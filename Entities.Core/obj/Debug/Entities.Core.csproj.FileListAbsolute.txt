@@ -1,0 +1,4 @@
+C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Entities.Core\bin\Debug\Entities.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Entities.Core\bin\Debug\Entities.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Entities.Core\obj\Debug\Entities.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Entities.Core\obj\Debug\Entities.Core.pdb

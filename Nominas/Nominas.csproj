@@ -1,0 +1,453 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F839264F-376C-40A7-9079-2F254AE91359}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Nominas</RootNamespace>
+    <AssemblyName>Nominas</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Nominas.Program</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ConvierteRomanosaLetras">
+      <HintPath>..\..\..\..\..\Downloads\LibRFC\LibRFC\ConvierteRomanosaLetras.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.9.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="RFC">
+      <HintPath>..\..\..\..\..\Downloads\LibRFC\LibRFC\RFC.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="frmBuscar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBuscar.Designer.cs">
+      <DependentUpon>frmBuscar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmClientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmClientes.Designer.cs">
+      <DependentUpon>frmClientes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmComplementos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmComplementos.Designer.cs">
+      <DependentUpon>frmComplementos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmDepartamentos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDepartamentos.Designer.cs">
+      <DependentUpon>frmDepartamentos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmEmpleados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEmpleados.Designer.cs">
+      <DependentUpon>frmEmpleados.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmEmpresas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEmpresas.Designer.cs">
+      <DependentUpon>frmEmpresas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmFactores.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmFactores.Designer.cs">
+      <DependentUpon>frmFactores.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmImagen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmImagen.Designer.cs">
+      <DependentUpon>frmImagen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmListaClientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaClientes.Designer.cs">
+      <DependentUpon>frmListaClientes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmListaComplementos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaComplementos.Designer.cs">
+      <DependentUpon>frmListaComplementos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmListaDepartamentos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaDepartamentos.Designer.cs">
+      <DependentUpon>frmListaDepartamentos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmListaEmpleados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaEmpleados.Designer.cs">
+      <DependentUpon>frmListaEmpleados.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmListaEmpresas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaEmpresas.Designer.cs">
+      <DependentUpon>frmListaEmpresas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmListaFactores.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaFactores.Designer.cs">
+      <DependentUpon>frmListaFactores.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmListaImagenes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaImagenes.Designer.cs">
+      <DependentUpon>frmListaImagenes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmListaPerfiles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaPerfiles.Designer.cs">
+      <DependentUpon>frmListaPerfiles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmListaPeriodos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaPeriodos.Designer.cs">
+      <DependentUpon>frmListaPeriodos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmListaPlazas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaPlazas.Designer.cs">
+      <DependentUpon>frmListaPlazas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmListaPuestos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaPuestos.Designer.cs">
+      <DependentUpon>frmListaPuestos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmListaSalario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaSalario.Designer.cs">
+      <DependentUpon>frmListaSalario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmLogIn.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLogIn.Designer.cs">
+      <DependentUpon>frmLogIn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmLogo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLogo.Designer.cs">
+      <DependentUpon>frmLogo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmModificaClienteEmpleado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmModificaClienteEmpleado.Designer.cs">
+      <DependentUpon>frmModificaClienteEmpleado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmModificaSalarioImss.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmModificaSalarioImss.Designer.cs">
+      <DependentUpon>frmModificaSalarioImss.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmModificaSueldoEmpleado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmModificaSueldoEmpleado.Designer.cs">
+      <DependentUpon>frmModificaSueldoEmpleado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPerfiles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPerfiles.Designer.cs">
+      <DependentUpon>frmPerfiles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPeriodos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPeriodos.Designer.cs">
+      <DependentUpon>frmPeriodos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPlazas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPlazas.Designer.cs">
+      <DependentUpon>frmPlazas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPrincipal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPrincipal.Designer.cs">
+      <DependentUpon>frmPrincipal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPuestos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPuestos.Designer.cs">
+      <DependentUpon>frmPuestos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSalario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSalario.Designer.cs">
+      <DependentUpon>frmSalario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSeleccionarEmpresa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSeleccionarEmpresa.Designer.cs">
+      <DependentUpon>frmSeleccionarEmpresa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalVar.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmBuscar.resx">
+      <DependentUpon>frmBuscar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmClientes.resx">
+      <DependentUpon>frmClientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmComplementos.resx">
+      <DependentUpon>frmComplementos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmDepartamentos.resx">
+      <DependentUpon>frmDepartamentos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEmpleados.resx">
+      <DependentUpon>frmEmpleados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEmpresas.resx">
+      <DependentUpon>frmEmpresas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmFactores.resx">
+      <DependentUpon>frmFactores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmImagen.resx">
+      <DependentUpon>frmImagen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListaClientes.resx">
+      <DependentUpon>frmListaClientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListaComplementos.resx">
+      <DependentUpon>frmListaComplementos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListaDepartamentos.resx">
+      <DependentUpon>frmListaDepartamentos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListaEmpleados.resx">
+      <DependentUpon>frmListaEmpleados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListaEmpresas.resx">
+      <DependentUpon>frmListaEmpresas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListaFactores.resx">
+      <DependentUpon>frmListaFactores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListaImagenes.resx">
+      <DependentUpon>frmListaImagenes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListaPerfiles.resx">
+      <DependentUpon>frmListaPerfiles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListaPeriodos.resx">
+      <DependentUpon>frmListaPeriodos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListaPlazas.resx">
+      <DependentUpon>frmListaPlazas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListaPuestos.resx">
+      <DependentUpon>frmListaPuestos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListaSalario.resx">
+      <DependentUpon>frmListaSalario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLogIn.resx">
+      <DependentUpon>frmLogIn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLogo.resx">
+      <DependentUpon>frmLogo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmModificaClienteEmpleado.resx">
+      <DependentUpon>frmModificaClienteEmpleado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmModificaSalarioImss.resx">
+      <DependentUpon>frmModificaSalarioImss.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmModificaSueldoEmpleado.resx">
+      <DependentUpon>frmModificaSueldoEmpleado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPerfiles.resx">
+      <DependentUpon>frmPerfiles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPeriodos.resx">
+      <DependentUpon>frmPeriodos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPlazas.resx">
+      <DependentUpon>frmPlazas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPrincipal.resx">
+      <DependentUpon>frmPrincipal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPuestos.resx">
+      <DependentUpon>frmPuestos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSalario.resx">
+      <DependentUpon>frmSalario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSeleccionarEmpresa.resx">
+      <DependentUpon>frmSeleccionarEmpresa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Autorizaciones.Core\Autorizaciones.Core.csproj">
+      <Project>{85e3a89d-2eb1-40b4-ba25-0e9600ec15a0}</Project>
+      <Name>Autorizaciones.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Catalogos.Core\Catalogos.Core.csproj">
+      <Project>{82d361fb-9511-4e6a-a33b-11b1a65b4353}</Project>
+      <Name>Catalogos.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Clientes.Core\Clientes.Core.csproj">
+      <Project>{05b3d13b-5118-469d-bcb7-61c4f6a0e949}</Project>
+      <Name>Clientes.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Complementos.Core\Complementos.Core.csproj">
+      <Project>{4363c955-dbe1-49dd-a5c9-d4d13fb3ba21}</Project>
+      <Name>Complementos.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Data.Obj\Data.Obj.csproj">
+      <Project>{2f926e34-44b7-49dc-b955-9b33f8b55c96}</Project>
+      <Name>Data.Obj</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Departamento.Core\Departamento.Core.csproj">
+      <Project>{976a8297-166c-4d90-94b1-69de7ccc9271}</Project>
+      <Name>Departamento.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Direccion.Core\Direccion.Core.csproj">
+      <Project>{edd3a402-8d97-4357-8e5c-acfab60ecd27}</Project>
+      <Name>Direccion.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Empleados.Core\Empleados.Core.csproj">
+      <Project>{ad7ad50b-c084-4e52-bbbb-705e08b143e6}</Project>
+      <Name>Empleados.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Empresas.Core\Empresas.Core.csproj">
+      <Project>{9ddf6a04-39b7-458a-9f15-123f2b27c303}</Project>
+      <Name>Empresas.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Factores.Core\Factores.Core.csproj">
+      <Project>{4975efe5-7f1e-4648-89c1-ff4b4fcafd7a}</Project>
+      <Name>Factores.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Imagen.Core\Imagen.Core.csproj">
+      <Project>{38c53406-8cfb-4bd5-a58e-c6bc19da2524}</Project>
+      <Name>Imagen.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LayoutMovimientos.Core\LayoutMovimientos.Core.csproj">
+      <Project>{213f2f4a-01c5-47da-ad29-5c45f17b91e4}</Project>
+      <Name>LayoutMovimientos.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Perfil.Core\Perfil.Core.csproj">
+      <Project>{f45c48b3-fd8c-4b67-9d87-10e3971c1dbd}</Project>
+      <Name>Perfil.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Periodos.Core\Periodos.Core.csproj">
+      <Project>{0cadde52-8b72-446e-80f8-33da3fc99151}</Project>
+      <Name>Periodos.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plaza.Core\Plaza.Core.csproj">
+      <Project>{dae0cf88-089f-452c-ac35-9a458753c71b}</Project>
+      <Name>Plaza.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Puestos.Core\Puestos.Core.csproj">
+      <Project>{c9507108-2018-4989-97bc-c00354d90a75}</Project>
+      <Name>Puestos.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Salario.Core\Salario.Core.csproj">
+      <Project>{17ca0d9b-32e3-4dd4-9f85-f9a8083a5b67}</Project>
+      <Name>Salario.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Usuarios.Core\Usuarios.Core.csproj">
+      <Project>{eaaf5c8a-7616-431b-8875-cd0bc4300e2d}</Project>
+      <Name>Usuarios.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,14 @@
+C:\Users\gamer\Documents\GitHub\Nomina\Plaza.Core\bin\Debug\Plaza.Core.dll
+C:\Users\gamer\Documents\GitHub\Nomina\Plaza.Core\bin\Debug\Plaza.Core.pdb
+C:\Users\gamer\Documents\GitHub\Nomina\Plaza.Core\bin\Debug\Data.Obj.dll
+C:\Users\gamer\Documents\GitHub\Nomina\Plaza.Core\bin\Debug\Data.Obj.pdb
+C:\Users\gamer\Documents\GitHub\Nomina\Plaza.Core\obj\Debug\Plaza.Core.csprojResolveAssemblyReference.cache
+C:\Users\gamer\Documents\GitHub\Nomina\Plaza.Core\obj\Debug\Plaza.Core.dll
+C:\Users\gamer\Documents\GitHub\Nomina\Plaza.Core\obj\Debug\Plaza.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Plaza.Core\bin\Debug\Plaza.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Plaza.Core\bin\Debug\Plaza.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Plaza.Core\bin\Debug\Data.Obj.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Plaza.Core\bin\Debug\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Plaza.Core\obj\Debug\Plaza.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Plaza.Core\obj\Debug\Plaza.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Plaza.Core\obj\Debug\Plaza.Core.csprojResolveAssemblyReference.cache

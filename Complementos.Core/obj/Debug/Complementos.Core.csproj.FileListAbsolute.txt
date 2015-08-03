@@ -1,0 +1,6 @@
+C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Complementos.Core\bin\Debug\Complementos.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Complementos.Core\bin\Debug\Complementos.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Complementos.Core\bin\Debug\Data.Obj.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Complementos.Core\bin\Debug\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Complementos.Core\obj\Debug\Complementos.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Complementos.Core\obj\Debug\Complementos.Core.pdb

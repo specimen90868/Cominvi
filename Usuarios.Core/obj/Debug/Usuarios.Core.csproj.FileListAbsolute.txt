@@ -1,0 +1,7 @@
+C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Usuarios.Core\bin\Debug\Usuarios.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Usuarios.Core\bin\Debug\Usuarios.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Usuarios.Core\bin\Debug\Data.Obj.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Usuarios.Core\bin\Debug\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Usuarios.Core\obj\Debug\Usuarios.Core.csprojResolveAssemblyReference.cache
+C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Usuarios.Core\obj\Debug\Usuarios.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Usuarios.Core\obj\Debug\Usuarios.Core.pdb

@@ -1,0 +1,7 @@
+C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\LayoutMovimientos.Core\bin\Debug\LayoutMovimientos.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\LayoutMovimientos.Core\bin\Debug\LayoutMovimientos.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\LayoutMovimientos.Core\bin\Debug\Data.Obj.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\LayoutMovimientos.Core\bin\Debug\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\LayoutMovimientos.Core\obj\Debug\LayoutMovimientos.Core.csprojResolveAssemblyReference.cache
+C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\LayoutMovimientos.Core\obj\Debug\LayoutMovimientos.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\LayoutMovimientos.Core\obj\Debug\LayoutMovimientos.Core.pdb
