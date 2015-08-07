@@ -9,31 +9,31 @@ namespace Empleados.Core
     public class Empleados
     {
         public int idtrabajador { get; set; }
+        public string noempleado { get; set; }
         public string nombres { get; set; }
         public string paterno { get; set; }
         public string materno { get; set; }
         public string nombrecompleto { get; set; }
-        public DateTime fechanacimiento { get; set; }
-        public int edad { get; set; }
         public int idempresa { get; set; }
-        public int idcliente { get; set; }
+        public int idperiodo { get; set; }
+        public int iddepartamento { get; set; }
+        public int idpuesto { get; set; }
         public DateTime fechaingreso { get; set; }
         public int antiguedad { get; set; }
-        public int idperiodo { get; set; }
-        public string localforaneo { get; set; }
-        public string sua { get; set; }
+        public DateTime fechaantiguedad { get; set; }
+        public int antiguedadmod { get; set; }
+        public DateTime fechanacimiento { get; set; }
+        public int edad { get; set; }
         public string rfc { get; set; }
         public string curp { get; set; }
         public string nss { get; set; }
         public int digitoverificador { get; set; }
-        public string tiposalario { get; set; }
-        public decimal sdi { get; set; }
-        public decimal sd { get; set; }
-        public decimal sueldo { get; set; }
-        public int idinfonavit { get; set; }
+        public int tiposalario { get; set; }
+        public double sdi { get; set; }
+        public double sd { get; set; }
+        public double sueldo { get; set; }
         public int estatus { get; set; }
         public int idse { get; set; }
-        public int modsalario { get; set; }
-        public int idplaza { get; set; }      
+        public int idusuario { get; set; }      
     }
 }

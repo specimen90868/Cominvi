@@ -41,12 +41,7 @@
             this.mnuEmpleados = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuEmpleadoNomina = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuComplementos = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuModificarCliente = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuModificarSueldo = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.mnuEmpleadoSindicato = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuExpedientes = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuBajas = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuInfonavit = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuIncapacidades = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,28 +51,27 @@
             this.mnuModificacion = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuBaja = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuSeguroSocial = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuContratos = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuNominas = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuCatalogos = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuClientes = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuDepartamentos = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPuestos = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPeriodos = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuFactores = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuSalarioMinimo = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuConfiguracion = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuEmpresa = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuEmpresas = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuLogo = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuUsuarios = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPerfiles = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuPlazas = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuCambiarContrasenia = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuPreferencias = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.tablasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuFactores = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuSalarioMinimo = new System.Windows.Forms.ToolStripMenuItem();
             this.workPerfil = new System.ComponentModel.BackgroundWorker();
             this.stsPrincipal = new System.Windows.Forms.StatusStrip();
             this.toolEstatusPerfil = new System.Windows.Forms.ToolStripStatusLabel();
+            this.mnuEmpleadosBaja = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuPrincipal.SuspendLayout();
             this.stsPrincipal.SuspendLayout();
             this.SuspendLayout();
@@ -88,13 +82,12 @@
             this.mnuArchivo,
             this.mnuRecursosHumanos,
             this.mnuSeguroSocial,
-            this.mnuContratos,
             this.mnuNominas,
             this.mnuCatalogos,
             this.mnuConfiguracion});
             this.mnuPrincipal.Location = new System.Drawing.Point(0, 0);
             this.mnuPrincipal.Name = "mnuPrincipal";
-            this.mnuPrincipal.Size = new System.Drawing.Size(795, 24);
+            this.mnuPrincipal.Size = new System.Drawing.Size(776, 24);
             this.mnuPrincipal.TabIndex = 1;
             this.mnuPrincipal.Text = "menuStrip1";
             // 
@@ -162,7 +155,6 @@
             this.mnuRecursosHumanos.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuEmpleados,
             this.mnuExpedientes,
-            this.mnuBajas,
             this.toolStripSeparator3,
             this.mnuInfonavit,
             this.mnuIncapacidades,
@@ -177,10 +169,8 @@
             this.mnuEmpleados.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuEmpleadoNomina,
             this.mnuComplementos,
-            this.mnuModificarCliente,
-            this.mnuModificarSueldo,
-            this.toolStripSeparator6,
-            this.mnuEmpleadoSindicato});
+            this.toolStripSeparator7,
+            this.mnuEmpleadosBaja});
             this.mnuEmpleados.Name = "mnuEmpleados";
             this.mnuEmpleados.Size = new System.Drawing.Size(152, 22);
             this.mnuEmpleados.Text = "Empleados";
@@ -188,53 +178,22 @@
             // mnuEmpleadoNomina
             // 
             this.mnuEmpleadoNomina.Name = "mnuEmpleadoNomina";
-            this.mnuEmpleadoNomina.Size = new System.Drawing.Size(218, 22);
+            this.mnuEmpleadoNomina.Size = new System.Drawing.Size(192, 22);
             this.mnuEmpleadoNomina.Text = "Empleados de nómina";
             this.mnuEmpleadoNomina.Click += new System.EventHandler(this.mnuEmpleadoNomina_Click);
             // 
             // mnuComplementos
             // 
             this.mnuComplementos.Name = "mnuComplementos";
-            this.mnuComplementos.Size = new System.Drawing.Size(218, 22);
+            this.mnuComplementos.Size = new System.Drawing.Size(192, 22);
             this.mnuComplementos.Text = "Complementos";
             this.mnuComplementos.Click += new System.EventHandler(this.mnuComplementos_Click);
-            // 
-            // mnuModificarCliente
-            // 
-            this.mnuModificarCliente.Name = "mnuModificarCliente";
-            this.mnuModificarCliente.Size = new System.Drawing.Size(218, 22);
-            this.mnuModificarCliente.Text = "Modificar Cliente y Periodo";
-            this.mnuModificarCliente.Click += new System.EventHandler(this.mnuModificarCliente_Click);
-            // 
-            // mnuModificarSueldo
-            // 
-            this.mnuModificarSueldo.Name = "mnuModificarSueldo";
-            this.mnuModificarSueldo.Size = new System.Drawing.Size(218, 22);
-            this.mnuModificarSueldo.Text = "Modificar Sueldo";
-            this.mnuModificarSueldo.Click += new System.EventHandler(this.mnuModificarSueldo_Click);
-            // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(215, 6);
-            // 
-            // mnuEmpleadoSindicato
-            // 
-            this.mnuEmpleadoSindicato.Name = "mnuEmpleadoSindicato";
-            this.mnuEmpleadoSindicato.Size = new System.Drawing.Size(218, 22);
-            this.mnuEmpleadoSindicato.Text = "Empleados de sindicato";
             // 
             // mnuExpedientes
             // 
             this.mnuExpedientes.Name = "mnuExpedientes";
             this.mnuExpedientes.Size = new System.Drawing.Size(152, 22);
             this.mnuExpedientes.Text = "Expedientes";
-            // 
-            // mnuBajas
-            // 
-            this.mnuBajas.Name = "mnuBajas";
-            this.mnuBajas.Size = new System.Drawing.Size(152, 22);
-            this.mnuBajas.Text = "Bajas";
             // 
             // toolStripSeparator3
             // 
@@ -292,12 +251,6 @@
             this.mnuSeguroSocial.Size = new System.Drawing.Size(90, 20);
             this.mnuSeguroSocial.Text = "Seguro Social";
             // 
-            // mnuContratos
-            // 
-            this.mnuContratos.Name = "mnuContratos";
-            this.mnuContratos.Size = new System.Drawing.Size(71, 20);
-            this.mnuContratos.Text = "Contratos";
-            // 
             // mnuNominas
             // 
             this.mnuNominas.Name = "mnuNominas";
@@ -307,22 +260,12 @@
             // mnuCatalogos
             // 
             this.mnuCatalogos.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuClientes,
             this.mnuDepartamentos,
             this.mnuPuestos,
-            this.mnuPeriodos,
-            this.mnuFactores,
-            this.mnuSalarioMinimo});
+            this.mnuPeriodos});
             this.mnuCatalogos.Name = "mnuCatalogos";
             this.mnuCatalogos.Size = new System.Drawing.Size(72, 20);
             this.mnuCatalogos.Text = "Catálogos";
-            // 
-            // mnuClientes
-            // 
-            this.mnuClientes.Name = "mnuClientes";
-            this.mnuClientes.Size = new System.Drawing.Size(155, 22);
-            this.mnuClientes.Text = "Clientes";
-            this.mnuClientes.Click += new System.EventHandler(this.mnuClientes_Click);
             // 
             // mnuDepartamentos
             // 
@@ -345,62 +288,34 @@
             this.mnuPeriodos.Text = "Periodos";
             this.mnuPeriodos.Click += new System.EventHandler(this.mnuPeriodos_Click);
             // 
-            // mnuFactores
-            // 
-            this.mnuFactores.Name = "mnuFactores";
-            this.mnuFactores.Size = new System.Drawing.Size(155, 22);
-            this.mnuFactores.Text = "Factores";
-            this.mnuFactores.Click += new System.EventHandler(this.mnuFactores_Click);
-            // 
-            // mnuSalarioMinimo
-            // 
-            this.mnuSalarioMinimo.Name = "mnuSalarioMinimo";
-            this.mnuSalarioMinimo.Size = new System.Drawing.Size(155, 22);
-            this.mnuSalarioMinimo.Text = "Salario minimo";
-            this.mnuSalarioMinimo.Click += new System.EventHandler(this.mnuSalarioMinimo_Click);
-            // 
             // mnuConfiguracion
             // 
             this.mnuConfiguracion.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuEmpresa,
             this.mnuUsuarios,
             this.mnuPerfiles,
-            this.mnuPlazas,
             this.mnuCambiarContrasenia,
             this.toolStripSeparator2,
-            this.mnuPreferencias});
+            this.mnuPreferencias,
+            this.toolStripSeparator6,
+            this.tablasToolStripMenuItem});
             this.mnuConfiguracion.Name = "mnuConfiguracion";
             this.mnuConfiguracion.Size = new System.Drawing.Size(95, 20);
             this.mnuConfiguracion.Text = "Configuración";
             // 
             // mnuEmpresa
             // 
-            this.mnuEmpresa.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuEmpresas,
-            this.mnuLogo});
             this.mnuEmpresa.Name = "mnuEmpresa";
             this.mnuEmpresa.Size = new System.Drawing.Size(180, 22);
             this.mnuEmpresa.Text = "Empresa";
-            // 
-            // mnuEmpresas
-            // 
-            this.mnuEmpresas.Name = "mnuEmpresas";
-            this.mnuEmpresas.Size = new System.Drawing.Size(124, 22);
-            this.mnuEmpresas.Text = "Empresas";
-            this.mnuEmpresas.Click += new System.EventHandler(this.mnuEmpresas_Click_1);
-            // 
-            // mnuLogo
-            // 
-            this.mnuLogo.Name = "mnuLogo";
-            this.mnuLogo.Size = new System.Drawing.Size(124, 22);
-            this.mnuLogo.Text = "Logo";
-            this.mnuLogo.Click += new System.EventHandler(this.mnuLogo_Click);
+            this.mnuEmpresa.Click += new System.EventHandler(this.mnuEmpresa_Click);
             // 
             // mnuUsuarios
             // 
             this.mnuUsuarios.Name = "mnuUsuarios";
             this.mnuUsuarios.Size = new System.Drawing.Size(180, 22);
             this.mnuUsuarios.Text = "Usuarios";
+            this.mnuUsuarios.Click += new System.EventHandler(this.mnuUsuarios_Click);
             // 
             // mnuPerfiles
             // 
@@ -409,18 +324,12 @@
             this.mnuPerfiles.Text = "Perfiles";
             this.mnuPerfiles.Click += new System.EventHandler(this.mnuPerfiles_Click);
             // 
-            // mnuPlazas
-            // 
-            this.mnuPlazas.Name = "mnuPlazas";
-            this.mnuPlazas.Size = new System.Drawing.Size(180, 22);
-            this.mnuPlazas.Text = "Plazas";
-            this.mnuPlazas.Click += new System.EventHandler(this.mnuPlazas_Click);
-            // 
             // mnuCambiarContrasenia
             // 
             this.mnuCambiarContrasenia.Name = "mnuCambiarContrasenia";
             this.mnuCambiarContrasenia.Size = new System.Drawing.Size(180, 22);
             this.mnuCambiarContrasenia.Text = "Cambiar contraseña";
+            this.mnuCambiarContrasenia.Click += new System.EventHandler(this.mnuCambiarContrasenia_Click);
             // 
             // toolStripSeparator2
             // 
@@ -432,6 +341,35 @@
             this.mnuPreferencias.Name = "mnuPreferencias";
             this.mnuPreferencias.Size = new System.Drawing.Size(180, 22);
             this.mnuPreferencias.Text = "Preferencias";
+            this.mnuPreferencias.Click += new System.EventHandler(this.mnuPreferencias_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(177, 6);
+            // 
+            // tablasToolStripMenuItem
+            // 
+            this.tablasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuFactores,
+            this.mnuSalarioMinimo});
+            this.tablasToolStripMenuItem.Name = "tablasToolStripMenuItem";
+            this.tablasToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.tablasToolStripMenuItem.Text = "Tablas";
+            // 
+            // mnuFactores
+            // 
+            this.mnuFactores.Name = "mnuFactores";
+            this.mnuFactores.Size = new System.Drawing.Size(154, 22);
+            this.mnuFactores.Text = "Factores";
+            this.mnuFactores.Click += new System.EventHandler(this.mnuFactores_Click_1);
+            // 
+            // mnuSalarioMinimo
+            // 
+            this.mnuSalarioMinimo.Name = "mnuSalarioMinimo";
+            this.mnuSalarioMinimo.Size = new System.Drawing.Size(154, 22);
+            this.mnuSalarioMinimo.Text = "Salario mínimo";
+            this.mnuSalarioMinimo.Click += new System.EventHandler(this.mnuSalarioMinimo_Click_1);
             // 
             // workPerfil
             // 
@@ -446,7 +384,7 @@
             this.toolEstatusPerfil});
             this.stsPrincipal.Location = new System.Drawing.Point(0, 645);
             this.stsPrincipal.Name = "stsPrincipal";
-            this.stsPrincipal.Size = new System.Drawing.Size(795, 22);
+            this.stsPrincipal.Size = new System.Drawing.Size(776, 22);
             this.stsPrincipal.TabIndex = 3;
             this.stsPrincipal.Text = "statusStrip1";
             // 
@@ -456,11 +394,23 @@
             this.toolEstatusPerfil.Size = new System.Drawing.Size(98, 17);
             this.toolEstatusPerfil.Text = "Cargando perfil...";
             // 
+            // mnuEmpleadosBaja
+            // 
+            this.mnuEmpleadosBaja.Name = "mnuEmpleadosBaja";
+            this.mnuEmpleadosBaja.Size = new System.Drawing.Size(192, 22);
+            this.mnuEmpleadosBaja.Text = "Empleados en Baja";
+            this.mnuEmpleadosBaja.Click += new System.EventHandler(this.mnuEmpleadosBaja_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(189, 6);
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(795, 667);
+            this.ClientSize = new System.Drawing.Size(776, 667);
             this.Controls.Add(this.stsPrincipal);
             this.Controls.Add(this.mnuPrincipal);
             this.IsMdiContainer = true;
@@ -491,16 +441,12 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem mnuPreferencias;
         private System.Windows.Forms.ToolStripMenuItem mnuCatalogos;
-        private System.Windows.Forms.ToolStripMenuItem mnuClientes;
         private System.Windows.Forms.ToolStripMenuItem mnuDepartamentos;
         private System.Windows.Forms.ToolStripMenuItem mnuPuestos;
         private System.Windows.Forms.ToolStripMenuItem mnuPeriodos;
-        private System.Windows.Forms.ToolStripMenuItem mnuFactores;
-        private System.Windows.Forms.ToolStripMenuItem mnuSalarioMinimo;
         private System.Windows.Forms.ToolStripMenuItem mnuRecursosHumanos;
         private System.Windows.Forms.ToolStripMenuItem mnuEmpleados;
         private System.Windows.Forms.ToolStripMenuItem mnuExpedientes;
-        private System.Windows.Forms.ToolStripMenuItem mnuBajas;
         private System.Windows.Forms.ToolStripMenuItem mnuIniciarSesion;
         private System.Windows.Forms.ToolStripMenuItem mnuCerrarSesion;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
@@ -510,9 +456,7 @@
         private System.Windows.Forms.StatusStrip stsPrincipal;
         private System.Windows.Forms.ToolStripMenuItem mnuEmpresa;
         private System.Windows.Forms.ToolStripStatusLabel toolEstatusPerfil;
-        private System.Windows.Forms.ToolStripMenuItem mnuPlazas;
         private System.Windows.Forms.ToolStripMenuItem mnuSeguroSocial;
-        private System.Windows.Forms.ToolStripMenuItem mnuContratos;
         private System.Windows.Forms.ToolStripMenuItem mnuNominas;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem mnuIncapacidades;
@@ -523,13 +467,13 @@
         private System.Windows.Forms.ToolStripMenuItem mnuBaja;
         private System.Windows.Forms.ToolStripMenuItem mnuModificacion;
         private System.Windows.Forms.ToolStripMenuItem mnuEmpleadoNomina;
-        private System.Windows.Forms.ToolStripMenuItem mnuModificarCliente;
-        private System.Windows.Forms.ToolStripMenuItem mnuModificarSueldo;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
-        private System.Windows.Forms.ToolStripMenuItem mnuEmpleadoSindicato;
         private System.Windows.Forms.ToolStripMenuItem mnuComplementos;
-        private System.Windows.Forms.ToolStripMenuItem mnuEmpresas;
-        private System.Windows.Forms.ToolStripMenuItem mnuLogo;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripMenuItem tablasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mnuFactores;
+        private System.Windows.Forms.ToolStripMenuItem mnuSalarioMinimo;
+        private System.Windows.Forms.ToolStripMenuItem mnuEmpleadosBaja;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
     }
 }
 

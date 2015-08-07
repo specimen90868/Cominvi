@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
+using System.Data.SqlClient;
 using System.Configuration;
 
 namespace Nominas
@@ -20,31 +20,46 @@ namespace Nominas
         }
 
         #region VARIABLES GLOBALES
-        MySqlConnection cnx;
-        MySqlCommand cmd;
+        SqlConnection cnx;
+        SqlCommand cmd;
         List<Empleados.Core.Empleados> lstEmpleados;
         #endregion
 
-       
+        #region VARIABLES PUBLICAS
+        public int _empleadoAltaBaja;
+        #endregion
+
         private void frmListaEmpleados_Load(object sender, EventArgs e)
         {
             dgvEmpleados.RowHeadersVisible = false;
             CargaPerfil();
             ListaEmpleados();
+
+            if (_empleadoAltaBaja == GLOBALES.INACTIVO)
+            {
+                toolNuevo.Enabled = false;
+                toolBaja.Enabled = false;
+                toolIncrementoSalario.Enabled = false;
+            }
+            else
+            {
+                toolReingreso.Visible = false;
+            }
         }
 
         private void ListaEmpleados()
         {
             string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-            cnx = new MySqlConnection(cdn);
-            cmd = new MySqlCommand();
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
             cmd.Connection = cnx;
             Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
             eh.Command = cmd;
 
             Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
             empleado.idempresa = GLOBALES.IDEMPRESA;
-            empleado.idplaza = GLOBALES.IDPLAZA;
+            empleado.estatus = _empleadoAltaBaja;
+            
             try
             {
                 cnx.Open();
@@ -94,7 +109,7 @@ namespace Nominas
                         toolNuevo.Enabled = Convert.ToBoolean(lstEdiciones[i].crear);
                         toolConsultar.Enabled = Convert.ToBoolean(lstEdiciones[i].consulta);
                         toolEditar.Enabled = Convert.ToBoolean(lstEdiciones[i].modificar);
-                        toolBaja.Enabled = Convert.ToBoolean(lstEdiciones[i].baja);
+                        toolEliminar.Enabled = Convert.ToBoolean(lstEdiciones[i].baja);
                         break;
                 }
             }
@@ -139,69 +154,6 @@ namespace Nominas
         private void toolEditar_Click(object sender, EventArgs e)
         {
             Seleccion(GLOBALES.MODIFICAR);
-        }
-
-        private void toolBaja_Click(object sender, EventArgs e)
-        {
-            int estatus = 0;
-            string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-            int fila = dgvEmpleados.CurrentCell.RowIndex;
-            int idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
-
-            cnx = new MySqlConnection(cdn);
-            cmd = new MySqlCommand();
-            cmd.Connection = cnx;
-
-            Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
-            eh.Command = cmd;
-
-            Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
-            empleado.idtrabajador = idempleado;
-
-            LayoutMovimientos.Core.LayoutHelper lh = new LayoutMovimientos.Core.LayoutHelper();
-            lh.Command = cmd;
-            LayoutMovimientos.Core.LayoutMovimientos lm = new LayoutMovimientos.Core.LayoutMovimientos();
-            lm.idtrabajador = idempleado;
-
-            try
-            {
-                cnx.Open();
-                estatus = (int)eh.obtenerEstatus(empleado);
-                cnx.Close();
-                cnx.Dispose();
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
-            }
-
-            if (estatus.Equals(0))
-            {
-                DialogResult respuesta = MessageBox.Show("¿Quiere eliminar la trabajador?", "Confirmación", MessageBoxButtons.YesNo);
-                if (respuesta == DialogResult.Yes)
-                {
-                    //eh = new Empleados.Core.EmpleadosHelper();
-                    //eh.Command = cmd;
-                    
-                    try
-                    {
-                        cnx.Open();
-                        eh.bajaEmpleado(empleado);
-                        lh.bajaLayoutMovimiento(lm);
-                        cnx.Close();
-                        cnx.Dispose();
-                        ListaEmpleados();
-                    }
-                    catch (Exception error)
-                    {
-                        MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("El empleado no puede ser eliminado. Ya tiene movimientos registrados.", "Confirmación");
-            }
         }
 
         private void txtBuscar_Click(object sender, EventArgs e)
@@ -258,17 +210,112 @@ namespace Nominas
 
         private void toolModificarSalario_Click(object sender, EventArgs e)
         {
-            int fila = dgvEmpleados.CurrentCell.RowIndex;
-            frmModificaSalarioImss msi = new frmModificaSalarioImss();
-            msi.MdiParent = this.MdiParent;
-            msi._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
-            msi._nombreCompleto = dgvEmpleados.Rows[fila].Cells[1].Value.ToString();
-            msi.Show();
+            //int fila = dgvEmpleados.CurrentCell.RowIndex;
+            //frmModificaSalarioImss msi = new frmModificaSalarioImss();
+            //msi.MdiParent = this.MdiParent;
+            //msi._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
+            //msi._nombreCompleto = dgvEmpleados.Rows[fila].Cells[1].Value.ToString();
+            //msi.Show();
         }
 
         private void frmListaEmpleados_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.Dispose();
+        }
+
+        private void toolIncrementoSalario_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolHistorial_Click(object sender, EventArgs e)
+        {
+            int fila = dgvEmpleados.CurrentCell.RowIndex;
+            frmListaHistorial lh = new frmListaHistorial();
+            lh.MdiParent = this.MdiParent;
+            lh._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
+            lh.Show();
+        }
+
+        private void toolEliminar_Click(object sender, EventArgs e)
+        {
+            //int estatus = 0;
+            string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
+            int fila = dgvEmpleados.CurrentCell.RowIndex;
+            int idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
+
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
+            eh.Command = cmd;
+
+            Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
+            empleado.idtrabajador = idempleado;
+
+            //try
+            //{
+            //    cnx.Open();
+            //    estatus = (int)eh.obtenerEstatus(empleado);
+            //    cnx.Close();
+            //    cnx.Dispose();
+            //}
+            //catch (Exception error)
+            //{
+            //    MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
+            //}
+
+            //if (estatus.Equals(1)) {}
+            //else { MessageBox.Show("El empleado no puede ser eliminado. Ya tiene movimientos registrados.", "Confirmación"); }
+
+            DialogResult respuesta = MessageBox.Show("¿Quiere eliminar la trabajador?. \r\n \r\n CUIDADO. Esta acción eliminará permanentemente el Empleado.", "Confirmación", MessageBoxButtons.YesNo);
+            if (respuesta == DialogResult.Yes)
+            {
+                //eh = new Empleados.Core.EmpleadosHelper();
+                //eh.Command = cmd;
+
+                try
+                {
+                    cnx.Open();
+                    eh.eliminarEmpleado(empleado);
+                    cnx.Close();
+                    cnx.Dispose();
+                    ListaEmpleados();
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
+                }
+            }
+
+            
+        }
+
+        private void toolBaja_Click(object sender, EventArgs e)
+        {
+            int fila = dgvEmpleados.CurrentCell.RowIndex;
+            frmBaja b = new frmBaja();
+            b.MdiParent = this.MdiParent;
+            b._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
+            b._nombreEmpleado = dgvEmpleados.Rows[fila].Cells[1].Value.ToString();
+            b.Show();
+        }
+
+        private void toolReingreso_Click(object sender, EventArgs e)
+        {
+            int fila = dgvEmpleados.CurrentCell.RowIndex;
+            frmReingresoEmpleado r = new frmReingresoEmpleado();
+            r.OnReingreso += r_OnReingreso;
+            r._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
+            r._nombreEmpleado = dgvEmpleados.Rows[fila].Cells[1].Value.ToString();
+            r.Show();
+        }
+
+        void r_OnReingreso(int edicion)
+        {
+            if (edicion == GLOBALES.NUEVO)
+                ListaEmpleados();
         }
     }
 }

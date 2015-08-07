@@ -30,6 +30,16 @@ namespace Imagen.Core
             return lstImagen;
         }
 
+        public object ExisteImagen(Imagenes img)
+        {
+            Command.CommandText = "select count(*) from imagenes where idpersona = @idpersona and tipopersona = @tipopersona";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idpersona",img.idpersona);
+            Command.Parameters.AddWithValue("tipopersona", img.tipopersona);
+            object existe = Select(Command);
+            return existe;
+        }
+
         public int insertaImagen(Imagenes img)
         {
             Command.CommandText = "insert into imagenes (idpersona, imagen, tipopersona) values (@idpersona,@imagen,@tipopersona)";
@@ -46,6 +56,7 @@ namespace Imagen.Core
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idpersona", img.idpersona);
             Command.Parameters.AddWithValue("tipopersona", img.tipopersona);
+            Command.Parameters.AddWithValue("imagen",img.imagen);
             return Command.ExecuteNonQuery();
         }
 

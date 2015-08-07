@@ -3,25 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MySql.Data.MySqlClient;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace Data.Obj
 {
     public class DataObj
     {
-        public MySqlCommand Command { get; set; }
+        public SqlCommand Command { get; set; }
 
-        public DataTable SelectData(MySqlCommand pCommand)
+        public DataTable SelectData(SqlCommand pCommand)
         {
             DataTable dt = new DataTable();
-            MySqlDataAdapter da = new MySqlDataAdapter();
+            SqlDataAdapter da = new SqlDataAdapter();
             da.SelectCommand = pCommand;
             da.Fill(dt);
             return dt;
         }
 
-        public object Select(MySqlCommand pCommand)
+        public object Select(SqlCommand pCommand)
         {
             return pCommand.ExecuteScalar();
         }

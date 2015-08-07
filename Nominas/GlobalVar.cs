@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+﻿using System.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -21,23 +21,31 @@ namespace Nominas
         public static int MODIFICAR = 2;
         public static int EMPRESAS = 100;
         public static int EMPLEADOS = 101;
-        public static int CLIENTES = 102;
         #endregion
 
         #region VARIABLES TIPO PERSONA
         public static int pEMPRESA = 0;
-        public static int pCLIENTE = 1;
-        public static int pEMPLEADO = 2;
+        public static int pEMPLEADO = 1;
         #endregion
 
         #region VARIABLES TIPO DIRECCION
         public static int dFISCAL = 0;
-        public static int dSUCURSAL = 1;
-        public static int dPERSONAL = 2;
+        public static int dPERSONAL = 1;
+        #endregion
+
+        #region TIPOS DE MOVIMIENTO
+        public static int mALTA = 1;
+        public static int mREINGRESO = 2;
+        public static int mMODIFICACIONSALARIO = 3;
+        public static int mBAJA = 4;
+        #endregion
+
+        #region TIPOS DE ESTATUS
+        public static int ACTIVO = 1;
+        public static int INACTIVO = 0;
         #endregion
 
         public static int IDUSUARIO { get; set; }
-        public static int IDPLAZA { get; set; }
         public static int IDPERFIL { get; set; }
         public static int IDEMPRESA { get; set; }
         public static string NOMBREEMPRESA { get; set; }
@@ -96,8 +104,8 @@ namespace Nominas
         public static List<Autorizaciones.Core.Ediciones> PERFILEDICIONES(string menu)
         {
             string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-            MySqlConnection cnx = new MySqlConnection(cdn);
-            MySqlCommand cmd = new MySqlCommand();
+            SqlConnection cnx = new SqlConnection(cdn);
+            SqlCommand cmd = new SqlCommand();
             cmd.Connection = cnx;
             Autorizaciones.Core.AutorizacionHelper ah = new Autorizaciones.Core.AutorizacionHelper();
             ah.Command = cmd;
@@ -105,7 +113,7 @@ namespace Nominas
             try 
             {
                 cnx.Open();
-                lstEdiciones = ah.getEdiciones(IDPERFIL.ToString(), menu);
+                lstEdiciones = ah.getEdiciones(IDPERFIL, menu);
                 cnx.Close();
                 cnx.Dispose();
             }

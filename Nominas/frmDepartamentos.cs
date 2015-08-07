@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+﻿using System.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,8 +20,8 @@ namespace Nominas
         }
 
         #region VARIABLES GLOBALES
-        MySqlConnection cnx;
-        MySqlCommand cmd;
+        SqlConnection cnx;
+        SqlCommand cmd;
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
         Departamento.Core.DeptoHelper dh;
         #endregion
@@ -61,9 +61,9 @@ namespace Nominas
                 return;
             }
 
-            cnx = new MySqlConnection();
+            cnx = new SqlConnection();
             cnx.ConnectionString = cdn;
-            cmd = new MySqlCommand();
+            cmd = new SqlCommand();
             cmd.Connection = cnx;
             dh = new Departamento.Core.DeptoHelper();
             dh.Command = cmd;
@@ -71,6 +71,7 @@ namespace Nominas
             Departamento.Core.Depto depto = new Departamento.Core.Depto();
             depto.descripcion = txtDescripcion.Text;
             depto.estatus = 1;
+            depto.idempresa = GLOBALES.IDEMPRESA;
 
             switch (_tipoOperacion)
             {
@@ -123,9 +124,9 @@ namespace Nominas
             /// _tipoOperacion CONSULTA = 1, EDICION = 2
             if (_tipoOperacion == GLOBALES.CONSULTAR || _tipoOperacion == GLOBALES.MODIFICAR)
             {
-                cnx = new MySqlConnection();
+                cnx = new SqlConnection();
                 cnx.ConnectionString = cdn;
-                cmd = new MySqlCommand();
+                cmd = new SqlCommand();
                 cmd.Connection = cnx;
                 dh = new Departamento.Core.DeptoHelper();
                 dh.Command = cmd;

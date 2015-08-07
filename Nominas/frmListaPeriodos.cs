@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+﻿using System.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,42 +20,33 @@ namespace Nominas
         }
 
         #region VARIABLES GLOBALES
-        MySqlConnection cnx;
-        MySqlCommand cmd;
+        SqlConnection cnx;
+        SqlCommand cmd;
         List<Periodos.Core.Periodos> lstPeriodos;
-        List<Clientes.Core.Clientes> lstClientes;
         #endregion
 
         private void ListaPeriodos()
         {
             string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-            cnx = new MySqlConnection(cdn);
-            cmd = new MySqlCommand();
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
             cmd.Connection = cnx;
             Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
-            Clientes.Core.ClientesHelper ch = new Clientes.Core.ClientesHelper();
             ph.Command = cmd;
-            ch.Command = cmd;
-
-            Clientes.Core.Clientes c = new Clientes.Core.Clientes();
-            c.plaza = GLOBALES.IDPLAZA;
+            Periodos.Core.Periodos periodos = new Periodos.Core.Periodos();
+            periodos.idempresa = GLOBALES.IDEMPRESA;
 
             try
             {
                 cnx.Open();
-                lstPeriodos = ph.obtenerPeriodos();
-                lstClientes = ch.obtenerClientes(c);
+                lstPeriodos = ph.obtenerPeriodos(periodos);
                 cnx.Close();
                 cnx.Dispose();
 
                 var periodo = from p in lstPeriodos
-                              join cli in lstClientes
-                              on p.idcliente equals cli.idcliente
-                              orderby cli.nombre ascending
                               select new
                               {
                                   IdPeriodo = p.idperiodo,
-                                  Cliente = cli.nombre,
                                   Pago = p.pago
                               };
                             
@@ -146,14 +137,14 @@ namespace Nominas
                 string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
                 int fila = dgvPeriodos.CurrentCell.RowIndex;
                 int id = int.Parse(dgvPeriodos.Rows[fila].Cells[0].Value.ToString());
-                cnx = new MySqlConnection(cdn);
-                cmd = new MySqlCommand();
+                cnx = new SqlConnection(cdn);
+                cmd = new SqlCommand();
                 cmd.Connection = cnx;
                 Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
                 ph.Command = cmd;
                 Periodos.Core.Periodos periodo = new Periodos.Core.Periodos();
                 periodo.idperiodo = id;
-                periodo.estatus = 0;
+                
                 try
                 {
                     cnx.Open();
@@ -183,12 +174,9 @@ namespace Nominas
                 if (string.IsNullOrEmpty(txtBuscar.Text) || string.IsNullOrWhiteSpace(txtBuscar.Text))
                 {
                     var periodo = from p in lstPeriodos
-                                  join cli in lstClientes on p.idcliente equals cli.idcliente
-                                  orderby cli.nombre ascending
                                   select new
                                   {
                                       IdPeriodo = p.idperiodo,
-                                      Cliente = cli.nombre,
                                       Pago = p.pago
                                   };
                     dgvPeriodos.DataSource = periodo.ToList();
@@ -196,12 +184,10 @@ namespace Nominas
                 else
                 {
                     var busqueda = from p in lstPeriodos
-                                   join cli in lstClientes on p.idcliente equals cli.idcliente where cli.nombre.Contains(txtBuscar.Text.ToUpper())
-                                   orderby cli.nombre ascending
+                                   where p.pago.Contains(txtBuscar.Text.ToUpper())
                                    select new
                                    {
                                        IdPeriodo = p.idperiodo,
-                                       Cliente = cli.nombre,
                                        Pago = p.pago
                                    };
                     dgvPeriodos.DataSource = busqueda.ToList();
@@ -211,7 +197,7 @@ namespace Nominas
 
         private void txtBuscar_Leave(object sender, EventArgs e)
         {
-            txtBuscar.Text = "Buscar cliente...";
+            txtBuscar.Text = "Buscar periodo...";
             txtBuscar.Font = new Font("Segoe UI", 9, FontStyle.Italic);
             txtBuscar.ForeColor = System.Drawing.Color.Gray;
         }

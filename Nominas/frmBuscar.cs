@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+﻿using System.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,14 +25,11 @@ namespace Nominas
         #endregion
 
         #region VARIABLES GLOBALES
-        MySqlConnection cnx;
-        MySqlCommand cmd;
+        SqlConnection cnx;
+        SqlCommand cmd;
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
         Empleados.Core.EmpleadosHelper eh;
         List<Empleados.Core.Empleados> lstEmpleados;
-
-        Clientes.Core.ClientesHelper ch;
-        List<Clientes.Core.Clientes> lstClientes;
         #endregion
 
         #region VARIABLES PUBLICAS
@@ -43,8 +40,8 @@ namespace Nominas
         {
             dgvCatalogo.RowHeadersVisible = false;
 
-            cnx = new MySqlConnection();
-            cmd = new MySqlCommand();
+            cnx = new SqlConnection();
+            cmd = new SqlCommand();
             cnx.ConnectionString = cdn;
             cmd.Connection = cnx;
 
@@ -54,7 +51,6 @@ namespace Nominas
                 eh.Command = cmd;
 
                 Empleados.Core.Empleados em = new Empleados.Core.Empleados();
-                em.idplaza = GLOBALES.IDPLAZA;
                 em.idempresa = GLOBALES.IDEMPRESA;
 
                 try
@@ -77,35 +73,6 @@ namespace Nominas
                     MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
                 }
             }
-            else if (_catalogo == GLOBALES.CLIENTES)
-            {
-                ch = new Clientes.Core.ClientesHelper();
-                ch.Command = cmd;
-
-                Clientes.Core.Clientes clientes = new Clientes.Core.Clientes();
-                clientes.plaza = GLOBALES.IDPLAZA;
-
-                try
-                {
-                    cnx.Open();
-                    lstClientes = ch.obtenerClientes(clientes);
-                    cnx.Close();
-                    cnx.Dispose();
-
-                    var cliente = from c in lstClientes select new { Id = c.idcliente, Nombre = c.nombre };
-                    dgvCatalogo.DataSource = cliente.ToList();
-
-                    for (int i = 0; i < dgvCatalogo.Columns.Count; i++)
-                    {
-                        dgvCatalogo.AutoResizeColumn(i);
-                    }
-                }
-                catch (Exception error)
-                {
-                    MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
-                }
-            }
-            
         }
 
         private void toolCerrar_Click(object sender, EventArgs e)
@@ -143,17 +110,6 @@ namespace Nominas
                                        };
                         dgvCatalogo.DataSource = empleado.ToList();
                     }
-                    else if (_catalogo == GLOBALES.CLIENTES)
-                    {
-                        var cliente = from c in lstClientes
-                                       select new
-                                       {
-                                           Id = c.idcliente,
-                                           Nombre = c.nombre
-                                       };
-                        dgvCatalogo.DataSource = cliente.ToList();
-                    }
-                    
                 }
                 else
                 {
@@ -165,17 +121,6 @@ namespace Nominas
                                        {
                                            Id = b.idtrabajador,
                                            Nombre = b.nombrecompleto
-                                       };
-                        dgvCatalogo.DataSource = busqueda.ToList();
-                    }
-                    else if (_catalogo == GLOBALES.CLIENTES)
-                    {
-                        var busqueda = from b in lstClientes
-                                       where b.nombre.Contains(txtBuscar.Text.ToUpper())
-                                       select new
-                                       {
-                                           Id = b.idcliente,
-                                           Nombre = b.nombre
                                        };
                         dgvCatalogo.DataSource = busqueda.ToList();
                     }

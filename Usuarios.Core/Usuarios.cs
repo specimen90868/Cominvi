@@ -13,6 +13,7 @@ namespace Usuarios.Core
         public string nombre { get; set; }
         public string password { get; set; }
         public int activo { get; set; }
-        public int plaza { get; set; }
+        public DateTime fecharegistro { get; set; }
+        public int idperfil { get; set; }
     }
 }

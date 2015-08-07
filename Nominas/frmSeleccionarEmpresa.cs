@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
+using System.Data.SqlClient;
 using System.Configuration;
 
 namespace Nominas
@@ -37,8 +37,8 @@ namespace Nominas
         private void cargaGridEmpresa()
         {
             string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-            MySqlConnection cnx = new MySqlConnection();
-            MySqlCommand cmd = new MySqlCommand();
+            SqlConnection cnx = new SqlConnection();
+            SqlCommand cmd = new SqlCommand();
 
             cnx.ConnectionString = cdn;
             cmd.Connection = cnx;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
-using MySql.Data.MySqlClient;
+using System.Data.SqlClient;
 
 namespace Factores.Core
 {
@@ -49,7 +49,7 @@ namespace Factores.Core
 
         public object FactorDePago(Factores f)
         {
-            Command.CommandText = "select max(valor) from factores where anio <= @anio order by anio desc";
+            Command.CommandText = "select top 1 valor from factores where anio <= @anio order by anio desc";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("anio", f.anio);
             object dato = Select(Command);

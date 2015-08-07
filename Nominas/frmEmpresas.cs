@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
+using System.Data.SqlClient;
 using System.Configuration;
 using System.Text.RegularExpressions;
 
@@ -21,13 +21,14 @@ namespace Nominas
         }
 
         #region VARIABLES GLOBALES
-        MySqlConnection cnx;
-        MySqlCommand cmd;
+        SqlConnection cnx;
+        SqlCommand cmd;
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-        string rutaImagen;
         Empresas.Core.EmpresasHelper eh;
         Direccion.Core.DireccionesHelper dh;
         Imagen.Core.ImagenesHelper ih;
+        Bitmap bmp;
+        bool ImagenAsignada = false;
         #endregion
         
         #region DELEGADOS
@@ -43,16 +44,17 @@ namespace Nominas
 
         private void toolGuardarCerrar_Click(object sender, EventArgs e)
         {
-            guardar(0);
+            guardar(1);
         }
 
         private void toolGuardarNuevo_Click(object sender, EventArgs e)
         {
-            guardar(1);   
+            guardar(0);   
         }
 
         private void guardar(int tipoGuardar)
         {
+            int existe = 0;
             //SE VALIDA SI TODOS LOS TEXTBOX HAN SIDO LLENADOS.
             string control = GLOBALES.VALIDAR(this,typeof(TextBox));
             if (!control.Equals(""))
@@ -70,9 +72,9 @@ namespace Nominas
 
             int idempresa;
 
-            cnx = new MySqlConnection();
+            cnx = new SqlConnection();
             cnx.ConnectionString = cdn;
-            cmd = new MySqlCommand();
+            cmd = new SqlCommand();
             cmd.Connection = cnx;
             eh = new Empresas.Core.EmpresasHelper();
             eh.Command = cmd;
@@ -82,9 +84,8 @@ namespace Nominas
             em.rfc = txtRfc.Text;
             em.registro = txtRegistroPatronal.Text;
             em.digitoverificador = int.Parse(txtDigitoVerificador.Text);
-            em.sindicato = Convert.ToInt32(chkEsSindicato.Checked);
             em.representante = txtRepresentante.Text;
-            em.activo = 1;
+            em.estatus = 1;
 
             dh = new Direccion.Core.DireccionesHelper();
             dh.Command = cmd;
@@ -101,17 +102,41 @@ namespace Nominas
             d.tipodireccion = GLOBALES.dFISCAL;
             d.tipopersona = GLOBALES.pEMPRESA;
 
+            ih = new Imagen.Core.ImagenesHelper();
+            ih.Command = cmd;
+
+            Imagen.Core.Imagenes img = null;
+
+            try
+            {
+                if (ImagenAsignada == true)
+                {
+                    img = new Imagen.Core.Imagenes();
+                    img.imagen = GLOBALES.IMAGEN_BYTES(bmp);
+                    img.tipopersona = GLOBALES.pEMPRESA;
+                }
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error: " + error.Message, "Error");
+            }
+            
+
             switch (_tipoOperacion)
             {
                 case 0:
                     try
                     {
                         cnx.Open();
-                        MySqlCommand lastId = eh.insertaEmpresa(em);
-                        long Id = lastId.LastInsertedId;
+                        eh.insertaEmpresa(em);
                         idempresa = (int)eh.obtenerIdEmpresa(em);
                         d.idpersona = idempresa;
                         dh.insertaDireccion(d);
+                        if (ImagenAsignada == true)
+                        {
+                            img.idpersona = idempresa;
+                            ih.insertaImagen(img);
+                        }
                         cnx.Close();
                         cnx.Dispose();
                     }
@@ -126,9 +151,20 @@ namespace Nominas
                         em.idempresa = _idempresa;
                         d.iddireccion = _iddireccion;
                         d.idpersona = _idempresa;
+
                         cnx.Open();
                         eh.actualizaEmpresa(em);
                         dh.actualizaDireccion(d);
+                        if (ImagenAsignada == true)
+                        {
+                            img.idpersona = _idempresa;
+                            img.tipopersona = GLOBALES.pEMPRESA;
+                            existe = (int)ih.ExisteImagen(img);
+                            if (existe != 0)
+                                ih.actualizaImagen(img);
+                            else
+                                ih.insertaImagen(img);
+                        }
                         cnx.Close();
                         cnx.Dispose();
                     }
@@ -167,9 +203,9 @@ namespace Nominas
             /// _tipoOperacion CONSULTA = 1, EDICION = 2
             if (_tipoOperacion == GLOBALES.CONSULTAR || _tipoOperacion == GLOBALES.MODIFICAR)
             {
-                cnx = new MySqlConnection();
+                cnx = new SqlConnection();
                 cnx.ConnectionString = cdn;
-                cmd = new MySqlCommand();
+                cmd = new SqlCommand();
                 cmd.Connection = cnx;
                 eh = new Empresas.Core.EmpresasHelper();
                 eh.Command = cmd;
@@ -179,7 +215,7 @@ namespace Nominas
 
                 Direccion.Core.Direcciones d = new Direccion.Core.Direcciones();
                 d.idpersona = _idempresa;
-                d.tipopersona = 0; ///TIPO PERSONA 0 - Empresas
+                d.tipopersona = GLOBALES.pEMPRESA; ///TIPO PERSONA 0 - Empresas
                 List<Empresas.Core.Empresas> lstEmpresa;
                 List<Direccion.Core.Direcciones> lstDireccion;
 
@@ -198,7 +234,6 @@ namespace Nominas
                         txtRfc.Text = lstEmpresa[i].rfc;
                         txtRegistroPatronal.Text = lstEmpresa[i].registro;
                         txtDigitoVerificador.Text = lstEmpresa[i].digitoverificador.ToString();
-                        chkEsSindicato.Checked = Convert.ToBoolean(lstEmpresa[i].sindicato);
                     }
 
                     for (int i = 0; i < lstDireccion.Count; i++)
@@ -226,6 +261,7 @@ namespace Nominas
                     GLOBALES.INHABILITAR(this, typeof(TextBox));
                     GLOBALES.INHABILITAR(this, typeof(MaskedTextBox));
                     GLOBALES.INHABILITAR(this, typeof(CheckBox));
+                    btnAsignar.Enabled = false;
                 }
                 else
                     toolTitulo.Text = "Edición Empresa";
@@ -237,11 +273,6 @@ namespace Nominas
             this.Dispose();
         }
 
-        private void btnExaminar_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnAsignar_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
@@ -251,9 +282,17 @@ namespace Nominas
 
             if (DialogResult.OK == ofd.ShowDialog())
             {
-                rutaImagen = ofd.FileName;
-                lblRutaImagen.Text = rutaImagen;
+                bmp = new Bitmap(ofd.FileName);
+                ImagenAsignada = true;
             }
+        }
+
+        private void btnVer_Click(object sender, EventArgs e)
+        {
+            frmImagen i = new frmImagen();
+            i._idpersona = _idempresa;
+            i._tipopersona = GLOBALES.pEMPRESA;
+            i.Show();
         }
     }
 }

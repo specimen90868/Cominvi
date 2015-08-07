@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
-using MySql.Data.MySqlClient;
+using System.Data.SqlClient;
 
 namespace Salario.Core
 {
@@ -14,7 +14,7 @@ namespace Salario.Core
         {
             DataTable dtSalarios = new DataTable();
             List<Salarios> lstSalario = new List<Salarios>();
-            Command.CommandText = "select idsalario, periodo, valor from salariominimo";
+            Command.CommandText = "select idsalario, periodo, valor, zona zona from salariominimo";
             Command.Parameters.Clear();
             dtSalarios = SelectData(Command);
             for (int i = 0; i < dtSalarios.Rows.Count; i++)
@@ -23,6 +23,7 @@ namespace Salario.Core
                 s.idsalario = int.Parse(dtSalarios.Rows[i]["idsalario"].ToString());
                 s.periodo = DateTime.Parse(dtSalarios.Rows[i]["periodo"].ToString());
                 s.valor = decimal.Parse(dtSalarios.Rows[i]["valor"].ToString());
+                s.zona = dtSalarios.Rows[i]["zona"].ToString();
                 lstSalario.Add(s);
             }
             return lstSalario;
@@ -32,7 +33,7 @@ namespace Salario.Core
         {
             DataTable dtSalarios = new DataTable();
             List<Salarios> lstSalario = new List<Salarios>();
-            Command.CommandText = "select idsalario, periodo, valor from salariominimo where idsalario = @idsalario";
+            Command.CommandText = "select idsalario, periodo, valor, zona from salariominimo where idsalario = @idsalario";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idsalario", salario.idsalario);
             dtSalarios = SelectData(Command);
@@ -42,6 +43,7 @@ namespace Salario.Core
                 s.idsalario = int.Parse(dtSalarios.Rows[i]["idsalario"].ToString());
                 s.periodo = DateTime.Parse(dtSalarios.Rows[i]["periodo"].ToString());
                 s.valor = decimal.Parse(dtSalarios.Rows[i]["valor"].ToString());
+                s.zona = dtSalarios.Rows[i]["zona"].ToString();
                 lstSalario.Add(s);
             }
             return lstSalario;
@@ -49,20 +51,22 @@ namespace Salario.Core
 
         public int insertaSalario(Salarios s)
         {
-            Command.CommandText = "insert into salariominimo (periodo, valor) values (@periodo, @valor)";
+            Command.CommandText = "insert into salariominimo (periodo, valor, zona) values (@periodo, @valor, @zona)";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("periodo", s.periodo);
             Command.Parameters.AddWithValue("valor", s.valor);
+            Command.Parameters.AddWithValue("zona", s.zona);
             return Command.ExecuteNonQuery();
         }
 
         public int actualizaSalario(Salarios s)
         {
-            Command.CommandText = "update salariominimo set periodo = @periodo, valor = @valor where idsalario = @idsalario";
+            Command.CommandText = "update salariominimo set periodo = @periodo, valor = @valor, zona = @zona where idsalario = @idsalario";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idsalario", s.idsalario);
             Command.Parameters.AddWithValue("periodo", s.periodo);
             Command.Parameters.AddWithValue("valor", s.valor);
+            Command.Parameters.AddWithValue("zona", s.zona);
             return Command.ExecuteNonQuery();
         }
 

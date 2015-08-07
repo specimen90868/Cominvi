@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+﻿using System.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,8 +20,8 @@ namespace Nominas
         }
 
         #region VARIABLES GLOBALES
-        MySqlConnection cnx;
-        MySqlCommand cmd;
+        SqlConnection cnx;
+        SqlCommand cmd;
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
         List<Empleados.Core.Empleados> lstEmpleados;
         #endregion
@@ -29,15 +29,15 @@ namespace Nominas
         private void ListaEmpleados()
         {
             
-            cnx = new MySqlConnection(cdn);
-            cmd = new MySqlCommand();
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
             cmd.Connection = cnx;
             Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
             eh.Command = cmd;
 
             Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
             empleado.idempresa = GLOBALES.IDEMPRESA;
-            empleado.idplaza = GLOBALES.IDPLAZA;
+            empleado.estatus = GLOBALES.ACTIVO;
 
             try
             {
@@ -87,13 +87,9 @@ namespace Nominas
             int fila = 0;
             frmComplementos c = new frmComplementos();
             c.MdiParent = this.MdiParent;
-            
-            if (!edicion.Equals(GLOBALES.NUEVO))
-            {
-                fila = dgvComplementos.CurrentCell.RowIndex;
-                c._idEmpleado = int.Parse(dgvComplementos.Rows[fila].Cells[0].Value.ToString());
-                c._nombreEmpleado = dgvComplementos.Rows[fila].Cells[1].Value.ToString();
-            }
+            fila = dgvComplementos.CurrentCell.RowIndex;
+            c._idEmpleado = int.Parse(dgvComplementos.Rows[fila].Cells[0].Value.ToString());
+            c._nombreEmpleado = dgvComplementos.Rows[fila].Cells[1].Value.ToString();
             c._tipoOperacion = edicion;
             c.Show();
         }
@@ -108,9 +104,9 @@ namespace Nominas
         private void dgvComplementos_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             int fila = 0;
-            cnx = new MySqlConnection();
+            cnx = new SqlConnection();
             cnx.ConnectionString = cdn;
-            cmd = new MySqlCommand();
+            cmd = new SqlCommand();
             cmd.Connection = cnx;
 
             Complementos.Core.ComplementoHelper ch = new Complementos.Core.ComplementoHelper();

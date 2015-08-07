@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MySql.Data.MySqlClient;
+using System.Data.SqlClient;
 using System.Data;
 
 namespace Catalogos.Core
@@ -34,14 +34,14 @@ namespace Catalogos.Core
         {
             DataTable dtCatalogo = new DataTable();
             List<Catalogo> lstCatalogo = new List<Catalogo>();
-            Command.CommandText = "select valor, descripcion from catalogo where grupodescripcion = @grupodescripcion";
+            Command.CommandText = "select id, descripcion from catalogo where grupodescripcion = @grupodescripcion";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("grupodescripcion",c.grupodescripcion);
             dtCatalogo = SelectData(Command);
             for (int i = 0; i < dtCatalogo.Rows.Count; i++)
             {
                 Catalogo cat = new Catalogo();
-                cat.valor = dtCatalogo.Rows[i]["valor"].ToString();
+                cat.id = int.Parse(dtCatalogo.Rows[i]["id"].ToString());
                 cat.descripcion = dtCatalogo.Rows[i]["descripcion"].ToString();
                 lstCatalogo.Add(cat);
             }

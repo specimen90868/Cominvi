@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+﻿using System.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,16 +20,16 @@ namespace Nominas
         }
 
         #region VARIABLES GLOBALES
-        MySqlConnection cnx;
-        MySqlCommand cmd;
+        SqlConnection cnx;
+        SqlCommand cmd;
         List<Salario.Core.Salarios> lstSalarios;
         #endregion
 
         private void ListaSalario()
         {
             string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-            cnx = new MySqlConnection(cdn);
-            cmd = new MySqlCommand();
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
             cmd.Connection = cnx;
             Salario.Core.SalariosHelper sh = new Salario.Core.SalariosHelper();
             sh.Command = cmd;
@@ -130,8 +130,8 @@ namespace Nominas
                 string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
                 int fila = dgvSalario.CurrentCell.RowIndex;
                 int id = int.Parse(dgvSalario.Rows[fila].Cells[0].Value.ToString());
-                cnx = new MySqlConnection(cdn);
-                cmd = new MySqlCommand();
+                cnx = new SqlConnection(cdn);
+                cmd = new SqlCommand();
                 cmd.Connection = cnx;
                 Salario.Core.SalariosHelper sh = new Salario.Core.SalariosHelper();
                 sh.Command = cmd;

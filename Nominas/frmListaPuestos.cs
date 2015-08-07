@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
+using System.Data.SqlClient;
 using System.Configuration;
 
 namespace Nominas
@@ -20,24 +20,26 @@ namespace Nominas
         }
 
         #region VARIABLES GLOBALES
-        MySqlConnection cnx;
-        MySqlCommand cmd;
+        SqlConnection cnx;
+        SqlCommand cmd;
         List<Puestos.Core.Puestos> lstPuestos;
         #endregion
 
         private void ListaPuestos()
         {
             string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-            cnx = new MySqlConnection(cdn);
-            cmd = new MySqlCommand();
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
             cmd.Connection = cnx;
             Puestos.Core.PuestosHelper ph = new Puestos.Core.PuestosHelper();
             ph.Command = cmd;
+            Puestos.Core.Puestos puestos = new Puestos.Core.Puestos();
+            puestos.idempresa = GLOBALES.IDEMPRESA;
 
             try
             {
                 cnx.Open();
-                lstPuestos = ph.obtenerPuestos();
+                lstPuestos = ph.obtenerPuestos(puestos);
                 cnx.Close();
                 cnx.Dispose();
 
@@ -134,14 +136,14 @@ namespace Nominas
                 string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
                 int fila = dgvPuestos.CurrentCell.RowIndex;
                 int id = int.Parse(dgvPuestos.Rows[fila].Cells[0].Value.ToString());
-                cnx = new MySqlConnection(cdn);
-                cmd = new MySqlCommand();
+                cnx = new SqlConnection(cdn);
+                cmd = new SqlCommand();
                 cmd.Connection = cnx;
                 Puestos.Core.PuestosHelper ph = new Puestos.Core.PuestosHelper();
                 ph.Command = cmd;
                 Puestos.Core.Puestos puesto = new Puestos.Core.Puestos();
                 puesto.id = id;
-                puesto.estatus = 0;
+                
                 try
                 {
                     cnx.Open();

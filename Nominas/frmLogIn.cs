@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Configuration;
-using MySql.Data.MySqlClient;
+using System.Data.SqlClient;
 
 namespace Nominas
 {
@@ -22,8 +22,8 @@ namespace Nominas
         private void btnAceptar_Click(object sender, EventArgs e)
         {
             string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-            MySqlConnection cnx = new MySqlConnection();
-            MySqlCommand cmd = new MySqlCommand();
+            SqlConnection cnx = new SqlConnection();
+            SqlCommand cmd = new SqlCommand();
 
             cnx.ConnectionString = cdn;
             cmd.Connection = cnx;
@@ -50,7 +50,6 @@ namespace Nominas
                         if (GLOBALES.SESION == 0)
                         {
                             GLOBALES.IDUSUARIO = int.Parse(usr.Rows[0]["idusuario"].ToString());
-                            GLOBALES.IDPLAZA = int.Parse(usr.Rows[0]["plaza"].ToString());
                             GLOBALES.IDPERFIL = int.Parse(usr.Rows[0]["idperfil"].ToString());
                             GLOBALES.SESION = 1;
                             frmPrincipal p = new frmPrincipal();
@@ -60,7 +59,6 @@ namespace Nominas
                         else
                         {
                             GLOBALES.IDUSUARIO = int.Parse(usr.Rows[0]["idusuario"].ToString());
-                            GLOBALES.IDPLAZA = int.Parse(usr.Rows[0]["plaza"].ToString());
                             GLOBALES.IDPERFIL = int.Parse(usr.Rows[0]["idperfil"].ToString());
                             this.Close();
                         }

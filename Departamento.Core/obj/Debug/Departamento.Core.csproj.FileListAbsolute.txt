@@ -12,3 +12,10 @@ C:\Users\gamer\Documents\GitHub\Nomina\Departamento.Core\bin\Debug\Data.Obj.pdb
 C:\Users\gamer\Documents\GitHub\Nomina\Departamento.Core\obj\Debug\Departamento.Core.csprojResolveAssemblyReference.cache
 C:\Users\gamer\Documents\GitHub\Nomina\Departamento.Core\obj\Debug\Departamento.Core.dll
 C:\Users\gamer\Documents\GitHub\Nomina\Departamento.Core\obj\Debug\Departamento.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Departamento.Core\bin\Debug\Departamento.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Departamento.Core\bin\Debug\Departamento.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Departamento.Core\bin\Debug\Data.Obj.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Departamento.Core\bin\Debug\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Departamento.Core\obj\Debug\Departamento.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Departamento.Core\obj\Debug\Departamento.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Departamento.Core\obj\Debug\Departamento.Core.csprojResolveAssemblyReference.cache

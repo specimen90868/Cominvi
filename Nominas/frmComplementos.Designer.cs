@@ -56,26 +56,18 @@
             this.cmbContrato = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.cmbJornada = new System.Windows.Forms.ComboBox();
-            this.cmbDepartamento = new System.Windows.Forms.ComboBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.cmbPuesto = new System.Windows.Forms.ComboBox();
-            this.label12 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.cmbEstadoCivil = new System.Windows.Forms.ComboBox();
             this.label15 = new System.Windows.Forms.Label();
             this.cmbSexo = new System.Windows.Forms.ComboBox();
             this.label17 = new System.Windows.Forms.Label();
             this.cmbEscolaridad = new System.Windows.Forms.ComboBox();
-            this.label18 = new System.Windows.Forms.Label();
-            this.txtHorario = new System.Windows.Forms.TextBox();
-            this.label19 = new System.Windows.Forms.Label();
-            this.txtNoControl = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
             this.txtClinica = new System.Windows.Forms.TextBox();
             this.txtNacionalidad = new System.Windows.Forms.TextBox();
             this.label21 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
-            this.txtFunciones = new System.Windows.Forms.TextBox();
+            this.txtObservaciones = new System.Windows.Forms.TextBox();
             this.lblEmpleado = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.toolTitulo.SuspendLayout();
@@ -89,7 +81,7 @@
             this.toolVentana});
             this.toolTitulo.Location = new System.Drawing.Point(0, 0);
             this.toolTitulo.Name = "toolTitulo";
-            this.toolTitulo.Size = new System.Drawing.Size(628, 27);
+            this.toolTitulo.Size = new System.Drawing.Size(602, 27);
             this.toolTitulo.TabIndex = 2;
             this.toolTitulo.Text = "toolAcciones";
             // 
@@ -107,7 +99,7 @@
             this.toolCerrar});
             this.toolAcciones.Location = new System.Drawing.Point(0, 27);
             this.toolAcciones.Name = "toolAcciones";
-            this.toolAcciones.Size = new System.Drawing.Size(628, 25);
+            this.toolAcciones.Size = new System.Drawing.Size(602, 25);
             this.toolAcciones.TabIndex = 3;
             this.toolAcciones.Text = "toolEmpresa";
             // 
@@ -151,6 +143,7 @@
             // 
             // txtPais
             // 
+            this.txtPais.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtPais.Location = new System.Drawing.Point(137, 306);
             this.txtPais.Name = "txtPais";
             this.txtPais.Size = new System.Drawing.Size(130, 20);
@@ -301,7 +294,7 @@
             this.cmbContrato.Location = new System.Drawing.Point(137, 396);
             this.cmbContrato.Name = "cmbContrato";
             this.cmbContrato.Size = new System.Drawing.Size(130, 21);
-            this.cmbContrato.TabIndex = 8;
+            this.cmbContrato.TabIndex = 9;
             // 
             // label9
             // 
@@ -318,46 +311,12 @@
             this.cmbJornada.Location = new System.Drawing.Point(137, 423);
             this.cmbJornada.Name = "cmbJornada";
             this.cmbJornada.Size = new System.Drawing.Size(130, 21);
-            this.cmbJornada.TabIndex = 9;
-            // 
-            // cmbDepartamento
-            // 
-            this.cmbDepartamento.FormattingEnabled = true;
-            this.cmbDepartamento.Location = new System.Drawing.Point(137, 450);
-            this.cmbDepartamento.Name = "cmbDepartamento";
-            this.cmbDepartamento.Size = new System.Drawing.Size(130, 21);
-            this.cmbDepartamento.TabIndex = 10;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(53, 453);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(77, 13);
-            this.label11.TabIndex = 232;
-            this.label11.Text = "Departamento:";
-            // 
-            // cmbPuesto
-            // 
-            this.cmbPuesto.FormattingEnabled = true;
-            this.cmbPuesto.Location = new System.Drawing.Point(137, 478);
-            this.cmbPuesto.Name = "cmbPuesto";
-            this.cmbPuesto.Size = new System.Drawing.Size(130, 21);
-            this.cmbPuesto.TabIndex = 11;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(87, 481);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(43, 13);
-            this.label12.TabIndex = 234;
-            this.label12.Text = "Puesto:";
+            this.cmbJornada.TabIndex = 10;
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(66, 509);
+            this.label14.Location = new System.Drawing.Point(66, 453);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(64, 13);
             this.label14.TabIndex = 235;
@@ -366,15 +325,15 @@
             // cmbEstadoCivil
             // 
             this.cmbEstadoCivil.FormattingEnabled = true;
-            this.cmbEstadoCivil.Location = new System.Drawing.Point(137, 506);
+            this.cmbEstadoCivil.Location = new System.Drawing.Point(137, 450);
             this.cmbEstadoCivil.Name = "cmbEstadoCivil";
             this.cmbEstadoCivil.Size = new System.Drawing.Size(130, 21);
-            this.cmbEstadoCivil.TabIndex = 12;
+            this.cmbEstadoCivil.TabIndex = 11;
             // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(96, 537);
+            this.label15.Location = new System.Drawing.Point(96, 480);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(34, 13);
             this.label15.TabIndex = 237;
@@ -383,15 +342,15 @@
             // cmbSexo
             // 
             this.cmbSexo.FormattingEnabled = true;
-            this.cmbSexo.Location = new System.Drawing.Point(137, 534);
+            this.cmbSexo.Location = new System.Drawing.Point(137, 477);
             this.cmbSexo.Name = "cmbSexo";
             this.cmbSexo.Size = new System.Drawing.Size(130, 21);
-            this.cmbSexo.TabIndex = 13;
+            this.cmbSexo.TabIndex = 12;
             // 
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(286, 537);
+            this.label17.Location = new System.Drawing.Point(66, 507);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(65, 13);
             this.label17.TabIndex = 239;
@@ -400,50 +359,15 @@
             // cmbEscolaridad
             // 
             this.cmbEscolaridad.FormattingEnabled = true;
-            this.cmbEscolaridad.Location = new System.Drawing.Point(357, 534);
+            this.cmbEscolaridad.Location = new System.Drawing.Point(137, 504);
             this.cmbEscolaridad.Name = "cmbEscolaridad";
             this.cmbEscolaridad.Size = new System.Drawing.Size(130, 21);
-            this.cmbEscolaridad.TabIndex = 18;
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(307, 399);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(44, 13);
-            this.label18.TabIndex = 241;
-            this.label18.Text = "Horario:";
-            // 
-            // txtHorario
-            // 
-            this.txtHorario.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtHorario.Location = new System.Drawing.Point(357, 396);
-            this.txtHorario.Multiline = true;
-            this.txtHorario.Name = "txtHorario";
-            this.txtHorario.Size = new System.Drawing.Size(225, 48);
-            this.txtHorario.TabIndex = 14;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(288, 453);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(63, 13);
-            this.label19.TabIndex = 243;
-            this.label19.Text = "No. Control:";
-            // 
-            // txtNoControl
-            // 
-            this.txtNoControl.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtNoControl.Location = new System.Drawing.Point(357, 450);
-            this.txtNoControl.Name = "txtNoControl";
-            this.txtNoControl.Size = new System.Drawing.Size(130, 20);
-            this.txtNoControl.TabIndex = 15;
+            this.cmbEscolaridad.TabIndex = 13;
             // 
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(310, 481);
+            this.label20.Location = new System.Drawing.Point(302, 399);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(41, 13);
             this.label20.TabIndex = 245;
@@ -452,23 +376,23 @@
             // txtClinica
             // 
             this.txtClinica.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtClinica.Location = new System.Drawing.Point(357, 478);
+            this.txtClinica.Location = new System.Drawing.Point(351, 396);
             this.txtClinica.Name = "txtClinica";
             this.txtClinica.Size = new System.Drawing.Size(42, 20);
-            this.txtClinica.TabIndex = 16;
+            this.txtClinica.TabIndex = 14;
             // 
             // txtNacionalidad
             // 
             this.txtNacionalidad.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtNacionalidad.Location = new System.Drawing.Point(357, 506);
+            this.txtNacionalidad.Location = new System.Drawing.Point(351, 422);
             this.txtNacionalidad.Name = "txtNacionalidad";
             this.txtNacionalidad.Size = new System.Drawing.Size(130, 20);
-            this.txtNacionalidad.TabIndex = 17;
+            this.txtNacionalidad.TabIndex = 15;
             // 
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(279, 509);
+            this.label21.Location = new System.Drawing.Point(273, 426);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(72, 13);
             this.label21.TabIndex = 248;
@@ -477,20 +401,20 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(71, 564);
+            this.label22.Location = new System.Drawing.Point(49, 534);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(59, 13);
+            this.label22.Size = new System.Drawing.Size(81, 13);
             this.label22.TabIndex = 249;
-            this.label22.Text = "Funciones:";
+            this.label22.Text = "Observaciones:";
             // 
-            // txtFunciones
+            // txtObservaciones
             // 
-            this.txtFunciones.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtFunciones.Location = new System.Drawing.Point(136, 561);
-            this.txtFunciones.Multiline = true;
-            this.txtFunciones.Name = "txtFunciones";
-            this.txtFunciones.Size = new System.Drawing.Size(445, 134);
-            this.txtFunciones.TabIndex = 19;
+            this.txtObservaciones.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtObservaciones.Location = new System.Drawing.Point(136, 531);
+            this.txtObservaciones.Multiline = true;
+            this.txtObservaciones.Name = "txtObservaciones";
+            this.txtObservaciones.Size = new System.Drawing.Size(445, 134);
+            this.txtObservaciones.TabIndex = 16;
             // 
             // lblEmpleado
             // 
@@ -516,29 +440,21 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(628, 754);
+            this.ClientSize = new System.Drawing.Size(602, 700);
             this.Controls.Add(this.lblEmpleado);
             this.Controls.Add(this.label23);
-            this.Controls.Add(this.txtFunciones);
+            this.Controls.Add(this.txtObservaciones);
             this.Controls.Add(this.label22);
             this.Controls.Add(this.label21);
             this.Controls.Add(this.txtNacionalidad);
             this.Controls.Add(this.txtClinica);
             this.Controls.Add(this.label20);
-            this.Controls.Add(this.txtNoControl);
-            this.Controls.Add(this.label19);
-            this.Controls.Add(this.txtHorario);
-            this.Controls.Add(this.label18);
             this.Controls.Add(this.cmbEscolaridad);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.cmbSexo);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.cmbEstadoCivil);
             this.Controls.Add(this.label14);
-            this.Controls.Add(this.label12);
-            this.Controls.Add(this.cmbPuesto);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.cmbDepartamento);
             this.Controls.Add(this.cmbJornada);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.cmbContrato);
@@ -604,26 +520,18 @@
         private System.Windows.Forms.ComboBox cmbContrato;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ComboBox cmbJornada;
-        private System.Windows.Forms.ComboBox cmbDepartamento;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.ComboBox cmbPuesto;
-        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.ComboBox cmbEstadoCivil;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.ComboBox cmbSexo;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.ComboBox cmbEscolaridad;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.TextBox txtHorario;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.TextBox txtNoControl;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.TextBox txtClinica;
         private System.Windows.Forms.TextBox txtNacionalidad;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.TextBox txtFunciones;
+        private System.Windows.Forms.TextBox txtObservaciones;
         private System.Windows.Forms.Label lblEmpleado;
         private System.Windows.Forms.Label label23;
     }

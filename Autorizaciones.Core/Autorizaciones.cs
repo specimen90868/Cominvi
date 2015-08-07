@@ -25,10 +25,10 @@ namespace Autorizaciones.Core
     public class Ediciones
     {
         public string nombre { get; set; }
-        public int crear { get; set; }
-        public int consulta { get; set; }
-        public int modificar { get; set; }
-        public int baja { get; set; }
+        public bool crear { get; set; }
+        public bool consulta { get; set; }
+        public bool modificar { get; set; }
+        public bool baja { get; set; }
     }
 
     public class Autorizacion

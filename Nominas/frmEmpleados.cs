@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+﻿using System.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,12 +21,21 @@ namespace Nominas
         }
 
         #region VARIABLES GLOBALES
-        MySqlConnection cnx;
-        MySqlCommand cmd;
+        SqlConnection cnx;
+        SqlCommand cmd;
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
         Empleados.Core.EmpleadosHelper eh;
+        Departamento.Core.DeptoHelper dh;
+        Puestos.Core.PuestosHelper ph;
+        Estados.Core.EstadosHelper edoh;
         Imagen.Core.ImagenesHelper ih;
-        //byte[] fotografia;
+        Catalogos.Core.CatalogosHelper cath;
+        Periodos.Core.PeriodosHelper pdh;
+        Historial.Core.HistorialHelper hh;
+        string sexo;
+        string estado;
+        Bitmap bmp;
+        bool ImagenAsignada = false;
         #endregion
 
         #region DELEGADOS
@@ -41,37 +50,48 @@ namespace Nominas
 
         private void CargaComboBox()
         {
-            cnx = new MySqlConnection();
+            cnx = new SqlConnection();
             cnx.ConnectionString = cdn;
-            cmd = new MySqlCommand();
+            cmd = new SqlCommand();
             cmd.Connection = cnx;
 
-            Clientes.Core.ClientesHelper ch = new Clientes.Core.ClientesHelper();
-            Catalogos.Core.CatalogosHelper cath = new Catalogos.Core.CatalogosHelper();
-            ch.Command = cmd;
+            cath = new Catalogos.Core.CatalogosHelper();
             cath.Command = cmd;
-
-            Clientes.Core.Clientes cli = new Clientes.Core.Clientes();
-            cli.plaza = GLOBALES.IDPLAZA;
-            Catalogos.Core.Catalogo lf = new Catalogos.Core.Catalogo();
-            lf.grupodescripcion = "LOCALFORANEO";
-            Catalogos.Core.Catalogo sua = new Catalogos.Core.Catalogo();
-            sua.grupodescripcion = "SUA";
             Catalogos.Core.Catalogo ts = new Catalogos.Core.Catalogo();
             ts.grupodescripcion = "SALARIO";
 
-            List<Clientes.Core.Clientes> lstClientes = new List<Clientes.Core.Clientes>();
-            List<Catalogos.Core.Catalogo> lstLocalForaneo = new List<Catalogos.Core.Catalogo>();
-            List<Catalogos.Core.Catalogo> lstSua = new List<Catalogos.Core.Catalogo>();
+            dh = new Departamento.Core.DeptoHelper();
+            dh.Command = cmd;
+            Departamento.Core.Depto depto = new Departamento.Core.Depto();
+            depto.idempresa = GLOBALES.IDEMPRESA;
+
+            ph = new Puestos.Core.PuestosHelper();
+            ph.Command = cmd;
+            Puestos.Core.Puestos puesto = new Puestos.Core.Puestos();
+            puesto.idempresa = GLOBALES.IDEMPRESA;
+
+            edoh = new Estados.Core.EstadosHelper();
+            edoh.Command = cmd;
+
+            pdh = new Periodos.Core.PeriodosHelper();
+            pdh.Command = cmd;
+            Periodos.Core.Periodos periodo = new Periodos.Core.Periodos();
+            periodo.idempresa = GLOBALES.IDEMPRESA;
+
             List<Catalogos.Core.Catalogo> lstTipoSalario = new List<Catalogos.Core.Catalogo>();
+            List<Departamento.Core.Depto> lstDepto = new List<Departamento.Core.Depto>();
+            List<Puestos.Core.Puestos> lstPuesto = new List<Puestos.Core.Puestos>();
+            List<Estados.Core.Estados> lstEstados = new List<Estados.Core.Estados>();
+            List<Periodos.Core.Periodos> lstPeriodos = new List<Periodos.Core.Periodos>();
 
             try
             {
                 cnx.Open();
-                lstClientes = ch.obtenerClientes(cli);
-                lstLocalForaneo = cath.obtenerGrupo(lf);
-                lstSua = cath.obtenerGrupo(sua);
                 lstTipoSalario = cath.obtenerGrupo(ts);
+                lstDepto = dh.obtenerDepartamentos(depto);
+                lstPuesto = ph.obtenerPuestos(puesto);
+                lstEstados = edoh.obtenerEstados();
+                lstPeriodos = pdh.obtenerPeriodos(periodo);
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -80,21 +100,26 @@ namespace Nominas
                 MessageBox.Show("Error: \r\n \r\n " + error.Message,"Error");
                 this.Dispose();
             }
-            cmbCliente.DataSource = lstClientes.ToList();
-            cmbCliente.DisplayMember = "nombre";
-            cmbCliente.ValueMember = "idcliente";
-
-            cmbLocalForaneo.DataSource = lstLocalForaneo.ToList();
-            cmbLocalForaneo.DisplayMember = "descripcion";
-            cmbLocalForaneo.ValueMember = "valor";
-
-            cmbSua.DataSource = lstSua.ToList();
-            cmbSua.DisplayMember = "descripcion";
-            cmbSua.ValueMember = "valor";
 
             cmbTipoSalario.DataSource = lstTipoSalario.ToList();
             cmbTipoSalario.DisplayMember = "descripcion";
-            cmbTipoSalario.ValueMember = "valor";
+            cmbTipoSalario.ValueMember = "id";
+
+            cmbDepartamento.DataSource = lstDepto.ToList();
+            cmbDepartamento.DisplayMember = "descripcion";
+            cmbDepartamento.ValueMember = "id";
+
+            cmbPuesto.DataSource = lstPuesto.ToList();
+            cmbPuesto.DisplayMember = "descripcion";
+            cmbPuesto.ValueMember = "id";
+
+            cmbEstado.DataSource = lstEstados.ToList();
+            cmbEstado.DisplayMember = "nombre";
+            cmbEstado.ValueMember = "idestado";
+
+            cmbPeriodo.DataSource = lstPeriodos.ToList();
+            cmbPeriodo.DisplayMember = "pago";
+            cmbPeriodo.ValueMember = "idperiodo";
         }
 
         private void frmEmpleados_Load(object sender, EventArgs e)
@@ -103,9 +128,9 @@ namespace Nominas
             /// _tipoOperacion CONSULTA = 1, EDICION = 2
             if (_tipoOperacion == GLOBALES.CONSULTAR || _tipoOperacion == GLOBALES.MODIFICAR)
             {
-                cnx = new MySqlConnection();
+                cnx = new SqlConnection();
                 cnx.ConnectionString = cdn;
-                cmd = new MySqlCommand();
+                cmd = new SqlCommand();
                 cmd.Connection = cnx;
                 eh = new Empleados.Core.EmpleadosHelper();
                 eh.Command = cmd;
@@ -127,31 +152,26 @@ namespace Nominas
                         txtNombre.Text = lstEmpleado[i].nombres;
                         txtApPaterno.Text = lstEmpleado[i].paterno;
                         txtApMaterno.Text = lstEmpleado[i].materno;
+                        txtNoEmpleado.Text = lstEmpleado[i].noempleado;
+                        dtpFechaIngreso.Value = DateTime.Parse(lstEmpleado[i].fechaingreso.ToString());
+                        dtpFechaAntiguedad.Value = DateTime.Parse(lstEmpleado[i].fechaantiguedad.ToString());
                         dtpFechaNacimiento.Value = DateTime.Parse(lstEmpleado[i].fechanacimiento.ToString());
+                        txtAntiguedad.Text = lstEmpleado[i].antiguedad.ToString();
                         txtEdad.Text = lstEmpleado[i].edad.ToString();
-                        dtpFechaIngreso.Value = lstEmpleado[i].fechaingreso;
-                        cmbLocalForaneo.SelectedValue = lstEmpleado[i].localforaneo;
-                        cmbSua.SelectedValue = lstEmpleado[i].sua;
+                        txtAntiguedadMod.Text = lstEmpleado[i].antiguedadmod.ToString();
                         txtRFC.Text = lstEmpleado[i].rfc;
                         txtCURP.Text = lstEmpleado[i].curp;
                         txtNSS.Text = lstEmpleado[i].nss;
                         txtDigito.Text = lstEmpleado[i].digitoverificador.ToString();
 
-                        lblCliente.Visible = false;
-                        lblPeriodo.Visible = false;
-                        cmbCliente.Visible = false;
-                        cmbPeriodo.Visible = false;
+                        cmbDepartamento.SelectedValue = int.Parse(lstEmpleado[i].iddepartamento.ToString());
+                        cmbPuesto.SelectedValue = int.Parse(lstEmpleado[i].idpuesto.ToString());
+                        cmbPeriodo.SelectedValue = int.Parse(lstEmpleado[i].idperiodo.ToString());
+                        cmbTipoSalario.SelectedValue = int.Parse(lstEmpleado[i].tiposalario.ToString());
 
-                        lblSalario.Visible = false;
-                        lblTipoSalario.Visible = false;
-                        lblSueldo.Visible = false;
-                        lblSD.Visible = false;
-                        lblSDI.Visible = false;
-                        cmbTipoSalario.Visible = false;
-                        txtSueldo.Visible = false;
-                        txtSD.Visible = false;
-                        txtSDI.Visible = false;
-                        btnCalcular.Visible = false;
+                        txtSueldo.Text = lstEmpleado[i].sueldo.ToString("F6");
+                        txtSD.Text = lstEmpleado[i].sd.ToString("F6");
+                        txtSDI.Text = lstEmpleado[i].sdi.ToString("F6");
                     }
                 }
                 catch (Exception error)
@@ -167,43 +187,20 @@ namespace Nominas
                     GLOBALES.INHABILITAR(this, typeof(Button));
                     GLOBALES.INHABILITAR(this, typeof(DateTimePicker));
                     GLOBALES.INHABILITAR(this, typeof(ComboBox));
+                    GLOBALES.INHABILITAR(this, typeof(RadioButton));
+                    toolGuardarCerrar.Enabled = false;
+                    toolGuardarNuevo.Enabled = false;
                 }
                 else
                     toolTitulo.Text = "Edición Empleado";
             }
+            else
+                toolHistorial.Enabled = false;
         }
 
-        private void cmbCliente_SelectionChangeCommitted(object sender, EventArgs e)
+        private void dtpFechaAntiguedad_Leave(object sender, EventArgs e)
         {
-            cnx = new MySqlConnection();
-            cnx.ConnectionString = cdn;
-            cmd = new MySqlCommand();
-            cmd.Connection = cnx;
-
-            Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
-            ph.Command = cmd;
-
-            Periodos.Core.Periodos p = new Periodos.Core.Periodos();
-            p.idcliente = int.Parse(cmbCliente.SelectedValue.ToString());
-
-            List<Periodos.Core.Periodos> lstPeriodo = new List<Periodos.Core.Periodos>();
-
-            try
-            {
-                cnx.Open();
-                lstPeriodo = ph.obtenerPeriodoCliente(p);
-                cnx.Close();
-                cnx.Dispose();
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
-                this.Dispose();
-            }
-
-            cmbPeriodo.DataSource = lstPeriodo.ToList();
-            cmbPeriodo.DisplayMember = "pago";
-            cmbPeriodo.ValueMember = "idperiodo";
+            txtAntiguedadMod.Text = ObtieneEdad(dtpFechaAntiguedad.Value).ToString();
         }
 
         private void dtpFechaNacimiento_Leave(object sender, EventArgs e)
@@ -215,16 +212,7 @@ namespace Nominas
             string registro = rfc.RFC13Pocisiones(txtApPaterno.Text, txtApMaterno.Text, txtNombre.Text, dtpFechaNacimiento.Value.ToString("yy/MM/dd"));
             txtRFC.Text = registro.Substring(0, 4) + registro.Substring(5, 9);
 
-            DateTime fechaActual = DateTime.Now;
-            DateTime fechaNacimiento = dtpFechaNacimiento.Value;
-            double anios = (fechaActual - fechaNacimiento).TotalDays / 365;
-            int aniosTruncado = (int)Math.Truncate(anios);
-            if (fechaActual.Month < fechaNacimiento.Month)
-                aniosTruncado -= 1;
-            else if (fechaActual.Day < fechaNacimiento.Day)
-                    aniosTruncado -= 1;
-                    
-            txtEdad.Text = aniosTruncado.ToString();
+            txtEdad.Text = ObtieneEdad(dtpFechaNacimiento.Value).ToString();
         }
 
         private void cmbPeriodo_SelectedIndexChanged(object sender, EventArgs e)
@@ -239,9 +227,9 @@ namespace Nominas
             {
                 int DiasDePago = 0;
                 double FactorDePago = 0;
-                cnx = new MySqlConnection();
+                cnx = new SqlConnection();
                 cnx.ConnectionString = cdn;
-                cmd = new MySqlCommand();
+                cmd = new SqlCommand();
                 cmd.Connection = cnx;
 
                 Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
@@ -253,7 +241,7 @@ namespace Nominas
                 fh.Command = cmd;
 
                 p.idperiodo = int.Parse(cmbPeriodo.SelectedValue.ToString());
-                f.anio = 0;
+                f.anio = int.Parse(txtAntiguedadMod.Text);
 
                 try
                 {
@@ -263,8 +251,8 @@ namespace Nominas
                     cnx.Close();
                     cnx.Dispose();
 
-                    txtSD.Text = (double.Parse(txtSueldo.Text) / DiasDePago).ToString("F4");
-                    txtSDI.Text = (double.Parse(txtSD.Text) * FactorDePago).ToString("F4");
+                    txtSD.Text = (double.Parse(txtSueldo.Text) / DiasDePago).ToString("F6");
+                    txtSDI.Text = (double.Parse(txtSD.Text) * FactorDePago).ToString("F6");
                 }
                 catch (Exception error)
                 {
@@ -291,6 +279,7 @@ namespace Nominas
 
         private void guardar(int tipoGuardar)
         {
+            int existe = 0;
             //SE VALIDA SI TODOS LOS CAMPOS HAN SIDO LLENADOS.
             string control = GLOBALES.VALIDAR(this, typeof(TextBox));
             if (!control.Equals(""))
@@ -306,49 +295,91 @@ namespace Nominas
                 return;
             }
 
-            cnx = new MySqlConnection();
+            int idtrabajador;
+
+            cnx = new SqlConnection();
             cnx.ConnectionString = cdn;
-            cmd = new MySqlCommand();
+            cmd = new SqlCommand();
             cmd.Connection = cnx;
             eh = new Empleados.Core.EmpleadosHelper();
             eh.Command = cmd;
 
             Empleados.Core.Empleados em = new Empleados.Core.Empleados();
             em.nombres = txtNombre.Text;
-            em.paterno = txtApMaterno.Text;
+            em.paterno = txtApPaterno.Text;
             em.materno = txtApMaterno.Text;
+            em.noempleado = txtNoEmpleado.Text;
             em.nombrecompleto = txtApPaterno.Text + (string.IsNullOrEmpty(txtApMaterno.Text) ? "" : " " + txtApMaterno.Text) + " " + txtNombre.Text;
+            em.fechaingreso = dtpFechaIngreso.Value;
+            em.antiguedad = int.Parse(txtAntiguedad.Text);
+            em.fechaantiguedad = dtpFechaAntiguedad.Value;
             em.fechanacimiento = dtpFechaNacimiento.Value;
+            em.antiguedadmod = int.Parse(txtAntiguedadMod.Text);
             em.edad = int.Parse(txtEdad.Text);
             em.idempresa = GLOBALES.IDEMPRESA;
-            em.fechaingreso = dtpFechaIngreso.Value;
-            em.localforaneo = cmbLocalForaneo.SelectedValue.ToString();
-            em.sua = cmbSua.SelectedValue.ToString();
             em.rfc = txtRFC.Text;
             em.curp = txtCURP.Text;
             em.nss = txtNSS.Text;
             em.digitoverificador = int.Parse(txtDigito.Text);
+
+            em.iddepartamento = int.Parse(cmbDepartamento.SelectedValue.ToString());
+            em.idpuesto = int.Parse(cmbPuesto.SelectedValue.ToString());
+            em.idperiodo = int.Parse(cmbPeriodo.SelectedValue.ToString());
+            em.tiposalario = int.Parse(cmbTipoSalario.SelectedValue.ToString());
+
+            em.sdi = double.Parse(txtSDI.Text);
+            em.sd = double.Parse(txtSD.Text);
+            em.sueldo = double.Parse(txtSueldo.Text);
+            em.idse = 0;
+
+            hh = new Historial.Core.HistorialHelper();
+            hh.Command = cmd;
+            Historial.Core.Historial h = new Historial.Core.Historial();
+            h.tipomovimiento = GLOBALES.mALTA;
+            h.valor = double.Parse(txtSDI.Text);
+            h.fecha_imss = dtpFechaIngreso.Value;
+            h.fecha_sistema = DateTime.Now;
+            h.motivobaja = 0;
+
+            ih = new Imagen.Core.ImagenesHelper();
+            ih.Command = cmd;
+
+            Imagen.Core.Imagenes img = null;
+
+            try
+            {
+                if (ImagenAsignada == true)
+                {
+                    img = new Imagen.Core.Imagenes();
+                    img.imagen = GLOBALES.IMAGEN_BYTES(bmp);
+                    img.tipopersona = GLOBALES.pEMPLEADO;
+                }
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error: " + error.Message, "Error");
+            }
 
             switch (_tipoOperacion)
             {
                 case 0:
                     try
                     {
-                        em.antiguedad = 0;
-                        em.idcliente = int.Parse(cmbCliente.SelectedValue.ToString());
-                        em.idperiodo = int.Parse(cmbPeriodo.SelectedValue.ToString());
-                        em.tiposalario = cmbTipoSalario.SelectedValue.ToString();
-                        em.sdi = decimal.Parse(txtSDI.Text);
-                        em.sd = decimal.Parse(txtSD.Text);
-                        em.sueldo = decimal.Parse(txtSueldo.Text);
-                        em.idinfonavit = 0;
-                        em.estatus = 0;
-                        em.idse = 0;
-                        em.modsalario = 0;
-                        em.idplaza = GLOBALES.IDPLAZA;
+                        em.estatus = GLOBALES.ACTIVO;
+                        em.idusuario = GLOBALES.IDUSUARIO;
 
                         cnx.Open();
                         eh.insertaEmpleado(em);
+                        idtrabajador = (int)eh.obtenerIdTrabajador(em);
+                        h.idtrabajador = idtrabajador;
+                        h.idempresa = GLOBALES.IDEMPRESA;
+                        hh.insertarHistorial(h);
+                        if (ImagenAsignada == true)
+                        {
+                            img.idpersona = idtrabajador;
+                            ih.insertaImagen(img);
+                        }
+
                         cnx.Close();
                         cnx.Dispose();
                     }
@@ -360,9 +391,21 @@ namespace Nominas
                 case 2:
                     try
                     {
-                        em.idempresa = _idempleado;
+                        em.idtrabajador = _idempleado;
                         cnx.Open();
                         eh.actualizaEmpleado(em);
+
+                        if (ImagenAsignada == true)
+                        {
+                            img.idpersona = _idempleado;
+                            img.tipopersona = GLOBALES.pEMPLEADO;
+                            existe = (int)ih.ExisteImagen(img);
+                            if (existe != 0)
+                                ih.actualizaImagen(img);
+                            else
+                                ih.insertaImagen(img);
+                        }
+
                         cnx.Close();
                         cnx.Dispose();
                     }
@@ -388,39 +431,149 @@ namespace Nominas
             }
         }
 
-        private byte[] ImagenByte(Image imagen)
+        private void dtpFechaIngreso_Leave(object sender, EventArgs e)
         {
-            MemoryStream ms = new MemoryStream();
-            imagen.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-            return ms.ToArray();
+            dtpFechaAntiguedad.Value = dtpFechaIngreso.Value;
+            txtAntiguedad.Text = ObtieneEdad(dtpFechaIngreso.Value).ToString();
         }
 
-        private Image ByteImage(byte[] byteArray)
+        private string ObtieneSexo()
         {
-            MemoryStream ms = new MemoryStream(byteArray);
-            Image img = Image.FromStream(ms);
-            return img;
+            if (rbtnHombre.Checked)
+            {
+                sexo = "H";
+            }
+            else if (rbtnMujer.Checked)
+            {
+                sexo = "M";
+            }
+            else
+            {
+                sexo = "X";
+            }
+
+            return sexo.ToString();
         }
 
-        //private void pbFoto_DoubleClick(object sender, EventArgs e)
-        //{
-        //    OpenFileDialog abrir = new OpenFileDialog();
-        //    abrir.Title = "Seleccionar fotografia";
-        //    abrir.Filter = "Archivo de imagen (*.jpg)|*.jpg";
+        private string ObtieneEstado()
+        {
+            switch(cmbEstado.Text)
+            {
+                case "AGUASCALIENTES": estado = "AS";
+                    break;
+                case "BAJA CALIFORNIA": estado = "BC";
+                    break;
+                case "BAJA CALIFORNIA SUR": estado = "BS";
+                    break;
+                case "CAMPECHE": estado = "CC";
+                    break;
+                case "CHIAPAS": estado = "CS";
+                    break;
+                case "CHIHUAHUA": estado = "CH";
+                    break;
+                case "COAHUILA": estado = "CL";
+                    break;
+                case "COLIMA": estado = "CM";
+                    break;
+                case "DISTRITO FEDERAL": estado = "DF";
+                    break;
+                case "DURANGO": estado = "DG";
+                    break;
+                case "GUANAJUATO": estado = "GT";
+                    break;
+                case "GUERRERO": estado = "GR";
+                    break;
+                case "HIDALGO": estado = "HG";
+                    break;
+                case "JALISCO": estado = "JC";
+                    break;
+                case "MEXICO": estado = "MC";
+                    break;
+                case "MICHOACAN": estado = "MN";
+                    break;
+                case "MORELOS": estado = "MS";
+                    break;
+                case "NAYARIT": estado = "NT";
+                    break;
+                case "NUEVO LEON": estado = "NL";
+                    break;
+                case "OAXACA": estado = "OC";
+                    break;
+                case "PUEBLA": estado = "PL";
+                    break;
+                case "QUERETARO": estado = "QT";
+                    break;
+                case "QUINTANA ROO": estado = "QR";
+                    break;
+                case "SAN LUIS POTOSI": estado = "SP";
+                    break;
+                case "SINALOA": estado = "SL";
+                    break;
+                case "SONORA": estado = "SR";
+                    break;
+                case "TABASCO": estado = "TC";
+                    break;
+                case "TAMAULIPAS": estado = "TS";
+                    break;
+                case "TLAXCALA": estado = "TL";
+                    break;
+                case "VERACRUZ": estado = "VZ";
+                    break;
+                case "YUCATAN": estado = "YN";
+                    break;
+                case "ZACATECAS": estado = "ZS";
+                    break;
+            }
+            return estado;
+        }
 
-        //    if (abrir.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-        //    {
-        //        try
-        //        {
-        //            Bitmap img = new Bitmap(abrir.FileName);
-        //            pbFoto.Image = img;
-        //            fotografia = ImagenByte(pbFoto.Image);
-        //        }
-        //        catch (Exception error)
-        //        {
-        //            MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
-        //        }
-        //    }
-        //}
+        private int ObtieneEdad(DateTime fecha)
+        {
+            DateTime fechaNacimiento = fecha;
+            int edad = (DateTime.Now.Subtract(fechaNacimiento).Days / 365);
+            return edad;
+        }
+
+        private void btnObtenerCurp_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtNombre.Text) || string.IsNullOrEmpty(txtApPaterno.Text) || string.IsNullOrEmpty(txtApMaterno.Text) || ObtieneSexo().Equals("X"))
+                return;
+            CURPLib.CURPLib obtenerCurp = new CURPLib.CURPLib();
+            txtCURP.Text = obtenerCurp.CURPCompleta(txtApPaterno.Text, txtApMaterno.Text, txtNombre.Text, dtpFechaNacimiento.Value.ToString("yy/MM/dd"), sexo, estado);
+        }
+
+        private void btnAsignar_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Title = "Seleccionar imagen";
+            ofd.Filter = "Archivo de Imagen (*.jpg, *.png, *.bmp)|*.jpg; *.png; *.bmp";
+            ofd.RestoreDirectory = false;
+
+            if (DialogResult.OK == ofd.ShowDialog())
+            {
+                bmp = new Bitmap(ofd.FileName);
+                ImagenAsignada = true;
+            }
+        }
+
+        private void dtpFechaAntiguedad_ValueChanged(object sender, EventArgs e)
+        {
+            txtAntiguedadMod.Text = ObtieneEdad(dtpFechaAntiguedad.Value).ToString();
+        }
+
+        private void btnVer_Click(object sender, EventArgs e)
+        {
+            frmImagen i = new frmImagen();
+            i._idpersona = _idempleado;
+            i._tipopersona = GLOBALES.pEMPLEADO;
+            i.Show();
+        }
+
+        private void toolHistorial_Click(object sender, EventArgs e)
+        {
+            frmListaHistorial lh = new frmListaHistorial();
+            lh._idempleado = _idempleado;
+            lh.Show();
+        }
     }
 }

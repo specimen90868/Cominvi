@@ -10,17 +10,13 @@ namespace Complementos.Core
     {
         public int id { get; set; }
         public int idtrabajador { get; set; }
-        public string contrato { get; set; }
-        public string jornada { get; set; }
-        public int iddepartamento { get; set; }
-        public int idpuesto { get; set; }
-        public string estadocivil { get; set; }
-        public string sexo { get; set; }
-        public string escolaridad { get; set; }
-        public string horario { get; set; }
-        public string nocontrol { get; set; }
+        public int contrato { get; set; }
+        public int jornada { get; set; }
+        public int estadocivil { get; set; }
+        public int sexo { get; set; }
+        public int escolaridad { get; set; }
         public string clinica { get; set; }
         public string nacionalidad { get; set; }
-        public string funciones { get; set; }
+        public string observaciones { get; set; }
     }
 }

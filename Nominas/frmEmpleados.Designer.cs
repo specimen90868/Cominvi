@@ -39,11 +39,6 @@
             this.Label16 = new System.Windows.Forms.Label();
             this.btnCalcular = new System.Windows.Forms.Button();
             this.txtNSS = new System.Windows.Forms.MaskedTextBox();
-            this.cmbSua = new System.Windows.Forms.ComboBox();
-            this.Label15 = new System.Windows.Forms.Label();
-            this.cmbLocalForaneo = new System.Windows.Forms.ComboBox();
-            this.Label45 = new System.Windows.Forms.Label();
-            this.cmbCliente = new System.Windows.Forms.ComboBox();
             this.txtCURP = new System.Windows.Forms.TextBox();
             this.Label27 = new System.Windows.Forms.Label();
             this.Label26 = new System.Windows.Forms.Label();
@@ -59,7 +54,6 @@
             this.Label11 = new System.Windows.Forms.Label();
             this.cmbPeriodo = new System.Windows.Forms.ComboBox();
             this.lblPeriodo = new System.Windows.Forms.Label();
-            this.lblCliente = new System.Windows.Forms.Label();
             this.txtApMaterno = new System.Windows.Forms.TextBox();
             this.txtApPaterno = new System.Windows.Forms.TextBox();
             this.txtNombre = new System.Windows.Forms.TextBox();
@@ -73,6 +67,26 @@
             this.dtpFechaNacimiento = new System.Windows.Forms.DateTimePicker();
             this.txtEdad = new System.Windows.Forms.TextBox();
             this.txtDigito = new System.Windows.Forms.MaskedTextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtNoEmpleado = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.cmbDepartamento = new System.Windows.Forms.ComboBox();
+            this.cmbPuesto = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.dtpFechaAntiguedad = new System.Windows.Forms.DateTimePicker();
+            this.lblEstado = new System.Windows.Forms.Label();
+            this.cmbEstado = new System.Windows.Forms.ComboBox();
+            this.txtAntiguedadMod = new System.Windows.Forms.TextBox();
+            this.rbtnHombre = new System.Windows.Forms.RadioButton();
+            this.rbtnMujer = new System.Windows.Forms.RadioButton();
+            this.label12 = new System.Windows.Forms.Label();
+            this.btnObtenerCurp = new System.Windows.Forms.Button();
+            this.btnVer = new System.Windows.Forms.Button();
+            this.btnAsignar = new System.Windows.Forms.Button();
+            this.label13 = new System.Windows.Forms.Label();
+            this.txtAntiguedad = new System.Windows.Forms.TextBox();
+            this.toolHistorial = new System.Windows.Forms.ToolStripButton();
             this.toolAcciones.SuspendLayout();
             this.toolEmpleado.SuspendLayout();
             this.SuspendLayout();
@@ -98,6 +112,7 @@
             // toolEmpleado
             // 
             this.toolEmpleado.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolHistorial,
             this.toolGuardarCerrar,
             this.toolGuardarNuevo,
             this.toolCerrar});
@@ -140,7 +155,7 @@
             this.lblSalario.AutoSize = true;
             this.lblSalario.BackColor = System.Drawing.Color.White;
             this.lblSalario.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.lblSalario.Location = new System.Drawing.Point(14, 313);
+            this.lblSalario.Location = new System.Drawing.Point(13, 362);
             this.lblSalario.Name = "lblSalario";
             this.lblSalario.Size = new System.Drawing.Size(61, 18);
             this.lblSalario.TabIndex = 209;
@@ -159,10 +174,10 @@
             // 
             // btnCalcular
             // 
-            this.btnCalcular.Location = new System.Drawing.Point(286, 370);
+            this.btnCalcular.Location = new System.Drawing.Point(285, 419);
             this.btnCalcular.Name = "btnCalcular";
             this.btnCalcular.Size = new System.Drawing.Size(54, 20);
-            this.btnCalcular.TabIndex = 16;
+            this.btnCalcular.TabIndex = 23;
             this.btnCalcular.Text = "Calcular";
             this.btnCalcular.UseVisualStyleBackColor = true;
             this.btnCalcular.Click += new System.EventHandler(this.btnCalcular_Click);
@@ -173,50 +188,7 @@
             this.txtNSS.Mask = "9999999999";
             this.txtNSS.Name = "txtNSS";
             this.txtNSS.Size = new System.Drawing.Size(151, 20);
-            this.txtNSS.TabIndex = 12;
-            // 
-            // cmbSua
-            // 
-            this.cmbSua.FormattingEnabled = true;
-            this.cmbSua.Location = new System.Drawing.Point(127, 270);
-            this.cmbSua.Name = "cmbSua";
-            this.cmbSua.Size = new System.Drawing.Size(152, 21);
-            this.cmbSua.TabIndex = 7;
-            // 
-            // Label15
-            // 
-            this.Label15.AutoSize = true;
-            this.Label15.Location = new System.Drawing.Point(65, 275);
-            this.Label15.Name = "Label15";
-            this.Label15.Size = new System.Drawing.Size(56, 13);
-            this.Label15.TabIndex = 201;
-            this.Label15.Text = "Tipo SUA:";
-            // 
-            // cmbLocalForaneo
-            // 
-            this.cmbLocalForaneo.FormattingEnabled = true;
-            this.cmbLocalForaneo.Location = new System.Drawing.Point(127, 243);
-            this.cmbLocalForaneo.Name = "cmbLocalForaneo";
-            this.cmbLocalForaneo.Size = new System.Drawing.Size(152, 21);
-            this.cmbLocalForaneo.TabIndex = 6;
-            // 
-            // Label45
-            // 
-            this.Label45.AutoSize = true;
-            this.Label45.Location = new System.Drawing.Point(34, 246);
-            this.Label45.Name = "Label45";
-            this.Label45.Size = new System.Drawing.Size(87, 13);
-            this.Label45.TabIndex = 199;
-            this.Label45.Text = "Local o Foraneo:";
-            // 
-            // cmbCliente
-            // 
-            this.cmbCliente.FormattingEnabled = true;
-            this.cmbCliente.Location = new System.Drawing.Point(415, 217);
-            this.cmbCliente.Name = "cmbCliente";
-            this.cmbCliente.Size = new System.Drawing.Size(151, 21);
-            this.cmbCliente.TabIndex = 8;
-            this.cmbCliente.SelectionChangeCommitted += new System.EventHandler(this.cmbCliente_SelectionChangeCommitted);
+            this.txtNSS.TabIndex = 14;
             // 
             // txtCURP
             // 
@@ -224,7 +196,7 @@
             this.txtCURP.Location = new System.Drawing.Point(415, 139);
             this.txtCURP.Name = "txtCURP";
             this.txtCURP.Size = new System.Drawing.Size(151, 20);
-            this.txtCURP.TabIndex = 11;
+            this.txtCURP.TabIndex = 12;
             // 
             // Label27
             // 
@@ -248,15 +220,15 @@
             // 
             this.cmbTipoSalario.Enabled = false;
             this.cmbTipoSalario.FormattingEnabled = true;
-            this.cmbTipoSalario.Location = new System.Drawing.Point(127, 343);
+            this.cmbTipoSalario.Location = new System.Drawing.Point(126, 392);
             this.cmbTipoSalario.Name = "cmbTipoSalario";
             this.cmbTipoSalario.Size = new System.Drawing.Size(152, 21);
-            this.cmbTipoSalario.TabIndex = 14;
+            this.cmbTipoSalario.TabIndex = 21;
             // 
             // lblTipoSalario
             // 
             this.lblTipoSalario.AutoSize = true;
-            this.lblTipoSalario.Location = new System.Drawing.Point(43, 346);
+            this.lblTipoSalario.Location = new System.Drawing.Point(42, 395);
             this.lblTipoSalario.Name = "lblTipoSalario";
             this.lblTipoSalario.Size = new System.Drawing.Size(79, 13);
             this.lblTipoSalario.TabIndex = 193;
@@ -265,16 +237,16 @@
             // txtSueldo
             // 
             this.txtSueldo.Enabled = false;
-            this.txtSueldo.Location = new System.Drawing.Point(128, 370);
+            this.txtSueldo.Location = new System.Drawing.Point(127, 419);
             this.txtSueldo.Name = "txtSueldo";
             this.txtSueldo.Size = new System.Drawing.Size(152, 20);
-            this.txtSueldo.TabIndex = 15;
+            this.txtSueldo.TabIndex = 22;
             this.txtSueldo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblSueldo
             // 
             this.lblSueldo.AutoSize = true;
-            this.lblSueldo.Location = new System.Drawing.Point(24, 374);
+            this.lblSueldo.Location = new System.Drawing.Point(23, 423);
             this.lblSueldo.Name = "lblSueldo";
             this.lblSueldo.Size = new System.Drawing.Size(98, 13);
             this.lblSueldo.TabIndex = 192;
@@ -282,17 +254,17 @@
             // 
             // txtSD
             // 
-            this.txtSD.Location = new System.Drawing.Point(127, 396);
+            this.txtSD.Location = new System.Drawing.Point(126, 445);
             this.txtSD.Name = "txtSD";
             this.txtSD.ReadOnly = true;
             this.txtSD.Size = new System.Drawing.Size(152, 20);
-            this.txtSD.TabIndex = 17;
+            this.txtSD.TabIndex = 24;
             this.txtSD.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblSD
             // 
             this.lblSD.AutoSize = true;
-            this.lblSD.Location = new System.Drawing.Point(52, 399);
+            this.lblSD.Location = new System.Drawing.Point(51, 448);
             this.lblSD.Name = "lblSD";
             this.lblSD.Size = new System.Drawing.Size(70, 13);
             this.lblSD.TabIndex = 190;
@@ -300,17 +272,17 @@
             // 
             // txtSDI
             // 
-            this.txtSDI.Location = new System.Drawing.Point(127, 422);
+            this.txtSDI.Location = new System.Drawing.Point(126, 471);
             this.txtSDI.Name = "txtSDI";
             this.txtSDI.ReadOnly = true;
             this.txtSDI.Size = new System.Drawing.Size(152, 20);
-            this.txtSDI.TabIndex = 18;
+            this.txtSDI.TabIndex = 25;
             this.txtSDI.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblSDI
             // 
             this.lblSDI.AutoSize = true;
-            this.lblSDI.Location = new System.Drawing.Point(5, 425);
+            this.lblSDI.Location = new System.Drawing.Point(4, 474);
             this.lblSDI.Name = "lblSDI";
             this.lblSDI.Size = new System.Drawing.Size(117, 13);
             this.lblSDI.TabIndex = 187;
@@ -324,6 +296,7 @@
             this.dtpFechaIngreso.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.dtpFechaIngreso.Size = new System.Drawing.Size(152, 20);
             this.dtpFechaIngreso.TabIndex = 5;
+            this.dtpFechaIngreso.Leave += new System.EventHandler(this.dtpFechaIngreso_Leave);
             // 
             // Label11
             // 
@@ -337,29 +310,20 @@
             // cmbPeriodo
             // 
             this.cmbPeriodo.FormattingEnabled = true;
-            this.cmbPeriodo.Location = new System.Drawing.Point(415, 243);
+            this.cmbPeriodo.Location = new System.Drawing.Point(415, 273);
             this.cmbPeriodo.Name = "cmbPeriodo";
             this.cmbPeriodo.Size = new System.Drawing.Size(151, 21);
-            this.cmbPeriodo.TabIndex = 9;
+            this.cmbPeriodo.TabIndex = 18;
             this.cmbPeriodo.SelectedIndexChanged += new System.EventHandler(this.cmbPeriodo_SelectedIndexChanged);
             // 
             // lblPeriodo
             // 
             this.lblPeriodo.AutoSize = true;
-            this.lblPeriodo.Location = new System.Drawing.Point(363, 246);
+            this.lblPeriodo.Location = new System.Drawing.Point(363, 276);
             this.lblPeriodo.Name = "lblPeriodo";
             this.lblPeriodo.Size = new System.Drawing.Size(46, 13);
             this.lblPeriodo.TabIndex = 183;
             this.lblPeriodo.Text = "Periodo:";
-            // 
-            // lblCliente
-            // 
-            this.lblCliente.AutoSize = true;
-            this.lblCliente.Location = new System.Drawing.Point(367, 220);
-            this.lblCliente.Name = "lblCliente";
-            this.lblCliente.Size = new System.Drawing.Size(42, 13);
-            this.lblCliente.TabIndex = 182;
-            this.lblCliente.Text = "Cliente:";
             // 
             // txtApMaterno
             // 
@@ -426,7 +390,7 @@
             this.txtRFC.Location = new System.Drawing.Point(415, 113);
             this.txtRFC.Name = "txtRFC";
             this.txtRFC.Size = new System.Drawing.Size(151, 20);
-            this.txtRFC.TabIndex = 10;
+            this.txtRFC.TabIndex = 11;
             // 
             // label4
             // 
@@ -440,7 +404,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 194);
+            this.label5.Location = new System.Drawing.Point(13, 272);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(109, 13);
             this.label5.TabIndex = 214;
@@ -449,16 +413,16 @@
             // dtpFechaNacimiento
             // 
             this.dtpFechaNacimiento.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFechaNacimiento.Location = new System.Drawing.Point(127, 191);
+            this.dtpFechaNacimiento.Location = new System.Drawing.Point(127, 269);
             this.dtpFechaNacimiento.Name = "dtpFechaNacimiento";
             this.dtpFechaNacimiento.Size = new System.Drawing.Size(152, 20);
-            this.dtpFechaNacimiento.TabIndex = 4;
+            this.dtpFechaNacimiento.TabIndex = 7;
             this.dtpFechaNacimiento.Leave += new System.EventHandler(this.dtpFechaNacimiento_Leave);
             // 
             // txtEdad
             // 
             this.txtEdad.Enabled = false;
-            this.txtEdad.Location = new System.Drawing.Point(285, 191);
+            this.txtEdad.Location = new System.Drawing.Point(284, 269);
             this.txtEdad.Name = "txtEdad";
             this.txtEdad.Size = new System.Drawing.Size(30, 20);
             this.txtEdad.TabIndex = 19;
@@ -469,13 +433,214 @@
             this.txtDigito.Mask = "9";
             this.txtDigito.Name = "txtDigito";
             this.txtDigito.Size = new System.Drawing.Size(23, 20);
-            this.txtDigito.TabIndex = 215;
+            this.txtDigito.TabIndex = 15;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(29, 194);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(92, 13);
+            this.label6.TabIndex = 216;
+            this.label6.Text = "No. de Empleado:";
+            // 
+            // txtNoEmpleado
+            // 
+            this.txtNoEmpleado.Location = new System.Drawing.Point(127, 191);
+            this.txtNoEmpleado.Name = "txtNoEmpleado";
+            this.txtNoEmpleado.Size = new System.Drawing.Size(152, 20);
+            this.txtNoEmpleado.TabIndex = 4;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(332, 222);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(77, 13);
+            this.label8.TabIndex = 218;
+            this.label8.Text = "Departamento:";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(366, 249);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(43, 13);
+            this.label9.TabIndex = 219;
+            this.label9.Text = "Puesto:";
+            // 
+            // cmbDepartamento
+            // 
+            this.cmbDepartamento.FormattingEnabled = true;
+            this.cmbDepartamento.Location = new System.Drawing.Point(415, 219);
+            this.cmbDepartamento.Name = "cmbDepartamento";
+            this.cmbDepartamento.Size = new System.Drawing.Size(151, 21);
+            this.cmbDepartamento.TabIndex = 16;
+            // 
+            // cmbPuesto
+            // 
+            this.cmbPuesto.FormattingEnabled = true;
+            this.cmbPuesto.Location = new System.Drawing.Point(415, 246);
+            this.cmbPuesto.Name = "cmbPuesto";
+            this.cmbPuesto.Size = new System.Drawing.Size(151, 21);
+            this.cmbPuesto.TabIndex = 17;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(10, 246);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(111, 13);
+            this.label10.TabIndex = 222;
+            this.label10.Text = "Fecha de antiguedad:";
+            // 
+            // dtpFechaAntiguedad
+            // 
+            this.dtpFechaAntiguedad.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpFechaAntiguedad.Location = new System.Drawing.Point(127, 243);
+            this.dtpFechaAntiguedad.Name = "dtpFechaAntiguedad";
+            this.dtpFechaAntiguedad.Size = new System.Drawing.Size(151, 20);
+            this.dtpFechaAntiguedad.TabIndex = 6;
+            this.dtpFechaAntiguedad.ValueChanged += new System.EventHandler(this.dtpFechaAntiguedad_ValueChanged);
+            this.dtpFechaAntiguedad.Leave += new System.EventHandler(this.dtpFechaAntiguedad_Leave);
+            // 
+            // lblEstado
+            // 
+            this.lblEstado.AutoSize = true;
+            this.lblEstado.Location = new System.Drawing.Point(78, 298);
+            this.lblEstado.Name = "lblEstado";
+            this.lblEstado.Size = new System.Drawing.Size(43, 13);
+            this.lblEstado.TabIndex = 224;
+            this.lblEstado.Text = "Estado:";
+            // 
+            // cmbEstado
+            // 
+            this.cmbEstado.FormattingEnabled = true;
+            this.cmbEstado.ItemHeight = 13;
+            this.cmbEstado.Location = new System.Drawing.Point(127, 295);
+            this.cmbEstado.Name = "cmbEstado";
+            this.cmbEstado.Size = new System.Drawing.Size(151, 21);
+            this.cmbEstado.TabIndex = 225;
+            // 
+            // txtAntiguedadMod
+            // 
+            this.txtAntiguedadMod.Enabled = false;
+            this.txtAntiguedadMod.Location = new System.Drawing.Point(284, 243);
+            this.txtAntiguedadMod.Name = "txtAntiguedadMod";
+            this.txtAntiguedadMod.Size = new System.Drawing.Size(30, 20);
+            this.txtAntiguedadMod.TabIndex = 226;
+            // 
+            // rbtnHombre
+            // 
+            this.rbtnHombre.AutoSize = true;
+            this.rbtnHombre.Location = new System.Drawing.Point(128, 322);
+            this.rbtnHombre.Name = "rbtnHombre";
+            this.rbtnHombre.Size = new System.Drawing.Size(62, 17);
+            this.rbtnHombre.TabIndex = 9;
+            this.rbtnHombre.TabStop = true;
+            this.rbtnHombre.Text = "Hombre";
+            this.rbtnHombre.UseVisualStyleBackColor = true;
+            // 
+            // rbtnMujer
+            // 
+            this.rbtnMujer.AutoSize = true;
+            this.rbtnMujer.Location = new System.Drawing.Point(206, 322);
+            this.rbtnMujer.Name = "rbtnMujer";
+            this.rbtnMujer.Size = new System.Drawing.Size(51, 17);
+            this.rbtnMujer.TabIndex = 10;
+            this.rbtnMujer.TabStop = true;
+            this.rbtnMujer.Text = "Mujer";
+            this.rbtnMujer.UseVisualStyleBackColor = true;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(86, 324);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(34, 13);
+            this.label12.TabIndex = 230;
+            this.label12.Text = "Sexo:";
+            // 
+            // btnObtenerCurp
+            // 
+            this.btnObtenerCurp.Location = new System.Drawing.Point(572, 139);
+            this.btnObtenerCurp.Name = "btnObtenerCurp";
+            this.btnObtenerCurp.Size = new System.Drawing.Size(63, 23);
+            this.btnObtenerCurp.TabIndex = 13;
+            this.btnObtenerCurp.Text = "Obtener";
+            this.btnObtenerCurp.UseVisualStyleBackColor = true;
+            this.btnObtenerCurp.Click += new System.EventHandler(this.btnObtenerCurp_Click);
+            // 
+            // btnVer
+            // 
+            this.btnVer.Location = new System.Drawing.Point(415, 300);
+            this.btnVer.Name = "btnVer";
+            this.btnVer.Size = new System.Drawing.Size(67, 23);
+            this.btnVer.TabIndex = 19;
+            this.btnVer.Text = "Ver";
+            this.btnVer.UseVisualStyleBackColor = true;
+            this.btnVer.Click += new System.EventHandler(this.btnVer_Click);
+            // 
+            // btnAsignar
+            // 
+            this.btnAsignar.Location = new System.Drawing.Point(499, 300);
+            this.btnAsignar.Name = "btnAsignar";
+            this.btnAsignar.Size = new System.Drawing.Size(67, 23);
+            this.btnAsignar.TabIndex = 20;
+            this.btnAsignar.Text = "Asignar";
+            this.btnAsignar.UseVisualStyleBackColor = true;
+            this.btnAsignar.Click += new System.EventHandler(this.btnAsignar_Click);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(378, 303);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(31, 13);
+            this.label13.TabIndex = 234;
+            this.label13.Text = "Foto:";
+            // 
+            // txtAntiguedad
+            // 
+            this.txtAntiguedad.Enabled = false;
+            this.txtAntiguedad.Location = new System.Drawing.Point(284, 218);
+            this.txtAntiguedad.Name = "txtAntiguedad";
+            this.txtAntiguedad.Size = new System.Drawing.Size(30, 20);
+            this.txtAntiguedad.TabIndex = 235;
+            // 
+            // toolHistorial
+            // 
+            this.toolHistorial.Image = ((System.Drawing.Image)(resources.GetObject("toolHistorial.Image")));
+            this.toolHistorial.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolHistorial.Name = "toolHistorial";
+            this.toolHistorial.Size = new System.Drawing.Size(71, 22);
+            this.toolHistorial.Text = "Historial";
+            this.toolHistorial.Click += new System.EventHandler(this.toolHistorial_Click);
             // 
             // frmEmpleados
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(696, 609);
+            this.Controls.Add(this.txtAntiguedad);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.btnAsignar);
+            this.Controls.Add(this.btnVer);
+            this.Controls.Add(this.btnObtenerCurp);
+            this.Controls.Add(this.rbtnMujer);
+            this.Controls.Add(this.rbtnHombre);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.txtAntiguedadMod);
+            this.Controls.Add(this.cmbEstado);
+            this.Controls.Add(this.lblEstado);
+            this.Controls.Add(this.dtpFechaAntiguedad);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.cmbPuesto);
+            this.Controls.Add(this.cmbDepartamento);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.txtNoEmpleado);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.txtDigito);
             this.Controls.Add(this.txtEdad);
             this.Controls.Add(this.dtpFechaNacimiento);
@@ -487,11 +652,6 @@
             this.Controls.Add(this.Label16);
             this.Controls.Add(this.btnCalcular);
             this.Controls.Add(this.txtNSS);
-            this.Controls.Add(this.cmbSua);
-            this.Controls.Add(this.Label15);
-            this.Controls.Add(this.cmbLocalForaneo);
-            this.Controls.Add(this.Label45);
-            this.Controls.Add(this.cmbCliente);
             this.Controls.Add(this.txtCURP);
             this.Controls.Add(this.Label27);
             this.Controls.Add(this.Label26);
@@ -507,7 +667,6 @@
             this.Controls.Add(this.Label11);
             this.Controls.Add(this.cmbPeriodo);
             this.Controls.Add(this.lblPeriodo);
-            this.Controls.Add(this.lblCliente);
             this.Controls.Add(this.txtApMaterno);
             this.Controls.Add(this.txtApPaterno);
             this.Controls.Add(this.txtNombre);
@@ -540,11 +699,6 @@
         internal System.Windows.Forms.Label Label16;
         internal System.Windows.Forms.Button btnCalcular;
         internal System.Windows.Forms.MaskedTextBox txtNSS;
-        internal System.Windows.Forms.ComboBox cmbSua;
-        internal System.Windows.Forms.Label Label15;
-        internal System.Windows.Forms.ComboBox cmbLocalForaneo;
-        internal System.Windows.Forms.Label Label45;
-        internal System.Windows.Forms.ComboBox cmbCliente;
         internal System.Windows.Forms.TextBox txtCURP;
         internal System.Windows.Forms.Label Label27;
         internal System.Windows.Forms.Label Label26;
@@ -560,7 +714,6 @@
         internal System.Windows.Forms.Label Label11;
         internal System.Windows.Forms.ComboBox cmbPeriodo;
         internal System.Windows.Forms.Label lblPeriodo;
-        internal System.Windows.Forms.Label lblCliente;
         internal System.Windows.Forms.TextBox txtApMaterno;
         internal System.Windows.Forms.TextBox txtApPaterno;
         internal System.Windows.Forms.TextBox txtNombre;
@@ -574,5 +727,25 @@
         private System.Windows.Forms.DateTimePicker dtpFechaNacimiento;
         private System.Windows.Forms.TextBox txtEdad;
         private System.Windows.Forms.MaskedTextBox txtDigito;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txtNoEmpleado;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ComboBox cmbDepartamento;
+        private System.Windows.Forms.ComboBox cmbPuesto;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.DateTimePicker dtpFechaAntiguedad;
+        private System.Windows.Forms.Label lblEstado;
+        private System.Windows.Forms.ComboBox cmbEstado;
+        private System.Windows.Forms.TextBox txtAntiguedadMod;
+        private System.Windows.Forms.RadioButton rbtnHombre;
+        private System.Windows.Forms.RadioButton rbtnMujer;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Button btnObtenerCurp;
+        private System.Windows.Forms.Button btnVer;
+        private System.Windows.Forms.Button btnAsignar;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox txtAntiguedad;
+        private System.Windows.Forms.ToolStripButton toolHistorial;
     }
 }

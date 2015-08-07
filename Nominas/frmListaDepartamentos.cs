@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+﻿using System.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,24 +20,26 @@ namespace Nominas
         }
 
         #region VARIABLES GLOBALES
-        MySqlConnection cnx;
-        MySqlCommand cmd;
+        SqlConnection cnx;
+        SqlCommand cmd;
         List<Departamento.Core.Depto> lstDepartamentos;
         #endregion
 
         private void ListaDepartamentos()
         {
             string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-            cnx = new MySqlConnection(cdn);
-            cmd = new MySqlCommand();
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
             cmd.Connection = cnx;
             Departamento.Core.DeptoHelper dh = new Departamento.Core.DeptoHelper();
             dh.Command = cmd;
+            Departamento.Core.Depto deptos = new Departamento.Core.Depto();
+            deptos.idempresa = GLOBALES.IDEMPRESA;
 
             try
             {
                 cnx.Open();
-                lstDepartamentos = dh.obtenerDepartamentos();
+                lstDepartamentos = dh.obtenerDepartamentos(deptos);
                 cnx.Close();
                 cnx.Dispose();
 
@@ -129,14 +131,14 @@ namespace Nominas
                 string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
                 int fila = dgvDepartamentos.CurrentCell.RowIndex;
                 int id = int.Parse(dgvDepartamentos.Rows[fila].Cells[0].Value.ToString());
-                cnx = new MySqlConnection(cdn);
-                cmd = new MySqlCommand();
+                cnx = new SqlConnection(cdn);
+                cmd = new SqlCommand();
                 cmd.Connection = cnx;
                 Departamento.Core.DeptoHelper dh = new Departamento.Core.DeptoHelper();
                 dh.Command = cmd;
                 Departamento.Core.Depto depto = new Departamento.Core.Depto();
                 depto.id = id;
-                depto.estatus = 0;
+                
                 try
                 {
                     cnx.Open();

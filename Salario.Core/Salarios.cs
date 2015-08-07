@@ -11,5 +11,6 @@ namespace Salario.Core
         public int idsalario { get; set; }
         public DateTime periodo { get; set; }
         public decimal valor { get; set; }
+        public string zona { get; set; }
     }
 }

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
+using System.Data.SqlClient;
 using System.Configuration;
 
 namespace Nominas
@@ -20,8 +20,8 @@ namespace Nominas
         }
 
         #region VARIABLES GLOBALES
-        MySqlConnection cnx;
-        MySqlCommand cmd;
+        SqlConnection cnx;
+        SqlCommand cmd;
         List<Empresas.Core.Empresas> lstEmpresas;
         #endregion
 
@@ -35,8 +35,8 @@ namespace Nominas
         private void ListaEmpresas()
         {
             string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-            cnx = new MySqlConnection(cdn);
-            cmd = new MySqlCommand();
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
             cmd.Connection = cnx;
             Empresas.Core.EmpresasHelper eh = new Empresas.Core.EmpresasHelper();
             eh.Command = cmd;
@@ -160,8 +160,8 @@ namespace Nominas
                 string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
                 int fila = dgvEmpresas.CurrentCell.RowIndex;
                 int idempresa = int.Parse(dgvEmpresas.Rows[fila].Cells[0].Value.ToString());
-                cnx = new MySqlConnection(cdn);
-                cmd = new MySqlCommand();
+                cnx = new SqlConnection(cdn);
+                cmd = new SqlCommand();
                 cmd.Connection = cnx;
                 Empresas.Core.EmpresasHelper eh = new Empresas.Core.EmpresasHelper();
                 eh.Command = cmd;

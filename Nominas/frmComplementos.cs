@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+﻿using System.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,8 +26,8 @@ namespace Nominas
         #endregion
 
         #region VARIABLES GLOBALES
-        MySqlConnection cnx;
-        MySqlCommand cmd;
+        SqlConnection cnx;
+        SqlCommand cmd;
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
         Complementos.Core.ComplementoHelper ch;
         Direccion.Core.DireccionesHelper dh;
@@ -37,17 +37,13 @@ namespace Nominas
 
         private void CargaComboBox()
         {
-            cnx = new MySqlConnection();
+            cnx = new SqlConnection();
             cnx.ConnectionString = cdn;
-            cmd = new MySqlCommand();
+            cmd = new SqlCommand();
             cmd.Connection = cnx;
 
             Catalogos.Core.CatalogosHelper cath = new Catalogos.Core.CatalogosHelper();
-            Departamento.Core.DeptoHelper dh = new Departamento.Core.DeptoHelper();
-            Puestos.Core.PuestosHelper ph = new Puestos.Core.PuestosHelper();
             cath.Command = cmd;
-            dh.Command = cmd;
-            ph.Command = cmd;
 
             Catalogos.Core.Catalogo contrato = new Catalogos.Core.Catalogo();
             contrato.grupodescripcion = "CONTRATO";
@@ -66,9 +62,6 @@ namespace Nominas
             List<Catalogos.Core.Catalogo> lstSexo = new List<Catalogos.Core.Catalogo>();
             List<Catalogos.Core.Catalogo> lstEscolaridad = new List<Catalogos.Core.Catalogo>();
 
-            List<Departamento.Core.Depto> lstDeptos = new List<Departamento.Core.Depto>();
-            List<Puestos.Core.Puestos> lstPuestos = new List<Puestos.Core.Puestos>();
-
             try
             {
                 cnx.Open();
@@ -77,8 +70,6 @@ namespace Nominas
                 lstEstadoCivil = cath.obtenerGrupo(estadocivil);
                 lstSexo = cath.obtenerGrupo(sexo);
                 lstEscolaridad = cath.obtenerGrupo(escolaridad);
-                lstDeptos = dh.obtenerDepartamentos();
-                lstPuestos = ph.obtenerPuestos();
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -89,31 +80,23 @@ namespace Nominas
             }
             cmbContrato.DataSource = lstContrato.ToList();
             cmbContrato.DisplayMember = "descripcion";
-            cmbContrato.ValueMember = "valor";
+            cmbContrato.ValueMember = "id";
 
             cmbJornada.DataSource = lstJornada.ToList();
             cmbJornada.DisplayMember = "descripcion";
-            cmbJornada.ValueMember = "valor";
+            cmbJornada.ValueMember = "id";
 
             cmbEstadoCivil.DataSource = lstEstadoCivil.ToList();
             cmbEstadoCivil.DisplayMember = "descripcion";
-            cmbEstadoCivil.ValueMember = "valor";
+            cmbEstadoCivil.ValueMember = "id";
 
             cmbSexo.DataSource = lstSexo.ToList();
             cmbSexo.DisplayMember = "descripcion";
-            cmbSexo.ValueMember = "valor";
+            cmbSexo.ValueMember = "id";
 
             cmbEscolaridad.DataSource = lstEscolaridad.ToList();
             cmbEscolaridad.DisplayMember = "descripcion";
-            cmbEscolaridad.ValueMember = "valor";
-
-            cmbDepartamento.DataSource = lstDeptos.ToList();
-            cmbDepartamento.DisplayMember = "descripcion";
-            cmbDepartamento.ValueMember = "id";
-
-            cmbPuesto.DataSource = lstPuestos.ToList();
-            cmbPuesto.DisplayMember = "descripcion";
-            cmbPuesto.ValueMember = "id";
+            cmbEscolaridad.ValueMember = "id";
         }
 
         private void frmComplementos_Load(object sender, EventArgs e)
@@ -121,9 +104,9 @@ namespace Nominas
             CargaComboBox();
             if (_tipoOperacion == GLOBALES.CONSULTAR || _tipoOperacion == GLOBALES.MODIFICAR)
             {
-                cnx = new MySqlConnection();
+                cnx = new SqlConnection();
                 cnx.ConnectionString = cdn;
-                cmd = new MySqlCommand();
+                cmd = new SqlCommand();
                 cmd.Connection = cnx;
                 ch = new Complementos.Core.ComplementoHelper();
                 dh = new Direccion.Core.DireccionesHelper();
@@ -138,7 +121,7 @@ namespace Nominas
 
                 Direccion.Core.Direcciones d = new Direccion.Core.Direcciones();
                 d.idpersona = _idEmpleado;
-                d.tipopersona = 2;
+                d.tipopersona = GLOBALES.pEMPLEADO;
 
                 try
                 {
@@ -153,16 +136,12 @@ namespace Nominas
                         idComplemento = lstComplemento[i].id;
                         cmbContrato.SelectedValue = lstComplemento[i].contrato;
                         cmbJornada.SelectedValue = lstComplemento[i].jornada;
-                        cmbDepartamento.SelectedValue = lstComplemento[i].iddepartamento;
-                        cmbPuesto.SelectedValue = lstComplemento[i].idpuesto;
                         cmbEstadoCivil.SelectedValue = lstComplemento[i].estadocivil;
                         cmbSexo.SelectedValue = lstComplemento[i].sexo;
                         cmbEscolaridad.SelectedValue = lstComplemento[i].escolaridad;
-                        txtHorario.Text = lstComplemento[i].horario;
-                        txtNoControl.Text = lstComplemento[i].nocontrol;
                         txtClinica.Text = lstComplemento[i].clinica;
                         txtNacionalidad.Text = lstComplemento[i].nacionalidad;
-                        txtFunciones.Text = lstComplemento[i].funciones;
+                        txtObservaciones.Text = lstComplemento[i].observaciones;
                     }
 
                     for (int j = 0; j < lstDireccion.Count; j++)
@@ -189,6 +168,7 @@ namespace Nominas
                     GLOBALES.INHABILITAR(this, typeof(TextBox));
                     GLOBALES.INHABILITAR(this, typeof(MaskedTextBox));
                     GLOBALES.INHABILITAR(this, typeof(ComboBox));
+                    toolGuardar.Enabled = false;
                 }
                 else
                     toolTitulo.Text = "Edición del Complemento";
@@ -212,9 +192,9 @@ namespace Nominas
                 return;
             }
 
-            cnx = new MySqlConnection();
+            cnx = new SqlConnection();
             cnx.ConnectionString = cdn;
-            cmd = new MySqlCommand();
+            cmd = new SqlCommand();
             cmd.Connection = cnx;
             ch = new Complementos.Core.ComplementoHelper();
             dh = new Direccion.Core.DireccionesHelper();
@@ -236,18 +216,14 @@ namespace Nominas
 
             Complementos.Core.Complemento c = new Complementos.Core.Complemento();
             c.idtrabajador = _idEmpleado;
-            c.contrato = cmbContrato.SelectedValue.ToString();
-            c.jornada = cmbJornada.SelectedValue.ToString();
-            c.iddepartamento = int.Parse(cmbDepartamento.SelectedValue.ToString());
-            c.idpuesto = int.Parse(cmbPuesto.SelectedValue.ToString());
-            c.estadocivil = cmbEstadoCivil.SelectedValue.ToString();
-            c.sexo = cmbSexo.SelectedValue.ToString();
-            c.escolaridad = cmbEscolaridad.SelectedValue.ToString();
-            c.horario = txtHorario.Text;
-            c.nocontrol = txtNoControl.Text;
+            c.contrato = int.Parse(cmbContrato.SelectedValue.ToString());
+            c.jornada = int.Parse(cmbJornada.SelectedValue.ToString());
+            c.estadocivil = int.Parse(cmbEstadoCivil.SelectedValue.ToString());
+            c.sexo = int.Parse(cmbSexo.SelectedValue.ToString());
+            c.escolaridad = int.Parse(cmbEscolaridad.SelectedValue.ToString());
             c.clinica = txtClinica.Text;
             c.nacionalidad = txtNacionalidad.Text;
-            c.funciones = txtFunciones.Text;
+            c.observaciones = txtObservaciones.Text;
             
             switch (_tipoOperacion)
             {
@@ -271,7 +247,6 @@ namespace Nominas
                     {
                         d.iddireccion = idDireccion;
                         c.id = idComplemento;
-
                         cnx.Open();
                         ch.actualizaComplemento(c);
                         dh.actualizaDireccion(d);
@@ -285,6 +260,8 @@ namespace Nominas
                     }
                     break;
             }
+
+            this.Dispose();
         }
 
         private void toolCerrar_Click(object sender, EventArgs e)

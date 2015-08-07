@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Configuration;
-using MySql.Data.MySqlClient;
+using System.Data.SqlClient;
 
 namespace Nominas
 {
@@ -21,8 +21,8 @@ namespace Nominas
 
         #region VARIABLES GLOBALES
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-        MySqlConnection cnx;
-        MySqlCommand cmd;
+        SqlConnection cnx;
+        SqlCommand cmd;
         #endregion
 
         private void frmPrincipal_Load(object sender, EventArgs e)
@@ -33,8 +33,8 @@ namespace Nominas
 
         private void workPerfil_DoWork(object sender, DoWorkEventArgs e)
         {
-            cnx = new MySqlConnection();
-            cmd = new MySqlCommand();
+            cnx = new SqlConnection();
+            cmd = new SqlCommand();
 
             cnx.ConnectionString = cdn;
             cmd.Connection = cnx;
@@ -60,9 +60,6 @@ namespace Nominas
                     case "Seguro Social":
                         mnuSeguroSocial.Enabled = Convert.ToBoolean(lstAuth[i].acceso);
                         break;
-                    case "Contratos":
-                        mnuContratos.Enabled = Convert.ToBoolean(lstAuth[i].acceso);
-                        break;
                     case "Nominas":
                         mnuNominas.Enabled = Convert.ToBoolean(lstAuth[i].acceso);
                         break;
@@ -82,20 +79,11 @@ namespace Nominas
                     case "Empleados":
                         mnuEmpleados.Enabled = Convert.ToBoolean(lstMenu[i].ver);
                         break;
-                    case "Fotografías":
-                        mnuFotografias.Enabled = Convert.ToBoolean(lstMenu[i].ver);
-                        break;
                     case "Expedientes":
                         mnuExpedientes.Enabled = Convert.ToBoolean(lstMenu[i].ver);
                         break;
-                    case "Bajas":
-                        mnuBajas.Enabled = Convert.ToBoolean(lstMenu[i].ver);
-                        break;
                     case "Empresas":
                         mnuEmpresa.Enabled = Convert.ToBoolean(lstMenu[i].ver);
-                        break;
-                    case "Clientes":
-                        mnuClientes.Enabled = Convert.ToBoolean(lstMenu[i].ver);
                         break;
                     case "Departamentos":
                         mnuDepartamentos.Enabled = Convert.ToBoolean(lstMenu[i].ver);
@@ -111,9 +99,6 @@ namespace Nominas
                         break;
                     case "Salario minimo":
                         mnuSalarioMinimo.Enabled = Convert.ToBoolean(lstMenu[i].ver);
-                        break;
-                    case "Plazas":
-                        mnuPlazas.Enabled = Convert.ToBoolean(lstMenu[i].ver);
                         break;
                     case "Usuarios":
                         mnuUsuarios.Enabled = Convert.ToBoolean(lstMenu[i].ver);
@@ -163,7 +148,6 @@ namespace Nominas
         {
             mnuRecursosHumanos.Visible = false;
             mnuSeguroSocial.Visible = false;
-            mnuContratos.Visible = false;
             mnuNominas.Visible = false;
             mnuCatalogos.Visible = false;
             mnuConfiguracion.Visible = false;
@@ -188,7 +172,6 @@ namespace Nominas
         {
             mnuRecursosHumanos.Visible = true;
             mnuSeguroSocial.Visible = true;
-            mnuContratos.Visible = true;
             mnuNominas.Visible = true;
             mnuCatalogos.Visible = true;
             mnuConfiguracion.Visible = true;
@@ -215,7 +198,6 @@ namespace Nominas
             this.Text = "Sistema de Nomina";
             mnuRecursosHumanos.Visible = false;
             mnuSeguroSocial.Visible = false;
-            mnuContratos.Visible = false;
             mnuNominas.Visible = false;
             mnuCatalogos.Visible = false;
             mnuConfiguracion.Visible = false;
@@ -249,25 +231,11 @@ namespace Nominas
             toolEstatusPerfil.Text = "Perfil cargado.";
         }
 
-        private void mnuPlazas_Click(object sender, EventArgs e)
-        {
-            frmListaPlazas lp = new frmListaPlazas();
-            lp.MdiParent = this;
-            lp.Show();
-        }
-
         private void mnuPerfiles_Click(object sender, EventArgs e)
         {
             frmListaPerfiles lp = new frmListaPerfiles();
             lp.MdiParent = this;
             lp.Show();
-        }
-
-        private void mnuClientes_Click(object sender, EventArgs e)
-        {
-            frmListaClientes c = new frmListaClientes();
-            c.MdiParent = this;
-            c.Show();
         }
 
         private void mnuDepartamentos_Click(object sender, EventArgs e)
@@ -291,14 +259,14 @@ namespace Nominas
             lp.Show();
         }
 
-        private void mnuFactores_Click(object sender, EventArgs e)
+        private void mnuFactores_Click_1(object sender, EventArgs e)
         {
             frmListaFactores lf = new frmListaFactores();
             lf.MdiParent = this;
             lf.Show();
         }
 
-        private void mnuSalarioMinimo_Click(object sender, EventArgs e)
+        private void mnuSalarioMinimo_Click_1(object sender, EventArgs e)
         {
             frmListaSalario ls = new frmListaSalario();
             ls.MdiParent = this;
@@ -308,22 +276,9 @@ namespace Nominas
         private void mnuEmpleadoNomina_Click(object sender, EventArgs e)
         {
             frmListaEmpleados le = new frmListaEmpleados();
+            le._empleadoAltaBaja = GLOBALES.ACTIVO;
             le.MdiParent = this;
             le.Show();
-        }
-
-        private void mnuModificarCliente_Click(object sender, EventArgs e)
-        {
-            frmModificaClienteEmpleado mce = new frmModificaClienteEmpleado();
-            mce.MdiParent = this;
-            mce.Show();
-        }
-
-        private void mnuModificarSueldo_Click(object sender, EventArgs e)
-        {
-            frmModificaSueldoEmpleado mse = new frmModificaSueldoEmpleado();
-            mse.MdiParent = this;
-            mse.Show();
         }
 
         private void mnuComplementos_Click(object sender, EventArgs e)
@@ -333,7 +288,7 @@ namespace Nominas
             lc.Show();
         }
 
-        private void mnuEmpresas_Click_1(object sender, EventArgs e)
+        private void mnuEmpresa_Click(object sender, EventArgs e)
         {
             frmListaEmpresas le = new frmListaEmpresas();
             le.MdiParent = this;
@@ -341,13 +296,31 @@ namespace Nominas
             le.Show();
         }
 
-        private void mnuLogo_Click(object sender, EventArgs e)
+        private void mnuUsuarios_Click(object sender, EventArgs e)
         {
-            frmListaImagenes li = new frmListaImagenes();
-            li.MdiParent = this;
-            li._EmpresaEmpleado = GLOBALES.EMPRESAS;
-            li.Show();
+            frmListaUsuarios lu = new frmListaUsuarios();
+            lu.MdiParent = this;
+            lu.WindowState = FormWindowState.Maximized;
+            lu.Show();
         }
+
+        private void mnuCambiarContrasenia_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mnuPreferencias_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mnuEmpleadosBaja_Click(object sender, EventArgs e)
+        {
+            frmListaEmpleados le = new frmListaEmpleados();
+            le._empleadoAltaBaja = GLOBALES.INACTIVO;
+            le.MdiParent = this;
+            le.Show();
+        }        
     }
 }
 

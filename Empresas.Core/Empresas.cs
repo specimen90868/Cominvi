@@ -13,8 +13,7 @@ namespace Empresas.Core
         public string rfc { get; set; }
         public string registro { get; set; }
         public int digitoverificador { get; set; }
-        public int sindicato { get; set; }
         public string representante { get; set; }
-        public int activo { get; set; }
+        public int estatus { get; set; }
     }
 }

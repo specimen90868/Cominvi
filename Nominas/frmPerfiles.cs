@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+﻿using System.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,8 +26,8 @@ namespace Nominas
 
         #region VARIABLES GLOBALES
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-        MySqlConnection cnx;
-        MySqlCommand cmd;
+        SqlConnection cnx;
+        SqlCommand cmd;
         Perfil.Core.PerfilesHelper ph;
         Autorizaciones.Core.AutorizacionHelper auth;
         #endregion
@@ -58,9 +58,9 @@ namespace Nominas
 
             int idperfil;
 
-            cnx = new MySqlConnection();
+            cnx = new SqlConnection();
             cnx.ConnectionString = cdn;
-            cmd = new MySqlCommand();
+            cmd = new SqlCommand();
             cmd.Connection = cnx;
 
             ph = new Perfil.Core.PerfilesHelper();
@@ -184,9 +184,9 @@ namespace Nominas
             /// _tipoOperacion CONSULTA = 1, EDICION = 2
             if (_tipoOperacion == GLOBALES.CONSULTAR || _tipoOperacion == GLOBALES.MODIFICAR)
             {
-                cnx = new MySqlConnection();
+                cnx = new SqlConnection();
                 cnx.ConnectionString = cdn;
-                cmd = new MySqlCommand();
+                cmd = new SqlCommand();
                 cmd.Connection = cnx;
                 ph = new Perfil.Core.PerfilesHelper();
                 ph.Command = cmd;

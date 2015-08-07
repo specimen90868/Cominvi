@@ -9,12 +9,13 @@ namespace Departamento.Core
 {
     public class DeptoHelper : Data.Obj.DataObj
     {
-        public List<Depto> obtenerDepartamentos()
+        public List<Depto> obtenerDepartamentos(Depto depto)
         {
             DataTable dtDeptos = new DataTable();
             List<Depto> lstDeptos = new List<Depto>();
-            Command.CommandText = "select id, descripcion from departamentos where estatus = 1";
+            Command.CommandText = "select id, descripcion from departamentos where estatus = 1 and idempresa = @idempresa";
             Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", depto.idempresa);
             dtDeptos = SelectData(Command);
             for (int i = 0; i < dtDeptos.Rows.Count; i++)
             {
@@ -48,10 +49,11 @@ namespace Departamento.Core
 
         public int insertaDepartamento(Depto d)
         {
-            Command.CommandText = "insert into departamentos (descripcion, estatus) values (@descripcion, @estatus)";
+            Command.CommandText = "insert into departamentos (descripcion, estatus, idempresa) values (@descripcion, @estatus, @idempresa)";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("descripcion", d.descripcion);
             Command.Parameters.AddWithValue("estatus", d.estatus);
+            Command.Parameters.AddWithValue("idempresa", d.idempresa);
             return Command.ExecuteNonQuery();
         }
 
@@ -66,10 +68,9 @@ namespace Departamento.Core
 
         public int bajaDepartamento(Depto d)
         {
-            Command.CommandText = "update departamentos set estatus = @estatus where id = @id";
+            Command.CommandText = "update departamentos set estatus = 0 where id = @id";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("id", d.id);
-            Command.Parameters.AddWithValue("estatus", d.estatus);
             return Command.ExecuteNonQuery();
         }
     }

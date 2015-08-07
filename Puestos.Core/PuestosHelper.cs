@@ -4,18 +4,19 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MySql.Data.MySqlClient;
+using System.Data.SqlClient;
 
 namespace Puestos.Core
 {
     public class PuestosHelper : Data.Obj.DataObj
     {
-        public List<Puestos> obtenerPuestos()
+        public List<Puestos> obtenerPuestos(Puestos puesto)
         {
             DataTable dtPuestos = new DataTable();
             List<Puestos> lstPuestos = new List<Puestos>();
-            Command.CommandText = "select id, descripcion from puestos";
+            Command.CommandText = "select id, descripcion from puestos where estatus = 1 and idempresa = @idempresa";
             Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", puesto.idempresa);
             dtPuestos = SelectData(Command);
             for (int i = 0; i < dtPuestos.Rows.Count; i++)
             {
@@ -47,10 +48,11 @@ namespace Puestos.Core
 
         public int insertaPuesto(Puestos p)
         {
-            Command.CommandText = "insert into puestos (descripcion, estatus) values (@descripcion,@estatus)";
+            Command.CommandText = "insert into puestos (descripcion, estatus, idempresa) values (@descripcion,@estatus,@idempresa)";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("descripcion", p.descripcion);
             Command.Parameters.AddWithValue("estatus",p.estatus);
+            Command.Parameters.AddWithValue("idempresa", p.idempresa);
             return Command.ExecuteNonQuery();
         }
 
@@ -65,10 +67,9 @@ namespace Puestos.Core
 
         public int bajaPuesto(Puestos p)
         {
-            Command.CommandText = "update puestos set estatus = @estatus where id = @id";
+            Command.CommandText = "update puestos set estatus = 0 where id = @id";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("id", p.id);
-            Command.Parameters.AddWithValue("estatus", p.descripcion);
             return Command.ExecuteNonQuery();
         }
     }

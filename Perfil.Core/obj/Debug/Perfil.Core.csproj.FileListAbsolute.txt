@@ -12,3 +12,9 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Perfil.Core\bin\Debug\D
 C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Perfil.Core\obj\Debug\Perfil.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Perfil.Core\obj\Debug\Perfil.Core.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Perfil.Core\obj\Debug\Perfil.Core.csprojResolveAssemblyReference.cache
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Perfil.Core\bin\Debug\Perfil.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Perfil.Core\bin\Debug\Perfil.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Perfil.Core\bin\Debug\Data.Obj.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Perfil.Core\bin\Debug\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Perfil.Core\obj\Debug\Perfil.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Perfil.Core\obj\Debug\Perfil.Core.pdb

@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+﻿using System.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,8 +20,8 @@ namespace Nominas
         }
 
         #region VARIABLES GLOBALES
-        MySqlConnection cnx;
-        MySqlCommand cmd;
+        SqlConnection cnx;
+        SqlCommand cmd;
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
         int idperiodo;
         int antiguedad;
@@ -37,9 +37,9 @@ namespace Nominas
         {
             lblEmpleado.Text = _nombreCompleto;
 
-            cnx = new MySqlConnection();
+            cnx = new SqlConnection();
             cnx.ConnectionString = cdn;
-            cmd = new MySqlCommand();
+            cmd = new SqlCommand();
             cmd.Connection = cnx;
 
             Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
@@ -58,7 +58,7 @@ namespace Nominas
                 for (int i = 0; i < lstEmpleado.Count; i++)
                 {
                     idperiodo = lstEmpleado[i].idperiodo;
-                    antiguedad = lstEmpleado[i].antiguedad;
+                    antiguedad = lstEmpleado[i].antiguedadmod;
                 }
             }
             catch (Exception error)
@@ -74,9 +74,9 @@ namespace Nominas
             {
                 int DiasDePago = 0;
                 double FactorDePago = 0;
-                cnx = new MySqlConnection();
+                cnx = new SqlConnection();
                 cnx.ConnectionString = cdn;
-                cmd = new MySqlCommand();
+                cmd = new SqlCommand();
                 cmd.Connection = cnx;
 
                 Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
@@ -116,62 +116,14 @@ namespace Nominas
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            cnx = new MySqlConnection();
+            cnx = new SqlConnection();
             cnx.ConnectionString = cdn;
-            cmd = new MySqlCommand();
+            cmd = new SqlCommand();
             cmd.Connection = cnx;
-
-            LayoutMovimientos.Core.LayoutHelper lh = new LayoutMovimientos.Core.LayoutHelper();
-            Empresas.Core.EmpresasHelper eh = new Empresas.Core.EmpresasHelper();
-            lh.Command = cmd;
-            eh.Command = cmd;
-
-            LayoutMovimientos.Core.LayoutMovimientos lm = new LayoutMovimientos.Core.LayoutMovimientos();
-
-            List<Empresas.Core.Empresas> lstEmpresa = new List<Empresas.Core.Empresas>();
-            
-
-            for (int i = 0; i < lstEmpleado.Count; i++)
-            {
-                lm.idtrabajador = lstEmpleado[i].idtrabajador;
-                lm.idempresa = lstEmpleado[i].idempresa;
-                lm.idcliente = lstEmpleado[i].idcliente;
-                lm.movimiento = 2;
-                lm.nombres = lstEmpleado[i].nombres;
-                lm.paterno = lstEmpleado[i].paterno;
-                lm.materno = lstEmpleado[i].materno;
-                lm.sdi = lstEmpleado[i].sdi;
-                lm.sdinuevo = decimal.Parse(txtSDI.Text);
-                lm.nss = lstEmpleado[i].nss;
-                lm.digitonss = lstEmpleado[i].digitoverificador;
-                lm.fecha_ingreso = lstEmpleado[i].fechaingreso;
-                lm.fecha_sistema = DateTime.Now;
-                lm.curp = lstEmpleado[i].curp;
-                lm.generado = 0;
-
-                try
-                {
-                    cnx.Open();
-                    lstEmpresa = eh.obtenerEmpresa(lm.idempresa);
-                    cnx.Close();
-                    cnx.Dispose();
-                }
-                catch (Exception error)
-                {
-                    MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
-                }
-
-                for (int j = 0; j < lstEmpresa.Count; j++)
-                {
-                    lm.registro = lstEmpresa[j].registro;
-                    lm.digitoregistro = lstEmpresa[j].digitoverificador;
-                }
-            }
-
+         
             try
             {
                 cnx.Open();
-                lh.insertaLayoutMovimiento(lm);
                 cnx.Close();
                 cnx.Dispose();
             }

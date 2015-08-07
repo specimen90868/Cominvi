@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Configuration;
-using MySql.Data.MySqlClient;
+using System.Data.SqlClient;
 
 namespace Nominas
 {
@@ -21,8 +21,8 @@ namespace Nominas
 
         #region VARIABLES GLOBALES
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-        MySqlConnection cnx;
-        MySqlCommand cmd;
+        SqlConnection cnx;
+        SqlCommand cmd;
         Perfil.Core.PerfilesHelper ph;
         List<Perfil.Core.Perfiles> lstPerfiles;
         #endregion
@@ -36,9 +36,9 @@ namespace Nominas
 
         private void ListaPerfiles()
         {
-            cnx = new MySqlConnection();
+            cnx = new SqlConnection();
             cnx.ConnectionString = cdn;
-            cmd = new MySqlCommand();
+            cmd = new SqlCommand();
             cmd.Connection = cnx;
 
             ph = new Perfil.Core.PerfilesHelper();
@@ -175,8 +175,8 @@ namespace Nominas
             {
                 int fila = dgvPerfiles.CurrentCell.RowIndex;
                 int idperfil = int.Parse(dgvPerfiles.Rows[fila].Cells[0].Value.ToString());
-                cnx = new MySqlConnection(cdn);
-                cmd = new MySqlCommand();
+                cnx = new SqlConnection(cdn);
+                cmd = new SqlCommand();
                 cmd.Connection = cnx;
                 ph = new Perfil.Core.PerfilesHelper();
                 ph.Command = cmd;

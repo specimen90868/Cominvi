@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+﻿using System.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,8 +20,8 @@ namespace Nominas
         }
 
         #region VARIABLES GLOBALES
-        MySqlConnection cnx;
-        MySqlCommand cmd;
+        SqlConnection cnx;
+        SqlCommand cmd;
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
         int idempleado = 0;
         #endregion
@@ -37,9 +37,9 @@ namespace Nominas
                 MessageBox.Show("Debe especificar el empleado.", "Información");
                 return;
             }
-            cnx = new MySqlConnection();
+            cnx = new SqlConnection();
             cnx.ConnectionString = cdn;
-            cmd = new MySqlCommand();
+            cmd = new SqlCommand();
             cmd.Connection = cnx;
 
             Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
@@ -47,9 +47,9 @@ namespace Nominas
 
             Empleados.Core.Empleados em = new Empleados.Core.Empleados();
             em.idtrabajador = idempleado;
-            em.sueldo = decimal.Parse(txtSueldo.Text);
-            em.sd = decimal.Parse(txtSD.Text);
-            em.sdi = decimal.Parse(txtSDI.Text);
+            em.sueldo = double.Parse(txtSueldo.Text);
+            em.sd = double.Parse(txtSD.Text);
+            em.sdi = double.Parse(txtSDI.Text);
 
             try
             {
@@ -77,34 +77,6 @@ namespace Nominas
         {
             idempleado = id;
             lblEmpleado.Text = nombre;
-
-            cnx = new MySqlConnection();
-            cmd = new MySqlCommand();
-            cnx.ConnectionString = cdn;
-            cmd.Connection = cnx;
-
-            Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
-            eh.Command = cmd;
-            Empleados.Core.Empleados em = new Empleados.Core.Empleados();
-            em.idtrabajador = idempleado;
-
-            try
-            {
-                cnx.Open();
-                int estatus = (int)eh.obtenerEstatus(em);
-                cnx.Close();
-                cnx.Dispose();
-                if (estatus != 0)
-                {
-                    MessageBox.Show("No se puede modificar el sueldo, el empleado ya cuenta con movimientos. \r\n \r\n Se cerrará la ventana.", "Información");
-                    this.Dispose();
-                }
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show("Error: \r\n \r\n " + error.Message,"Error");
-                this.Dispose();
-            }
         }
 
         private void toolCerrar_Click(object sender, EventArgs e)
@@ -125,9 +97,10 @@ namespace Nominas
                 int DiasDePago = 0;
                 double FactorDePago = 0;
                 int Periodo = 0;
-                cnx = new MySqlConnection();
+                int AntiguedadMod = 0;
+                cnx = new SqlConnection();
                 cnx.ConnectionString = cdn;
-                cmd = new MySqlCommand();
+                cmd = new SqlCommand();
                 cmd.Connection = cnx;
 
                 Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
@@ -148,6 +121,7 @@ namespace Nominas
                     for (int i = 0; i < lstEmpleado.Count; i++)
                     {
                         Periodo = lstEmpleado[i].idperiodo;
+                        AntiguedadMod = lstEmpleado[i].antiguedadmod;
                     }
                 }
                 catch (Exception error)
@@ -157,7 +131,7 @@ namespace Nominas
                 }
                 
                 p.idperiodo = Periodo;
-                f.anio = 0;
+                f.anio = AntiguedadMod;
 
                 try
                 {
@@ -167,8 +141,8 @@ namespace Nominas
                     cnx.Close();
                     cnx.Dispose();
 
-                    txtSD.Text = (double.Parse(txtSueldo.Text) / DiasDePago).ToString("F4");
-                    txtSDI.Text = (double.Parse(txtSD.Text) * FactorDePago).ToString("F4");
+                    txtSD.Text = (double.Parse(txtSueldo.Text) / DiasDePago).ToString("F6");
+                    txtSDI.Text = (double.Parse(txtSD.Text) * FactorDePago).ToString("F6");
                 }
                 catch (Exception error)
                 {

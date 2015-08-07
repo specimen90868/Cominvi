@@ -11,5 +11,6 @@ namespace Puestos.Core
         public int id { get; set; }
         public string descripcion { get; set; }
         public int estatus { get; set; }
+        public int idempresa { get; set; }
     }
 }

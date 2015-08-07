@@ -1,0 +1,6 @@
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Ausentismo.Core\bin\Debug\Ausentismo.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Ausentismo.Core\bin\Debug\Ausentismo.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Ausentismo.Core\bin\Debug\Data.Obj.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Ausentismo.Core\bin\Debug\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Ausentismo.Core\obj\Debug\Ausentismo.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Ausentismo.Core\obj\Debug\Ausentismo.Core.pdb

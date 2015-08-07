@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MySql.Data.MySqlClient;
+using System.Data.SqlClient;
 using System.Data;
 
 namespace Empresas.Core
@@ -13,7 +13,7 @@ namespace Empresas.Core
         public List<Empresas> obtenerEmpresas()
         {
             DataTable dtEmpresas = new DataTable();
-            Command.CommandText = "select idempresa, nombre, rfc, registro, digitoverificador, representante from empresas where activo = 1";
+            Command.CommandText = "select idempresa, nombre, rfc, registro, digitoverificador, representante from empresas where estatus = 1";
             Command.Parameters.Clear();
             dtEmpresas = SelectData(Command);
             List<Empresas> lstEmpresa = new List<Empresas>();
@@ -34,7 +34,7 @@ namespace Empresas.Core
         public List<Empresas> obtenerEmpresa(int idempresa)
         {
             DataTable dtEmpresas = new DataTable();
-            Command.CommandText = "select idempresa, nombre, rfc, registro, digitoverificador, sindicato, representante from empresas where idempresa = @idempresa";
+            Command.CommandText = "select idempresa, nombre, rfc, registro, digitoverificador, representante from empresas where idempresa = @idempresa";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idempresa);
             dtEmpresas = SelectData(Command);
@@ -47,7 +47,6 @@ namespace Empresas.Core
                 e.rfc = dtEmpresas.Rows[i]["rfc"].ToString();
                 e.registro = dtEmpresas.Rows[i]["registro"].ToString();
                 e.digitoverificador = int.Parse(dtEmpresas.Rows[i]["digitoverificador"].ToString());
-                e.sindicato = int.Parse(dtEmpresas.Rows[i]["sindicato"].ToString());
                 e.representante = dtEmpresas.Rows[i]["representante"].ToString();
                 lstEmpresa.Add(e);
             }
@@ -57,7 +56,7 @@ namespace Empresas.Core
         public List<Empresas> InicioEmpresa()
         {
             List<Empresas> lstEmpresa = new List<Empresas>();
-            Command.CommandText = "select idempresa, nombre, registro, digitoverificador from empresas where activo = 1";
+            Command.CommandText = "select idempresa, nombre, registro, digitoverificador from empresas where estatus = 1";
             Command.Parameters.Clear();
             DataTable dtEmpresa = new DataTable();
             dtEmpresa = SelectData(Command);
@@ -83,25 +82,32 @@ namespace Empresas.Core
             return id;
         }
 
-        public MySqlCommand insertaEmpresa(Empresas e)
+        public object obtenerRegistroPatronal(Empresas e)
         {
-            Command.CommandText = "insert into empresas (nombre, rfc, registro, digitoverificador, sindicato, representante, activo) " + 
-                "values (@nombre, @rfc, @registro, @digitoverificador, @sindicato, @representante, @activo)";
+            Command.CommandText = "select registro + convert(char(1),digitoverificador) as registropatronal from dbo.Empresas where idempresa = @idempresa";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", e.idempresa);
+            object id = Select(Command);
+            return id;
+        }
+
+        public int insertaEmpresa(Empresas e)
+        {
+            Command.CommandText = "insert into empresas (nombre, rfc, registro, digitoverificador, representante, estatus) " + 
+                "values (@nombre, @rfc, @registro, @digitoverificador, @representante, @estatus)";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("nombre",e.nombre);
             Command.Parameters.AddWithValue("rfc", e.rfc);
             Command.Parameters.AddWithValue("registro", e.registro);
             Command.Parameters.AddWithValue("digitoverificador", e.digitoverificador);
-            Command.Parameters.AddWithValue("sindicato", e.sindicato);
             Command.Parameters.AddWithValue("representante", e.representante);
-            Command.Parameters.AddWithValue("activo", e.activo);
-            Command.ExecuteNonQuery();
-            return Command;
+            Command.Parameters.AddWithValue("estatus", e.estatus);
+            return Command.ExecuteNonQuery();
         }
 
         public int actualizaEmpresa(Empresas e)
         {
-            Command.CommandText = "update empresas set nombre = @nombre, rfc = @rfc, registro = @registro, digitoverificador = @digitoverificador, sindicato = @sindicato, representante = @representante " +
+            Command.CommandText = "update empresas set nombre = @nombre, rfc = @rfc, registro = @registro, digitoverificador = @digitoverificador, representante = @representante " +
                 "where idempresa = @idempresa";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", e.idempresa);
@@ -109,14 +115,13 @@ namespace Empresas.Core
             Command.Parameters.AddWithValue("rfc", e.rfc);
             Command.Parameters.AddWithValue("registro", e.registro);
             Command.Parameters.AddWithValue("digitoverificador", e.digitoverificador);
-            Command.Parameters.AddWithValue("sindicato", e.sindicato);
             Command.Parameters.AddWithValue("representante", e.representante);
             return Command.ExecuteNonQuery();
         }
 
         public int bajaEmpresa(Empresas e)
         {
-            Command.CommandText = "update empresas set activo = 0 where idempresa = @idempresa";
+            Command.CommandText = "update empresas set estatus = 0 where idempresa = @idempresa";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", e.idempresa);
             return Command.ExecuteNonQuery();

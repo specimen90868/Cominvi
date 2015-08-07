@@ -41,7 +41,6 @@
             this.Panel1 = new System.Windows.Forms.Panel();
             this.toolAcciones = new System.Windows.Forms.ToolStrip();
             this.toolTitulo = new System.Windows.Forms.ToolStripLabel();
-            this.chkEsSindicato = new System.Windows.Forms.CheckBox();
             this.txtRfc = new System.Windows.Forms.TextBox();
             this.txtRegistroPatronal = new System.Windows.Forms.MaskedTextBox();
             this.txtDigitoVerificador = new System.Windows.Forms.TextBox();
@@ -70,7 +69,6 @@
             this.label17 = new System.Windows.Forms.Label();
             this.btnVer = new System.Windows.Forms.Button();
             this.btnAsignar = new System.Windows.Forms.Button();
-            this.lblRutaImagen = new System.Windows.Forms.Label();
             this.Panel2.SuspendLayout();
             this.toolEmpresa.SuspendLayout();
             this.Panel1.SuspendLayout();
@@ -190,16 +188,6 @@
             this.toolTitulo.Size = new System.Drawing.Size(157, 24);
             this.toolTitulo.Text = "Nueva empresa";
             // 
-            // chkEsSindicato
-            // 
-            this.chkEsSindicato.AutoSize = true;
-            this.chkEsSindicato.Location = new System.Drawing.Point(575, 120);
-            this.chkEsSindicato.Name = "chkEsSindicato";
-            this.chkEsSindicato.Size = new System.Drawing.Size(85, 17);
-            this.chkEsSindicato.TabIndex = 14;
-            this.chkEsSindicato.Text = "Es Sindicato";
-            this.chkEsSindicato.UseVisualStyleBackColor = true;
-            // 
             // txtRfc
             // 
             this.txtRfc.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
@@ -273,7 +261,7 @@
             // 
             this.Label14.AutoSize = true;
             this.Label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label14.Location = new System.Drawing.Point(16, 180);
+            this.Label14.Location = new System.Drawing.Point(14, 180);
             this.Label14.Name = "Label14";
             this.Label14.Size = new System.Drawing.Size(80, 18);
             this.Label14.TabIndex = 161;
@@ -400,6 +388,7 @@
             // 
             // txtPais
             // 
+            this.txtPais.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtPais.Location = new System.Drawing.Point(136, 359);
             this.txtPais.Name = "txtPais";
             this.txtPais.Size = new System.Drawing.Size(130, 20);
@@ -425,16 +414,17 @@
             // 
             // btnVer
             // 
-            this.btnVer.Location = new System.Drawing.Point(134, 508);
+            this.btnVer.Location = new System.Drawing.Point(136, 480);
             this.btnVer.Name = "btnVer";
             this.btnVer.Size = new System.Drawing.Size(75, 23);
             this.btnVer.TabIndex = 167;
             this.btnVer.Text = "Ver";
             this.btnVer.UseVisualStyleBackColor = true;
+            this.btnVer.Click += new System.EventHandler(this.btnVer_Click);
             // 
             // btnAsignar
             // 
-            this.btnAsignar.Location = new System.Drawing.Point(215, 508);
+            this.btnAsignar.Location = new System.Drawing.Point(217, 480);
             this.btnAsignar.Name = "btnAsignar";
             this.btnAsignar.Size = new System.Drawing.Size(75, 23);
             this.btnAsignar.TabIndex = 168;
@@ -442,21 +432,11 @@
             this.btnAsignar.UseVisualStyleBackColor = true;
             this.btnAsignar.Click += new System.EventHandler(this.btnAsignar_Click);
             // 
-            // lblRutaImagen
-            // 
-            this.lblRutaImagen.AutoSize = true;
-            this.lblRutaImagen.Location = new System.Drawing.Point(301, 513);
-            this.lblRutaImagen.Name = "lblRutaImagen";
-            this.lblRutaImagen.Size = new System.Drawing.Size(93, 13);
-            this.lblRutaImagen.TabIndex = 169;
-            this.lblRutaImagen.Text = "Ruta de la imagen";
-            // 
             // frmEmpresas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(723, 560);
-            this.Controls.Add(this.lblRutaImagen);
             this.Controls.Add(this.btnAsignar);
             this.Controls.Add(this.btnVer);
             this.Controls.Add(this.label17);
@@ -483,7 +463,6 @@
             this.Controls.Add(this.Label12);
             this.Controls.Add(this.Panel2);
             this.Controls.Add(this.Panel1);
-            this.Controls.Add(this.chkEsSindicato);
             this.Controls.Add(this.txtRfc);
             this.Controls.Add(this.txtRegistroPatronal);
             this.Controls.Add(this.txtDigitoVerificador);
@@ -521,7 +500,6 @@
         internal System.Windows.Forms.Panel Panel1;
         internal System.Windows.Forms.ToolStrip toolAcciones;
         internal System.Windows.Forms.ToolStripLabel toolTitulo;
-        internal System.Windows.Forms.CheckBox chkEsSindicato;
         internal System.Windows.Forms.TextBox txtRfc;
         internal System.Windows.Forms.MaskedTextBox txtRegistroPatronal;
         internal System.Windows.Forms.TextBox txtDigitoVerificador;
@@ -551,6 +529,5 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Button btnVer;
         private System.Windows.Forms.Button btnAsignar;
-        private System.Windows.Forms.Label lblRutaImagen;
     }
 }

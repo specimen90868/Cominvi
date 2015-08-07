@@ -12,3 +12,10 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Autorizaciones.Core\bin
 C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Autorizaciones.Core\obj\Debug\Autorizaciones.Core.csprojResolveAssemblyReference.cache
 C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Autorizaciones.Core\obj\Debug\Autorizaciones.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Autorizaciones.Core\obj\Debug\Autorizaciones.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Autorizaciones.Core\bin\Debug\Autorizaciones.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Autorizaciones.Core\bin\Debug\Autorizaciones.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Autorizaciones.Core\bin\Debug\Data.Obj.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Autorizaciones.Core\bin\Debug\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Autorizaciones.Core\obj\Debug\Autorizaciones.Core.csprojResolveAssemblyReference.cache
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Autorizaciones.Core\obj\Debug\Autorizaciones.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Autorizaciones.Core\obj\Debug\Autorizaciones.Core.pdb

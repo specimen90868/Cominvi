@@ -1,0 +1,334 @@
+﻿namespace Nominas
+{
+    partial class frmReingresoEmpleado
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.label1 = new System.Windows.Forms.Label();
+            this.cmbRegistroPatronal = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.dtpFechaReingreso = new System.Windows.Forms.DateTimePicker();
+            this.dtpFechaAntiguedad = new System.Windows.Forms.DateTimePicker();
+            this.cmbDepartamento = new System.Windows.Forms.ComboBox();
+            this.cmbPuesto = new System.Windows.Forms.ComboBox();
+            this.txtSueldo = new System.Windows.Forms.TextBox();
+            this.txtSalarioDiario = new System.Windows.Forms.TextBox();
+            this.txtSDI = new System.Windows.Forms.TextBox();
+            this.btnAceptar = new System.Windows.Forms.Button();
+            this.btnCancelar = new System.Windows.Forms.Button();
+            this.btnCalcular = new System.Windows.Forms.Button();
+            this.txtAntiguedad = new System.Windows.Forms.TextBox();
+            this.txtAntiguedadMod = new System.Windows.Forms.TextBox();
+            this.lblNombreEmpleado = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.cmbPeriodo = new System.Windows.Forms.ComboBox();
+            this.SuspendLayout();
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(31, 44);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(90, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Registro patronal:";
+            // 
+            // cmbRegistroPatronal
+            // 
+            this.cmbRegistroPatronal.FormattingEnabled = true;
+            this.cmbRegistroPatronal.Location = new System.Drawing.Point(127, 41);
+            this.cmbRegistroPatronal.Name = "cmbRegistroPatronal";
+            this.cmbRegistroPatronal.Size = new System.Drawing.Size(327, 21);
+            this.cmbRegistroPatronal.TabIndex = 1;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(35, 74);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(86, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Fecha reingreso:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(10, 100);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(111, 13);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "Fecha de antiguedad:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(44, 123);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(77, 13);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "Departamento:";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(78, 150);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(43, 13);
+            this.label5.TabIndex = 5;
+            this.label5.Text = "Puesto:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(23, 204);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(98, 13);
+            this.label6.TabIndex = 6;
+            this.label6.Text = "Sueldo del periodo:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(51, 230);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(70, 13);
+            this.label7.TabIndex = 7;
+            this.label7.Text = "Salario diario:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(4, 256);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(117, 13);
+            this.label8.TabIndex = 8;
+            this.label8.Text = "Salario diario integrado:";
+            // 
+            // dtpFechaReingreso
+            // 
+            this.dtpFechaReingreso.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpFechaReingreso.Location = new System.Drawing.Point(127, 68);
+            this.dtpFechaReingreso.Name = "dtpFechaReingreso";
+            this.dtpFechaReingreso.Size = new System.Drawing.Size(128, 20);
+            this.dtpFechaReingreso.TabIndex = 9;
+            this.dtpFechaReingreso.Leave += new System.EventHandler(this.dtpFechaReingreso_Leave);
+            // 
+            // dtpFechaAntiguedad
+            // 
+            this.dtpFechaAntiguedad.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpFechaAntiguedad.Location = new System.Drawing.Point(127, 94);
+            this.dtpFechaAntiguedad.Name = "dtpFechaAntiguedad";
+            this.dtpFechaAntiguedad.Size = new System.Drawing.Size(128, 20);
+            this.dtpFechaAntiguedad.TabIndex = 10;
+            this.dtpFechaAntiguedad.Leave += new System.EventHandler(this.dtpFechaAntiguedad_Leave);
+            // 
+            // cmbDepartamento
+            // 
+            this.cmbDepartamento.FormattingEnabled = true;
+            this.cmbDepartamento.Location = new System.Drawing.Point(127, 120);
+            this.cmbDepartamento.Name = "cmbDepartamento";
+            this.cmbDepartamento.Size = new System.Drawing.Size(128, 21);
+            this.cmbDepartamento.TabIndex = 11;
+            // 
+            // cmbPuesto
+            // 
+            this.cmbPuesto.FormattingEnabled = true;
+            this.cmbPuesto.Location = new System.Drawing.Point(127, 147);
+            this.cmbPuesto.Name = "cmbPuesto";
+            this.cmbPuesto.Size = new System.Drawing.Size(128, 21);
+            this.cmbPuesto.TabIndex = 12;
+            // 
+            // txtSueldo
+            // 
+            this.txtSueldo.Location = new System.Drawing.Point(127, 201);
+            this.txtSueldo.Name = "txtSueldo";
+            this.txtSueldo.Size = new System.Drawing.Size(128, 20);
+            this.txtSueldo.TabIndex = 13;
+            // 
+            // txtSalarioDiario
+            // 
+            this.txtSalarioDiario.Enabled = false;
+            this.txtSalarioDiario.Location = new System.Drawing.Point(127, 227);
+            this.txtSalarioDiario.Name = "txtSalarioDiario";
+            this.txtSalarioDiario.Size = new System.Drawing.Size(128, 20);
+            this.txtSalarioDiario.TabIndex = 14;
+            // 
+            // txtSDI
+            // 
+            this.txtSDI.Enabled = false;
+            this.txtSDI.Location = new System.Drawing.Point(127, 253);
+            this.txtSDI.Name = "txtSDI";
+            this.txtSDI.Size = new System.Drawing.Size(128, 20);
+            this.txtSDI.TabIndex = 15;
+            // 
+            // btnAceptar
+            // 
+            this.btnAceptar.Location = new System.Drawing.Point(298, 253);
+            this.btnAceptar.Name = "btnAceptar";
+            this.btnAceptar.Size = new System.Drawing.Size(75, 23);
+            this.btnAceptar.TabIndex = 16;
+            this.btnAceptar.Text = "Aceptar";
+            this.btnAceptar.UseVisualStyleBackColor = true;
+            this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
+            // 
+            // btnCancelar
+            // 
+            this.btnCancelar.Location = new System.Drawing.Point(379, 253);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(75, 23);
+            this.btnCancelar.TabIndex = 17;
+            this.btnCancelar.Text = "Cancelar";
+            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            // 
+            // btnCalcular
+            // 
+            this.btnCalcular.Location = new System.Drawing.Point(261, 201);
+            this.btnCalcular.Name = "btnCalcular";
+            this.btnCalcular.Size = new System.Drawing.Size(62, 23);
+            this.btnCalcular.TabIndex = 18;
+            this.btnCalcular.Text = "Calcular";
+            this.btnCalcular.UseVisualStyleBackColor = true;
+            this.btnCalcular.Click += new System.EventHandler(this.btnCalcular_Click);
+            // 
+            // txtAntiguedad
+            // 
+            this.txtAntiguedad.Enabled = false;
+            this.txtAntiguedad.Location = new System.Drawing.Point(261, 68);
+            this.txtAntiguedad.Name = "txtAntiguedad";
+            this.txtAntiguedad.Size = new System.Drawing.Size(27, 20);
+            this.txtAntiguedad.TabIndex = 19;
+            // 
+            // txtAntiguedadMod
+            // 
+            this.txtAntiguedadMod.Enabled = false;
+            this.txtAntiguedadMod.Location = new System.Drawing.Point(261, 94);
+            this.txtAntiguedadMod.Name = "txtAntiguedadMod";
+            this.txtAntiguedadMod.Size = new System.Drawing.Size(27, 20);
+            this.txtAntiguedadMod.TabIndex = 20;
+            // 
+            // lblNombreEmpleado
+            // 
+            this.lblNombreEmpleado.AutoSize = true;
+            this.lblNombreEmpleado.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNombreEmpleado.Location = new System.Drawing.Point(12, 9);
+            this.lblNombreEmpleado.Name = "lblNombreEmpleado";
+            this.lblNombreEmpleado.Size = new System.Drawing.Size(191, 20);
+            this.lblNombreEmpleado.TabIndex = 21;
+            this.lblNombreEmpleado.Text = "Nombre del empleado";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(75, 177);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(46, 13);
+            this.label9.TabIndex = 22;
+            this.label9.Text = "Periodo:";
+            // 
+            // cmbPeriodo
+            // 
+            this.cmbPeriodo.FormattingEnabled = true;
+            this.cmbPeriodo.Location = new System.Drawing.Point(127, 174);
+            this.cmbPeriodo.Name = "cmbPeriodo";
+            this.cmbPeriodo.Size = new System.Drawing.Size(128, 21);
+            this.cmbPeriodo.TabIndex = 23;
+            // 
+            // frmReingresoEmpleado
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(466, 282);
+            this.Controls.Add(this.cmbPeriodo);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.lblNombreEmpleado);
+            this.Controls.Add(this.txtAntiguedadMod);
+            this.Controls.Add(this.txtAntiguedad);
+            this.Controls.Add(this.btnCalcular);
+            this.Controls.Add(this.btnCancelar);
+            this.Controls.Add(this.btnAceptar);
+            this.Controls.Add(this.txtSDI);
+            this.Controls.Add(this.txtSalarioDiario);
+            this.Controls.Add(this.txtSueldo);
+            this.Controls.Add(this.cmbPuesto);
+            this.Controls.Add(this.cmbDepartamento);
+            this.Controls.Add(this.dtpFechaAntiguedad);
+            this.Controls.Add(this.dtpFechaReingreso);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.cmbRegistroPatronal);
+            this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "frmReingresoEmpleado";
+            this.Text = "Reingreso del empleado";
+            this.Load += new System.EventHandler(this.frmReingresoEmpleado_Load);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cmbRegistroPatronal;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.DateTimePicker dtpFechaReingreso;
+        private System.Windows.Forms.DateTimePicker dtpFechaAntiguedad;
+        private System.Windows.Forms.ComboBox cmbDepartamento;
+        private System.Windows.Forms.ComboBox cmbPuesto;
+        private System.Windows.Forms.TextBox txtSueldo;
+        private System.Windows.Forms.TextBox txtSalarioDiario;
+        private System.Windows.Forms.TextBox txtSDI;
+        private System.Windows.Forms.Button btnAceptar;
+        private System.Windows.Forms.Button btnCancelar;
+        private System.Windows.Forms.Button btnCalcular;
+        private System.Windows.Forms.TextBox txtAntiguedad;
+        private System.Windows.Forms.TextBox txtAntiguedadMod;
+        private System.Windows.Forms.Label lblNombreEmpleado;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ComboBox cmbPeriodo;
+    }
+}
