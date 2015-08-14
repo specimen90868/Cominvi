@@ -80,6 +80,32 @@ namespace Empleados.Core
             return lstEmpleados;
         }
 
+        public List<IncrementoSalarial> obtenerIncremento(Empleados e)
+        {
+            DataTable dtIncremento = new DataTable();
+            List<IncrementoSalarial> lstEmpleadosIncremento = new List<IncrementoSalarial>();
+
+            Command.CommandText = "exec stp_IncrementoSalarioAnual @idempresa, @estatus";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", e.idempresa);
+            Command.Parameters.AddWithValue("estatus", e.estatus);
+
+            dtIncremento = SelectData(Command);
+
+            for (int i = 0; i < dtIncremento.Rows.Count; i++)
+            {
+                IncrementoSalarial incremento = new IncrementoSalarial();
+                incremento.id = int.Parse(dtIncremento.Rows[i]["id"].ToString());
+                incremento.idtrabajador = int.Parse(dtIncremento.Rows[i]["idtrabajador"].ToString());
+                incremento.nombre = dtIncremento.Rows[i]["nombre"].ToString();
+                incremento.sdivigente = double.Parse(dtIncremento.Rows[i]["sdivigente"].ToString());
+                incremento.sdinuevo = double.Parse(dtIncremento.Rows[i]["sdinuevo"].ToString());
+                lstEmpleadosIncremento.Add(incremento);
+            }
+
+            return lstEmpleadosIncremento;
+        }
+
         public object obtenerEstatus(Empleados e)
         {
             Command.CommandText = "select estatus from trabajadores where idtrabajador = @idtrabajador";

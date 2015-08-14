@@ -18,3 +18,4 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Periodos.Core\bin\Debug\Data.
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Periodos.Core\bin\Debug\Data.Obj.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Periodos.Core\obj\Debug\Periodos.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Periodos.Core\obj\Debug\Periodos.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Periodos.Core\obj\Debug\Periodos.Core.csprojResolveAssemblyReference.cache

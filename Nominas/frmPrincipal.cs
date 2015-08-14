@@ -14,6 +14,7 @@ namespace Nominas
 {
     public partial class frmPrincipal : Form
     {
+
         public frmPrincipal()
         {
             InitializeComponent();
@@ -320,6 +321,13 @@ namespace Nominas
             le._empleadoAltaBaja = GLOBALES.INACTIVO;
             le.MdiParent = this;
             le.Show();
+        }
+
+        private void toolProcesoSalarial_Click(object sender, EventArgs e)
+        {
+            frmListaProcesoSalarial lps = new frmListaProcesoSalarial();
+            lps.MdiParent = this;
+            lps.Show();
         }        
     }
 }

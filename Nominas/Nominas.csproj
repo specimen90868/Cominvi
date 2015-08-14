@@ -57,6 +57,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Calendario.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="frmBaja.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -158,6 +161,12 @@
     </Compile>
     <Compile Include="frmListaPeriodos.Designer.cs">
       <DependentUpon>frmListaPeriodos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmListaProcesoSalarial.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaProcesoSalarial.Designer.cs">
+      <DependentUpon>frmListaProcesoSalarial.cs</DependentUpon>
     </Compile>
     <Compile Include="frmListaPuestos.cs">
       <SubType>Form</SubType>
@@ -296,6 +305,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmListaPeriodos.resx">
       <DependentUpon>frmListaPeriodos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListaProcesoSalarial.resx">
+      <DependentUpon>frmListaProcesoSalarial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmListaPuestos.resx">
       <DependentUpon>frmListaPuestos.cs</DependentUpon>

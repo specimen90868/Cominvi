@@ -4,3 +4,4 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Estados.Core\bin\Debug\Data.O
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Estados.Core\bin\Debug\Data.Obj.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Estados.Core\obj\Debug\Estados.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Estados.Core\obj\Debug\Estados.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Estados.Core\obj\Debug\Estados.Core.csprojResolveAssemblyReference.cache

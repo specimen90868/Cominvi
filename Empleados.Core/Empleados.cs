@@ -36,4 +36,13 @@ namespace Empleados.Core
         public int idse { get; set; }
         public int idusuario { get; set; }      
     }
+
+    public class IncrementoSalarial
+    {
+        public int id { get; set; }
+        public int idtrabajador { get; set; }
+        public string nombre { get; set; }
+        public double sdivigente { get; set; }
+        public double sdinuevo { get; set; }
+    }
 }

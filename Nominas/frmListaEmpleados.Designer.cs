@@ -35,6 +35,7 @@
             this.toolEditar = new System.Windows.Forms.ToolStripButton();
             this.toolBaja = new System.Windows.Forms.ToolStripButton();
             this.toolHistorial = new System.Windows.Forms.ToolStripButton();
+            this.toolReingreso = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolEliminar = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -45,7 +46,6 @@
             this.toolTitulo = new System.Windows.Forms.ToolStrip();
             this.toolEmpleados = new System.Windows.Forms.ToolStripLabel();
             this.dgvEmpleados = new System.Windows.Forms.DataGridView();
-            this.toolReingreso = new System.Windows.Forms.ToolStripButton();
             this.toolBusqueda.SuspendLayout();
             this.toolTitulo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmpleados)).BeginInit();
@@ -117,6 +117,15 @@
             this.toolHistorial.Size = new System.Drawing.Size(71, 22);
             this.toolHistorial.Text = "Historial";
             this.toolHistorial.Click += new System.EventHandler(this.toolHistorial_Click);
+            // 
+            // toolReingreso
+            // 
+            this.toolReingreso.Image = ((System.Drawing.Image)(resources.GetObject("toolReingreso.Image")));
+            this.toolReingreso.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolReingreso.Name = "toolReingreso";
+            this.toolReingreso.Size = new System.Drawing.Size(79, 22);
+            this.toolReingreso.Text = "Reingreso";
+            this.toolReingreso.Click += new System.EventHandler(this.toolReingreso_Click);
             // 
             // toolStripSeparator3
             // 
@@ -199,15 +208,6 @@
             this.dgvEmpleados.Size = new System.Drawing.Size(1037, 672);
             this.dgvEmpleados.TabIndex = 5;
             this.dgvEmpleados.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmpleados_CellDoubleClick);
-            // 
-            // toolReingreso
-            // 
-            this.toolReingreso.Image = ((System.Drawing.Image)(resources.GetObject("toolReingreso.Image")));
-            this.toolReingreso.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolReingreso.Name = "toolReingreso";
-            this.toolReingreso.Size = new System.Drawing.Size(79, 22);
-            this.toolReingreso.Text = "Reingreso";
-            this.toolReingreso.Click += new System.EventHandler(this.toolReingreso_Click);
             // 
             // frmListaEmpleados
             // 

@@ -217,3 +217,4 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.csp
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.exe
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmReingresoEmpleado.resources
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmListaProcesoSalarial.resources

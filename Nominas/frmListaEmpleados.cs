@@ -38,6 +38,7 @@ namespace Nominas
             if (_empleadoAltaBaja == GLOBALES.INACTIVO)
             {
                 toolNuevo.Enabled = false;
+                toolEditar.Enabled = false;
                 toolBaja.Enabled = false;
                 toolIncrementoSalario.Enabled = false;
             }
