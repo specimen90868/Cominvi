@@ -47,5 +47,19 @@ namespace Historial.Core
             Command.Parameters.AddWithValue("motivobaja", h.motivobaja);
             return Command.ExecuteNonQuery();
         }
+
+        public void bulkMovimientos(DataTable dt, string tabla)
+        {
+            bulkCommand.DestinationTableName = tabla;
+            bulkCommand.WriteToServer(dt);
+            dt.Clear();
+        }
+
+        public int stpAntiguedadHistorial()
+        {
+            Command.CommandText = "exec stp_InsertaIncrementoSalarialAnual";
+            Command.Parameters.Clear();
+            return Command.ExecuteNonQuery();
+        }
     }
 }

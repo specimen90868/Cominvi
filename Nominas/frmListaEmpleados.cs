@@ -29,7 +29,7 @@ namespace Nominas
         public int _empleadoAltaBaja;
         #endregion
 
-        private void frmListaEmpleados_Load(object sender, EventArgs e)
+        private void frmListaEmpleados_Load(object sender, EventArgs e) 
         {
             dgvEmpleados.RowHeadersVisible = false;
             CargaPerfil();

@@ -33,10 +33,24 @@
             this.toolTituloVentana = new System.Windows.Forms.ToolStripLabel();
             this.toolAcciones = new System.Windows.Forms.ToolStrip();
             this.toolAplicar = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.lblBuscar = new System.Windows.Forms.ToolStripLabel();
-            this.txtBuscar = new System.Windows.Forms.ToolStripTextBox();
             this.dgvEmpleados = new System.Windows.Forms.DataGridView();
+            this.seleccion = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.idtrabajador = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.noempleado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sdivigente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sdinuevo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.antiguedad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.antiguedadmod = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fechaimss = new Nominas.CalendarioColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.calendarioColumn1 = new Nominas.CalendarioColumn();
             this.toolTitulo.SuspendLayout();
             this.toolAcciones.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmpleados)).BeginInit();
@@ -63,10 +77,7 @@
             // toolAcciones
             // 
             this.toolAcciones.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolAplicar,
-            this.toolStripSeparator1,
-            this.lblBuscar,
-            this.txtBuscar});
+            this.toolAplicar});
             this.toolAcciones.Location = new System.Drawing.Point(0, 27);
             this.toolAcciones.Name = "toolAcciones";
             this.toolAcciones.Size = new System.Drawing.Size(1156, 25);
@@ -80,36 +91,118 @@
             this.toolAplicar.Name = "toolAplicar";
             this.toolAplicar.Size = new System.Drawing.Size(64, 22);
             this.toolAplicar.Text = "Aplicar";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // lblBuscar
-            // 
-            this.lblBuscar.Name = "lblBuscar";
-            this.lblBuscar.Size = new System.Drawing.Size(45, 22);
-            this.lblBuscar.Text = "Buscar:";
-            // 
-            // txtBuscar
-            // 
-            this.txtBuscar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic);
-            this.txtBuscar.ForeColor = System.Drawing.Color.Gray;
-            this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(300, 25);
-            this.txtBuscar.Text = "Buscar empleado...";
+            this.toolAplicar.Click += new System.EventHandler(this.toolAplicar_Click);
             // 
             // dgvEmpleados
             // 
             this.dgvEmpleados.AllowUserToAddRows = false;
             this.dgvEmpleados.AllowUserToDeleteRows = false;
+            this.dgvEmpleados.AllowUserToResizeRows = false;
             this.dgvEmpleados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvEmpleados.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.seleccion,
+            this.idtrabajador,
+            this.noempleado,
+            this.nombre,
+            this.sdivigente,
+            this.sdinuevo,
+            this.antiguedad,
+            this.antiguedadmod,
+            this.fechaimss});
             this.dgvEmpleados.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvEmpleados.Location = new System.Drawing.Point(0, 52);
+            this.dgvEmpleados.MultiSelect = false;
             this.dgvEmpleados.Name = "dgvEmpleados";
             this.dgvEmpleados.Size = new System.Drawing.Size(1156, 640);
             this.dgvEmpleados.TabIndex = 7;
+            this.dgvEmpleados.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmpleados_CellContentClick);
+            // 
+            // seleccion
+            // 
+            this.seleccion.FalseValue = "0";
+            this.seleccion.HeaderText = "Selección";
+            this.seleccion.Name = "seleccion";
+            this.seleccion.TrueValue = "1";
+            // 
+            // idtrabajador
+            // 
+            this.idtrabajador.HeaderText = "Id";
+            this.idtrabajador.Name = "idtrabajador";
+            // 
+            // noempleado
+            // 
+            this.noempleado.HeaderText = "No. Empleado";
+            this.noempleado.Name = "noempleado";
+            // 
+            // nombre
+            // 
+            this.nombre.HeaderText = "Nombre";
+            this.nombre.Name = "nombre";
+            // 
+            // sdivigente
+            // 
+            this.sdivigente.HeaderText = "SDI Vigente";
+            this.sdivigente.Name = "sdivigente";
+            // 
+            // sdinuevo
+            // 
+            this.sdinuevo.HeaderText = "SDI Nuevo";
+            this.sdinuevo.Name = "sdinuevo";
+            // 
+            // antiguedad
+            // 
+            this.antiguedad.HeaderText = "Antiguedad";
+            this.antiguedad.Name = "antiguedad";
+            // 
+            // antiguedadmod
+            // 
+            this.antiguedadmod.HeaderText = "AntiguedadMod";
+            this.antiguedadmod.Name = "antiguedadmod";
+            // 
+            // fechaimss
+            // 
+            this.fechaimss.HeaderText = "Fecha IMSS";
+            this.fechaimss.Name = "fechaimss";
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "Id";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.HeaderText = "No. Empleado";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.HeaderText = "Nombre";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.HeaderText = "SDI Vigente";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.HeaderText = "SDI Nuevo";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.HeaderText = "Antiguedad";
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            this.dataGridViewTextBoxColumn7.HeaderText = "AntiguedadMod";
+            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            // 
+            // calendarioColumn1
+            // 
+            this.calendarioColumn1.HeaderText = "Fecha IMSS";
+            this.calendarioColumn1.Name = "calendarioColumn1";
             // 
             // frmListaProcesoSalarial
             // 
@@ -138,9 +231,23 @@
         internal System.Windows.Forms.ToolStripLabel toolTituloVentana;
         internal System.Windows.Forms.ToolStrip toolAcciones;
         private System.Windows.Forms.ToolStripButton toolAplicar;
-        internal System.Windows.Forms.ToolStripLabel lblBuscar;
-        internal System.Windows.Forms.ToolStripTextBox txtBuscar;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.DataGridView dgvEmpleados;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn seleccion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idtrabajador;
+        private System.Windows.Forms.DataGridViewTextBoxColumn noempleado;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nombre;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sdivigente;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sdinuevo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn antiguedad;
+        private System.Windows.Forms.DataGridViewTextBoxColumn antiguedadmod;
+        private CalendarioColumn fechaimss;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private CalendarioColumn calendarioColumn1;
     }
 }

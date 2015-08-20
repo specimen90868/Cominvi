@@ -39,10 +39,14 @@ namespace Empleados.Core
 
     public class IncrementoSalarial
     {
-        public int id { get; set; }
+        public int chk { get; set; }
         public int idtrabajador { get; set; }
+        public int noempleado { get; set; }
         public string nombre { get; set; }
         public double sdivigente { get; set; }
         public double sdinuevo { get; set; }
+        public int antiguedad { get; set; }
+        public int antiguedadmod { get; set; }
+        public DateTime fechaimss { get; set; }
     }
 }

@@ -11,6 +11,7 @@ namespace Data.Obj
     public class DataObj
     {
         public SqlCommand Command { get; set; }
+        public SqlBulkCopy bulkCommand { get; set; }
 
         public DataTable SelectData(SqlCommand pCommand)
         {

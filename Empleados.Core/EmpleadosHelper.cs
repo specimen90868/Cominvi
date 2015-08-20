@@ -95,11 +95,15 @@ namespace Empleados.Core
             for (int i = 0; i < dtIncremento.Rows.Count; i++)
             {
                 IncrementoSalarial incremento = new IncrementoSalarial();
-                incremento.id = int.Parse(dtIncremento.Rows[i]["id"].ToString());
+                incremento.chk = int.Parse(dtIncremento.Rows[i]["chk"].ToString());
                 incremento.idtrabajador = int.Parse(dtIncremento.Rows[i]["idtrabajador"].ToString());
+                incremento.noempleado = int.Parse(dtIncremento.Rows[i]["noempleado"].ToString());
                 incremento.nombre = dtIncremento.Rows[i]["nombre"].ToString();
                 incremento.sdivigente = double.Parse(dtIncremento.Rows[i]["sdivigente"].ToString());
                 incremento.sdinuevo = double.Parse(dtIncremento.Rows[i]["sdinuevo"].ToString());
+                incremento.antiguedad = int.Parse(dtIncremento.Rows[i]["antiguedad"].ToString());
+                incremento.antiguedadmod = int.Parse(dtIncremento.Rows[i]["antiguedadmod"].ToString());
+                incremento.fechaimss = DateTime.Parse(dtIncremento.Rows[i]["fechaimss"].ToString());
                 lstEmpleadosIncremento.Add(incremento);
             }
 
@@ -272,5 +276,6 @@ namespace Empleados.Core
             Command.Parameters.AddWithValue("idtrabajador", e.idtrabajador);
             return Command.ExecuteNonQuery();
         }
+
     }
 }
