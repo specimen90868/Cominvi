@@ -102,6 +102,12 @@
     <Compile Include="frmEmpresas.Designer.cs">
       <DependentUpon>frmEmpresas.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmExpediente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmExpediente.Designer.cs">
+      <DependentUpon>frmExpediente.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmFactores.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -137,6 +143,12 @@
     </Compile>
     <Compile Include="frmListaEmpresas.Designer.cs">
       <DependentUpon>frmListaEmpresas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmListaExpedientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaExpedientes.Designer.cs">
+      <DependentUpon>frmListaExpedientes.cs</DependentUpon>
     </Compile>
     <Compile Include="frmListaFactores.cs">
       <SubType>Form</SubType>
@@ -276,6 +288,9 @@
     <EmbeddedResource Include="frmEmpresas.resx">
       <DependentUpon>frmEmpresas.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmExpediente.resx">
+      <DependentUpon>frmExpediente.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmFactores.resx">
       <DependentUpon>frmFactores.cs</DependentUpon>
     </EmbeddedResource>
@@ -293,6 +308,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmListaEmpresas.resx">
       <DependentUpon>frmListaEmpresas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListaExpedientes.resx">
+      <DependentUpon>frmListaExpedientes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmListaFactores.resx">
       <DependentUpon>frmListaFactores.cs</DependentUpon>
@@ -417,6 +435,10 @@
     <ProjectReference Include="..\Estados.Core\Estados.Core.csproj">
       <Project>{2d9cec88-e081-444f-a42b-0ba60e6d92d1}</Project>
       <Name>Estados.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Expediente.Core\Expediente.Core.csproj">
+      <Project>{32ddd81b-67ff-4dcb-91ee-f478c1e152f5}</Project>
+      <Name>Expediente.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Factores.Core\Factores.Core.csproj">
       <Project>{4975efe5-7f1e-4648-89c1-ff4b4fcafd7a}</Project>

@@ -328,6 +328,13 @@ namespace Nominas
             frmListaProcesoSalarial lps = new frmListaProcesoSalarial();
             lps.MdiParent = this;
             lps.Show();
+        }
+
+        private void mnuExpedientes_Click(object sender, EventArgs e)
+        {
+            frmListaExpedientes le = new frmListaExpedientes();
+            le.MdiParent = this;
+            le.Show();
         }        
     }
 }

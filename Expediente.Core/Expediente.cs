@@ -10,6 +10,7 @@ namespace Expediente.Core
     {
         public int id { get; set; }
         public int idtrabajador { get; set; }
+        public int idempresa { get; set; }
         public bool contrato { get; set; }
         public bool solicitud { get; set; }
         public bool altaimss { get; set; }
@@ -24,7 +25,7 @@ namespace Expediente.Core
         public bool afore { get; set; }
         public bool fotografias { get; set; }
         public bool autorizacion { get; set; }
-        public bool estatus { get; set; }
-        public bool observacion { get; set; }
+        public int estatus { get; set; }
+        public string observacion { get; set; }
     }
 }

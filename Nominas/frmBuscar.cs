@@ -52,6 +52,7 @@ namespace Nominas
 
                 Empleados.Core.Empleados em = new Empleados.Core.Empleados();
                 em.idempresa = GLOBALES.IDEMPRESA;
+                em.estatus = GLOBALES.ACTIVO;
 
                 try
                 {

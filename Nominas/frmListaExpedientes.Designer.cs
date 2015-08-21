@@ -1,6 +1,6 @@
 ﻿namespace Nominas
 {
-    partial class frmListaComplementos
+    partial class frmListaExpedientes
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmListaComplementos));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmListaExpedientes));
             this.toolTitulo = new System.Windows.Forms.ToolStrip();
             this.toolEmpleados = new System.Windows.Forms.ToolStripLabel();
             this.toolBusqueda = new System.Windows.Forms.ToolStrip();
@@ -38,10 +38,11 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.lblBuscar = new System.Windows.Forms.ToolStripLabel();
             this.txtBuscar = new System.Windows.Forms.ToolStripTextBox();
-            this.dgvComplementos = new System.Windows.Forms.DataGridView();
+            this.dgvExpedientes = new System.Windows.Forms.DataGridView();
+            this.toolEliminar = new System.Windows.Forms.ToolStripButton();
             this.toolTitulo.SuspendLayout();
             this.toolBusqueda.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvComplementos)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvExpedientes)).BeginInit();
             this.SuspendLayout();
             // 
             // toolTitulo
@@ -51,16 +52,16 @@
             this.toolEmpleados});
             this.toolTitulo.Location = new System.Drawing.Point(0, 0);
             this.toolTitulo.Name = "toolTitulo";
-            this.toolTitulo.Size = new System.Drawing.Size(687, 27);
-            this.toolTitulo.TabIndex = 5;
+            this.toolTitulo.Size = new System.Drawing.Size(748, 27);
+            this.toolTitulo.TabIndex = 6;
             this.toolTitulo.Text = "ToolStrip1";
             // 
             // toolEmpleados
             // 
             this.toolEmpleados.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold);
             this.toolEmpleados.Name = "toolEmpleados";
-            this.toolEmpleados.Size = new System.Drawing.Size(274, 24);
-            this.toolEmpleados.Text = "Empleados - Complementos";
+            this.toolEmpleados.Size = new System.Drawing.Size(251, 24);
+            this.toolEmpleados.Text = "Empleados - Expedientes";
             // 
             // toolBusqueda
             // 
@@ -68,13 +69,14 @@
             this.toolNuevo,
             this.toolConsultar,
             this.toolEditar,
+            this.toolEliminar,
             this.toolStripSeparator1,
             this.lblBuscar,
             this.txtBuscar});
             this.toolBusqueda.Location = new System.Drawing.Point(0, 27);
             this.toolBusqueda.Name = "toolBusqueda";
-            this.toolBusqueda.Size = new System.Drawing.Size(687, 25);
-            this.toolBusqueda.TabIndex = 6;
+            this.toolBusqueda.Size = new System.Drawing.Size(748, 25);
+            this.toolBusqueda.TabIndex = 7;
             this.toolBusqueda.Text = "ToolStrip1";
             // 
             // toolNuevo
@@ -126,37 +128,45 @@
             this.txtBuscar.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBuscar_KeyPress);
             this.txtBuscar.Click += new System.EventHandler(this.txtBuscar_Click);
             // 
-            // dgvComplementos
+            // dgvExpedientes
             // 
-            this.dgvComplementos.AllowUserToAddRows = false;
-            this.dgvComplementos.AllowUserToDeleteRows = false;
-            this.dgvComplementos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvComplementos.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvComplementos.Location = new System.Drawing.Point(0, 52);
-            this.dgvComplementos.MultiSelect = false;
-            this.dgvComplementos.Name = "dgvComplementos";
-            this.dgvComplementos.ReadOnly = true;
-            this.dgvComplementos.Size = new System.Drawing.Size(687, 506);
-            this.dgvComplementos.TabIndex = 7;
-            this.dgvComplementos.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvComplementos_CellClick);
-            this.dgvComplementos.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvComplementos_CellDoubleClick);
+            this.dgvExpedientes.AllowUserToAddRows = false;
+            this.dgvExpedientes.AllowUserToDeleteRows = false;
+            this.dgvExpedientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvExpedientes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvExpedientes.Location = new System.Drawing.Point(0, 52);
+            this.dgvExpedientes.MultiSelect = false;
+            this.dgvExpedientes.Name = "dgvExpedientes";
+            this.dgvExpedientes.ReadOnly = true;
+            this.dgvExpedientes.Size = new System.Drawing.Size(748, 648);
+            this.dgvExpedientes.TabIndex = 8;
+            this.dgvExpedientes.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvExpedientes_CellClick);
             // 
-            // frmListaComplementos
+            // toolEliminar
+            // 
+            this.toolEliminar.Image = ((System.Drawing.Image)(resources.GetObject("toolEliminar.Image")));
+            this.toolEliminar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolEliminar.Name = "toolEliminar";
+            this.toolEliminar.Size = new System.Drawing.Size(70, 22);
+            this.toolEliminar.Text = "Eliminar";
+            this.toolEliminar.Click += new System.EventHandler(this.toolEliminar_Click);
+            // 
+            // frmListaExpedientes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(687, 558);
-            this.Controls.Add(this.dgvComplementos);
+            this.ClientSize = new System.Drawing.Size(748, 700);
+            this.Controls.Add(this.dgvExpedientes);
             this.Controls.Add(this.toolBusqueda);
             this.Controls.Add(this.toolTitulo);
-            this.Name = "frmListaComplementos";
-            this.Text = "Complementos";
-            this.Load += new System.EventHandler(this.frmListaComplementos_Load);
+            this.Name = "frmListaExpedientes";
+            this.Text = "Lista de Expedientes";
+            this.Load += new System.EventHandler(this.frmListaExpedientes_Load);
             this.toolTitulo.ResumeLayout(false);
             this.toolTitulo.PerformLayout();
             this.toolBusqueda.ResumeLayout(false);
             this.toolBusqueda.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvComplementos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvExpedientes)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -173,6 +183,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         internal System.Windows.Forms.ToolStripLabel lblBuscar;
         internal System.Windows.Forms.ToolStripTextBox txtBuscar;
-        private System.Windows.Forms.DataGridView dgvComplementos;
+        private System.Windows.Forms.DataGridView dgvExpedientes;
+        private System.Windows.Forms.ToolStripButton toolEliminar;
     }
 }

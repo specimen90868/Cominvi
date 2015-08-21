@@ -43,6 +43,12 @@
     <Compile Include="ExpedienteHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Data.Obj\Data.Obj.csproj">
+      <Project>{2f926e34-44b7-49dc-b955-9b33f8b55c96}</Project>
+      <Name>Data.Obj</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

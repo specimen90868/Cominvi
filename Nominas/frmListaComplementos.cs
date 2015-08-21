@@ -153,5 +153,47 @@ namespace Nominas
         {
             Seleccion(GLOBALES.CONSULTAR);
         }
+
+        private void txtBuscar_Click(object sender, EventArgs e)
+        {
+            txtBuscar.Text = "";
+            txtBuscar.Font = new Font("Arial", 9);
+            txtBuscar.ForeColor = System.Drawing.Color.Black;
+        }
+
+        private void txtBuscar_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                if (string.IsNullOrEmpty(txtBuscar.Text) || string.IsNullOrWhiteSpace(txtBuscar.Text))
+                {
+                    var em = from emp in lstEmpleados
+                             select new
+                             {
+                                 IdTrabajador = emp.idtrabajador,
+                                 Nombre = emp.nombrecompleto
+                             };
+                    dgvComplementos.DataSource = em.ToList();
+                }
+                else
+                {
+                    var busqueda = from b in lstEmpleados
+                                   where b.nombrecompleto.Contains(txtBuscar.Text.ToUpper())
+                                   select new
+                                   {
+                                       IdTrabajador = b.idtrabajador,
+                                       Nombre = b.nombrecompleto
+                                   };
+                    dgvComplementos.DataSource = busqueda.ToList();
+                }
+            }
+        }
+
+        private void txtBuscar_Leave(object sender, EventArgs e)
+        {
+            txtBuscar.Text = "Buscar empleado...";
+            txtBuscar.Font = new Font("Segoe UI", 9, FontStyle.Italic);
+            txtBuscar.ForeColor = System.Drawing.Color.Gray;
+        }
     }
 }
