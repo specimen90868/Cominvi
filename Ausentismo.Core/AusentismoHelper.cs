@@ -10,7 +10,7 @@ namespace Ausentismo.Core
     {
         public int insertaAusentismo(Ausentismo a)
         {
-            Command.CommandText = "insert into Ausentismos (idtrabajador, idempresa, registropatronal, nss, fecha_imss, dias) values " +
+            Command.CommandText = "insert into suaAusentismos (idtrabajador, idempresa, registropatronal, nss, fecha_imss, dias) values " +
                 "(@idtrabajador,@idempresa,@registropatronal,@nss,@fecha_imss,@dias)";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", a.idtrabajador);

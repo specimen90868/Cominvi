@@ -47,33 +47,33 @@ namespace Expediente.Core
         public List<Expediente> obtenerExpediente(Expediente e)
         {
             List<Expediente> lstExpediente = new List<Expediente>();
-            DataTable dtEstados = new DataTable();
+            DataTable dtExpediente = new DataTable();
             Command.CommandText = "select * from expedientes where idtrabajador = @idtrabajador";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", e.idtrabajador);
-            dtEstados = SelectData(Command);
-            for (int i = 0; i < dtEstados.Rows.Count; i++)
+            dtExpediente = SelectData(Command);
+            for (int i = 0; i < dtExpediente.Rows.Count; i++)
             {
                 Expediente exp = new Expediente();
-                exp.id = int.Parse(dtEstados.Rows[i]["id"].ToString());
-                exp.idtrabajador = int.Parse(dtEstados.Rows[i]["idtrabajador"].ToString());
-                exp.idempresa = int.Parse(dtEstados.Rows[i]["idempresa"].ToString());
-                exp.contrato = bool.Parse(dtEstados.Rows[i]["contrato"].ToString());
-                exp.solicitud = bool.Parse(dtEstados.Rows[i]["solicitud"].ToString());
-                exp.altaimss = bool.Parse(dtEstados.Rows[i]["altaimss"].ToString());
-                exp.credencial = bool.Parse(dtEstados.Rows[i]["credencial"].ToString());
-                exp.actanacimiento = bool.Parse(dtEstados.Rows[i]["actanacimiento"].ToString());
-                exp.ife = bool.Parse(dtEstados.Rows[i]["ife"].ToString());
-                exp.curp = bool.Parse(dtEstados.Rows[i]["curp"].ToString());
-                exp.cdomicilio = bool.Parse(dtEstados.Rows[i]["cdomicilio"].ToString());
-                exp.nss = bool.Parse(dtEstados.Rows[i]["nss"].ToString());
-                exp.rfc = bool.Parse(dtEstados.Rows[i]["rfc"].ToString());
-                exp.infonavit = bool.Parse(dtEstados.Rows[i]["infonavit"].ToString());
-                exp.afore = bool.Parse(dtEstados.Rows[i]["afore"].ToString());
-                exp.fotografias = bool.Parse(dtEstados.Rows[i]["fotografias"].ToString());
-                exp.autorizacion = bool.Parse(dtEstados.Rows[i]["autorizacion"].ToString());
-                exp.estatus = int.Parse(dtEstados.Rows[i]["estatus"].ToString());
-                exp.observacion = dtEstados.Rows[i]["observacion"].ToString();
+                exp.id = int.Parse(dtExpediente.Rows[i]["id"].ToString());
+                exp.idtrabajador = int.Parse(dtExpediente.Rows[i]["idtrabajador"].ToString());
+                exp.idempresa = int.Parse(dtExpediente.Rows[i]["idempresa"].ToString());
+                exp.contrato = bool.Parse(dtExpediente.Rows[i]["contrato"].ToString());
+                exp.solicitud = bool.Parse(dtExpediente.Rows[i]["solicitud"].ToString());
+                exp.altaimss = bool.Parse(dtExpediente.Rows[i]["altaimss"].ToString());
+                exp.credencial = bool.Parse(dtExpediente.Rows[i]["credencial"].ToString());
+                exp.actanacimiento = bool.Parse(dtExpediente.Rows[i]["actanacimiento"].ToString());
+                exp.ife = bool.Parse(dtExpediente.Rows[i]["ife"].ToString());
+                exp.curp = bool.Parse(dtExpediente.Rows[i]["curp"].ToString());
+                exp.cdomicilio = bool.Parse(dtExpediente.Rows[i]["cdomicilio"].ToString());
+                exp.nss = bool.Parse(dtExpediente.Rows[i]["nss"].ToString());
+                exp.rfc = bool.Parse(dtExpediente.Rows[i]["rfc"].ToString());
+                exp.infonavit = bool.Parse(dtExpediente.Rows[i]["infonavit"].ToString());
+                exp.afore = bool.Parse(dtExpediente.Rows[i]["afore"].ToString());
+                exp.fotografias = bool.Parse(dtExpediente.Rows[i]["fotografias"].ToString());
+                exp.autorizacion = bool.Parse(dtExpediente.Rows[i]["autorizacion"].ToString());
+                exp.estatus = int.Parse(dtExpediente.Rows[i]["estatus"].ToString());
+                exp.observacion = dtExpediente.Rows[i]["observacion"].ToString();
                 lstExpediente.Add(exp);
             }
             return lstExpediente;

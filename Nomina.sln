@@ -45,6 +45,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ausentismo.Core", "Ausentis
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expediente.Core", "Expediente.Core\Expediente.Core.csproj", "{32DDD81B-67FF-4DCB-91EE-F478C1E152F5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infonavit.Core", "Infonavit.Core\Infonavit.Core.csproj", "{0E040BF1-28A8-475E-A78A-02925549ACD7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -135,6 +137,10 @@ Global
 		{32DDD81B-67FF-4DCB-91EE-F478C1E152F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32DDD81B-67FF-4DCB-91EE-F478C1E152F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32DDD81B-67FF-4DCB-91EE-F478C1E152F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E040BF1-28A8-475E-A78A-02925549ACD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E040BF1-28A8-475E-A78A-02925549ACD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E040BF1-28A8-475E-A78A-02925549ACD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E040BF1-28A8-475E-A78A-02925549ACD7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

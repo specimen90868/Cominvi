@@ -11,4 +11,3 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Imagen.Core\bin\Debug\Data.Ob
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Imagen.Core\bin\Debug\Data.Obj.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Imagen.Core\obj\Debug\Imagen.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Imagen.Core\obj\Debug\Imagen.Core.pdb
-C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Imagen.Core\obj\Debug\Imagen.Core.csprojResolveAssemblyReference.cache

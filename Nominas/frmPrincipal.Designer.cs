@@ -48,7 +48,6 @@
             this.mnuExpedientes = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuInfonavit = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuIncapacidades = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuSeguroSocial = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuNominas = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuCatalogos = new System.Windows.Forms.ToolStripMenuItem();
@@ -153,8 +152,7 @@
             this.mnuEmpleados,
             this.mnuExpedientes,
             this.toolStripSeparator3,
-            this.mnuInfonavit,
-            this.mnuIncapacidades});
+            this.mnuInfonavit});
             this.mnuRecursosHumanos.Name = "mnuRecursosHumanos";
             this.mnuRecursosHumanos.Size = new System.Drawing.Size(121, 20);
             this.mnuRecursosHumanos.Text = "Recursos Humanos";
@@ -227,12 +225,7 @@
             this.mnuInfonavit.Name = "mnuInfonavit";
             this.mnuInfonavit.Size = new System.Drawing.Size(152, 22);
             this.mnuInfonavit.Text = "Infonavit";
-            // 
-            // mnuIncapacidades
-            // 
-            this.mnuIncapacidades.Name = "mnuIncapacidades";
-            this.mnuIncapacidades.Size = new System.Drawing.Size(152, 22);
-            this.mnuIncapacidades.Text = "Incapacidades";
+            this.mnuInfonavit.Click += new System.EventHandler(this.mnuInfonavit_Click);
             // 
             // mnuSeguroSocial
             // 
@@ -436,7 +429,6 @@
         private System.Windows.Forms.ToolStripMenuItem mnuSeguroSocial;
         private System.Windows.Forms.ToolStripMenuItem mnuNominas;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripMenuItem mnuIncapacidades;
         private System.Windows.Forms.ToolStripMenuItem mnuInfonavit;
         private System.Windows.Forms.ToolStripMenuItem mnuEmpleadoNomina;
         private System.Windows.Forms.ToolStripMenuItem mnuComplementos;

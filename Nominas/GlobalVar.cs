@@ -45,6 +45,16 @@ namespace Nominas
         public static int INACTIVO = 0;
         #endregion
 
+        #region TIPOS CREDITO INFONAVIT
+        public static int dPORCENTAJE = 1;
+        public static int dVSMDF = 3;
+        public static int dPESOS = 2;
+
+        public static int mPORCENTAJE = 20;
+        public static int mVSMDF = 19;
+        public static int mPESOS = 18;
+        #endregion
+
         public static int IDUSUARIO { get; set; }
         public static int IDPERFIL { get; set; }
         public static int IDEMPRESA { get; set; }

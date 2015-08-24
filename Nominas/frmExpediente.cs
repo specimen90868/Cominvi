@@ -52,6 +52,12 @@ namespace Nominas
                 return;
             }
 
+            if (_idEmpleado == 0)
+            {
+                MessageBox.Show("No se puede guardar no ha seleccionado al Empleado", "Error");
+                return;
+            }
+
             cnx = new SqlConnection();
             cnx.ConnectionString = cdn;
             cmd = new SqlCommand();
@@ -115,8 +121,6 @@ namespace Nominas
             if (OnNuevoExpediente != null)
                 OnNuevoExpediente(_tipoOperacion);
             this.Dispose();
-
-            this.Dispose();
         }
 
         private void frmExpediente_Load(object sender, EventArgs e)
@@ -168,14 +172,19 @@ namespace Nominas
 
                 if (_tipoOperacion == GLOBALES.CONSULTAR)
                 {
-                    toolTitulo.Text = "Consulta del Expediente";
+                    toolVentana.Text = "Consulta del Expediente";
                     GLOBALES.INHABILITAR(this, typeof(CheckBox));
                     GLOBALES.INHABILITAR(this, typeof(TextBox));
                     toolGuardar.Enabled = false;
                     toolBuscar.Enabled = false;
                 }
                 else
-                    toolTitulo.Text = "Edición del Expediente";
+                {
+                    toolVentana.Text = "Edición del Expediente";
+                    lblEmpleado.Text = _nombreEmpleado;
+                    toolBuscar.Enabled = false;
+                }
+                
             }
         }
 

@@ -120,6 +120,12 @@
     <Compile Include="frmImagen.Designer.cs">
       <DependentUpon>frmImagen.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmInfonavit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmInfonavit.Designer.cs">
+      <DependentUpon>frmInfonavit.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmListaComplementos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -161,6 +167,12 @@
     </Compile>
     <Compile Include="frmListaHistorial.Designer.cs">
       <DependentUpon>frmListaHistorial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmListaInfonavit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaInfonavit.Designer.cs">
+      <DependentUpon>frmListaInfonavit.cs</DependentUpon>
     </Compile>
     <Compile Include="frmListaPerfiles.cs">
       <SubType>Form</SubType>
@@ -297,6 +309,9 @@
     <EmbeddedResource Include="frmImagen.resx">
       <DependentUpon>frmImagen.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmInfonavit.resx">
+      <DependentUpon>frmInfonavit.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmListaComplementos.resx">
       <DependentUpon>frmListaComplementos.cs</DependentUpon>
     </EmbeddedResource>
@@ -317,6 +332,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmListaHistorial.resx">
       <DependentUpon>frmListaHistorial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListaInfonavit.resx">
+      <DependentUpon>frmListaInfonavit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmListaPerfiles.resx">
       <DependentUpon>frmListaPerfiles.cs</DependentUpon>
@@ -451,6 +469,10 @@
     <ProjectReference Include="..\Imagen.Core\Imagen.Core.csproj">
       <Project>{38c53406-8cfb-4bd5-a58e-c6bc19da2524}</Project>
       <Name>Imagen.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Infonavit.Core\Infonavit.Core.csproj">
+      <Project>{0e040bf1-28a8-475e-a78a-02925549acd7}</Project>
+      <Name>Infonavit.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Perfil.Core\Perfil.Core.csproj">
       <Project>{f45c48b3-fd8c-4b67-9d87-10e3971c1dbd}</Project>

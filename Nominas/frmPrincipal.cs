@@ -335,6 +335,13 @@ namespace Nominas
             frmListaExpedientes le = new frmListaExpedientes();
             le.MdiParent = this;
             le.Show();
+        }
+
+        private void mnuInfonavit_Click(object sender, EventArgs e)
+        {
+            frmListaInfonavit li = new frmListaInfonavit();
+            li.MdiParent = this;
+            li.Show();
         }        
     }
 }

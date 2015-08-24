@@ -1,0 +1,6 @@
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Infonavit.Core\bin\Debug\Infonavit.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Infonavit.Core\bin\Debug\Infonavit.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Infonavit.Core\bin\Debug\Data.Obj.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Infonavit.Core\bin\Debug\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Infonavit.Core\obj\Debug\Infonavit.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Infonavit.Core\obj\Debug\Infonavit.Core.pdb

@@ -18,4 +18,3 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Puestos.Core\bin\Debug\Data.O
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Puestos.Core\bin\Debug\Data.Obj.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Puestos.Core\obj\Debug\Puestos.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Puestos.Core\obj\Debug\Puestos.Core.pdb
-C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Puestos.Core\obj\Debug\Puestos.Core.csprojResolveAssemblyReference.cache
