@@ -349,6 +349,13 @@ namespace Nominas
             frmListaAltasSua las = new frmListaAltasSua();
             las.MdiParent = this;
             las.Show();
+        }
+
+        private void toolBajas_Click(object sender, EventArgs e)
+        {
+            frmListaBajasSua lbs = new frmListaBajasSua();
+            lbs.MdiParent = this;
+            lbs.Show();
         }        
     }
 }

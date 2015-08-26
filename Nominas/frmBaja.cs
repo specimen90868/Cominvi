@@ -32,6 +32,11 @@ namespace Nominas
         public string _nombreEmpleado;
         #endregion
 
+        #region DELEGADOS
+        public delegate void delOnBajaEmpleado(int baja);
+        public event delOnBajaEmpleado OnBajaEmpleado;
+        #endregion
+
         private void frmBaja_Load(object sender, EventArgs e)
         {
             lblNombreEmpleado.Text = _nombreEmpleado;
@@ -186,12 +191,25 @@ namespace Nominas
                 a.fecha_imss = dtpFechaBaja.Value;
                 a.dias = diasAusentismo;
 
+                Bajas.Core.BajasHelper bh = new Bajas.Core.BajasHelper();
+                bh.Command = cmd;
+
+                Bajas.Core.Bajas baja = new Bajas.Core.Bajas();
+                baja.idtrabajador = _idempleado;
+                baja.idempresa = GLOBALES.IDEMPRESA;
+                baja.motivo = int.Parse(cmbMotivoBaja.SelectedValue.ToString());
+                baja.fecha = dtpFechaBaja.Value;
+
                 try
                 {
                     cnx.Open();
                     h.valor = (double)(decimal)eh.obtenerSalarioDiarioIntegrado(emp);
                     hp.insertarHistorial(h);
                     eh.bajaEmpleado(emp);
+
+                    baja.registropatronal = (string)ep.obtenerRegistroPatronal(empresa);
+                    baja.nss = (string)eh.obtenerNss(emp);
+                    bh.insertaBaja(baja);
 
                     if (ausentismo)
                     {
@@ -202,6 +220,9 @@ namespace Nominas
 
                     cnx.Close();
                     cnx.Dispose();
+
+                    if(OnBajaEmpleado !=  null)
+                        OnBajaEmpleado(GLOBALES.INACTIVO);
                 }
                 catch (Exception error)
                 {

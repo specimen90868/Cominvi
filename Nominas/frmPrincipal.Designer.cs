@@ -279,6 +279,7 @@
             this.toolBajas.Name = "toolBajas";
             this.toolBajas.Size = new System.Drawing.Size(155, 22);
             this.toolBajas.Text = "Bajas";
+            this.toolBajas.Click += new System.EventHandler(this.toolBajas_Click);
             // 
             // toolAusentismos
             // 

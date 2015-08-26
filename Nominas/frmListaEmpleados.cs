@@ -297,10 +297,17 @@ namespace Nominas
         {
             int fila = dgvEmpleados.CurrentCell.RowIndex;
             frmBaja b = new frmBaja();
+            b.OnBajaEmpleado += b_OnBajaEmpleado;
             b.MdiParent = this.MdiParent;
             b._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
             b._nombreEmpleado = dgvEmpleados.Rows[fila].Cells[1].Value.ToString();
             b.Show();
+        }
+
+        void b_OnBajaEmpleado(int baja)
+        {
+            _empleadoAltaBaja = baja;
+            ListaEmpleados();
         }
 
         private void toolReingreso_Click(object sender, EventArgs e)

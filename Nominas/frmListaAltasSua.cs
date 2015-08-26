@@ -246,29 +246,34 @@ namespace Nominas
                 }
             }
             catch (Exception error) {
-                MessageBox.Show(error.Message);
+                MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
             }
-            
-            using(sw2 = new StreamWriter(ubicacion.SelectedPath + @"\Afil_Sua.txt"))
-            {
-                for (int i = 0; i < dgvAltasSua.Rows.Count; i++)
+
+            try {
+                using (sw2 = new StreamWriter(ubicacion.SelectedPath + @"\Afil_Sua.txt"))
                 {
-                    DateTime nacimiento = DateTime.Parse(dgvAltasSua.Rows[i].Cells["Nacimiento"].Value.ToString());
-                    int estado = int.Parse(dgvAltasSua.Rows[i].Cells["NoEstado"].Value.ToString());
-                    linea2 = dgvAltasSua.Rows[i].Cells["RegistroPatronal"].Value.ToString() +
-                             dgvAltasSua.Rows[i].Cells["Nss"].Value.ToString() +
-                             dgvAltasSua.Rows[i].Cells["CPostal"].Value.ToString() +
-                             nacimiento.ToString("ddMMyyyy") +
-                             dgvAltasSua.Rows[i].Cells["Estado"].Value.ToString().PadLeft(25) +
-                             estado.ToString("D2") +
-                             dgvAltasSua.Rows[i].Cells["Clinica"].Value.ToString() +
-                             (" ").ToString().PadLeft(12) +
-                             dgvAltasSua.Rows[i].Cells["Sexo"].Value.ToString() + "0 ";
-                    sw2.WriteLine(linea2);
-                    sw2.Flush();
+                    for (int i = 0; i < dgvAltasSua.Rows.Count; i++)
+                    {
+                        DateTime nacimiento = DateTime.Parse(dgvAltasSua.Rows[i].Cells["Nacimiento"].Value.ToString());
+                        int estado = int.Parse(dgvAltasSua.Rows[i].Cells["NoEstado"].Value.ToString());
+                        linea2 = dgvAltasSua.Rows[i].Cells["RegistroPatronal"].Value.ToString() +
+                                 dgvAltasSua.Rows[i].Cells["Nss"].Value.ToString() +
+                                 dgvAltasSua.Rows[i].Cells["CPostal"].Value.ToString() +
+                                 nacimiento.ToString("ddMMyyyy") +
+                                 dgvAltasSua.Rows[i].Cells["Estado"].Value.ToString().PadLeft(25) +
+                                 estado.ToString("D2") +
+                                 dgvAltasSua.Rows[i].Cells["Clinica"].Value.ToString() +
+                                 (" ").ToString().PadLeft(12) +
+                                 dgvAltasSua.Rows[i].Cells["Sexo"].Value.ToString() + "0 ";
+                        sw2.WriteLine(linea2);
+                        sw2.Flush();
+                    }
                 }
             }
-            sw2.Close();
+            catch (Exception error) {
+                MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
+            }
+            
             workArchivo.ReportProgress(100);
         }
 
