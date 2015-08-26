@@ -208,9 +208,16 @@ namespace Nominas
             if (string.IsNullOrEmpty(txtNombre.Text) || string.IsNullOrEmpty(txtApPaterno.Text) || string.IsNullOrEmpty(txtApMaterno.Text))
                 return;
 
-            RFC.ObtieneRFC rfc = new RFC.ObtieneRFC();
-            string registro = rfc.RFC13Pocisiones(txtApPaterno.Text, txtApMaterno.Text, txtNombre.Text, dtpFechaNacimiento.Value.ToString("yy/MM/dd"));
-            txtRFC.Text = registro.Substring(0, 4) + registro.Substring(5, 9);
+            Empleados.Core.RFC rfc = new Empleados.Core.RFC();
+            try
+            {
+                string registro = rfc.RFC13Pocisiones(txtApPaterno.Text, txtApMaterno.Text, txtNombre.Text, dtpFechaNacimiento.Value.ToString("yy/MM/dd"));
+                txtRFC.Text = registro.Substring(0, 4) + registro.Substring(5, 9);
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error: \r\n \r\n " + error.Message);
+            }
 
             txtEdad.Text = ObtieneEdad(dtpFechaNacimiento.Value).ToString();
         }
@@ -346,6 +353,27 @@ namespace Nominas
 
             Imagen.Core.Imagenes img = null;
 
+            Altas.Core.AltasHelper ah = new Altas.Core.AltasHelper();
+            ah.Command = cmd;
+            Altas.Core.Altas a = new Altas.Core.Altas();
+            a.nss = txtNSS.Text + txtDigito.Text;
+            a.rfc = txtRFC.Text;
+            a.curp = txtCURP.Text;
+            a.paterno = txtApPaterno.Text;
+            a.materno = txtApMaterno.Text;
+            a.nombre = txtNombre.Text;
+            a.fechaingreso = dtpFechaIngreso.Value;
+            a.sdi = double.Parse(txtSDI.Text);
+            a.fechanacimiento = dtpFechaNacimiento.Value;
+            a.estado = cmbEstado.Text;
+            a.noestado = int.Parse(cmbEstado.SelectedValue.ToString());
+            a.sexo = ObtieneSexo();
+
+            Empresas.Core.EmpresasHelper empresash = new Empresas.Core.EmpresasHelper();
+            empresash.Command = cmd;
+            Empresas.Core.Empresas empresa = new Empresas.Core.Empresas();
+            empresa.idempresa = GLOBALES.IDEMPRESA;
+
             try
             {
                 if (ImagenAsignada == true)
@@ -374,6 +402,14 @@ namespace Nominas
                         h.idtrabajador = idtrabajador;
                         h.idempresa = GLOBALES.IDEMPRESA;
                         hh.insertarHistorial(h);
+
+                        a.idtrabajador = idtrabajador;
+                        a.idempresa = GLOBALES.IDEMPRESA;
+                        a.contrato = 4;
+                        a.jornada = 12;
+                        a.registropatronal = empresash.obtenerRegistroPatronal(empresa).ToString();
+                        ah.insertaAlta(a);
+
                         if (ImagenAsignada == true)
                         {
                             img.idpersona = idtrabajador;
@@ -394,6 +430,9 @@ namespace Nominas
                         em.idtrabajador = _idempleado;
                         cnx.Open();
                         eh.actualizaEmpleado(em);
+
+                        a.idtrabajador = _idempleado;
+                        ah.actualizaAlta(a);
 
                         if (ImagenAsignada == true)
                         {
@@ -536,10 +575,18 @@ namespace Nominas
 
         private void btnObtenerCurp_Click(object sender, EventArgs e)
         {
+            estado = ObtieneEstado();
             if (string.IsNullOrEmpty(txtNombre.Text) || string.IsNullOrEmpty(txtApPaterno.Text) || string.IsNullOrEmpty(txtApMaterno.Text) || ObtieneSexo().Equals("X"))
                 return;
-            CURPLib.CURPLib obtenerCurp = new CURPLib.CURPLib();
-            txtCURP.Text = obtenerCurp.CURPCompleta(txtApPaterno.Text, txtApMaterno.Text, txtNombre.Text, dtpFechaNacimiento.Value.ToString("yy/MM/dd"), sexo, estado);
+            Empleados.Core.CURP obtenerCurp = new Empleados.Core.CURP();
+            try
+            {
+                txtCURP.Text = obtenerCurp.CURPCompleta(txtApPaterno.Text, txtApMaterno.Text, txtNombre.Text, dtpFechaNacimiento.Value.ToString("yy/MM/dd"), sexo, estado);
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
+            }
         }
 
         private void btnAsignar_Click(object sender, EventArgs e)

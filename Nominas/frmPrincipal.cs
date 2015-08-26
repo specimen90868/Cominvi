@@ -342,6 +342,13 @@ namespace Nominas
             frmListaInfonavit li = new frmListaInfonavit();
             li.MdiParent = this;
             li.Show();
+        }
+
+        private void toolAltas_Click(object sender, EventArgs e)
+        {
+            frmListaAltasSua las = new frmListaAltasSua();
+            las.MdiParent = this;
+            las.Show();
         }        
     }
 }

@@ -74,6 +74,7 @@
             this.toolExportar.Name = "toolExportar";
             this.toolExportar.Size = new System.Drawing.Size(70, 22);
             this.toolExportar.Text = "Exportar";
+            this.toolExportar.Click += new System.EventHandler(this.toolExportar_Click);
             // 
             // dgvHistorial
             // 

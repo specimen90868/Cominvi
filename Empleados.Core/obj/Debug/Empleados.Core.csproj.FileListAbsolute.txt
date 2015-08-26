@@ -12,9 +12,9 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Empleados.Core\bin\Debu
 C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Empleados.Core\obj\Debug\Empleados.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Empleados.Core\obj\Debug\Empleados.Core.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Empleados.Core\obj\Debug\Empleados.Core.csprojResolveAssemblyReference.cache
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Empleados.Core\obj\Debug\Empleados.Core.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Empleados.Core\bin\Debug\Empleados.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Empleados.Core\bin\Debug\Empleados.Core.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Empleados.Core\bin\Debug\Data.Obj.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Empleados.Core\bin\Debug\Data.Obj.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Empleados.Core\obj\Debug\Empleados.Core.dll
-C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Empleados.Core\obj\Debug\Empleados.Core.pdb

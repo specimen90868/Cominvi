@@ -49,6 +49,13 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuInfonavit = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuSeguroSocial = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolSUA = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolAltas = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolModificaciones = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolReingresos = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolBajas = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolAusentismos = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolInfonavit = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuNominas = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuCatalogos = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuDepartamentos = new System.Windows.Forms.ToolStripMenuItem();
@@ -167,7 +174,7 @@
             this.toolStripSeparator5,
             this.toolProcesoSalarial});
             this.mnuEmpleados.Name = "mnuEmpleados";
-            this.mnuEmpleados.Size = new System.Drawing.Size(152, 22);
+            this.mnuEmpleados.Size = new System.Drawing.Size(136, 22);
             this.mnuEmpleados.Text = "Empleados";
             // 
             // mnuEmpleadoNomina
@@ -211,27 +218,79 @@
             // mnuExpedientes
             // 
             this.mnuExpedientes.Name = "mnuExpedientes";
-            this.mnuExpedientes.Size = new System.Drawing.Size(152, 22);
+            this.mnuExpedientes.Size = new System.Drawing.Size(136, 22);
             this.mnuExpedientes.Text = "Expedientes";
             this.mnuExpedientes.Click += new System.EventHandler(this.mnuExpedientes_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(133, 6);
             // 
             // mnuInfonavit
             // 
             this.mnuInfonavit.Name = "mnuInfonavit";
-            this.mnuInfonavit.Size = new System.Drawing.Size(152, 22);
+            this.mnuInfonavit.Size = new System.Drawing.Size(136, 22);
             this.mnuInfonavit.Text = "Infonavit";
             this.mnuInfonavit.Click += new System.EventHandler(this.mnuInfonavit_Click);
             // 
             // mnuSeguroSocial
             // 
+            this.mnuSeguroSocial.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolSUA});
             this.mnuSeguroSocial.Name = "mnuSeguroSocial";
             this.mnuSeguroSocial.Size = new System.Drawing.Size(90, 20);
             this.mnuSeguroSocial.Text = "Seguro Social";
+            // 
+            // toolSUA
+            // 
+            this.toolSUA.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolAltas,
+            this.toolModificaciones,
+            this.toolReingresos,
+            this.toolBajas,
+            this.toolAusentismos,
+            this.toolInfonavit});
+            this.toolSUA.Name = "toolSUA";
+            this.toolSUA.Size = new System.Drawing.Size(165, 22);
+            this.toolSUA.Text = "Operaciones SUA";
+            // 
+            // toolAltas
+            // 
+            this.toolAltas.Name = "toolAltas";
+            this.toolAltas.Size = new System.Drawing.Size(155, 22);
+            this.toolAltas.Text = "Altas";
+            this.toolAltas.Click += new System.EventHandler(this.toolAltas_Click);
+            // 
+            // toolModificaciones
+            // 
+            this.toolModificaciones.Name = "toolModificaciones";
+            this.toolModificaciones.Size = new System.Drawing.Size(155, 22);
+            this.toolModificaciones.Text = "Modificaciones";
+            // 
+            // toolReingresos
+            // 
+            this.toolReingresos.Name = "toolReingresos";
+            this.toolReingresos.Size = new System.Drawing.Size(155, 22);
+            this.toolReingresos.Text = "Reingresos";
+            // 
+            // toolBajas
+            // 
+            this.toolBajas.Name = "toolBajas";
+            this.toolBajas.Size = new System.Drawing.Size(155, 22);
+            this.toolBajas.Text = "Bajas";
+            // 
+            // toolAusentismos
+            // 
+            this.toolAusentismos.Name = "toolAusentismos";
+            this.toolAusentismos.Size = new System.Drawing.Size(155, 22);
+            this.toolAusentismos.Text = "Ausentismos";
+            // 
+            // toolInfonavit
+            // 
+            this.toolInfonavit.Name = "toolInfonavit";
+            this.toolInfonavit.Size = new System.Drawing.Size(155, 22);
+            this.toolInfonavit.Text = "Infonavit";
             // 
             // mnuNominas
             // 
@@ -440,6 +499,13 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem toolProcesoSalarial;
+        private System.Windows.Forms.ToolStripMenuItem toolSUA;
+        private System.Windows.Forms.ToolStripMenuItem toolAltas;
+        private System.Windows.Forms.ToolStripMenuItem toolModificaciones;
+        private System.Windows.Forms.ToolStripMenuItem toolReingresos;
+        private System.Windows.Forms.ToolStripMenuItem toolBajas;
+        private System.Windows.Forms.ToolStripMenuItem toolAusentismos;
+        private System.Windows.Forms.ToolStripMenuItem toolInfonavit;
     }
 }
 

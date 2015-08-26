@@ -31,6 +31,7 @@ namespace Nominas
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
         Complementos.Core.ComplementoHelper ch;
         Direccion.Core.DireccionesHelper dh;
+        Altas.Core.AltasHelper ah;
         int idDireccion;
         int idComplemento;
         #endregion
@@ -198,8 +199,10 @@ namespace Nominas
             cmd.Connection = cnx;
             ch = new Complementos.Core.ComplementoHelper();
             dh = new Direccion.Core.DireccionesHelper();
+            ah = new Altas.Core.AltasHelper();
             ch.Command = cmd;
             dh.Command = cmd;
+            ah.Command = cmd;
 
             Direccion.Core.Direcciones d = new Direccion.Core.Direcciones();
             d.idpersona = _idEmpleado;
@@ -211,8 +214,8 @@ namespace Nominas
             d.ciudad = txtMunicipio.Text;
             d.estado = txtEstado.Text;
             d.pais = txtPais.Text;
-            d.tipodireccion = 2;
-            d.tipopersona = 2;
+            d.tipodireccion = GLOBALES.dPERSONAL;
+            d.tipopersona = GLOBALES.pEMPLEADO;
 
             Complementos.Core.Complemento c = new Complementos.Core.Complemento();
             c.idtrabajador = _idEmpleado;
@@ -224,6 +227,13 @@ namespace Nominas
             c.clinica = txtClinica.Text;
             c.nacionalidad = txtNacionalidad.Text;
             c.observaciones = txtObservaciones.Text;
+
+            Altas.Core.Altas a = new Altas.Core.Altas();
+            a.idtrabajador = _idEmpleado;
+            a.jornada = int.Parse(cmbJornada.SelectedValue.ToString());
+            a.contrato = int.Parse(cmbContrato.SelectedValue.ToString());
+            a.cp = txtCP.Text;
+            a.clinica = txtClinica.Text;
             
             switch (_tipoOperacion)
             {
@@ -233,6 +243,7 @@ namespace Nominas
                         cnx.Open();
                         dh.insertaDireccion(d);
                         ch.insertaComplemento(c);
+                        ah.actualizaAltaComplemento(a);
                         cnx.Close();
                         cnx.Dispose();
                     }
@@ -250,6 +261,7 @@ namespace Nominas
                         cnx.Open();
                         ch.actualizaComplemento(c);
                         dh.actualizaDireccion(d);
+                        ah.actualizaAltaComplemento(a);
                         cnx.Close();
                         cnx.Dispose();
                     }
