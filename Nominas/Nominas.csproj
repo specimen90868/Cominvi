@@ -138,6 +138,12 @@
     <Compile Include="frmListaAltasSua.Designer.cs">
       <DependentUpon>frmListaAltasSua.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmListaAusentimosSua.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaAusentimosSua.Designer.cs">
+      <DependentUpon>frmListaAusentimosSua.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmListaBajasSua.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -335,6 +341,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmListaAltasSua.resx">
       <DependentUpon>frmListaAltasSua.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListaAusentimosSua.resx">
+      <DependentUpon>frmListaAusentimosSua.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmListaBajasSua.resx">
       <DependentUpon>frmListaBajasSua.cs</DependentUpon>

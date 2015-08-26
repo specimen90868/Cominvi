@@ -356,6 +356,13 @@ namespace Nominas
             frmListaBajasSua lbs = new frmListaBajasSua();
             lbs.MdiParent = this;
             lbs.Show();
+        }
+
+        private void toolAusentismos_Click(object sender, EventArgs e)
+        {
+            frmListaAusentimosSua las = new frmListaAusentimosSua();
+            las.MdiParent = this;
+            las.Show();
         }        
     }
 }

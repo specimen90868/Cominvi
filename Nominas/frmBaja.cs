@@ -222,7 +222,7 @@ namespace Nominas
                     cnx.Dispose();
 
                     if(OnBajaEmpleado !=  null)
-                        OnBajaEmpleado(GLOBALES.INACTIVO);
+                        OnBajaEmpleado(GLOBALES.ACTIVO);
                 }
                 catch (Exception error)
                 {

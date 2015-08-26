@@ -286,6 +286,7 @@
             this.toolAusentismos.Name = "toolAusentismos";
             this.toolAusentismos.Size = new System.Drawing.Size(155, 22);
             this.toolAusentismos.Text = "Ausentismos";
+            this.toolAusentismos.Click += new System.EventHandler(this.toolAusentismos_Click);
             // 
             // toolInfonavit
             // 
