@@ -370,6 +370,13 @@ namespace Nominas
             frmListaModificacionesSua lms = new frmListaModificacionesSua();
             lms.MdiParent = this;
             lms.Show();
+        }
+
+        private void toolReingresos_Click(object sender, EventArgs e)
+        {
+            frmListaReingresosSua lrs = new frmListaReingresosSua();
+            lrs.MdiParent = this;
+            lrs.Show();
         }        
     }
 }

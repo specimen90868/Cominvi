@@ -23,6 +23,7 @@ namespace Nominas
         SqlConnection cnx;
         SqlCommand cmd;
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
+        string sexo;
         #endregion
 
         #region DELEGADOS
@@ -46,19 +47,21 @@ namespace Nominas
             Puestos.Core.PuestosHelper ph = new Puestos.Core.PuestosHelper();
             Periodos.Core.PeriodosHelper periodoh = new Periodos.Core.PeriodosHelper();
             Factores.Core.FactoresHelper fh = new Factores.Core.FactoresHelper();
+            Estados.Core.EstadosHelper edoh = new Estados.Core.EstadosHelper();
 
             eh.Command = cmd;
             dh.Command = cmd;
             ph.Command = cmd;
             periodoh.Command = cmd;
             fh.Command = cmd;
+            edoh.Command = cmd;
 
             Empresas.Core.Empresas empresa = new Empresas.Core.Empresas();
             Departamento.Core.Depto depto = new Departamento.Core.Depto();
             Puestos.Core.Puestos puesto = new Puestos.Core.Puestos();
             Periodos.Core.Periodos periodo = new Periodos.Core.Periodos();
             Factores.Core.Factores factor = new Factores.Core.Factores();
-
+            
             depto.idempresa = GLOBALES.IDEMPRESA;
             puesto.idempresa = GLOBALES.IDEMPRESA;
             periodo.idempresa = GLOBALES.IDEMPRESA;
@@ -67,6 +70,7 @@ namespace Nominas
             List<Departamento.Core.Depto> lstDepto = new List<Departamento.Core.Depto>();
             List<Puestos.Core.Puestos> lstPuesto = new List<Puestos.Core.Puestos>();
             List<Periodos.Core.Periodos> lstPeriodo = new List<Periodos.Core.Periodos>();
+            List<Estados.Core.Estados> lstEstados = new List<Estados.Core.Estados>();
 
             try {
                 cnx.Open();
@@ -74,6 +78,7 @@ namespace Nominas
                 lstDepto = dh.obtenerDepartamentos(depto);
                 lstPuesto = ph.obtenerPuestos(puesto);
                 lstPeriodo = periodoh.obtenerPeriodos(periodo);
+                lstEstados = edoh.obtenerEstados();
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -97,6 +102,10 @@ namespace Nominas
             cmbPeriodo.DataSource = lstPeriodo.ToList();
             cmbPeriodo.DisplayMember = "pago";
             cmbPeriodo.ValueMember = "idperiodo";
+
+            cmbEstados.DataSource = lstEstados.ToList();
+            cmbEstados.DisplayMember = "nombre";
+            cmbEstados.ValueMember = "idestado";
 
             lblNombreEmpleado.Text = _nombreEmpleado;
         }
@@ -166,6 +175,7 @@ namespace Nominas
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
+            string rp;
             //SE VALIDA SI TODOS LOS CAMPOS HAN SIDO LLENADOS.
             string control = GLOBALES.VALIDAR(this, typeof(TextBox));
             if (!control.Equals(""))
@@ -180,12 +190,25 @@ namespace Nominas
 
             Empleados.Core.EmpleadosHelper empleadoh = new Empleados.Core.EmpleadosHelper();
             Historial.Core.HistorialHelper hh = new Historial.Core.HistorialHelper();
+            Reingreso.Core.ReingresoHelper rh = new Reingreso.Core.ReingresoHelper();
+            Altas.Core.AltasHelper ah = new Altas.Core.AltasHelper();
+            Empresas.Core.EmpresasHelper eh = new Empresas.Core.EmpresasHelper();
+            Direccion.Core.DireccionesHelper dh = new Direccion.Core.DireccionesHelper();
+            Complementos.Core.ComplementoHelper ch = new Complementos.Core.ComplementoHelper();
 
             empleadoh.Command = cmd;
             hh.Command = cmd;
+            rh.Command = cmd;
+            ah.Command = cmd;
+            eh.Command = cmd;
+            dh.Command = cmd;
+            ch.Command = cmd;
 
             Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
             Historial.Core.Historial historia = new Historial.Core.Historial();
+            Reingreso.Core.Reingresos reingreso = new Reingreso.Core.Reingresos();
+            Altas.Core.Altas alta = new Altas.Core.Altas();
+            Empresas.Core.Empresas empresa = new Empresas.Core.Empresas();
 
             empleado.idtrabajador = _idempleado;
             empleado.idempresa = int.Parse(cmbRegistroPatronal.SelectedValue.ToString());
@@ -209,15 +232,60 @@ namespace Nominas
             historia.fecha_sistema = DateTime.Now;
             historia.motivobaja = 0;
 
+            empresa.idempresa = int.Parse(cmbRegistroPatronal.SelectedValue.ToString());
+
+            reingreso.idtrabajador = _idempleado;
+            reingreso.idempresa = int.Parse(cmbRegistroPatronal.SelectedValue.ToString());
+            reingreso.fechaingreso = dtpFechaReingreso.Value;
+            reingreso.sdi = double.Parse(txtSDI.Text);
+
+            alta.idtrabajador = _idempleado;
+            alta.idempresa = int.Parse(cmbRegistroPatronal.SelectedValue.ToString());
+            alta.contrato = 4;
+            alta.jornada = 12;
+            alta.fechaingreso = dtpFechaReingreso.Value;
+            alta.sdi = double.Parse(txtSDI.Text);
+            alta.cp = "00000";
+            alta.clinica = "000";
+            alta.estado = cmbEstados.Text;
+            alta.noestado = int.Parse(cmbEstados.SelectedValue.ToString());
+            alta.sexo = ObtieneSexo();
+            
+            List<Empleados.Core.Empleados> lstEmpleado = new List<Empleados.Core.Empleados>();
+
             try {
                 cnx.Open();
                 empleadoh.reingreso(empleado);
 
+                rp = (string)eh.obtenerRegistroPatronal(empresa);
+                reingreso.registropatronal = rp;
+                alta.registropatronal = rp;
+
+                lstEmpleado = empleadoh.obtenerEmpleado(empleado);
+
+                for (int i = 0; i < lstEmpleado.Count; i++)
+                {
+                    reingreso.nss = lstEmpleado[i].nss + lstEmpleado[i].digitoverificador;
+                    alta.nss = lstEmpleado[i].nss + lstEmpleado[i].digitoverificador;
+                    alta.rfc = lstEmpleado[i].rfc;
+                    alta.curp = lstEmpleado[i].curp;
+                    alta.paterno = lstEmpleado[i].paterno;
+                    alta.materno = lstEmpleado[i].materno;
+                    alta.nombre = lstEmpleado[i].nombres;
+                    alta.fechanacimiento = lstEmpleado[i].fechanacimiento;
+                }
+
                 int idEmpresaEmpleado = (int)empleadoh.obtenerIdEmpresa(empleado);
                 if (idEmpresaEmpleado == int.Parse(cmbRegistroPatronal.SelectedValue.ToString()))
+                {
                     historia.tipomovimiento = GLOBALES.mREINGRESO;
+                    rh.insertaReingreso(reingreso);
+                }
                 else
+                {
                     historia.tipomovimiento = GLOBALES.mALTA;
+                    ah.insertaAlta(alta);
+                }
 
                 hh.insertarHistorial(historia);
 
@@ -233,6 +301,24 @@ namespace Nominas
                 MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
             }
             this.Dispose();
+        }
+
+        private string ObtieneSexo()
+        {
+            if (rbtnHombre.Checked)
+            {
+                sexo = "H";
+            }
+            else if (rbtnMujer.Checked)
+            {
+                sexo = "M";
+            }
+            else
+            {
+                sexo = "X";
+            }
+
+            return sexo.ToString();
         }
     }
 }

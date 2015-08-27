@@ -52,6 +52,11 @@
             this.lblNombreEmpleado = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.cmbPeriodo = new System.Windows.Forms.ComboBox();
+            this.cmbEstados = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.rbtnMujer = new System.Windows.Forms.RadioButton();
+            this.rbtnHombre = new System.Windows.Forms.RadioButton();
+            this.label12 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -193,7 +198,7 @@
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Location = new System.Drawing.Point(298, 253);
+            this.btnAceptar.Location = new System.Drawing.Point(298, 308);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(75, 23);
             this.btnAceptar.TabIndex = 16;
@@ -203,7 +208,7 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(379, 253);
+            this.btnCancelar.Location = new System.Drawing.Point(379, 308);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
             this.btnCancelar.TabIndex = 17;
@@ -264,11 +269,64 @@
             this.cmbPeriodo.Size = new System.Drawing.Size(128, 21);
             this.cmbPeriodo.TabIndex = 23;
             // 
+            // cmbEstados
+            // 
+            this.cmbEstados.FormattingEnabled = true;
+            this.cmbEstados.Location = new System.Drawing.Point(127, 279);
+            this.cmbEstados.Name = "cmbEstados";
+            this.cmbEstados.Size = new System.Drawing.Size(128, 21);
+            this.cmbEstados.TabIndex = 24;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(78, 282);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(43, 13);
+            this.label10.TabIndex = 25;
+            this.label10.Text = "Estado:";
+            // 
+            // rbtnMujer
+            // 
+            this.rbtnMujer.AutoSize = true;
+            this.rbtnMujer.Location = new System.Drawing.Point(205, 311);
+            this.rbtnMujer.Name = "rbtnMujer";
+            this.rbtnMujer.Size = new System.Drawing.Size(51, 17);
+            this.rbtnMujer.TabIndex = 232;
+            this.rbtnMujer.TabStop = true;
+            this.rbtnMujer.Text = "Mujer";
+            this.rbtnMujer.UseVisualStyleBackColor = true;
+            // 
+            // rbtnHombre
+            // 
+            this.rbtnHombre.AutoSize = true;
+            this.rbtnHombre.Location = new System.Drawing.Point(127, 311);
+            this.rbtnHombre.Name = "rbtnHombre";
+            this.rbtnHombre.Size = new System.Drawing.Size(62, 17);
+            this.rbtnHombre.TabIndex = 231;
+            this.rbtnHombre.TabStop = true;
+            this.rbtnHombre.Text = "Hombre";
+            this.rbtnHombre.UseVisualStyleBackColor = true;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(85, 313);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(34, 13);
+            this.label12.TabIndex = 233;
+            this.label12.Text = "Sexo:";
+            // 
             // frmReingresoEmpleado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(466, 282);
+            this.ClientSize = new System.Drawing.Size(466, 340);
+            this.Controls.Add(this.rbtnMujer);
+            this.Controls.Add(this.rbtnHombre);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.cmbEstados);
             this.Controls.Add(this.cmbPeriodo);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.lblNombreEmpleado);
@@ -330,5 +388,10 @@
         private System.Windows.Forms.Label lblNombreEmpleado;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ComboBox cmbPeriodo;
+        private System.Windows.Forms.ComboBox cmbEstados;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.RadioButton rbtnMujer;
+        private System.Windows.Forms.RadioButton rbtnHombre;
+        private System.Windows.Forms.Label label12;
     }
 }

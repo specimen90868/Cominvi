@@ -274,6 +274,7 @@
             this.toolReingresos.Name = "toolReingresos";
             this.toolReingresos.Size = new System.Drawing.Size(155, 22);
             this.toolReingresos.Text = "Reingresos";
+            this.toolReingresos.Click += new System.EventHandler(this.toolReingresos_Click);
             // 
             // toolBajas
             // 

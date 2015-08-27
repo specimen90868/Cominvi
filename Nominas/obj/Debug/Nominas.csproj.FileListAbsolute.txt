@@ -238,3 +238,6 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Modificacio
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Modificaciones.Core.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmListaModificacionesSua.resources
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmIncrementoSalarial.resources
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmListaReingresosSua.resources
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Reingreso.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Reingreso.Core.pdb

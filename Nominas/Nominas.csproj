@@ -234,6 +234,12 @@
     <Compile Include="frmListaPuestos.Designer.cs">
       <DependentUpon>frmListaPuestos.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmListaReingresosSua.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaReingresosSua.Designer.cs">
+      <DependentUpon>frmListaReingresosSua.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmListaSalario.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -402,6 +408,9 @@
     <EmbeddedResource Include="frmListaPuestos.resx">
       <DependentUpon>frmListaPuestos.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmListaReingresosSua.resx">
+      <DependentUpon>frmListaReingresosSua.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmListaSalario.resx">
       <DependentUpon>frmListaSalario.cs</DependentUpon>
     </EmbeddedResource>
@@ -551,6 +560,10 @@
     <ProjectReference Include="..\Puestos.Core\Puestos.Core.csproj">
       <Project>{c9507108-2018-4989-97bc-c00354d90a75}</Project>
       <Name>Puestos.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Reingreso.Core\Reingreso.Core.csproj">
+      <Project>{df00396f-202b-42cc-96ec-39c09b0d2740}</Project>
+      <Name>Reingreso.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Salario.Core\Salario.Core.csproj">
       <Project>{17ca0d9b-32e3-4dd4-9f85-f9a8083a5b67}</Project>

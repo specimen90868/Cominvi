@@ -25,5 +25,13 @@ namespace Estados.Core
             }
             return lstEstados;
         }
+
+        public object obtenerIdEstado(Estados e)
+        {
+            Command.CommandText = "seletc idestado from estados where estado like '%@estado%'";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("estado", e.nombre);
+            return Command.ExecuteNonQuery();
+        }
     }
 }
