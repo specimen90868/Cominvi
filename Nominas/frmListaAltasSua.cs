@@ -225,6 +225,7 @@ namespace Nominas
                 {
                     for (int i = 0; i < dgvAltasSua.Rows.Count; i++)
                     {
+                        linea1 = "";
                         DateTime ingreso = DateTime.Parse(dgvAltasSua.Rows[i].Cells["Ingreso"].Value.ToString());
                         double integrado = double.Parse(dgvAltasSua.Rows[i].Cells["Integrado"].Value.ToString());
                         decimal dIntegrado = Decimal.Round((decimal)integrado, 2);
@@ -254,6 +255,7 @@ namespace Nominas
                 {
                     for (int i = 0; i < dgvAltasSua.Rows.Count; i++)
                     {
+                        linea2 = "";
                         DateTime nacimiento = DateTime.Parse(dgvAltasSua.Rows[i].Cells["Nacimiento"].Value.ToString());
                         int estado = int.Parse(dgvAltasSua.Rows[i].Cells["NoEstado"].Value.ToString());
                         linea2 = dgvAltasSua.Rows[i].Cells["RegistroPatronal"].Value.ToString() +

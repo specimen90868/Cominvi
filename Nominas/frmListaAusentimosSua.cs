@@ -157,6 +157,7 @@ namespace Nominas
                 {
                     for (int i = 0; i < dgvAusentismoSua.Rows.Count; i++)
                     {
+                        linea1 = "";
                         DateTime baja = DateTime.Parse(dgvAusentismoSua.Rows[i].Cells["Baja"].Value.ToString());
                         int dias = int.Parse(dgvAusentismoSua.Rows[i].Cells["Dias"].Value.ToString());
 

@@ -267,6 +267,7 @@
             this.toolModificaciones.Name = "toolModificaciones";
             this.toolModificaciones.Size = new System.Drawing.Size(155, 22);
             this.toolModificaciones.Text = "Modificaciones";
+            this.toolModificaciones.Click += new System.EventHandler(this.toolModificaciones_Click);
             // 
             // toolReingresos
             // 

@@ -168,6 +168,7 @@ namespace Nominas
                 {
                     for (int i = 0; i < dgvBajasSua.Rows.Count; i++)
                     {
+                        linea1 = "";
                         DateTime baja = DateTime.Parse(dgvBajasSua.Rows[i].Cells["Baja"].Value.ToString());
                         int motivo = int.Parse(dgvBajasSua.Rows[i].Cells["MValor"].Value.ToString());
                         linea1 += dgvBajasSua.Rows[i].Cells["RegistroPatronal"].Value.ToString();

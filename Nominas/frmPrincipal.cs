@@ -363,6 +363,13 @@ namespace Nominas
             frmListaAusentimosSua las = new frmListaAusentimosSua();
             las.MdiParent = this;
             las.Show();
+        }
+
+        private void toolModificaciones_Click(object sender, EventArgs e)
+        {
+            frmListaModificacionesSua lms = new frmListaModificacionesSua();
+            lms.MdiParent = this;
+            lms.Show();
         }        
     }
 }

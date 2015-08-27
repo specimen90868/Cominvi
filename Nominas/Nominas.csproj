@@ -198,6 +198,12 @@
     <Compile Include="frmListaInfonavit.Designer.cs">
       <DependentUpon>frmListaInfonavit.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmListaModificacionesSua.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaModificacionesSua.Designer.cs">
+      <DependentUpon>frmListaModificacionesSua.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmListaPerfiles.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -372,6 +378,9 @@
     <EmbeddedResource Include="frmListaInfonavit.resx">
       <DependentUpon>frmListaInfonavit.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmListaModificacionesSua.resx">
+      <DependentUpon>frmListaModificacionesSua.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmListaPerfiles.resx">
       <DependentUpon>frmListaPerfiles.cs</DependentUpon>
     </EmbeddedResource>
@@ -517,6 +526,10 @@
     <ProjectReference Include="..\Infonavit.Core\Infonavit.Core.csproj">
       <Project>{0e040bf1-28a8-475e-a78a-02925549acd7}</Project>
       <Name>Infonavit.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modificaciones.Core\Modificaciones.Core.csproj">
+      <Project>{c602fa04-77b6-4fd2-bb58-016d01d0942f}</Project>
+      <Name>Modificaciones.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Perfil.Core\Perfil.Core.csproj">
       <Project>{f45c48b3-fd8c-4b67-9d87-10e3971c1dbd}</Project>
