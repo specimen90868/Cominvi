@@ -226,7 +226,18 @@ namespace Nominas
 
         private void toolIncrementoSalario_Click(object sender, EventArgs e)
         {
+            int fila = dgvEmpleados.CurrentCell.RowIndex;
+            frmIncrementoSalarial isal = new frmIncrementoSalarial();
+            isal.OnIncrementoSalarial += isal_OnIncrementoSalarial;
+            isal.MdiParent = this.MdiParent;
+            isal._nombreEmpleado = dgvEmpleados.Rows[fila].Cells[1].Value.ToString();
+            isal._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
+            isal.Show();
+        }
 
+        void isal_OnIncrementoSalarial()
+        {
+            ListaEmpleados();
         }
 
         private void toolHistorial_Click(object sender, EventArgs e)

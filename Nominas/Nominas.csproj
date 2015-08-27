@@ -126,6 +126,12 @@
     <Compile Include="frmImagen.Designer.cs">
       <DependentUpon>frmImagen.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmIncrementoSalarial.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmIncrementoSalarial.Designer.cs">
+      <DependentUpon>frmIncrementoSalarial.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmInfonavit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -341,6 +347,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmImagen.resx">
       <DependentUpon>frmImagen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmIncrementoSalarial.resx">
+      <DependentUpon>frmIncrementoSalarial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmInfonavit.resx">
       <DependentUpon>frmInfonavit.cs</DependentUpon>

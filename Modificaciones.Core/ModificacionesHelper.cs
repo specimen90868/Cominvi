@@ -31,5 +31,19 @@ namespace Modificaciones.Core
             }
             return lstModificaciones;
         }
+
+        public int insertaModificacion(Modificaciones m)
+        {
+            Command.CommandText = "insert into suaModificaciones (idtrabajador, idempresa, registropatronal, nss, fecha, sdi) " +
+                "values (@idtrabajador, @idempresa, @registropatronal, @nss, @fecha, @sdi)";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador",m.idtrabajador);
+            Command.Parameters.AddWithValue("idempresa", m.idempresa);
+            Command.Parameters.AddWithValue("registropatronal", m.registropatronal);
+            Command.Parameters.AddWithValue("nss", m.nss);
+            Command.Parameters.AddWithValue("fecha", m.fecha);
+            Command.Parameters.AddWithValue("sdi", m.sdi);
+            return Command.ExecuteNonQuery();
+        }
     }
 }
