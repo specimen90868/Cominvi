@@ -15,4 +15,18 @@ namespace Infonavit.Core
         public int descuento { get; set; }
         public double valordescuento { get; set; }
     }
+
+    public class suaInfonavit
+    {
+        public int id { get; set; }
+        public int idtrabajador { get; set; }
+        public int idempresa { get; set; }
+        public string registropatronal { get; set; }
+        public string nss { get; set; }
+        public string credito { get; set; }
+        public int modificacion { get; set; }
+        public DateTime fecha { get; set; }
+        public int descuento { get; set; }
+        public double valor { get; set; }
+    }
 }

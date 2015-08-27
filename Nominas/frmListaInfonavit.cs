@@ -141,7 +141,19 @@ namespace Nominas
 
         private void toolModificar_Click(object sender, EventArgs e)
         {
+            int fila = 0;
+            fila = dgvInfonavit.CurrentCell.RowIndex;
+            frmModificacionInfonavit mi = new frmModificacionInfonavit();
+            mi.OnInfonavit += mi_OnInfonavit;
+            mi._idEmpleado = int.Parse(dgvInfonavit.Rows[fila].Cells[0].Value.ToString());
+            mi._nombreEmpleado = dgvInfonavit.Rows[fila].Cells[1].Value.ToString();
+            mi.MdiParent = this.MdiParent;
+            mi.Show();
+        }
 
+        void mi_OnInfonavit()
+        {
+            ListaEmpleados();
         }
 
         private void txtBuscar_Click(object sender, EventArgs e)

@@ -295,6 +295,7 @@
             this.toolInfonavit.Name = "toolInfonavit";
             this.toolInfonavit.Size = new System.Drawing.Size(155, 22);
             this.toolInfonavit.Text = "Infonavit";
+            this.toolInfonavit.Click += new System.EventHandler(this.toolInfonavit_Click);
             // 
             // mnuNominas
             // 

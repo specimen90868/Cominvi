@@ -86,5 +86,48 @@ namespace Infonavit.Core
             return Command.ExecuteNonQuery();
         }
 
+        public List<suaInfonavit> obtenerInfonavit(suaInfonavit e)
+        {
+            List<suaInfonavit> lstInfonavit = new List<suaInfonavit>();
+            DataTable dtInfonavit = new DataTable();
+            Command.CommandText = "select * from suaInfonavit where idempresa = @idempresa";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", e.idempresa);
+            dtInfonavit = SelectData(Command);
+            for (int i = 0; i < dtInfonavit.Rows.Count; i++)
+            {
+                suaInfonavit inf = new suaInfonavit();
+                inf.id = int.Parse(dtInfonavit.Rows[i]["id"].ToString());
+                inf.idtrabajador = int.Parse(dtInfonavit.Rows[i]["idtrabajador"].ToString());
+                inf.idempresa = int.Parse(dtInfonavit.Rows[i]["idempresa"].ToString());
+                inf.registropatronal = dtInfonavit.Rows[i]["registropatronal"].ToString();
+                inf.nss = dtInfonavit.Rows[i]["nss"].ToString();
+                inf.credito = dtInfonavit.Rows[i]["credito"].ToString();
+                inf.modificacion = int.Parse(dtInfonavit.Rows[i]["modificacion"].ToString());
+                inf.fecha = DateTime.Parse(dtInfonavit.Rows[i]["fecha"].ToString());
+                inf.descuento = int.Parse(dtInfonavit.Rows[i]["descuento"].ToString());
+                inf.valor = double.Parse(dtInfonavit.Rows[i]["valor"].ToString());
+                lstInfonavit.Add(inf);
+            }
+            return lstInfonavit;
+        }
+
+        public int insertarInfonavitSua(suaInfonavit i)
+        {
+            Command.CommandText = "insert into suaInfonavit (idtrabajador, idempresa, registropatronal, nss, credito, modificacion, fecha, descuento, valor) " +
+                "values (@idtrabajador, @idempresa, @registropatronal, @nss, @credito, @modificacion, @fecha, @descuento, @valor)";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", i.idtrabajador);
+            Command.Parameters.AddWithValue("idempresa", i.idempresa);
+            Command.Parameters.AddWithValue("registropatronal", i.registropatronal);
+            Command.Parameters.AddWithValue("nss", i.nss);
+            Command.Parameters.AddWithValue("credito", i.credito);
+            Command.Parameters.AddWithValue("modificacion", i.modificacion);
+            Command.Parameters.AddWithValue("fecha", i.fecha);
+            Command.Parameters.AddWithValue("descuento", i.descuento);
+            Command.Parameters.AddWithValue("valor", i.valor);
+            return Command.ExecuteNonQuery();
+        }
+
     }
 }

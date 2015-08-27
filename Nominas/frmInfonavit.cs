@@ -192,17 +192,17 @@ namespace Nominas
 
         private void rbtnPorcentaje_CheckedChanged(object sender, EventArgs e)
         {
-            Descuento = 1;
+            Descuento = GLOBALES.dPORCENTAJE;
         }
 
         private void rbtnVsmdf_CheckedChanged(object sender, EventArgs e)
         {
-            Descuento = 3;
+            Descuento = GLOBALES.dVSMDF;
         }
 
         private void rbtnPesos_CheckedChanged(object sender, EventArgs e)
         {
-            Descuento = 2;
+            Descuento = GLOBALES.dPESOS;
         }
     }
 }

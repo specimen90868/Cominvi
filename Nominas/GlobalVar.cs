@@ -50,9 +50,9 @@ namespace Nominas
         public static int dVSMDF = 3;
         public static int dPESOS = 2;
 
-        public static int mPORCENTAJE = 20;
-        public static int mVSMDF = 19;
-        public static int mPESOS = 18;
+        public static int mCREDITO = 20;
+        public static int mVALORDESCUENTO = 19;
+        public static int mTIPODESCUENTO = 18;
         #endregion
 
         public static int IDUSUARIO { get; set; }

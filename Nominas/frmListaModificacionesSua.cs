@@ -175,7 +175,7 @@ namespace Nominas
             }
             catch (Exception error)
             {
-                MessageBox.Show(error.Message);
+                MessageBox.Show("Error: \r\n \r\n" + error.Message,"Error");
             }
 
             workMod.ReportProgress(100);

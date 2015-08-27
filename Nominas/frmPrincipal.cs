@@ -377,6 +377,13 @@ namespace Nominas
             frmListaReingresosSua lrs = new frmListaReingresosSua();
             lrs.MdiParent = this;
             lrs.Show();
+        }
+
+        private void toolInfonavit_Click(object sender, EventArgs e)
+        {
+            frmListaInfonavitSua lis = new frmListaInfonavitSua();
+            lis.MdiParent = this;
+            lis.Show();
         }        
     }
 }
