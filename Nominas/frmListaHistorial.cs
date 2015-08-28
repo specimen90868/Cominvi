@@ -62,6 +62,7 @@ namespace Nominas
                          select new
                          {
                              IdTrabajador = emp.idtrabajador,
+                             NoEmpleado = emp.noempleado,
                              Nombre = emp.nombrecompleto,
                              Movimiento = 
                                 his.tipomovimiento == GLOBALES.mALTA ? "ALTA" :
@@ -77,6 +78,7 @@ namespace Nominas
                 {
                     dgvHistorial.AutoResizeColumn(i);
                 }
+                dgvHistorial.Columns["IdTrabajador"].Visible = false;
             }
             catch (Exception error)
             {

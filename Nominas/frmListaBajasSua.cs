@@ -67,7 +67,6 @@ namespace Nominas
                           join t in lstEmpleados on b.idtrabajador equals t.idtrabajador
                           select new
                           {
-                              Id = b.id,
                               RegistroPatronal = b.registropatronal,
                               Nss = b.nss,
                               Nombre = t.nombrecompleto,
@@ -81,6 +80,7 @@ namespace Nominas
                 {
                     dgvBajasSua.AutoResizeColumn(i);
                 }
+                dgvBajasSua.Columns["MValor"].Visible = false;
             }
             catch (Exception error)
             {
@@ -111,7 +111,6 @@ namespace Nominas
                           join t in lstEmpleados on b.idtrabajador equals t.idtrabajador
                           select new
                           {
-                              Id = b.id,
                               RegistroPatronal = b.registropatronal,
                               Nss = b.nss,
                               Nombre = t.nombrecompleto,
@@ -129,7 +128,6 @@ namespace Nominas
                           where (b.fecha >= new DateTime(desde.Year, desde.Month, desde.Day) && b.fecha <= new DateTime(hasta.Year, hasta.Month, hasta.Day))
                           select new
                           {
-                              Id = b.id,
                               RegistroPatronal = b.registropatronal,
                               Nss = b.nss,
                               Nombre = t.nombrecompleto,
@@ -144,6 +142,7 @@ namespace Nominas
             {
                 dgvBajasSua.AutoResizeColumn(i);
             }
+            dgvBajasSua.Columns["MValor"].Visible = false;
         }
 
         private void toolExportar_Click(object sender, EventArgs e)

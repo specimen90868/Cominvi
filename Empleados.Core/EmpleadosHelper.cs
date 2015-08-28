@@ -15,7 +15,7 @@ namespace Empleados.Core
         {
             DataTable dtEmpleados = new DataTable();
             List<Empleados> lstEmpleados = new List<Empleados>();
-            Command.CommandText = "select idtrabajador, paterno, materno, nombres, nombrecompleto, curp, fechaingreso, antiguedad, sdi, sd, sueldo from trabajadores where idempresa = @idempresa and estatus = @estatus";
+            Command.CommandText = "select idtrabajador, noempleado, paterno, materno, nombres, nombrecompleto, curp, fechaingreso, antiguedad, sdi, sd, sueldo from trabajadores where idempresa = @idempresa and estatus = @estatus";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", e.idempresa);
             Command.Parameters.AddWithValue("estatus", e.estatus);
@@ -25,6 +25,7 @@ namespace Empleados.Core
             {
                 Empleados empleado = new Empleados();
                 empleado.idtrabajador = int.Parse(dtEmpleados.Rows[i]["idtrabajador"].ToString());
+                empleado.noempleado = dtEmpleados.Rows[i]["noempleado"].ToString();
                 empleado.paterno = dtEmpleados.Rows[i]["paterno"].ToString();
                 empleado.materno = dtEmpleados.Rows[i]["materno"].ToString();
                 empleado.nombres = dtEmpleados.Rows[i]["nombres"].ToString();

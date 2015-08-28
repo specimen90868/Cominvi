@@ -73,7 +73,6 @@ namespace Nominas
                         var alt = from a in lstAltas
                                   select new
                                   {
-                                      Id = a.id,
                                       RegistroPatronal = a.registropatronal,
                                       Nss = a.nss,
                                       Curp = a.curp,
@@ -110,7 +109,6 @@ namespace Nominas
                                   join e in lstEmpleado on m.idtrabajador equals e.idtrabajador
                                   select new
                                   {
-                                      Id = m.id,
                                       RegistroPatronal = m.registropatronal,
                                       Nss = m.nss,
                                       Paterno = e.paterno,
@@ -152,7 +150,6 @@ namespace Nominas
                                   join c in lstCatalogo on b.motivo equals c.id
                                   select new
                                   {
-                                      Id = b.id,
                                       RegistroPatronal = b.registropatronal,
                                       Nss = b.nss,
                                       Paterno = e.paterno,
@@ -203,7 +200,6 @@ namespace Nominas
                         var alt = from a in lstAltas
                                   select new
                                   {
-                                      Id = a.id,
                                       RegistroPatronal = a.registropatronal,
                                       Nss = a.nss,
                                       Curp = a.curp,
@@ -221,7 +217,6 @@ namespace Nominas
                                   where (a.fechaingreso >= new DateTime(desde.Year, desde.Month, desde.Day) && a.fechaingreso <= new DateTime(hasta.Year, hasta.Month, hasta.Day))
                                   select new
                                   {
-                                      Id = a.id,
                                       RegistroPatronal = a.registropatronal,
                                       Nss = a.nss,
                                       Curp = a.curp,
@@ -243,7 +238,6 @@ namespace Nominas
                                   join e in lstEmpleado on m.idtrabajador equals e.idtrabajador
                                   select new
                                   {
-                                      Id = m.id,
                                       RegistroPatronal = m.registropatronal,
                                       Nss = m.nss,
                                       Paterno = e.paterno,
@@ -262,7 +256,6 @@ namespace Nominas
                                   where (m.fecha >= new DateTime(desde.Year, desde.Month, desde.Day) && m.fecha <= new DateTime(hasta.Year, hasta.Month, hasta.Day))
                                   select new
                                   {
-                                      Id = m.id,
                                       RegistroPatronal = m.registropatronal,
                                       Nss = m.nss,
                                       Paterno = e.paterno,
@@ -285,7 +278,6 @@ namespace Nominas
                                   join c in lstCatalogo on b.motivo equals c.id
                                   select new
                                   {
-                                      Id = b.id,
                                       RegistroPatronal = b.registropatronal,
                                       Nss = b.nss,
                                       Paterno = e.paterno,
@@ -304,7 +296,6 @@ namespace Nominas
                                   where (b.fecha >= new DateTime(desde.Year, desde.Month, desde.Day) && b.fecha <= new DateTime(hasta.Year, hasta.Month, hasta.Day))
                                   select new
                                   {
-                                      Id = b.id,
                                       RegistroPatronal = b.registropatronal,
                                       Nss = b.nss,
                                       Paterno = e.paterno,

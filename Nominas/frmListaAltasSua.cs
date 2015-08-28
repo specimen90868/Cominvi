@@ -61,7 +61,6 @@ namespace Nominas
                           join j in lstCatalogos on a.jornada equals j.id
                          select new
                          {
-                             Id = a.id,
                              RegistroPatronal = a.registropatronal,
                              Nss = a.nss,
                              Rfc = a.rfc,
@@ -88,6 +87,10 @@ namespace Nominas
                 {
                     dgvAltasSua.AutoResizeColumn(i);
                 }
+
+                dgvAltasSua.Columns["CValor"].Visible = false;
+                dgvAltasSua.Columns["JValor"].Visible = false;
+                dgvAltasSua.Columns["NoEstado"].Visible = false;
             }
             catch (Exception error)
             {
@@ -122,7 +125,6 @@ namespace Nominas
                           join j in lstCatalogos on a.jornada equals j.id
                           select new
                           {
-                              Id = a.id,
                               RegistroPatronal = a.registropatronal,
                               Nss = a.nss,
                               Rfc = a.rfc,
@@ -152,7 +154,6 @@ namespace Nominas
                           where (a.fechaingreso >= new DateTime(desde.Year, desde.Month, desde.Day) && a.fechaingreso <= new DateTime(hasta.Year, hasta.Month, hasta.Day))
                           select new
                           {
-                              Id = a.id,
                               RegistroPatronal = a.registropatronal,
                               Nss = a.nss,
                               Rfc = a.rfc,
@@ -180,6 +181,10 @@ namespace Nominas
             {
                 dgvAltasSua.AutoResizeColumn(i);
             }
+
+            dgvAltasSua.Columns["CValor"].Visible = false;
+            dgvAltasSua.Columns["JValor"].Visible = false;
+            dgvAltasSua.Columns["NoEstado"].Visible = false;
         }
 
         private void toolExportar_Click(object sender, EventArgs e)

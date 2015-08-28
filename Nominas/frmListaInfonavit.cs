@@ -57,6 +57,7 @@ namespace Nominas
                          select new
                          {
                              IdTrabajador = e.idtrabajador,
+                             NoEmpleado = e.noempleado,
                              Nombre = e.nombrecompleto,
                              Credito = i.credito,
                              Descuento = i.descuento == GLOBALES.dPORCENTAJE ? "PORCENTAJE" :
@@ -70,6 +71,7 @@ namespace Nominas
                 {
                     dgvInfonavit.AutoResizeColumn(i);
                 }
+                dgvInfonavit.Columns["IdTrabajador"].Visible = false;
             }
             catch (Exception error)
             {
@@ -105,7 +107,7 @@ namespace Nominas
             {
                 fila = dgvInfonavit.CurrentCell.RowIndex;
                 i._idEmpleado = int.Parse(dgvInfonavit.Rows[fila].Cells[0].Value.ToString());
-                i._nombreEmpleado = dgvInfonavit.Rows[fila].Cells[1].Value.ToString();
+                i._nombreEmpleado = dgvInfonavit.Rows[fila].Cells[2].Value.ToString();
             }
 
             i._tipoOperacion = edicion;
@@ -146,7 +148,7 @@ namespace Nominas
             frmModificacionInfonavit mi = new frmModificacionInfonavit();
             mi.OnInfonavit += mi_OnInfonavit;
             mi._idEmpleado = int.Parse(dgvInfonavit.Rows[fila].Cells[0].Value.ToString());
-            mi._nombreEmpleado = dgvInfonavit.Rows[fila].Cells[1].Value.ToString();
+            mi._nombreEmpleado = dgvInfonavit.Rows[fila].Cells[2].Value.ToString();
             mi.MdiParent = this.MdiParent;
             mi.Show();
         }
@@ -174,6 +176,7 @@ namespace Nominas
                              select new
                              {
                                  IdTrabajador = emp.idtrabajador,
+                                 NoEmpleado = emp.noempleado,
                                  Nombre = emp.nombrecompleto,
                                  Credito = i.credito,
                                  Descuento = i.descuento == GLOBALES.dPORCENTAJE ? "PORCENTAJE" :
@@ -190,6 +193,7 @@ namespace Nominas
                                    select new
                                    {
                                        IdTrabajador = b.idtrabajador,
+                                       NoEmpleado = b.noempleado,
                                        Nombre = b.nombrecompleto,
                                        Credito = i.credito,
                                        Descuento = i.descuento == GLOBALES.dPORCENTAJE ? "PORCENTAJE" :
@@ -198,6 +202,7 @@ namespace Nominas
                                    };
                     dgvInfonavit.DataSource = busqueda.ToList();
                 }
+                dgvInfonavit.Columns["IdTrabajador"].Visible = false;
             }
         }
 

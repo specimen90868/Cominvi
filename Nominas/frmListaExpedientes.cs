@@ -56,6 +56,7 @@ namespace Nominas
                          select new
                          {
                              IdTrabajador = e.idtrabajador,
+                             NoEmpleado = e.noempleado,
                              Nombre = e.nombrecompleto,
                              Estatus = ((int)ex.estatus) == 0 ? "SIN EXPEDIENTE" :
                              ((int)ex.estatus > 0 && (int)ex.estatus < 14) ? "EXPEDIENTE SIN COMPLETAR" : "COMPLETO"
@@ -67,6 +68,7 @@ namespace Nominas
                 {
                     dgvExpedientes.AutoResizeColumn(i);
                 }
+                dgvExpedientes.Columns["IdTrabajador"].Visible = false;
             }
             catch (Exception error)
             {
@@ -102,7 +104,7 @@ namespace Nominas
             {
                 fila = dgvExpedientes.CurrentCell.RowIndex;
                 e._idEmpleado = int.Parse(dgvExpedientes.Rows[fila].Cells[0].Value.ToString());
-                e._nombreEmpleado = dgvExpedientes.Rows[fila].Cells[1].Value.ToString();
+                e._nombreEmpleado = dgvExpedientes.Rows[fila].Cells[2].Value.ToString();
             }
 
             e._tipoOperacion = edicion;
@@ -226,6 +228,7 @@ namespace Nominas
                              select new
                              {
                                  IdTrabajador = emp.idtrabajador,
+                                 NoEmpleado = emp.noempleado,
                                  Nombre = emp.nombrecompleto,
                                  Estatus = ((int)ex.estatus) == 0 ? "SIN EXPEDIENTE" :
                                     ((int)ex.estatus > 0 && (int)ex.estatus < 14) ? "EXPEDIENTE SIN COMPLETAR" : "COMPLETO"
@@ -240,12 +243,14 @@ namespace Nominas
                                    select new
                                    {
                                        IdTrabajador = b.idtrabajador,
+                                       NoEmpleado = b.noempleado,
                                        Nombre = b.nombrecompleto,
                                        Estatus = ((int)ex.estatus) == 0 ? "SIN EXPEDIENTE" :
                                         ((int)ex.estatus > 0 && (int)ex.estatus < 14) ? "EXPEDIENTE SIN COMPLETAR" : "COMPLETO"
                                    };
                     dgvExpedientes.DataSource = busqueda.ToList();
                 }
+                dgvExpedientes.Columns["IdTrabajador"].Visible = false;
             }
         }
 

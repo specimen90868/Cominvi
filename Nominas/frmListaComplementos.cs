@@ -50,6 +50,7 @@ namespace Nominas
                          select new
                          {
                              IdTrabajador = e.idtrabajador,
+                             NoEmpleado = e.noempleado,
                              Nombre = e.nombrecompleto
                          };
                 dgvComplementos.DataSource = em.ToList();
@@ -63,6 +64,7 @@ namespace Nominas
             {
                 MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
             }
+            dgvComplementos.Columns["IdTrabajador"].Visible = false;
         }
 
         private void CargaPerfil()
@@ -89,7 +91,7 @@ namespace Nominas
             c.MdiParent = this.MdiParent;
             fila = dgvComplementos.CurrentCell.RowIndex;
             c._idEmpleado = int.Parse(dgvComplementos.Rows[fila].Cells[0].Value.ToString());
-            c._nombreEmpleado = dgvComplementos.Rows[fila].Cells[1].Value.ToString();
+            c._nombreEmpleado = dgvComplementos.Rows[fila].Cells[2].Value.ToString();
             c._tipoOperacion = edicion;
             c.Show();
         }
@@ -171,6 +173,7 @@ namespace Nominas
                              select new
                              {
                                  IdTrabajador = emp.idtrabajador,
+                                 NoEmpleado = emp.noempleado,
                                  Nombre = emp.nombrecompleto
                              };
                     dgvComplementos.DataSource = em.ToList();
@@ -182,10 +185,12 @@ namespace Nominas
                                    select new
                                    {
                                        IdTrabajador = b.idtrabajador,
+                                       NoEmpleado = b.noempleado,
                                        Nombre = b.nombrecompleto
                                    };
                     dgvComplementos.DataSource = busqueda.ToList();
                 }
+                dgvComplementos.Columns["IdTrabajador"].Visible = false;
             }
         }
 

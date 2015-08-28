@@ -72,6 +72,7 @@ namespace Nominas
                          select new
                          {
                              IdTrabajador = e.idtrabajador,
+                             NoEmpleado = e.noempleado,
                              Nombre = e.nombrecompleto,
                              Ingreso = e.fechaingreso,
                              Antiguedad = e.antiguedad + " AÑOS",
@@ -93,9 +94,11 @@ namespace Nominas
 
             DataGridViewCellStyle estilo = new DataGridViewCellStyle();
             estilo.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dgvEmpleados.Columns[4].DefaultCellStyle = estilo;
             dgvEmpleados.Columns[5].DefaultCellStyle = estilo;
             dgvEmpleados.Columns[6].DefaultCellStyle = estilo;
+            dgvEmpleados.Columns[7].DefaultCellStyle = estilo;
+
+            dgvEmpleados.Columns["IdTrabajador"].Visible = false;
         }
 
         private void CargaPerfil()
@@ -175,6 +178,7 @@ namespace Nominas
                              {
                                  IdTrabajador = em.idtrabajador,
                                  Nombre = em.nombrecompleto,
+                                 NoEmpleado = em.noempleado,
                                  Ingreso = em.fechaingreso,
                                  Antiguedad = em.antiguedad + " AÑOS",
                                  SDI = em.sdi,
@@ -190,6 +194,7 @@ namespace Nominas
                                    select new
                                    {
                                        IdTrabajador = b.idtrabajador,
+                                       NoEmpleado = b.noempleado,
                                        Nombre = b.nombrecompleto,
                                        Ingreso = b.fechaingreso,
                                        Antiguedad = b.antiguedad + " AÑOS",
@@ -199,6 +204,7 @@ namespace Nominas
                                    };
                     dgvEmpleados.DataSource = busqueda.ToList();
                 }
+                dgvEmpleados.Columns["IdTrabajador"].Visible = false;
             }
         }
 
@@ -230,7 +236,7 @@ namespace Nominas
             frmIncrementoSalarial isal = new frmIncrementoSalarial();
             isal.OnIncrementoSalarial += isal_OnIncrementoSalarial;
             isal.MdiParent = this.MdiParent;
-            isal._nombreEmpleado = dgvEmpleados.Rows[fila].Cells[1].Value.ToString();
+            isal._nombreEmpleado = dgvEmpleados.Rows[fila].Cells[2].Value.ToString();
             isal._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
             isal.Show();
         }
@@ -327,7 +333,7 @@ namespace Nominas
             frmReingresoEmpleado r = new frmReingresoEmpleado();
             r.OnReingreso += r_OnReingreso;
             r._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
-            r._nombreEmpleado = dgvEmpleados.Rows[fila].Cells[1].Value.ToString();
+            r._nombreEmpleado = dgvEmpleados.Rows[fila].Cells[2].Value.ToString();
             r.Show();
         }
 

@@ -61,7 +61,6 @@ namespace Nominas
                          join t in lstEmpleados on m.idtrabajador equals t.idtrabajador
                          select new
                          {
-                             Id = m.id,
                              RegistroPatronal = m.registropatronal,
                              Nss = m.nss,
                              Nombre = t.nombrecompleto,
@@ -103,7 +102,6 @@ namespace Nominas
                          join t in lstEmpleados on m.idtrabajador equals t.idtrabajador
                          select new
                          {
-                             Id = m.id,
                              RegistroPatronal = m.registropatronal,
                              Nss = m.nss,
                              Nombre = t.nombrecompleto,
@@ -119,7 +117,6 @@ namespace Nominas
                          where (m.fecha >= new DateTime(desde.Year, desde.Month, desde.Day) && m.fecha <= new DateTime(hasta.Year, hasta.Month, hasta.Day))
                          select new
                          {
-                             Id = m.id,
                              RegistroPatronal = m.registropatronal,
                              Nss = m.nss,
                              Nombre = t.nombrecompleto,

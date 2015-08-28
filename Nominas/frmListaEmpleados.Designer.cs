@@ -69,7 +69,7 @@
             this.txtBuscar});
             this.toolBusqueda.Location = new System.Drawing.Point(0, 27);
             this.toolBusqueda.Name = "toolBusqueda";
-            this.toolBusqueda.Size = new System.Drawing.Size(1037, 25);
+            this.toolBusqueda.Size = new System.Drawing.Size(1198, 25);
             this.toolBusqueda.TabIndex = 3;
             this.toolBusqueda.Text = "ToolStrip1";
             // 
@@ -184,7 +184,7 @@
             this.toolEmpleados});
             this.toolTitulo.Location = new System.Drawing.Point(0, 0);
             this.toolTitulo.Name = "toolTitulo";
-            this.toolTitulo.Size = new System.Drawing.Size(1037, 27);
+            this.toolTitulo.Size = new System.Drawing.Size(1198, 27);
             this.toolTitulo.TabIndex = 4;
             this.toolTitulo.Text = "ToolStrip1";
             // 
@@ -205,7 +205,7 @@
             this.dgvEmpleados.MultiSelect = false;
             this.dgvEmpleados.Name = "dgvEmpleados";
             this.dgvEmpleados.ReadOnly = true;
-            this.dgvEmpleados.Size = new System.Drawing.Size(1037, 672);
+            this.dgvEmpleados.Size = new System.Drawing.Size(1198, 672);
             this.dgvEmpleados.TabIndex = 5;
             this.dgvEmpleados.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmpleados_CellDoubleClick);
             // 
@@ -213,7 +213,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1037, 724);
+            this.ClientSize = new System.Drawing.Size(1198, 724);
             this.Controls.Add(this.dgvEmpleados);
             this.Controls.Add(this.toolBusqueda);
             this.Controls.Add(this.toolTitulo);
