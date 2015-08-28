@@ -216,6 +216,12 @@
     <Compile Include="frmListaModificacionesSua.Designer.cs">
       <DependentUpon>frmListaModificacionesSua.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmListaOperacionesIdse.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaOperacionesIdse.Designer.cs">
+      <DependentUpon>frmListaOperacionesIdse.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmListaPerfiles.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -410,6 +416,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmListaModificacionesSua.resx">
       <DependentUpon>frmListaModificacionesSua.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListaOperacionesIdse.resx">
+      <DependentUpon>frmListaOperacionesIdse.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmListaPerfiles.resx">
       <DependentUpon>frmListaPerfiles.cs</DependentUpon>

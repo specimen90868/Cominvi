@@ -384,6 +384,30 @@ namespace Nominas
             frmListaInfonavitSua lis = new frmListaInfonavitSua();
             lis.MdiParent = this;
             lis.Show();
+        }
+
+        private void toolAltasIdse_Click(object sender, EventArgs e)
+        {
+            frmListaOperacionesIdse loi = new frmListaOperacionesIdse();
+            loi.MdiParent = this;
+            loi._tipoOperacion = 0;
+            loi.Show();
+        }
+
+        private void toolModificacionIdse_Click(object sender, EventArgs e)
+        {
+            frmListaOperacionesIdse loi = new frmListaOperacionesIdse();
+            loi.MdiParent = this;
+            loi._tipoOperacion = 1;
+            loi.Show();
+        }
+
+        private void toolBaja_Click(object sender, EventArgs e)
+        {
+            frmListaOperacionesIdse loi = new frmListaOperacionesIdse();
+            loi.MdiParent = this;
+            loi._tipoOperacion = 2;
+            loi.Show();
         }        
     }
 }

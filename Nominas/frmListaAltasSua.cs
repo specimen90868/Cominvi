@@ -208,9 +208,7 @@ namespace Nominas
                 {
                     workArchivo.RunWorkerAsync();
                 }
-                
             }
-                
             #endregion
         }
 

@@ -49,7 +49,7 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuInfonavit = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuSeguroSocial = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolSUA = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolSua = new System.Windows.Forms.ToolStripMenuItem();
             this.toolAltas = new System.Windows.Forms.ToolStripMenuItem();
             this.toolModificaciones = new System.Windows.Forms.ToolStripMenuItem();
             this.toolReingresos = new System.Windows.Forms.ToolStripMenuItem();
@@ -75,6 +75,10 @@
             this.workPerfil = new System.ComponentModel.BackgroundWorker();
             this.stsPrincipal = new System.Windows.Forms.StatusStrip();
             this.toolEstatusPerfil = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolIdse = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolAltasIdse = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolModificacionIdse = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolBaja = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPrincipal.SuspendLayout();
             this.stsPrincipal.SuspendLayout();
             this.SuspendLayout();
@@ -237,23 +241,24 @@
             // mnuSeguroSocial
             // 
             this.mnuSeguroSocial.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolSUA});
+            this.toolSua,
+            this.toolIdse});
             this.mnuSeguroSocial.Name = "mnuSeguroSocial";
             this.mnuSeguroSocial.Size = new System.Drawing.Size(90, 20);
             this.mnuSeguroSocial.Text = "Seguro Social";
             // 
-            // toolSUA
+            // toolSua
             // 
-            this.toolSUA.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolSua.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolAltas,
             this.toolModificaciones,
             this.toolReingresos,
             this.toolBajas,
             this.toolAusentismos,
             this.toolInfonavit});
-            this.toolSUA.Name = "toolSUA";
-            this.toolSUA.Size = new System.Drawing.Size(165, 22);
-            this.toolSUA.Text = "Operaciones SUA";
+            this.toolSua.Name = "toolSua";
+            this.toolSua.Size = new System.Drawing.Size(165, 22);
+            this.toolSua.Text = "Operaciones SUA";
             // 
             // toolAltas
             // 
@@ -440,6 +445,37 @@
             this.toolEstatusPerfil.Size = new System.Drawing.Size(98, 17);
             this.toolEstatusPerfil.Text = "Cargando perfil...";
             // 
+            // toolIdse
+            // 
+            this.toolIdse.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolAltasIdse,
+            this.toolModificacionIdse,
+            this.toolBaja});
+            this.toolIdse.Name = "toolIdse";
+            this.toolIdse.Size = new System.Drawing.Size(165, 22);
+            this.toolIdse.Text = "Operaciones Idse";
+            // 
+            // toolAltasIdse
+            // 
+            this.toolAltasIdse.Name = "toolAltasIdse";
+            this.toolAltasIdse.Size = new System.Drawing.Size(155, 22);
+            this.toolAltasIdse.Text = "Altas";
+            this.toolAltasIdse.Click += new System.EventHandler(this.toolAltasIdse_Click);
+            // 
+            // toolModificacionIdse
+            // 
+            this.toolModificacionIdse.Name = "toolModificacionIdse";
+            this.toolModificacionIdse.Size = new System.Drawing.Size(155, 22);
+            this.toolModificacionIdse.Text = "Modificaciones";
+            this.toolModificacionIdse.Click += new System.EventHandler(this.toolModificacionIdse_Click);
+            // 
+            // toolBaja
+            // 
+            this.toolBaja.Name = "toolBaja";
+            this.toolBaja.Size = new System.Drawing.Size(155, 22);
+            this.toolBaja.Text = "Bajas";
+            this.toolBaja.Click += new System.EventHandler(this.toolBaja_Click);
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -504,13 +540,17 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem toolProcesoSalarial;
-        private System.Windows.Forms.ToolStripMenuItem toolSUA;
+        private System.Windows.Forms.ToolStripMenuItem toolSua;
         private System.Windows.Forms.ToolStripMenuItem toolAltas;
         private System.Windows.Forms.ToolStripMenuItem toolModificaciones;
         private System.Windows.Forms.ToolStripMenuItem toolReingresos;
         private System.Windows.Forms.ToolStripMenuItem toolBajas;
         private System.Windows.Forms.ToolStripMenuItem toolAusentismos;
         private System.Windows.Forms.ToolStripMenuItem toolInfonavit;
+        private System.Windows.Forms.ToolStripMenuItem toolIdse;
+        private System.Windows.Forms.ToolStripMenuItem toolAltasIdse;
+        private System.Windows.Forms.ToolStripMenuItem toolModificacionIdse;
+        private System.Windows.Forms.ToolStripMenuItem toolBaja;
     }
 }
 
