@@ -388,6 +388,7 @@
             this.toolConceptos.Name = "toolConceptos";
             this.toolConceptos.Size = new System.Drawing.Size(155, 22);
             this.toolConceptos.Text = "Conceptos";
+            this.toolConceptos.Click += new System.EventHandler(this.toolConceptos_Click);
             // 
             // mnuConfiguracion
             // 

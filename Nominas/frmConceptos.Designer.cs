@@ -1,6 +1,6 @@
 ﻿namespace Nominas
 {
-    partial class frmFactores
+    partial class frmConceptos
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmFactores));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmConceptos));
             this.toolTitulo = new System.Windows.Forms.ToolStrip();
             this.toolVentana = new System.Windows.Forms.ToolStripLabel();
             this.toolAcciones = new System.Windows.Forms.ToolStrip();
@@ -36,10 +36,10 @@
             this.toolGuardarNuevo = new System.Windows.Forms.ToolStripButton();
             this.toolCerrar = new System.Windows.Forms.ToolStripButton();
             this.Label2 = new System.Windows.Forms.Label();
-            this.txtAnio = new System.Windows.Forms.TextBox();
-            this.Label1 = new System.Windows.Forms.Label();
-            this.txtValor = new System.Windows.Forms.TextBox();
-            this.lblDeptoPuesto = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtConcepto = new System.Windows.Forms.TextBox();
+            this.cmbTipo = new System.Windows.Forms.ComboBox();
             this.toolTitulo.SuspendLayout();
             this.toolAcciones.SuspendLayout();
             this.SuspendLayout();
@@ -51,16 +51,16 @@
             this.toolVentana});
             this.toolTitulo.Location = new System.Drawing.Point(0, 0);
             this.toolTitulo.Name = "toolTitulo";
-            this.toolTitulo.Size = new System.Drawing.Size(607, 27);
-            this.toolTitulo.TabIndex = 4;
+            this.toolTitulo.Size = new System.Drawing.Size(678, 27);
+            this.toolTitulo.TabIndex = 5;
             this.toolTitulo.Text = "toolAcciones";
             // 
             // toolVentana
             // 
             this.toolVentana.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolVentana.Name = "toolVentana";
-            this.toolVentana.Size = new System.Drawing.Size(268, 24);
-            this.toolVentana.Text = "Nuevo factor de integración";
+            this.toolVentana.Size = new System.Drawing.Size(164, 24);
+            this.toolVentana.Text = "Nuevo concepto";
             // 
             // toolAcciones
             // 
@@ -70,8 +70,8 @@
             this.toolCerrar});
             this.toolAcciones.Location = new System.Drawing.Point(0, 27);
             this.toolAcciones.Name = "toolAcciones";
-            this.toolAcciones.Size = new System.Drawing.Size(607, 25);
-            this.toolAcciones.TabIndex = 5;
+            this.toolAcciones.Size = new System.Drawing.Size(678, 25);
+            this.toolAcciones.TabIndex = 6;
             this.toolAcciones.Text = "toolEmpresa";
             // 
             // toolGuardarCerrar
@@ -106,60 +106,64 @@
             // 
             this.Label2.AutoSize = true;
             this.Label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label2.Location = new System.Drawing.Point(12, 74);
+            this.Label2.Location = new System.Drawing.Point(12, 69);
             this.Label2.Name = "Label2";
             this.Label2.Size = new System.Drawing.Size(168, 18);
-            this.Label2.TabIndex = 106;
+            this.Label2.TabIndex = 107;
             this.Label2.Text = "Factor de integración";
             // 
-            // txtAnio
+            // label1
             // 
-            this.txtAnio.Location = new System.Drawing.Point(94, 113);
-            this.txtAnio.Name = "txtAnio";
-            this.txtAnio.Size = new System.Drawing.Size(57, 20);
-            this.txtAnio.TabIndex = 105;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 111);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(47, 13);
+            this.label1.TabIndex = 108;
+            this.label1.Text = "Nombre:";
             // 
-            // Label1
+            // label3
             // 
-            this.Label1.AutoSize = true;
-            this.Label1.Location = new System.Drawing.Point(62, 116);
-            this.Label1.Name = "Label1";
-            this.Label1.Size = new System.Drawing.Size(29, 13);
-            this.Label1.TabIndex = 104;
-            this.Label1.Text = "Año:";
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(12, 137);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(31, 13);
+            this.label3.TabIndex = 109;
+            this.label3.Text = "Tipo:";
             // 
-            // txtValor
+            // txtConcepto
             // 
-            this.txtValor.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtValor.Location = new System.Drawing.Point(94, 139);
-            this.txtValor.Name = "txtValor";
-            this.txtValor.Size = new System.Drawing.Size(57, 20);
-            this.txtValor.TabIndex = 103;
+            this.txtConcepto.Location = new System.Drawing.Point(65, 108);
+            this.txtConcepto.Name = "txtConcepto";
+            this.txtConcepto.Size = new System.Drawing.Size(148, 20);
+            this.txtConcepto.TabIndex = 110;
             // 
-            // lblDeptoPuesto
+            // cmbTipo
             // 
-            this.lblDeptoPuesto.AutoSize = true;
-            this.lblDeptoPuesto.Location = new System.Drawing.Point(57, 142);
-            this.lblDeptoPuesto.Name = "lblDeptoPuesto";
-            this.lblDeptoPuesto.Size = new System.Drawing.Size(34, 13);
-            this.lblDeptoPuesto.TabIndex = 102;
-            this.lblDeptoPuesto.Text = "Valor:";
+            this.cmbTipo.FormattingEnabled = true;
+            this.cmbTipo.Items.AddRange(new object[] {
+            "PERCEPCION",
+            "DEDUCCION"});
+            this.cmbTipo.Location = new System.Drawing.Point(65, 134);
+            this.cmbTipo.Name = "cmbTipo";
+            this.cmbTipo.Size = new System.Drawing.Size(148, 21);
+            this.cmbTipo.TabIndex = 111;
+            this.cmbTipo.SelectedIndexChanged += new System.EventHandler(this.cmbTipo_SelectedIndexChanged);
             // 
-            // frmFactores
+            // frmConceptos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(607, 587);
+            this.ClientSize = new System.Drawing.Size(678, 583);
+            this.Controls.Add(this.cmbTipo);
+            this.Controls.Add(this.txtConcepto);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.Label2);
-            this.Controls.Add(this.txtAnio);
-            this.Controls.Add(this.Label1);
-            this.Controls.Add(this.txtValor);
-            this.Controls.Add(this.lblDeptoPuesto);
             this.Controls.Add(this.toolAcciones);
             this.Controls.Add(this.toolTitulo);
-            this.Name = "frmFactores";
-            this.Text = "Factores de integración";
-            this.Load += new System.EventHandler(this.frmFactores_Load);
+            this.Name = "frmConceptos";
+            this.Text = "Conceptos";
+            this.Load += new System.EventHandler(this.frmConceptos_Load);
             this.toolTitulo.ResumeLayout(false);
             this.toolTitulo.PerformLayout();
             this.toolAcciones.ResumeLayout(false);
@@ -178,9 +182,9 @@
         internal System.Windows.Forms.ToolStripButton toolGuardarNuevo;
         private System.Windows.Forms.ToolStripButton toolCerrar;
         internal System.Windows.Forms.Label Label2;
-        internal System.Windows.Forms.TextBox txtAnio;
-        internal System.Windows.Forms.Label Label1;
-        internal System.Windows.Forms.TextBox txtValor;
-        internal System.Windows.Forms.Label lblDeptoPuesto;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtConcepto;
+        private System.Windows.Forms.ComboBox cmbTipo;
     }
 }

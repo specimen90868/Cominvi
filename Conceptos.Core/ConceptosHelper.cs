@@ -22,7 +22,28 @@ namespace Conceptos.Core
                 Conceptos concepto = new Conceptos();
                 concepto.id = int.Parse(dtConceptos.Rows[i]["id"].ToString());
                 concepto.concepto = dtConceptos.Rows[i]["concepto"].ToString();
-                concepto.tipoconcepto = int.Parse(dtConceptos.Rows[i]["tipoconcepto"].ToString());
+                concepto.tipoconcepto = dtConceptos.Rows[i]["tipoconcepto"].ToString();
+                concepto.formula = dtConceptos.Rows[i]["formula"].ToString();
+                concepto.gruposat = dtConceptos.Rows[i]["gruposat"].ToString();
+                lstConcepto.Add(concepto);
+            }
+            return lstConcepto;
+        }
+
+        public List<Conceptos> obtenerConcepto(Conceptos c)
+        {
+            List<Conceptos> lstConcepto = new List<Conceptos>();
+            DataTable dtConceptos = new DataTable();
+            Command.CommandText = "select * from conceptos where id = @id";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("id", c.id);
+            dtConceptos = SelectData(Command);
+            for (int i = 0; i < dtConceptos.Rows.Count; i++)
+            {
+                Conceptos concepto = new Conceptos();
+                concepto.id = int.Parse(dtConceptos.Rows[i]["id"].ToString());
+                concepto.concepto = dtConceptos.Rows[i]["concepto"].ToString();
+                concepto.tipoconcepto = dtConceptos.Rows[i]["tipoconcepto"].ToString();
                 concepto.formula = dtConceptos.Rows[i]["formula"].ToString();
                 concepto.gruposat = dtConceptos.Rows[i]["gruposat"].ToString();
                 lstConcepto.Add(concepto);
@@ -48,6 +69,14 @@ namespace Conceptos.Core
             Command.Parameters.AddWithValue("id", c.id);
             Command.Parameters.AddWithValue("concepto", c.concepto);
             Command.Parameters.AddWithValue("tipoconcepto", c.tipoconcepto);
+            return Command.ExecuteNonQuery();
+        }
+
+        public int eliminarConcepto(Conceptos c)
+        {
+            Command.CommandText = "delete from conceptos where id = @id";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("id", c.id);
             return Command.ExecuteNonQuery();
         }
     }

@@ -422,6 +422,13 @@ namespace Nominas
             frmListaSubsidio ls = new frmListaSubsidio();
             ls.MdiParent = this;
             ls.Show();
+        }
+
+        private void toolConceptos_Click(object sender, EventArgs e)
+        {
+            frmListaConceptos lc = new frmListaConceptos();
+            lc.MdiParent = this;
+            lc.Show();
         }        
     }
 }

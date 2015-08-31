@@ -78,6 +78,12 @@
     <Compile Include="frmComplementos.Designer.cs">
       <DependentUpon>frmComplementos.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmConceptos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConceptos.Designer.cs">
+      <DependentUpon>frmConceptos.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmDepartamentos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -167,6 +173,12 @@
     </Compile>
     <Compile Include="frmListaComplementos.Designer.cs">
       <DependentUpon>frmListaComplementos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmListaConceptos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaConceptos.Designer.cs">
+      <DependentUpon>frmListaConceptos.cs</DependentUpon>
     </Compile>
     <Compile Include="frmListaDepartamentos.cs">
       <SubType>Form</SubType>
@@ -372,6 +384,9 @@
     <EmbeddedResource Include="frmComplementos.resx">
       <DependentUpon>frmComplementos.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmConceptos.resx">
+      <DependentUpon>frmConceptos.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmDepartamentos.resx">
       <DependentUpon>frmDepartamentos.cs</DependentUpon>
     </EmbeddedResource>
@@ -416,6 +431,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmListaComplementos.resx">
       <DependentUpon>frmListaComplementos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListaConceptos.resx">
+      <DependentUpon>frmListaConceptos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmListaDepartamentos.resx">
       <DependentUpon>frmListaDepartamentos.cs</DependentUpon>

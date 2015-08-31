@@ -254,3 +254,5 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\TablaIsr.Co
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\TablaSubsidio.Core.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmListaSubsidio.resources
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmSubsidio.resources
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmListaConceptos.resources
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmConceptos.resources
