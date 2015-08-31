@@ -415,6 +415,13 @@ namespace Nominas
             frmListaIsr li = new frmListaIsr();
             li.MdiParent = this;
             li.Show();
+        }
+
+        private void toolSubsidio_Click(object sender, EventArgs e)
+        {
+            frmListaSubsidio ls = new frmListaSubsidio();
+            ls.MdiParent = this;
+            ls.Show();
         }        
     }
 }

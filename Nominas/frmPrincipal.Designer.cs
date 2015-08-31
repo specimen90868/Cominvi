@@ -486,6 +486,7 @@
             this.toolSubsidio.Name = "toolSubsidio";
             this.toolSubsidio.Size = new System.Drawing.Size(154, 22);
             this.toolSubsidio.Text = "Subsidio";
+            this.toolSubsidio.Click += new System.EventHandler(this.toolSubsidio_Click);
             // 
             // workPerfil
             // 

@@ -12,9 +12,9 @@ using System.Windows.Forms;
 
 namespace Nominas
 {
-    public partial class frmIsr : Form
+    public partial class frmSubsidio : Form
     {
-        public frmIsr()
+        public frmSubsidio()
         {
             InitializeComponent();
         }
@@ -22,21 +22,36 @@ namespace Nominas
         #region VARIABLES GLOBALES
         SqlConnection cnx;
         SqlCommand cmd;
-        TablaIsr.Core.IsrHelper ih;
+        TablaSubsidio.Core.SubsidioHelper sh;
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
         #endregion
 
         #region DELEGADOS
-        public delegate void delOnNuevoIsr(int edicion);
-        public event delOnNuevoIsr OnNuevoIsr;
+        public delegate void delOnNuevoSubsidio(int edicion);
+        public event delOnNuevoSubsidio OnNuevoSubsidio;
         #endregion
 
         #region VARIABLES PUBLICAS
-        public int _idIsr;
+        public int _idSubsidio;
         public int _tipoOperacion;
         #endregion
 
-        private void frmIsr_Load(object sender, EventArgs e)
+        private void toolGuardarCerrar_Click(object sender, EventArgs e)
+        {
+            guardar(1);
+        }
+
+        private void toolGuardarNuevo_Click(object sender, EventArgs e)
+        {
+            guardar(0);
+        }
+
+        private void toolCerrar_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
+        }
+
+        private void frmSubsidio_Load(object sender, EventArgs e)
         {
             txtAnio.Text = DateTime.Now.Year.ToString();
             if (_tipoOperacion == GLOBALES.CONSULTAR || _tipoOperacion == GLOBALES.MODIFICAR)
@@ -45,28 +60,27 @@ namespace Nominas
                 cnx.ConnectionString = cdn;
                 cmd = new SqlCommand();
                 cmd.Connection = cnx;
-                ih = new TablaIsr.Core.IsrHelper();
-                ih.Command = cmd;
+                sh = new TablaSubsidio.Core.SubsidioHelper();
+                sh.Command = cmd;
 
-                TablaIsr.Core.TablaIsr isr = new TablaIsr.Core.TablaIsr();
-                isr.id = _idIsr;
+                TablaSubsidio.Core.TablaSubsidio subsidio = new TablaSubsidio.Core.TablaSubsidio();
+                subsidio.id = _idSubsidio;
 
-                List<TablaIsr.Core.TablaIsr> lstIsr;
+                List<TablaSubsidio.Core.TablaSubsidio> lstSubsidio;
 
                 try
                 {
                     cnx.Open();
-                    lstIsr = ih.obtenerIsr(isr);
+                    lstSubsidio = sh.obtieneSubsidio(subsidio);
                     cnx.Close();
                     cnx.Dispose();
 
-                    for (int i = 0; i < lstIsr.Count; i++)
+                    for (int i = 0; i < lstSubsidio.Count; i++)
                     {
-                        txtInferior.Text = lstIsr[i].inferior.ToString();
-                        txtCuota.Text = lstIsr[i].cuota.ToString();
-                        txtPorcentaje.Text = lstIsr[i].porcentaje.ToString();
-                        txtDias.Text = lstIsr[i].periodo.ToString();
-                        txtAnio.Text = lstIsr[i].anio.ToString();
+                        txtDesde.Text = lstSubsidio[i].desde.ToString();
+                        txtCantidad.Text = lstSubsidio[i].cantidad.ToString();
+                        txtDias.Text = lstSubsidio[i].periodo.ToString();
+                        txtAnio.Text = lstSubsidio[i].anio.ToString();
                     }
                 }
                 catch (Exception error)
@@ -76,11 +90,11 @@ namespace Nominas
 
                 if (_tipoOperacion == GLOBALES.CONSULTAR)
                 {
-                    toolTitulo.Text = "Consulta ISR";
+                    toolTitulo.Text = "Consulta Subsidio";
                     GLOBALES.INHABILITAR(this, typeof(TextBox));
                 }
                 else
-                    toolTitulo.Text = "Edición ISR";
+                    toolTitulo.Text = "Edición Subsidio";
             }
         }
 
@@ -98,15 +112,14 @@ namespace Nominas
             cnx.ConnectionString = cdn;
             cmd = new SqlCommand();
             cmd.Connection = cnx;
-            ih = new TablaIsr.Core.IsrHelper();
-            ih.Command = cmd;
+            sh = new TablaSubsidio.Core.SubsidioHelper();
+            sh.Command = cmd;
 
-            TablaIsr.Core.TablaIsr isr = new TablaIsr.Core.TablaIsr();
-            isr.inferior = double.Parse(txtInferior.Text.Trim());
-            isr.cuota = double.Parse(txtCuota.Text.Trim());
-            isr.porcentaje = double.Parse(txtPorcentaje.Text.Trim());
-            isr.periodo = int.Parse(txtDias.Text.Trim());
-            isr.anio = int.Parse(txtAnio.Text.Trim());
+            TablaSubsidio.Core.TablaSubsidio subsidio = new TablaSubsidio.Core.TablaSubsidio();
+            subsidio.desde = double.Parse(txtDesde.Text.Trim());
+            subsidio.cantidad = double.Parse(txtCantidad.Text.Trim());
+            subsidio.periodo = int.Parse(txtDias.Text.Trim());
+            subsidio.anio = int.Parse(txtAnio.Text.Trim());
 
             switch (_tipoOperacion)
             {
@@ -114,7 +127,7 @@ namespace Nominas
                     try
                     {
                         cnx.Open();
-                        ih.insertaIsr(isr);
+                        sh.insertaSubsidio(subsidio);
                         cnx.Close();
                         cnx.Dispose();
                     }
@@ -126,9 +139,9 @@ namespace Nominas
                 case 2:
                     try
                     {
-                        isr.id = _idIsr;
+                        subsidio.id =_idSubsidio;
                         cnx.Open();
-                        ih.actualizaIsr(isr);
+                        sh.actualizaSubsidio(subsidio);
                         cnx.Close();
                         cnx.Dispose();
                     }
@@ -146,26 +159,11 @@ namespace Nominas
                     txtAnio.Text = DateTime.Now.Year.ToString();
                     break;
                 case 1:
-                    if (OnNuevoIsr != null)
-                        OnNuevoIsr(_tipoOperacion);
+                    if (OnNuevoSubsidio != null)
+                        OnNuevoSubsidio(_tipoOperacion);
                     this.Dispose();
                     break;
             }
-        }
-
-        private void toolGuardarCerrar_Click(object sender, EventArgs e)
-        {
-            guardar(1);
-        }
-
-        private void toolGuardarNuevo_Click(object sender, EventArgs e)
-        {
-            guardar(0);
-        }
-
-        private void toolCerrar_Click(object sender, EventArgs e)
-        {
-            this.Dispose();
         }
     }
 }

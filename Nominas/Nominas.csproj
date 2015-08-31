@@ -270,6 +270,12 @@
     <Compile Include="frmListaSalario.Designer.cs">
       <DependentUpon>frmListaSalario.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmListaSubsidio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaSubsidio.Designer.cs">
+      <DependentUpon>frmListaSubsidio.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmListaUsuarios.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -341,6 +347,12 @@
     </Compile>
     <Compile Include="frmSeleccionarEmpresa.Designer.cs">
       <DependentUpon>frmSeleccionarEmpresa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSubsidio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSubsidio.Designer.cs">
+      <DependentUpon>frmSubsidio.cs</DependentUpon>
     </Compile>
     <Compile Include="frmUsuarios.cs">
       <SubType>Form</SubType>
@@ -456,6 +468,9 @@
     <EmbeddedResource Include="frmListaSalario.resx">
       <DependentUpon>frmListaSalario.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmListaSubsidio.resx">
+      <DependentUpon>frmListaSubsidio.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmListaUsuarios.resx">
       <DependentUpon>frmListaUsuarios.cs</DependentUpon>
     </EmbeddedResource>
@@ -491,6 +506,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmSeleccionarEmpresa.resx">
       <DependentUpon>frmSeleccionarEmpresa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSubsidio.resx">
+      <DependentUpon>frmSubsidio.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmUsuarios.resx">
       <DependentUpon>frmUsuarios.cs</DependentUpon>

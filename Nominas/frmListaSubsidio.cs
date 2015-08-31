@@ -12,9 +12,9 @@ using System.Windows.Forms;
 
 namespace Nominas
 {
-    public partial class frmListaIsr : Form
+    public partial class frmListaSubsidio : Form
     {
-        public frmListaIsr()
+        public frmListaSubsidio()
         {
             InitializeComponent();
         }
@@ -22,73 +22,73 @@ namespace Nominas
         #region VARIABLES GLOBALES
         SqlConnection cnx;
         SqlCommand cmd;
-        List<TablaIsr.Core.TablaIsr> lstIsr;
-        TablaIsr.Core.IsrHelper ih;
+        List<TablaSubsidio.Core.TablaSubsidio> lstSubsidio;
+        TablaSubsidio.Core.SubsidioHelper sh;
         #endregion
 
-        private void frmListaIsr_Load(object sender, EventArgs e)
-        {
-            dgvIsr.RowHeadersVisible = false;
-            ListaIsr();
-        }
-
-        private void ListaIsr()
+        private void ListaSubsidio()
         {
             string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();
             cmd.Connection = cnx;
 
-            ih = new TablaIsr.Core.IsrHelper();
-            ih.Command = cmd;
+            sh = new TablaSubsidio.Core.SubsidioHelper();
+            sh.Command = cmd;
 
-            try {
+            try
+            {
                 cnx.Open();
-                lstIsr = ih.obtenerTablaIsr();
+                lstSubsidio = sh.obtenerTablaSubsidio();
                 cnx.Close();
                 cnx.Dispose();
 
-                var isr = from i in lstIsr
-                          select new 
+                var sub = from s in lstSubsidio
+                          select new
                           {
-                              Id = i.id,
-                              Inferior = i.inferior,
-                              Cuota = i.cuota,
-                              Porcentaje = i.porcentaje,
-                              Periodo = (i.periodo == 7) ? "SEMANAL" : "QUINCENAL",
-                              Anio = i.anio
+                              Id = s.id,
+                              Desde = s.desde,
+                              Cantidad = s.cantidad,
+                              Periodo = (s.periodo == 7) ? "SEMANAL" : "QUINCENAL",
+                              Anio = s.anio
                           };
 
-                dgvIsr.DataSource = isr.ToList();
+                dgvSubsidio.DataSource = sub.ToList();
             }
-            catch (Exception error) {
+            catch (Exception error)
+            {
                 MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
             }
 
             DataGridViewCellStyle estilo = new DataGridViewCellStyle();
             estilo.Alignment = DataGridViewContentAlignment.MiddleRight;
             estilo.Format = "n6";
-            dgvIsr.Columns[1].DefaultCellStyle = estilo;
-            dgvIsr.Columns[2].DefaultCellStyle = estilo;
-            dgvIsr.Columns[3].DefaultCellStyle = estilo;
+            dgvSubsidio.Columns[1].DefaultCellStyle = estilo;
+            dgvSubsidio.Columns[2].DefaultCellStyle = estilo;
 
-            dgvIsr.Columns["Id"].Visible = false;
+            dgvSubsidio.Columns["Id"].Visible = false;
 
-            for (int i = 0; i < dgvIsr.Columns.Count; i++)
+            for (int i = 0; i < dgvSubsidio.Columns.Count; i++)
             {
-                dgvIsr.AutoResizeColumn(i);
+                dgvSubsidio.AutoResizeColumn(i);
             }
+        }
+
+        private void frmListaSubsidio_Load(object sender, EventArgs e)
+        {
+            dgvSubsidio.RowHeadersVisible = false;
+            ListaSubsidio();
         }
 
         private void CargaPerfil()
         {
-            List<Autorizaciones.Core.Ediciones> lstEdiciones = GLOBALES.PERFILEDICIONES("ISR");
+            List<Autorizaciones.Core.Ediciones> lstEdiciones = GLOBALES.PERFILEDICIONES("Subsidio");
 
             for (int i = 0; i < lstEdiciones.Count; i++)
             {
                 switch (lstEdiciones[i].nombre.ToString())
                 {
-                    case "ISR":
+                    case "Subsidio":
                         toolNuevo.Enabled = Convert.ToBoolean(lstEdiciones[i].crear);
                         toolConsultar.Enabled = Convert.ToBoolean(lstEdiciones[i].consulta);
                         toolEditar.Enabled = Convert.ToBoolean(lstEdiciones[i].modificar);
@@ -100,23 +100,23 @@ namespace Nominas
 
         private void Seleccion(int edicion)
         {
-            frmIsr i = new frmIsr();
-            i.OnNuevoIsr += i_OnNuevoIsr;
-            i.MdiParent = this.MdiParent;
+            frmSubsidio s = new frmSubsidio();
+            s.OnNuevoSubsidio += s_OnNuevoSubsidio;
+            s.MdiParent = this.MdiParent;
             int fila = 0;
             if (!edicion.Equals(GLOBALES.NUEVO))
             {
-                fila = dgvIsr.CurrentCell.RowIndex;
-                i._idIsr = int.Parse(dgvIsr.Rows[fila].Cells[0].Value.ToString());
+                fila = dgvSubsidio.CurrentCell.RowIndex;
+                s._idSubsidio = int.Parse(dgvSubsidio.Rows[fila].Cells[0].Value.ToString());
             }
-            i._tipoOperacion = edicion;
-            i.Show();
+            s._tipoOperacion = edicion;
+            s.Show();
         }
 
-        void i_OnNuevoIsr(int edicion)
+        void s_OnNuevoSubsidio(int edicion)
         {
             if (edicion == GLOBALES.NUEVO || edicion == GLOBALES.MODIFICAR)
-                ListaIsr();
+                ListaSubsidio();
         }
 
         private void toolNuevo_Click(object sender, EventArgs e)
@@ -136,27 +136,27 @@ namespace Nominas
 
         private void toolBaja_Click(object sender, EventArgs e)
         {
-            DialogResult respuesta = MessageBox.Show("¿Quiere eliminar el registro ISR?", "Confirmación", MessageBoxButtons.YesNo);
+            DialogResult respuesta = MessageBox.Show("¿Quiere eliminar el subsidio?", "Confirmación", MessageBoxButtons.YesNo);
             if (respuesta == DialogResult.Yes)
             {
                 string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-                int fila = dgvIsr.CurrentCell.RowIndex;
-                int id = int.Parse(dgvIsr.Rows[fila].Cells[0].Value.ToString());
+                int fila = dgvSubsidio.CurrentCell.RowIndex;
+                int id = int.Parse(dgvSubsidio.Rows[fila].Cells[0].Value.ToString());
                 cnx = new SqlConnection(cdn);
                 cmd = new SqlCommand();
                 cmd.Connection = cnx;
-                ih = new TablaIsr.Core.IsrHelper();
-                ih.Command = cmd;
-                TablaIsr.Core.TablaIsr isr = new TablaIsr.Core.TablaIsr();
-                isr.id = id;
+                sh = new TablaSubsidio.Core.SubsidioHelper();
+                sh.Command = cmd;
+                TablaSubsidio.Core.TablaSubsidio subsidio = new TablaSubsidio.Core.TablaSubsidio();
+                subsidio.id = id;
 
                 try
                 {
                     cnx.Open();
-                    ih.eliminaIsr(isr);
+                    sh.eliminaSubsidio(subsidio);
                     cnx.Close();
                     cnx.Dispose();
-                    ListaIsr();
+                    ListaSubsidio();
                 }
                 catch (Exception error)
                 {
@@ -180,22 +180,21 @@ namespace Nominas
 
         private void filtrado(string periodo)
         {
-            var busqueda = from b in lstIsr
+            var busqueda = from b in lstSubsidio
                            where b.periodo.ToString().Contains(periodo)
                            select new
                            {
                                Id = b.id,
-                               Inferior = b.inferior,
-                               Cuota = b.cuota,
-                               Porcentaje = b.porcentaje,
+                               Desde = b.desde,
+                               Cantidad = b.cantidad,
                                Periodo = (b.periodo == 7) ? "SEMANAL" : "QUINCENAL",
                                Anio = b.anio
                            };
-            dgvIsr.DataSource = busqueda.ToList();
-            dgvIsr.Columns["Id"].Visible = false;
-            for (int i = 0; i < dgvIsr.Columns.Count; i++)
+            dgvSubsidio.DataSource = busqueda.ToList();
+            dgvSubsidio.Columns["Id"].Visible = false;
+            for (int i = 0; i < dgvSubsidio.Columns.Count; i++)
             {
-                dgvIsr.AutoResizeColumn(i);
+                dgvSubsidio.AutoResizeColumn(i);
             }
         }
     }
