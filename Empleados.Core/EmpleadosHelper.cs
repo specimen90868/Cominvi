@@ -164,9 +164,9 @@ namespace Empleados.Core
         public int insertaEmpleado(Empleados e)
         {
             Command.CommandText = "insert into trabajadores (noempleado,nombres,paterno,materno,nombrecompleto,idempresa,idperiodo,iddepartamento,idpuesto,fechaingreso,antiguedad," + 
-                "fechaantiguedad,antiguedadmod,fechanacimiento,edad,rfc,curp,nss,digitoverificador,tiposalario,sdi,sd,sueldo,estatus,idse,idusuario) " +
+                "fechaantiguedad,antiguedadmod,fechanacimiento,edad,rfc,curp,nss,digitoverificador,tiposalario,sdi,sd,sueldo,estatus,idusuario) " +
                 "values (@noempleado,@nombres,@paterno,@materno,@nombrecompleto,@idempresa,@idperiodo,@iddepartamento,@idpuesto,@fechaingreso,@antiguedad,@fechaantiguedad,@antiguedadmod," + 
-                "@fechanacimiento,@edad,@rfc,@curp,@nss,@digitoverificador,@tiposalario,@sdi,@sd,@sueldo,@estatus,@idse,@idusuario)";
+                "@fechanacimiento,@edad,@rfc,@curp,@nss,@digitoverificador,@tiposalario,@sdi,@sd,@sueldo,@estatus,@idusuario)";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("noempleado", e.noempleado);
             Command.Parameters.AddWithValue("nombres",e.nombres);
@@ -192,7 +192,6 @@ namespace Empleados.Core
             Command.Parameters.AddWithValue("sd", e.sd);
             Command.Parameters.AddWithValue("sueldo", e.sueldo);
             Command.Parameters.AddWithValue("estatus", e.estatus);
-            Command.Parameters.AddWithValue("idse", e.idse);
             Command.Parameters.AddWithValue("idusuario", e.idusuario);
 
             return Command.ExecuteNonQuery();

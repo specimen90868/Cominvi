@@ -138,6 +138,12 @@
     <Compile Include="frmInfonavit.Designer.cs">
       <DependentUpon>frmInfonavit.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmIsr.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmIsr.Designer.cs">
+      <DependentUpon>frmIsr.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmListaAltasSua.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -209,6 +215,12 @@
     </Compile>
     <Compile Include="frmListaInfonavitSua.Designer.cs">
       <DependentUpon>frmListaInfonavitSua.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmListaIsr.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaIsr.Designer.cs">
+      <DependentUpon>frmListaIsr.cs</DependentUpon>
     </Compile>
     <Compile Include="frmListaModificacionesSua.cs">
       <SubType>Form</SubType>
@@ -378,6 +390,9 @@
     <EmbeddedResource Include="frmInfonavit.resx">
       <DependentUpon>frmInfonavit.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmIsr.resx">
+      <DependentUpon>frmIsr.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmListaAltasSua.resx">
       <DependentUpon>frmListaAltasSua.cs</DependentUpon>
     </EmbeddedResource>
@@ -413,6 +428,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmListaInfonavitSua.resx">
       <DependentUpon>frmListaInfonavitSua.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListaIsr.resx">
+      <DependentUpon>frmListaIsr.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmListaModificacionesSua.resx">
       <DependentUpon>frmListaModificacionesSua.cs</DependentUpon>
@@ -524,6 +542,10 @@
       <Project>{4363c955-dbe1-49dd-a5c9-d4d13fb3ba21}</Project>
       <Name>Complementos.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Conceptos.Core\Conceptos.Core.csproj">
+      <Project>{c6321c6d-e28f-43ea-a0af-a1420a27c9da}</Project>
+      <Name>Conceptos.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Data.Obj\Data.Obj.csproj">
       <Project>{2f926e34-44b7-49dc-b955-9b33f8b55c96}</Project>
       <Name>Data.Obj</Name>
@@ -595,6 +617,14 @@
     <ProjectReference Include="..\Salario.Core\Salario.Core.csproj">
       <Project>{17ca0d9b-32e3-4dd4-9f85-f9a8083a5b67}</Project>
       <Name>Salario.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TablaIsr.Core\TablaIsr.Core.csproj">
+      <Project>{c40d6675-7f87-42f8-975b-5ff39c9eec5a}</Project>
+      <Name>TablaIsr.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TablaSubsidio.Core\TablaSubsidio.Core.csproj">
+      <Project>{3a958c65-bcb1-45a7-a14b-afaf6de07c49}</Project>
+      <Name>TablaSubsidio.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Usuarios.Core\Usuarios.Core.csproj">
       <Project>{eaaf5c8a-7616-431b-8875-cd0bc4300e2d}</Project>

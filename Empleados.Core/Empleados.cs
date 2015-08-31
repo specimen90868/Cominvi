@@ -33,7 +33,6 @@ namespace Empleados.Core
         public double sd { get; set; }
         public double sueldo { get; set; }
         public int estatus { get; set; }
-        public int idse { get; set; }
         public int idusuario { get; set; }      
     }
 

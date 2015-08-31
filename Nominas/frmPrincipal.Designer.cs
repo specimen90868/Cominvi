@@ -56,11 +56,17 @@
             this.toolBajas = new System.Windows.Forms.ToolStripMenuItem();
             this.toolAusentismos = new System.Windows.Forms.ToolStripMenuItem();
             this.toolInfonavit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolIdse = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolAltasIdse = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolModificacionIdse = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolBaja = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuNominas = new System.Windows.Forms.ToolStripMenuItem();
+            this.cálculoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuCatalogos = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuDepartamentos = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPuestos = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPeriodos = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolConceptos = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuConfiguracion = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuEmpresa = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuUsuarios = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,13 +78,11 @@
             this.tablasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuFactores = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuSalarioMinimo = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolIsr = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolSubsidio = new System.Windows.Forms.ToolStripMenuItem();
             this.workPerfil = new System.ComponentModel.BackgroundWorker();
             this.stsPrincipal = new System.Windows.Forms.StatusStrip();
             this.toolEstatusPerfil = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolIdse = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolAltasIdse = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolModificacionIdse = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolBaja = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPrincipal.SuspendLayout();
             this.stsPrincipal.SuspendLayout();
             this.SuspendLayout();
@@ -302,18 +306,58 @@
             this.toolInfonavit.Text = "Infonavit";
             this.toolInfonavit.Click += new System.EventHandler(this.toolInfonavit_Click);
             // 
+            // toolIdse
+            // 
+            this.toolIdse.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolAltasIdse,
+            this.toolModificacionIdse,
+            this.toolBaja});
+            this.toolIdse.Name = "toolIdse";
+            this.toolIdse.Size = new System.Drawing.Size(165, 22);
+            this.toolIdse.Text = "Operaciones Idse";
+            // 
+            // toolAltasIdse
+            // 
+            this.toolAltasIdse.Name = "toolAltasIdse";
+            this.toolAltasIdse.Size = new System.Drawing.Size(155, 22);
+            this.toolAltasIdse.Text = "Altas";
+            this.toolAltasIdse.Click += new System.EventHandler(this.toolAltasIdse_Click);
+            // 
+            // toolModificacionIdse
+            // 
+            this.toolModificacionIdse.Name = "toolModificacionIdse";
+            this.toolModificacionIdse.Size = new System.Drawing.Size(155, 22);
+            this.toolModificacionIdse.Text = "Modificaciones";
+            this.toolModificacionIdse.Click += new System.EventHandler(this.toolModificacionIdse_Click);
+            // 
+            // toolBaja
+            // 
+            this.toolBaja.Name = "toolBaja";
+            this.toolBaja.Size = new System.Drawing.Size(155, 22);
+            this.toolBaja.Text = "Bajas";
+            this.toolBaja.Click += new System.EventHandler(this.toolBaja_Click);
+            // 
             // mnuNominas
             // 
+            this.mnuNominas.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cálculoToolStripMenuItem});
             this.mnuNominas.Name = "mnuNominas";
             this.mnuNominas.Size = new System.Drawing.Size(67, 20);
             this.mnuNominas.Text = "Nominas";
+            // 
+            // cálculoToolStripMenuItem
+            // 
+            this.cálculoToolStripMenuItem.Name = "cálculoToolStripMenuItem";
+            this.cálculoToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.cálculoToolStripMenuItem.Text = "Cálculo de nómina";
             // 
             // mnuCatalogos
             // 
             this.mnuCatalogos.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuDepartamentos,
             this.mnuPuestos,
-            this.mnuPeriodos});
+            this.mnuPeriodos,
+            this.toolConceptos});
             this.mnuCatalogos.Name = "mnuCatalogos";
             this.mnuCatalogos.Size = new System.Drawing.Size(72, 20);
             this.mnuCatalogos.Text = "Catálogos";
@@ -338,6 +382,12 @@
             this.mnuPeriodos.Size = new System.Drawing.Size(155, 22);
             this.mnuPeriodos.Text = "Periodos";
             this.mnuPeriodos.Click += new System.EventHandler(this.mnuPeriodos_Click);
+            // 
+            // toolConceptos
+            // 
+            this.toolConceptos.Name = "toolConceptos";
+            this.toolConceptos.Size = new System.Drawing.Size(155, 22);
+            this.toolConceptos.Text = "Conceptos";
             // 
             // mnuConfiguracion
             // 
@@ -403,7 +453,9 @@
             // 
             this.tablasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuFactores,
-            this.mnuSalarioMinimo});
+            this.mnuSalarioMinimo,
+            this.toolIsr,
+            this.toolSubsidio});
             this.tablasToolStripMenuItem.Name = "tablasToolStripMenuItem";
             this.tablasToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.tablasToolStripMenuItem.Text = "Tablas";
@@ -421,6 +473,19 @@
             this.mnuSalarioMinimo.Size = new System.Drawing.Size(154, 22);
             this.mnuSalarioMinimo.Text = "Salario mínimo";
             this.mnuSalarioMinimo.Click += new System.EventHandler(this.mnuSalarioMinimo_Click_1);
+            // 
+            // toolIsr
+            // 
+            this.toolIsr.Name = "toolIsr";
+            this.toolIsr.Size = new System.Drawing.Size(154, 22);
+            this.toolIsr.Text = "ISR";
+            this.toolIsr.Click += new System.EventHandler(this.toolIsr_Click);
+            // 
+            // toolSubsidio
+            // 
+            this.toolSubsidio.Name = "toolSubsidio";
+            this.toolSubsidio.Size = new System.Drawing.Size(154, 22);
+            this.toolSubsidio.Text = "Subsidio";
             // 
             // workPerfil
             // 
@@ -444,37 +509,6 @@
             this.toolEstatusPerfil.Name = "toolEstatusPerfil";
             this.toolEstatusPerfil.Size = new System.Drawing.Size(98, 17);
             this.toolEstatusPerfil.Text = "Cargando perfil...";
-            // 
-            // toolIdse
-            // 
-            this.toolIdse.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolAltasIdse,
-            this.toolModificacionIdse,
-            this.toolBaja});
-            this.toolIdse.Name = "toolIdse";
-            this.toolIdse.Size = new System.Drawing.Size(165, 22);
-            this.toolIdse.Text = "Operaciones Idse";
-            // 
-            // toolAltasIdse
-            // 
-            this.toolAltasIdse.Name = "toolAltasIdse";
-            this.toolAltasIdse.Size = new System.Drawing.Size(155, 22);
-            this.toolAltasIdse.Text = "Altas";
-            this.toolAltasIdse.Click += new System.EventHandler(this.toolAltasIdse_Click);
-            // 
-            // toolModificacionIdse
-            // 
-            this.toolModificacionIdse.Name = "toolModificacionIdse";
-            this.toolModificacionIdse.Size = new System.Drawing.Size(155, 22);
-            this.toolModificacionIdse.Text = "Modificaciones";
-            this.toolModificacionIdse.Click += new System.EventHandler(this.toolModificacionIdse_Click);
-            // 
-            // toolBaja
-            // 
-            this.toolBaja.Name = "toolBaja";
-            this.toolBaja.Size = new System.Drawing.Size(155, 22);
-            this.toolBaja.Text = "Bajas";
-            this.toolBaja.Click += new System.EventHandler(this.toolBaja_Click);
             // 
             // frmPrincipal
             // 
@@ -551,6 +585,10 @@
         private System.Windows.Forms.ToolStripMenuItem toolAltasIdse;
         private System.Windows.Forms.ToolStripMenuItem toolModificacionIdse;
         private System.Windows.Forms.ToolStripMenuItem toolBaja;
+        private System.Windows.Forms.ToolStripMenuItem cálculoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolConceptos;
+        private System.Windows.Forms.ToolStripMenuItem toolIsr;
+        private System.Windows.Forms.ToolStripMenuItem toolSubsidio;
     }
 }
 

@@ -337,7 +337,6 @@ namespace Nominas
             em.sdi = double.Parse(txtSDI.Text);
             em.sd = double.Parse(txtSD.Text);
             em.sueldo = double.Parse(txtSueldo.Text);
-            em.idse = 0;
 
             hh = new Historial.Core.HistorialHelper();
             hh.Command = cmd;

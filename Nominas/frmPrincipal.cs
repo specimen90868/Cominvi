@@ -408,6 +408,13 @@ namespace Nominas
             loi.MdiParent = this;
             loi._tipoOperacion = 2;
             loi.Show();
+        }
+
+        private void toolIsr_Click(object sender, EventArgs e)
+        {
+            frmListaIsr li = new frmListaIsr();
+            li.MdiParent = this;
+            li.Show();
         }        
     }
 }
