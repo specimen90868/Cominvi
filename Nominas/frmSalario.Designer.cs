@@ -40,6 +40,8 @@
             this.Label5 = new System.Windows.Forms.Label();
             this.txtValor = new System.Windows.Forms.TextBox();
             this.Label4 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cmbZona = new System.Windows.Forms.ComboBox();
             this.toolTitulo.SuspendLayout();
             this.toolAcciones.SuspendLayout();
             this.SuspendLayout();
@@ -115,7 +117,7 @@
             // dtpPeriodo
             // 
             this.dtpPeriodo.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpPeriodo.Location = new System.Drawing.Point(88, 107);
+            this.dtpPeriodo.Location = new System.Drawing.Point(88, 105);
             this.dtpPeriodo.Name = "dtpPeriodo";
             this.dtpPeriodo.Size = new System.Drawing.Size(91, 20);
             this.dtpPeriodo.TabIndex = 1;
@@ -139,17 +141,40 @@
             // Label4
             // 
             this.Label4.AutoSize = true;
-            this.Label4.Location = new System.Drawing.Point(51, 138);
+            this.Label4.Location = new System.Drawing.Point(39, 138);
             this.Label4.Name = "Label4";
             this.Label4.Size = new System.Drawing.Size(34, 13);
             this.Label4.TabIndex = 111;
             this.Label4.Text = "Valor:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(38, 169);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 13);
+            this.label2.TabIndex = 116;
+            this.label2.Text = "Zona:";
+            // 
+            // cmbZona
+            // 
+            this.cmbZona.FormattingEnabled = true;
+            this.cmbZona.Items.AddRange(new object[] {
+            "A",
+            "B",
+            "C"});
+            this.cmbZona.Location = new System.Drawing.Point(88, 166);
+            this.cmbZona.Name = "cmbZona";
+            this.cmbZona.Size = new System.Drawing.Size(91, 21);
+            this.cmbZona.TabIndex = 117;
             // 
             // frmSalario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(531, 435);
+            this.Controls.Add(this.cmbZona);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.Label1);
             this.Controls.Add(this.dtpPeriodo);
             this.Controls.Add(this.Label5);
@@ -182,5 +207,7 @@
         internal System.Windows.Forms.Label Label5;
         internal System.Windows.Forms.TextBox txtValor;
         internal System.Windows.Forms.Label Label4;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox cmbZona;
     }
 }

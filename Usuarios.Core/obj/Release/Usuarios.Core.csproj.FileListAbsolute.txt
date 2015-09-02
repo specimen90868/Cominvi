@@ -1,0 +1,7 @@
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Usuarios.Core\bin\Release\Usuarios.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Usuarios.Core\bin\Release\Usuarios.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Usuarios.Core\bin\Release\Data.Obj.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Usuarios.Core\bin\Release\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Usuarios.Core\obj\Release\Usuarios.Core.csprojResolveAssemblyReference.cache
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Usuarios.Core\obj\Release\Usuarios.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Usuarios.Core\obj\Release\Usuarios.Core.pdb

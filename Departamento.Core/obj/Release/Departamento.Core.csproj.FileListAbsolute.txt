@@ -1,0 +1,6 @@
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Departamento.Core\bin\Release\Departamento.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Departamento.Core\bin\Release\Departamento.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Departamento.Core\bin\Release\Data.Obj.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Departamento.Core\bin\Release\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Departamento.Core\obj\Release\Departamento.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Departamento.Core\obj\Release\Departamento.Core.pdb

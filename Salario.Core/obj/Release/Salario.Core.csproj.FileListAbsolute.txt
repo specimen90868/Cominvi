@@ -1,0 +1,6 @@
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Salario.Core\bin\Release\Salario.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Salario.Core\bin\Release\Salario.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Salario.Core\bin\Release\Data.Obj.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Salario.Core\bin\Release\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Salario.Core\obj\Release\Salario.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Salario.Core\obj\Release\Salario.Core.pdb

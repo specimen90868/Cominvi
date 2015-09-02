@@ -1,0 +1,6 @@
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Bajas\bin\Release\Bajas.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Bajas\bin\Release\Bajas.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Bajas\bin\Release\Data.Obj.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Bajas\bin\Release\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Bajas\obj\Release\Bajas.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Bajas\obj\Release\Bajas.pdb

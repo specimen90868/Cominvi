@@ -1,0 +1,6 @@
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Altas.Core\bin\Release\Altas.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Altas.Core\bin\Release\Altas.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Altas.Core\bin\Release\Data.Obj.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Altas.Core\bin\Release\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Altas.Core\obj\Release\Altas.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Altas.Core\obj\Release\Altas.Core.pdb

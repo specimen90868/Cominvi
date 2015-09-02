@@ -1,0 +1,6 @@
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\DiasFestivos.Core\bin\Release\DiasFestivos.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\DiasFestivos.Core\bin\Release\DiasFestivos.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\DiasFestivos.Core\bin\Release\Data.Obj.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\DiasFestivos.Core\bin\Release\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\DiasFestivos.Core\obj\Release\DiasFestivos.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\DiasFestivos.Core\obj\Release\DiasFestivos.Core.pdb

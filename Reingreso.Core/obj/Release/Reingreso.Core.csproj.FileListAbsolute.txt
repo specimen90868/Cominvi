@@ -1,0 +1,6 @@
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Reingreso.Core\bin\Release\Reingreso.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Reingreso.Core\bin\Release\Reingreso.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Reingreso.Core\bin\Release\Data.Obj.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Reingreso.Core\bin\Release\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Reingreso.Core\obj\Release\Reingreso.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Reingreso.Core\obj\Release\Reingreso.Core.pdb

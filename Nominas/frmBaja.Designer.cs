@@ -114,7 +114,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.dtpFechaBaja);
             this.Controls.Add(this.label1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmBaja";

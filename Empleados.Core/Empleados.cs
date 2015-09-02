@@ -16,6 +16,7 @@ namespace Empleados.Core
         public string nombrecompleto { get; set; }
         public int idempresa { get; set; }
         public int idperiodo { get; set; }
+        public int idsalario { get; set; }
         public int iddepartamento { get; set; }
         public int idpuesto { get; set; }
         public DateTime fechaingreso { get; set; }

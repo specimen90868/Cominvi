@@ -32,6 +32,7 @@ namespace Nominas
         Catalogos.Core.CatalogosHelper cath;
         Periodos.Core.PeriodosHelper pdh;
         Historial.Core.HistorialHelper hh;
+        Salario.Core.SalariosHelper sh;
         string sexo;
         string estado;
         Bitmap bmp;
@@ -78,11 +79,15 @@ namespace Nominas
             Periodos.Core.Periodos periodo = new Periodos.Core.Periodos();
             periodo.idempresa = GLOBALES.IDEMPRESA;
 
+            sh = new Salario.Core.SalariosHelper();
+            sh.Command = cmd;
+
             List<Catalogos.Core.Catalogo> lstTipoSalario = new List<Catalogos.Core.Catalogo>();
             List<Departamento.Core.Depto> lstDepto = new List<Departamento.Core.Depto>();
             List<Puestos.Core.Puestos> lstPuesto = new List<Puestos.Core.Puestos>();
             List<Estados.Core.Estados> lstEstados = new List<Estados.Core.Estados>();
             List<Periodos.Core.Periodos> lstPeriodos = new List<Periodos.Core.Periodos>();
+            List<Salario.Core.Salarios> lstSalario = new List<Salario.Core.Salarios>();
 
             try
             {
@@ -92,6 +97,7 @@ namespace Nominas
                 lstPuesto = ph.obtenerPuestos(puesto);
                 lstEstados = edoh.obtenerEstados();
                 lstPeriodos = pdh.obtenerPeriodos(periodo);
+                lstSalario = sh.obtenerSalarios();
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -120,6 +126,10 @@ namespace Nominas
             cmbPeriodo.DataSource = lstPeriodos.ToList();
             cmbPeriodo.DisplayMember = "pago";
             cmbPeriodo.ValueMember = "idperiodo";
+
+            cmbZona.DataSource = lstSalario.ToList();
+            cmbZona.DisplayMember = "zona";
+            cmbZona.ValueMember = "idsalario";
         }
 
         private void frmEmpleados_Load(object sender, EventArgs e)
@@ -167,6 +177,7 @@ namespace Nominas
                         cmbDepartamento.SelectedValue = int.Parse(lstEmpleado[i].iddepartamento.ToString());
                         cmbPuesto.SelectedValue = int.Parse(lstEmpleado[i].idpuesto.ToString());
                         cmbPeriodo.SelectedValue = int.Parse(lstEmpleado[i].idperiodo.ToString());
+                        cmbZona.SelectedValue = int.Parse(lstEmpleado[i].idsalario.ToString());
                         cmbTipoSalario.SelectedValue = int.Parse(lstEmpleado[i].tiposalario.ToString());
 
                         txtSueldo.Text = lstEmpleado[i].sueldo.ToString("F6");
@@ -332,6 +343,7 @@ namespace Nominas
             em.iddepartamento = int.Parse(cmbDepartamento.SelectedValue.ToString());
             em.idpuesto = int.Parse(cmbPuesto.SelectedValue.ToString());
             em.idperiodo = int.Parse(cmbPeriodo.SelectedValue.ToString());
+            em.idsalario = int.Parse(cmbZona.SelectedValue.ToString());
             em.tiposalario = int.Parse(cmbTipoSalario.SelectedValue.ToString());
 
             em.sdi = double.Parse(txtSDI.Text);

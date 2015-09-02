@@ -79,5 +79,53 @@ namespace Conceptos.Core
             Command.Parameters.AddWithValue("id", c.id);
             return Command.ExecuteNonQuery();
         }
+
+        public List<ConceptoTrabajador> obtenerConceptosTrabajador(ConceptoTrabajador ct)
+        {
+            List<ConceptoTrabajador> lstConceptoTrabajador = new List<ConceptoTrabajador>();
+            DataTable dtConceptos = new DataTable();
+            Command.CommandText = "select * from ConceptoTrabajador where idempleado = @idempleado";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempleado", ct.idempleado);
+            dtConceptos = SelectData(Command);
+            for (int i = 0; i < dtConceptos.Rows.Count; i++)
+            {
+                ConceptoTrabajador concepto = new ConceptoTrabajador();
+                concepto.id = int.Parse(dtConceptos.Rows[i]["id"].ToString());
+                concepto.idempleado = int.Parse(dtConceptos.Rows[i]["idempleado"].ToString());
+                concepto.idconcepto = int.Parse(dtConceptos.Rows[i]["idconcepto"].ToString());
+                lstConceptoTrabajador.Add(concepto);
+            }
+            return lstConceptoTrabajador;
+        }
+
+        public object existeConceptoTrabajador(ConceptoTrabajador ct)
+        {
+            Command.CommandText = "select count(*) from ConceptoTrabajador where idempleado = @idempleado and idconcepto = @idconcepto";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempleado", ct.idempleado);
+            Command.Parameters.AddWithValue("idconcepto", ct.idconcepto);
+            object existe = Select(Command);
+            return existe;
+        }
+
+        public int insertaConceptoTrabajador(ConceptoTrabajador ct)
+        {
+            Command.CommandText = "insert into ConceptoTrabajador (idempleado, idconcepto) values (@idempleado, @idconcepto)";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempleado", ct.idempleado);
+            Command.Parameters.AddWithValue("idconcepto", ct.idconcepto);
+            return Command.ExecuteNonQuery();
+        }
+
+        public int eliminaConceptoTrabajador(ConceptoTrabajador ct)
+        {
+            Command.CommandText = "delete from ConceptoTrabajador where id = @id";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("id", ct.id);
+            return Command.ExecuteNonQuery();
+        }
+
     }
 }
+

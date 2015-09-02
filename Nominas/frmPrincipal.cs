@@ -429,7 +429,36 @@ namespace Nominas
             frmListaConceptos lc = new frmListaConceptos();
             lc.MdiParent = this;
             lc.Show();
-        }        
+        }
+
+        private void toolConceptoEmpleado_Click(object sender, EventArgs e)
+        {
+            frmListaConceptoEmpleado lce = new frmListaConceptoEmpleado();
+            lce.MdiParent = this;
+            lce.Show();
+        }
+
+        private void toolImss_Click(object sender, EventArgs e)
+        {
+            frmListaImss li = new frmListaImss();
+            li.MdiParent = this;
+            li.Show();
+        }
+
+        private void toolHistorialFaltas_Click(object sender, EventArgs e)
+        {
+            frmListaFaltas lf = new frmListaFaltas();
+            lf.MdiParent = this;
+            lf.Show();
+        }
+
+        private void toolCargaFaltas_Click(object sender, EventArgs e)
+        {
+            frmListaCargaFaltas lcf = new frmListaCargaFaltas();
+            lcf.MdiParent = this;
+            lcf.Show();
+        }
+      
     }
 }
 

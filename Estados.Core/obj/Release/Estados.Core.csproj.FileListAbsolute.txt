@@ -1,0 +1,6 @@
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Estados.Core\bin\Release\Estados.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Estados.Core\bin\Release\Estados.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Estados.Core\bin\Release\Data.Obj.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Estados.Core\bin\Release\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Estados.Core\obj\Release\Estados.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Estados.Core\obj\Release\Estados.Core.pdb

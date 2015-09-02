@@ -1,0 +1,6 @@
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Imagen.Core\bin\Release\Imagen.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Imagen.Core\bin\Release\Imagen.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Imagen.Core\bin\Release\Data.Obj.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Imagen.Core\bin\Release\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Imagen.Core\obj\Release\Imagen.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Imagen.Core\obj\Release\Imagen.Core.pdb

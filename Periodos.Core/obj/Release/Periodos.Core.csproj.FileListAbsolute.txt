@@ -1,0 +1,6 @@
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Periodos.Core\bin\Release\Periodos.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Periodos.Core\bin\Release\Periodos.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Periodos.Core\bin\Release\Data.Obj.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Periodos.Core\bin\Release\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Periodos.Core\obj\Release\Periodos.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Periodos.Core\obj\Release\Periodos.Core.pdb

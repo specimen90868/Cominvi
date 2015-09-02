@@ -1,0 +1,6 @@
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Expediente.Core\bin\Release\Expediente.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Expediente.Core\bin\Release\Expediente.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Expediente.Core\bin\Release\Data.Obj.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Expediente.Core\bin\Release\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Expediente.Core\obj\Release\Expediente.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Expediente.Core\obj\Release\Expediente.Core.pdb

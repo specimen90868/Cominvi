@@ -1,0 +1,6 @@
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Conceptos.Core\bin\Release\Conceptos.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Conceptos.Core\bin\Release\Conceptos.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Conceptos.Core\bin\Release\Data.Obj.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Conceptos.Core\bin\Release\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Conceptos.Core\obj\Release\Conceptos.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Conceptos.Core\obj\Release\Conceptos.Core.pdb

@@ -1,0 +1,6 @@
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Faltas.Core\bin\Release\Faltas.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Faltas.Core\bin\Release\Faltas.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Faltas.Core\bin\Release\Data.Obj.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Faltas.Core\bin\Release\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Faltas.Core\obj\Release\Faltas.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Faltas.Core\obj\Release\Faltas.Core.pdb

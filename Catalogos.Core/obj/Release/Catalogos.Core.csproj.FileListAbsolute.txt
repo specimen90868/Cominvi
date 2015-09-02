@@ -1,0 +1,6 @@
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Catalogos.Core\bin\Release\Catalogos.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Catalogos.Core\bin\Release\Catalogos.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Catalogos.Core\bin\Release\Data.Obj.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Catalogos.Core\bin\Release\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Catalogos.Core\obj\Release\Catalogos.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Catalogos.Core\obj\Release\Catalogos.Core.pdb

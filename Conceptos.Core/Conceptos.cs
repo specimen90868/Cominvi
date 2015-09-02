@@ -15,4 +15,11 @@ namespace Conceptos.Core
         public string formula { get; set; }
         public string gruposat { get; set; }
     }
+
+    public class ConceptoTrabajador
+    {
+        public int id { get; set; }
+        public int idempleado { get; set; }
+        public int idconcepto { get; set; }
+    }
 }

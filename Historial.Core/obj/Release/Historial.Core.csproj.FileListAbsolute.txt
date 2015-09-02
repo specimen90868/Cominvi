@@ -1,0 +1,6 @@
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Historial.Core\bin\Release\Historial.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Historial.Core\bin\Release\Historial.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Historial.Core\bin\Release\Data.Obj.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Historial.Core\bin\Release\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Historial.Core\obj\Release\Historial.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Historial.Core\obj\Release\Historial.Core.pdb

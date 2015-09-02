@@ -32,6 +32,7 @@
             this.toolAcciones = new System.Windows.Forms.ToolStrip();
             this.toolTitulo = new System.Windows.Forms.ToolStripLabel();
             this.toolEmpleado = new System.Windows.Forms.ToolStrip();
+            this.toolHistorial = new System.Windows.Forms.ToolStripButton();
             this.toolGuardarCerrar = new System.Windows.Forms.ToolStripButton();
             this.toolGuardarNuevo = new System.Windows.Forms.ToolStripButton();
             this.toolCerrar = new System.Windows.Forms.ToolStripButton();
@@ -86,7 +87,8 @@
             this.btnAsignar = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
             this.txtAntiguedad = new System.Windows.Forms.TextBox();
-            this.toolHistorial = new System.Windows.Forms.ToolStripButton();
+            this.label14 = new System.Windows.Forms.Label();
+            this.cmbZona = new System.Windows.Forms.ComboBox();
             this.toolAcciones.SuspendLayout();
             this.toolEmpleado.SuspendLayout();
             this.SuspendLayout();
@@ -121,6 +123,15 @@
             this.toolEmpleado.Size = new System.Drawing.Size(696, 25);
             this.toolEmpleado.TabIndex = 2;
             this.toolEmpleado.Text = "toolEmpresa";
+            // 
+            // toolHistorial
+            // 
+            this.toolHistorial.Image = ((System.Drawing.Image)(resources.GetObject("toolHistorial.Image")));
+            this.toolHistorial.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolHistorial.Name = "toolHistorial";
+            this.toolHistorial.Size = new System.Drawing.Size(71, 22);
+            this.toolHistorial.Text = "Historial";
+            this.toolHistorial.Click += new System.EventHandler(this.toolHistorial_Click);
             // 
             // toolGuardarCerrar
             // 
@@ -573,7 +584,7 @@
             // 
             // btnVer
             // 
-            this.btnVer.Location = new System.Drawing.Point(415, 300);
+            this.btnVer.Location = new System.Drawing.Point(415, 339);
             this.btnVer.Name = "btnVer";
             this.btnVer.Size = new System.Drawing.Size(67, 23);
             this.btnVer.TabIndex = 19;
@@ -583,7 +594,7 @@
             // 
             // btnAsignar
             // 
-            this.btnAsignar.Location = new System.Drawing.Point(499, 300);
+            this.btnAsignar.Location = new System.Drawing.Point(499, 339);
             this.btnAsignar.Name = "btnAsignar";
             this.btnAsignar.Size = new System.Drawing.Size(67, 23);
             this.btnAsignar.TabIndex = 20;
@@ -594,7 +605,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(378, 303);
+            this.label13.Location = new System.Drawing.Point(378, 342);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(31, 13);
             this.label13.TabIndex = 234;
@@ -608,20 +619,30 @@
             this.txtAntiguedad.Size = new System.Drawing.Size(30, 20);
             this.txtAntiguedad.TabIndex = 235;
             // 
-            // toolHistorial
+            // label14
             // 
-            this.toolHistorial.Image = ((System.Drawing.Image)(resources.GetObject("toolHistorial.Image")));
-            this.toolHistorial.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolHistorial.Name = "toolHistorial";
-            this.toolHistorial.Size = new System.Drawing.Size(71, 22);
-            this.toolHistorial.Text = "Historial";
-            this.toolHistorial.Click += new System.EventHandler(this.toolHistorial_Click);
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(374, 303);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(35, 13);
+            this.label14.TabIndex = 236;
+            this.label14.Text = "Zona:";
+            // 
+            // cmbZona
+            // 
+            this.cmbZona.FormattingEnabled = true;
+            this.cmbZona.Location = new System.Drawing.Point(415, 300);
+            this.cmbZona.Name = "cmbZona";
+            this.cmbZona.Size = new System.Drawing.Size(151, 21);
+            this.cmbZona.TabIndex = 237;
             // 
             // frmEmpleados
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(696, 609);
+            this.Controls.Add(this.cmbZona);
+            this.Controls.Add(this.label14);
             this.Controls.Add(this.txtAntiguedad);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.btnAsignar);
@@ -747,5 +768,7 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TextBox txtAntiguedad;
         private System.Windows.Forms.ToolStripButton toolHistorial;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.ComboBox cmbZona;
     }
 }

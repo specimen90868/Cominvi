@@ -1,0 +1,6 @@
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\TablaIsr.Core\bin\Release\TablaIsr.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\TablaIsr.Core\bin\Release\TablaIsr.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\TablaIsr.Core\bin\Release\Data.Obj.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\TablaIsr.Core\bin\Release\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\TablaIsr.Core\obj\Release\TablaIsr.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\TablaIsr.Core\obj\Release\TablaIsr.Core.pdb

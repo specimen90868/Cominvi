@@ -61,6 +61,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TablaIsr.Core", "TablaIsr.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TablaSubsidio.Core", "TablaSubsidio.Core\TablaSubsidio.Core.csproj", "{3A958C65-BCB1-45A7-A14B-AFAF6DE07C49}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Imss.Core", "Imss.Core\Imss.Core.csproj", "{60942491-B274-4B96-8ACC-90E7B95AFF0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Faltas.Core", "Faltas.Core\Faltas.Core.csproj", "{BAFE81B0-03B5-4408-B2FA-A4BECBE1783C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -183,6 +187,14 @@ Global
 		{3A958C65-BCB1-45A7-A14B-AFAF6DE07C49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A958C65-BCB1-45A7-A14B-AFAF6DE07C49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A958C65-BCB1-45A7-A14B-AFAF6DE07C49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60942491-B274-4B96-8ACC-90E7B95AFF0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60942491-B274-4B96-8ACC-90E7B95AFF0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60942491-B274-4B96-8ACC-90E7B95AFF0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60942491-B274-4B96-8ACC-90E7B95AFF0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAFE81B0-03B5-4408-B2FA-A4BECBE1783C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAFE81B0-03B5-4408-B2FA-A4BECBE1783C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAFE81B0-03B5-4408-B2FA-A4BECBE1783C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAFE81B0-03B5-4408-B2FA-A4BECBE1783C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

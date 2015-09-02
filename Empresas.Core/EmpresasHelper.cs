@@ -83,6 +83,15 @@ namespace Empresas.Core
             return id;
         }
 
+        public int obtenerIdEmpresa(string nombre)
+        {
+            Command.CommandText = "select idempresa from empresas where nombre = @nombre";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("nombre", nombre);          
+            object id = Select(Command);
+            return (int)id;
+        }
+
         public object obtenerRegistroPatronal(Empresas e)
         {
             Command.CommandText = "select registro + convert(char(1),digitoverificador) as registropatronal from dbo.Empresas where idempresa = @idempresa";

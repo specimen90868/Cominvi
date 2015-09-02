@@ -1,0 +1,6 @@
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Puestos.Core\bin\Release\Puestos.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Puestos.Core\bin\Release\Puestos.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Puestos.Core\bin\Release\Data.Obj.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Puestos.Core\bin\Release\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Puestos.Core\obj\Release\Puestos.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Puestos.Core\obj\Release\Puestos.Core.pdb

@@ -1,0 +1,6 @@
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Complementos.Core\bin\Release\Complementos.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Complementos.Core\bin\Release\Complementos.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Complementos.Core\bin\Release\Data.Obj.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Complementos.Core\bin\Release\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Complementos.Core\obj\Release\Complementos.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Complementos.Core\obj\Release\Complementos.Core.pdb

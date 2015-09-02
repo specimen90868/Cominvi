@@ -24,6 +24,7 @@ namespace Nominas
         SqlCommand cmd;
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
         Salario.Core.SalariosHelper sh;
+        string Zona;
         #endregion
 
         #region VARIABLES PUBLICAS
@@ -71,6 +72,7 @@ namespace Nominas
             Salario.Core.Salarios salario = new Salario.Core.Salarios();
             salario.periodo = dtpPeriodo.Value;
             salario.valor = decimal.Parse(txtValor.Text.Trim());
+            salario.zona = cmbZona.Text;
 
             switch (_tipoOperacion)
             {
@@ -108,6 +110,7 @@ namespace Nominas
                 case 0:
                     GLOBALES.LIMPIAR(this, typeof(TextBox));
                     GLOBALES.REFRESCAR(this, typeof(DateTimePicker));
+                    GLOBALES.REFRESCAR(this, typeof(ComboBox));
                     //limpiar(this, typeof(TextBox));
                     break;
                 case 1:
@@ -145,6 +148,7 @@ namespace Nominas
                     {
                         dtpPeriodo.Value = lstSalario[i].periodo;
                         txtValor.Text = lstSalario[i].valor.ToString();
+                        cmbZona.SelectedIndex = (lstSalario[i].zona == "A") ? 0 : (lstSalario[i].zona == "B") ? 1 : 2;
                     }
                 }
                 catch (Exception error)
@@ -156,6 +160,8 @@ namespace Nominas
                 {
                     toolTitulo.Text = "Consulta salario mínimo";
                     GLOBALES.INHABILITAR(this, typeof(TextBox));
+                    GLOBALES.INHABILITAR(this, typeof(ComboBox));
+                    GLOBALES.INHABILITAR(this, typeof(DateTimePicker));
                 }
                 else
                     toolTitulo.Text = "Edición salario mínimo";

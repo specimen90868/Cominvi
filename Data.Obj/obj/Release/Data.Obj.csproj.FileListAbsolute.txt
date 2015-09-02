@@ -1,0 +1,4 @@
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Data.Obj\bin\Release\Data.Obj.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Data.Obj\bin\Release\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Data.Obj\obj\Release\Data.Obj.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Data.Obj\obj\Release\Data.Obj.pdb

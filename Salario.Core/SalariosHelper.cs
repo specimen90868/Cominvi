@@ -14,7 +14,7 @@ namespace Salario.Core
         {
             DataTable dtSalarios = new DataTable();
             List<Salarios> lstSalario = new List<Salarios>();
-            Command.CommandText = "select idsalario, periodo, valor, zona zona from salariominimo";
+            Command.CommandText = "select idsalario, periodo, valor, zona from salariominimo";
             Command.Parameters.Clear();
             dtSalarios = SelectData(Command);
             for (int i = 0; i < dtSalarios.Rows.Count; i++)
