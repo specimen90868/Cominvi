@@ -33,6 +33,7 @@
             this.toolVentana = new System.Windows.Forms.ToolStripLabel();
             this.toolAcciones = new System.Windows.Forms.ToolStrip();
             this.toolGuardar = new System.Windows.Forms.ToolStripButton();
+            this.toolBuscar = new System.Windows.Forms.ToolStripButton();
             this.toolCerrar = new System.Windows.Forms.ToolStripButton();
             this.Label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -40,7 +41,6 @@
             this.txtFaltas = new System.Windows.Forms.TextBox();
             this.dtpInicio = new System.Windows.Forms.DateTimePicker();
             this.dtpFin = new System.Windows.Forms.DateTimePicker();
-            this.toolBuscar = new System.Windows.Forms.ToolStripButton();
             this.lblEmpleado = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.toolTitulo.SuspendLayout();
@@ -87,6 +87,15 @@
             this.toolGuardar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.toolGuardar.Click += new System.EventHandler(this.toolGuardar_Click);
             // 
+            // toolBuscar
+            // 
+            this.toolBuscar.Image = ((System.Drawing.Image)(resources.GetObject("toolBuscar.Image")));
+            this.toolBuscar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolBuscar.Name = "toolBuscar";
+            this.toolBuscar.Size = new System.Drawing.Size(62, 22);
+            this.toolBuscar.Text = "Buscar";
+            this.toolBuscar.Click += new System.EventHandler(this.toolBuscar_Click);
+            // 
             // toolCerrar
             // 
             this.toolCerrar.Image = ((System.Drawing.Image)(resources.GetObject("toolCerrar.Image")));
@@ -94,6 +103,7 @@
             this.toolCerrar.Name = "toolCerrar";
             this.toolCerrar.Size = new System.Drawing.Size(59, 22);
             this.toolCerrar.Text = "Cerrar";
+            this.toolCerrar.Click += new System.EventHandler(this.toolCerrar_Click);
             // 
             // Label2
             // 
@@ -138,6 +148,7 @@
             this.dtpInicio.Name = "dtpInicio";
             this.dtpInicio.Size = new System.Drawing.Size(100, 20);
             this.dtpInicio.TabIndex = 111;
+            this.dtpInicio.ValueChanged += new System.EventHandler(this.dtpInicio_ValueChanged);
             // 
             // dtpFin
             // 
@@ -146,15 +157,6 @@
             this.dtpFin.Name = "dtpFin";
             this.dtpFin.Size = new System.Drawing.Size(100, 20);
             this.dtpFin.TabIndex = 112;
-            // 
-            // toolBuscar
-            // 
-            this.toolBuscar.Image = ((System.Drawing.Image)(resources.GetObject("toolBuscar.Image")));
-            this.toolBuscar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolBuscar.Name = "toolBuscar";
-            this.toolBuscar.Size = new System.Drawing.Size(62, 22);
-            this.toolBuscar.Text = "Buscar";
-            this.toolBuscar.Click += new System.EventHandler(this.toolBuscar_Click);
             // 
             // lblEmpleado
             // 

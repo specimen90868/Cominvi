@@ -64,6 +64,9 @@
             this.toolFaltas = new System.Windows.Forms.ToolStripMenuItem();
             this.toolHistorialFaltas = new System.Windows.Forms.ToolStripMenuItem();
             this.toolCargaFaltas = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolIncapacidad = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolHistorialIncapacidad = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolCargaIncapacidad = new System.Windows.Forms.ToolStripMenuItem();
             this.toolConceptoEmpleado = new System.Windows.Forms.ToolStripMenuItem();
             this.cálculoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuCatalogos = new System.Windows.Forms.ToolStripMenuItem();
@@ -346,6 +349,7 @@
             // 
             this.mnuNominas.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolFaltas,
+            this.toolIncapacidad,
             this.toolConceptoEmpleado,
             this.cálculoToolStripMenuItem});
             this.mnuNominas.Name = "mnuNominas";
@@ -364,16 +368,39 @@
             // toolHistorialFaltas
             // 
             this.toolHistorialFaltas.Name = "toolHistorialFaltas";
-            this.toolHistorialFaltas.Size = new System.Drawing.Size(152, 22);
+            this.toolHistorialFaltas.Size = new System.Drawing.Size(151, 22);
             this.toolHistorialFaltas.Text = "Historial Faltas";
             this.toolHistorialFaltas.Click += new System.EventHandler(this.toolHistorialFaltas_Click);
             // 
             // toolCargaFaltas
             // 
             this.toolCargaFaltas.Name = "toolCargaFaltas";
-            this.toolCargaFaltas.Size = new System.Drawing.Size(152, 22);
+            this.toolCargaFaltas.Size = new System.Drawing.Size(151, 22);
             this.toolCargaFaltas.Text = "Cargar Faltas";
             this.toolCargaFaltas.Click += new System.EventHandler(this.toolCargaFaltas_Click);
+            // 
+            // toolIncapacidad
+            // 
+            this.toolIncapacidad.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolHistorialIncapacidad,
+            this.toolCargaIncapacidad});
+            this.toolIncapacidad.Name = "toolIncapacidad";
+            this.toolIncapacidad.Size = new System.Drawing.Size(195, 22);
+            this.toolIncapacidad.Text = "Incapacidades";
+            // 
+            // toolHistorialIncapacidad
+            // 
+            this.toolHistorialIncapacidad.Name = "toolHistorialIncapacidad";
+            this.toolHistorialIncapacidad.Size = new System.Drawing.Size(196, 22);
+            this.toolHistorialIncapacidad.Text = "Historial incapacidades";
+            this.toolHistorialIncapacidad.Click += new System.EventHandler(this.toolHistorialIncapacidad_Click);
+            // 
+            // toolCargaIncapacidad
+            // 
+            this.toolCargaIncapacidad.Name = "toolCargaIncapacidad";
+            this.toolCargaIncapacidad.Size = new System.Drawing.Size(196, 22);
+            this.toolCargaIncapacidad.Text = "Carga incapacidades";
+            this.toolCargaIncapacidad.Click += new System.EventHandler(this.toolCargaIncapacidad_Click);
             // 
             // toolConceptoEmpleado
             // 
@@ -641,6 +668,9 @@
         private System.Windows.Forms.ToolStripMenuItem toolFaltas;
         private System.Windows.Forms.ToolStripMenuItem toolHistorialFaltas;
         private System.Windows.Forms.ToolStripMenuItem toolCargaFaltas;
+        private System.Windows.Forms.ToolStripMenuItem toolIncapacidad;
+        private System.Windows.Forms.ToolStripMenuItem toolHistorialIncapacidad;
+        private System.Windows.Forms.ToolStripMenuItem toolCargaIncapacidad;
     }
 }
 

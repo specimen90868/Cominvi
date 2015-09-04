@@ -115,7 +115,7 @@ namespace Altas.Core
         {
             Command.CommandText = "update suaAltas set nss = @nss, rfc = @rfc, curp = @curp, paterno = @paterno, materno = @materno, nombre = @nombre," +
                 "fechaingreso = @fechaingreso, sdi = @sdi, fechanacimiento = @fechanacimiento, estado = @estado, noestado = @noestado, sexo = @sexo " + 
-                "where idtrabajdor = @idtrabajador";
+                "where idtrabajador = @idtrabajador";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", a.idtrabajador);
             Command.Parameters.AddWithValue("nss", a.nss);

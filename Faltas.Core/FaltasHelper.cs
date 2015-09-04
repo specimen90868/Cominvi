@@ -14,6 +14,8 @@ namespace Faltas.Core
             List<Faltas> lstFaltas = new List<Faltas>();
             DataTable dtFaltas = new DataTable();
             Command.CommandText = "select * from faltas where idempresa = @idempresa";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", f.idempresa);
             dtFaltas = SelectData(Command);
             for (int i = 0; i < dtFaltas.Rows.Count; i++)
             {
@@ -56,7 +58,7 @@ namespace Faltas.Core
 
         public object existeFalta(Faltas f)
         {
-            Command.CommandText = "select count(*) from faltas where idtrabajador = @idtrabajador and fechainicio = @fechainicio and fechafin = @fechafin";
+            Command.CommandText = "select coalesce(sum(faltas)) from faltas where idtrabajador = @idtrabajador and fechainicio = @fechainicio and fechafin = @fechafin";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", f.idtrabajador);
             Command.Parameters.AddWithValue("fechainicio", f.idtrabajador);
@@ -93,9 +95,19 @@ namespace Faltas.Core
 
         public int eliminaFalta(Faltas f)
         {
-            Command.CommandText = "delete from faltas  where id = @id";
+            Command.CommandText = "delete from faltas where id = @id";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("id", f.id);
+            return Command.ExecuteNonQuery();
+        }
+
+        public int eliminaFaltaExistente(Faltas f)
+        {
+            Command.CommandText = "delete from faltas where idtrabajador = @idtrabajador and fechainicio = @fechainicio and fechafin = @fechafin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", f.idtrabajador);
+            Command.Parameters.AddWithValue("fechainicio", f.fechainicio);
+            Command.Parameters.AddWithValue("fechafin", f.fechafin);
             return Command.ExecuteNonQuery();
         }
 

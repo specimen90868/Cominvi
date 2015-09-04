@@ -20,7 +20,7 @@ namespace Nominas
         }
 
         #region VARIABLES PUBLICAS
-        public int _idEmpleado;
+        public int _idEmpleado = 0;
         public string _nombreEmpleado;
         public int _idFalta;
         public int _tipoOperacion;
@@ -261,6 +261,35 @@ namespace Nominas
                     break;
             }
             this.Dispose();
+        }
+
+        private void toolCerrar_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
+        }
+
+        private void dtpInicio_ValueChanged(object sender, EventArgs e)
+        {
+            if (periodo == 7)
+            {
+                DateTime dt = dtpInicio.Value;
+                while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
+                dtpInicio.Value = dt;
+                dtpFin.Value = dt.AddDays(6);
+            }
+            else
+            {
+                if (DateTime.Now.Day <= 15)
+                {
+                    dtpInicio.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                    dtpFin.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 15);
+                }
+                else
+                {
+                    dtpInicio.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 16);
+                    dtpFin.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
+                }
+            }
         }
     }
 }

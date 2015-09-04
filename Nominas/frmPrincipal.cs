@@ -458,6 +458,20 @@ namespace Nominas
             lcf.MdiParent = this;
             lcf.Show();
         }
+
+        private void toolHistorialIncapacidad_Click(object sender, EventArgs e)
+        {
+            frmListaIncapacidad li = new frmListaIncapacidad();
+            li.MdiParent = this;
+            li.Show();
+        }
+
+        private void toolCargaIncapacidad_Click(object sender, EventArgs e)
+        {
+            frmListaCargaIncapacidades lci = new frmListaCargaIncapacidades();
+            lci.MdiParent = this;
+            lci.Show();
+        }
       
     }
 }

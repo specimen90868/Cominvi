@@ -108,6 +108,12 @@
     <Compile Include="frmDiasAusentismo.Designer.cs">
       <DependentUpon>frmDiasAusentismo.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmEditorFormulas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEditorFormulas.Designer.cs">
+      <DependentUpon>frmEditorFormulas.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmEmpleados.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -156,6 +162,12 @@
     <Compile Include="frmImss.Designer.cs">
       <DependentUpon>frmImss.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmIncapacidad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmIncapacidad.Designer.cs">
+      <DependentUpon>frmIncapacidad.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmIncrementoSalarial.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -197,6 +209,12 @@
     </Compile>
     <Compile Include="frmListaCargaFaltas.Designer.cs">
       <DependentUpon>frmListaCargaFaltas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmListaCargaIncapacidades.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaCargaIncapacidades.Designer.cs">
+      <DependentUpon>frmListaCargaIncapacidades.cs</DependentUpon>
     </Compile>
     <Compile Include="frmListaComplementos.cs">
       <SubType>Form</SubType>
@@ -263,6 +281,12 @@
     </Compile>
     <Compile Include="frmListaImss.Designer.cs">
       <DependentUpon>frmListaImss.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmListaIncapacidad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaIncapacidad.Designer.cs">
+      <DependentUpon>frmListaIncapacidad.cs</DependentUpon>
     </Compile>
     <Compile Include="frmListaInfonavit.cs">
       <SubType>Form</SubType>
@@ -447,6 +471,9 @@
     <EmbeddedResource Include="frmDiasAusentismo.resx">
       <DependentUpon>frmDiasAusentismo.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmEditorFormulas.resx">
+      <DependentUpon>frmEditorFormulas.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmEmpleados.resx">
       <DependentUpon>frmEmpleados.cs</DependentUpon>
     </EmbeddedResource>
@@ -471,6 +498,9 @@
     <EmbeddedResource Include="frmImss.resx">
       <DependentUpon>frmImss.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmIncapacidad.resx">
+      <DependentUpon>frmIncapacidad.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmIncrementoSalarial.resx">
       <DependentUpon>frmIncrementoSalarial.cs</DependentUpon>
     </EmbeddedResource>
@@ -491,6 +521,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmListaCargaFaltas.resx">
       <DependentUpon>frmListaCargaFaltas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListaCargaIncapacidades.resx">
+      <DependentUpon>frmListaCargaIncapacidades.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmListaComplementos.resx">
       <DependentUpon>frmListaComplementos.cs</DependentUpon>
@@ -524,6 +557,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmListaImss.resx">
       <DependentUpon>frmListaImss.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListaIncapacidad.resx">
+      <DependentUpon>frmListaIncapacidad.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmListaInfonavit.resx">
       <DependentUpon>frmListaInfonavit.cs</DependentUpon>
@@ -705,6 +741,10 @@
     <ProjectReference Include="..\Imss.Core\Imss.Core.csproj">
       <Project>{60942491-b274-4b96-8acc-90e7b95aff0f}</Project>
       <Name>Imss.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Incapacidad.Core\Incapacidad.Core.csproj">
+      <Project>{3e2fdc56-09c7-4b0c-8dd2-f5251ac2aadb}</Project>
+      <Name>Incapacidad.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Infonavit.Core\Infonavit.Core.csproj">
       <Project>{0e040bf1-28a8-475e-a78a-02925549acd7}</Project>
