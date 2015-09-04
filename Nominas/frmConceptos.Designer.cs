@@ -40,6 +40,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.txtConcepto = new System.Windows.Forms.TextBox();
             this.cmbTipo = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtFormula = new System.Windows.Forms.TextBox();
+            this.btnEditor = new System.Windows.Forms.Button();
             this.toolTitulo.SuspendLayout();
             this.toolAcciones.SuspendLayout();
             this.SuspendLayout();
@@ -149,11 +152,40 @@
             this.cmbTipo.TabIndex = 111;
             this.cmbTipo.SelectedIndexChanged += new System.EventHandler(this.cmbTipo_SelectedIndexChanged);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 164);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(47, 13);
+            this.label4.TabIndex = 112;
+            this.label4.Text = "Fórmula:";
+            // 
+            // txtFormula
+            // 
+            this.txtFormula.Location = new System.Drawing.Point(65, 161);
+            this.txtFormula.Name = "txtFormula";
+            this.txtFormula.Size = new System.Drawing.Size(368, 20);
+            this.txtFormula.TabIndex = 113;
+            // 
+            // btnEditor
+            // 
+            this.btnEditor.Location = new System.Drawing.Point(439, 159);
+            this.btnEditor.Name = "btnEditor";
+            this.btnEditor.Size = new System.Drawing.Size(43, 23);
+            this.btnEditor.TabIndex = 114;
+            this.btnEditor.Text = "Editor";
+            this.btnEditor.UseVisualStyleBackColor = true;
+            this.btnEditor.Click += new System.EventHandler(this.btnEditor_Click);
+            // 
             // frmConceptos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(678, 583);
+            this.Controls.Add(this.btnEditor);
+            this.Controls.Add(this.txtFormula);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.cmbTipo);
             this.Controls.Add(this.txtConcepto);
             this.Controls.Add(this.label3);
@@ -186,5 +218,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtConcepto;
         private System.Windows.Forms.ComboBox cmbTipo;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtFormula;
+        private System.Windows.Forms.Button btnEditor;
     }
 }

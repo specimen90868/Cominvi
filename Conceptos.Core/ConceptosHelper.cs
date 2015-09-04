@@ -53,22 +53,24 @@ namespace Conceptos.Core
 
         public int insertaConcepto(Conceptos c)
         {
-            Command.CommandText = "insert into conceptos (idempresa, concepto, tipoconcepto) " +
-                "values (@idempresa, @concepto, @tipoconcepto)";
+            Command.CommandText = "insert into conceptos (idempresa, concepto, tipoconcepto, formula) " +
+                "values (@idempresa, @concepto, @tipoconcepto, @formula)";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa",c.idempresa);
             Command.Parameters.AddWithValue("concepto", c.concepto);
             Command.Parameters.AddWithValue("tipoconcepto", c.tipoconcepto);
+            Command.Parameters.AddWithValue("formula",c.formula);
             return Command.ExecuteNonQuery();
         }
 
         public int actualizaConcepto(Conceptos c)
         {
-            Command.CommandText = "update conceptos set concepto = @concepto, tipoconcepto = @tipoconcepto where id = @id";
+            Command.CommandText = "update conceptos set concepto = @concepto, tipoconcepto = @tipoconcepto, formula = @formula where id = @id";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("id", c.id);
             Command.Parameters.AddWithValue("concepto", c.concepto);
             Command.Parameters.AddWithValue("tipoconcepto", c.tipoconcepto);
+            Command.Parameters.AddWithValue("formula", c.formula);
             return Command.ExecuteNonQuery();
         }
 

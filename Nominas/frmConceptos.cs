@@ -58,6 +58,7 @@ namespace Nominas
             concepto.idempresa = GLOBALES.IDEMPRESA;
             concepto.concepto = txtConcepto.Text;
             concepto.tipoconcepto = TipoConcepto;
+            concepto.formula = txtFormula.Text;
 
             switch (_tipoOperacion)
             {
@@ -153,6 +154,7 @@ namespace Nominas
                     {
                         txtConcepto.Text = lstConcepto[i].concepto.ToString();
                         cmbTipo.SelectedIndex = (lstConcepto[i].tipoconcepto == "P") ? 0 : 1;
+                        txtFormula.Text = lstConcepto[i].formula;
                     }
                 }
                 catch (Exception error)
@@ -169,6 +171,18 @@ namespace Nominas
                 else
                     toolTitulo.Text = "Edición concepto";
             }
+        }
+
+        private void btnEditor_Click(object sender, EventArgs e)
+        {
+            frmEditorFormulas ef = new frmEditorFormulas();
+            ef.OnFormula += ef_OnFormula;
+            ef.ShowDialog();
+        }
+
+        void ef_OnFormula(string formula)
+        {
+            txtFormula.Text = formula;
         }
     }
 }

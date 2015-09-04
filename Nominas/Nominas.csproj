@@ -730,6 +730,10 @@
       <Project>{bafe81b0-03b5-4408-b2fa-a4becbe1783c}</Project>
       <Name>Faltas.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Formulas.Core\Formulas.Core.csproj">
+      <Project>{b1cfc7af-dc8b-4406-a0ff-4d621b623a37}</Project>
+      <Name>Formulas.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Historial.Core\Historial.Core.csproj">
       <Project>{35798ea8-56c7-4966-ad65-6598a15379d5}</Project>
       <Name>Historial.Core</Name>
