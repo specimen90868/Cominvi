@@ -43,6 +43,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtFormula = new System.Windows.Forms.TextBox();
             this.btnEditor = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtExento = new System.Windows.Forms.TextBox();
+            this.btnEditor2 = new System.Windows.Forms.Button();
             this.toolTitulo.SuspendLayout();
             this.toolAcciones.SuspendLayout();
             this.SuspendLayout();
@@ -165,24 +168,53 @@
             // 
             this.txtFormula.Location = new System.Drawing.Point(65, 161);
             this.txtFormula.Name = "txtFormula";
-            this.txtFormula.Size = new System.Drawing.Size(368, 20);
+            this.txtFormula.Size = new System.Drawing.Size(148, 20);
             this.txtFormula.TabIndex = 113;
             // 
             // btnEditor
             // 
-            this.btnEditor.Location = new System.Drawing.Point(439, 159);
+            this.btnEditor.Location = new System.Drawing.Point(219, 160);
             this.btnEditor.Name = "btnEditor";
-            this.btnEditor.Size = new System.Drawing.Size(43, 23);
+            this.btnEditor.Size = new System.Drawing.Size(43, 22);
             this.btnEditor.TabIndex = 114;
             this.btnEditor.Text = "Editor";
             this.btnEditor.UseVisualStyleBackColor = true;
             this.btnEditor.Click += new System.EventHandler(this.btnEditor_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(12, 190);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(43, 13);
+            this.label5.TabIndex = 115;
+            this.label5.Text = "Exento:";
+            // 
+            // txtExento
+            // 
+            this.txtExento.Location = new System.Drawing.Point(65, 187);
+            this.txtExento.Name = "txtExento";
+            this.txtExento.Size = new System.Drawing.Size(148, 20);
+            this.txtExento.TabIndex = 116;
+            // 
+            // btnEditor2
+            // 
+            this.btnEditor2.Location = new System.Drawing.Point(219, 186);
+            this.btnEditor2.Name = "btnEditor2";
+            this.btnEditor2.Size = new System.Drawing.Size(43, 21);
+            this.btnEditor2.TabIndex = 117;
+            this.btnEditor2.Text = "Editor";
+            this.btnEditor2.UseVisualStyleBackColor = true;
+            this.btnEditor2.Click += new System.EventHandler(this.btnEditor2_Click);
             // 
             // frmConceptos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(678, 583);
+            this.Controls.Add(this.btnEditor2);
+            this.Controls.Add(this.txtExento);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.btnEditor);
             this.Controls.Add(this.txtFormula);
             this.Controls.Add(this.label4);
@@ -221,5 +253,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtFormula;
         private System.Windows.Forms.Button btnEditor;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox txtExento;
+        private System.Windows.Forms.Button btnEditor2;
     }
 }

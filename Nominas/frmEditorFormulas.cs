@@ -28,8 +28,12 @@ namespace Nominas
         #endregion
 
         #region DELEGADOS
-        public delegate void delOnFormula(string formula);
+        public delegate void delOnFormula(string formula, int tipo);
         public event delOnFormula OnFormula;
+        #endregion
+
+        #region VARIABLES PUBLICAS
+        public int _tipo;
         #endregion
 
         private void frmEditorFormulas_Load(object sender, EventArgs e)
@@ -133,7 +137,7 @@ namespace Nominas
             if (e.Data.GetDataPresent(typeof(TreeNode)))
             {
                 tn = (TreeNode)(e.Data.GetData(typeof(TreeNode)));
-                txtFormula.Text += tn.Text;
+                txtFormula.Text += "[" + tn.Text + "]";
             } 
         }
 
@@ -150,7 +154,7 @@ namespace Nominas
         private void toolAsignar_Click(object sender, EventArgs e)
         {
             if (OnFormula != null)
-                OnFormula(txtFormula.Text);
+                OnFormula(txtFormula.Text, _tipo);
         }
     }
 }

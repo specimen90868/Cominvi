@@ -185,7 +185,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(482, 642);
+            this.ClientSize = new System.Drawing.Size(482, 353);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ContenedorTreeView);
             this.Controls.Add(this.txtFormula);

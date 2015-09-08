@@ -69,6 +69,8 @@
             this.toolCargaIncapacidad = new System.Windows.Forms.ToolStripMenuItem();
             this.toolConceptoEmpleado = new System.Windows.Forms.ToolStripMenuItem();
             this.cálculoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolVacaciones = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuCatalogos = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuDepartamentos = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPuestos = new System.Windows.Forms.ToolStripMenuItem();
@@ -351,7 +353,9 @@
             this.toolFaltas,
             this.toolIncapacidad,
             this.toolConceptoEmpleado,
-            this.cálculoToolStripMenuItem});
+            this.cálculoToolStripMenuItem,
+            this.toolStripSeparator8,
+            this.toolVacaciones});
             this.mnuNominas.Name = "mnuNominas";
             this.mnuNominas.Size = new System.Drawing.Size(67, 20);
             this.mnuNominas.Text = "Nominas";
@@ -414,6 +418,18 @@
             this.cálculoToolStripMenuItem.Name = "cálculoToolStripMenuItem";
             this.cálculoToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
             this.cálculoToolStripMenuItem.Text = "Cálculo de nómina";
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(192, 6);
+            // 
+            // toolVacaciones
+            // 
+            this.toolVacaciones.Name = "toolVacaciones";
+            this.toolVacaciones.Size = new System.Drawing.Size(195, 22);
+            this.toolVacaciones.Text = "Vacaciones";
+            this.toolVacaciones.Click += new System.EventHandler(this.toolVacaciones_Click);
             // 
             // mnuCatalogos
             // 
@@ -671,6 +687,8 @@
         private System.Windows.Forms.ToolStripMenuItem toolIncapacidad;
         private System.Windows.Forms.ToolStripMenuItem toolHistorialIncapacidad;
         private System.Windows.Forms.ToolStripMenuItem toolCargaIncapacidad;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripMenuItem toolVacaciones;
     }
 }
 

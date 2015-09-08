@@ -472,6 +472,13 @@ namespace Nominas
             lci.MdiParent = this;
             lci.Show();
         }
+
+        private void toolVacaciones_Click(object sender, EventArgs e)
+        {
+            frmListaCargaVacaciones lcv = new frmListaCargaVacaciones();
+            lcv.MdiParent = this;
+            lcv.Show();
+        }
       
     }
 }

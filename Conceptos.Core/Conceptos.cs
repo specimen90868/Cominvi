@@ -13,6 +13,9 @@ namespace Conceptos.Core
         public string concepto { get; set; }
         public string tipoconcepto { get; set; }
         public string formula { get; set; }
+        public string formulaexento { get; set; }
+        public bool gravado { get; set; }
+        public bool exento { get; set; }
         public string gruposat { get; set; }
     }
 

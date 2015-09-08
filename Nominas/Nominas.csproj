@@ -216,6 +216,12 @@
     <Compile Include="frmListaCargaIncapacidades.Designer.cs">
       <DependentUpon>frmListaCargaIncapacidades.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmListaCargaVacaciones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaCargaVacaciones.Designer.cs">
+      <DependentUpon>frmListaCargaVacaciones.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmListaComplementos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -524,6 +530,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmListaCargaIncapacidades.resx">
       <DependentUpon>frmListaCargaIncapacidades.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListaCargaVacaciones.resx">
+      <DependentUpon>frmListaCargaVacaciones.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmListaComplementos.resx">
       <DependentUpon>frmListaComplementos.cs</DependentUpon>

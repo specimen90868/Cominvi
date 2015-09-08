@@ -4,3 +4,4 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Conceptos.Core\bin\Debug\Data
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Conceptos.Core\bin\Debug\Data.Obj.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Conceptos.Core\obj\Debug\Conceptos.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Conceptos.Core\obj\Debug\Conceptos.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Conceptos.Core\obj\Debug\Conceptos.Core.csprojResolveAssemblyReference.cache

@@ -59,6 +59,9 @@ namespace Nominas
             concepto.concepto = txtConcepto.Text;
             concepto.tipoconcepto = TipoConcepto;
             concepto.formula = txtFormula.Text;
+            concepto.formulaexento = txtExento.Text;
+            concepto.gravado = false;
+            concepto.exento = false;
 
             switch (_tipoOperacion)
             {
@@ -129,6 +132,8 @@ namespace Nominas
 
         private void frmConceptos_Load(object sender, EventArgs e)
         {
+            txtFormula.Text = "0";
+            txtExento.Text = "0";
             if (_tipoOperacion == GLOBALES.CONSULTAR || _tipoOperacion == GLOBALES.MODIFICAR)
             {
                 cnx = new SqlConnection();
@@ -155,6 +160,7 @@ namespace Nominas
                         txtConcepto.Text = lstConcepto[i].concepto.ToString();
                         cmbTipo.SelectedIndex = (lstConcepto[i].tipoconcepto == "P") ? 0 : 1;
                         txtFormula.Text = lstConcepto[i].formula;
+                        txtExento.Text = lstConcepto[i].formulaexento;
                     }
                 }
                 catch (Exception error)
@@ -177,12 +183,24 @@ namespace Nominas
         {
             frmEditorFormulas ef = new frmEditorFormulas();
             ef.OnFormula += ef_OnFormula;
+            ef._tipo = 0;
             ef.ShowDialog();
         }
 
-        void ef_OnFormula(string formula)
+        void ef_OnFormula(string formula, int tipo)
         {
-            txtFormula.Text = formula;
+            if (tipo == 0)
+                txtFormula.Text = formula;
+            else
+                txtExento.Text = formula;
+        }
+
+        private void btnEditor2_Click(object sender, EventArgs e)
+        {
+            frmEditorFormulas ef = new frmEditorFormulas();
+            ef.OnFormula += ef_OnFormula;
+            ef._tipo = 1;
+            ef.ShowDialog();
         }
     }
 }

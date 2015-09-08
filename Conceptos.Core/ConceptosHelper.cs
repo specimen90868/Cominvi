@@ -24,6 +24,9 @@ namespace Conceptos.Core
                 concepto.concepto = dtConceptos.Rows[i]["concepto"].ToString();
                 concepto.tipoconcepto = dtConceptos.Rows[i]["tipoconcepto"].ToString();
                 concepto.formula = dtConceptos.Rows[i]["formula"].ToString();
+                concepto.formulaexento = dtConceptos.Rows[i]["formulaexento"].ToString();
+                concepto.gravado = bool.Parse(dtConceptos.Rows[i]["gravado"].ToString());
+                concepto.exento = bool.Parse(dtConceptos.Rows[i]["exento"].ToString());
                 concepto.gruposat = dtConceptos.Rows[i]["gruposat"].ToString();
                 lstConcepto.Add(concepto);
             }
@@ -45,6 +48,9 @@ namespace Conceptos.Core
                 concepto.concepto = dtConceptos.Rows[i]["concepto"].ToString();
                 concepto.tipoconcepto = dtConceptos.Rows[i]["tipoconcepto"].ToString();
                 concepto.formula = dtConceptos.Rows[i]["formula"].ToString();
+                concepto.formulaexento = dtConceptos.Rows[i]["formulaexento"].ToString();
+                concepto.gravado = bool.Parse(dtConceptos.Rows[i]["gravado"].ToString());
+                concepto.exento = bool.Parse(dtConceptos.Rows[i]["exento"].ToString());
                 concepto.gruposat = dtConceptos.Rows[i]["gruposat"].ToString();
                 lstConcepto.Add(concepto);
             }
@@ -53,24 +59,31 @@ namespace Conceptos.Core
 
         public int insertaConcepto(Conceptos c)
         {
-            Command.CommandText = "insert into conceptos (idempresa, concepto, tipoconcepto, formula) " +
-                "values (@idempresa, @concepto, @tipoconcepto, @formula)";
+            Command.CommandText = "insert into conceptos (idempresa, concepto, tipoconcepto, formula, formulaexento, gravado, exento) " +
+                "values (@idempresa, @concepto, @tipoconcepto, @formula, @formulaexento, @gravado, @exento)";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa",c.idempresa);
             Command.Parameters.AddWithValue("concepto", c.concepto);
             Command.Parameters.AddWithValue("tipoconcepto", c.tipoconcepto);
             Command.Parameters.AddWithValue("formula",c.formula);
+            Command.Parameters.AddWithValue("formulaexento", c.formulaexento);
+            Command.Parameters.AddWithValue("gravado", c.gravado);
+            Command.Parameters.AddWithValue("exento", c.exento);
             return Command.ExecuteNonQuery();
         }
 
         public int actualizaConcepto(Conceptos c)
         {
-            Command.CommandText = "update conceptos set concepto = @concepto, tipoconcepto = @tipoconcepto, formula = @formula where id = @id";
+            Command.CommandText = "update conceptos set concepto = @concepto, tipoconcepto = @tipoconcepto, formula = @formula, formulaexento = @formulaexento, gravado = @gravado, " + 
+                "exento = @exento where id = @id";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("id", c.id);
             Command.Parameters.AddWithValue("concepto", c.concepto);
             Command.Parameters.AddWithValue("tipoconcepto", c.tipoconcepto);
             Command.Parameters.AddWithValue("formula", c.formula);
+            Command.Parameters.AddWithValue("formulaexento", c.formulaexento);
+            Command.Parameters.AddWithValue("gravado", c.gravado);
+            Command.Parameters.AddWithValue("exento", c.exento);
             return Command.ExecuteNonQuery();
         }
 
