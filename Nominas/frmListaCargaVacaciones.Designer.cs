@@ -40,6 +40,15 @@
             this.lblBuscar = new System.Windows.Forms.ToolStripLabel();
             this.txtBuscar = new System.Windows.Forms.ToolStripTextBox();
             this.dgvCargaVacaciones = new System.Windows.Forms.DataGridView();
+            this.noempleado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.paterno = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.materno = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.prima = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.vacaciones = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.diaspago = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.inicioperiodo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.finperiodo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,14 +58,6 @@
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.noempleado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.paterno = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.materno = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.prima = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.diaspago = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.inicioperiodo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.finperiodo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolTitulo.SuspendLayout();
             this.toolBusqueda.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCargaVacaciones)).BeginInit();
@@ -103,6 +104,7 @@
             this.toolNuevo.Name = "toolNuevo";
             this.toolNuevo.Size = new System.Drawing.Size(62, 22);
             this.toolNuevo.Text = "Nuevo";
+            this.toolNuevo.Click += new System.EventHandler(this.toolNuevo_Click);
             // 
             // toolCargar
             // 
@@ -120,6 +122,7 @@
             this.toolLimpiar.Name = "toolLimpiar";
             this.toolLimpiar.Size = new System.Drawing.Size(67, 22);
             this.toolLimpiar.Text = "Limpiar";
+            this.toolLimpiar.Click += new System.EventHandler(this.toolLimpiar_Click);
             // 
             // toolAplicar
             // 
@@ -128,6 +131,7 @@
             this.toolAplicar.Name = "toolAplicar";
             this.toolAplicar.Size = new System.Drawing.Size(64, 22);
             this.toolAplicar.Text = "Aplicar";
+            this.toolAplicar.Click += new System.EventHandler(this.toolAplicar_Click);
             // 
             // toolStripSeparator1
             // 
@@ -147,6 +151,9 @@
             this.txtBuscar.Name = "txtBuscar";
             this.txtBuscar.Size = new System.Drawing.Size(300, 25);
             this.txtBuscar.Text = "Buscar no. empleado...";
+            this.txtBuscar.Leave += new System.EventHandler(this.txtBuscar_Leave);
+            this.txtBuscar.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBuscar_KeyPress);
+            this.txtBuscar.Click += new System.EventHandler(this.txtBuscar_Click);
             // 
             // dgvCargaVacaciones
             // 
@@ -158,6 +165,7 @@
             this.paterno,
             this.materno,
             this.prima,
+            this.vacaciones,
             this.diaspago,
             this.inicioperiodo,
             this.finperiodo});
@@ -167,6 +175,59 @@
             this.dgvCargaVacaciones.Size = new System.Drawing.Size(864, 675);
             this.dgvCargaVacaciones.TabIndex = 11;
             this.dgvCargaVacaciones.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCargaVacaciones_CellContentClick);
+            this.dgvCargaVacaciones.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCargaVacaciones_CellValueChanged);
+            this.dgvCargaVacaciones.CurrentCellDirtyStateChanged += new System.EventHandler(this.dgvCargaVacaciones_CurrentCellDirtyStateChanged);
+            // 
+            // noempleado
+            // 
+            this.noempleado.HeaderText = "No. Empleado";
+            this.noempleado.Name = "noempleado";
+            // 
+            // nombre
+            // 
+            this.nombre.HeaderText = "Nombre";
+            this.nombre.Name = "nombre";
+            // 
+            // paterno
+            // 
+            this.paterno.HeaderText = "Ap. Paterno";
+            this.paterno.Name = "paterno";
+            // 
+            // materno
+            // 
+            this.materno.HeaderText = "Ap. Materno";
+            this.materno.Name = "materno";
+            // 
+            // prima
+            // 
+            this.prima.FalseValue = "false";
+            this.prima.HeaderText = "Prima V.";
+            this.prima.Name = "prima";
+            this.prima.TrueValue = "true";
+            // 
+            // vacaciones
+            // 
+            this.vacaciones.FalseValue = "false";
+            this.vacaciones.HeaderText = "Vacaciones";
+            this.vacaciones.Name = "vacaciones";
+            this.vacaciones.TrueValue = "true";
+            // 
+            // diaspago
+            // 
+            this.diaspago.HeaderText = "Dias a pagar";
+            this.diaspago.Name = "diaspago";
+            this.diaspago.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.diaspago.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // inicioperiodo
+            // 
+            this.inicioperiodo.HeaderText = "Fecha inicio";
+            this.inicioperiodo.Name = "inicioperiodo";
+            // 
+            // finperiodo
+            // 
+            this.finperiodo.HeaderText = "Fecha fin";
+            this.finperiodo.Name = "finperiodo";
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -217,48 +278,6 @@
             this.dataGridViewTextBoxColumn9.HeaderText = "Fecha fin";
             this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
             // 
-            // noempleado
-            // 
-            this.noempleado.HeaderText = "No. Empleado";
-            this.noempleado.Name = "noempleado";
-            // 
-            // nombre
-            // 
-            this.nombre.HeaderText = "Nombre";
-            this.nombre.Name = "nombre";
-            // 
-            // paterno
-            // 
-            this.paterno.HeaderText = "Ap. Paterno";
-            this.paterno.Name = "paterno";
-            // 
-            // materno
-            // 
-            this.materno.HeaderText = "Ap. Materno";
-            this.materno.Name = "materno";
-            // 
-            // prima
-            // 
-            this.prima.HeaderText = "Prima V.";
-            this.prima.Name = "prima";
-            // 
-            // diaspago
-            // 
-            this.diaspago.HeaderText = "Dias a pagar";
-            this.diaspago.Name = "diaspago";
-            this.diaspago.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.diaspago.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // inicioperiodo
-            // 
-            this.inicioperiodo.HeaderText = "Fecha inicio";
-            this.inicioperiodo.Name = "inicioperiodo";
-            // 
-            // finperiodo
-            // 
-            this.finperiodo.HeaderText = "Fecha fin";
-            this.finperiodo.Name = "finperiodo";
-            // 
             // frmListaCargaVacaciones
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -292,14 +311,6 @@
         internal System.Windows.Forms.ToolStripLabel lblBuscar;
         internal System.Windows.Forms.ToolStripTextBox txtBuscar;
         private System.Windows.Forms.DataGridView dgvCargaVacaciones;
-        private System.Windows.Forms.DataGridViewTextBoxColumn noempleado;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombre;
-        private System.Windows.Forms.DataGridViewTextBoxColumn paterno;
-        private System.Windows.Forms.DataGridViewTextBoxColumn materno;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn prima;
-        private System.Windows.Forms.DataGridViewTextBoxColumn diaspago;
-        private System.Windows.Forms.DataGridViewTextBoxColumn inicioperiodo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn finperiodo;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
@@ -309,5 +320,14 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
+        private System.Windows.Forms.DataGridViewTextBoxColumn noempleado;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nombre;
+        private System.Windows.Forms.DataGridViewTextBoxColumn paterno;
+        private System.Windows.Forms.DataGridViewTextBoxColumn materno;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn prima;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn vacaciones;
+        private System.Windows.Forms.DataGridViewTextBoxColumn diaspago;
+        private System.Windows.Forms.DataGridViewTextBoxColumn inicioperiodo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn finperiodo;
     }
 }

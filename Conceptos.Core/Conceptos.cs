@@ -10,6 +10,7 @@ namespace Conceptos.Core
     {
         public int id { get; set; }
         public int idempresa { get; set; }
+        public int noconcepto { get; set; }
         public string concepto { get; set; }
         public string tipoconcepto { get; set; }
         public string formula { get; set; }

@@ -69,6 +69,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Incapacidad.Core", "Incapac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formulas.Core", "Formulas.Core\Formulas.Core.csproj", "{B1CFC7AF-DC8B-4406-A0FF-4D621B623A37}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vacaciones.Core", "Vacaciones.Core\Vacaciones.Core.csproj", "{C07D9805-4692-400D-AA2B-4A7D8F69F569}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -207,6 +209,10 @@ Global
 		{B1CFC7AF-DC8B-4406-A0FF-4D621B623A37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1CFC7AF-DC8B-4406-A0FF-4D621B623A37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1CFC7AF-DC8B-4406-A0FF-4D621B623A37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C07D9805-4692-400D-AA2B-4A7D8F69F569}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C07D9805-4692-400D-AA2B-4A7D8F69F569}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C07D9805-4692-400D-AA2B-4A7D8F69F569}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C07D9805-4692-400D-AA2B-4A7D8F69F569}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

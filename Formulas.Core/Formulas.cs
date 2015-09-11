@@ -11,5 +11,8 @@ namespace Formulas.Core
         public int id { get; set; }
         public string nombre { get; set; }
         public int padre { get; set; }
+        public string tabla { get; set; }
+        public string campo { get; set; }
+        public string clausula { get; set; }
     }
 }

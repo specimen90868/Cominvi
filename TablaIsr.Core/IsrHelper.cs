@@ -51,6 +51,29 @@ namespace TablaIsr.Core
             return lstIsr;
         }
 
+        public List<TablaIsr> isrCorrespondiente(TablaIsr ti)
+        {
+            List<TablaIsr> lstIsr = new List<TablaIsr>();
+            DataTable dtIsr = new DataTable();
+            Command.CommandText = "select top 1 * from tablaIsr where periodo = @periodo and inferior <= @cantidad order by inferior desc";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("periodo", ti.periodo);
+            Command.Parameters.AddWithValue("cantidad", ti.inferior);
+            dtIsr = SelectData(Command);
+            for (int i = 0; i < dtIsr.Rows.Count; i++)
+            {
+                TablaIsr isr = new TablaIsr();
+                isr.id = int.Parse(dtIsr.Rows[i]["id"].ToString());
+                isr.inferior = double.Parse(dtIsr.Rows[i]["inferior"].ToString());
+                isr.cuota = double.Parse(dtIsr.Rows[i]["cuota"].ToString());
+                isr.porcentaje = double.Parse(dtIsr.Rows[i]["porcentaje"].ToString());
+                isr.periodo = int.Parse(dtIsr.Rows[i]["periodo"].ToString());
+                isr.anio = int.Parse(dtIsr.Rows[i]["anio"].ToString());
+                lstIsr.Add(isr);
+            }
+            return lstIsr;
+        }
+
         public int insertaIsr(TablaIsr ti)
         {
             Command.CommandText = "insert into tablaIsr (inferior, cuota, porcentaje, periodo, anio) " +

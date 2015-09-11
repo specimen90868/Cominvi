@@ -160,6 +160,7 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Estados.Cor
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Expediente.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Factores.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Faltas.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Formulas.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Historial.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Imagen.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Imss.Core.dll
@@ -174,6 +175,7 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Salario.Cor
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\TablaIsr.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\TablaSubsidio.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Usuarios.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Vacaciones.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Altas.Core.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Ausentismo.Core.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Autorizaciones.Core.pdb
@@ -191,6 +193,7 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Estados.Cor
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Expediente.Core.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Factores.Core.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Faltas.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Formulas.Core.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Historial.Core.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Imagen.Core.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Imss.Core.pdb
@@ -205,6 +208,7 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Salario.Cor
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\TablaIsr.Core.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\TablaSubsidio.Core.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Usuarios.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Vacaciones.Core.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.csprojResolveAssemblyReference.cache
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmBaja.resources
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmBuscaConcepto.resources
@@ -214,6 +218,7 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frm
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmConceptos.resources
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmDepartamentos.resources
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmDiasAusentismo.resources
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmEditorFormulas.resources
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmEmpleados.resources
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmEmpresas.resources
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmExpediente.resources
@@ -230,6 +235,8 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frm
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmListaAusentimosSua.resources
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmListaBajasSua.resources
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmListaCargaFaltas.resources
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmListaCargaIncapacidades.resources
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmListaCargaVacaciones.resources
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmListaComplementos.resources
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmListaConceptoEmpleado.resources
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmListaConceptos.resources
@@ -241,6 +248,7 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frm
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmListaFaltas.resources
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmListaHistorial.resources
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmListaImss.resources
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmListaIncapacidad.resources
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmListaInfonavit.resources
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmListaInfonavitSua.resources
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmListaIsr.resources
@@ -271,9 +279,4 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.Pro
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.csproj.GenerateResource.Cache
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.exe
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.pdb
-C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmListaIncapacidad.resources
-C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmListaCargaIncapacidades.resources
-C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Formulas.Core.dll
-C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Formulas.Core.pdb
-C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmEditorFormulas.resources
-C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmListaCargaVacaciones.resources
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmVacaciones.resources

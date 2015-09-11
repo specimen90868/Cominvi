@@ -117,6 +117,41 @@ namespace Empleados.Core
             return lstEmpleadosIncremento;
         }
 
+        public List<Empleados> obtenerAntiguedades(string noempleados)
+        {
+            string[] noEmp = noempleados.Split(',');
+            string commandText = "select idtrabajador, idsalario, idperiodo, antiguedadmod, sd, fechaantiguedad, sueldo from trabajadores where noempleado in ({0})";
+            string[] paramNombre = noEmp.Select((s, i) => "@noempleado" + i.ToString()).ToArray();
+            string inClausula = string.Join(",", paramNombre);
+
+            DataTable dtEmpleados = new DataTable();
+            List<Empleados> lstEmpleados = new List<Empleados>();
+            Command.CommandText = string.Format(commandText, inClausula);
+            Command.Parameters.Clear();
+            
+            for (int i = 0; i < paramNombre.Length; i++)
+            {
+                Command.Parameters.AddWithValue(paramNombre[i], noEmp[i]);
+            }
+
+            dtEmpleados = SelectData(Command);
+
+            for (int i = 0; i < dtEmpleados.Rows.Count; i++)
+            {
+                Empleados empleado = new Empleados();
+                empleado.idtrabajador = int.Parse(dtEmpleados.Rows[i]["idtrabajador"].ToString());
+                empleado.idsalario = int.Parse(dtEmpleados.Rows[i]["idsalario"].ToString());
+                empleado.idperiodo = int.Parse(dtEmpleados.Rows[i]["idperiodo"].ToString());
+                empleado.antiguedadmod = int.Parse(dtEmpleados.Rows[i]["antiguedadmod"].ToString());
+                empleado.sd = double.Parse(dtEmpleados.Rows[i]["sd"].ToString());
+                empleado.sueldo = double.Parse(dtEmpleados.Rows[i]["sueldo"].ToString());
+                empleado.fechaantiguedad = DateTime.Parse(dtEmpleados.Rows[i]["fechaantiguedad"].ToString());
+                lstEmpleados.Add(empleado);
+            }
+
+            return lstEmpleados;
+        }
+
         public object obtenerEstatus(Empleados e)
         {
             Command.CommandText = "select estatus from trabajadores where idtrabajador = @idtrabajador";

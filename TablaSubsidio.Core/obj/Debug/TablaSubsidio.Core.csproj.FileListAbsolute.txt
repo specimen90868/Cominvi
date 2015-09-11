@@ -2,5 +2,6 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\TablaSubsidio.Core\bin\Debug\
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\TablaSubsidio.Core\bin\Debug\TablaSubsidio.Core.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\TablaSubsidio.Core\bin\Debug\Data.Obj.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\TablaSubsidio.Core\bin\Debug\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\TablaSubsidio.Core\obj\Debug\TablaSubsidio.Core.csprojResolveAssemblyReference.cache
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\TablaSubsidio.Core\obj\Debug\TablaSubsidio.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\TablaSubsidio.Core\obj\Debug\TablaSubsidio.Core.pdb

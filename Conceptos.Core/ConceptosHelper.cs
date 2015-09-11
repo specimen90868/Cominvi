@@ -56,6 +56,24 @@ namespace Conceptos.Core
             }
             return lstConcepto;
         }
+        
+        public object obtenerFormula(Conceptos c)
+        {
+            Command.CommandText = "select formula from conceptos where noconcepto = @noconcepto";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("noconcepto", c.noconcepto);
+            object dato = Select(Command);
+            return dato;
+        }
+
+        public object obtenerFormulaExento(Conceptos c)
+        {
+            Command.CommandText = "select formulaexento from conceptos where noconcepto = @noconcepto";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("noconcepto", c.noconcepto);
+            object dato = Select(Command);
+            return dato;
+        }
 
         public int insertaConcepto(Conceptos c)
         {
@@ -94,6 +112,8 @@ namespace Conceptos.Core
             Command.Parameters.AddWithValue("id", c.id);
             return Command.ExecuteNonQuery();
         }
+
+        #region RELACION TRABAJADOR - CONCEPTO
 
         public List<ConceptoTrabajador> obtenerConceptosTrabajador(ConceptoTrabajador ct)
         {
@@ -140,6 +160,8 @@ namespace Conceptos.Core
             Command.Parameters.AddWithValue("id", ct.id);
             return Command.ExecuteNonQuery();
         }
+
+        #endregion
 
     }
 }

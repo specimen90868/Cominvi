@@ -147,5 +147,27 @@ namespace Nominas
             Image img = Image.FromStream(ms);
             return img;
         }
+
+        public static List<string> EXTRAEVARIABLES(string formula, string inicio, string fin)
+        {
+            List<string> coincidencias = new List<string>();
+            int indexStart = 0, indexEnd = 0;
+            bool exit = false;
+            while (!exit)
+            {
+                indexStart = formula.IndexOf(inicio);
+                indexEnd = formula.IndexOf(fin);
+                if (indexStart != -1 && indexEnd != -1)
+                {
+                    coincidencias.Add(formula.Substring(indexStart + inicio.Length,
+                        indexEnd - indexStart - inicio.Length));
+                    formula = formula.Substring(indexEnd + fin.Length);
+                }
+                else
+                    exit = true;
+            }
+            return coincidencias;
+        }
+
     }   
 }

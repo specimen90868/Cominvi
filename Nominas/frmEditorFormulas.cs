@@ -137,7 +137,30 @@ namespace Nominas
             if (e.Data.GetDataPresent(typeof(TreeNode)))
             {
                 tn = (TreeNode)(e.Data.GetData(typeof(TreeNode)));
-                txtFormula.Text += "[" + tn.Text + "]";
+                switch (tn.Text)
+                {
+                    case "(":
+                        txtFormula.Text += tn.Text;
+                        break;
+                    case ")":
+                        txtFormula.Text += tn.Text;
+                        break;
+                    case "+":
+                        txtFormula.Text += tn.Text;
+                        break;
+                    case "-":
+                        txtFormula.Text += tn.Text;
+                        break;
+                    case "*":
+                        txtFormula.Text += tn.Text;
+                        break;
+                    case "/": 
+                        txtFormula.Text += tn.Text;
+                        break;
+                    default: 
+                        txtFormula.Text += "[" + tn.Text + "]";
+                        break;
+                }
             } 
         }
 
