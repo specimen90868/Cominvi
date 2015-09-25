@@ -31,6 +31,7 @@ namespace Vacaciones.Core
                 vacacion.diasapagar = int.Parse(dtVacaciones.Rows[i]["diasapagar"].ToString());
                 vacacion.diaspendientes = int.Parse(dtVacaciones.Rows[i]["diaspendientes"].ToString());
                 vacacion.pv = double.Parse(dtVacaciones.Rows[i]["pv"].ToString());
+                vacacion.pexenta = double.Parse(dtVacaciones.Rows[i]["pexenta"].ToString());
                 vacacion.pgravada = double.Parse(dtVacaciones.Rows[i]["pgravada"].ToString());
                 vacacion.isrgravada = double.Parse(dtVacaciones.Rows[i]["isrgravada"].ToString());
                 vacacion.pagovacaciones = double.Parse(dtVacaciones.Rows[i]["pagovacaciones"].ToString());
@@ -67,6 +68,7 @@ namespace Vacaciones.Core
                 vacacion.diasapagar = int.Parse(dtVacacion.Rows[i]["diasapagar"].ToString());
                 vacacion.diaspendientes = int.Parse(dtVacacion.Rows[i]["diaspendientes"].ToString());
                 vacacion.pv = double.Parse(dtVacacion.Rows[i]["pv"].ToString());
+                vacacion.pexenta = double.Parse(dtVacacion.Rows[i]["pexenta"].ToString());
                 vacacion.pgravada = double.Parse(dtVacacion.Rows[i]["pgravada"].ToString());
                 vacacion.isrgravada = double.Parse(dtVacacion.Rows[i]["isrgravada"].ToString());
                 vacacion.pagovacaciones = double.Parse(dtVacacion.Rows[i]["pagovacaciones"].ToString());
@@ -82,11 +84,36 @@ namespace Vacaciones.Core
 
         public object vacacionesPagadas(Vacaciones v)
         {
-            Command.CommandText = "select coalesce(sum(diasapagar)) from PagoVacaciones where idtrabajador = @idtrabajador";
+            Command.CommandText = "select isnull(sum(pagovacaciones),0) as pagovacaciones from PagoVacaciones " +
+                "where idtrabajador = @idtrabajador and inicio = @fechainicio and fin = @fechafin";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", v.idtrabajador);
+            Command.Parameters.AddWithValue("fechainicio", v.inicio);
+            Command.Parameters.AddWithValue("fechafin", v.fin);
             object dato = Select(Command);
             return dato;
+        }
+
+        public List<Vacaciones> primaVacacional(Vacaciones v)
+        {
+            List<Vacaciones> lstPrima = new List<Vacaciones>();
+            DataTable dtPrima = new DataTable();
+            Command.CommandText = "select isnull(sum(pv),0) as pv, isnull(sum(pexenta),0) as pexenta, isnull(sum(pgravada),0) as pgravada from PagoVacaciones " +
+                "where idtrabajador = @idtrabajador and inicio = @fechainicio and fin = @fechafin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", v.idtrabajador);
+            Command.Parameters.AddWithValue("fechainicio", v.inicio);
+            Command.Parameters.AddWithValue("fechafin", v.fin);
+            dtPrima = SelectData(Command);
+            for (int i = 0; i < dtPrima.Rows.Count; i++)
+            {
+                Vacaciones vacacion = new Vacaciones();
+                vacacion.pv = double.Parse(dtPrima.Rows[i]["pv"].ToString());
+                vacacion.pexenta = double.Parse(dtPrima.Rows[i]["pexenta"].ToString());
+                vacacion.pgravada = double.Parse(dtPrima.Rows[i]["pgravada"].ToString());
+                lstPrima.Add(vacacion);
+            }
+            return lstPrima;
         }
 
         public int eliminaVacacion(Vacaciones v)

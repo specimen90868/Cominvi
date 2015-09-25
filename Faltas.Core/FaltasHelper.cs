@@ -58,11 +58,11 @@ namespace Faltas.Core
 
         public object existeFalta(Faltas f)
         {
-            Command.CommandText = "select coalesce(sum(faltas)) from faltas where idtrabajador = @idtrabajador and fechainicio = @fechainicio and fechafin = @fechafin";
+            Command.CommandText = "select coalesce(sum(faltas),0) as faltas from faltas where idtrabajador = @idtrabajador and fechainicio = @fechainicio and fechafin = @fechafin";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", f.idtrabajador);
-            Command.Parameters.AddWithValue("fechainicio", f.idtrabajador);
-            Command.Parameters.AddWithValue("fechafin", f.idtrabajador);
+            Command.Parameters.AddWithValue("fechainicio", f.fechainicio);
+            Command.Parameters.AddWithValue("fechafin", f.fechafin);
             object dato = Select(Command);
             return dato;
         }

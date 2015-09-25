@@ -13,13 +13,13 @@ namespace Autorizaciones.Core
         public int idperfil { get; set; }
         public string nombre { get; set; }
         public string modulo { get; set; }
-        public int acceso { get; set; }
+        public bool acceso { get; set; }
     }
 
     public class Menus
     {
         public string nombre { get; set; }
-        public int ver { get; set; }
+        public bool ver { get; set; }
     }
 
     public class Ediciones

@@ -418,6 +418,7 @@
             this.cálculoToolStripMenuItem.Name = "cálculoToolStripMenuItem";
             this.cálculoToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
             this.cálculoToolStripMenuItem.Text = "Cálculo de nómina";
+            this.cálculoToolStripMenuItem.Click += new System.EventHandler(this.cálculoToolStripMenuItem_Click);
             // 
             // toolStripSeparator8
             // 

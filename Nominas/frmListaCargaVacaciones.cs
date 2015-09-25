@@ -118,6 +118,92 @@ namespace Nominas
                 return;
             }
 
+            workVacaciones.RunWorkerAsync();
+        }
+
+        private void dgvCargaVacaciones_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1)
+                return;
+
+            if (dgvCargaVacaciones.Columns[e.ColumnIndex].Name == "vacaciones")
+            {
+                DataGridViewRow row = dgvCargaVacaciones.Rows[e.RowIndex];
+                DataGridViewCheckBoxCell cellSelecion = row.Cells["vacaciones"] as DataGridViewCheckBoxCell;
+                if (!Convert.ToBoolean(cellSelecion.Value))
+                {
+                    dgvCargaVacaciones.Rows[e.RowIndex].Cells["diaspago"].Value = "0";                  
+                }
+            }
+        }
+
+        private void dgvCargaVacaciones_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvCargaVacaciones.Columns[e.ColumnIndex].Name == "vacaciones")
+            {
+                DataGridViewRow row = dgvCargaVacaciones.Rows[e.RowIndex];
+                DataGridViewCheckBoxCell cellSelecion = row.Cells["vacaciones"] as DataGridViewCheckBoxCell;
+                if (!Convert.ToBoolean(cellSelecion.Value))
+                {
+                    dgvCargaVacaciones.Rows[e.RowIndex].Cells["diaspago"].Value = "0";
+                }
+            }
+        }
+
+        private void dgvCargaVacaciones_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            if (dgvCargaVacaciones.IsCurrentCellDirty)
+            {
+                dgvCargaVacaciones.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            }
+        }
+
+        private void toolLimpiar_Click(object sender, EventArgs e)
+        {
+            dgvCargaVacaciones.Rows.Clear();
+        }
+
+        private void txtBuscar_Click(object sender, EventArgs e)
+        {
+            txtBuscar.Text = "";
+            txtBuscar.Font = new Font("Arial", 9);
+            txtBuscar.ForeColor = System.Drawing.Color.Black;
+        }
+
+        private void txtBuscar_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                for (int i = 0; i < dgvCargaVacaciones.Rows.Count; i++)
+                {
+                    if (txtBuscar.Text.Trim() == dgvCargaVacaciones.Rows[i].Cells["noempleado"].Value.ToString())
+                        dgvCargaVacaciones.Rows[i].Selected = true;
+                }
+            }
+        }
+
+        private void txtBuscar_Leave(object sender, EventArgs e)
+        {
+            txtBuscar.Text = "Buscar no. empleado...";
+            txtBuscar.Font = new Font("Segoe UI", 9, FontStyle.Italic);
+            txtBuscar.ForeColor = System.Drawing.Color.Gray;
+        }
+
+        private void toolNuevo_Click(object sender, EventArgs e)
+        {
+            frmVacaciones v = new frmVacaciones();
+            v.OnVacacion += v_OnVacacion;
+            v.MdiParent = this.MdiParent;
+            v.Show();
+        }
+
+        void v_OnVacacion(string noempleado, string nombre, string paterno, string materno, bool prima, bool vacacion, int diaspago, DateTime fechainicio, DateTime fechafin)
+        {
+            dgvCargaVacaciones.Rows.Add(noempleado,nombre,paterno,materno,prima,vacacion,diaspago,fechainicio,fechafin);
+        }
+
+        private void workVacaciones_DoWork(object sender, DoWorkEventArgs e)
+        {
             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();
             cmd.Connection = cnx;
@@ -127,6 +213,20 @@ namespace Nominas
             {
                 if ((bool)fila.Cells["prima"].Value) seCalculaPrima = true;
                 if ((bool)fila.Cells["vacaciones"].Value) seCalculaVacaciones = true;
+            }
+
+            eh = new Empresas.Core.EmpresasHelper();
+            eh.Command = cmd;
+
+            try
+            {
+                cnx.Open();
+                idEmpresa = eh.obtenerIdEmpresa(nombreEmpresa);
+                cnx.Close();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
             }
 
             #region LISTAS
@@ -190,7 +290,7 @@ namespace Nominas
                     }
                     catch (Exception error)
                     {
-                        MessageBox.Show("Error: \r\n \r\n" + error.Message,"Error");
+                        MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
                     }
                 }
                 #endregion
@@ -214,7 +314,7 @@ namespace Nominas
                 {
                     MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
                 }
-                
+
                 for (int i = 0; i < dgvCargaVacaciones.Rows.Count; i++)
                 {
                     if ((bool)dgvCargaVacaciones.Rows[i].Cells["prima"].Value)
@@ -309,7 +409,8 @@ namespace Nominas
                         TablaIsr.Core.TablaIsr tablaIsr = new TablaIsr.Core.TablaIsr();
                         Periodos.Core.Periodos periodo = new Periodos.Core.Periodos();
                         periodo.idperiodo = lstDatosEmpleado[i].idperiodo;
-                        try {
+                        try
+                        {
                             cnx.Open();
                             diasPeriodo = (int)ph.DiasDePago(periodo);
                             cnx.Close();
@@ -317,11 +418,12 @@ namespace Nominas
                         catch (Exception error)
                         { MessageBox.Show("Error (Periodo): \r\n \r\n" + error.Message, "Error"); cnx.Dispose(); this.Dispose(); }
 
-                        valor1 = ((double.Parse(pGravada[i]) / lstDatosEmpleado[i].sd) * 30.4) + 
-                            ((new DateTime(DateTime.Now.Year,12,31) - new DateTime(DateTime.Now.Year,1,1)).TotalDays * 30);
+                        valor1 = ((double.Parse(pGravada[i]) / lstDatosEmpleado[i].sd) * 30.4) +
+                            ((new DateTime(DateTime.Now.Year, 12, 31) - new DateTime(DateTime.Now.Year, 1, 1)).TotalDays * 30);
                         tablaIsr.periodo = diasPeriodo;
                         tablaIsr.inferior = valor1;
-                        try {
+                        try
+                        {
                             cnx.Open();
                             lstIsr1 = ih.isrCorrespondiente(tablaIsr);
                             excedente = valor1 - lstIsr1[0].inferior;
@@ -337,7 +439,8 @@ namespace Nominas
                         tablaIsr.periodo = diasPeriodo;
                         tablaIsr.inferior = valor2;
 
-                        try {
+                        try
+                        {
                             cnx.Open();
                             lstIsr2 = ih.isrCorrespondiente(tablaIsr);
                             cnx.Close();
@@ -356,7 +459,7 @@ namespace Nominas
                     {
                         isrDefinitivo = 0;
                     }
-                    isr.Add(isrDefinitivo.ToString());                        
+                    isr.Add(isrDefinitivo.ToString());
                 }
                 #endregion
 
@@ -385,6 +488,7 @@ namespace Nominas
                 dt.Columns.Add("diasapagar", typeof(Int32));
                 dt.Columns.Add("diaspendientes", typeof(Int32));
                 dt.Columns.Add("pv", typeof(Double));
+                dt.Columns.Add("pexenta", typeof(Double));
                 dt.Columns.Add("pgravada", typeof(Double));
                 dt.Columns.Add("isrgravada", typeof(Double));
                 dt.Columns.Add("pagovacaciones", typeof(Double));
@@ -399,7 +503,7 @@ namespace Nominas
                     dtFila = dt.NewRow();
                     dtFila["id"] = index;
                     dtFila["idtrabajador"] = lstDatosEmpleado[i].idtrabajador;
-                    dtFila["idempresa"] = GLOBALES.IDEMPRESA;
+                    dtFila["idempresa"] = idEmpresa;
                     dtFila["fechaingreso"] = lstDatosEmpleado[i].fechaantiguedad;
                     dtFila["inicio"] = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["inicioperiodo"].Value.ToString());
                     dtFila["fin"] = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["finperiodo"].Value.ToString());
@@ -408,6 +512,7 @@ namespace Nominas
                     dtFila["diasapagar"] = 0;
                     dtFila["diaspendientes"] = 0;
                     dtFila["pv"] = double.Parse(primaVacacional[i]);
+                    dtFila["pexenta"] = double.Parse(exento[i]);
                     dtFila["pgravada"] = double.Parse(pGravada[i]);
                     dtFila["isrgravada"] = double.Parse(isr[i]);
                     dtFila["pagovacaciones"] = 0;
@@ -531,7 +636,7 @@ namespace Nominas
                     dtFila = dt.NewRow();
                     dtFila["id"] = index;
                     dtFila["idtrabajador"] = lstDatosEmpleado[i].idtrabajador;
-                    dtFila["idempresa"] = GLOBALES.IDEMPRESA;
+                    dtFila["idempresa"] = idEmpresa;
                     dtFila["fechaingreso"] = lstDatosEmpleado[i].fechaantiguedad;
                     dtFila["inicio"] = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["inicioperiodo"].Value.ToString());
                     dtFila["fin"] = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["finperiodo"].Value.ToString());
@@ -559,7 +664,6 @@ namespace Nominas
                     vh.stpVacaciones();
                     cnx.Close();
                     cnx.Dispose();
-                    MessageBox.Show("Vacación aplicada.", "Confirmación");
                 }
                 catch (Exception error)
                 {
@@ -570,85 +674,9 @@ namespace Nominas
             #endregion
         }
 
-        private void dgvCargaVacaciones_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void workVacaciones_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (e.RowIndex == -1)
-                return;
-
-            if (dgvCargaVacaciones.Columns[e.ColumnIndex].Name == "vacaciones")
-            {
-                DataGridViewRow row = dgvCargaVacaciones.Rows[e.RowIndex];
-                DataGridViewCheckBoxCell cellSelecion = row.Cells["vacaciones"] as DataGridViewCheckBoxCell;
-                if (!Convert.ToBoolean(cellSelecion.Value))
-                {
-                    dgvCargaVacaciones.Rows[e.RowIndex].Cells["diaspago"].Value = "0";                  
-                }
-            }
-        }
-
-        private void dgvCargaVacaciones_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            if (dgvCargaVacaciones.Columns[e.ColumnIndex].Name == "vacaciones")
-            {
-                DataGridViewRow row = dgvCargaVacaciones.Rows[e.RowIndex];
-                DataGridViewCheckBoxCell cellSelecion = row.Cells["vacaciones"] as DataGridViewCheckBoxCell;
-                if (!Convert.ToBoolean(cellSelecion.Value))
-                {
-                    dgvCargaVacaciones.Rows[e.RowIndex].Cells["diaspago"].Value = "0";
-                }
-            }
-        }
-
-        private void dgvCargaVacaciones_CurrentCellDirtyStateChanged(object sender, EventArgs e)
-        {
-            if (dgvCargaVacaciones.IsCurrentCellDirty)
-            {
-                dgvCargaVacaciones.CommitEdit(DataGridViewDataErrorContexts.Commit);
-            }
-        }
-
-        private void toolLimpiar_Click(object sender, EventArgs e)
-        {
-            dgvCargaVacaciones.Rows.Clear();
-        }
-
-        private void txtBuscar_Click(object sender, EventArgs e)
-        {
-            txtBuscar.Text = "";
-            txtBuscar.Font = new Font("Arial", 9);
-            txtBuscar.ForeColor = System.Drawing.Color.Black;
-        }
-
-        private void txtBuscar_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)Keys.Enter)
-            {
-                for (int i = 0; i < dgvCargaVacaciones.Rows.Count; i++)
-                {
-                    if (txtBuscar.Text.Trim() == dgvCargaVacaciones.Rows[i].Cells["noempleado"].Value.ToString())
-                        dgvCargaVacaciones.Rows[i].Selected = true;
-                }
-            }
-        }
-
-        private void txtBuscar_Leave(object sender, EventArgs e)
-        {
-            txtBuscar.Text = "Buscar no. empleado...";
-            txtBuscar.Font = new Font("Segoe UI", 9, FontStyle.Italic);
-            txtBuscar.ForeColor = System.Drawing.Color.Gray;
-        }
-
-        private void toolNuevo_Click(object sender, EventArgs e)
-        {
-            frmVacaciones v = new frmVacaciones();
-            v.OnVacacion += v_OnVacacion;
-            v.MdiParent = this.MdiParent;
-            v.Show();
-        }
-
-        void v_OnVacacion(string noempleado, string nombre, string paterno, string materno, bool prima, bool vacacion, int diaspago, DateTime fechainicio, DateTime fechafin)
-        {
-            dgvCargaVacaciones.Rows.Add(noempleado,nombre,paterno,materno,prima,vacacion,diaspago,fechainicio,fechafin);
+            MessageBox.Show("Vacación aplicada.", "Confirmación");
         }
     }
 }

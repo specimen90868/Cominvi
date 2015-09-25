@@ -45,7 +45,7 @@ namespace Nominas
 
             cnx.Open();
 
-            List<Autorizaciones.Core.Autorizaciones> lstAuth = ah.getAutorizacion(GLOBALES.IDUSUARIO.ToString());
+            List<Autorizaciones.Core.Autorizaciones> lstAuth = ah.getAutorizacion(GLOBALES.IDUSUARIO);
             List<Autorizaciones.Core.Menus> lstMenu = ah.getMenus(GLOBALES.IDPERFIL.ToString());
 
             cnx.Close();
@@ -478,6 +478,13 @@ namespace Nominas
             frmListaCargaVacaciones lcv = new frmListaCargaVacaciones();
             lcv.MdiParent = this;
             lcv.Show();
+        }
+
+        private void cálculoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmListaCalculoNomina lcn = new frmListaCalculoNomina();
+            lcn.MdiParent = this;
+            lcn.Show();
         }
       
     }

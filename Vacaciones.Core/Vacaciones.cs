@@ -19,6 +19,7 @@ namespace Vacaciones.Core
         public int diasapagar { get; set; }
         public int diaspendientes { get; set; }
         public double pv { get; set; }
+        public double pexenta { get; set; }
         public double pgravada { get; set; }
         public double isrgravada { get; set; }
         public double pagovacaciones { get; set; }

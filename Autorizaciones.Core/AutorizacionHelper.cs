@@ -10,11 +10,11 @@ namespace Autorizaciones.Core
 {
     public class AutorizacionHelper : Data.Obj.DataObj
     {
-        public List<Autorizaciones> getAutorizacion(string idusuario)
+        public List<Autorizaciones> getAutorizacion(int idusuario)
         {
             List<Autorizaciones> auth = new List<Autorizaciones>();
             DataTable dtAuth = new DataTable();
-            Command.CommandText = "call spAutorizacion (@idusuario)";
+            Command.CommandText = "exec stp_Autorizacion @idusuario";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idusuario", idusuario);
             dtAuth = SelectData(Command);
@@ -26,7 +26,7 @@ namespace Autorizaciones.Core
                 a.idperfil = int.Parse(dtAuth.Rows[i]["idperfil"].ToString());
                 a.nombre = dtAuth.Rows[i]["nombre"].ToString();
                 a.modulo = dtAuth.Rows[i]["modulo"].ToString();
-                a.acceso = int.Parse(dtAuth.Rows[i]["acceso"].ToString());
+                a.acceso = bool.Parse(dtAuth.Rows[i]["acceso"].ToString());
                 auth.Add(a);
             }
             return auth;
@@ -45,7 +45,7 @@ namespace Autorizaciones.Core
             {
                 Menus m = new Menus();
                 m.nombre = dtMenu.Rows[i]["nombre"].ToString();
-                m.ver = int.Parse(dtMenu.Rows[i]["ver"].ToString());
+                m.ver = bool.Parse(dtMenu.Rows[i]["ver"].ToString());
                 menu.Add(m);
             }
             return menu;

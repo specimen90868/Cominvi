@@ -58,6 +58,7 @@
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.workVacaciones = new System.ComponentModel.BackgroundWorker();
             this.toolTitulo.SuspendLayout();
             this.toolBusqueda.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCargaVacaciones)).BeginInit();
@@ -278,6 +279,12 @@
             this.dataGridViewTextBoxColumn9.HeaderText = "Fecha fin";
             this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
             // 
+            // workVacaciones
+            // 
+            this.workVacaciones.WorkerReportsProgress = true;
+            this.workVacaciones.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workVacaciones_DoWork);
+            this.workVacaciones.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workVacaciones_RunWorkerCompleted);
+            // 
             // frmListaCargaVacaciones
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -329,5 +336,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn diaspago;
         private System.Windows.Forms.DataGridViewTextBoxColumn inicioperiodo;
         private System.Windows.Forms.DataGridViewTextBoxColumn finperiodo;
+        private System.ComponentModel.BackgroundWorker workVacaciones;
     }
 }

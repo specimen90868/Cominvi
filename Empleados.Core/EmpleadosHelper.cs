@@ -152,6 +152,36 @@ namespace Empleados.Core
             return lstEmpleados;
         }
 
+        public List<Empleados> obtenerSalarioDiario(string noempleados)
+        {
+            string[] noEmp = noempleados.Split(',');
+            string commandText = "select idtrabajador, sd from trabajadores where noempleado in ({0})";
+            string[] paramNombre = noEmp.Select((s, i) => "@noempleado" + i.ToString()).ToArray();
+            string inClausula = string.Join(",", paramNombre);
+
+            DataTable dtEmpleados = new DataTable();
+            List<Empleados> lstEmpleados = new List<Empleados>();
+            Command.CommandText = string.Format(commandText, inClausula);
+            Command.Parameters.Clear();
+
+            for (int i = 0; i < paramNombre.Length; i++)
+            {
+                Command.Parameters.AddWithValue(paramNombre[i], noEmp[i]);
+            }
+
+            dtEmpleados = SelectData(Command);
+
+            for (int i = 0; i < dtEmpleados.Rows.Count; i++)
+            {
+                Empleados empleado = new Empleados();
+                empleado.idtrabajador = int.Parse(dtEmpleados.Rows[i]["idtrabajador"].ToString());
+                empleado.sd = double.Parse(dtEmpleados.Rows[i]["sd"].ToString());
+                lstEmpleados.Add(empleado);
+            }
+
+            return lstEmpleados;
+        }
+
         public object obtenerEstatus(Empleados e)
         {
             Command.CommandText = "select estatus from trabajadores where idtrabajador = @idtrabajador";

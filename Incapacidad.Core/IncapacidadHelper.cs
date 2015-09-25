@@ -66,6 +66,17 @@ namespace Incapacidad.Core
             return lstIncapacidad;
         }
 
+        public object existeIncapacidad(Incapacidades inc)
+        {
+            Command.CommandText = "select coalesce(SUM(diastomados),0) as diastomados from incapacidades where idtrabajador = @idtrabajador and fechainicio between @fechainicio and @fechafin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", inc.idtrabajador);
+            Command.Parameters.AddWithValue("fechainicio", inc.fechainicio);
+            Command.Parameters.AddWithValue("fechafin", inc.fechafin);
+            object dato = Select(Command);
+            return dato;
+        }
+
         public int insertaIncapacidad(Incapacidades inc)
         {
             Command.CommandText = "insert into Incapacidades (idtrabajador, idempresa, diasincapacidad, diastomados, diasrestantes, diasapagar, tipo, aplicada, consecutiva, fechainicio, fechafin) " +
