@@ -53,6 +53,15 @@ namespace Infonavit.Core
             return lstInfonavit;
         }
 
+        public object obtenerValorInfonavit(Infonavit e)
+        {
+            Command.CommandText = "select valordescuento from infonavit where idtrabajador = @idtrabajador";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", e.idtrabajador);
+            object dato = Select(Command);
+            return dato;
+        }
+
         public object existeInfonavit(Infonavit e)
         {
             Command.CommandText = "select count(idtrabajador) from infonavit where idtrabajador = @idtrabajador";

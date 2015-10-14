@@ -70,6 +70,15 @@ namespace Salario.Core
             return lstSalario;
         }
 
+        public object obtenerSalarioValor(Salarios s)
+        {
+            Command.CommandText = "select valor from salariominimo where idsalario = @idsalario";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idsalario", s.idsalario);
+            object dato = Select(Command);
+            return dato;
+        }
+
         public int insertaSalario(Salarios s)
         {
             Command.CommandText = "insert into salariominimo (periodo, valor, zona) values (@periodo, @valor, @zona)";

@@ -279,15 +279,15 @@ namespace Nominas
             }
             else
             {
-                if (DateTime.Now.Day <= 15)
+                if (dtpInicio.Value.Day <= 15)
                 {
-                    dtpInicio.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-                    dtpFin.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 15);
+                    dtpInicio.Value = new DateTime(dtpInicio.Value.Year, dtpInicio.Value.Month, 1);
+                    dtpFin.Value = new DateTime(dtpInicio.Value.Year, dtpInicio.Value.Month, 15);
                 }
                 else
                 {
-                    dtpInicio.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 16);
-                    dtpFin.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
+                    dtpInicio.Value = new DateTime(dtpInicio.Value.Year, dtpInicio.Value.Month, 16);
+                    dtpFin.Value = new DateTime(dtpInicio.Value.Year, dtpInicio.Value.Month, DateTime.DaysInMonth(dtpInicio.Value.Year, dtpInicio.Value.Month));
                 }
             }
         }

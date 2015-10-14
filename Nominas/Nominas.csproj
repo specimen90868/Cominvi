@@ -145,6 +145,12 @@
     <Compile Include="frmFiltro.Designer.cs">
       <DependentUpon>frmFiltro.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmFiltroNomina.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmFiltroNomina.Designer.cs">
+      <DependentUpon>frmFiltroNomina.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmImagen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -439,6 +445,12 @@
     <Compile Include="frmSeleccionarEmpresa.Designer.cs">
       <DependentUpon>frmSeleccionarEmpresa.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmSeleccionPeriodo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSeleccionPeriodo.Designer.cs">
+      <DependentUpon>frmSeleccionPeriodo.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmSubsidio.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -505,6 +517,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmFiltro.resx">
       <DependentUpon>frmFiltro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmFiltroNomina.resx">
+      <DependentUpon>frmFiltroNomina.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmImagen.resx">
       <DependentUpon>frmImagen.cs</DependentUpon>
@@ -653,6 +668,9 @@
     <EmbeddedResource Include="frmSeleccionarEmpresa.resx">
       <DependentUpon>frmSeleccionarEmpresa.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmSeleccionPeriodo.resx">
+      <DependentUpon>frmSeleccionPeriodo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmSubsidio.resx">
       <DependentUpon>frmSubsidio.cs</DependentUpon>
     </EmbeddedResource>
@@ -700,6 +718,10 @@
     <ProjectReference Include="..\Bajas\Bajas.Core.csproj">
       <Project>{4b47e72f-bc89-41e5-982c-75d21331e070}</Project>
       <Name>Bajas.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CalculoNomina.Core\CalculoNomina.Core.csproj">
+      <Project>{83af98b0-39b8-413b-8f85-a5fadf574c51}</Project>
+      <Name>CalculoNomina.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Catalogos.Core\Catalogos.Core.csproj">
       <Project>{82d361fb-9511-4e6a-a33b-11b1a65b4353}</Project>

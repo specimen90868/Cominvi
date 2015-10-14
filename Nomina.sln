@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data.Obj", "Data.Obj\Data.Obj.csproj", "{2F926E34-44B7-49DC-B955-9B33F8B55C96}"
 EndProject
@@ -70,6 +70,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formulas.Core", "Formulas.Core\Formulas.Core.csproj", "{B1CFC7AF-DC8B-4406-A0FF-4D621B623A37}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vacaciones.Core", "Vacaciones.Core\Vacaciones.Core.csproj", "{C07D9805-4692-400D-AA2B-4A7D8F69F569}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculoNomina.Core", "CalculoNomina.Core\CalculoNomina.Core.csproj", "{83AF98B0-39B8-413B-8F85-A5FADF574C51}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -213,6 +215,10 @@ Global
 		{C07D9805-4692-400D-AA2B-4A7D8F69F569}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C07D9805-4692-400D-AA2B-4A7D8F69F569}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C07D9805-4692-400D-AA2B-4A7D8F69F569}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83AF98B0-39B8-413B-8F85-A5FADF574C51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83AF98B0-39B8-413B-8F85-A5FADF574C51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83AF98B0-39B8-413B-8F85-A5FADF574C51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83AF98B0-39B8-413B-8F85-A5FADF574C51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

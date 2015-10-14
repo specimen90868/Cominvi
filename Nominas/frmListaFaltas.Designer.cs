@@ -37,6 +37,7 @@
             this.lblBuscar = new System.Windows.Forms.ToolStripLabel();
             this.txtBuscar = new System.Windows.Forms.ToolStripTextBox();
             this.dgvFaltas = new System.Windows.Forms.DataGridView();
+            this.toolEliminar = new System.Windows.Forms.ToolStripButton();
             this.toolTitulo.SuspendLayout();
             this.toolBusqueda.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFaltas)).BeginInit();
@@ -64,6 +65,7 @@
             // 
             this.toolBusqueda.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolNuevo,
+            this.toolEliminar,
             this.toolStripSeparator1,
             this.lblBuscar,
             this.txtBuscar});
@@ -116,6 +118,15 @@
             this.dgvFaltas.Size = new System.Drawing.Size(814, 628);
             this.dgvFaltas.TabIndex = 9;
             // 
+            // toolEliminar
+            // 
+            this.toolEliminar.Image = ((System.Drawing.Image)(resources.GetObject("toolEliminar.Image")));
+            this.toolEliminar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolEliminar.Name = "toolEliminar";
+            this.toolEliminar.Size = new System.Drawing.Size(70, 22);
+            this.toolEliminar.Text = "Eliminar";
+            this.toolEliminar.Click += new System.EventHandler(this.toolEliminar_Click);
+            // 
             // frmListaFaltas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -147,5 +158,6 @@
         internal System.Windows.Forms.ToolStripLabel lblBuscar;
         internal System.Windows.Forms.ToolStripTextBox txtBuscar;
         private System.Windows.Forms.DataGridView dgvFaltas;
+        private System.Windows.Forms.ToolStripButton toolEliminar;
     }
 }

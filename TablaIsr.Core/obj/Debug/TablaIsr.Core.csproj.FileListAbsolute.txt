@@ -4,4 +4,3 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\TablaIsr.Core\bin\Debug\Data.
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\TablaIsr.Core\bin\Debug\Data.Obj.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\TablaIsr.Core\obj\Debug\TablaIsr.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\TablaIsr.Core\obj\Debug\TablaIsr.Core.pdb
-C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\TablaIsr.Core\obj\Debug\TablaIsr.Core.csprojResolveAssemblyReference.cache

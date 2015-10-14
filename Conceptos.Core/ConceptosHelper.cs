@@ -56,11 +56,31 @@ namespace Conceptos.Core
             }
             return lstConcepto;
         }
+
+        public List<Conceptos> obtenerConceptoNomina(Conceptos c)
+        {
+            List<Conceptos> lstConcepto = new List<Conceptos>();
+            DataTable dtConceptos = new DataTable();
+            Command.CommandText = "select id, tipoconcepto from conceptos where noconcepto = @noconcepto and idempresa = @idempresa";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("noconcepto", c.noconcepto);
+            Command.Parameters.AddWithValue("idempresa", c.idempresa);
+            dtConceptos = SelectData(Command);
+            for (int i = 0; i < dtConceptos.Rows.Count; i++)
+            {
+                Conceptos concepto = new Conceptos();
+                concepto.id = int.Parse(dtConceptos.Rows[i]["id"].ToString());
+                concepto.tipoconcepto = dtConceptos.Rows[i]["tipoconcepto"].ToString();
+                lstConcepto.Add(concepto);
+            }
+            return lstConcepto;
+        }
         
         public object obtenerFormula(Conceptos c)
         {
-            Command.CommandText = "select formula from conceptos where noconcepto = @noconcepto";
+            Command.CommandText = "select formula from conceptos where noconcepto = @noconcepto and idempresa = @idempresa";
             Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", c.idempresa);
             Command.Parameters.AddWithValue("noconcepto", c.noconcepto);
             object dato = Select(Command);
             return dato;

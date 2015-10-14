@@ -10,342 +10,479 @@ namespace Nominas
 {
     public class FormulasValores
     {
-        private string variable;
-        private List<Empleados.Core.Empleados> empleados;
+        private List<CalculoNomina.Core.Nomina> datosNomina;
+        private List<Empleados.Core.Empleados> datosEmpleados;
         private DateTime fechainicio, fechafin;
-        private int periodo;
-
-        public FormulasValores(string _dato, List<Empleados.Core.Empleados> _empleados)
+        private string formula;
+        
+        public FormulasValores(List<CalculoNomina.Core.Nomina> _datosNomina, DateTime _inicio, DateTime _fin)
         {
-            variable = _dato;
-            empleados = _empleados;
+            datosNomina = _datosNomina;
+            fechainicio = _inicio;
+            fechafin = _fin;
         }
 
-        public FormulasValores(string _dato, List<Empleados.Core.Empleados> _empleados, int _periodo)
+        public FormulasValores(string _formula, List<Empleados.Core.Empleados> _datosEmpleados, DateTime _inicio, DateTime _fin)
         {
-            variable = _dato;
-            empleados = _empleados;
-            periodo = _periodo;
+            datosEmpleados = _datosEmpleados;
+            fechainicio = _inicio;
+            fechafin = _fin;
+            formula = _formula;
         }
 
-        public FormulasValores(string _dato, List<Empleados.Core.Empleados> _empleados, DateTime _fechainicio, DateTime _fechafin, int _periodo)
+        public object calcularFormula()
         {
-            variable = _dato;
-            empleados = _empleados;
-            fechainicio = _fechainicio;
-            fechafin = _fechafin;
-            periodo = _periodo;
+            return evaluacionFormula(datosNomina[0].formula);
         }
 
-        public List<string> ObtenerValorVariable()
+        public object calcularFormulaExento()
         {
+            return evaluacionFormula(datosNomina[0].formulaexento);
+        }
+
+        public object calcularFormulaVacaciones()
+        {
+            return evaluacionFormulaVacaciones(formula);
+        }
+
+        public object calcularFormulaVacacionesExento()
+        {
+            return evaluacionFormulaVacaciones(formula);
+        }
+        
+        private object evaluacionFormula(string formula)
+        {
+            if (formula.Equals("0"))
+                return 0;
+
             string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
             SqlConnection cnx = new SqlConnection(cdn);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = cnx;
-            List<string> valores = new List<string>();
-            
-            switch(variable)
+
+            List<string> variables = new List<string>();
+            variables = GLOBALES.EXTRAEVARIABLES(formula, "[", "]");
+
+            object resultado;
+
+            for (int i = 0; i < variables.Count; i++)
             {
-                case "SueldoDiario":
-                    List<Empleados.Core.Empleados> lstEmpleado;
-                    Empleados.Core.EmpleadosHelper empleadohp = new Empleados.Core.EmpleadosHelper();
-                    empleadohp.Command = cmd;
-                    for (int i = 0; i < empleados.Count; i++)
-                    {
-                        Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
-                        empleado.idtrabajador = empleados[i].idtrabajador;
-                        cnx.Open();
-                        lstEmpleado = empleadohp.obtenerEmpleado(empleado);
-                        cnx.Close();
-                        valores.Add(lstEmpleado[0].sd.ToString());
-                    }
-                    cnx.Dispose();
-                    break;
-                case "SBC":
-                    Empleados.Core.EmpleadosHelper sbc = new Empleados.Core.EmpleadosHelper();
-                    sbc.Command = cmd;
-                    for (int i = 0; i < empleados.Count; i++)
-                    {
-                        Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
-                        empleado.idtrabajador = empleados[i].idtrabajador;
-                        cnx.Open();
-                        valores.Add(sbc.obtenerSalarioDiarioIntegrado(empleado).ToString());
-                        cnx.Close();
-                    }
-                    cnx.Dispose();
-                    break;
-                case "DiasDerechoV":
-                    Vacaciones.Core.VacacionesHelper vh = new Vacaciones.Core.VacacionesHelper();
-                    vh.Command = cmd;
-                    for (int i = 0; i < empleados.Count; i++)
-                    {
+                switch (variables[i])
+                {
+                    case "SueldoDiario":
+                        formula = formula.Replace("[" + variables[i] + "]", datosNomina[0].sd.ToString());
+                        break;
+
+                    case "SBC":
+                        formula = formula.Replace("[" + variables[i] + "]", datosNomina[0].sdi.ToString());
+                        break;
+
+                    case "DiasDerechoV":
+                        object dias;
+                        Vacaciones.Core.VacacionesHelper vh = new Vacaciones.Core.VacacionesHelper();
+                        vh.Command = cmd;
                         Vacaciones.Core.DiasDerecho diasDerecho = new Vacaciones.Core.DiasDerecho();
-                        diasDerecho.anio = empleados[i].antiguedadmod;
+                        diasDerecho.anio = datosNomina[0].antiguedadmod;
+
                         cnx.Open();
-                        valores.Add(vh.diasDerecho(diasDerecho).ToString());
+                        dias = vh.diasDerecho(diasDerecho).ToString();
                         cnx.Close();
-                    }
-                    cnx.Dispose();
-                    break;
-                case "SalarioMinimo":
-                    List<Salario.Core.Salarios> salarios = new List<Salario.Core.Salarios>();
-                    Salario.Core.SalariosHelper sh = new Salario.Core.SalariosHelper();
-                    sh.Command = cmd;
-                    for (int i = 0; i < empleados.Count; i++)
-                    {
-                        cnx.Open();
-                        salarios = sh.obtenerSalario(new DateTime(DateTime.Now.Year, 1, 1), empleados[i].idsalario);
-                        valores.Add(salarios[0].valor.ToString());
-                        cnx.Close();
-                    }
-                    cnx.Dispose();
-                    break;
-                case "Faltas":
-                    object noFaltas;
-                    Faltas.Core.FaltasHelper fh = new Faltas.Core.FaltasHelper();
-                    fh.Command = cmd;
-                    for (int i = 0; i < empleados.Count; i++)
-                    {
+
+                        formula = formula.Replace("[" + variables[i] + "]", dias.ToString());
+                        break;
+
+                    case "SalarioMinimo":
+                        formula = formula.Replace("[" + variables[i] + "]", datosNomina[0].salariominimo.ToString());
+                        break;
+
+                    case "Faltas":
+                        object noFaltas;
+                        Faltas.Core.FaltasHelper fh = new Faltas.Core.FaltasHelper();
+                        fh.Command = cmd;
                         Faltas.Core.Faltas falta = new Faltas.Core.Faltas();
-                        falta.idtrabajador = empleados[i].idtrabajador;
+                        falta.idtrabajador = datosNomina[0].idtrabajador;
                         falta.fechainicio = fechainicio;
                         falta.fechafin = fechafin;
+
                         cnx.Open();
                         noFaltas = fh.existeFalta(falta);
-                        valores.Add(noFaltas.ToString());
                         cnx.Close();
-                    }
-                    cnx.Dispose();
-                    break;
 
-                case "DiasLaborados":
-                    for (int i = 0; i < empleados.Count; i++)
-                    {
-                        if (periodo == 7)
-                            valores.Add((7).ToString());
-                        else if (periodo == 15)
-                            valores.Add((15).ToString());
-                    }
-                    break;
+                        formula = formula.Replace("[" + variables[i] + "]", noFaltas.ToString());
+                        break;
 
-                case "DiasIncapacidad":
-                    object diasIncapacidad;
-                    Incapacidad.Core.IncapacidadHelper ih = new Incapacidad.Core.IncapacidadHelper();
-                    ih.Command = cmd;
-                    for (int i = 0; i < empleados.Count; i++)
-                    {
+                    case "DiasLaborados":
+                        formula = formula.Replace("[" + variables[i] + "]", datosNomina[0].dias.ToString());
+                        break;
+
+                    case "DiasIncapacidad":
+                        object diasIncapacidad;
+                        Incapacidad.Core.IncapacidadHelper ih = new Incapacidad.Core.IncapacidadHelper();
+                        ih.Command = cmd;
                         Incapacidad.Core.Incapacidades inc = new Incapacidad.Core.Incapacidades();
-                        inc.idtrabajador = empleados[i].idtrabajador;
+                        inc.idtrabajador = datosNomina[0].idtrabajador;
                         inc.fechainicio = fechainicio;
                         inc.fechafin = fechafin;
+
                         cnx.Open();
                         diasIncapacidad = ih.existeIncapacidad(inc);
-                        valores.Add(diasIncapacidad.ToString());
                         cnx.Close();
-                    }
-                    cnx.Dispose();
-                break;
 
-                case "Infonavit":
-                    Infonavit.Core.InfonavitHelper infh = new Infonavit.Core.InfonavitHelper();
-                    infh.Command = cmd;
-                    List<Infonavit.Core.Infonavit> lstInfonavit = new List<Infonavit.Core.Infonavit>();
-                    List<string> variables = new List<string>();
-                    string formula = "";
-                    for (int i = 0; i < empleados.Count; i++)
-                    {
+                        formula = formula.Replace("[" + variables[i] + "]", diasIncapacidad.ToString());
+                        break;
+
+                    case "ISR":
+                        double excedente = 0, ImpMarginal = 0, isr = 0;
+                        List<TablaIsr.Core.TablaIsr> lstIsr = new List<TablaIsr.Core.TablaIsr>();
+                        TablaIsr.Core.IsrHelper isrh = new TablaIsr.Core.IsrHelper();
+                        isrh.Command = cmd;
+
+                        TablaIsr.Core.TablaIsr _isr = new TablaIsr.Core.TablaIsr();
+                        _isr.periodo = datosNomina[0].dias;
+                        _isr.inferior = datosNomina[0].sd * (double)datosNomina[0].dias;
+                       
+                        cnx.Open();
+                        lstIsr = isrh.isrCorrespondiente(_isr);
+                        cnx.Close();
+                        
+                        for (int j = 0; j < lstIsr.Count; j++)
+                        {
+                            excedente = (datosNomina[0].sd * (double)datosNomina[0].dias) - lstIsr[j].inferior;
+                            ImpMarginal = excedente * (lstIsr[j].porcentaje / 100);
+                            isr = ImpMarginal + lstIsr[j].cuota;
+                        }
+                        return isr;
+
+                    case "Infonavit":
+                        string formulaInfonavit = "";
+                        List<string> variablesInfonavit = new List<string>();
+
+                        Infonavit.Core.InfonavitHelper infh = new Infonavit.Core.InfonavitHelper();
+                        infh.Command = cmd;
+                        List<Infonavit.Core.Infonavit> lstInfonavit = new List<Infonavit.Core.Infonavit>();
+
                         Infonavit.Core.Infonavit inf = new Infonavit.Core.Infonavit();
-                        inf.idtrabajador = empleados[i].idtrabajador;
+                        inf.idtrabajador = datosNomina[0].idtrabajador;
+                        
                         cnx.Open();
                         lstInfonavit = infh.obtenerInfonavit(inf);
                         cnx.Close();
 
-                        if (!lstInfonavit.Count.Equals(0))
+                        Conceptos.Core.ConceptosHelper ch = new Conceptos.Core.ConceptosHelper();
+                        ch.Command = cmd;
+                        Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
+                        concepto.idempresa = GLOBALES.IDEMPRESA;
+
+                        if (lstInfonavit[0].descuento == GLOBALES.dPORCENTAJE)
+                            concepto.noconcepto = 10; //INFONAVIT PORCENTAJE
+
+                        if (lstInfonavit[0].descuento == GLOBALES.dVSMDF)
+                            concepto.noconcepto = 11; //INFONAVIT VSMDF
+
+                        if (lstInfonavit[0].descuento == GLOBALES.dPESOS)
+                            concepto.noconcepto = 12; //INFONAVIT FIJO
+                        
+                        cnx.Open();
+                        formulaInfonavit = ch.obtenerFormula(concepto).ToString();
+                        cnx.Close();
+
+                        return evaluacionFormula(formulaInfonavit);
+
+                    case "ValorInfonavit":
+                        object valorInfonavit;
+                        Infonavit.Core.InfonavitHelper vih = new Infonavit.Core.InfonavitHelper();
+                        vih.Command = cmd;
+                        
+                        Infonavit.Core.Infonavit infonavit = new Infonavit.Core.Infonavit();
+                        infonavit.idtrabajador = datosNomina[0].idtrabajador;
+                        
+                        cnx.Open();
+                        valorInfonavit = vih.obtenerValorInfonavit(infonavit);
+                        cnx.Close();
+
+                        formula = formula.Replace("[" + variables[i] + "]", valorInfonavit.ToString());
+                        break;
+                        
+                    case "DiasMes":
+                        int diasMes = 0;
+                        int mes = DateTime.Now.Month;
+                        switch (mes)
                         {
-                            Conceptos.Core.ConceptosHelper ch = new Conceptos.Core.ConceptosHelper();
-                            ch.Command = cmd;
-                            Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
-                            if (lstInfonavit[0].descuento == GLOBALES.dPORCENTAJE)
-                                concepto.noconcepto = 10; //INFONAVIT PORCENTAJE
-
-                            if (lstInfonavit[0].descuento == GLOBALES.dVSMDF)
-                                concepto.noconcepto = 11; //INFONAVIT VSMDF
-
-                            if (lstInfonavit[0].descuento == GLOBALES.dPESOS)
-                                concepto.noconcepto = 12; //INFONAVIT FIJO
-
-                            formula = ch.obtenerFormula(concepto).ToString();
-                            variables = GLOBALES.EXTRAEVARIABLES(formula, "[", "]");
-
-                            for (int j = 0; j < variables.Count; j++)
-                            {
-                                if (variables[i].Equals("ValorInfonavit"))
-                                    formula = formula.Replace("[" + variables[j] + "]", lstInfonavit[0].valordescuento.ToString());
-                                else
-                                    formula = formula.Replace("[" + variables[j] + "]", ObtenerValorVariable(variables[j], empleados[i].idtrabajador).ToString());
-                            }
-
-                            MathParserTK.MathParser parser = new MathParserTK.MathParser();
-                            valores.Add(parser.Parse(formula).ToString());
+                            case 1:
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 1) + DateTime.DaysInMonth(DateTime.Now.Year, 2);
+                                break;
+                            case 2:
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 1) + DateTime.DaysInMonth(DateTime.Now.Year, 2);
+                                break;
+                            case 3:
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 3) + DateTime.DaysInMonth(DateTime.Now.Year, 4);
+                                break;
+                            case 4:
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 3) + DateTime.DaysInMonth(DateTime.Now.Year, 4);
+                                break;
+                            case 5:
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 5) + DateTime.DaysInMonth(DateTime.Now.Year, 6);
+                                break;
+                            case 6:
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 5) + DateTime.DaysInMonth(DateTime.Now.Year, 6);
+                                break;
+                            case 7:
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 7) + DateTime.DaysInMonth(DateTime.Now.Year, 8);
+                                break;
+                            case 8:
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 7) + DateTime.DaysInMonth(DateTime.Now.Year, 8);
+                                break;
+                            case 9:
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 9) + DateTime.DaysInMonth(DateTime.Now.Year, 10);
+                                break;
+                            case 10:
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 9) + DateTime.DaysInMonth(DateTime.Now.Year, 10);
+                                break;
+                            case 11:
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 11) + DateTime.DaysInMonth(DateTime.Now.Year, 12);
+                                break;
+                            case 12:
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 11) + DateTime.DaysInMonth(DateTime.Now.Year, 12);
+                                break;
                         }
-                        else
-                        {
-                            valores.Add("0");
-                        }
-                    }
-                break;
+
+                        formula = formula.Replace("[" + variables[i] + "]", diasMes.ToString());
+                        break;
+                }
             }
-            return valores;
+            cnx.Dispose();
+            MathParserTK.MathParser parser = new MathParserTK.MathParser();
+            resultado = parser.Parse(formula.ToString());
+            return resultado;
         }
 
-        public object ObtenerValorVariable(string variable, int idempleado, int antiguedad = 0)
+        private object evaluacionFormulaVacaciones(string formula)
         {
             string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
             SqlConnection cnx = new SqlConnection(cdn);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = cnx;
-            object valor = null;
-            Empleados.Core.EmpleadosHelper empleadohp;
-            Empleados.Core.Empleados emp;
 
-            switch (variable)
+            List<string> variables = new List<string>();
+            variables = GLOBALES.EXTRAEVARIABLES(formula, "[", "]");
+
+            object resultado;
+
+            for (int i = 0; i < variables.Count; i++)
             {
-                case "SueldoDiario":
-                    List<Empleados.Core.Empleados> lstEmpleado;
-                    empleadohp = new Empleados.Core.EmpleadosHelper();
-                    empleadohp.Command = cmd;
-                    
-                    emp = new Empleados.Core.Empleados();
-                    emp.idtrabajador = idempleado;
-                    cnx.Open();
-                    lstEmpleado = empleadohp.obtenerEmpleado(emp);
-                    cnx.Close();
-                    valor = lstEmpleado[0].sd;
-                    
-                    cnx.Dispose();
-                    break;
+                switch (variables[i])
+                {
+                    case "SueldoDiario":
+                        formula = formula.Replace("[" + variables[i] + "]", datosEmpleados[0].sd.ToString());
+                        break;
 
-                case "SBC":
-                    empleadohp = new Empleados.Core.EmpleadosHelper();
-                    empleadohp.Command = cmd;
-                    emp = new Empleados.Core.Empleados();
-                    emp.idtrabajador = idempleado;
-                    cnx.Open();
-                    valor = empleadohp.obtenerSalarioDiarioIntegrado(emp).ToString();
-                    cnx.Close();
-                    cnx.Dispose();
-                    break;
+                    case "SBC":
+                        formula = formula.Replace("[" + variables[i] + "]", datosEmpleados[0].sdi.ToString());
+                        break;
 
-                case "DiasDerechoV":
-                    Vacaciones.Core.VacacionesHelper vh = new Vacaciones.Core.VacacionesHelper();
-                    vh.Command = cmd;
-                    for (int i = 0; i < empleados.Count; i++)
-                    {
+                    case "DiasDerechoV":
+                        object dias;
+                        Vacaciones.Core.VacacionesHelper vh = new Vacaciones.Core.VacacionesHelper();
+                        vh.Command = cmd;
                         Vacaciones.Core.DiasDerecho diasDerecho = new Vacaciones.Core.DiasDerecho();
-                        diasDerecho.anio = antiguedad;
+                        diasDerecho.anio = datosEmpleados[0].antiguedadmod;
+
                         cnx.Open();
-                        valor = vh.diasDerecho(diasDerecho).ToString();
+                        dias = vh.diasDerecho(diasDerecho).ToString();
                         cnx.Close();
-                    }
-                    cnx.Dispose();
-                    break;
 
-                case "SalarioMinimo":
-                    List<Salario.Core.Salarios> salarios = new List<Salario.Core.Salarios>();
-                    Salario.Core.SalariosHelper sh = new Salario.Core.SalariosHelper();
-                    sh.Command = cmd;
-                    cnx.Open();
-                    salarios = sh.obtenerSalario(new DateTime(DateTime.Now.Year, 1, 1), idempleado);
-                    valor = salarios[0].valor.ToString();
-                    cnx.Close();
-                    cnx.Dispose();
-                    break;
+                        formula = formula.Replace("[" + variables[i] + "]", dias.ToString());
+                        break;
 
-                case "Faltas":
-                    object noFaltas;
-                    Faltas.Core.FaltasHelper fh = new Faltas.Core.FaltasHelper();
-                    fh.Command = cmd;
-                    Faltas.Core.Faltas falta = new Faltas.Core.Faltas();
-                    falta.idtrabajador = idempleado;
-                    falta.fechainicio = fechainicio;
-                    falta.fechafin = fechafin;
-                    cnx.Open();
-                    noFaltas = fh.existeFalta(falta);
-                    valor = noFaltas.ToString();
-                    cnx.Close();
-                    cnx.Dispose();
-                    break;
+                    case "SalarioMinimo":
+                        object salarioValor;
+                        Salario.Core.SalariosHelper sh = new Salario.Core.SalariosHelper();
+                        sh.Command = cmd;
+                        Salario.Core.Salarios salario = new Salario.Core.Salarios();
+                        salario.idsalario = datosEmpleados[0].idsalario;
+                        cnx.Open();
+                        salarioValor = sh.obtenerSalarioValor(salario);
+                        cnx.Close();
+                        formula = formula.Replace("[" + variables[i] + "]", salarioValor.ToString());
+                        break;
 
-                case "DiasLaborados":
-                    for (int i = 0; i < empleados.Count; i++)
-                    {
-                        if (periodo == 7)
-                            valor = (7).ToString();
-                        else if (periodo == 15)
-                            valor = (15).ToString();
-                    }
-                    break;
+                    case "Faltas":
+                        object noFaltas;
+                        Faltas.Core.FaltasHelper fh = new Faltas.Core.FaltasHelper();
+                        fh.Command = cmd;
+                        Faltas.Core.Faltas falta = new Faltas.Core.Faltas();
+                        falta.idtrabajador = datosEmpleados[0].idtrabajador;
+                        falta.fechainicio = fechainicio;
+                        falta.fechafin = fechafin;
 
-                case "DiasIncapacidad":
-                    object diasIncapacidad;
-                    Incapacidad.Core.IncapacidadHelper ih = new Incapacidad.Core.IncapacidadHelper();
-                    ih.Command = cmd;
-                    Incapacidad.Core.Incapacidades inc = new Incapacidad.Core.Incapacidades();
-                    inc.idtrabajador = idempleado;
-                    inc.fechainicio = fechainicio;
-                    inc.fechafin = fechafin;
-                    cnx.Open();
-                    diasIncapacidad = ih.existeIncapacidad(inc);
-                    valor = diasIncapacidad.ToString();
-                    cnx.Close();
-                    cnx.Dispose();
-                    break;
+                        cnx.Open();
+                        noFaltas = fh.existeFalta(falta);
+                        cnx.Close();
 
-                case "DiasMes":
-                    int mes = DateTime.Now.Month;
-                    switch (mes)
-                    {
-                        case 1:
-                            valor = DateTime.DaysInMonth(DateTime.Now.Year, 1) + DateTime.DaysInMonth(DateTime.Now.Year, 2);
-                            break;
-                        case 2:
-                            valor = DateTime.DaysInMonth(DateTime.Now.Year, 1) + DateTime.DaysInMonth(DateTime.Now.Year, 2);
-                            break;
-                        case 3:
-                            valor = DateTime.DaysInMonth(DateTime.Now.Year, 3) + DateTime.DaysInMonth(DateTime.Now.Year, 4);
-                            break;
-                        case 4:
-                            valor = DateTime.DaysInMonth(DateTime.Now.Year, 3) + DateTime.DaysInMonth(DateTime.Now.Year, 4);
-                            break;
-                        case 5:
-                            valor = DateTime.DaysInMonth(DateTime.Now.Year, 5) + DateTime.DaysInMonth(DateTime.Now.Year, 6);
-                            break;
-                        case 6:
-                            valor = DateTime.DaysInMonth(DateTime.Now.Year, 5) + DateTime.DaysInMonth(DateTime.Now.Year, 6);
-                            break;
-                        case 7:
-                            valor = DateTime.DaysInMonth(DateTime.Now.Year, 7) + DateTime.DaysInMonth(DateTime.Now.Year, 8);
-                            break;
-                        case 8:
-                            valor = DateTime.DaysInMonth(DateTime.Now.Year, 7) + DateTime.DaysInMonth(DateTime.Now.Year, 8);
-                            break;
-                        case 9:
-                            valor = DateTime.DaysInMonth(DateTime.Now.Year, 9) + DateTime.DaysInMonth(DateTime.Now.Year, 10);
-                            break;
-                        case 10:
-                            valor = DateTime.DaysInMonth(DateTime.Now.Year, 9) + DateTime.DaysInMonth(DateTime.Now.Year, 10);
-                            break;
-                        case 11:
-                            valor = DateTime.DaysInMonth(DateTime.Now.Year, 11) + DateTime.DaysInMonth(DateTime.Now.Year, 12);
-                            break;
-                        case 12:
-                            valor = DateTime.DaysInMonth(DateTime.Now.Year, 11) + DateTime.DaysInMonth(DateTime.Now.Year, 12);
-                            break;
-                    }
-                    break;
+                        formula = formula.Replace("[" + variables[i] + "]", noFaltas.ToString());
+                        break;
+
+                    case "DiasLaborados":
+                        object diasLaborados;
+                        Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
+                        ph.Command = cmd;
+                        Periodos.Core.Periodos periodo = new Periodos.Core.Periodos();
+                        periodo.idperiodo = datosEmpleados[0].idperiodo;
+                        cnx.Open();
+                        diasLaborados = ph.DiasDePago(periodo);
+                        cnx.Close();
+
+                        formula = formula.Replace("[" + variables[i] + "]", diasLaborados.ToString());
+                        break;
+
+                    case "DiasIncapacidad":
+                        object diasIncapacidad;
+                        Incapacidad.Core.IncapacidadHelper ih = new Incapacidad.Core.IncapacidadHelper();
+                        ih.Command = cmd;
+                        Incapacidad.Core.Incapacidades inc = new Incapacidad.Core.Incapacidades();
+                        inc.idtrabajador = datosEmpleados[0].idtrabajador;
+                        inc.fechainicio = fechainicio;
+                        inc.fechafin = fechafin;
+
+                        cnx.Open();
+                        diasIncapacidad = ih.existeIncapacidad(inc);
+                        cnx.Close();
+
+                        formula = formula.Replace("[" + variables[i] + "]", diasIncapacidad.ToString());
+                        break;
+
+                    case "ISR":
+                        object diasLaboradosIsr;
+                        Periodos.Core.PeriodosHelper phi = new Periodos.Core.PeriodosHelper();
+                        phi.Command = cmd;
+                        Periodos.Core.Periodos periodoIsr = new Periodos.Core.Periodos();
+                        periodoIsr.idperiodo = datosEmpleados[0].idperiodo;
+                        cnx.Open();
+                        diasLaboradosIsr = phi.DiasDePago(periodoIsr);
+                        cnx.Close();
+
+                        double excedente = 0, ImpMarginal = 0, isr = 0;
+                        List<TablaIsr.Core.TablaIsr> lstIsr = new List<TablaIsr.Core.TablaIsr>();
+                        TablaIsr.Core.IsrHelper isrh = new TablaIsr.Core.IsrHelper();
+                        isrh.Command = cmd;
+
+                        TablaIsr.Core.TablaIsr _isr = new TablaIsr.Core.TablaIsr();
+                        _isr.periodo = (int)diasLaboradosIsr;
+                        _isr.inferior = datosEmpleados[0].sd * (double)diasLaboradosIsr;
+
+                        cnx.Open();
+                        lstIsr = isrh.isrCorrespondiente(_isr);
+                        cnx.Close();
+
+                        for (int j = 0; j < lstIsr.Count; j++)
+                        {
+                            excedente = (datosNomina[0].sd * (double)datosNomina[0].dias) - lstIsr[j].inferior;
+                            ImpMarginal = excedente * (lstIsr[j].porcentaje / 100);
+                            isr = ImpMarginal + lstIsr[j].cuota;
+                        }
+                        return isr;
+
+                    case "Infonavit":
+                        string formulaInfonavit = "";
+                        List<string> variablesInfonavit = new List<string>();
+
+                        Infonavit.Core.InfonavitHelper infh = new Infonavit.Core.InfonavitHelper();
+                        infh.Command = cmd;
+                        List<Infonavit.Core.Infonavit> lstInfonavit = new List<Infonavit.Core.Infonavit>();
+
+                        Infonavit.Core.Infonavit inf = new Infonavit.Core.Infonavit();
+                        inf.idtrabajador = datosNomina[0].idtrabajador;
+
+                        cnx.Open();
+                        lstInfonavit = infh.obtenerInfonavit(inf);
+                        cnx.Close();
+
+                        Conceptos.Core.ConceptosHelper ch = new Conceptos.Core.ConceptosHelper();
+                        ch.Command = cmd;
+                        Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
+                        concepto.idempresa = GLOBALES.IDEMPRESA;
+
+                        if (lstInfonavit[0].descuento == GLOBALES.dPORCENTAJE)
+                            concepto.noconcepto = 10; //INFONAVIT PORCENTAJE
+
+                        if (lstInfonavit[0].descuento == GLOBALES.dVSMDF)
+                            concepto.noconcepto = 11; //INFONAVIT VSMDF
+
+                        if (lstInfonavit[0].descuento == GLOBALES.dPESOS)
+                            concepto.noconcepto = 12; //INFONAVIT FIJO
+
+                        cnx.Open();
+                        formulaInfonavit = ch.obtenerFormula(concepto).ToString();
+                        cnx.Close();
+
+                        return evaluacionFormula(formulaInfonavit);
+
+                    case "ValorInfonavit":
+                        object valorInfonavit;
+                        Infonavit.Core.InfonavitHelper vih = new Infonavit.Core.InfonavitHelper();
+                        vih.Command = cmd;
+
+                        Infonavit.Core.Infonavit infonavit = new Infonavit.Core.Infonavit();
+                        infonavit.idtrabajador = datosNomina[0].idtrabajador;
+
+                        cnx.Open();
+                        valorInfonavit = vih.obtenerValorInfonavit(infonavit);
+                        cnx.Close();
+
+                        formula = formula.Replace("[" + variables[i] + "]", valorInfonavit.ToString());
+                        break;
+
+                    case "DiasMes":
+                        int diasMes = 0;
+                        int mes = DateTime.Now.Month;
+                        switch (mes)
+                        {
+                            case 1:
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 1) + DateTime.DaysInMonth(DateTime.Now.Year, 2);
+                                break;
+                            case 2:
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 1) + DateTime.DaysInMonth(DateTime.Now.Year, 2);
+                                break;
+                            case 3:
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 3) + DateTime.DaysInMonth(DateTime.Now.Year, 4);
+                                break;
+                            case 4:
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 3) + DateTime.DaysInMonth(DateTime.Now.Year, 4);
+                                break;
+                            case 5:
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 5) + DateTime.DaysInMonth(DateTime.Now.Year, 6);
+                                break;
+                            case 6:
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 5) + DateTime.DaysInMonth(DateTime.Now.Year, 6);
+                                break;
+                            case 7:
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 7) + DateTime.DaysInMonth(DateTime.Now.Year, 8);
+                                break;
+                            case 8:
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 7) + DateTime.DaysInMonth(DateTime.Now.Year, 8);
+                                break;
+                            case 9:
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 9) + DateTime.DaysInMonth(DateTime.Now.Year, 10);
+                                break;
+                            case 10:
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 9) + DateTime.DaysInMonth(DateTime.Now.Year, 10);
+                                break;
+                            case 11:
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 11) + DateTime.DaysInMonth(DateTime.Now.Year, 12);
+                                break;
+                            case 12:
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 11) + DateTime.DaysInMonth(DateTime.Now.Year, 12);
+                                break;
+                        }
+
+                        formula = formula.Replace("[" + variables[i] + "]", diasMes.ToString());
+                        break;
+                }
             }
-            return valor;
+            cnx.Dispose();
+            MathParserTK.MathParser parser = new MathParserTK.MathParser();
+            resultado = parser.Parse(formula.ToString());
+            return resultado;
         }
     }
 }

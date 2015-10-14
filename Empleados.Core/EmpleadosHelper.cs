@@ -120,7 +120,8 @@ namespace Empleados.Core
         public List<Empleados> obtenerAntiguedades(string noempleados)
         {
             string[] noEmp = noempleados.Split(',');
-            string commandText = "select idtrabajador, idsalario, idperiodo, antiguedadmod, sd, fechaantiguedad, sueldo from trabajadores where noempleado in ({0})";
+            string commandText = "select idtrabajador, idsalario, idperiodo, antiguedadmod, sdi, sd, fechaantiguedad, sueldo from trabajadores " +
+                    "where noempleado in ({0})";
             string[] paramNombre = noEmp.Select((s, i) => "@noempleado" + i.ToString()).ToArray();
             string inClausula = string.Join(",", paramNombre);
 
@@ -143,6 +144,7 @@ namespace Empleados.Core
                 empleado.idsalario = int.Parse(dtEmpleados.Rows[i]["idsalario"].ToString());
                 empleado.idperiodo = int.Parse(dtEmpleados.Rows[i]["idperiodo"].ToString());
                 empleado.antiguedadmod = int.Parse(dtEmpleados.Rows[i]["antiguedadmod"].ToString());
+                empleado.sdi = double.Parse(dtEmpleados.Rows[i]["sdi"].ToString());
                 empleado.sd = double.Parse(dtEmpleados.Rows[i]["sd"].ToString());
                 empleado.sueldo = double.Parse(dtEmpleados.Rows[i]["sueldo"].ToString());
                 empleado.fechaantiguedad = DateTime.Parse(dtEmpleados.Rows[i]["fechaantiguedad"].ToString());

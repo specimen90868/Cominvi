@@ -194,5 +194,33 @@ namespace Nominas
             txtBuscar.Font = new Font("Segoe UI", 9, FontStyle.Italic);
             txtBuscar.ForeColor = System.Drawing.Color.Gray;
         }
+
+        private void toolEliminar_Click(object sender, EventArgs e)
+        {
+            int fila = 0;
+
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            fh = new Faltas.Core.FaltasHelper();
+            fh.Command = cmd;
+
+            Faltas.Core.Faltas falta = new Faltas.Core.Faltas();
+            falta.id = int.Parse(dgvFaltas.Rows[fila].Cells[0].Value.ToString());
+
+            try
+            {
+                cnx.Open();
+                fh.eliminaFalta(falta);
+                cnx.Close();
+                cnx.Dispose();
+            }
+            catch (Exception error) 
+            {
+                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+            }
+            ListaFaltas();
+        }
     }
 }

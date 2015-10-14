@@ -482,9 +482,9 @@ namespace Nominas
 
         private void cálculoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmListaCalculoNomina lcn = new frmListaCalculoNomina();
-            lcn.MdiParent = this;
-            lcn.Show();
+            frmSeleccionPeriodo sp = new frmSeleccionPeriodo();
+            sp.MdiParent = this;
+            sp.Show();
         }
       
     }

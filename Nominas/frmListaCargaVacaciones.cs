@@ -60,7 +60,7 @@ namespace Nominas
                             cmd.Connection = con;
                             con.Open();
                             DataTable dtExcelSchema = con.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                            sheetName = dtExcelSchema.Rows[5]["TABLE_NAME"].ToString();
+                            sheetName = dtExcelSchema.Rows[6]["TABLE_NAME"].ToString();
                             con.Close();
                         }
                     }
@@ -231,26 +231,11 @@ namespace Nominas
 
             #region LISTAS
             List<Empleados.Core.Empleados> lstDatosEmpleado;
-            List<string> variables;
-            List<string> formulas;
-            List<string> valores;
-            List<string> primaVacacional;
-            List<string> exento;
-            List<string> pGravada;
-            List<string> isr;
-            List<string> diasDerecho;
-            List<string> tPrima;
-            List<string> diasAPagar;
-            List<string> vacaciones;
             #endregion
 
             #region CALCULO DE PRIMA VACACIONAL
             if (seCalculaPrima)
             {
-                double primaGravada = 0, excedente = 0, ImpMarginal = 0, isrDefinitivo = 0;
-                double isr1 = 0, isr2 = 0, valor1 = 0, valor2 = 0, valor3 = 0, valor4 = 0;
-                int diasPeriodo = 0;
-
                 #region DATOS DEL EMPLEADO
                 emph = new Empleados.Core.EmpleadosHelper();
                 emph.Command = cmd;
@@ -270,273 +255,101 @@ namespace Nominas
                 catch (Exception error)
                 {
                     MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-                    this.Dispose();
                 }
                 #endregion
 
-                #region DIAS DERECHO
-                diasDerecho = new List<string>();
-                vh = new Vacaciones.Core.VacacionesHelper();
-                vh.Command = cmd;
+                #region CALCULO PRIMA VACACIONAL
+                ch = new Conceptos.Core.ConceptosHelper();
+                ch.Command = cmd;
+                Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
+                concepto.idempresa = GLOBALES.IDEMPRESA;
+                concepto.noconcepto = 4; //PRIMA VACACIONAL
+                string formulaPrimaVacacional = "";
+                string formulaExentoPrimaVacacional = "";
+                double exento = 0;
+                try
+                {
+                    cnx.Open();
+                    formulaPrimaVacacional = (string)ch.obtenerFormula(concepto);
+                    formulaExentoPrimaVacacional = (string)ch.obtenerFormulaExento(concepto);
+                    cnx.Close();
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                }
+
+                List<Empleados.Core.Empleados> lstEmpleado;
+                List<Vacaciones.Core.Vacaciones> lstPrimaVacacional = new List<Vacaciones.Core.Vacaciones>();
                 for (int i = 0; i < lstDatosEmpleado.Count; i++)
                 {
+                    lstEmpleado = new List<Empleados.Core.Empleados>();
+                    Empleados.Core.Empleados emp = new Empleados.Core.Empleados();
+                    emp.idtrabajador = lstDatosEmpleado[i].idtrabajador;
+                    emp.idsalario = lstDatosEmpleado[i].idsalario;
+                    emp.idperiodo = lstDatosEmpleado[i].idperiodo;
+                    emp.antiguedadmod = lstDatosEmpleado[i].antiguedadmod;
+                    emp.sdi = lstDatosEmpleado[i].sdi;
+                    emp.sd = lstDatosEmpleado[i].sd;
+                    emp.fechaantiguedad = lstDatosEmpleado[i].fechaantiguedad;
+                    emp.sueldo = lstDatosEmpleado[i].sueldo;
+                    lstEmpleado.Add(emp);
+
+                    Vacaciones.Core.Vacaciones prima = new Vacaciones.Core.Vacaciones();
+                    prima.idtrabajador = lstDatosEmpleado[i].idtrabajador;
+                    prima.idempresa = GLOBALES.IDEMPRESA;
+                    prima.fechaingreso = lstDatosEmpleado[i].fechaantiguedad;
+                    prima.inicio = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["inicioperiodo"].Value.ToString());
+                    prima.fin = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["finperiodo"].Value.ToString());
+                    prima.sd = lstDatosEmpleado[i].sd;
+                    prima.diasapagar = 0;
+                    prima.diaspendientes = 0;
+                    prima.pagovacaciones = 0;
+                    prima.fechapago = DateTime.Now;
+                    prima.pagada = false;
+                    prima.pvpagada = false;
+
+                    vh = new Vacaciones.Core.VacacionesHelper();
+                    vh.Command = cmd;
                     Vacaciones.Core.DiasDerecho dias = new Vacaciones.Core.DiasDerecho();
                     dias.anio = lstDatosEmpleado[i].antiguedadmod;
                     try
                     {
                         cnx.Open();
-                        diasDerecho.Add(vh.diasDerecho(dias).ToString());
+                        prima.diasderecho = (int)vh.diasDerecho(dias);
                         cnx.Close();
                     }
                     catch (Exception error)
                     {
                         MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
                     }
-                }
-                #endregion
 
-                #region FORMULA DE PRIMA VACACIONAL Y ASIGNACION POR EMPLEADO
-                ch = new Conceptos.Core.ConceptosHelper();
-                ch.Command = cmd;
-                Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
-                concepto.noconcepto = 4; //PRIMA VACACIONAL          
-                string formulaPrimaVacacional = "";
-                variables = new List<string>();
-                formulas = new List<string>();
-                try
-                {
-                    cnx.Open();
-                    formulaPrimaVacacional = (string)ch.obtenerFormula(concepto);
-                    cnx.Close();
-                    variables = GLOBALES.EXTRAEVARIABLES(formulaPrimaVacacional, "[", "]");
-                }
-                catch (Exception error)
-                {
-                    MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-                }
+                    FormulasValores f = new FormulasValores(formulaPrimaVacacional, lstEmpleado, DateTime.Now, DateTime.Now);
+                    prima.pv = (double)f.calcularFormulaVacaciones();
 
-                for (int i = 0; i < dgvCargaVacaciones.Rows.Count; i++)
-                {
-                    if ((bool)dgvCargaVacaciones.Rows[i].Cells["prima"].Value)
-                        formulas.Add(formulaPrimaVacacional);
-                }
-                #endregion
+                    f = new FormulasValores(formulaExentoPrimaVacacional, lstEmpleado, DateTime.Now, DateTime.Now);
+                    exento = (double)f.calcularFormulaVacacionesExento();
 
-                #region CALCULO DE LA FORMULA DE PRIMA VACACIONAL
-                valores = new List<string>();
-                primaVacacional = new List<string>();
-                for (int i = 0; i < variables.Count; i++)
-                {
-                    FormulasValores f = new FormulasValores(variables[i], lstDatosEmpleado);
-                    valores = f.ObtenerValorVariable();
-                    for (int j = 0; j < valores.Count; j++)
+                    if (prima.pv > exento)
                     {
-                        formulas[j] = formulas[j].Replace("[" + variables[i] + "]", valores[j]);
-                    }
-                }
-
-                for (int i = 0; i < formulas.Count; i++)
-                {
-                    MathParserTK.MathParser parser = new MathParserTK.MathParser();
-                    primaVacacional.Add(parser.Parse(formulas[i]).ToString());
-                }
-                #endregion
-
-                #region CALCULO DE LA FORMULA PRIMA VACACIONAL EXENTO
-                string formulaPrimaVacacionalExento = "";
-                formulas = new List<string>();
-                variables = new List<string>();
-                exento = new List<string>();
-                try
-                {
-                    cnx.Open();
-                    formulaPrimaVacacionalExento = (string)ch.obtenerFormulaExento(concepto);
-                    cnx.Close();
-                    variables = GLOBALES.EXTRAEVARIABLES(formulaPrimaVacacionalExento, "[", "]");
-                }
-                catch (Exception error)
-                {
-                    MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-                }
-
-                for (int i = 0; i < dgvCargaVacaciones.Rows.Count; i++)
-                {
-                    if ((bool)dgvCargaVacaciones.Rows[i].Cells["prima"].Value)
-                        formulas.Add(formulaPrimaVacacionalExento);
-                }
-
-                for (int i = 0; i < variables.Count; i++)
-                {
-                    FormulasValores f = new FormulasValores(variables[i], lstDatosEmpleado);
-                    valores = f.ObtenerValorVariable();
-                    for (int j = 0; j < valores.Count; j++)
-                    {
-                        formulas[j] = formulas[j].Replace("[" + variables[i] + "]", valores[j]);
-                    }
-                }
-
-                for (int i = 0; i < formulas.Count; i++)
-                {
-                    MathParserTK.MathParser parser = new MathParserTK.MathParser();
-                    exento.Add(parser.Parse(formulas[i]).ToString());
-                }
-                #endregion
-
-                #region PV EXENTA
-                pGravada = new List<string>();
-                for (int i = 0; i < primaVacacional.Count; i++)
-                {
-                    if (double.Parse(primaVacacional[i]) > double.Parse(exento[i]))
-                        primaGravada = double.Parse(primaVacacional[i]) - double.Parse(exento[i]);
-                    else
-                        primaGravada = 0;
-                    pGravada.Add(primaGravada.ToString());
-                }
-                #endregion
-
-                #region PV GRAVADA
-                ih = new TablaIsr.Core.IsrHelper();
-                ph = new Periodos.Core.PeriodosHelper();
-                ih.Command = cmd;
-                ph.Command = cmd;
-                List<TablaIsr.Core.TablaIsr> lstIsr1;
-                List<TablaIsr.Core.TablaIsr> lstIsr2;
-                isr = new List<string>();
-                for (int i = 0; i < pGravada.Count; i++)
-                {
-                    if (!double.Parse(pGravada[i]).Equals(0))
-                    {
-                        TablaIsr.Core.TablaIsr tablaIsr = new TablaIsr.Core.TablaIsr();
-                        Periodos.Core.Periodos periodo = new Periodos.Core.Periodos();
-                        periodo.idperiodo = lstDatosEmpleado[i].idperiodo;
-                        try
-                        {
-                            cnx.Open();
-                            diasPeriodo = (int)ph.DiasDePago(periodo);
-                            cnx.Close();
-                        }
-                        catch (Exception error)
-                        { MessageBox.Show("Error (Periodo): \r\n \r\n" + error.Message, "Error"); cnx.Dispose(); this.Dispose(); }
-
-                        valor1 = ((double.Parse(pGravada[i]) / lstDatosEmpleado[i].sd) * 30.4) +
-                            ((new DateTime(DateTime.Now.Year, 12, 31) - new DateTime(DateTime.Now.Year, 1, 1)).TotalDays * 30);
-                        tablaIsr.periodo = diasPeriodo;
-                        tablaIsr.inferior = valor1;
-                        try
-                        {
-                            cnx.Open();
-                            lstIsr1 = ih.isrCorrespondiente(tablaIsr);
-                            excedente = valor1 - lstIsr1[0].inferior;
-                            ImpMarginal = excedente * (lstIsr1[0].porcentaje / 100);
-                            isr1 = ImpMarginal + lstIsr1[0].cuota;
-                            cnx.Close();
-                        }
-                        catch (Exception error)
-                        { MessageBox.Show("Error (Isr): \r\n \r\n" + error.Message, "Error"); cnx.Dispose(); this.Dispose(); }
-
-                        tablaIsr = new TablaIsr.Core.TablaIsr();
-                        valor2 = ((new DateTime(DateTime.Now.Year, 12, 31) - new DateTime(DateTime.Now.Year, 1, 1)).TotalDays * 30);
-                        tablaIsr.periodo = diasPeriodo;
-                        tablaIsr.inferior = valor2;
-
-                        try
-                        {
-                            cnx.Open();
-                            lstIsr2 = ih.isrCorrespondiente(tablaIsr);
-                            cnx.Close();
-                            excedente = valor2 - lstIsr2[0].inferior;
-                            ImpMarginal = excedente * (lstIsr2[0].porcentaje / 100);
-                            isr2 = ImpMarginal + lstIsr2[0].cuota;
-                        }
-                        catch (Exception error)
-                        { MessageBox.Show("Error (Isr): \r\n \r\n" + error.Message, "Error"); cnx.Dispose(); this.Dispose(); }
-
-                        valor3 = isr1 - isr2;
-                        valor4 = valor3 / ((double.Parse(pGravada[i]) / lstDatosEmpleado[i].sd) * 30.4);
-                        isrDefinitivo = valor4 * double.Parse(pGravada[i]);
+                        prima.pexenta = exento;
+                        prima.pgravada = prima.pv - exento;
                     }
                     else
                     {
-                        isrDefinitivo = 0;
+                        prima.pexenta = prima.pv;
+                        prima.pgravada = 0;
                     }
-                    isr.Add(isrDefinitivo.ToString());
-                }
-                #endregion
 
-                #region PAGO DE PRIMA
-                tPrima = new List<string>();
-                for (int i = 0; i < lstDatosEmpleado.Count; i++)
-                {
-                    tPrima.Add((double.Parse(primaVacacional[i]) - double.Parse(isr[i])).ToString());
+                    prima.isrgravada = isr(prima.pgravada, lstDatosEmpleado[i].idperiodo, lstDatosEmpleado[i].sd);
+                    prima.totalprima = prima.pv - prima.isrgravada;
+                    prima.total = prima.pv - prima.isrgravada;
+                    lstPrimaVacacional.Add(prima);
                 }
-                #endregion
+                
+                #endregion  
 
-                #region DATATABLE BULK PRIMA VACACIONAL
-                bulk = new SqlBulkCopy(cnx);
-                vh.bulkCommand = bulk;
-
-                DataTable dt = new DataTable();
-                DataRow dtFila;
-                dt.Columns.Add("id", typeof(Int32));
-                dt.Columns.Add("idtrabajador", typeof(Int32));
-                dt.Columns.Add("idempresa", typeof(Int32));
-                dt.Columns.Add("fechaingreso", typeof(DateTime));
-                dt.Columns.Add("inicio", typeof(DateTime));
-                dt.Columns.Add("fin", typeof(DateTime));
-                dt.Columns.Add("sd", typeof(Double));
-                dt.Columns.Add("diasderecho", typeof(Int32));
-                dt.Columns.Add("diasapagar", typeof(Int32));
-                dt.Columns.Add("diaspendientes", typeof(Int32));
-                dt.Columns.Add("pv", typeof(Double));
-                dt.Columns.Add("pexenta", typeof(Double));
-                dt.Columns.Add("pgravada", typeof(Double));
-                dt.Columns.Add("isrgravada", typeof(Double));
-                dt.Columns.Add("pagovacaciones", typeof(Double));
-                dt.Columns.Add("totalprima", typeof(Double));
-                dt.Columns.Add("total", typeof(Double));
-                dt.Columns.Add("fechapago", typeof(DateTime));
-                dt.Columns.Add("pagada", typeof(Boolean));
-                dt.Columns.Add("pvpagada", typeof(Boolean));
-                int index = 1;
-                for (int i = 0; i < lstDatosEmpleado.Count; i++)
-                {
-                    dtFila = dt.NewRow();
-                    dtFila["id"] = index;
-                    dtFila["idtrabajador"] = lstDatosEmpleado[i].idtrabajador;
-                    dtFila["idempresa"] = idEmpresa;
-                    dtFila["fechaingreso"] = lstDatosEmpleado[i].fechaantiguedad;
-                    dtFila["inicio"] = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["inicioperiodo"].Value.ToString());
-                    dtFila["fin"] = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["finperiodo"].Value.ToString());
-                    dtFila["sd"] = lstDatosEmpleado[i].sd;
-                    dtFila["diasderecho"] = int.Parse(diasDerecho[i]);
-                    dtFila["diasapagar"] = 0;
-                    dtFila["diaspendientes"] = 0;
-                    dtFila["pv"] = double.Parse(primaVacacional[i]);
-                    dtFila["pexenta"] = double.Parse(exento[i]);
-                    dtFila["pgravada"] = double.Parse(pGravada[i]);
-                    dtFila["isrgravada"] = double.Parse(isr[i]);
-                    dtFila["pagovacaciones"] = 0;
-                    dtFila["totalprima"] = double.Parse(tPrima[i]);
-                    dtFila["total"] = double.Parse(tPrima[i]);
-                    dtFila["fechapago"] = DateTime.Now;
-                    dtFila["pagada"] = 0;
-                    dtFila["pvpagada"] = 0;
-                    dt.Rows.Add(dtFila);
-                    index++;
-                }
-
-                try
-                {
-                    cnx.Open();
-                    vh.bulkVacaciones(dt, "tmpPagoVacaciones");
-                    cnx.Close();
-                    MessageBox.Show("Prima vacacional aplicada.", "Confirmación");
-                }
-                catch (Exception error)
-                {
-                    MessageBox.Show("Error (DataTable): \r\n \r\n" + error.Message, "Error");
-                }
-                #endregion
+                bulkVacaciones(lstPrimaVacacional);
             }
             #endregion
 
@@ -567,116 +380,204 @@ namespace Nominas
                 }
                 #endregion
 
-                #region DIAS DERECHO
-                diasDerecho = new List<string>();
-                vh = new Vacaciones.Core.VacacionesHelper();
-                vh.Command = cmd;
-                for (int i = 0; i < lstDatosEmpleado.Count; i++)
-                {
-                    Vacaciones.Core.DiasDerecho dias = new Vacaciones.Core.DiasDerecho();
-                    dias.anio = lstDatosEmpleado[i].antiguedadmod;
-                    try
-                    {
-                        cnx.Open();
-                        diasDerecho.Add(vh.diasDerecho(dias).ToString());
-                        cnx.Close();
-                    }
-                    catch (Exception error)
-                    {
-                        MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-                    }
-                }
-                #endregion
-
-                #region DIAS A PAGAR DATAGRID
-                diasAPagar = new List<string>();
+                #region CALCULO DE VACACIONES
+                List<Vacaciones.Core.Vacaciones> lstVacaciones = new List<Vacaciones.Core.Vacaciones>();
+                int i = 0;
                 foreach (DataGridViewRow fila in dgvCargaVacaciones.Rows)
                 {
                     if ((bool)fila.Cells["vacaciones"].Value)
-                        diasAPagar.Add(fila.Cells["diaspago"].Value.ToString());
+                    {
+                        Vacaciones.Core.Vacaciones vacacion = new Vacaciones.Core.Vacaciones();
+                        vacacion.idtrabajador = lstDatosEmpleado[i].idtrabajador;
+                        vacacion.idempresa = GLOBALES.IDEMPRESA;
+                        vacacion.fechaingreso = lstDatosEmpleado[i].fechaantiguedad;
+                        vacacion.inicio = DateTime.Parse(fila.Cells["inicioperiodo"].Value.ToString());
+                        vacacion.fin = DateTime.Parse(fila.Cells["finperiodo"].Value.ToString());
+                        vacacion.sd = lstDatosEmpleado[i].sd;
+                        vacacion.diasapagar = int.Parse(fila.Cells["diaspago"].Value.ToString());
+                        
+                        vh = new Vacaciones.Core.VacacionesHelper();
+                        vh.Command = cmd;
+                        Vacaciones.Core.DiasDerecho dias = new Vacaciones.Core.DiasDerecho();
+                        dias.anio = lstDatosEmpleado[i].antiguedadmod;
+                        try
+                        {
+                            cnx.Open();
+                            vacacion.diasderecho = (int)vh.diasDerecho(dias);
+                            cnx.Close();
+                        }
+                        catch (Exception error)
+                        {
+                            MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                        }
+
+                        vacacion.diaspendientes = vacacion.diasderecho - vacacion.diasapagar;
+                        vacacion.pv = 0;
+                        vacacion.pexenta = 0;
+                        vacacion.pgravada = 0;
+                        vacacion.isrgravada = 0;
+                        vacacion.pagovacaciones = lstDatosEmpleado[i].sd * int.Parse(fila.Cells["diaspago"].Value.ToString());
+                        vacacion.totalprima = 0;
+                        vacacion.total = lstDatosEmpleado[i].sd * int.Parse(fila.Cells["diaspago"].Value.ToString());
+                        vacacion.fechapago = DateTime.Now;
+                        vacacion.pagada = false;
+                        vacacion.pvpagada = false;
+                        lstVacaciones.Add(vacacion);
+                        i++;
+                    }
                 }
                 #endregion
 
-                #region CALCULO DE VACACIONES A PAGAR
-                vacaciones = new List<string>();
-                for (int i = 0; i < lstDatosEmpleado.Count; i++)
-                {
-                    vacaciones.Add((lstDatosEmpleado[i].sd * double.Parse(diasAPagar[i])).ToString());
-                }
-                #endregion
-
-                #region DATATABLE BULK VACACIONES
-                bulk = new SqlBulkCopy(cnx);
-                vh.bulkCommand = bulk;
-
-                DataTable dt = new DataTable();
-                DataRow dtFila;
-                dt.Columns.Add("id", typeof(Int32));
-                dt.Columns.Add("idtrabajador", typeof(Int32));
-                dt.Columns.Add("idempresa", typeof(Int32));
-                dt.Columns.Add("fechaingreso", typeof(DateTime));
-                dt.Columns.Add("inicio", typeof(DateTime));
-                dt.Columns.Add("fin", typeof(DateTime));
-                dt.Columns.Add("sd", typeof(Double));
-                dt.Columns.Add("diasderecho", typeof(Int32));
-                dt.Columns.Add("diasapagar", typeof(Int32));
-                dt.Columns.Add("diaspendientes", typeof(Int32));
-                dt.Columns.Add("pv", typeof(Double));
-                dt.Columns.Add("pgravada", typeof(Double));
-                dt.Columns.Add("isrgravada", typeof(Double));
-                dt.Columns.Add("pagovacaciones", typeof(Double));
-                dt.Columns.Add("totalprima", typeof(Double));
-                dt.Columns.Add("total", typeof(Double));
-                dt.Columns.Add("fechapago", typeof(DateTime));
-                dt.Columns.Add("pagada", typeof(Boolean));
-                dt.Columns.Add("pvpagada", typeof(Boolean));
-                int index = 1;
-                for (int i = 0; i < lstDatosEmpleado.Count; i++)
-                {
-                    dtFila = dt.NewRow();
-                    dtFila["id"] = index;
-                    dtFila["idtrabajador"] = lstDatosEmpleado[i].idtrabajador;
-                    dtFila["idempresa"] = idEmpresa;
-                    dtFila["fechaingreso"] = lstDatosEmpleado[i].fechaantiguedad;
-                    dtFila["inicio"] = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["inicioperiodo"].Value.ToString());
-                    dtFila["fin"] = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["finperiodo"].Value.ToString());
-                    dtFila["sd"] = lstDatosEmpleado[i].sd;
-                    dtFila["diasderecho"] = int.Parse(diasDerecho[i]);
-                    dtFila["diasapagar"] = int.Parse(diasAPagar[i]);
-                    dtFila["diaspendientes"] = int.Parse(diasDerecho[i]) - int.Parse(diasAPagar[i]);
-                    dtFila["pv"] = 0;
-                    dtFila["pgravada"] = 0;
-                    dtFila["isrgravada"] = 0;
-                    dtFila["pagovacaciones"] = double.Parse(vacaciones[i]);
-                    dtFila["totalprima"] = 0;
-                    dtFila["total"] = double.Parse(vacaciones[i]);
-                    dtFila["fechapago"] = DateTime.Now;
-                    dtFila["pagada"] = 0;
-                    dtFila["pvpagada"] = 0;
-                    dt.Rows.Add(dtFila);
-                    index++;
-                }
-
-                try
-                {
-                    cnx.Open();
-                    vh.bulkVacaciones(dt, "tmpPagoVacaciones");
-                    vh.stpVacaciones();
-                    cnx.Close();
-                    cnx.Dispose();
-                }
-                catch (Exception error)
-                {
-                    MessageBox.Show("Error (DataTable): \r\n \r\n" + error.Message, "Error");
-                }
-                #endregion
+                bulkVacaciones(lstVacaciones);
             }
             #endregion
+
+            cnx.Dispose();
         }
 
         private void workVacaciones_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             MessageBox.Show("Vacación aplicada.", "Confirmación");
+        }
+
+        private double isr(double pgravada, int idperiodo, double sd)
+        {
+            double excedente = 0, ImpMarginal = 0, isrDefinitivo = 0;
+            double isr1 = 0, isr2 = 0, valor1 = 0, valor2 = 0, valor3 = 0, valor4 = 0;
+            int diasPeriodo = 0;
+
+            ih = new TablaIsr.Core.IsrHelper();
+            ph = new Periodos.Core.PeriodosHelper();
+            ih.Command = cmd;
+            ph.Command = cmd;
+            List<TablaIsr.Core.TablaIsr> lstIsr1;
+            List<TablaIsr.Core.TablaIsr> lstIsr2;
+            
+            if (!pgravada.Equals(0))
+            {
+                TablaIsr.Core.TablaIsr tablaIsr = new TablaIsr.Core.TablaIsr();
+                Periodos.Core.Periodos periodo = new Periodos.Core.Periodos();
+                periodo.idperiodo = idperiodo;
+                try
+                {
+                    cnx.Open();
+                    diasPeriodo = (int)ph.DiasDePago(periodo);
+                    cnx.Close();
+                }
+                catch (Exception error)
+                { MessageBox.Show("Error (Periodo): \r\n \r\n" + error.Message, "Error"); cnx.Dispose(); this.Dispose(); }
+
+                valor1 = ((pgravada / sd) * 30.4) +
+                    ((new DateTime(DateTime.Now.Year, 12, 31) - new DateTime(DateTime.Now.Year, 1, 1)).TotalDays * 30);
+                tablaIsr.periodo = diasPeriodo;
+                tablaIsr.inferior = valor1;
+                try
+                {
+                    cnx.Open();
+                    lstIsr1 = ih.isrCorrespondiente(tablaIsr);
+                    excedente = valor1 - lstIsr1[0].inferior;
+                    ImpMarginal = excedente * (lstIsr1[0].porcentaje / 100);
+                    isr1 = ImpMarginal + lstIsr1[0].cuota;
+                    cnx.Close();
+                }
+                catch (Exception error)
+                { MessageBox.Show("Error (Isr): \r\n \r\n" + error.Message, "Error"); cnx.Dispose(); this.Dispose(); }
+
+                tablaIsr = new TablaIsr.Core.TablaIsr();
+                valor2 = ((new DateTime(DateTime.Now.Year, 12, 31) - new DateTime(DateTime.Now.Year, 1, 1)).TotalDays * 30);
+                tablaIsr.periodo = diasPeriodo;
+                tablaIsr.inferior = valor2;
+
+                try
+                {
+                    cnx.Open();
+                    lstIsr2 = ih.isrCorrespondiente(tablaIsr);
+                    cnx.Close();
+                    excedente = valor2 - lstIsr2[0].inferior;
+                    ImpMarginal = excedente * (lstIsr2[0].porcentaje / 100);
+                    isr2 = ImpMarginal + lstIsr2[0].cuota;
+                }
+                catch (Exception error)
+                { MessageBox.Show("Error (Isr): \r\n \r\n" + error.Message, "Error"); cnx.Dispose(); this.Dispose(); }
+
+                valor3 = isr1 - isr2;
+                valor4 = valor3 / ((pgravada / sd) * 30.4);
+                isrDefinitivo = valor4 * pgravada;
+            }
+            else
+            {
+                isrDefinitivo = 0;
+            }
+            
+            return isrDefinitivo;
+        }
+
+        private void bulkVacaciones(List<Vacaciones.Core.Vacaciones> lista)
+        {
+            bulk = new SqlBulkCopy(cnx);
+            vh.bulkCommand = bulk;
+
+            DataTable dt = new DataTable();
+            DataRow dtFila;
+            dt.Columns.Add("id", typeof(Int32));
+            dt.Columns.Add("idtrabajador", typeof(Int32));
+            dt.Columns.Add("idempresa", typeof(Int32));
+            dt.Columns.Add("fechaingreso", typeof(DateTime));
+            dt.Columns.Add("inicio", typeof(DateTime));
+            dt.Columns.Add("fin", typeof(DateTime));
+            dt.Columns.Add("sd", typeof(Double));
+            dt.Columns.Add("diasderecho", typeof(Int32));
+            dt.Columns.Add("diasapagar", typeof(Int32));
+            dt.Columns.Add("diaspendientes", typeof(Int32));
+            dt.Columns.Add("pv", typeof(Double));
+            dt.Columns.Add("pexenta", typeof(Double));
+            dt.Columns.Add("pgravada", typeof(Double));
+            dt.Columns.Add("isrgravada", typeof(Double));
+            dt.Columns.Add("pagovacaciones", typeof(Double));
+            dt.Columns.Add("totalprima", typeof(Double));
+            dt.Columns.Add("total", typeof(Double));
+            dt.Columns.Add("fechapago", typeof(DateTime));
+            dt.Columns.Add("pagada", typeof(Boolean));
+            dt.Columns.Add("pvpagada", typeof(Boolean));
+            int index = 1;
+            for (int i = 0; i < lista.Count; i++)
+            {
+                dtFila = dt.NewRow();
+                dtFila["id"] = index;
+                dtFila["idtrabajador"] = lista[i].idtrabajador;
+                dtFila["idempresa"] = lista[i].idempresa;
+                dtFila["fechaingreso"] = lista[i].fechaingreso;
+                dtFila["inicio"] = lista[i].inicio;
+                dtFila["fin"] = lista[i].fin;
+                dtFila["sd"] = lista[i].sd;
+                dtFila["diasderecho"] = lista[i].diasderecho;
+                dtFila["diasapagar"] = lista[i].diasapagar;
+                dtFila["diaspendientes"] = lista[i].diaspendientes;
+                dtFila["pv"] = lista[i].pv;
+                dtFila["pexenta"] = lista[i].pexenta;
+                dtFila["pgravada"] = lista[i].pgravada;
+                dtFila["isrgravada"] = lista[i].isrgravada;
+                dtFila["pagovacaciones"] = lista[i].pagovacaciones;
+                dtFila["totalprima"] = lista[i].totalprima;
+                dtFila["total"] = lista[i].total;
+                dtFila["fechapago"] = lista[i].fechapago;
+                dtFila["pagada"] = lista[i].pagada;
+                dtFila["pvpagada"] = lista[i].pvpagada;
+                dt.Rows.Add(dtFila);
+                index++;
+            }
+
+            try
+            {
+                cnx.Open();
+                vh.bulkVacaciones(dt, "tmpPagoVacaciones");
+                vh.stpVacaciones();
+                cnx.Close();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error (DataTable): \r\n \r\n" + error.Message, "Error");
+            }
         }
     }
 }
