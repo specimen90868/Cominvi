@@ -94,9 +94,84 @@ namespace CalculoNomina.Core
                 pago.cantidad = double.Parse(dtPagoNomina.Rows[i]["cantidad"].ToString());
                 pago.fechainicio = DateTime.Parse(dtPagoNomina.Rows[i]["fechainicio"].ToString());
                 pago.fechafin = DateTime.Parse(dtPagoNomina.Rows[i]["fechafin"].ToString());
+                pago.guardada = bool.Parse(dtPagoNomina.Rows[i]["guardada"].ToString());
                 lstPagoNomina.Add(pago);
             }
             return lstPagoNomina;
+        }
+
+        public List<tmpPagoNomina> obtenerDatosRecibo(tmpPagoNomina pn)
+        {
+            List<tmpPagoNomina> lstRecibo = new List<tmpPagoNomina>();
+            DataTable dtRecibo = new DataTable();
+            Command.CommandText = "select * from tmpPagoNomina where idtrabajador = @idtrabajador and fechainicio = @fechainicio and fechafin = @fechafin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", pn.idtrabajador);
+            Command.Parameters.AddWithValue("fechainicio", pn.fechainicio);
+            Command.Parameters.AddWithValue("fechafin", pn.fechafin);
+            dtRecibo = SelectData(Command);
+            for (int i = 0; i < dtRecibo.Rows.Count; i++)
+            {
+                tmpPagoNomina pago = new tmpPagoNomina();
+                pago.id = int.Parse(dtRecibo.Rows[i]["id"].ToString());
+                pago.idtrabajador = int.Parse(dtRecibo.Rows[i]["idtrabajador"].ToString());
+                pago.idempresa = int.Parse(dtRecibo.Rows[i]["idempresa"].ToString());
+                pago.idconcepto = int.Parse(dtRecibo.Rows[i]["idconcepto"].ToString());
+                pago.tipoconcepto = dtRecibo.Rows[i]["tipoconcepto"].ToString();
+                pago.exento = double.Parse(dtRecibo.Rows[i]["exento"].ToString());
+                pago.gravado = double.Parse(dtRecibo.Rows[i]["gravado"].ToString());
+                pago.cantidad = double.Parse(dtRecibo.Rows[i]["cantidad"].ToString());
+                pago.fechainicio = DateTime.Parse(dtRecibo.Rows[i]["fechainicio"].ToString());
+                pago.fechafin = DateTime.Parse(dtRecibo.Rows[i]["fechafin"].ToString());
+                lstRecibo.Add(pago);
+            }
+            return lstRecibo;
+        }
+
+        public List<tmpPagoNomina> obtenerPreNomina(tmpPagoNomina pn)
+        {
+            List<tmpPagoNomina> lstPreNomina = new List<tmpPagoNomina>();
+            DataTable dtRecibo = new DataTable();
+            Command.CommandText = "select * from tmpPagoNomina where idempresa = @idempresa and fechainicio = @fechainicio and fechafin = @fechafin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", pn.idempresa);
+            Command.Parameters.AddWithValue("fechainicio", pn.fechainicio);
+            Command.Parameters.AddWithValue("fechafin", pn.fechafin);
+            dtRecibo = SelectData(Command);
+            for (int i = 0; i < dtRecibo.Rows.Count; i++)
+            {
+                tmpPagoNomina pago = new tmpPagoNomina();
+                pago.id = int.Parse(dtRecibo.Rows[i]["id"].ToString());
+                pago.idtrabajador = int.Parse(dtRecibo.Rows[i]["idtrabajador"].ToString());
+                pago.idempresa = int.Parse(dtRecibo.Rows[i]["idempresa"].ToString());
+                pago.idconcepto = int.Parse(dtRecibo.Rows[i]["idconcepto"].ToString());
+                pago.tipoconcepto = dtRecibo.Rows[i]["tipoconcepto"].ToString();
+                pago.exento = double.Parse(dtRecibo.Rows[i]["exento"].ToString());
+                pago.gravado = double.Parse(dtRecibo.Rows[i]["gravado"].ToString());
+                pago.cantidad = double.Parse(dtRecibo.Rows[i]["cantidad"].ToString());
+                pago.fechainicio = DateTime.Parse(dtRecibo.Rows[i]["fechainicio"].ToString());
+                pago.fechafin = DateTime.Parse(dtRecibo.Rows[i]["fechafin"].ToString());
+                lstPreNomina.Add(pago);
+            }
+            return lstPreNomina;
+        }
+
+        public List<tmpPagoNomina> obtenerFechasPreNomina(tmpPagoNomina pn)
+        {
+            List<tmpPagoNomina> lstPreNomina = new List<tmpPagoNomina>();
+            DataTable dtPreNomina = new DataTable();
+            Command.CommandText = "select distinct fechainicio, fechafin from tmpPagoNomina where idempresa = @idempresa";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", pn.idempresa);
+            dtPreNomina = SelectData(Command);
+            for (int i = 0; i < dtPreNomina.Rows.Count; i++)
+            {
+                tmpPagoNomina pago = new tmpPagoNomina();
+                pago.fechainicio = DateTime.Parse(dtPreNomina.Rows[i]["fechainicio"].ToString());
+                pago.fechafin = DateTime.Parse(dtPreNomina.Rows[i]["fechafin"].ToString());
+                lstPreNomina.Add(pago);
+            }
+            return lstPreNomina;
         }
 
         public object existePreNomina(DateTime inicio, DateTime fin)
@@ -104,6 +179,17 @@ namespace CalculoNomina.Core
             Command.CommandText = "select count(*) from tmpPagoNomina where fechainicio = @fechainicio and fechafin = @fechafin";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("fechainicio",inicio);
+            Command.Parameters.AddWithValue("fechafin", fin);
+            object dato = Select(Command);
+            return dato;
+        }
+
+        public object existeNomina(int idempresa, DateTime inicio, DateTime fin)
+        {
+            Command.CommandText = "select count(*) from PagoNomina where idempresa = @idempresa and fechainicio = @fechainicio and fechafin = @fechafin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idempresa);
+            Command.Parameters.AddWithValue("fechainicio", inicio);
             Command.Parameters.AddWithValue("fechafin", fin);
             object dato = Select(Command);
             return dato;
@@ -124,6 +210,38 @@ namespace CalculoNomina.Core
             Command.Parameters.AddWithValue("idtrabajador", pn.idtrabajador);
             Command.Parameters.AddWithValue("fechainicio", pn.fechainicio);
             Command.Parameters.AddWithValue("fechafin", pn.fechafin);
+            return Command.ExecuteNonQuery();
+        }
+
+        public int actualizaPreNomina(tmpPagoNomina pn)
+        {
+            Command.CommandText = "update tmpPagoNomina set guardada = @guardada where idempresa = @idempresa and fechainicio = @fechainicio and fechafin = @fechafin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("guardada", pn.guardada);
+            Command.Parameters.AddWithValue("idempresa", pn.idempresa);
+            Command.Parameters.AddWithValue("fechainicio", pn.fechainicio);
+            Command.Parameters.AddWithValue("fechafin", pn.fechafin);
+            return Command.ExecuteNonQuery();
+        }
+
+        public int eliminaPreNomina(tmpPagoNomina pn)
+        {
+            Command.CommandText = "delete from tmpPagoNomina where idempresa = @idempresa and fechainicio = @fechainicio and fechafin = @fechafin and guardada = @guardada";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", pn.idempresa);
+            Command.Parameters.AddWithValue("fechainicio", pn.fechainicio);
+            Command.Parameters.AddWithValue("fechafin", pn.fechafin);
+            Command.Parameters.AddWithValue("guardada", pn.guardada);
+            return Command.ExecuteNonQuery();
+        }
+
+        public int stpAutorizaNomina(int idempresa, DateTime inicio, DateTime fin)
+        {
+            Command.CommandText = "exec stp_AutorizaNomina @idempresa, @fechainicio, @fechafin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idempresa);
+            Command.Parameters.AddWithValue("fechainicio", inicio);
+            Command.Parameters.AddWithValue("fechafin", fin);
             return Command.ExecuteNonQuery();
         }
     }

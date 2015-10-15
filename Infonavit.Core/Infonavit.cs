@@ -14,6 +14,7 @@ namespace Infonavit.Core
         public string credito { get; set; }
         public int descuento { get; set; }
         public double valordescuento { get; set; }
+        public bool activo { get; set; }
     }
 
     public class suaInfonavit

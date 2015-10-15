@@ -22,6 +22,7 @@ namespace Conceptos.Core
                 Conceptos concepto = new Conceptos();
                 concepto.id = int.Parse(dtConceptos.Rows[i]["id"].ToString());
                 concepto.concepto = dtConceptos.Rows[i]["concepto"].ToString();
+                concepto.noconcepto = int.Parse(dtConceptos.Rows[i]["noconcepto"].ToString());
                 concepto.tipoconcepto = dtConceptos.Rows[i]["tipoconcepto"].ToString();
                 concepto.formula = dtConceptos.Rows[i]["formula"].ToString();
                 concepto.formulaexento = dtConceptos.Rows[i]["formulaexento"].ToString();

@@ -118,567 +118,7 @@ namespace Nominas
 
         private void toolPrenomina_Click(object sender, EventArgs e)
         {
-            cnx = new SqlConnection(cdn);
-            cmd = new SqlCommand();
-            cmd.Connection = cnx;
-
-            #region DISEÑO DEL GRIDVIEW
-
-            dgvEmpleados.Columns["seleccion"].DataPropertyName = "chk";
-            dgvEmpleados.Columns["idtrabajador"].DataPropertyName = "idtrabajador";
-            dgvEmpleados.Columns["iddepartamento"].DataPropertyName = "iddepartamento";
-            dgvEmpleados.Columns["idpuesto"].DataPropertyName = "idpuesto";
-            dgvEmpleados.Columns["noempleado"].DataPropertyName = "noempleado";
-            dgvEmpleados.Columns["nombres"].DataPropertyName = "nombres";
-            dgvEmpleados.Columns["paterno"].DataPropertyName = "paterno";
-            dgvEmpleados.Columns["materno"].DataPropertyName = "materno";
-            dgvEmpleados.Columns["sueldo"].DataPropertyName = "sueldo";
-            dgvEmpleados.Columns["despensa"].DataPropertyName = "despensa";
-            dgvEmpleados.Columns["asistencia"].DataPropertyName = "asistencia";
-            dgvEmpleados.Columns["puntualidad"].DataPropertyName = "puntualidad";
-            dgvEmpleados.Columns["horas"].DataPropertyName = "horas";
-
-            DataGridViewCellStyle estilo = new DataGridViewCellStyle();
-            estilo.Alignment = DataGridViewContentAlignment.MiddleRight;
-
-            dgvEmpleados.Columns[8].DefaultCellStyle = estilo;
-            dgvEmpleados.Columns[9].DefaultCellStyle = estilo;
-            dgvEmpleados.Columns[10].DefaultCellStyle = estilo;
-            dgvEmpleados.Columns[11].DefaultCellStyle = estilo;
-            dgvEmpleados.Columns[12].DefaultCellStyle = estilo;
-
-            dgvEmpleados.Columns["idtrabajador"].Visible = false;
-            dgvEmpleados.Columns["noempleado"].ReadOnly = true;
-            dgvEmpleados.Columns["nombres"].ReadOnly = true;
-            dgvEmpleados.Columns["paterno"].ReadOnly = true;
-            dgvEmpleados.Columns["materno"].ReadOnly = true;
-            #endregion
-
-            #region LISTADO DE EMPLEADOS GRID
-            nh = new CalculoNomina.Core.NominaHelper();
-            nh.Command = cmd;
-            lstEmpleadosNomina = new List<CalculoNomina.Core.DatosEmpleado>();
-
-            try
-            {
-                cnx.Open();
-                lstEmpleadosNomina = nh.obtenerDatosEmpleado(GLOBALES.IDEMPRESA, GLOBALES.ACTIVO);
-                cnx.Close();
-                cnx.Dispose();
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show("Error: \r\n \r\n" + error.Message,"Error");
-            }
-
-            dgvEmpleados.DataSource = lstEmpleadosNomina;
-
-            for (int i = 1; i < dgvEmpleados.Columns.Count; i++)
-            {
-                dgvEmpleados.AutoResizeColumn(i);
-            }
-            #endregion
-
-            //#region FORMULA DE SUELDO
-            //ch = new Conceptos.Core.ConceptosHelper();
-            //ch.Command = cmd;
-            //Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
-            //concepto.noconcepto = 1; //SUELDO        
-            //string formulaSueldo = "";
-            //variables = new List<string>();
-            //formulas = new List<string>();
-            //try
-            //{
-            //    cnx.Open();
-            //    formulaSueldo = (string)ch.obtenerFormula(concepto);
-            //    cnx.Close();
-            //    variables = GLOBALES.EXTRAEVARIABLES(formulaSueldo, "[", "]");
-            //}
-            //catch (Exception error)
-            //{
-            //    MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-            //}
-
-            //for (int i = 0; i < dgvEmpleados.Rows.Count; i++)
-            //{
-            //    if ((bool)dgvEmpleados.Rows[i].Cells["check"].Value)
-            //        formulas.Add(formulaSueldo);
-            //}
-            //#endregion
-
-            //#region CALCULO DE LA FORMULA DE SUELDO
-            //valores = new List<string>();
-            //sueldo = new List<string>();
-            //for (int i = 0; i < variables.Count; i++)
-            //{
-            //    FormulasValores f = new FormulasValores(variables[i], lstDatosEmpleado, inicio, fin, 15);
-            //    valores = f.ObtenerValorVariable();
-            //    for (int j = 0; j < valores.Count; j++)
-            //    {
-            //        formulas[j] = formulas[j].Replace("[" + variables[i] + "]", valores[j]);
-            //    }
-            //}
-
-            //for (int i = 0; i < formulas.Count; i++)
-            //{
-            //    MathParserTK.MathParser parser = new MathParserTK.MathParser();
-            //    sueldo.Add(parser.Parse(formulas[i]).ToString());
-            //}
-            //#endregion
-
-            //#region VACACIONES
-            //vacaciones = new List<string>();
-            //vh = new Vacaciones.Core.VacacionesHelper();
-            //vh.Command = cmd;
-            //for (int i = 0; i < lstDatosEmpleado.Count; i++)
-            //{
-            //    Vacaciones.Core.Vacaciones vacacion = new Vacaciones.Core.Vacaciones();
-            //    vacacion.idtrabajador = lstDatosEmpleado[i].idtrabajador;
-            //    vacacion.inicio = inicio;
-            //    vacacion.fin = fin;
-            //    try
-            //    {
-            //        cnx.Open();
-            //        vacaciones.Add(vh.vacacionesPagadas(vacacion).ToString());
-            //        cnx.Close();
-            //    }
-            //    catch (Exception error) {
-            //        MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-            //        cnx.Dispose();
-            //    }
-            //}
-            //#endregion
-
-            //#region PRIMA VACACIONAL
-            //primaVacacional = new List<object>();
-            //vh = new Vacaciones.Core.VacacionesHelper();
-            //vh.Command = cmd;
-            //for (int i = 0; i < lstDatosEmpleado.Count; i++)
-            //{
-            //    Vacaciones.Core.Vacaciones vacacion = new Vacaciones.Core.Vacaciones();
-            //    vacacion.idtrabajador = lstDatosEmpleado[i].idtrabajador;
-            //    vacacion.inicio = inicio;
-            //    vacacion.fin = fin;
-            //    try {
-            //        cnx.Open();
-            //        primaVacacional.Add(vh.primaVacacional(vacacion));
-            //        cnx.Close();
-            //    }
-            //    catch (Exception error)
-            //    {
-            //        MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-            //        cnx.Dispose();
-            //    }
-            //}
-            //#endregion
-
-            //#region DESPENSA
-            //Conceptos.Core.Conceptos conceptoDespensa = new Conceptos.Core.Conceptos();
-            //conceptoDespensa.noconcepto = 6; //DESPENSA        
-            //string formulaDespensa = "";
-            //variables = new List<string>();
-            //formulas = new List<string>();
-            //try
-            //{
-            //    cnx.Open();
-            //    formulaDespensa = (string)ch.obtenerFormula(conceptoDespensa);
-            //    cnx.Close();
-            //    variables = GLOBALES.EXTRAEVARIABLES(formulaDespensa, "[", "]");
-            //}
-            //catch (Exception error)
-            //{
-            //    MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-            //}
-
-            //for (int i = 0; i < dgvEmpleados.Rows.Count; i++)
-            //{
-            //    if ((bool)dgvEmpleados.Rows[i].Cells["check"].Value)
-            //        formulas.Add(formulaDespensa);
-            //}
-            //#endregion
-
-            //#region CALCULO DE LA FORMULA DE DESPENSA
-            //despensa = new List<string>();
-            //valores = new List<string>();
-            //for (int i = 0; i < variables.Count; i++)
-            //{
-            //    FormulasValores f = new FormulasValores(variables[i], lstDatosEmpleado, 15);
-            //    valores = f.ObtenerValorVariable();
-            //    for (int j = 0; j < valores.Count; j++)
-            //    {
-            //        formulas[j] = formulas[j].Replace("[" + variables[i] + "]", valores[j]);
-            //    }
-            //}
-
-            //for (int i = 0; i < formulas.Count; i++)
-            //{
-            //    MathParserTK.MathParser parser = new MathParserTK.MathParser();
-            //    despensa.Add(parser.Parse(formulas[i]).ToString());
-            //}
-            //#endregion
-
-            /////INICIO CALCULO DE PREMIO DE ASISTENCIA Y CALCULO DE CANTIDAD A EXENTAR
-            //#region PREMIO DE ASISTENCIAS
-            //Conceptos.Core.Conceptos conceptoAsistencia = new Conceptos.Core.Conceptos();
-            //conceptoAsistencia.noconcepto = 3; //SUELDO        
-            //string formulaAsistencia = "";
-            //variables = new List<string>();
-            //formulas = new List<string>();
-            //try
-            //{
-            //    cnx.Open();
-            //    formulaAsistencia = (string)ch.obtenerFormula(conceptoAsistencia);
-            //    cnx.Close();
-            //    variables = GLOBALES.EXTRAEVARIABLES(formulaAsistencia, "[", "]");
-            //}
-            //catch (Exception error)
-            //{
-            //    MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-            //}
-
-            //for (int i = 0; i < dgvEmpleados.Rows.Count; i++)
-            //{
-            //    if ((bool)dgvEmpleados.Rows[i].Cells["check"].Value)
-            //        formulas.Add(formulaAsistencia);
-            //}
-            //#endregion
-
-            //#region CALCULO DE LA FORMULA DE ASISTENCIA
-            //asistencia = new List<string>();
-            //valores = new List<string>();
-            //for (int i = 0; i < variables.Count; i++)
-            //{
-            //    FormulasValores f = new FormulasValores(variables[i], lstDatosEmpleado, 15);
-            //    valores = f.ObtenerValorVariable();
-            //    for (int j = 0; j < valores.Count; j++)
-            //    {
-            //        formulas[j] = formulas[j].Replace("[" + variables[i] + "]", valores[j]);
-            //    }
-            //}
-
-            //for (int i = 0; i < formulas.Count; i++)
-            //{
-            //    MathParserTK.MathParser parser = new MathParserTK.MathParser();
-            //    asistencia.Add(parser.Parse(formulas[i]).ToString());
-            //}
-            //#endregion
-
-            //#region PREMIO DE ASISTENCIAS EXENTO
-            //Conceptos.Core.Conceptos conceptoAsistenciaExento = new Conceptos.Core.Conceptos();
-            //conceptoAsistenciaExento.noconcepto = 3; //PREMIO DE ASISTENCIA        
-            //string formulaAsistenciaExento = "";
-            //variables = new List<string>();
-            //formulas = new List<string>();
-            //try
-            //{
-            //    cnx.Open();
-            //    formulaAsistencia = (string)ch.obtenerFormulaExento(conceptoAsistenciaExento);
-            //    cnx.Close();
-            //    variables = GLOBALES.EXTRAEVARIABLES(formulaAsistenciaExento, "[", "]");
-            //}
-            //catch (Exception error)
-            //{
-            //    MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-            //}
-
-            //for (int i = 0; i < dgvEmpleados.Rows.Count; i++)
-            //{
-            //    if ((bool)dgvEmpleados.Rows[i].Cells["check"].Value)
-            //        formulas.Add(formulaAsistenciaExento);
-            //}
-            //#endregion
-
-            //#region CALCULO DE LA FORMULA DE ASISTENCIA EXENTA
-            //asistenciaExcenta = new List<string>();
-            //valores = new List<string>();
-            //for (int i = 0; i < variables.Count; i++)
-            //{
-            //    FormulasValores f = new FormulasValores(variables[i], lstDatosEmpleado, 15);
-            //    valores = f.ObtenerValorVariable();
-            //    for (int j = 0; j < valores.Count; j++)
-            //    {
-            //        formulas[j] = formulas[j].Replace("[" + variables[i] + "]", valores[j]);
-            //    }
-            //}
-
-            //for (int i = 0; i < formulas.Count; i++)
-            //{
-            //    MathParserTK.MathParser parser = new MathParserTK.MathParser();
-            //    asistenciaExcenta.Add(parser.Parse(formulas[i]).ToString());
-            //}
-            //#endregion
-
-            //#region CALCULO DE ASISTENCIA GRAVADA
-            //asistenciaGravada = new List<string>();
-            //for (int i = 0; i < asistenciaExcenta.Count; i++)
-            //{
-            //    asistenciaGravada.Add((double.Parse(asistencia[i]) - double.Parse(asistenciaExcenta[i])).ToString());
-            //}
-            //#endregion
-            /////FIN CALCULO DE PREMIO DE ASISTENCIA
-
-            /////INICIO CALCULO DE PREMIO DE PUNTUALIDAD Y CALCULO DE CANTIDAD A EXENTAR
-            //#region PREMIO DE PUNTUALIDAD
-            //Conceptos.Core.Conceptos conceptoPuntualidad = new Conceptos.Core.Conceptos();
-            //conceptoPuntualidad.noconcepto = 5; //SUELDO        
-            //string formulaPuntualidad = "";
-            //variables = new List<string>();
-            //formulas = new List<string>();
-            //try
-            //{
-            //    cnx.Open();
-            //    formulaPuntualidad = (string)ch.obtenerFormula(conceptoPuntualidad);
-            //    cnx.Close();
-            //    variables = GLOBALES.EXTRAEVARIABLES(formulaPuntualidad, "[", "]");
-            //}
-            //catch (Exception error)
-            //{
-            //    MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-            //}
-
-            //for (int i = 0; i < dgvEmpleados.Rows.Count; i++)
-            //{
-            //    if ((bool)dgvEmpleados.Rows[i].Cells["check"].Value)
-            //        formulas.Add(formulaPuntualidad);
-            //}
-            //#endregion
-
-            //#region CALCULO DE LA FORMULA DE PUNTUALIDAD
-            //puntualidad = new List<string>();
-            //valores = new List<string>();
-            //for (int i = 0; i < variables.Count; i++)
-            //{
-            //    FormulasValores f = new FormulasValores(variables[i], lstDatosEmpleado, 15);
-            //    valores = f.ObtenerValorVariable();
-            //    for (int j = 0; j < valores.Count; j++)
-            //    {
-            //        formulas[j] = formulas[j].Replace("[" + variables[i] + "]", valores[j]);
-            //    }
-            //}
-
-            //for (int i = 0; i < formulas.Count; i++)
-            //{
-            //    MathParserTK.MathParser parser = new MathParserTK.MathParser();
-            //    puntualidad.Add(parser.Parse(formulas[i]).ToString());
-            //}
-            //#endregion
-
-            //#region PREMIO DE PUNTUALIDAD EXENTO
-            //Conceptos.Core.Conceptos conceptoPuntualidadexenta = new Conceptos.Core.Conceptos();
-            //conceptoPuntualidadexenta.noconcepto = 5; //PREMIO DE PUNTUALIDAD        
-            //string formulaPuntualidadExenta = "";
-            //variables = new List<string>();
-            //formulas = new List<string>();
-            //try
-            //{
-            //    cnx.Open();
-            //    formulaPuntualidadExenta = (string)ch.obtenerFormulaExento(conceptoPuntualidadexenta);
-            //    cnx.Close();
-            //    variables = GLOBALES.EXTRAEVARIABLES(formulaPuntualidadExenta, "[", "]");
-            //}
-            //catch (Exception error)
-            //{
-            //    MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-            //}
-
-            //for (int i = 0; i < dgvEmpleados.Rows.Count; i++)
-            //{
-            //    if ((bool)dgvEmpleados.Rows[i].Cells["check"].Value)
-            //        formulas.Add(formulaPuntualidadExenta);
-            //}
-            //#endregion
-
-            //#region CALCULO DE LA FORMULA DE PUNTUALIDAD EXENTA
-            //puntualidadExcenta = new List<string>();
-            //valores = new List<string>();
-            //for (int i = 0; i < variables.Count; i++)
-            //{
-            //    FormulasValores f = new FormulasValores(variables[i], lstDatosEmpleado, 15);
-            //    valores = f.ObtenerValorVariable();
-            //    for (int j = 0; j < valores.Count; j++)
-            //    {
-            //        formulas[j] = formulas[j].Replace("[" + variables[i] + "]", valores[j]);
-            //    }
-            //}
-
-            //for (int i = 0; i < formulas.Count; i++)
-            //{
-            //    MathParserTK.MathParser parser = new MathParserTK.MathParser();
-            //    puntualidadExcenta.Add(parser.Parse(formulas[i]).ToString());
-            //}
-            //#endregion
-
-            //#region CALCULO DE PUNTUALIDAD GRAVADA
-            //puntualidadGravada = new List<string>();
-            //for (int i = 0; i < puntualidadExcenta.Count; i++)
-            //{
-            //    puntualidadGravada.Add((double.Parse(puntualidad[i]) - double.Parse(puntualidadExcenta[i])).ToString());
-            //}
-            //#endregion
-            /////FIN CALCULO DE PREMIO DE PUNTUALIDAD
-
-            /////INICIO CALCULO DE HORAS EXTRAS DOBLES A EXENTAR
-            //#region HORAS EXTRAS DOBLES
-            //Conceptos.Core.Conceptos conceptoHorasExtrasDobles = new Conceptos.Core.Conceptos();
-            //conceptoHorasExtrasDobles.noconcepto = 2; //HORAS EXTRAS DOBLES        
-            //string formulaHorasExtrasDobles = "";
-            //variables = new List<string>();
-            //formulas = new List<string>();
-            //try
-            //{
-            //    cnx.Open();
-            //    formulaHorasExtrasDobles = (string)ch.obtenerFormula(conceptoHorasExtrasDobles);
-            //    cnx.Close();
-            //    variables = GLOBALES.EXTRAEVARIABLES(formulaHorasExtrasDobles, "[", "]");
-            //}
-            //catch (Exception error)
-            //{
-            //    MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-            //}
-
-            //for (int i = 0; i < dgvEmpleados.Rows.Count; i++)
-            //{
-            //    if ((bool)dgvEmpleados.Rows[i].Cells["check"].Value)
-            //        formulas.Add(formulaHorasExtrasDobles);
-            //}
-            //#endregion
-
-            //#region CALCULO DE LA FORMULA DE HORAS EXTRAS DOBLES
-            //horasExtrasDobles = new List<string>();
-            //valores = new List<string>();
-            //for (int i = 0; i < variables.Count; i++)
-            //{
-            //    FormulasValores f = new FormulasValores(variables[i], lstDatosEmpleado, 15);
-            //    valores = f.ObtenerValorVariable();
-            //    for (int j = 0; j < valores.Count; j++)
-            //    {
-            //        formulas[j] = formulas[j].Replace("[" + variables[i] + "]", valores[j]);
-            //    }
-            //}
-
-            //for (int i = 0; i < formulas.Count; i++)
-            //{
-            //    MathParserTK.MathParser parser = new MathParserTK.MathParser();
-            //    horasExtrasDobles.Add(parser.Parse(formulas[i]).ToString());
-            //}
-            //#endregion
-
-            //#region HORAS EXTRAS DOBLES EXENTO
-            //Conceptos.Core.Conceptos conceptoHorasExtrasDoblesExenta = new Conceptos.Core.Conceptos();
-            //conceptoHorasExtrasDoblesExenta.noconcepto = 2; //HORAS EXTRAS DOBLES       
-            //string formulaHorasExtrasDoblesExenta = "";
-            //variables = new List<string>();
-            //formulas = new List<string>();
-            //try
-            //{
-            //    cnx.Open();
-            //    formulaHorasExtrasDoblesExenta = (string)ch.obtenerFormulaExento(conceptoHorasExtrasDoblesExenta);
-            //    cnx.Close();
-            //    variables = GLOBALES.EXTRAEVARIABLES(formulaHorasExtrasDoblesExenta, "[", "]");
-            //}
-            //catch (Exception error)
-            //{
-            //    MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-            //}
-
-            //for (int i = 0; i < dgvEmpleados.Rows.Count; i++)
-            //{
-            //    if ((bool)dgvEmpleados.Rows[i].Cells["check"].Value)
-            //        formulas.Add(formulaHorasExtrasDoblesExenta);
-            //}
-            //#endregion
-
-            //#region CALCULO DE LA FORMULA DE HORAS EXTRAS DOBLES EXENTO
-            //horasExtrasDoblesExcenta = new List<string>();
-            //valores = new List<string>();
-            //for (int i = 0; i < variables.Count; i++)
-            //{
-            //    FormulasValores f = new FormulasValores(variables[i], lstDatosEmpleado, 15);
-            //    valores = f.ObtenerValorVariable();
-            //    for (int j = 0; j < valores.Count; j++)
-            //    {
-            //        formulas[j] = formulas[j].Replace("[" + variables[i] + "]", valores[j]);
-            //    }
-            //}
-
-            //for (int i = 0; i < formulas.Count; i++)
-            //{
-            //    MathParserTK.MathParser parser = new MathParserTK.MathParser();
-            //    horasExtrasDoblesExcenta.Add(parser.Parse(formulas[i]).ToString());
-            //}
-            //#endregion
-
-            //#region CALCULO DE HORAS EXTRAS DOBLES GRAVADA
-            //horasExtrasDoblesGravada = new List<string>();
-            //for (int i = 0; i < horasExtrasDoblesExcenta.Count; i++)
-            //{
-            //    if (double.Parse(horasExtrasDobles[i]) > double.Parse(horasExtrasDoblesExcenta[i]))
-            //    {
-            //        horasExtrasDoblesGravada.Add((double.Parse(horasExtrasDobles[i]) - double.Parse(horasExtrasDoblesExcenta[i])).ToString());
-            //    }
-            //    else
-            //    {
-            //        horasExtrasDoblesGravada.Add("0");
-            //    }
-            //}
-            //#endregion
-            /////FIN CALCULO DE HORAS EXTRAS DOBLES
-
-            //#region CALCULO DEL ISR
-            //double excedente, ImpMarginal;
-            //isr = new List<string>();
-            //List<TablaIsr.Core.TablaIsr> lstIsr = new List<TablaIsr.Core.TablaIsr>();
-            //TablaIsr.Core.IsrHelper ih = new TablaIsr.Core.IsrHelper();
-            //ih.Command = cmd;
-            //for (int i = 0; i < lstDatosEmpleado.Count; i++)
-            //{
-            //    TablaIsr.Core.TablaIsr _isr = new TablaIsr.Core.TablaIsr();
-            //    _isr.periodo = 15;
-            //    _isr.inferior = double.Parse(sueldo[i]);
-            //    try
-            //    {
-            //        cnx.Open();
-            //        lstIsr = ih.isrCorrespondiente(_isr);
-            //        cnx.Close();
-            //    }
-            //    catch (Exception error) {
-            //        MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-            //        cnx.Dispose();
-            //    }
-
-            //    for (int j = 0; j < lstIsr.Count; j++)
-            //    {
-            //        excedente = double.Parse(sueldo[i]) - lstIsr[j].inferior;
-            //        ImpMarginal = excedente * (lstIsr[j].porcentaje / 100);
-            //        isr.Add((ImpMarginal + lstIsr[j].cuota).ToString());
-            //    }
-            //}
-            //#endregion
-
-            //#region CALCULO INFONAVIT
-            //Conceptos.Core.Conceptos conceptoInfonavit = new Conceptos.Core.Conceptos();
-            //conceptoInfonavit.noconcepto = 9; //INFONAVIT        
-            //string formulaInfonavit = "";
-            //variables = new List<string>();
-            //infonavit = new List<string>();
-            //try
-            //{
-            //    cnx.Open();
-            //    formulaInfonavit = (string)ch.obtenerFormula(conceptoInfonavit);
-            //    cnx.Close();
-            //    variables = GLOBALES.EXTRAEVARIABLES(formulaInfonavit, "[", "]");
-            //}
-            //catch (Exception error)
-            //{
-            //    MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-            //}
-
-            //for (int i = 0; i < variables.Count; i++)
-            //{
-            //    FormulasValores f = new FormulasValores(variables[i], lstDatosEmpleado);
-            //    infonavit = f.ObtenerValorVariable();
-            //}
-            //#endregion
+            cargaEmpleados();
         }
 
         private void frmListaCalculoNomina_Load(object sender, EventArgs e)
@@ -694,6 +134,7 @@ namespace Nominas
             estilo.Alignment = DataGridViewContentAlignment.MiddleRight;
             dgvEmpleados.Columns["seleccion"].HeaderCell.Style = estilo;
             #endregion
+
             NominaActual();
         }
 
@@ -761,249 +202,7 @@ namespace Nominas
 
         private void toolCalcular_Click(object sender, EventArgs e)
         {
-            cnx = new SqlConnection(cdn);
-            cmd = new SqlCommand();
-            cmd.Connection = cnx;
-            string listaIds = "";
-
-            #region LISTAS
-            List<CalculoNomina.Core.Nomina> lstDatosNomina;
-            List<tmpPagoNomina> lstValoresNomina;
-            List<CalculoNomina.Core.Nomina> lstDatoTrabajador;
-            #endregion
-
-            #region DATOS DE LA NOMINA
-            foreach (DataGridViewRow fila in dgvEmpleados.Rows)
-            {
-                if ((bool)fila.Cells["seleccion"].Value)
-                {
-                    listaIds += fila.Cells["idtrabajador"].Value + ",";
-                }
-            }
-
-            if (listaIds.Equals("")) return;
-
-            listaIds.Substring(listaIds.Length - 1, 1);
-
-            nh = new CalculoNomina.Core.NominaHelper();
-            nh.Command = cmd;
-            lstDatosNomina = new List<CalculoNomina.Core.Nomina>();
-            try {
-                cnx.Open();
-                lstDatosNomina = nh.obtenerDatosNomina(GLOBALES.IDEMPRESA, GLOBALES.ACTIVO, listaIds);
-                cnx.Close();
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-            }
-            #endregion
-
-            #region CALCULO
-            lstValoresNomina = new List<tmpPagoNomina>();
-            for (int i = 0; i < lstDatosNomina.Count; i++)
-            {
-                tmpPagoNomina vn = new tmpPagoNomina();
-                vn.idtrabajador = lstDatosNomina[i].idtrabajador;
-                vn.idempresa = GLOBALES.IDEMPRESA;
-                vn.idconcepto = lstDatosNomina[i].id;
-                vn.tipoconcepto = lstDatosNomina[i].tipoconcepto;
-                vn.fechainicio = dtpPeriodoInicio.Value;
-                vn.fechafin = dtpPeriodoFin.Value;
-
-                lstDatoTrabajador = new List<CalculoNomina.Core.Nomina>();
-                CalculoNomina.Core.Nomina nt = new CalculoNomina.Core.Nomina();
-                nt.idtrabajador = lstDatosNomina[i].idtrabajador;
-                nt.dias = lstDatosNomina[i].dias;
-                nt.salariominimo = lstDatosNomina[i].salariominimo;
-                nt.antiguedadmod = lstDatosNomina[i].antiguedadmod;
-                nt.sdi = lstDatosNomina[i].sdi;
-                nt.sd = lstDatosNomina[i].sd;
-                nt.id = lstDatosNomina[i].id;
-                nt.noconcepto = lstDatosNomina[i].noconcepto;
-                nt.tipoconcepto = lstDatosNomina[i].tipoconcepto;
-                nt.formula = lstDatosNomina[i].formula;
-                nt.formulaexento = lstDatosNomina[i].formulaexento;
-                lstDatoTrabajador.Add(nt);
-
-                FormulasValores f = new FormulasValores(lstDatoTrabajador, dtpPeriodoInicio.Value, dtpPeriodoFin.Value);
-                vn.cantidad = (double)f.calcularFormula();
-                vn.exento = double.Parse(f.calcularFormulaExento().ToString());
-                vn.gravado = (double)f.calcularFormula() - double.Parse(f.calcularFormulaExento().ToString());
-
-                lstValoresNomina.Add(vn);
-            }
-            #endregion
-
-            #region VERIFICACION DE PRIMA VACACIONAL Y VACACIONES
-            vh = new Vacaciones.Core.VacacionesHelper();
-            vh.Command = cmd;
-
-            foreach (DataGridViewRow fila in dgvEmpleados.Rows)
-            {
-                if ((bool)fila.Cells["seleccion"].Value)
-                {
-                    Vacaciones.Core.Vacaciones vacacion = new Vacaciones.Core.Vacaciones();
-                    vacacion.idtrabajador = int.Parse(fila.Cells["idtrabajador"].Value.ToString());
-                    vacacion.inicio = dtpPeriodoInicio.Value;
-                    vacacion.fin = dtpPeriodoFin.Value;
-                    List<Vacaciones.Core.Vacaciones> lstPrima = new List<Vacaciones.Core.Vacaciones>();
-                    double vacacionesPagadas = 0;
-                    try
-                    {
-                        cnx.Open();
-                        lstPrima = vh.primaVacacional(vacacion);
-                        vacacionesPagadas = double.Parse(vh.vacacionesPagadas(vacacion).ToString());
-                        cnx.Close();
-                    }
-                    catch (Exception error)
-                    {
-                        MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-                        cnx.Dispose();
-                    }
-
-                    if (lstPrima[0].pv != 0)
-                    {
-                        ch = new Conceptos.Core.ConceptosHelper();
-                        ch.Command = cmd;
-                        Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
-                        concepto.noconcepto = 4; //PRIMA VACACIONAL
-                        concepto.idempresa = GLOBALES.IDEMPRESA;
-                        List<Conceptos.Core.Conceptos> lstConcepto = new List<Conceptos.Core.Conceptos>();
-                        try 
-                        {
-                            cnx.Open();
-                            lstConcepto = ch.obtenerConceptoNomina(concepto);
-                            cnx.Close();
-                        }
-                        catch (Exception error) {
-                            MessageBox.Show("Error: \r\n \r\n" + error.Message,"Error");
-                        }
-
-                        tmpPagoNomina vn = new tmpPagoNomina();
-                        vn.idtrabajador = (int)fila.Cells["idtrabajador"].Value;
-                        vn.idempresa = GLOBALES.IDEMPRESA;
-                        vn.idconcepto = lstConcepto[0].id;
-                        vn.tipoconcepto = lstConcepto[0].tipoconcepto;
-                        vn.fechainicio = dtpPeriodoInicio.Value;
-                        vn.fechafin = dtpPeriodoFin.Value;
-                        vn.exento = lstPrima[0].pexenta;
-                        vn.gravado = lstPrima[0].pgravada;
-                        vn.cantidad = lstPrima[0].pv;
-                        lstValoresNomina.Add(vn);
-                    }
-
-                    if (vacacionesPagadas != 0) 
-                    {
-                        ch = new Conceptos.Core.ConceptosHelper();
-                        ch.Command = cmd;
-                        Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
-                        concepto.noconcepto = 7; //VACACIONES
-                        concepto.idempresa = GLOBALES.IDEMPRESA;
-                        List<Conceptos.Core.Conceptos> lstConcepto = new List<Conceptos.Core.Conceptos>();
-                        try
-                        {
-                            cnx.Open();
-                            lstConcepto = ch.obtenerConceptoNomina(concepto);
-                            cnx.Close();
-                        }
-                        catch (Exception error)
-                        {
-                            MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-                        }
-
-                        tmpPagoNomina vn = new tmpPagoNomina();
-                        vn.idtrabajador = (int)fila.Cells["idtrabajador"].Value;
-                        vn.idempresa = GLOBALES.IDEMPRESA;
-                        vn.idconcepto = lstConcepto[0].id;
-                        vn.tipoconcepto = lstConcepto[0].tipoconcepto;
-                        vn.fechainicio = dtpPeriodoInicio.Value;
-                        vn.fechafin = dtpPeriodoFin.Value;
-                        vn.exento = 0;
-                        vn.gravado = vacacionesPagadas;
-                        vn.cantidad = vacacionesPagadas;
-                        lstValoresNomina.Add(vn);
-                    }
-                }
-            }
-            
-            #endregion
-
-            #region BULK DATA
-            DataTable dt = new DataTable();
-            DataRow dtFila;
-            dt.Columns.Add("id", typeof(Int32));
-            dt.Columns.Add("idtrabajador", typeof(Int32));
-            dt.Columns.Add("idempresa", typeof(Int32));
-            dt.Columns.Add("idconcepto", typeof(Int32));
-            dt.Columns.Add("tipoconcepto", typeof(String));
-            dt.Columns.Add("exento", typeof(Double));
-            dt.Columns.Add("gravado", typeof(Double));
-            dt.Columns.Add("cantidad", typeof(Double));
-            dt.Columns.Add("fechainicio", typeof(DateTime));
-            dt.Columns.Add("fechafin", typeof(DateTime));
-
-            for (int i = 0; i < lstValoresNomina.Count; i++)
-            {
-                dtFila = dt.NewRow();
-                dtFila["id"] = i + 1;
-                dtFila["idtrabajador"] = lstValoresNomina[i].idtrabajador;
-                dtFila["idempresa"] = lstValoresNomina[i].idempresa;
-                dtFila["idconcepto"] = lstValoresNomina[i].idconcepto;
-                dtFila["tipoconcepto"] = lstValoresNomina[i].tipoconcepto;
-                dtFila["exento"] = lstValoresNomina[i].exento;
-                dtFila["gravado"] = lstValoresNomina[i].gravado;
-                dtFila["cantidad"] = lstValoresNomina[i].cantidad;
-                dtFila["fechainicio"] = lstValoresNomina[i].fechainicio;
-                dtFila["fechafin"] = lstValoresNomina[i].fechafin;
-                dt.Rows.Add(dtFila);
-            }
-
-            bulk = new SqlBulkCopy(cnx);
-            nh.bulkCommand = bulk;
-
-            try {
-                cnx.Open();
-                nh.bulkNomina(dt, "tmpPagoNomina");
-                cnx.Close();
-            }
-            catch (Exception error) {
-                MessageBox.Show("Error: \r\n \r\n" + error.Message + "\r\n \r\n Error Bulk Nomina.", "Error");
-            }
-            #endregion
-
-            #region MOSTRAR DATOS EN EL GRID
-            foreach (DataGridViewRow fila in dgvEmpleados.Rows)
-            {
-                if ((bool)fila.Cells["seleccion"].Value)
-                {
-                    for (int i = 0; i < lstValoresNomina.Count; i++)
-                    {
-                        if ((int)fila.Cells["idtrabajador"].Value == lstValoresNomina[i].idtrabajador)
-                        {
-                            switch(lstValoresNomina[i].idconcepto)
-                            {
-                                case 1:
-                                    fila.Cells["sueldo"].Value = lstValoresNomina[i].cantidad;
-                                    break;
-                                case 2:
-                                    fila.Cells["horas"].Value = lstValoresNomina[i].cantidad;
-                                    break;
-                                case 3:
-                                    fila.Cells["asistencia"].Value = lstValoresNomina[i].cantidad;
-                                    break;
-                                case 5:
-                                    fila.Cells["puntualidad"].Value = lstValoresNomina[i].cantidad;
-                                    break;
-                                case 6:
-                                    fila.Cells["despensa"].Value = lstValoresNomina[i].cantidad;
-                                    break;
-                            }
-                        }
-                    }
-                }
-            }
-            #endregion
+            workerCalculo.RunWorkerAsync();
         }
 
         private void dtpPeriodoInicio_ValueChanged(object sender, EventArgs e)
@@ -1015,9 +214,10 @@ namespace Nominas
             int existe = 0;
             nh = new CalculoNomina.Core.NominaHelper();
             nh.Command = cmd;
-            try {
+            try
+            {
                 cnx.Open();
-                existe = (int)nh.existePreNomina(dtpPeriodoInicio.Value, dtpPeriodoFin.Value);
+                existe = (int)nh.existeNomina(GLOBALES.IDEMPRESA, dtpPeriodoInicio.Value, dtpPeriodoFin.Value);
                 cnx.Close();
                 cnx.Dispose();
 
@@ -1035,9 +235,9 @@ namespace Nominas
                     toolPrenomina.Enabled = true;
                 }
             }
-            catch (Exception error) 
+            catch (Exception error)
             {
-                MessageBox.Show("Error: \r\n \r\n" + error.Message,"Error");
+                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
             }
         }
 
@@ -1067,6 +267,310 @@ namespace Nominas
 
         private void toolDescalcular_Click(object sender, EventArgs e)
         {
+            workDescalculo.RunWorkerAsync();
+        }
+
+        private void dgvEmpleados_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int fila = 0;
+            fila = dgvEmpleados.CurrentCell.RowIndex;
+            frmReciboNomina rn = new frmReciboNomina();
+            rn._idEmpleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
+            rn._inicioPeriodo = dtpPeriodoInicio.Value;
+            rn._finPeriodo = dtpPeriodoFin.Value;
+            rn.Show();
+        }
+
+        private void workerCalculo_DoWork(object sender, DoWorkEventArgs e)
+        {
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+            string listaIds = "";
+
+            #region LISTAS
+            List<CalculoNomina.Core.Nomina> lstDatosNomina;
+            List<tmpPagoNomina> lstValoresNomina;
+            List<CalculoNomina.Core.Nomina> lstDatoTrabajador;
+            #endregion
+
+            #region DATOS DE LA NOMINA
+            foreach (DataGridViewRow fila in dgvEmpleados.Rows)
+            {
+                if ((bool)fila.Cells["seleccion"].Value && double.Parse(fila.Cells["sueldo"].Value.ToString()) == 0)
+                {
+                    listaIds += fila.Cells["idtrabajador"].Value + ",";
+                }
+            }
+
+            if (listaIds.Equals("")) return;
+
+            listaIds.Substring(listaIds.Length - 1, 1);
+
+            nh = new CalculoNomina.Core.NominaHelper();
+            nh.Command = cmd;
+            lstDatosNomina = new List<CalculoNomina.Core.Nomina>();
+            try
+            {
+                cnx.Open();
+                lstDatosNomina = nh.obtenerDatosNomina(GLOBALES.IDEMPRESA, GLOBALES.ACTIVO, listaIds);
+                cnx.Close();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+            }
+            #endregion
+
+            #region CALCULO
+            lstValoresNomina = new List<tmpPagoNomina>();
+            int contadorNomina = lstDatosNomina.Count;
+            int progreso = 0;
+            for (int i = 0; i < lstDatosNomina.Count; i++)
+            {
+                progreso = (i * 100) / contadorNomina;
+
+                tmpPagoNomina vn = new tmpPagoNomina();
+                vn.idtrabajador = lstDatosNomina[i].idtrabajador;
+                vn.idempresa = GLOBALES.IDEMPRESA;
+                vn.idconcepto = lstDatosNomina[i].id;
+                vn.tipoconcepto = lstDatosNomina[i].tipoconcepto;
+                vn.fechainicio = dtpPeriodoInicio.Value;
+                vn.fechafin = dtpPeriodoFin.Value;
+                vn.guardada = false;
+
+                lstDatoTrabajador = new List<CalculoNomina.Core.Nomina>();
+                CalculoNomina.Core.Nomina nt = new CalculoNomina.Core.Nomina();
+                nt.idtrabajador = lstDatosNomina[i].idtrabajador;
+                nt.dias = lstDatosNomina[i].dias;
+                nt.salariominimo = lstDatosNomina[i].salariominimo;
+                nt.antiguedadmod = lstDatosNomina[i].antiguedadmod;
+                nt.sdi = lstDatosNomina[i].sdi;
+                nt.sd = lstDatosNomina[i].sd;
+                nt.id = lstDatosNomina[i].id;
+                nt.noconcepto = lstDatosNomina[i].noconcepto;
+                nt.tipoconcepto = lstDatosNomina[i].tipoconcepto;
+                nt.formula = lstDatosNomina[i].formula;
+                nt.formulaexento = lstDatosNomina[i].formulaexento;
+                lstDatoTrabajador.Add(nt);
+
+                FormulasValores f = new FormulasValores(lstDatoTrabajador, dtpPeriodoInicio.Value, dtpPeriodoFin.Value);
+                vn.cantidad = double.Parse(f.calcularFormula().ToString());
+                vn.exento = double.Parse(f.calcularFormulaExento().ToString());
+                vn.gravado = double.Parse(f.calcularFormula().ToString()) - double.Parse(f.calcularFormulaExento().ToString());
+
+                lstValoresNomina.Add(vn);
+                workerCalculo.ReportProgress(progreso, "Calculo de Nómina");
+            }
+            workerCalculo.ReportProgress(100, "Calculo de Nómina");
+            #endregion
+
+            #region VERIFICACION DE PRIMA VACACIONAL Y VACACIONES
+            vh = new Vacaciones.Core.VacacionesHelper();
+            vh.Command = cmd;
+            int contadorGrid = dgvEmpleados.Rows.Count;
+            int contador = 0;
+            progreso = 0;
+            foreach (DataGridViewRow fila in dgvEmpleados.Rows)
+            {
+                progreso = (contador * 100) / contadorGrid;
+                workerCalculo.ReportProgress(progreso, "Verificación de Prima Vacacional y Vacaciones");
+                contador++;
+
+                if ((bool)fila.Cells["seleccion"].Value)
+                {
+                    Vacaciones.Core.Vacaciones vacacion = new Vacaciones.Core.Vacaciones();
+                    vacacion.idtrabajador = int.Parse(fila.Cells["idtrabajador"].Value.ToString());
+                    vacacion.inicio = dtpPeriodoInicio.Value;
+                    vacacion.fin = dtpPeriodoFin.Value;
+                    List<Vacaciones.Core.Vacaciones> lstPrima = new List<Vacaciones.Core.Vacaciones>();
+                    double vacacionesPagadas = 0;
+                    try
+                    {
+                        cnx.Open();
+                        lstPrima = vh.primaVacacional(vacacion);
+                        vacacionesPagadas = double.Parse(vh.vacacionesPagadas(vacacion).ToString());
+                        cnx.Close();
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                        cnx.Dispose();
+                    }
+
+                    if (lstPrima[0].pv != 0)
+                    {
+                        ch = new Conceptos.Core.ConceptosHelper();
+                        ch.Command = cmd;
+                        Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
+                        concepto.noconcepto = 4; //PRIMA VACACIONAL
+                        concepto.idempresa = GLOBALES.IDEMPRESA;
+                        List<Conceptos.Core.Conceptos> lstConcepto = new List<Conceptos.Core.Conceptos>();
+                        try
+                        {
+                            cnx.Open();
+                            lstConcepto = ch.obtenerConceptoNomina(concepto);
+                            cnx.Close();
+                        }
+                        catch (Exception error)
+                        {
+                            MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                        }
+
+                        tmpPagoNomina vn = new tmpPagoNomina();
+                        vn.idtrabajador = (int)fila.Cells["idtrabajador"].Value;
+                        vn.idempresa = GLOBALES.IDEMPRESA;
+                        vn.idconcepto = lstConcepto[0].id;
+                        vn.tipoconcepto = lstConcepto[0].tipoconcepto;
+                        vn.fechainicio = dtpPeriodoInicio.Value;
+                        vn.fechafin = dtpPeriodoFin.Value;
+                        vn.exento = lstPrima[0].pexenta;
+                        vn.gravado = lstPrima[0].pgravada;
+                        vn.cantidad = lstPrima[0].pv;
+                        vn.guardada = false;
+                        lstValoresNomina.Add(vn);
+                    }
+
+                    if (vacacionesPagadas != 0)
+                    {
+                        ch = new Conceptos.Core.ConceptosHelper();
+                        ch.Command = cmd;
+                        Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
+                        concepto.noconcepto = 7; //VACACIONES
+                        concepto.idempresa = GLOBALES.IDEMPRESA;
+                        List<Conceptos.Core.Conceptos> lstConcepto = new List<Conceptos.Core.Conceptos>();
+                        try
+                        {
+                            cnx.Open();
+                            lstConcepto = ch.obtenerConceptoNomina(concepto);
+                            cnx.Close();
+                        }
+                        catch (Exception error)
+                        {
+                            MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                        }
+
+                        tmpPagoNomina vn = new tmpPagoNomina();
+                        vn.idtrabajador = (int)fila.Cells["idtrabajador"].Value;
+                        vn.idempresa = GLOBALES.IDEMPRESA;
+                        vn.idconcepto = lstConcepto[0].id;
+                        vn.tipoconcepto = lstConcepto[0].tipoconcepto;
+                        vn.fechainicio = dtpPeriodoInicio.Value;
+                        vn.fechafin = dtpPeriodoFin.Value;
+                        vn.exento = 0;
+                        vn.gravado = vacacionesPagadas;
+                        vn.cantidad = vacacionesPagadas;
+                        vn.guardada = false;
+                        lstValoresNomina.Add(vn);
+                    }
+                }
+            }
+            workerCalculo.ReportProgress(100, "Verificación de Prima Vacacional y Vacaciones");
+            #endregion
+
+            #region BULK DATA
+            DataTable dt = new DataTable();
+            DataRow dtFila;
+            dt.Columns.Add("id", typeof(Int32));
+            dt.Columns.Add("idtrabajador", typeof(Int32));
+            dt.Columns.Add("idempresa", typeof(Int32));
+            dt.Columns.Add("idconcepto", typeof(Int32));
+            dt.Columns.Add("tipoconcepto", typeof(String));
+            dt.Columns.Add("exento", typeof(Double));
+            dt.Columns.Add("gravado", typeof(Double));
+            dt.Columns.Add("cantidad", typeof(Double));
+            dt.Columns.Add("fechainicio", typeof(DateTime));
+            dt.Columns.Add("fechafin", typeof(DateTime));
+            dt.Columns.Add("guardada", typeof(Boolean));
+
+            contadorNomina = lstValoresNomina.Count;
+            for (int i = 0; i < lstValoresNomina.Count; i++)
+            {
+                progreso = (i * 100) / contadorNomina;
+                workerCalculo.ReportProgress(progreso, "BulkData");
+                dtFila = dt.NewRow();
+                dtFila["id"] = i + 1;
+                dtFila["idtrabajador"] = lstValoresNomina[i].idtrabajador;
+                dtFila["idempresa"] = lstValoresNomina[i].idempresa;
+                dtFila["idconcepto"] = lstValoresNomina[i].idconcepto;
+                dtFila["tipoconcepto"] = lstValoresNomina[i].tipoconcepto;
+                dtFila["exento"] = lstValoresNomina[i].exento;
+                dtFila["gravado"] = lstValoresNomina[i].gravado;
+                dtFila["cantidad"] = lstValoresNomina[i].cantidad;
+                dtFila["fechainicio"] = lstValoresNomina[i].fechainicio;
+                dtFila["fechafin"] = lstValoresNomina[i].fechafin;
+                dtFila["guardada"] = lstValoresNomina[i].guardada;
+                dt.Rows.Add(dtFila);
+            }
+            workerCalculo.ReportProgress(100, "BulkData");
+            bulk = new SqlBulkCopy(cnx);
+            nh.bulkCommand = bulk;
+
+            try
+            {
+                cnx.Open();
+                nh.bulkNomina(dt, "tmpPagoNomina");
+                cnx.Close();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error: \r\n \r\n" + error.Message + "\r\n \r\n Error Bulk Nomina.", "Error");
+            }
+            #endregion
+
+            #region MOSTRAR DATOS EN EL GRID
+            contadorGrid = dgvEmpleados.Rows.Count;
+            contador = 0;
+            foreach (DataGridViewRow fila in dgvEmpleados.Rows)
+            {
+                progreso = (contador * 100) / contadorGrid;
+                workerCalculo.ReportProgress(progreso, "Mostrar datos");
+                contador++;
+                if ((bool)fila.Cells["seleccion"].Value)
+                {
+                    for (int i = 0; i < lstValoresNomina.Count; i++)
+                    {
+                        if ((int)fila.Cells["idtrabajador"].Value == lstValoresNomina[i].idtrabajador)
+                        {
+                            switch (lstValoresNomina[i].idconcepto)
+                            {
+                                case 1:
+                                    fila.Cells["sueldo"].Value = lstValoresNomina[i].cantidad;
+                                    break;
+                                case 2:
+                                    fila.Cells["horas"].Value = lstValoresNomina[i].cantidad;
+                                    break;
+                                case 3:
+                                    fila.Cells["asistencia"].Value = lstValoresNomina[i].cantidad;
+                                    break;
+                                case 5:
+                                    fila.Cells["puntualidad"].Value = lstValoresNomina[i].cantidad;
+                                    break;
+                                case 6:
+                                    fila.Cells["despensa"].Value = lstValoresNomina[i].cantidad;
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+            workerCalculo.ReportProgress(100, "Mostrar datos");
+            #endregion
+        }
+
+        private void workerCalculo_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            toolPorcentaje.Text = e.ProgressPercentage.ToString() + "%";
+            toolEtapa.Text = e.UserState.ToString();
+        }
+
+        private void workerCalculo_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            toolPorcentaje.Text = "Completado.";
+        }
+
+        private void workDescalculo_DoWork(object sender, DoWorkEventArgs e)
+        {
             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();
             cmd.Connection = cnx;
@@ -1079,23 +583,296 @@ namespace Nominas
             pn.fechainicio = dtpPeriodoInicio.Value;
             pn.fechafin = dtpPeriodoFin.Value;
 
+            int contadorGrid = dgvEmpleados.Rows.Count;
+            int contador = 0;
+            int progreso = 0;
             foreach (DataGridViewRow fila in dgvEmpleados.Rows)
             {
+                progreso = (contador * 100) / contadorGrid;
+                workDescalculo.ReportProgress(progreso, "Descalculo");
+                contador++;
                 if ((bool)fila.Cells["seleccion"].Value)
                 {
                     pn.idtrabajador = (int)fila.Cells["idtrabajador"].Value;
-                    try {
+                    try
+                    {
                         cnx.Open();
                         nh.eliminaCalculo(pn);
                         cnx.Close();
                     }
-                    catch (Exception error) 
+                    catch (Exception error)
                     {
                         MessageBox.Show("Error: \r\n \r\n" + error.Message + "\r\n \r\n Error en descalculo: " + fila.Cells["noempleado"].Value.ToString(), "Error");
                     }
+                    fila.Cells["sueldo"].Value = 0;
+                    fila.Cells["despensa"].Value = 0;
+                    fila.Cells["asistencia"].Value = 0;
+                    fila.Cells["puntualidad"].Value = 0;
+                    fila.Cells["horas"].Value = 0;
                 }
             }
             cnx.Dispose();
+            workDescalculo.ReportProgress(100, "Descalculo");
+        }
+
+        private void workDescalculo_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            toolPorcentaje.Text = e.ProgressPercentage.ToString() + "%";
+            toolEtapa.Text = e.UserState.ToString();
+        }
+
+        private void workDescalculo_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            toolPorcentaje.Text = "Completado.";
+        }
+
+        private void toolGuardar_Click(object sender, EventArgs e)
+        {
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            nh = new CalculoNomina.Core.NominaHelper();
+            nh.Command = cmd;
+
+            CalculoNomina.Core.tmpPagoNomina pn = new CalculoNomina.Core.tmpPagoNomina();
+            pn.idempresa = GLOBALES.IDEMPRESA;
+            pn.fechainicio = dtpPeriodoInicio.Value;
+            pn.fechafin = dtpPeriodoFin.Value;
+            pn.guardada = true;
+
+            try
+            {
+                cnx.Open();
+                nh.actualizaPreNomina(pn);
+                cnx.Close();
+                cnx.Dispose();
+
+                MessageBox.Show("PreNomina Guardada.","Confirmación");
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+            }
+        }
+
+        private void toolAbrir_Click(object sender, EventArgs e)
+        {
+            frmSeleccionarPreNomina spn = new frmSeleccionarPreNomina();
+            spn.OnPreNomina += spn_OnPreNomina;
+            spn.Show();
+        }
+
+        void spn_OnPreNomina(DateTime inicio, DateTime fin)
+        {
+            cargaEmpleados();
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            nh = new CalculoNomina.Core.NominaHelper();
+            nh.Command = cmd;
+
+            CalculoNomina.Core.tmpPagoNomina pn = new CalculoNomina.Core.tmpPagoNomina();
+            pn.idempresa = GLOBALES.IDEMPRESA;
+            pn.fechainicio = inicio;
+            pn.fechafin = fin;
+
+            List<CalculoNomina.Core.tmpPagoNomina> lstPreNomina = new List<CalculoNomina.Core.tmpPagoNomina>();
+            try
+            {
+                cnx.Open();
+                lstPreNomina = nh.obtenerPreNomina(pn);
+                cnx.Close();
+                cnx.Dispose();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+            }
+
+            foreach (DataGridViewRow fila in dgvEmpleados.Rows)
+            {
+                for (int i = 0; i < lstPreNomina.Count; i++)
+                {
+                    if ((int)fila.Cells["idtrabajador"].Value == lstPreNomina[i].idtrabajador)
+                    {
+                        switch (lstPreNomina[i].idconcepto)
+                        {
+                            case 1:
+                                fila.Cells["sueldo"].Value = lstPreNomina[i].cantidad;
+                                break;
+                            case 2:
+                                fila.Cells["horas"].Value = lstPreNomina[i].cantidad;
+                                break;
+                            case 3:
+                                fila.Cells["asistencia"].Value = lstPreNomina[i].cantidad;
+                                break;
+                            case 5:
+                                fila.Cells["puntualidad"].Value = lstPreNomina[i].cantidad;
+                                break;
+                            case 6:
+                                fila.Cells["despensa"].Value = lstPreNomina[i].cantidad;
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void cargaEmpleados()
+        {
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            #region DISEÑO DEL GRIDVIEW
+
+            dgvEmpleados.Columns["seleccion"].DataPropertyName = "chk";
+            dgvEmpleados.Columns["idtrabajador"].DataPropertyName = "idtrabajador";
+            dgvEmpleados.Columns["iddepartamento"].DataPropertyName = "iddepartamento";
+            dgvEmpleados.Columns["idpuesto"].DataPropertyName = "idpuesto";
+            dgvEmpleados.Columns["noempleado"].DataPropertyName = "noempleado";
+            dgvEmpleados.Columns["nombres"].DataPropertyName = "nombres";
+            dgvEmpleados.Columns["paterno"].DataPropertyName = "paterno";
+            dgvEmpleados.Columns["materno"].DataPropertyName = "materno";
+            dgvEmpleados.Columns["sueldo"].DataPropertyName = "sueldo";
+            dgvEmpleados.Columns["despensa"].DataPropertyName = "despensa";
+            dgvEmpleados.Columns["asistencia"].DataPropertyName = "asistencia";
+            dgvEmpleados.Columns["puntualidad"].DataPropertyName = "puntualidad";
+            dgvEmpleados.Columns["horas"].DataPropertyName = "horas";
+
+            DataGridViewCellStyle estilo = new DataGridViewCellStyle();
+            estilo.Alignment = DataGridViewContentAlignment.MiddleRight;
+
+            dgvEmpleados.Columns[8].DefaultCellStyle = estilo;
+            dgvEmpleados.Columns[9].DefaultCellStyle = estilo;
+            dgvEmpleados.Columns[10].DefaultCellStyle = estilo;
+            dgvEmpleados.Columns[11].DefaultCellStyle = estilo;
+            dgvEmpleados.Columns[12].DefaultCellStyle = estilo;
+
+            dgvEmpleados.Columns["idtrabajador"].Visible = false;
+            dgvEmpleados.Columns["noempleado"].ReadOnly = true;
+            dgvEmpleados.Columns["nombres"].ReadOnly = true;
+            dgvEmpleados.Columns["paterno"].ReadOnly = true;
+            dgvEmpleados.Columns["materno"].ReadOnly = true;
+            #endregion
+
+            #region LISTADO DE EMPLEADOS GRID
+            nh = new CalculoNomina.Core.NominaHelper();
+            nh.Command = cmd;
+            lstEmpleadosNomina = new List<CalculoNomina.Core.DatosEmpleado>();
+
+            try
+            {
+                cnx.Open();
+                lstEmpleadosNomina = nh.obtenerDatosEmpleado(GLOBALES.IDEMPRESA, GLOBALES.ACTIVO);
+                cnx.Close();
+                cnx.Dispose();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+            }
+
+            dgvEmpleados.DataSource = lstEmpleadosNomina;
+
+            for (int i = 1; i < dgvEmpleados.Columns.Count; i++)
+            {
+                dgvEmpleados.AutoResizeColumn(i);
+            }
+            #endregion
+        }
+
+        private void toolCerrar_Click(object sender, EventArgs e)
+        {
+            eliminarPreNomina();
+        }
+
+        private void frmListaCalculoNomina_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            eliminarPreNomina();
+        }
+
+        private void eliminarPreNomina()
+        {
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            nh = new CalculoNomina.Core.NominaHelper();
+            nh.Command = cmd;
+
+            CalculoNomina.Core.tmpPagoNomina pn = new CalculoNomina.Core.tmpPagoNomina();
+            pn.idempresa = GLOBALES.IDEMPRESA;
+            pn.fechainicio = dtpPeriodoInicio.Value;
+            pn.fechafin = dtpPeriodoFin.Value;
+            pn.guardada = false;
+
+            try
+            {
+                cnx.Open();
+                nh.eliminaPreNomina(pn);
+                cnx.Close();
+                cnx.Dispose();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+            }
+            this.Dispose();
+        }
+
+        private void toolAutorizar_Click(object sender, EventArgs e)
+        {
+            DialogResult respuesta = MessageBox.Show("¿Quiere autorizar el periodo?", "Confirmación", MessageBoxButtons.YesNo);
+            if (respuesta == DialogResult.Yes)
+            {
+                cnx = new SqlConnection(cdn);
+                cmd = new SqlCommand();
+                cmd.Connection = cnx;
+
+                nh = new CalculoNomina.Core.NominaHelper();
+                nh.Command = cmd;
+
+                try
+                {
+                    cnx.Open();
+                    nh.stpAutorizaNomina(GLOBALES.IDEMPRESA, dtpPeriodoInicio.Value, dtpPeriodoFin.Value);
+                    cnx.Close();
+                    cnx.Dispose();
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                }
+            }
+        }
+
+        private void txtBuscar_Click(object sender, EventArgs e)
+        {
+            txtBuscar.Text = "";
+            txtBuscar.Font = new Font("Arial", 9);
+            txtBuscar.ForeColor = System.Drawing.Color.Black;
+        }
+
+        private void txtBuscar_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                for (int i = 0; i < dgvEmpleados.Rows.Count; i++)
+                {
+                    if (txtBuscar.Text.Trim() == dgvEmpleados.Rows[i].Cells["noempleado"].Value.ToString())
+                        dgvEmpleados.Rows[i].Selected = true;
+                }
+            }
+        }
+
+        private void txtBuscar_Leave(object sender, EventArgs e)
+        {
+            txtBuscar.Text = "Buscar no. empleado...";
+            txtBuscar.Font = new Font("Segoe UI", 9, FontStyle.Italic);
+            txtBuscar.ForeColor = System.Drawing.Color.Gray;
         }
     }
 
@@ -1111,5 +888,6 @@ namespace Nominas
         public double cantidad { get; set; }
         public DateTime fechainicio { get; set; }
         public DateTime fechafin { get; set; }
+        public bool guardada { get; set; }
     }
 }

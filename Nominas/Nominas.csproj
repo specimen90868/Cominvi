@@ -427,6 +427,12 @@
     <Compile Include="frmPuestos.Designer.cs">
       <DependentUpon>frmPuestos.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmReciboNomina.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReciboNomina.Designer.cs">
+      <DependentUpon>frmReciboNomina.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmReingresoEmpleado.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -444,6 +450,12 @@
     </Compile>
     <Compile Include="frmSeleccionarEmpresa.Designer.cs">
       <DependentUpon>frmSeleccionarEmpresa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSeleccionarPreNomina.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSeleccionarPreNomina.Designer.cs">
+      <DependentUpon>frmSeleccionarPreNomina.cs</DependentUpon>
     </Compile>
     <Compile Include="frmSeleccionPeriodo.cs">
       <SubType>Form</SubType>
@@ -659,6 +671,9 @@
     <EmbeddedResource Include="frmPuestos.resx">
       <DependentUpon>frmPuestos.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmReciboNomina.resx">
+      <DependentUpon>frmReciboNomina.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmReingresoEmpleado.resx">
       <DependentUpon>frmReingresoEmpleado.cs</DependentUpon>
     </EmbeddedResource>
@@ -667,6 +682,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmSeleccionarEmpresa.resx">
       <DependentUpon>frmSeleccionarEmpresa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSeleccionarPreNomina.resx">
+      <DependentUpon>frmSeleccionarPreNomina.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmSeleccionPeriodo.resx">
       <DependentUpon>frmSeleccionPeriodo.cs</DependentUpon>

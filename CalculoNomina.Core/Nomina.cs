@@ -51,5 +51,6 @@ namespace CalculoNomina.Core
         public double cantidad { get; set; }
         public DateTime fechainicio { get; set; }
         public DateTime fechafin { get; set; }
+        public bool guardada { get; set; }
     }
 }

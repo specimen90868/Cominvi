@@ -26,6 +26,7 @@ namespace Infonavit.Core
                 inf.credito = dtInfonavit.Rows[i]["credito"].ToString();
                 inf.descuento = int.Parse(dtInfonavit.Rows[i]["descuento"].ToString());
                 inf.valordescuento = double.Parse(dtInfonavit.Rows[i]["valordescuento"].ToString());
+                inf.activo = bool.Parse(dtInfonavit.Rows[i]["activo"].ToString());
                 lstInfonavit.Add(inf);
             }
             return lstInfonavit;
@@ -35,9 +36,10 @@ namespace Infonavit.Core
         {
             List<Infonavit> lstInfonavit = new List<Infonavit>();
             DataTable dtInfonavit = new DataTable();
-            Command.CommandText = "select * from infonavit where idtrabajador = @idtrabajador";
+            Command.CommandText = "select * from infonavit where idtrabajador = @idtrabajador and activo = @activo";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", e.idtrabajador);
+            Command.Parameters.AddWithValue("activo", e.activo);
             dtInfonavit = SelectData(Command);
             for (int i = 0; i < dtInfonavit.Rows.Count; i++)
             {
@@ -48,6 +50,7 @@ namespace Infonavit.Core
                 inf.credito = dtInfonavit.Rows[i]["credito"].ToString();
                 inf.descuento = int.Parse(dtInfonavit.Rows[i]["descuento"].ToString());
                 inf.valordescuento = double.Parse(dtInfonavit.Rows[i]["valordescuento"].ToString());
+                inf.activo = bool.Parse(dtInfonavit.Rows[i]["activo"].ToString());
                 lstInfonavit.Add(inf);
             }
             return lstInfonavit;
@@ -64,7 +67,7 @@ namespace Infonavit.Core
 
         public object existeInfonavit(Infonavit e)
         {
-            Command.CommandText = "select count(idtrabajador) from infonavit where idtrabajador = @idtrabajador";
+            Command.CommandText = "select count(idtrabajador) from infonavit where idtrabajador = @idtrabajador and activo = 1";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", e.idtrabajador);
             object dato = Select(Command);
@@ -73,25 +76,27 @@ namespace Infonavit.Core
 
         public int insertaInfonavit(Infonavit i)
         {
-            Command.CommandText = "insert into infonavit (idempresa,idtrabajador,credito,descuento,valordescuento) " +
-                "values (@idempresa,@idtrabajador,@credito,@descuento,@valordescuento)";
+            Command.CommandText = "insert into infonavit (idempresa,idtrabajador,credito,descuento,valordescuento, activo) " +
+                "values (@idempresa,@idtrabajador,@credito,@descuento,@valordescuento, @activo)";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", i.idempresa);
             Command.Parameters.AddWithValue("idtrabajador", i.idtrabajador);
             Command.Parameters.AddWithValue("credito", i.credito);
             Command.Parameters.AddWithValue("descuento", i.descuento);
             Command.Parameters.AddWithValue("valordescuento", i.valordescuento);
+            Command.Parameters.AddWithValue("activo", i.activo);
             return Command.ExecuteNonQuery();
         }
 
         public int actualizaInfonavit(Infonavit i)
         {
-            Command.CommandText = "update infonavit set credito = @credito, descuento = @descuento, valordescuento = @valordescuento where idtrabajador = @idtrabajador";
+            Command.CommandText = "update infonavit set credito = @credito, descuento = @descuento, valordescuento = @valordescuento, activo = @activo where idtrabajador = @idtrabajador";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", i.idtrabajador);
             Command.Parameters.AddWithValue("credito", i.credito);
             Command.Parameters.AddWithValue("descuento", i.descuento);
             Command.Parameters.AddWithValue("valordescuento", i.valordescuento);
+            Command.Parameters.AddWithValue("activo", i.activo);
             return Command.ExecuteNonQuery();
         }
 

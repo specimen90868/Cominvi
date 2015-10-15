@@ -62,7 +62,8 @@ namespace Nominas
                              Credito = i.credito,
                              Descuento = i.descuento == GLOBALES.dPORCENTAJE ? "PORCENTAJE" :
                              i.descuento == GLOBALES.dVSMDF ? "VSMDF" : "PESOS",
-                             Valor = i.valordescuento
+                             Valor = i.valordescuento,
+                             Activo = i.activo ? "ACTIVO" : "NO ACTIVO"
                          };
 
                 dgvInfonavit.DataSource = em.ToList();

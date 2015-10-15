@@ -93,6 +93,7 @@
             this.workPerfil = new System.ComponentModel.BackgroundWorker();
             this.stsPrincipal = new System.Windows.Forms.StatusStrip();
             this.toolEstatusPerfil = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolAutorizarNomina = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPrincipal.SuspendLayout();
             this.stsPrincipal.SuspendLayout();
             this.SuspendLayout();
@@ -108,7 +109,7 @@
             this.mnuConfiguracion});
             this.mnuPrincipal.Location = new System.Drawing.Point(0, 0);
             this.mnuPrincipal.Name = "mnuPrincipal";
-            this.mnuPrincipal.Size = new System.Drawing.Size(776, 24);
+            this.mnuPrincipal.Size = new System.Drawing.Size(699, 24);
             this.mnuPrincipal.TabIndex = 1;
             this.mnuPrincipal.Text = "menuStrip1";
             // 
@@ -354,6 +355,7 @@
             this.toolIncapacidad,
             this.toolConceptoEmpleado,
             this.cálculoToolStripMenuItem,
+            this.toolAutorizarNomina,
             this.toolStripSeparator8,
             this.toolVacaciones});
             this.mnuNominas.Name = "mnuNominas";
@@ -591,7 +593,7 @@
             this.toolEstatusPerfil});
             this.stsPrincipal.Location = new System.Drawing.Point(0, 645);
             this.stsPrincipal.Name = "stsPrincipal";
-            this.stsPrincipal.Size = new System.Drawing.Size(776, 22);
+            this.stsPrincipal.Size = new System.Drawing.Size(699, 22);
             this.stsPrincipal.TabIndex = 3;
             this.stsPrincipal.Text = "statusStrip1";
             // 
@@ -601,11 +603,17 @@
             this.toolEstatusPerfil.Size = new System.Drawing.Size(98, 17);
             this.toolEstatusPerfil.Text = "Cargando perfil...";
             // 
+            // toolAutorizarNomina
+            // 
+            this.toolAutorizarNomina.Name = "toolAutorizarNomina";
+            this.toolAutorizarNomina.Size = new System.Drawing.Size(195, 22);
+            this.toolAutorizarNomina.Text = "Autorizar nómina";
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(776, 667);
+            this.ClientSize = new System.Drawing.Size(699, 667);
             this.Controls.Add(this.stsPrincipal);
             this.Controls.Add(this.mnuPrincipal);
             this.IsMdiContainer = true;
@@ -690,6 +698,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolCargaIncapacidad;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem toolVacaciones;
+        private System.Windows.Forms.ToolStripMenuItem toolAutorizarNomina;
     }
 }
 

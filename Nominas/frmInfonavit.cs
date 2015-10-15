@@ -65,6 +65,7 @@ namespace Nominas
                     {
                         txtNumeroCredito.Text = lstInfonavit[j].credito;
                         txtValor.Text = lstInfonavit[j].valordescuento.ToString();
+                        chkActivo.Checked = lstInfonavit[j].activo;
                         switch (lstInfonavit[j].descuento)
                         {
                                 //Porcentaje
@@ -90,6 +91,7 @@ namespace Nominas
                     toolVentana.Text = "Consulta del Crédito";
                     GLOBALES.INHABILITAR(this, typeof(TextBox));
                     GLOBALES.INHABILITAR(this, typeof(RadioButton));
+                    GLOBALES.INHABILITAR(this, typeof(CheckBox));
                     toolGuardar.Enabled = false;
                     toolBuscar.Enabled = false;
                 }
@@ -130,6 +132,7 @@ namespace Nominas
             i.credito = txtNumeroCredito.Text;
             i.descuento = Descuento;
             i.valordescuento = double.Parse(txtValor.Text);
+            i.activo = chkActivo.Checked;
             
 
             switch (_tipoOperacion)

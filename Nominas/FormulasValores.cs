@@ -163,30 +163,36 @@ namespace Nominas
 
                         Infonavit.Core.Infonavit inf = new Infonavit.Core.Infonavit();
                         inf.idtrabajador = datosNomina[0].idtrabajador;
-                        
+                        inf.activo = true;
+
                         cnx.Open();
                         lstInfonavit = infh.obtenerInfonavit(inf);
                         cnx.Close();
 
-                        Conceptos.Core.ConceptosHelper ch = new Conceptos.Core.ConceptosHelper();
-                        ch.Command = cmd;
-                        Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
-                        concepto.idempresa = GLOBALES.IDEMPRESA;
+                        if (lstInfonavit.Count != 0)
+                        {
+                            Conceptos.Core.ConceptosHelper ch = new Conceptos.Core.ConceptosHelper();
+                            ch.Command = cmd;
+                            Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
+                            concepto.idempresa = GLOBALES.IDEMPRESA;
 
-                        if (lstInfonavit[0].descuento == GLOBALES.dPORCENTAJE)
-                            concepto.noconcepto = 10; //INFONAVIT PORCENTAJE
+                            if (lstInfonavit[0].descuento == GLOBALES.dPORCENTAJE)
+                                concepto.noconcepto = 10; //INFONAVIT PORCENTAJE
 
-                        if (lstInfonavit[0].descuento == GLOBALES.dVSMDF)
-                            concepto.noconcepto = 11; //INFONAVIT VSMDF
+                            if (lstInfonavit[0].descuento == GLOBALES.dVSMDF)
+                                concepto.noconcepto = 11; //INFONAVIT VSMDF
 
-                        if (lstInfonavit[0].descuento == GLOBALES.dPESOS)
-                            concepto.noconcepto = 12; //INFONAVIT FIJO
-                        
-                        cnx.Open();
-                        formulaInfonavit = ch.obtenerFormula(concepto).ToString();
-                        cnx.Close();
+                            if (lstInfonavit[0].descuento == GLOBALES.dPESOS)
+                                concepto.noconcepto = 12; //INFONAVIT FIJO
 
-                        return evaluacionFormula(formulaInfonavit);
+                            cnx.Open();
+                            formulaInfonavit = ch.obtenerFormula(concepto).ToString();
+                            cnx.Close();
+
+                            return evaluacionFormula(formulaInfonavit);
+                        }
+                        else
+                            return 0;                        
 
                     case "ValorInfonavit":
                         object valorInfonavit;
