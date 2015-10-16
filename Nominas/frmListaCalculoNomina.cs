@@ -33,6 +33,7 @@ namespace Nominas
         Conceptos.Core.ConceptosHelper ch;
         Vacaciones.Core.VacacionesHelper vh;
         CalculoNomina.Core.NominaHelper nh;
+        ProgramacionConcepto.Core.ProgramacionHelper pch;
         DateTime inicio, fin;
         List<CalculoNomina.Core.DatosEmpleado> lstEmpleadosNomina;
         CheckBox chk;
@@ -377,7 +378,7 @@ namespace Nominas
                 workerCalculo.ReportProgress(progreso, "Verificación de Prima Vacacional y Vacaciones");
                 contador++;
 
-                if ((bool)fila.Cells["seleccion"].Value)
+                if ((bool)fila.Cells["seleccion"].Value && double.Parse(fila.Cells["sueldo"].Value.ToString()) == 0)
                 {
                     Vacaciones.Core.Vacaciones vacacion = new Vacaciones.Core.Vacaciones();
                     vacacion.idtrabajador = int.Parse(fila.Cells["idtrabajador"].Value.ToString());
@@ -466,6 +467,76 @@ namespace Nominas
                 }
             }
             workerCalculo.ReportProgress(100, "Verificación de Prima Vacacional y Vacaciones");
+            #endregion
+
+            #region PROGRAMACION DE DEDUCCIONES
+            pch = new ProgramacionConcepto.Core.ProgramacionHelper();
+            pch.Command = cmd;
+            contadorGrid = dgvEmpleados.Rows.Count;
+            contador = 0;
+            progreso = 0;
+            foreach (DataGridViewRow fila in dgvEmpleados.Rows)
+            {
+                progreso = (contador * 100) / contadorGrid;
+                workerCalculo.ReportProgress(progreso, "Otras Deducciones");
+                contador++;
+
+                if ((bool)fila.Cells["seleccion"].Value && double.Parse(fila.Cells["sueldo"].Value.ToString()) == 0)
+                {
+                    int existe = 0;
+                    ProgramacionConcepto.Core.ProgramacionConcepto programacion = new ProgramacionConcepto.Core.ProgramacionConcepto();
+                    programacion.idtrabajador = int.Parse(fila.Cells["idtrabajador"].Value.ToString());
+
+                    List<ProgramacionConcepto.Core.ProgramacionConcepto> lstProgramacion = new List<ProgramacionConcepto.Core.ProgramacionConcepto>();
+                    
+                    try
+                    {
+                        cnx.Open();
+                        existe = (int)pch.existeProgramacion(programacion);
+                        cnx.Close();
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                        cnx.Dispose();
+                    }
+
+                    if (existe != 0)
+                    {
+                        try
+                        {
+                            cnx.Open();
+                            lstProgramacion = pch.obtenerProgramacion(programacion);
+                            cnx.Close();
+                        }
+                        catch (Exception error)
+                        {
+                            MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                            cnx.Dispose();
+                        }
+
+                        for (int i = 0; i < lstProgramacion.Count; i++)
+                        {
+                            if (dtpPeriodoFin.Value <= lstProgramacion[i].fechafin)
+                            {
+                                tmpPagoNomina vn = new tmpPagoNomina();
+                                vn.idtrabajador = (int)fila.Cells["idtrabajador"].Value;
+                                vn.idempresa = GLOBALES.IDEMPRESA;
+                                vn.idconcepto = lstProgramacion[i].idconcepto;
+                                vn.tipoconcepto = "D";
+                                vn.fechainicio = dtpPeriodoInicio.Value;
+                                vn.fechafin = dtpPeriodoFin.Value;
+                                vn.exento = 0;
+                                vn.gravado = 0;
+                                vn.cantidad = lstProgramacion[i].cantidad;
+                                vn.guardada = false;
+                                lstValoresNomina.Add(vn);
+                            }
+                        }
+                    }
+                }
+            }
+            workerCalculo.ReportProgress(100, "Otras Deducciones");
             #endregion
 
             #region BULK DATA

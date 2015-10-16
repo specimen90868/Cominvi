@@ -55,6 +55,15 @@ namespace ProgramacionConcepto.Core
             return lstProgramacion;
         }
 
+        public object existeProgramacion(ProgramacionConcepto pc)
+        {
+            Command.CommandText = "select count(idtrabajador) as existe from programacionconcepto where idtrabajador = @idtrabajador";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", pc.idtrabajador);
+            object dato = Select(Command);
+            return dato;
+        }
+
         public int insertaProgramacion(ProgramacionConcepto pc)
         {
             Command.CommandText = "insert into ProgramacionConcepto (idtrabajador, idempresa, idconcepto, concepto, cantidad, fechafin) " +
