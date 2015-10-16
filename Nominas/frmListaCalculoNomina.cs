@@ -838,9 +838,10 @@ namespace Nominas
                 try
                 {
                     cnx.Open();
-                    nh.stpAutorizaNomina(GLOBALES.IDEMPRESA, dtpPeriodoInicio.Value, dtpPeriodoFin.Value);
+                    nh.stpAutorizaNomina(GLOBALES.IDEMPRESA, dtpPeriodoInicio.Value, dtpPeriodoFin.Value, GLOBALES.IDUSUARIO);
                     cnx.Close();
                     cnx.Dispose();
+                    MessageBox.Show("Nomina autorizada.", "Confirmación");
                 }
                 catch (Exception error)
                 {
@@ -873,6 +874,15 @@ namespace Nominas
             txtBuscar.Text = "Buscar no. empleado...";
             txtBuscar.Font = new Font("Segoe UI", 9, FontStyle.Italic);
             txtBuscar.ForeColor = System.Drawing.Color.Gray;
+        }
+
+        private void toolReportePreNomina_Click(object sender, EventArgs e)
+        {
+            frmVisorReportes vr = new frmVisorReportes();
+            vr._noReporte = 0;
+            vr._inicioPeriodo = dtpPeriodoInicio.Value;
+            vr._finPeriodo = dtpPeriodoFin.Value;
+            vr.Show();
         }
     }
 

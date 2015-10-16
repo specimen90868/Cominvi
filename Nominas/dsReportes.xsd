@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsReportes" targetNamespace="http://tempuri.org/dsReportes.xsd" xmlns:mstns="http://tempuri.org/dsReportes.xsd" xmlns="http://tempuri.org/dsReportes.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsReportes" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsReportes" msprop:Generator_UserDSName="dsReportes">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="PreNominaNetos" msprop:Generator_TableClassName="PreNominaNetosDataTable" msprop:Generator_TableVarName="tablePreNominaNetos" msprop:Generator_TablePropName="PreNominaNetos" msprop:Generator_RowDeletingName="PreNominaNetosRowDeleting" msprop:Generator_RowChangingName="PreNominaNetosRowChanging" msprop:Generator_RowEvHandlerName="PreNominaNetosRowChangeEventHandler" msprop:Generator_RowDeletedName="PreNominaNetosRowDeleted" msprop:Generator_UserTableName="PreNominaNetos" msprop:Generator_RowChangedName="PreNominaNetosRowChanged" msprop:Generator_RowEvArgName="PreNominaNetosRowChangeEvent" msprop:Generator_RowClassName="PreNominaNetosRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="empresa" msprop:Generator_ColumnVarNameInTable="columnempresa" msprop:Generator_ColumnPropNameInRow="empresa" msprop:Generator_ColumnPropNameInTable="empresaColumn" msprop:Generator_UserColumnName="empresa" type="xs:string" minOccurs="0" />
+              <xs:element name="noempleado" msprop:Generator_ColumnVarNameInTable="columnnoempleado" msprop:Generator_ColumnPropNameInRow="noempleado" msprop:Generator_ColumnPropNameInTable="noempleadoColumn" msprop:Generator_UserColumnName="noempleado" type="xs:string" minOccurs="0" />
+              <xs:element name="nombrecompleto" msprop:Generator_ColumnVarNameInTable="columnnombrecompleto" msprop:Generator_ColumnPropNameInRow="nombrecompleto" msprop:Generator_ColumnPropNameInTable="nombrecompletoColumn" msprop:Generator_UserColumnName="nombrecompleto" type="xs:string" minOccurs="0" />
+              <xs:element name="percepciones" msprop:Generator_ColumnVarNameInTable="columnpercepciones" msprop:Generator_ColumnPropNameInRow="percepciones" msprop:Generator_ColumnPropNameInTable="percepcionesColumn" msprop:Generator_UserColumnName="percepciones" type="xs:double" minOccurs="0" />
+              <xs:element name="deducciones" msprop:Generator_ColumnVarNameInTable="columndeducciones" msprop:Generator_ColumnPropNameInRow="deducciones" msprop:Generator_ColumnPropNameInTable="deduccionesColumn" msprop:Generator_UserColumnName="deducciones" type="xs:double" minOccurs="0" />
+              <xs:element name="neto" msprop:Generator_ColumnVarNameInTable="columnneto" msprop:Generator_ColumnPropNameInRow="neto" msprop:Generator_ColumnPropNameInTable="netoColumn" msprop:Generator_UserColumnName="neto" type="xs:double" minOccurs="0" />
+              <xs:element name="fechainicio" msprop:Generator_ColumnVarNameInTable="columnfechainicio" msprop:Generator_ColumnPropNameInRow="fechainicio" msprop:Generator_ColumnPropNameInTable="fechainicioColumn" msprop:Generator_UserColumnName="fechainicio" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="fechafin" msprop:Generator_ColumnVarNameInTable="columnfechafin" msprop:Generator_ColumnPropNameInRow="fechafin" msprop:Generator_ColumnPropNameInTable="fechafinColumn" msprop:Generator_UserColumnName="fechafin" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

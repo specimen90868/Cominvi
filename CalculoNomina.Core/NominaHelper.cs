@@ -235,13 +235,14 @@ namespace CalculoNomina.Core
             return Command.ExecuteNonQuery();
         }
 
-        public int stpAutorizaNomina(int idempresa, DateTime inicio, DateTime fin)
+        public int stpAutorizaNomina(int idempresa, DateTime inicio, DateTime fin, int idusuario)
         {
             Command.CommandText = "exec stp_AutorizaNomina @idempresa, @fechainicio, @fechafin";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idempresa);
             Command.Parameters.AddWithValue("fechainicio", inicio);
             Command.Parameters.AddWithValue("fechafin", fin);
+            Command.Parameters.AddWithValue("idusuario", idusuario);
             return Command.ExecuteNonQuery();
         }
     }

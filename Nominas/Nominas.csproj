@@ -38,9 +38,12 @@
     <Reference Include="CURPLib">
       <HintPath>..\Librerias\CURPLib.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,6 +56,11 @@
   <ItemGroup>
     <Compile Include="Calendario.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="dsReportes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsReportes.xsd</DependentUpon>
     </Compile>
     <Compile Include="FormulasValores.cs" />
     <Compile Include="frmBaja.cs">
@@ -349,6 +357,12 @@
     <Compile Include="frmListaProcesoSalarial.Designer.cs">
       <DependentUpon>frmListaProcesoSalarial.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmListaProgramacionConceptos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaProgramacionConceptos.Designer.cs">
+      <DependentUpon>frmListaProgramacionConceptos.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmListaPuestos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -421,6 +435,12 @@
     <Compile Include="frmPrincipal.Designer.cs">
       <DependentUpon>frmPrincipal.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmProgramacionConcepto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmProgramacionConcepto.Designer.cs">
+      <DependentUpon>frmProgramacionConcepto.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmPuestos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -480,6 +500,12 @@
     </Compile>
     <Compile Include="frmVacaciones.Designer.cs">
       <DependentUpon>frmVacaciones.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmVisorReportes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmVisorReportes.Designer.cs">
+      <DependentUpon>frmVisorReportes.cs</DependentUpon>
     </Compile>
     <Compile Include="GlobalVar.cs" />
     <Compile Include="MathParser.cs" />
@@ -632,6 +658,9 @@
     <EmbeddedResource Include="frmListaProcesoSalarial.resx">
       <DependentUpon>frmListaProcesoSalarial.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmListaProgramacionConceptos.resx">
+      <DependentUpon>frmListaProgramacionConceptos.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmListaPuestos.resx">
       <DependentUpon>frmListaPuestos.cs</DependentUpon>
     </EmbeddedResource>
@@ -668,6 +697,9 @@
     <EmbeddedResource Include="frmPrincipal.resx">
       <DependentUpon>frmPrincipal.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmProgramacionConcepto.resx">
+      <DependentUpon>frmProgramacionConcepto.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmPuestos.resx">
       <DependentUpon>frmPuestos.cs</DependentUpon>
     </EmbeddedResource>
@@ -698,6 +730,9 @@
     <EmbeddedResource Include="frmVacaciones.resx">
       <DependentUpon>frmVacaciones.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmVisorReportes.resx">
+      <DependentUpon>frmVisorReportes.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -707,6 +742,18 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Reportes\rptPreNominaNetos.rdlc" />
+    <None Include="dsReportes.xsc">
+      <DependentUpon>dsReportes.xsd</DependentUpon>
+    </None>
+    <None Include="dsReportes.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsReportes.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="dsReportes.xss">
+      <DependentUpon>dsReportes.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -828,6 +875,10 @@
     <ProjectReference Include="..\Periodos.Core\Periodos.Core.csproj">
       <Project>{0cadde52-8b72-446e-80f8-33da3fc99151}</Project>
       <Name>Periodos.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProgramacionConcepto.Core\ProgramacionConcepto.Core.csproj">
+      <Project>{e4663116-becd-4329-9e79-2e75a5b32da1}</Project>
+      <Name>ProgramacionConcepto.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Puestos.Core\Puestos.Core.csproj">
       <Project>{c9507108-2018-4989-97bc-c00354d90a75}</Project>

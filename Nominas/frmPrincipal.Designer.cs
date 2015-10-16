@@ -69,6 +69,7 @@
             this.toolCargaIncapacidad = new System.Windows.Forms.ToolStripMenuItem();
             this.toolConceptoEmpleado = new System.Windows.Forms.ToolStripMenuItem();
             this.cálculoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolAutorizarNomina = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.toolVacaciones = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuCatalogos = new System.Windows.Forms.ToolStripMenuItem();
@@ -93,7 +94,8 @@
             this.workPerfil = new System.ComponentModel.BackgroundWorker();
             this.stsPrincipal = new System.Windows.Forms.StatusStrip();
             this.toolEstatusPerfil = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolAutorizarNomina = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolProgramacion = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuPrincipal.SuspendLayout();
             this.stsPrincipal.SuspendLayout();
             this.SuspendLayout();
@@ -354,7 +356,9 @@
             this.toolFaltas,
             this.toolIncapacidad,
             this.toolConceptoEmpleado,
+            this.toolProgramacion,
             this.cálculoToolStripMenuItem,
+            this.toolStripSeparator9,
             this.toolAutorizarNomina,
             this.toolStripSeparator8,
             this.toolVacaciones});
@@ -368,7 +372,7 @@
             this.toolHistorialFaltas,
             this.toolCargaFaltas});
             this.toolFaltas.Name = "toolFaltas";
-            this.toolFaltas.Size = new System.Drawing.Size(195, 22);
+            this.toolFaltas.Size = new System.Drawing.Size(218, 22);
             this.toolFaltas.Text = "Faltas";
             // 
             // toolHistorialFaltas
@@ -391,7 +395,7 @@
             this.toolHistorialIncapacidad,
             this.toolCargaIncapacidad});
             this.toolIncapacidad.Name = "toolIncapacidad";
-            this.toolIncapacidad.Size = new System.Drawing.Size(195, 22);
+            this.toolIncapacidad.Size = new System.Drawing.Size(218, 22);
             this.toolIncapacidad.Text = "Incapacidades";
             // 
             // toolHistorialIncapacidad
@@ -411,26 +415,32 @@
             // toolConceptoEmpleado
             // 
             this.toolConceptoEmpleado.Name = "toolConceptoEmpleado";
-            this.toolConceptoEmpleado.Size = new System.Drawing.Size(195, 22);
+            this.toolConceptoEmpleado.Size = new System.Drawing.Size(218, 22);
             this.toolConceptoEmpleado.Text = "Conceptos - Empleado";
             this.toolConceptoEmpleado.Click += new System.EventHandler(this.toolConceptoEmpleado_Click);
             // 
             // cálculoToolStripMenuItem
             // 
             this.cálculoToolStripMenuItem.Name = "cálculoToolStripMenuItem";
-            this.cálculoToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.cálculoToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.cálculoToolStripMenuItem.Text = "Cálculo de nómina";
             this.cálculoToolStripMenuItem.Click += new System.EventHandler(this.cálculoToolStripMenuItem_Click);
+            // 
+            // toolAutorizarNomina
+            // 
+            this.toolAutorizarNomina.Name = "toolAutorizarNomina";
+            this.toolAutorizarNomina.Size = new System.Drawing.Size(218, 22);
+            this.toolAutorizarNomina.Text = "Autorizar nómina";
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(192, 6);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(215, 6);
             // 
             // toolVacaciones
             // 
             this.toolVacaciones.Name = "toolVacaciones";
-            this.toolVacaciones.Size = new System.Drawing.Size(195, 22);
+            this.toolVacaciones.Size = new System.Drawing.Size(218, 22);
             this.toolVacaciones.Text = "Vacaciones";
             this.toolVacaciones.Click += new System.EventHandler(this.toolVacaciones_Click);
             // 
@@ -603,11 +613,17 @@
             this.toolEstatusPerfil.Size = new System.Drawing.Size(98, 17);
             this.toolEstatusPerfil.Text = "Cargando perfil...";
             // 
-            // toolAutorizarNomina
+            // toolProgramacion
             // 
-            this.toolAutorizarNomina.Name = "toolAutorizarNomina";
-            this.toolAutorizarNomina.Size = new System.Drawing.Size(195, 22);
-            this.toolAutorizarNomina.Text = "Autorizar nómina";
+            this.toolProgramacion.Name = "toolProgramacion";
+            this.toolProgramacion.Size = new System.Drawing.Size(218, 22);
+            this.toolProgramacion.Text = "Programación de concepto";
+            this.toolProgramacion.Click += new System.EventHandler(this.toolProgramacion_Click);
+            // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(215, 6);
             // 
             // frmPrincipal
             // 
@@ -699,6 +715,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem toolVacaciones;
         private System.Windows.Forms.ToolStripMenuItem toolAutorizarNomina;
+        private System.Windows.Forms.ToolStripMenuItem toolProgramacion;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
     }
 }
 

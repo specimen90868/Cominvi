@@ -486,6 +486,13 @@ namespace Nominas
             sp.MdiParent = this;
             sp.Show();
         }
+
+        private void toolProgramacion_Click(object sender, EventArgs e)
+        {
+            frmListaProgramacionConceptos lpc = new frmListaProgramacionConceptos();
+            lpc.MdiParent = this;
+            lpc.Show();
+        }
       
     }
 }

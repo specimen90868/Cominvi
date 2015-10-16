@@ -29,20 +29,21 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmListaCalculoNomina));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle56 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle57 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle58 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle59 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle60 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle61 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle62 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle63 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle64 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle65 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle66 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolTitulo = new System.Windows.Forms.ToolStrip();
             this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
             this.toolAbrir = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolAutorizar = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolGuardar = new System.Windows.Forms.ToolStripMenuItem();
             this.toolBusqueda = new System.Windows.Forms.ToolStrip();
@@ -98,7 +99,7 @@
             this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.toolAutorizar = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolReportePreNomina = new System.Windows.Forms.ToolStripButton();
             this.toolTitulo.SuspendLayout();
             this.toolBusqueda.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmpleados)).BeginInit();
@@ -141,6 +142,14 @@
             this.toolAbrir.Text = "Abrir";
             this.toolAbrir.Click += new System.EventHandler(this.toolAbrir_Click);
             // 
+            // toolAutorizar
+            // 
+            this.toolAutorizar.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.toolAutorizar.Name = "toolAutorizar";
+            this.toolAutorizar.Size = new System.Drawing.Size(152, 22);
+            this.toolAutorizar.Text = "Autorizar";
+            this.toolAutorizar.Click += new System.EventHandler(this.toolAutorizar_Click);
+            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
@@ -163,6 +172,7 @@
             this.toolStripSeparator3,
             this.toolDescalcular,
             this.toolStripSeparator1,
+            this.toolReportePreNomina,
             this.toolCerrar,
             this.toolStripSeparator4,
             this.lblBuscar,
@@ -189,21 +199,21 @@
             // toolTodos
             // 
             this.toolTodos.Name = "toolTodos";
-            this.toolTodos.Size = new System.Drawing.Size(152, 22);
+            this.toolTodos.Size = new System.Drawing.Size(150, 22);
             this.toolTodos.Text = "Todos";
             this.toolTodos.Click += new System.EventHandler(this.toolTodos_Click);
             // 
             // toolDepartamento
             // 
             this.toolDepartamento.Name = "toolDepartamento";
-            this.toolDepartamento.Size = new System.Drawing.Size(152, 22);
+            this.toolDepartamento.Size = new System.Drawing.Size(150, 22);
             this.toolDepartamento.Text = "Departamento";
             this.toolDepartamento.Click += new System.EventHandler(this.toolDepartamento_Click);
             // 
             // toolPuesto
             // 
             this.toolPuesto.Name = "toolPuesto";
-            this.toolPuesto.Size = new System.Drawing.Size(152, 22);
+            this.toolPuesto.Size = new System.Drawing.Size(150, 22);
             this.toolPuesto.Text = "Puesto";
             this.toolPuesto.Click += new System.EventHandler(this.toolPuesto_Click);
             // 
@@ -314,9 +324,9 @@
             // 
             // seleccion
             // 
-            dataGridViewCellStyle56.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle56.NullValue = false;
-            this.seleccion.DefaultCellStyle = dataGridViewCellStyle56;
+            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle23.NullValue = false;
+            this.seleccion.DefaultCellStyle = dataGridViewCellStyle23;
             this.seleccion.HeaderText = "Seleccion";
             this.seleccion.Name = "seleccion";
             // 
@@ -364,37 +374,37 @@
             // 
             // sueldo
             // 
-            dataGridViewCellStyle57.Format = "C6";
-            dataGridViewCellStyle57.NullValue = null;
-            this.sueldo.DefaultCellStyle = dataGridViewCellStyle57;
+            dataGridViewCellStyle24.Format = "C6";
+            dataGridViewCellStyle24.NullValue = null;
+            this.sueldo.DefaultCellStyle = dataGridViewCellStyle24;
             this.sueldo.HeaderText = "Sueldo";
             this.sueldo.Name = "sueldo";
             // 
             // despensa
             // 
-            dataGridViewCellStyle58.Format = "C6";
-            this.despensa.DefaultCellStyle = dataGridViewCellStyle58;
+            dataGridViewCellStyle25.Format = "C6";
+            this.despensa.DefaultCellStyle = dataGridViewCellStyle25;
             this.despensa.HeaderText = "Despensa";
             this.despensa.Name = "despensa";
             // 
             // asistencia
             // 
-            dataGridViewCellStyle59.Format = "C6";
-            this.asistencia.DefaultCellStyle = dataGridViewCellStyle59;
+            dataGridViewCellStyle26.Format = "C6";
+            this.asistencia.DefaultCellStyle = dataGridViewCellStyle26;
             this.asistencia.HeaderText = "Asistencia";
             this.asistencia.Name = "asistencia";
             // 
             // puntualidad
             // 
-            dataGridViewCellStyle60.Format = "C6";
-            this.puntualidad.DefaultCellStyle = dataGridViewCellStyle60;
+            dataGridViewCellStyle27.Format = "C6";
+            this.puntualidad.DefaultCellStyle = dataGridViewCellStyle27;
             this.puntualidad.HeaderText = "Puntualidad";
             this.puntualidad.Name = "puntualidad";
             // 
             // horas
             // 
-            dataGridViewCellStyle61.Format = "C6";
-            this.horas.DefaultCellStyle = dataGridViewCellStyle61;
+            dataGridViewCellStyle28.Format = "C6";
+            this.horas.DefaultCellStyle = dataGridViewCellStyle28;
             this.horas.HeaderText = "H. Extras Dobles";
             this.horas.Name = "horas";
             // 
@@ -551,49 +561,50 @@
             // 
             // dataGridViewTextBoxColumn8
             // 
-            dataGridViewCellStyle62.Format = "C6";
-            dataGridViewCellStyle62.NullValue = null;
-            this.dataGridViewTextBoxColumn8.DefaultCellStyle = dataGridViewCellStyle62;
+            dataGridViewCellStyle29.Format = "C6";
+            dataGridViewCellStyle29.NullValue = null;
+            this.dataGridViewTextBoxColumn8.DefaultCellStyle = dataGridViewCellStyle29;
             this.dataGridViewTextBoxColumn8.HeaderText = "P. Puntualidad";
             this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
             // 
             // dataGridViewTextBoxColumn9
             // 
-            dataGridViewCellStyle63.Format = "C6";
-            this.dataGridViewTextBoxColumn9.DefaultCellStyle = dataGridViewCellStyle63;
+            dataGridViewCellStyle30.Format = "C6";
+            this.dataGridViewTextBoxColumn9.DefaultCellStyle = dataGridViewCellStyle30;
             this.dataGridViewTextBoxColumn9.HeaderText = "H. Extras Dobles";
             this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
             // 
             // dataGridViewTextBoxColumn10
             // 
-            dataGridViewCellStyle64.Format = "C6";
-            this.dataGridViewTextBoxColumn10.DefaultCellStyle = dataGridViewCellStyle64;
+            dataGridViewCellStyle31.Format = "C6";
+            this.dataGridViewTextBoxColumn10.DefaultCellStyle = dataGridViewCellStyle31;
             this.dataGridViewTextBoxColumn10.HeaderText = "Inicio";
             this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
             this.dataGridViewTextBoxColumn10.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn11
             // 
-            dataGridViewCellStyle65.Format = "C6";
-            this.dataGridViewTextBoxColumn11.DefaultCellStyle = dataGridViewCellStyle65;
+            dataGridViewCellStyle32.Format = "C6";
+            this.dataGridViewTextBoxColumn11.DefaultCellStyle = dataGridViewCellStyle32;
             this.dataGridViewTextBoxColumn11.HeaderText = "Fin";
             this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
             this.dataGridViewTextBoxColumn11.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn12
             // 
-            dataGridViewCellStyle66.Format = "C6";
-            this.dataGridViewTextBoxColumn12.DefaultCellStyle = dataGridViewCellStyle66;
+            dataGridViewCellStyle33.Format = "C6";
+            this.dataGridViewTextBoxColumn12.DefaultCellStyle = dataGridViewCellStyle33;
             this.dataGridViewTextBoxColumn12.HeaderText = "H. Extras Dobles";
             this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
             // 
-            // toolAutorizar
+            // toolReportePreNomina
             // 
-            this.toolAutorizar.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.toolAutorizar.Name = "toolAutorizar";
-            this.toolAutorizar.Size = new System.Drawing.Size(152, 22);
-            this.toolAutorizar.Text = "Autorizar";
-            this.toolAutorizar.Click += new System.EventHandler(this.toolAutorizar_Click);
+            this.toolReportePreNomina.Image = ((System.Drawing.Image)(resources.GetObject("toolReportePreNomina.Image")));
+            this.toolReportePreNomina.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolReportePreNomina.Name = "toolReportePreNomina";
+            this.toolReportePreNomina.Size = new System.Drawing.Size(107, 22);
+            this.toolReportePreNomina.Text = "Ver PreNomina";
+            this.toolReportePreNomina.Click += new System.EventHandler(this.toolReportePreNomina_Click);
             // 
             // frmListaCalculoNomina
             // 
@@ -688,5 +699,6 @@
         private System.Windows.Forms.ToolStripButton toolCerrar;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem toolAutorizar;
+        private System.Windows.Forms.ToolStripButton toolReportePreNomina;
     }
 }
