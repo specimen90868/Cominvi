@@ -29,6 +29,10 @@ namespace Nominas
         Faltas.Core.FaltasHelper fh;
         #endregion
 
+        #region VARIABLES PUBLICAS
+        public int _tipoNomina;
+        #endregion
+
         private void ListaFaltas()
         {
             cnx = new SqlConnection(cdn);
@@ -41,7 +45,11 @@ namespace Nominas
 
             Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
             empleado.idempresa = GLOBALES.IDEMPRESA;
-            empleado.estatus = GLOBALES.ACTIVO;
+
+            if(_tipoNomina == GLOBALES.NORMAL)
+                empleado.estatus = GLOBALES.ACTIVO;
+            if(_tipoNomina == GLOBALES.ESPECIAL)
+                empleado.estatus = GLOBALES.INACTIVO;
 
             Faltas.Core.Faltas falta = new Faltas.Core.Faltas();
             falta.idempresa = GLOBALES.IDEMPRESA;
@@ -206,6 +214,7 @@ namespace Nominas
             fh = new Faltas.Core.FaltasHelper();
             fh.Command = cmd;
 
+            fila = dgvFaltas.CurrentCell.RowIndex;
             Faltas.Core.Faltas falta = new Faltas.Core.Faltas();
             falta.id = int.Parse(dgvFaltas.Rows[fila].Cells[0].Value.ToString());
 

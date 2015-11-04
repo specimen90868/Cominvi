@@ -46,6 +46,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.txtExento = new System.Windows.Forms.TextBox();
             this.btnEditor2 = new System.Windows.Forms.Button();
+            this.chkVisible = new System.Windows.Forms.CheckBox();
             this.toolTitulo.SuspendLayout();
             this.toolAcciones.SuspendLayout();
             this.SuspendLayout();
@@ -207,11 +208,22 @@
             this.btnEditor2.UseVisualStyleBackColor = true;
             this.btnEditor2.Click += new System.EventHandler(this.btnEditor2_Click);
             // 
+            // chkVisible
+            // 
+            this.chkVisible.AutoSize = true;
+            this.chkVisible.Location = new System.Drawing.Point(219, 110);
+            this.chkVisible.Name = "chkVisible";
+            this.chkVisible.Size = new System.Drawing.Size(56, 17);
+            this.chkVisible.TabIndex = 118;
+            this.chkVisible.Text = "Visible";
+            this.chkVisible.UseVisualStyleBackColor = true;
+            // 
             // frmConceptos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(678, 583);
+            this.Controls.Add(this.chkVisible);
             this.Controls.Add(this.btnEditor2);
             this.Controls.Add(this.txtExento);
             this.Controls.Add(this.label5);
@@ -256,5 +268,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtExento;
         private System.Windows.Forms.Button btnEditor2;
+        private System.Windows.Forms.CheckBox chkVisible;
     }
 }

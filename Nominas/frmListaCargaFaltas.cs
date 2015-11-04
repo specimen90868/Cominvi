@@ -56,7 +56,7 @@ namespace Nominas
                             cmd.Connection = con;
                             con.Open();
                             DataTable dtExcelSchema = con.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                            sheetName = dtExcelSchema.Rows[2]["TABLE_NAME"].ToString();
+                            sheetName = dtExcelSchema.Rows[3]["TABLE_NAME"].ToString();
                             con.Close();
                         }
                     }
@@ -138,6 +138,12 @@ namespace Nominas
                 MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
             }
 
+            if (idEmpresa != GLOBALES.IDEMPRESA)
+            {
+                MessageBox.Show("Intenta aplicar las faltas en un empresa diferente. \r\n \r\n La ventana se cerrará.", "Error");
+                this.Dispose();
+            }
+
             DataTable dt = new DataTable();
             DataRow dtFila;
             dt.Columns.Add("id", typeof(Int32));
@@ -160,7 +166,7 @@ namespace Nominas
                 } catch (Exception error) { 
                     MessageBox.Show("Error: \r\n \r\n" + error.Message,"Error"); 
                 }
-                dtFila["idempresa"] = idEmpresa;
+                dtFila["idempresa"] = GLOBALES.IDEMPRESA;
                 dtFila["faltas"] = fila.Cells["nofaltas"].Value;
                 dtFila["fechainicio"] = fila.Cells["fechainicio"].Value;
                 dtFila["fechafin"] = fila.Cells["fechafin"].Value;

@@ -52,5 +52,6 @@ namespace CalculoNomina.Core
         public DateTime fechainicio { get; set; }
         public DateTime fechafin { get; set; }
         public bool guardada { get; set; }
+        public int tiponomina { get; set; }
     }
 }

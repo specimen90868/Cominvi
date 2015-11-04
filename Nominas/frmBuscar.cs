@@ -34,6 +34,7 @@ namespace Nominas
 
         #region VARIABLES PUBLICAS
         public int _catalogo;
+        public int _tipoNomina;
         #endregion
 
         private void frmBuscar_Load(object sender, EventArgs e)
@@ -52,7 +53,11 @@ namespace Nominas
 
                 Empleados.Core.Empleados em = new Empleados.Core.Empleados();
                 em.idempresa = GLOBALES.IDEMPRESA;
-                em.estatus = GLOBALES.ACTIVO;
+
+                if (_tipoNomina == GLOBALES.NORMAL)
+                    em.estatus = GLOBALES.ACTIVO;
+                if (_tipoNomina == GLOBALES.ESPECIAL)
+                    em.estatus = GLOBALES.INACTIVO;
 
                 try
                 {

@@ -45,6 +45,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txtDiasPago = new System.Windows.Forms.TextBox();
+            this.chkPagoTotal = new System.Windows.Forms.CheckBox();
+            this.txtDiasPagoPV = new System.Windows.Forms.TextBox();
             this.toolTitulo.SuspendLayout();
             this.toolAcciones.SuspendLayout();
             this.SuspendLayout();
@@ -146,11 +148,12 @@
             this.chkPrimaVacacional.TabIndex = 259;
             this.chkPrimaVacacional.Text = "Prima vacacional";
             this.chkPrimaVacacional.UseVisualStyleBackColor = true;
+            this.chkPrimaVacacional.CheckedChanged += new System.EventHandler(this.chkPrimaVacacional_CheckedChanged);
             // 
             // chkVacaciones
             // 
             this.chkVacaciones.AutoSize = true;
-            this.chkVacaciones.Location = new System.Drawing.Point(50, 182);
+            this.chkVacaciones.Location = new System.Drawing.Point(47, 207);
             this.chkVacaciones.Name = "chkVacaciones";
             this.chkVacaciones.Size = new System.Drawing.Size(82, 17);
             this.chkVacaciones.TabIndex = 260;
@@ -161,7 +164,7 @@
             // dtpFin
             // 
             this.dtpFin.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFin.Location = new System.Drawing.Point(123, 259);
+            this.dtpFin.Location = new System.Drawing.Point(120, 284);
             this.dtpFin.Name = "dtpFin";
             this.dtpFin.Size = new System.Drawing.Size(100, 20);
             this.dtpFin.TabIndex = 263;
@@ -169,7 +172,7 @@
             // dtpInicio
             // 
             this.dtpInicio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpInicio.Location = new System.Drawing.Point(123, 233);
+            this.dtpInicio.Location = new System.Drawing.Point(120, 258);
             this.dtpInicio.Name = "dtpInicio";
             this.dtpInicio.Size = new System.Drawing.Size(100, 20);
             this.dtpInicio.TabIndex = 262;
@@ -178,7 +181,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(62, 235);
+            this.label3.Location = new System.Drawing.Point(59, 260);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(46, 13);
             this.label3.TabIndex = 261;
@@ -187,7 +190,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(47, 211);
+            this.label1.Location = new System.Drawing.Point(44, 236);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(70, 13);
             this.label1.TabIndex = 264;
@@ -195,16 +198,38 @@
             // 
             // txtDiasPago
             // 
-            this.txtDiasPago.Location = new System.Drawing.Point(123, 208);
+            this.txtDiasPago.Location = new System.Drawing.Point(120, 233);
             this.txtDiasPago.Name = "txtDiasPago";
             this.txtDiasPago.Size = new System.Drawing.Size(100, 20);
             this.txtDiasPago.TabIndex = 265;
+            // 
+            // chkPagoTotal
+            // 
+            this.chkPagoTotal.AutoSize = true;
+            this.chkPagoTotal.Enabled = false;
+            this.chkPagoTotal.Location = new System.Drawing.Point(65, 182);
+            this.chkPagoTotal.Name = "chkPagoTotal";
+            this.chkPagoTotal.Size = new System.Drawing.Size(78, 17);
+            this.chkPagoTotal.TabIndex = 266;
+            this.chkPagoTotal.Text = "Pago Total";
+            this.chkPagoTotal.UseVisualStyleBackColor = true;
+            this.chkPagoTotal.CheckedChanged += new System.EventHandler(this.chkPagoTotal_CheckedChanged);
+            // 
+            // txtDiasPagoPV
+            // 
+            this.txtDiasPagoPV.Enabled = false;
+            this.txtDiasPagoPV.Location = new System.Drawing.Point(149, 180);
+            this.txtDiasPagoPV.Name = "txtDiasPagoPV";
+            this.txtDiasPagoPV.Size = new System.Drawing.Size(71, 20);
+            this.txtDiasPagoPV.TabIndex = 267;
             // 
             // frmVacaciones
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(604, 516);
+            this.Controls.Add(this.txtDiasPagoPV);
+            this.Controls.Add(this.chkPagoTotal);
             this.Controls.Add(this.txtDiasPago);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dtpFin);
@@ -247,5 +272,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtDiasPago;
+        private System.Windows.Forms.CheckBox chkPagoTotal;
+        private System.Windows.Forms.TextBox txtDiasPagoPV;
     }
 }

@@ -201,5 +201,35 @@ namespace Nominas
         {
             Seleccion(GLOBALES.NUEVO);
         }
+
+        private void toolEliminar_Click(object sender, EventArgs e)
+        {
+            int fila = 0;
+
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            ih = new Incapacidad.Core.IncapacidadHelper();
+            ih.Command = cmd;
+
+            fila = dgvIncapacidad.CurrentCell.RowIndex;
+            Incapacidad.Core.Incapacidades incapacidad = new Incapacidad.Core.Incapacidades();
+            incapacidad.id = int.Parse(dgvIncapacidad.Rows[fila].Cells[0].Value.ToString());
+
+            try
+            {
+                cnx.Open();
+                ih.eliminaIncapadidad(incapacidad);
+                cnx.Close();
+                cnx.Dispose();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+            }
+
+            ListaIncapacidad();
+        }
     }
 }

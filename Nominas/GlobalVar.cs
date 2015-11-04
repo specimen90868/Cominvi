@@ -55,6 +55,11 @@ namespace Nominas
         public static int mTIPODESCUENTO = 18;
         #endregion
 
+        #region TIPO NOMINA
+        public static int NORMAL = 0;
+        public static int ESPECIAL = 1;
+        #endregion
+
         public static int IDUSUARIO { get; set; }
         public static int IDPERFIL { get; set; }
         public static int IDEMPRESA { get; set; }

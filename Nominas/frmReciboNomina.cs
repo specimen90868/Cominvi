@@ -93,7 +93,7 @@ namespace Nominas
 
             var percepcion = from r in lstRecibo
                              join c in lstConceptos on r.idconcepto equals c.id
-                             where c.tipoconcepto.Contains("P")
+                             where c.tipoconcepto.Contains("P") && c.visible == true
                              select new
                              {
                                  NoConcepto = c.noconcepto,
@@ -103,7 +103,7 @@ namespace Nominas
 
             var deduccion = from r in lstRecibo
                             join c in lstConceptos on r.idconcepto equals c.id
-                            where c.tipoconcepto.Contains("D")
+                            where c.tipoconcepto.Contains("D") && c.visible == true
                             select new
                             {
                                 NoConcepto = c.noconcepto,

@@ -25,10 +25,12 @@ namespace Nominas
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
         Departamento.Core.DeptoHelper dh;
         Puestos.Core.PuestosHelper ph;
+        Empleados.Core.EmpleadosHelper eh;
         #endregion
 
         #region VARIABLES PUBLICAS
         public int _filtro;
+        public int _tipoNomina;
         #endregion
 
         #region DELEGADOS
@@ -55,7 +57,12 @@ namespace Nominas
                     dh.Command = cmd;
                     Departamento.Core.Depto depto = new Departamento.Core.Depto();
                     depto.idempresa = GLOBALES.IDEMPRESA;
-                    depto.estatus = GLOBALES.ACTIVO;
+
+                    if (_tipoNomina == GLOBALES.NORMAL)
+                        depto.estatus = GLOBALES.ACTIVO;
+                    if (_tipoNomina == GLOBALES.ESPECIAL)
+                        depto.estatus = GLOBALES.INACTIVO;
+
                     List<Departamento.Core.Depto> lstDeptosDe = new List<Departamento.Core.Depto>();
                     List<Departamento.Core.Depto> lstDeptosHasta = new List<Departamento.Core.Depto>();
                     try {
@@ -82,7 +89,12 @@ namespace Nominas
                     ph.Command = cmd;
                     Puestos.Core.Puestos puesto = new Puestos.Core.Puestos();
                     puesto.idempresa = GLOBALES.IDEMPRESA;
-                    puesto.estatus = GLOBALES.ACTIVO;
+
+                    if (_tipoNomina == GLOBALES.NORMAL)
+                        puesto.estatus = GLOBALES.ACTIVO;
+                    if (_tipoNomina == GLOBALES.ESPECIAL)
+                        puesto.estatus = GLOBALES.INACTIVO;
+
                     List<Puestos.Core.Puestos> lstPuestosDe = new List<Puestos.Core.Puestos>();
                     List<Puestos.Core.Puestos> lstPuestosHasta = new List<Puestos.Core.Puestos>();
                     try
@@ -103,6 +115,38 @@ namespace Nominas
                     cmbHasta.DisplayMember = "descripcion";
                     cmbHasta.ValueMember = "id";
                     break;
+
+                case 2:
+                    eh = new Empleados.Core.EmpleadosHelper();
+                    eh.Command = cmd;
+                    Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
+                    empleado.idempresa = GLOBALES.IDEMPRESA;
+                    
+                    if (_tipoNomina == GLOBALES.NORMAL)
+                        empleado.estatus = GLOBALES.ACTIVO;
+                    if (_tipoNomina == GLOBALES.ESPECIAL)
+                        empleado.estatus = GLOBALES.INACTIVO;
+
+                    List<Empleados.Core.Empleados> lstEmpleadoDe = new List<Empleados.Core.Empleados>();
+                    List<Empleados.Core.Empleados> lstEmpleadoHasta = new List<Empleados.Core.Empleados>();
+                    try 
+                    {
+                        cnx.Open();
+                        lstEmpleadoDe = eh.obtenerEmpleados(empleado);
+                        lstEmpleadoHasta = eh.obtenerEmpleados(empleado);
+                        cnx.Close();
+                        cnx.Dispose();
+                    }
+                    catch (Exception error) { MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error"); }
+
+                    cmbDe.DataSource = lstEmpleadoDe;
+                    cmbDe.DisplayMember = "noempleado";
+                    cmbDe.ValueMember = "idtrabajador";
+
+                    cmbHasta.DataSource = lstEmpleadoHasta;
+                    cmbHasta.DisplayMember = "noempleado";
+                    cmbHasta.ValueMember = "idtrabajador";
+                    break;
             }
         }
 
@@ -116,11 +160,6 @@ namespace Nominas
             if (OnFiltro != null)
                 OnFiltro(_filtro, int.Parse(cmbDe.SelectedValue.ToString()), int.Parse(cmbHasta.SelectedValue.ToString()));
             this.Dispose();
-        }
-
-        private void cmbDe_TextChanged(object sender, EventArgs e)
-        {
-            
         }
     }
 }

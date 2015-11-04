@@ -43,6 +43,8 @@
             this.dtpFin = new System.Windows.Forms.DateTimePicker();
             this.lblEmpleado = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
+            this.rbtnEspecial = new System.Windows.Forms.RadioButton();
+            this.rbtnNormal = new System.Windows.Forms.RadioButton();
             this.toolTitulo.SuspendLayout();
             this.toolAcciones.SuspendLayout();
             this.SuspendLayout();
@@ -178,11 +180,35 @@
             this.label23.TabIndex = 254;
             this.label23.Text = "Empleado:";
             // 
+            // rbtnEspecial
+            // 
+            this.rbtnEspecial.AutoSize = true;
+            this.rbtnEspecial.Location = new System.Drawing.Point(236, 144);
+            this.rbtnEspecial.Name = "rbtnEspecial";
+            this.rbtnEspecial.Size = new System.Drawing.Size(65, 17);
+            this.rbtnEspecial.TabIndex = 256;
+            this.rbtnEspecial.Text = "Especial";
+            this.rbtnEspecial.UseVisualStyleBackColor = true;
+            // 
+            // rbtnNormal
+            // 
+            this.rbtnNormal.AutoSize = true;
+            this.rbtnNormal.Checked = true;
+            this.rbtnNormal.Location = new System.Drawing.Point(236, 121);
+            this.rbtnNormal.Name = "rbtnNormal";
+            this.rbtnNormal.Size = new System.Drawing.Size(58, 17);
+            this.rbtnNormal.TabIndex = 257;
+            this.rbtnNormal.TabStop = true;
+            this.rbtnNormal.Text = "Normal";
+            this.rbtnNormal.UseVisualStyleBackColor = true;
+            // 
             // frmFaltas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(544, 389);
+            this.Controls.Add(this.rbtnNormal);
+            this.Controls.Add(this.rbtnEspecial);
             this.Controls.Add(this.lblEmpleado);
             this.Controls.Add(this.label23);
             this.Controls.Add(this.dtpFin);
@@ -221,5 +247,7 @@
         private System.Windows.Forms.ToolStripButton toolBuscar;
         private System.Windows.Forms.Label lblEmpleado;
         private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.RadioButton rbtnEspecial;
+        private System.Windows.Forms.RadioButton rbtnNormal;
     }
 }

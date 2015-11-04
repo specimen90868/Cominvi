@@ -98,6 +98,12 @@ namespace Nominas
         {
             frmBuscar b = new frmBuscar();
             b._catalogo = GLOBALES.EMPLEADOS;
+
+            if (rbtnNormal.Checked)
+                b._tipoNomina = GLOBALES.NORMAL;
+            if (rbtnEspecial.Checked)
+                b._tipoNomina = GLOBALES.ESPECIAL;
+
             b.OnBuscar += b_OnBuscar;
             b.ShowDialog();
         }

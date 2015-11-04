@@ -18,6 +18,7 @@ namespace Conceptos.Core
         public bool gravado { get; set; }
         public bool exento { get; set; }
         public string gruposat { get; set; }
+        public bool visible { get; set; }
     }
 
     public class ConceptoTrabajador

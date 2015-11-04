@@ -62,6 +62,7 @@ namespace Nominas
             concepto.formulaexento = txtExento.Text;
             concepto.gravado = false;
             concepto.exento = false;
+            concepto.visible = chkVisible.Checked;
 
             switch (_tipoOperacion)
             {
@@ -161,6 +162,7 @@ namespace Nominas
                         cmbTipo.SelectedIndex = (lstConcepto[i].tipoconcepto == "P") ? 0 : 1;
                         txtFormula.Text = lstConcepto[i].formula;
                         txtExento.Text = lstConcepto[i].formulaexento;
+                        chkVisible.Checked = lstConcepto[i].visible;
                     }
                 }
                 catch (Exception error)
@@ -173,6 +175,7 @@ namespace Nominas
                     toolTitulo.Text = "Consulta concepto";
                     GLOBALES.INHABILITAR(this, typeof(TextBox));
                     GLOBALES.INHABILITAR(this, typeof(ComboBox));
+                    GLOBALES.INHABILITAR(this, typeof(CheckBox));
                 }
                 else
                     toolTitulo.Text = "Edición concepto";

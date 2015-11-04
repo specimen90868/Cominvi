@@ -14,6 +14,7 @@ namespace Nominas
         private List<Empleados.Core.Empleados> datosEmpleados;
         private DateTime fechainicio, fechafin;
         private string formula;
+        private int diasDerechoV;
         
         public FormulasValores(List<CalculoNomina.Core.Nomina> _datosNomina, DateTime _inicio, DateTime _fin)
         {
@@ -22,12 +23,13 @@ namespace Nominas
             fechafin = _fin;
         }
 
-        public FormulasValores(string _formula, List<Empleados.Core.Empleados> _datosEmpleados, DateTime _inicio, DateTime _fin)
+        public FormulasValores(string _formula, List<Empleados.Core.Empleados> _datosEmpleados, DateTime _inicio, DateTime _fin, int _diasDerechoV = 0)
         {
             datosEmpleados = _datosEmpleados;
             fechainicio = _inicio;
             fechafin = _fin;
             formula = _formula;
+            diasDerechoV = _diasDerechoV;
         }
 
         public object calcularFormula()
@@ -78,16 +80,20 @@ namespace Nominas
                         break;
 
                     case "DiasDerechoV":
-                        object dias;
-                        Vacaciones.Core.VacacionesHelper vh = new Vacaciones.Core.VacacionesHelper();
-                        vh.Command = cmd;
-                        Vacaciones.Core.DiasDerecho diasDerecho = new Vacaciones.Core.DiasDerecho();
-                        diasDerecho.anio = datosNomina[0].antiguedadmod;
+                        object dias = null;
+                        if (diasDerechoV == 0)
+                        {
+                            Vacaciones.Core.VacacionesHelper vh = new Vacaciones.Core.VacacionesHelper();
+                            vh.Command = cmd;
+                            Vacaciones.Core.DiasDerecho diasDerecho = new Vacaciones.Core.DiasDerecho();
+                            diasDerecho.anio = datosNomina[0].antiguedadmod;
 
-                        cnx.Open();
-                        dias = vh.diasDerecho(diasDerecho).ToString();
-                        cnx.Close();
-
+                            cnx.Open();
+                            dias = vh.diasDerecho(diasDerecho).ToString();
+                            cnx.Close();
+                        }
+                        else
+                            dias = diasDerechoV;
                         formula = formula.Replace("[" + variables[i] + "]", dias.ToString());
                         break;
 
@@ -254,6 +260,36 @@ namespace Nominas
 
                         formula = formula.Replace("[" + variables[i] + "]", diasMes.ToString());
                         break;
+                    case "Vacaciones":
+                        Vacaciones.Core.VacacionesHelper pvh = new Vacaciones.Core.VacacionesHelper();
+                        pvh.Command = cmd;
+                        Vacaciones.Core.Vacaciones vacacion = new Vacaciones.Core.Vacaciones();
+                        vacacion.idtrabajador = datosNomina[0].idtrabajador;
+                        vacacion.inicio = fechainicio;
+                        vacacion.fin = fechafin;
+                        double pagovacaciones = 0;
+                        cnx.Open();
+                        pagovacaciones = double.Parse(pvh.vacacionesPagadas(vacacion).ToString());
+                        cnx.Close();
+                        cnx.Dispose();
+
+                        formula = formula.Replace("[" + variables[i] + "]", pagovacaciones.ToString());
+                        break;
+                    case "Subsidio":
+                        TablaSubsidio.Core.SubsidioHelper ts = new TablaSubsidio.Core.SubsidioHelper();
+                        ts.Command = cmd;
+                        TablaSubsidio.Core.TablaSubsidio subsidio = new TablaSubsidio.Core.TablaSubsidio();
+                        subsidio.anio = fechainicio.Year;
+                        subsidio.periodo = datosNomina[0].dias;
+                        subsidio.desde = (datosNomina[0].sd * datosNomina[0].dias);
+                        double cantidad = 0;
+                        cnx.Open();
+                        cantidad = double.Parse(ts.obtenerCantidadSubsidio(subsidio).ToString());
+                        cnx.Close();
+                        cnx.Dispose();
+
+                        formula = formula.Replace("[" + variables[i] + "]", cantidad.ToString());
+                        break;
                 }
             }
             cnx.Dispose();
@@ -287,15 +323,20 @@ namespace Nominas
                         break;
 
                     case "DiasDerechoV":
-                        object dias;
-                        Vacaciones.Core.VacacionesHelper vh = new Vacaciones.Core.VacacionesHelper();
-                        vh.Command = cmd;
-                        Vacaciones.Core.DiasDerecho diasDerecho = new Vacaciones.Core.DiasDerecho();
-                        diasDerecho.anio = datosEmpleados[0].antiguedadmod;
+                        object dias = null;
+                        if (diasDerechoV == 0)
+                        {
+                            Vacaciones.Core.VacacionesHelper vh = new Vacaciones.Core.VacacionesHelper();
+                            vh.Command = cmd;
+                            Vacaciones.Core.DiasDerecho diasDerecho = new Vacaciones.Core.DiasDerecho();
+                            diasDerecho.anio = datosEmpleados[0].antiguedadmod;
 
-                        cnx.Open();
-                        dias = vh.diasDerecho(diasDerecho).ToString();
-                        cnx.Close();
+                            cnx.Open();
+                            dias = vh.diasDerecho(diasDerecho).ToString();
+                            cnx.Close();
+                        }
+                        else
+                            dias = diasDerechoV;
 
                         formula = formula.Replace("[" + variables[i] + "]", dias.ToString());
                         break;

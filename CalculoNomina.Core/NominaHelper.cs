@@ -223,6 +223,21 @@ namespace CalculoNomina.Core
             Command.Parameters.AddWithValue("fechafin", pn.fechafin);
             return Command.ExecuteNonQuery();
         }
+        
+        public int actualizaHorasExtras(tmpPagoNomina pn)
+        {
+            Command.CommandText = "update tmpPagoNomina set cantidad = @cantidad, gravado = @gravado where idempresa = @idempresa and fechainicio = @fechainicio and fechafin = @fechafin and " +
+                "idtrabajador = @idtrabajador and idconcepto = @idconcepto";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("cantidad", pn.cantidad);
+            Command.Parameters.AddWithValue("gravado", pn.gravado);
+            Command.Parameters.AddWithValue("fechainicio", pn.fechainicio);
+            Command.Parameters.AddWithValue("fechafin", pn.fechafin);
+            Command.Parameters.AddWithValue("idempresa", pn.idempresa);
+            Command.Parameters.AddWithValue("idtrabajador", pn.idtrabajador);
+            Command.Parameters.AddWithValue("idconcepto", pn.idconcepto);
+            return Command.ExecuteNonQuery();
+        }
 
         public int eliminaPreNomina(tmpPagoNomina pn)
         {

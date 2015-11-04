@@ -56,7 +56,7 @@ namespace Nominas
                             cmd.Connection = con;
                             con.Open();
                             DataTable dtExcelSchema = con.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                            sheetName = dtExcelSchema.Rows[3]["TABLE_NAME"].ToString();
+                            sheetName = dtExcelSchema.Rows[4]["TABLE_NAME"].ToString();
                             con.Close();
                         }
                     }
@@ -79,7 +79,9 @@ namespace Nominas
 
                                 for (int i = 2; i < dt.Rows.Count; i++)
                                 {
-                                    dgvCargaIncapacidades.Rows.Add(
+                                    if (dt.Rows[i][0].ToString() != "")
+                                    {
+                                        dgvCargaIncapacidades.Rows.Add(
                                         dt.Rows[i][0].ToString(), //NO EMPLEADO
                                         dt.Rows[i][1].ToString(), //NOMBRE
                                         dt.Rows[i][2].ToString(), //PATERNO
@@ -88,6 +90,7 @@ namespace Nominas
                                         dt.Rows[i][5].ToString(), //FECHA INICIO
                                         dt.Rows[i][6].ToString(), //INICIO PERIODO
                                         dt.Rows[i][7].ToString()); //FIN PERIODO
+                                    }
                                 }
 
                                 for (int i = 0; i < dt.Columns.Count; i++)
@@ -172,12 +175,8 @@ namespace Nominas
             eh = new Empresas.Core.EmpresasHelper();
             eh.Command = cmd;
 
-            ih = new Incapacidad.Core.IncapacidadHelper();
-            ih.bulkCommand = bulk;
-            ih.Command = cmd;
-
-            emph = new Empleados.Core.EmpleadosHelper();
-            emph.Command = cmd;
+            //emph = new Empleados.Core.EmpleadosHelper();
+            //emph.Command = cmd;
 
             try
             {
@@ -188,6 +187,12 @@ namespace Nominas
             catch (Exception error)
             {
                 MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+            }
+
+            if (idEmpresa != GLOBALES.IDEMPRESA)
+            {
+                MessageBox.Show("Intenta aplicar las incapacidades en un empresa diferente. \r\n \r\n La ventana se cerrará.", "Error");
+                this.Dispose();
             }
 
             DataTable dt = new DataTable();
@@ -234,6 +239,11 @@ namespace Nominas
 
                 dtFila = dt.NewRow();
                 dtFila["id"] = i;
+                cnx = new SqlConnection(cdn);
+                cmd = new SqlCommand();
+                cmd.Connection = cnx;
+                emph = new Empleados.Core.EmpleadosHelper();
+                emph.Command = cmd;
                 try
                 {
                     cnx.Open();
@@ -257,6 +267,15 @@ namespace Nominas
                 dt.Rows.Add(dtFila);
                 i++;
             }
+
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            bulk = new SqlBulkCopy(cnx);
+            cmd.Connection = cnx;
+
+            ih = new Incapacidad.Core.IncapacidadHelper();
+            ih.bulkCommand = bulk;
+            ih.Command = cmd;
 
             try
             {

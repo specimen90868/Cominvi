@@ -447,9 +447,10 @@ namespace Nominas
 
         private void toolHistorialFaltas_Click(object sender, EventArgs e)
         {
-            frmListaFaltas lf = new frmListaFaltas();
-            lf.MdiParent = this;
-            lf.Show();
+            frmSeleccionTipoNomina stn = new frmSeleccionTipoNomina();
+            stn._ventana = "HistorialFaltas";
+            stn.MdiParent = this;
+            stn.Show();
         }
 
         private void toolCargaFaltas_Click(object sender, EventArgs e)
@@ -480,18 +481,27 @@ namespace Nominas
             lcv.Show();
         }
 
-        private void cálculoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            frmSeleccionPeriodo sp = new frmSeleccionPeriodo();
-            sp.MdiParent = this;
-            sp.Show();
-        }
-
         private void toolProgramacion_Click(object sender, EventArgs e)
         {
             frmListaProgramacionConceptos lpc = new frmListaProgramacionConceptos();
             lpc.MdiParent = this;
             lpc.Show();
+        }
+
+        private void toolNominaNormal_Click(object sender, EventArgs e)
+        {
+            frmSeleccionPeriodo sp = new frmSeleccionPeriodo();
+            sp._TipoNomina = GLOBALES.NORMAL;
+            sp.MdiParent = this;
+            sp.Show();
+        }
+
+        private void toolNominaEspecial_Click(object sender, EventArgs e)
+        {
+            frmSeleccionPeriodo sp = new frmSeleccionPeriodo();
+            sp._TipoNomina = GLOBALES.ESPECIAL;
+            sp.MdiParent = this;
+            sp.Show();
         }
       
     }

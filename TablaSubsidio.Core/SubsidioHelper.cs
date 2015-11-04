@@ -49,6 +49,17 @@ namespace TablaSubsidio.Core
             return lstSubsidio;
         }
 
+        public object obtenerCantidadSubsidio(TablaSubsidio ts)
+        {
+            Command.CommandText = "select top 1 cantidad from tablasubsidio where anio = @anio and desde <= @desde and periodo = @periodo";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("anio", ts.anio);
+            Command.Parameters.AddWithValue("desde", ts.desde);
+            Command.Parameters.AddWithValue("periodo", ts.periodo);
+            object dato = Select(Command);
+            return dato;
+        }
+
         public int insertaSubsidio(TablaSubsidio ts)
         {
             Command.CommandText = "insert into tablaSubsidio (desde, cantidad, periodo, anio) " +

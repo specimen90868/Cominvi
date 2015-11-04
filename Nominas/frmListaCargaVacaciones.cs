@@ -89,10 +89,13 @@ namespace Nominas
                                         dt.Rows[i][2].ToString(), //PATERNO
                                         dt.Rows[i][3].ToString(), //MATERNO
                                         (dt.Rows[i][4].ToString() == "Si" ? true : false), //PRIMA VACACIONAL
-                                        (dt.Rows[i][5].ToString() == "Si" ? true : false), //VACACIONES
+                                        (dt.Rows[i][5].ToString() == "Si" ? true : false), //PAGO TOTAL
                                         (dt.Rows[i][5].ToString() == "Si" ? dt.Rows[i][6].ToString() : "0"), //DIAS A PAGAR
-                                        dt.Rows[i][7].ToString(), //FECHA INICIO
-                                        dt.Rows[i][8].ToString()); //FECHA FIN
+
+                                        (dt.Rows[i][7].ToString() == "Si" ? true : false), //VACACIONES
+                                        (dt.Rows[i][7].ToString() == "Si" ? dt.Rows[i][8].ToString() : "0"), //DIAS A PAGAR
+                                        dt.Rows[i][9].ToString(), //FECHA INICIO
+                                        dt.Rows[i][10].ToString()); //FECHA FIN
                                 }
 
                                 for (int i = 0; i < dt.Columns.Count; i++)
@@ -119,6 +122,7 @@ namespace Nominas
             }
 
             workVacaciones.RunWorkerAsync();
+            
         }
 
         private void dgvCargaVacaciones_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -135,6 +139,16 @@ namespace Nominas
                     dgvCargaVacaciones.Rows[e.RowIndex].Cells["diaspago"].Value = "0";                  
                 }
             }
+
+            if (dgvCargaVacaciones.Columns[e.ColumnIndex].Name == "pagototal")
+            {
+                DataGridViewRow row = dgvCargaVacaciones.Rows[e.RowIndex];
+                DataGridViewCheckBoxCell cellSelecion = row.Cells["pagototal"] as DataGridViewCheckBoxCell;
+                if (Convert.ToBoolean(cellSelecion.Value))
+                {
+                    dgvCargaVacaciones.Rows[e.RowIndex].Cells["diaspagopv"].Value = "0";
+                }
+            }
         }
 
         private void dgvCargaVacaciones_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -148,6 +162,16 @@ namespace Nominas
                     dgvCargaVacaciones.Rows[e.RowIndex].Cells["diaspago"].Value = "0";
                 }
             }
+
+            if (dgvCargaVacaciones.Columns[e.ColumnIndex].Name == "pagototal")
+            {
+                DataGridViewRow row = dgvCargaVacaciones.Rows[e.RowIndex];
+                DataGridViewCheckBoxCell cellSelecion = row.Cells["pagototal"] as DataGridViewCheckBoxCell;
+                if (Convert.ToBoolean(cellSelecion.Value))
+                {
+                    dgvCargaVacaciones.Rows[e.RowIndex].Cells["diaspagopv"].Value = "0";
+                }
+            }
         }
 
         private void dgvCargaVacaciones_CurrentCellDirtyStateChanged(object sender, EventArgs e)
@@ -156,6 +180,8 @@ namespace Nominas
             {
                 dgvCargaVacaciones.CommitEdit(DataGridViewDataErrorContexts.Commit);
             }
+            else
+                dgvCargaVacaciones.CommitEdit(DataGridViewDataErrorContexts.Commit);
         }
 
         private void toolLimpiar_Click(object sender, EventArgs e)
@@ -197,9 +223,9 @@ namespace Nominas
             v.Show();
         }
 
-        void v_OnVacacion(string noempleado, string nombre, string paterno, string materno, bool prima, bool vacacion, int diaspago, DateTime fechainicio, DateTime fechafin)
+        void v_OnVacacion(string noempleado, string nombre, string paterno, string materno, bool prima, bool pago, int diaspagopv, bool vacacion, int diaspago, DateTime fechainicio, DateTime fechafin)
         {
-            dgvCargaVacaciones.Rows.Add(noempleado,nombre,paterno,materno,prima,vacacion,diaspago,fechainicio,fechafin);
+            dgvCargaVacaciones.Rows.Add(noempleado,nombre,paterno,materno,prima,pago,diaspagopv,vacacion,diaspago,fechainicio,fechafin);
         }
 
         private void workVacaciones_DoWork(object sender, DoWorkEventArgs e)
@@ -211,8 +237,8 @@ namespace Nominas
             bool seCalculaPrima = false, seCalculaVacaciones = false;
             foreach (DataGridViewRow fila in dgvCargaVacaciones.Rows)
             {
-                if ((bool)fila.Cells["prima"].Value) seCalculaPrima = true;
-                if ((bool)fila.Cells["vacaciones"].Value) seCalculaVacaciones = true;
+                if (bool.Parse(fila.Cells["prima"].Value.ToString())) seCalculaPrima = true;
+                if (bool.Parse(fila.Cells["vacaciones"].Value.ToString())) seCalculaVacaciones = true;
             }
 
             eh = new Empresas.Core.EmpresasHelper();
@@ -281,73 +307,155 @@ namespace Nominas
 
                 List<Empleados.Core.Empleados> lstEmpleado;
                 List<Vacaciones.Core.Vacaciones> lstPrimaVacacional = new List<Vacaciones.Core.Vacaciones>();
-                for (int i = 0; i < lstDatosEmpleado.Count; i++)
+                int indice = 0;
+                foreach (DataGridViewRow fila in dgvCargaVacaciones.Rows)
                 {
-                    lstEmpleado = new List<Empleados.Core.Empleados>();
-                    Empleados.Core.Empleados emp = new Empleados.Core.Empleados();
-                    emp.idtrabajador = lstDatosEmpleado[i].idtrabajador;
-                    emp.idsalario = lstDatosEmpleado[i].idsalario;
-                    emp.idperiodo = lstDatosEmpleado[i].idperiodo;
-                    emp.antiguedadmod = lstDatosEmpleado[i].antiguedadmod;
-                    emp.sdi = lstDatosEmpleado[i].sdi;
-                    emp.sd = lstDatosEmpleado[i].sd;
-                    emp.fechaantiguedad = lstDatosEmpleado[i].fechaantiguedad;
-                    emp.sueldo = lstDatosEmpleado[i].sueldo;
-                    lstEmpleado.Add(emp);
-
-                    Vacaciones.Core.Vacaciones prima = new Vacaciones.Core.Vacaciones();
-                    prima.idtrabajador = lstDatosEmpleado[i].idtrabajador;
-                    prima.idempresa = GLOBALES.IDEMPRESA;
-                    prima.fechaingreso = lstDatosEmpleado[i].fechaantiguedad;
-                    prima.inicio = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["inicioperiodo"].Value.ToString());
-                    prima.fin = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["finperiodo"].Value.ToString());
-                    prima.sd = lstDatosEmpleado[i].sd;
-                    prima.diasapagar = 0;
-                    prima.diaspendientes = 0;
-                    prima.pagovacaciones = 0;
-                    prima.fechapago = DateTime.Now;
-                    prima.pagada = false;
-                    prima.pvpagada = false;
-
-                    vh = new Vacaciones.Core.VacacionesHelper();
-                    vh.Command = cmd;
-                    Vacaciones.Core.DiasDerecho dias = new Vacaciones.Core.DiasDerecho();
-                    dias.anio = lstDatosEmpleado[i].antiguedadmod;
-                    try
+                    if (bool.Parse(fila.Cells["prima"].Value.ToString()))
                     {
-                        cnx.Open();
-                        prima.diasderecho = (int)vh.diasDerecho(dias);
-                        cnx.Close();
-                    }
-                    catch (Exception error)
-                    {
-                        MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-                    }
+                        lstEmpleado = new List<Empleados.Core.Empleados>();
+                        Empleados.Core.Empleados emp = new Empleados.Core.Empleados();
+                        emp.idtrabajador = lstDatosEmpleado[indice].idtrabajador;
+                        emp.idsalario = lstDatosEmpleado[indice].idsalario;
+                        emp.idperiodo = lstDatosEmpleado[indice].idperiodo;
+                        emp.antiguedadmod = lstDatosEmpleado[indice].antiguedadmod;
+                        emp.sdi = lstDatosEmpleado[indice].sdi;
+                        emp.sd = lstDatosEmpleado[indice].sd;
+                        emp.fechaantiguedad = lstDatosEmpleado[indice].fechaantiguedad;
+                        emp.sueldo = lstDatosEmpleado[indice].sueldo;
+                        lstEmpleado.Add(emp);
 
-                    FormulasValores f = new FormulasValores(formulaPrimaVacacional, lstEmpleado, DateTime.Now, DateTime.Now);
-                    prima.pv = (double)f.calcularFormulaVacaciones();
+                        Vacaciones.Core.Vacaciones prima = new Vacaciones.Core.Vacaciones();
+                        prima.idtrabajador = lstDatosEmpleado[indice].idtrabajador;
+                        prima.idempresa = GLOBALES.IDEMPRESA;
+                        prima.fechaingreso = lstDatosEmpleado[indice].fechaantiguedad;
+                        prima.inicio = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["inicioperiodo"].Value.ToString());
+                        prima.fin = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["finperiodo"].Value.ToString());
+                        prima.sd = lstDatosEmpleado[indice].sd;
+                        prima.diasapagar = 0;
+                        prima.diaspendientes = 0;
+                        prima.pagovacaciones = 0;
+                        prima.fechapago = DateTime.Now;
+                        prima.pagada = false;
+                        prima.pvpagada = false;
 
-                    f = new FormulasValores(formulaExentoPrimaVacacional, lstEmpleado, DateTime.Now, DateTime.Now);
-                    exento = (double)f.calcularFormulaVacacionesExento();
+                        vh = new Vacaciones.Core.VacacionesHelper();
+                        vh.Command = cmd;
+                        Vacaciones.Core.DiasDerecho dias = new Vacaciones.Core.DiasDerecho();
+                        dias.anio = lstDatosEmpleado[indice].antiguedadmod;
+                        try
+                        {
+                            cnx.Open();
+                            prima.diasderecho = (int)vh.diasDerecho(dias);
+                            cnx.Close();
+                        }
+                        catch (Exception error)
+                        {
+                            MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                        }
 
-                    if (prima.pv > exento)
-                    {
-                        prima.pexenta = exento;
-                        prima.pgravada = prima.pv - exento;
+                        if (bool.Parse(fila.Cells["pagototal"].Value.ToString()))
+                        {
+                            FormulasValores f = new FormulasValores(formulaPrimaVacacional, lstEmpleado, DateTime.Now, DateTime.Now);
+                            prima.pv = (double)f.calcularFormulaVacaciones();
+
+                            f = new FormulasValores(formulaExentoPrimaVacacional, lstEmpleado, DateTime.Now, DateTime.Now);
+                            exento = (double)f.calcularFormulaVacacionesExento();
+                        }
+                        else
+                        {
+                            FormulasValores f = new FormulasValores(formulaPrimaVacacional, lstEmpleado, DateTime.Now, DateTime.Now, int.Parse(fila.Cells["diaspagopv"].Value.ToString()));
+                            prima.pv = (double)f.calcularFormulaVacaciones();
+
+                            f = new FormulasValores(formulaExentoPrimaVacacional, lstEmpleado, DateTime.Now, DateTime.Now, int.Parse(fila.Cells["diaspagopv"].Value.ToString()));
+                            exento = (double)f.calcularFormulaVacacionesExento();
+                        }
+
+                        if (prima.pv > exento)
+                        {
+                            prima.pexenta = exento;
+                            prima.pgravada = prima.pv - exento;
+                        }
+                        else
+                        {
+                            prima.pexenta = prima.pv;
+                            prima.pgravada = 0;
+                        }
+
+                        prima.isrgravada = isr(prima.pgravada, lstDatosEmpleado[indice].idperiodo, lstDatosEmpleado[indice].sd);
+                        prima.totalprima = prima.pv - prima.isrgravada;
+                        prima.total = prima.pv - prima.isrgravada;
+                        lstPrimaVacacional.Add(prima);
+                        indice++;
                     }
-                    else
-                    {
-                        prima.pexenta = prima.pv;
-                        prima.pgravada = 0;
-                    }
-
-                    prima.isrgravada = isr(prima.pgravada, lstDatosEmpleado[i].idperiodo, lstDatosEmpleado[i].sd);
-                    prima.totalprima = prima.pv - prima.isrgravada;
-                    prima.total = prima.pv - prima.isrgravada;
-                    lstPrimaVacacional.Add(prima);
                 }
-                
-                #endregion  
+                #region CALCULO PV COMENTADA
+                //for (int i = 0; i < lstDatosEmpleado.Count; i++)
+                //{
+                //    lstEmpleado = new List<Empleados.Core.Empleados>();
+                //    Empleados.Core.Empleados emp = new Empleados.Core.Empleados();
+                //    emp.idtrabajador = lstDatosEmpleado[i].idtrabajador;
+                //    emp.idsalario = lstDatosEmpleado[i].idsalario;
+                //    emp.idperiodo = lstDatosEmpleado[i].idperiodo;
+                //    emp.antiguedadmod = lstDatosEmpleado[i].antiguedadmod;
+                //    emp.sdi = lstDatosEmpleado[i].sdi;
+                //    emp.sd = lstDatosEmpleado[i].sd;
+                //    emp.fechaantiguedad = lstDatosEmpleado[i].fechaantiguedad;
+                //    emp.sueldo = lstDatosEmpleado[i].sueldo;
+                //    lstEmpleado.Add(emp);
+
+                //    Vacaciones.Core.Vacaciones prima = new Vacaciones.Core.Vacaciones();
+                //    prima.idtrabajador = lstDatosEmpleado[i].idtrabajador;
+                //    prima.idempresa = GLOBALES.IDEMPRESA;
+                //    prima.fechaingreso = lstDatosEmpleado[i].fechaantiguedad;
+                //    prima.inicio = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["inicioperiodo"].Value.ToString());
+                //    prima.fin = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["finperiodo"].Value.ToString());
+                //    prima.sd = lstDatosEmpleado[i].sd;
+                //    prima.diasapagar = 0;
+                //    prima.diaspendientes = 0;
+                //    prima.pagovacaciones = 0;
+                //    prima.fechapago = DateTime.Now;
+                //    prima.pagada = false;
+                //    prima.pvpagada = false;
+
+                //    vh = new Vacaciones.Core.VacacionesHelper();
+                //    vh.Command = cmd;
+                //    Vacaciones.Core.DiasDerecho dias = new Vacaciones.Core.DiasDerecho();
+                //    dias.anio = lstDatosEmpleado[i].antiguedadmod;
+                //    try
+                //    {
+                //        cnx.Open();
+                //        prima.diasderecho = (int)vh.diasDerecho(dias);
+                //        cnx.Close();
+                //    }
+                //    catch (Exception error)
+                //    {
+                //        MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                //    }
+
+                //    FormulasValores f = new FormulasValores(formulaPrimaVacacional, lstEmpleado, DateTime.Now, DateTime.Now);
+                //    prima.pv = (double)f.calcularFormulaVacaciones();
+
+                //    f = new FormulasValores(formulaExentoPrimaVacacional, lstEmpleado, DateTime.Now, DateTime.Now);
+                //    exento = (double)f.calcularFormulaVacacionesExento();
+
+                //    if (prima.pv > exento)
+                //    {
+                //        prima.pexenta = exento;
+                //        prima.pgravada = prima.pv - exento;
+                //    }
+                //    else
+                //    {
+                //        prima.pexenta = prima.pv;
+                //        prima.pgravada = 0;
+                //    }
+
+                //    prima.isrgravada = isr(prima.pgravada, lstDatosEmpleado[i].idperiodo, lstDatosEmpleado[i].sd);
+                //    prima.totalprima = prima.pv - prima.isrgravada;
+                //    prima.total = prima.pv - prima.isrgravada;
+                //    lstPrimaVacacional.Add(prima);
+                //}
+                #endregion
+                #endregion
 
                 bulkVacaciones(lstPrimaVacacional);
             }
@@ -362,7 +470,7 @@ namespace Nominas
                 noempleados = "";
                 foreach (DataGridViewRow fila in dgvCargaVacaciones.Rows)
                 {
-                    if ((bool)fila.Cells["vacaciones"].Value)
+                    if (bool.Parse(fila.Cells["vacaciones"].Value.ToString()))
                         noempleados += fila.Cells["noempleado"].Value.ToString() + ",";
                 }
                 noempleados = noempleados.Substring(0, noempleados.Count() - 1);
@@ -385,7 +493,7 @@ namespace Nominas
                 int i = 0;
                 foreach (DataGridViewRow fila in dgvCargaVacaciones.Rows)
                 {
-                    if ((bool)fila.Cells["vacaciones"].Value)
+                    if (bool.Parse(fila.Cells["vacaciones"].Value.ToString()))
                     {
                         Vacaciones.Core.Vacaciones vacacion = new Vacaciones.Core.Vacaciones();
                         vacacion.idtrabajador = lstDatosEmpleado[i].idtrabajador;
@@ -438,6 +546,7 @@ namespace Nominas
         private void workVacaciones_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             MessageBox.Show("Vacación aplicada.", "Confirmación");
+            dgvCargaVacaciones.Rows.Clear();
         }
 
         private double isr(double pgravada, int idperiodo, double sd)

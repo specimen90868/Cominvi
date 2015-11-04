@@ -63,7 +63,6 @@
             this.cmbDe.Name = "cmbDe";
             this.cmbDe.Size = new System.Drawing.Size(148, 21);
             this.cmbDe.TabIndex = 2;
-            this.cmbDe.TextChanged += new System.EventHandler(this.cmbDe_TextChanged);
             // 
             // cmbHasta
             // 

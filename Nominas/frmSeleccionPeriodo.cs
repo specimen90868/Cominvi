@@ -28,6 +28,10 @@ namespace Nominas
         List<Periodos.Core.Periodos> lstPeriodos;
         #endregion
 
+        #region VARIABLES PUBLICAS
+        public int _TipoNomina;
+        #endregion
+
         private void frmSeleccionPeriodo_Load(object sender, EventArgs e)
         {
             cnx = new SqlConnection(cdn);
@@ -67,6 +71,7 @@ namespace Nominas
         {
             frmListaCalculoNomina lcn = new frmListaCalculoNomina();
             lcn.MdiParent = this.MdiParent;
+            lcn._tipoNomina = _TipoNomina;
             lcn._periodo = periodoSeleccionado;
             lcn.Show();
             this.Dispose();

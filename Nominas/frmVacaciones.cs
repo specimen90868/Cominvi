@@ -20,7 +20,8 @@ namespace Nominas
         }
 
         #region DELEGADOS
-        public delegate void delOnVacacion(string noempleado, string nombre, string paterno, string materno, bool prima, bool vacacion, int diaspago, DateTime fechainicio, DateTime fechafin);
+        public delegate void delOnVacacion(string noempleado, string nombre, string paterno, string materno, bool prima, bool pago, int diaspagopv, 
+            bool vacacion, int diaspago, DateTime fechainicio, DateTime fechafin);
         public event delOnVacacion OnVacacion;
         #endregion
 
@@ -43,7 +44,9 @@ namespace Nominas
                         lstEmpleado[0].nombres, 
                         lstEmpleado[0].paterno, 
                         lstEmpleado[0].materno, 
-                        chkPrimaVacacional.Checked, 
+                        chkPrimaVacacional.Checked,
+                        chkPagoTotal.Checked,
+                        int.Parse(txtDiasPagoPV.Text),
                         chkVacaciones.Checked, 
                         int.Parse(txtDiasPago.Text),
                         dtpInicio.Value,
@@ -140,6 +143,7 @@ namespace Nominas
         {
             dtpFin.Enabled = false;
             txtDiasPago.Text = "0";
+            txtDiasPagoPV.Text = "0";
         }
 
         private void dtpInicio_ValueChanged(object sender, EventArgs e)
@@ -170,6 +174,37 @@ namespace Nominas
         {
             if (!chkVacaciones.Checked)
                 txtDiasPago.Text = "0";
+        }
+
+        private void chkPrimaVacacional_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkPrimaVacacional.Checked)
+            {
+                chkPagoTotal.Checked = false;
+                chkPagoTotal.Enabled = true;
+                txtDiasPagoPV.Enabled = true;
+            }
+            else
+            {
+                chkPagoTotal.Checked = false;
+                txtDiasPagoPV.Text = "0";
+                chkPagoTotal.Enabled = false;
+                txtDiasPagoPV.Enabled = false;
+            }
+        }
+
+        private void chkPagoTotal_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkPagoTotal.Checked)
+            {
+                txtDiasPagoPV.Text = "0";
+                txtDiasPagoPV.Enabled = false;
+            }
+            else
+            {
+                txtDiasPagoPV.Text = "0";
+                txtDiasPagoPV.Enabled = true;
+            }
         }
     }
 }
