@@ -43,14 +43,11 @@ namespace Nominas
             empleado.idempresa = GLOBALES.IDEMPRESA;
             empleado.estatus = GLOBALES.ACTIVO;
 
-            Incapacidad.Core.Incapacidades incapacidad = new Incapacidad.Core.Incapacidades();
-            incapacidad.idempresa = GLOBALES.IDEMPRESA;
-
             try
             {
                 cnx.Open();
                 lstEmpleados = eh.obtenerEmpleados(empleado);
-                lstIncapacidades = ih.obtenerIncapacidades(incapacidad);
+                lstIncapacidades = ih.obtenerIncapacidades(GLOBALES.IDEMPRESA);
                 cnx.Close();
                 cnx.Dispose();
             }

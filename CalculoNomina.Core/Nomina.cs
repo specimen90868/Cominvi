@@ -54,4 +54,17 @@ namespace CalculoNomina.Core
         public bool guardada { get; set; }
         public int tiponomina { get; set; }
     }
+
+    public class DatosFaltaIncapacidad
+    {
+        public int idtrabajador { get; set; }
+        public int iddepartamento { get; set; }
+        public int idpuesto { get; set; }
+        public string noempleado { get; set; }
+        public string nombres { get; set; }
+        public string paterno { get; set; }
+        public string materno { get; set; }
+        public int falta { get; set; }
+        public int incapacidad { get; set; }
+    }
 }

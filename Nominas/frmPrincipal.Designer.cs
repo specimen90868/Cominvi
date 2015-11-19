@@ -71,6 +71,8 @@
             this.toolConceptoEmpleado = new System.Windows.Forms.ToolStripMenuItem();
             this.toolProgramacion = new System.Windows.Forms.ToolStripMenuItem();
             this.cálculoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolNominaNormal = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolNominaEspecial = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.toolAutorizarNomina = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuCatalogos = new System.Windows.Forms.ToolStripMenuItem();
@@ -95,8 +97,6 @@
             this.workPerfil = new System.ComponentModel.BackgroundWorker();
             this.stsPrincipal = new System.Windows.Forms.StatusStrip();
             this.toolEstatusPerfil = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolNominaNormal = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolNominaEspecial = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPrincipal.SuspendLayout();
             this.stsPrincipal.SuspendLayout();
             this.SuspendLayout();
@@ -378,15 +378,16 @@
             // toolHistorialFaltas
             // 
             this.toolHistorialFaltas.Name = "toolHistorialFaltas";
-            this.toolHistorialFaltas.Size = new System.Drawing.Size(151, 22);
+            this.toolHistorialFaltas.Size = new System.Drawing.Size(152, 22);
             this.toolHistorialFaltas.Text = "Historial Faltas";
             this.toolHistorialFaltas.Click += new System.EventHandler(this.toolHistorialFaltas_Click);
             // 
             // toolCargaFaltas
             // 
             this.toolCargaFaltas.Name = "toolCargaFaltas";
-            this.toolCargaFaltas.Size = new System.Drawing.Size(151, 22);
+            this.toolCargaFaltas.Size = new System.Drawing.Size(152, 22);
             this.toolCargaFaltas.Text = "Cargar Faltas";
+            this.toolCargaFaltas.Visible = false;
             this.toolCargaFaltas.Click += new System.EventHandler(this.toolCargaFaltas_Click);
             // 
             // toolIncapacidad
@@ -410,6 +411,7 @@
             this.toolCargaIncapacidad.Name = "toolCargaIncapacidad";
             this.toolCargaIncapacidad.Size = new System.Drawing.Size(196, 22);
             this.toolCargaIncapacidad.Text = "Carga incapacidades";
+            this.toolCargaIncapacidad.Visible = false;
             this.toolCargaIncapacidad.Click += new System.EventHandler(this.toolCargaIncapacidad_Click);
             // 
             // toolVacaciones
@@ -441,6 +443,20 @@
             this.cálculoToolStripMenuItem.Name = "cálculoToolStripMenuItem";
             this.cálculoToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.cálculoToolStripMenuItem.Text = "Cálculo de nómina";
+            // 
+            // toolNominaNormal
+            // 
+            this.toolNominaNormal.Name = "toolNominaNormal";
+            this.toolNominaNormal.Size = new System.Drawing.Size(116, 22);
+            this.toolNominaNormal.Text = "Normal";
+            this.toolNominaNormal.Click += new System.EventHandler(this.toolNominaNormal_Click);
+            // 
+            // toolNominaEspecial
+            // 
+            this.toolNominaEspecial.Name = "toolNominaEspecial";
+            this.toolNominaEspecial.Size = new System.Drawing.Size(116, 22);
+            this.toolNominaEspecial.Text = "Especial";
+            this.toolNominaEspecial.Click += new System.EventHandler(this.toolNominaEspecial_Click);
             // 
             // toolStripSeparator9
             // 
@@ -621,20 +637,6 @@
             this.toolEstatusPerfil.Name = "toolEstatusPerfil";
             this.toolEstatusPerfil.Size = new System.Drawing.Size(98, 17);
             this.toolEstatusPerfil.Text = "Cargando perfil...";
-            // 
-            // toolNominaNormal
-            // 
-            this.toolNominaNormal.Name = "toolNominaNormal";
-            this.toolNominaNormal.Size = new System.Drawing.Size(152, 22);
-            this.toolNominaNormal.Text = "Normal";
-            this.toolNominaNormal.Click += new System.EventHandler(this.toolNominaNormal_Click);
-            // 
-            // toolNominaEspecial
-            // 
-            this.toolNominaEspecial.Name = "toolNominaEspecial";
-            this.toolNominaEspecial.Size = new System.Drawing.Size(152, 22);
-            this.toolNominaEspecial.Text = "Especial";
-            this.toolNominaEspecial.Click += new System.EventHandler(this.toolNominaEspecial_Click);
             // 
             // frmPrincipal
             // 

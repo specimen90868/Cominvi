@@ -33,9 +33,12 @@ namespace Nominas
         Conceptos.Core.ConceptosHelper ch;
         Vacaciones.Core.VacacionesHelper vh;
         CalculoNomina.Core.NominaHelper nh;
+        Faltas.Core.FaltasHelper fh;
+        Incapacidad.Core.IncapacidadHelper ih;
         ProgramacionConcepto.Core.ProgramacionHelper pch;
         List<tmpPagoNomina> lstValoresNomina;
         List<CalculoNomina.Core.DatosEmpleado> lstEmpleadosNomina;
+        List<CalculoNomina.Core.DatosFaltaIncapacidad> lstEmpleadosFaltaIncapacidad;
         CheckBox chk;
         DataTable dt;
         #endregion
@@ -105,6 +108,7 @@ namespace Nominas
         private void toolPrenomina_Click(object sender, EventArgs e)
         {
             cargaEmpleados();
+            toolPrenomina.Enabled = false;
         }
 
         private void frmListaCalculoNomina_Load(object sender, EventArgs e)
@@ -153,6 +157,14 @@ namespace Nominas
                     {
                         dgvEmpleados.AutoResizeColumn(i);
                     }
+
+                    var empleadoDeptoFalta = from f in lstEmpleadosFaltaIncapacidad where f.iddepartamento >= de && f.iddepartamento <= hasta select f;
+                    dgvFaltas.DataSource = empleadoDeptoFalta.ToList();
+                    for (int i = 1; i < dgvFaltas.Columns.Count; i++)
+                    {
+                        dgvFaltas.AutoResizeColumn(i);
+                    }
+                    
                     break;
                 case 1:
                     var empleadoPuesto = from f in lstEmpleadosNomina where f.idpuesto >= de && f.idpuesto <= hasta select f;
@@ -161,6 +173,14 @@ namespace Nominas
                     {
                         dgvEmpleados.AutoResizeColumn(i);
                     }
+
+                    var empleadoPuestoFalta = from f in lstEmpleadosFaltaIncapacidad where f.idpuesto >= de && f.idpuesto <= hasta select f;
+                    dgvFaltas.DataSource = empleadoPuestoFalta.ToList();
+                    for (int i = 1; i < dgvFaltas.Columns.Count; i++)
+                    {
+                        dgvFaltas.AutoResizeColumn(i);
+                    }
+                    
                     break;
                 case 2: 
                     var empleadoNoEmpleado = from f in lstEmpleadosNomina where f.idtrabajador >= de && f.idtrabajador <= hasta select f;
@@ -169,8 +189,18 @@ namespace Nominas
                     {
                         dgvEmpleados.AutoResizeColumn(i);
                     }
+
+                    var empleadoNoEmpleadoFalta = from f in lstEmpleadosFaltaIncapacidad where f.idtrabajador >= de && f.idtrabajador <= hasta select f;
+                    dgvFaltas.DataSource = empleadoNoEmpleadoFalta.ToList();
+                    for (int i = 1; i < dgvFaltas.Columns.Count; i++)
+                    {
+                        dgvFaltas.AutoResizeColumn(i);
+                    }
+                   
                     break;
             }
+
+            
         }
 
         private void toolPuesto_Click(object sender, EventArgs e)
@@ -188,6 +218,12 @@ namespace Nominas
             for (int i = 1; i < dgvEmpleados.Columns.Count; i++)
             {
                 dgvEmpleados.AutoResizeColumn(i);
+            }
+
+            dgvFaltas.DataSource = lstEmpleadosFaltaIncapacidad;
+            for (int i = 1; i < dgvFaltas.Columns.Count; i++)
+            {
+                dgvFaltas.AutoResizeColumn(i);
             }
         }
 
@@ -874,16 +910,36 @@ namespace Nominas
             nh = new CalculoNomina.Core.NominaHelper();
             nh.Command = cmd;
 
+            fh = new Faltas.Core.FaltasHelper();
+            fh.Command = cmd;
+
+            ih = new Incapacidad.Core.IncapacidadHelper();
+            ih.Command = cmd;
+
             CalculoNomina.Core.tmpPagoNomina pn = new CalculoNomina.Core.tmpPagoNomina();
             pn.idempresa = GLOBALES.IDEMPRESA;
             pn.fechainicio = inicio;
             pn.fechafin = fin;
 
+            Faltas.Core.Faltas falta = new Faltas.Core.Faltas();
+            falta.idempresa = GLOBALES.IDEMPRESA;
+            falta.fechainicio = inicio;
+            falta.fechafin = fin;
+
+            Incapacidad.Core.Incapacidades incapacidad = new Incapacidad.Core.Incapacidades();
+            incapacidad.idempresa = GLOBALES.IDEMPRESA;
+            incapacidad.fechainicio = inicio;
+            incapacidad.fechafin = fin;
+
             List<CalculoNomina.Core.tmpPagoNomina> lstPreNomina = new List<CalculoNomina.Core.tmpPagoNomina>();
+            List<Faltas.Core.Faltas> lstFaltas = new List<Faltas.Core.Faltas>();
+            List<Incapacidad.Core.Incapacidades> lstIncapacidad = new List<Incapacidad.Core.Incapacidades>();
             try
             {
                 cnx.Open();
                 lstPreNomina = nh.obtenerPreNomina(pn);
+                lstFaltas = fh.obtenerFaltas(falta);
+                lstIncapacidad = ih.obtenerIncapacidades(incapacidad);
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -916,6 +972,25 @@ namespace Nominas
                                 fila.Cells["despensa"].Value = lstPreNomina[i].cantidad;
                                 break;
                         }
+                    }
+                }
+            }
+
+            foreach (DataGridViewRow fila in dgvFaltas.Rows)
+            {
+                for (int i = 0; i < lstFaltas.Count; i++)
+                {
+                    if ((int)fila.Cells["idtrabajadorfalta"].Value == lstFaltas[i].idtrabajador)
+                    {
+                        fila.Cells["falta"].Value = lstFaltas[i].faltas;
+                    }
+                }
+
+                for (int i = 0; i < lstIncapacidad.Count; i++)
+                {
+                    if ((int)fila.Cells["idtrabajadorfalta"].Value == lstIncapacidad[i].idtrabajador)
+                    {
+                        fila.Cells["incapacidad"].Value = lstIncapacidad[i].diastomados;
                     }
                 }
             }
@@ -959,18 +1034,64 @@ namespace Nominas
             dgvEmpleados.Columns["materno"].ReadOnly = true;
             #endregion
 
+            #region DISEÑO DEL GRIDVIEW FALTAS
+            //if (_periodo == 7)
+            //{
+            //    DateTime dt = dtpPeriodoInicio.Value;
+            //    while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
+            //    for (int i = 0; i <= 6; i++)
+            //    {
+            //        dgvFaltas.Columns.Add("fecha" + (i + 1).ToString(), dt.AddDays(i).ToShortDateString());
+            //    }
+            //}
+            //else
+            //{
+            //    if (dtpPeriodoInicio.Value.Day <= 15)
+            //    {
+            //        dtpPeriodoInicio.Value = new DateTime(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month, 1);
+            //        for (int i = 0; i < 15; i++)
+            //            dgvFaltas.Columns.Add("fecha" + (i+1).ToString(), dtpPeriodoInicio.Value.AddDays(i).ToShortDateString());
+            //    }
+            //    else
+            //    {
+            //        int diasMes = DateTime.DaysInMonth(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month);
+            //        dtpPeriodoInicio.Value = new DateTime(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month, 16);
+            //        for (int i = 0; i < (diasMes - 15); i++)
+            //            dgvFaltas.Columns.Add("fecha" + (i + 1).ToString(), dtpPeriodoInicio.Value.AddDays(i).ToShortDateString());
+            //    }
+            //}
+            dgvFaltas.Columns["idtrabajadorfalta"].DataPropertyName = "idtrabajador";
+            dgvFaltas.Columns["iddepartamentofalta"].DataPropertyName = "iddepartamento";
+            dgvFaltas.Columns["idpuestofalta"].DataPropertyName = "idpuesto";
+            dgvFaltas.Columns["noempleadofalta"].DataPropertyName = "noempleado";
+            dgvFaltas.Columns["nombrefalta"].DataPropertyName = "nombres";
+            dgvFaltas.Columns["paternofalta"].DataPropertyName = "paterno";
+            dgvFaltas.Columns["maternofalta"].DataPropertyName = "materno";
+            dgvFaltas.Columns["falta"].DataPropertyName = "falta";
+            dgvFaltas.Columns["incapacidad"].DataPropertyName = "incapacidad";
+            #endregion
+
             #region LISTADO DE EMPLEADOS GRID
             nh = new CalculoNomina.Core.NominaHelper();
             nh.Command = cmd;
             lstEmpleadosNomina = new List<CalculoNomina.Core.DatosEmpleado>();
-
+            lstEmpleadosFaltaIncapacidad = new List<CalculoNomina.Core.DatosFaltaIncapacidad>();
+            
             try
             {
                 cnx.Open();
                 if (_tipoNomina == GLOBALES.NORMAL)
+                {
                     lstEmpleadosNomina = nh.obtenerDatosEmpleado(GLOBALES.IDEMPRESA, GLOBALES.ACTIVO);
+                    lstEmpleadosFaltaIncapacidad = nh.obtenerDatosFaltaInc(GLOBALES.IDEMPRESA, GLOBALES.ACTIVO);
+                }
+
                 if (_tipoNomina == GLOBALES.ESPECIAL)
+                {
                     lstEmpleadosNomina = nh.obtenerDatosEmpleado(GLOBALES.IDEMPRESA, GLOBALES.INACTIVO);
+                    lstEmpleadosFaltaIncapacidad = nh.obtenerDatosFaltaInc(GLOBALES.IDEMPRESA, GLOBALES.INACTIVO);
+                }
+                    
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -980,11 +1101,13 @@ namespace Nominas
             }
 
             dgvEmpleados.DataSource = lstEmpleadosNomina;
+            dgvFaltas.DataSource = lstEmpleadosFaltaIncapacidad;
 
             for (int i = 1; i < dgvEmpleados.Columns.Count; i++)
-            {
                 dgvEmpleados.AutoResizeColumn(i);
-            }
+
+            for (int i = 1; i < dgvFaltas.Columns.Count; i++)
+                dgvFaltas.AutoResizeColumn(i);
             #endregion
         }
 
@@ -1186,6 +1309,258 @@ namespace Nominas
             vr._finPeriodo = dtpPeriodoFin.Value;
             vr.Show();
         }
+
+        private void dgvFaltas_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvFaltas.Columns[e.ColumnIndex].Name == "falta")
+            {
+                if (int.Parse(dgvFaltas.Rows[e.RowIndex].Cells["falta"].Value.ToString()) > _periodo)
+                {
+                    MessageBox.Show("La falta ingresada es mayor al periodo. Verifique", "Error");
+                    dgvFaltas.Rows[e.RowIndex].Cells["falta"].Value = 0;
+                    return;
+                }
+
+                if (dgvFaltas.Rows[e.RowIndex].Cells["falta"].Value.ToString() != "0")
+                {
+                    if (dgvFaltas.Rows[e.RowIndex].Cells["incapacidad"].Value.ToString() != "0")
+                    {
+                        borraIncapacidad(e.ColumnIndex + 1, e.RowIndex);
+                        dgvFaltas.Rows[e.RowIndex].Cells["incapacidad"].Value = 0;
+                    }
+
+                    cnx = new SqlConnection(cdn);
+                    cmd = new SqlCommand();
+                    cmd.Connection = cnx;
+                    fh = new Faltas.Core.FaltasHelper();
+                    fh.Command = cmd;
+                    Faltas.Core.Faltas falta = new Faltas.Core.Faltas();
+                    falta.idtrabajador = int.Parse(dgvFaltas.Rows[e.RowIndex].Cells["idtrabajadorfalta"].Value.ToString());
+                    falta.idempresa = GLOBALES.IDEMPRESA;
+                    falta.periodo = _periodo;
+                    falta.faltas = int.Parse(dgvFaltas.Rows[e.RowIndex].Cells["falta"].Value.ToString());
+                    falta.fechainicio = dtpPeriodoInicio.Value;
+                    falta.fechafin = dtpPeriodoFin.Value;
+
+                    try
+                    {
+                        cnx.Open();
+                        fh.insertaFalta(falta);
+                        cnx.Close();
+                        cnx.Dispose();
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error: \r\n \r\n Se ingreso un valor incorrecto, verifique.", "Error");
+                        dgvFaltas.Rows[e.RowIndex].Cells["falta"].Value = 0;
+                        cnx.Dispose();
+                    }
+                }
+                else
+                {
+                    borraFalta(e.ColumnIndex, e.RowIndex);
+                }
+            }
+
+            if (dgvFaltas.Columns[e.ColumnIndex].Name == "incapacidad")
+            {
+                if (int.Parse(dgvFaltas.Rows[e.RowIndex].Cells["incapacidad"].Value.ToString()) > _periodo)
+                {
+                    MessageBox.Show("La incapacidad ingresada es mayor al periodo. Verifique", "Error");
+                    dgvFaltas.Rows[e.RowIndex].Cells["incapacidad"].Value = 0;
+                    return;
+                }
+
+                if (dgvFaltas.Rows[e.RowIndex].Cells["incapacidad"].Value.ToString() != "0")
+                {
+                    if (dgvFaltas.Rows[e.RowIndex].Cells["falta"].Value.ToString() != "0")
+                    {
+                        borraFalta(e.ColumnIndex - 1, e.RowIndex);
+                        dgvFaltas.Rows[e.RowIndex].Cells["falta"].Value = 0;
+                    }
+
+                    cnx = new SqlConnection(cdn);
+                    cmd = new SqlCommand();
+                    cmd.Connection = cnx;
+                    ih = new Incapacidad.Core.IncapacidadHelper();
+                    ih.Command = cmd;
+                    Incapacidad.Core.Incapacidades incapacidad = new Incapacidad.Core.Incapacidades();
+                    incapacidad.idtrabajador = int.Parse(dgvFaltas.Rows[e.RowIndex].Cells["idtrabajadorfalta"].Value.ToString());
+                    incapacidad.idempresa = GLOBALES.IDEMPRESA;
+                    incapacidad.diasincapacidad = 0;
+                    incapacidad.diastomados = int.Parse(dgvFaltas.Rows[e.RowIndex].Cells["incapacidad"].Value.ToString());
+                    incapacidad.diasrestantes = 0;
+                    incapacidad.diasapagar = 0;
+                    incapacidad.tipo = 0;
+                    incapacidad.aplicada = 1;
+                    incapacidad.consecutiva = 1;
+                    incapacidad.fechainicio = dtpPeriodoInicio.Value;
+                    incapacidad.fechafin = dtpPeriodoFin.Value;
+
+                    try
+                    {
+                        cnx.Open();
+                        ih.insertaIncapacidad(incapacidad);
+                        cnx.Close();
+                        cnx.Dispose();
+                    }                    
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error: \r\n \r\n Se ingreso un valor incorrecto, verifique.", "Error");
+                        dgvFaltas.Rows[e.RowIndex].Cells["incapacidad"].Value = 0;
+                        cnx.Dispose();
+                    }
+                }
+                else
+                {
+                    borraIncapacidad(e.ColumnIndex, e.RowIndex);
+                }
+            }
+        }
+
+        private void dgvFaltas_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            //if (dgvFaltas.IsCurrentCellDirty)
+            //    dgvFaltas.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            //else
+            //    dgvFaltas.CommitEdit(DataGridViewDataErrorContexts.Commit);
+        }
+
+        private void dgvFaltas_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Delete && dgvFaltas.CurrentCell.Selected && dgvFaltas.CurrentCell.ReadOnly != true)
+            {
+                int columna = dgvFaltas.CurrentCell.ColumnIndex;
+                int fila = dgvFaltas.CurrentCell.RowIndex;
+                if (dgvFaltas.Columns[columna].Name == "falta")
+                    borraFalta(columna, fila);
+                if (dgvFaltas.Columns[columna].Name == "incapacidad")
+                    borraIncapacidad(columna, fila);
+                dgvFaltas.CurrentCell.Value = 0;
+            } 
+        }
+
+        private void borraFalta(int columna, int fila)
+        {
+            if (dgvFaltas.Columns[columna].Name == "falta")
+            {
+                cnx = new SqlConnection(cdn);
+                cmd = new SqlCommand();
+                cmd.Connection = cnx;
+                fh = new Faltas.Core.FaltasHelper();
+                fh.Command = cmd;
+                Faltas.Core.Faltas falta = new Faltas.Core.Faltas();
+                falta.idtrabajador = int.Parse(dgvFaltas.Rows[fila].Cells["idtrabajadorfalta"].Value.ToString());
+                falta.fechainicio = dtpPeriodoInicio.Value;
+                falta.fechafin = dtpPeriodoFin.Value;
+
+                try
+                {
+                    cnx.Open();
+                    fh.eliminaFaltaExistente(falta);
+                    cnx.Close();
+                    cnx.Dispose();
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                    cnx.Dispose();
+                }
+            }
+        }
+
+        private void borraIncapacidad(int columna, int fila)
+        {
+            if (dgvFaltas.Columns[columna].Name == "incapacidad")
+            {
+                cnx = new SqlConnection(cdn);
+                cmd = new SqlCommand();
+                cmd.Connection = cnx;
+                ih = new Incapacidad.Core.IncapacidadHelper();
+                ih.Command = cmd;
+                
+                try
+                {
+                    cnx.Open();
+                    ih.eliminaIncapadidad(int.Parse(dgvFaltas.Rows[fila].Cells["idtrabajadorfalta"].Value.ToString()), dtpPeriodoInicio.Value, dtpPeriodoFin.Value);
+                    cnx.Close();
+                    cnx.Dispose();
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                    cnx.Dispose();
+                }
+            }
+        }
+
+        private void dgvEmpleados_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvEmpleados.Columns[e.ColumnIndex].Name == "horas")
+            {
+                for (int i = 0; i < lstValoresNomina.Count(); i++)
+                {
+                    if (int.Parse(dgvEmpleados.Rows[e.RowIndex].Cells["idtrabajador"].Value.ToString()) == lstValoresNomina[i].idtrabajador && lstValoresNomina[i].idconcepto == 2)
+                    {
+                        nh = new CalculoNomina.Core.NominaHelper();
+                        nh.Command = cmd;
+                        lstValoresNomina[i].cantidad = double.Parse(dgvEmpleados.Rows[e.RowIndex].Cells["horas"].Value.ToString());
+                        lstValoresNomina[i].gravado = double.Parse(dgvEmpleados.Rows[e.RowIndex].Cells["horas"].Value.ToString()) - lstValoresNomina[i].exento;
+                        CalculoNomina.Core.tmpPagoNomina hora = new CalculoNomina.Core.tmpPagoNomina();
+                        hora.idempresa = GLOBALES.IDEMPRESA;
+                        hora.idtrabajador = int.Parse(dgvEmpleados.Rows[e.RowIndex].Cells["idtrabajador"].Value.ToString());
+                        hora.idconcepto = 2;
+                        hora.fechainicio = dtpPeriodoInicio.Value;
+                        hora.fechafin = dtpPeriodoFin.Value;
+                        hora.cantidad = lstValoresNomina[i].cantidad;
+                        hora.gravado = lstValoresNomina[i].gravado;
+                        try
+                        {
+                            cnx.Open();
+                            nh.actualizaHorasExtrasDespensa(hora);
+                            cnx.Close();
+                        }
+                        catch (Exception error)
+                        {
+                            MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                        }
+                    }
+                }
+            }
+
+            if (dgvEmpleados.Columns[e.ColumnIndex].Name == "despensa")
+            {
+                for (int i = 0; i < lstValoresNomina.Count(); i++)
+                {
+                    if (int.Parse(dgvEmpleados.Rows[e.RowIndex].Cells["idtrabajador"].Value.ToString()) == lstValoresNomina[i].idtrabajador && lstValoresNomina[i].idconcepto == 6)
+                    {
+                        nh = new CalculoNomina.Core.NominaHelper();
+                        nh.Command = cmd;
+                        lstValoresNomina[i].cantidad = double.Parse(dgvEmpleados.Rows[e.RowIndex].Cells["despensa"].Value.ToString());
+                        lstValoresNomina[i].gravado = double.Parse(dgvEmpleados.Rows[e.RowIndex].Cells["despensa"].Value.ToString());
+                        CalculoNomina.Core.tmpPagoNomina despensa = new CalculoNomina.Core.tmpPagoNomina();
+                        despensa.idempresa = GLOBALES.IDEMPRESA;
+                        despensa.idtrabajador = int.Parse(dgvEmpleados.Rows[e.RowIndex].Cells["idtrabajador"].Value.ToString());
+                        despensa.idconcepto = 2;
+                        despensa.fechainicio = dtpPeriodoInicio.Value;
+                        despensa.fechafin = dtpPeriodoFin.Value;
+                        despensa.cantidad = lstValoresNomina[i].cantidad;
+                        despensa.gravado = lstValoresNomina[i].gravado;
+                        try
+                        {
+                            cnx.Open();
+                            nh.actualizaHorasExtrasDespensa(despensa);
+                            cnx.Close();
+                        }
+                        catch (Exception error)
+                        {
+                            MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                        }
+                    }
+                }
+            }
+        }
+        
     }
 
     public class tmpPagoNomina

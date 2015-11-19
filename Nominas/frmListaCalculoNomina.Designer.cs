@@ -50,6 +50,7 @@
             this.toolReportes = new System.Windows.Forms.ToolStripMenuItem();
             this.toolCaratula = new System.Windows.Forms.ToolStripMenuItem();
             this.empleadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolReporteDepto = new System.Windows.Forms.ToolStripMenuItem();
             this.toolBusqueda = new System.Windows.Forms.ToolStrip();
             this.toolFiltro = new System.Windows.Forms.ToolStripSplitButton();
             this.toolTodos = new System.Windows.Forms.ToolStripMenuItem();
@@ -91,7 +92,21 @@
             this.toolEtapa = new System.Windows.Forms.ToolStripStatusLabel();
             this.PanelBarra = new System.Windows.Forms.Panel();
             this.PanelGrid = new System.Windows.Forms.Panel();
+            this.tabGrid = new System.Windows.Forms.TabControl();
+            this.tabCalculoNomina = new System.Windows.Forms.TabPage();
+            this.tabFaltas = new System.Windows.Forms.TabPage();
+            this.dgvFaltas = new System.Windows.Forms.DataGridView();
+            this.idtrabajadorfalta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.iddepartamentofalta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idpuestofalta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.noempleadofalta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombrefalta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.paternofalta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.maternofalta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.falta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.incapacidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.workDescalculo = new System.ComponentModel.BackgroundWorker();
+            this.workHoras = new System.ComponentModel.BackgroundWorker();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -104,14 +119,25 @@
             this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.workHoras = new System.ComponentModel.BackgroundWorker();
-            this.toolReporteDepto = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolTitulo.SuspendLayout();
             this.toolBusqueda.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmpleados)).BeginInit();
             this.BarraEstado.SuspendLayout();
             this.PanelBarra.SuspendLayout();
             this.PanelGrid.SuspendLayout();
+            this.tabGrid.SuspendLayout();
+            this.tabCalculoNomina.SuspendLayout();
+            this.tabFaltas.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFaltas)).BeginInit();
             this.SuspendLayout();
             // 
             // toolTitulo
@@ -121,7 +147,7 @@
             this.toolStripSplitButton1});
             this.toolTitulo.Location = new System.Drawing.Point(0, 0);
             this.toolTitulo.Name = "toolTitulo";
-            this.toolTitulo.Size = new System.Drawing.Size(1303, 32);
+            this.toolTitulo.Size = new System.Drawing.Size(1079, 32);
             this.toolTitulo.TabIndex = 9;
             this.toolTitulo.Text = "ToolStrip1";
             // 
@@ -146,7 +172,7 @@
             // 
             this.toolAbrir.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolAbrir.Name = "toolAbrir";
-            this.toolAbrir.Size = new System.Drawing.Size(152, 22);
+            this.toolAbrir.Size = new System.Drawing.Size(126, 22);
             this.toolAbrir.Text = "Abrir";
             this.toolAbrir.Click += new System.EventHandler(this.toolAbrir_Click);
             // 
@@ -154,27 +180,27 @@
             // 
             this.toolGuardar.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolGuardar.Name = "toolGuardar";
-            this.toolGuardar.Size = new System.Drawing.Size(152, 22);
+            this.toolGuardar.Size = new System.Drawing.Size(126, 22);
             this.toolGuardar.Text = "Guardar";
             this.toolGuardar.Click += new System.EventHandler(this.toolGuardar_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(123, 6);
             // 
             // toolAutorizar
             // 
             this.toolAutorizar.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.toolAutorizar.Name = "toolAutorizar";
-            this.toolAutorizar.Size = new System.Drawing.Size(152, 22);
+            this.toolAutorizar.Size = new System.Drawing.Size(126, 22);
             this.toolAutorizar.Text = "Autorizar";
             this.toolAutorizar.Click += new System.EventHandler(this.toolAutorizar_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(123, 6);
             // 
             // toolReportes
             // 
@@ -184,7 +210,7 @@
             this.toolReporteDepto});
             this.toolReportes.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolReportes.Name = "toolReportes";
-            this.toolReportes.Size = new System.Drawing.Size(152, 22);
+            this.toolReportes.Size = new System.Drawing.Size(126, 22);
             this.toolReportes.Text = "Reportes";
             // 
             // toolCaratula
@@ -200,6 +226,13 @@
             this.empleadosToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.empleadosToolStripMenuItem.Text = "Empleados";
             this.empleadosToolStripMenuItem.Click += new System.EventHandler(this.empleadosToolStripMenuItem_Click);
+            // 
+            // toolReporteDepto
+            // 
+            this.toolReporteDepto.Name = "toolReporteDepto";
+            this.toolReporteDepto.Size = new System.Drawing.Size(155, 22);
+            this.toolReporteDepto.Text = "Departamentos";
+            this.toolReporteDepto.Click += new System.EventHandler(this.toolReporteDepto_Click);
             // 
             // toolBusqueda
             // 
@@ -217,7 +250,7 @@
             this.txtBuscar});
             this.toolBusqueda.Location = new System.Drawing.Point(0, 32);
             this.toolBusqueda.Name = "toolBusqueda";
-            this.toolBusqueda.Size = new System.Drawing.Size(1303, 25);
+            this.toolBusqueda.Size = new System.Drawing.Size(1079, 25);
             this.toolBusqueda.TabIndex = 10;
             this.toolBusqueda.Text = "ToolStrip1";
             // 
@@ -287,6 +320,7 @@
             this.toolCargar.Name = "toolCargar";
             this.toolCargar.Size = new System.Drawing.Size(96, 22);
             this.toolCargar.Text = "Cargar Horas";
+            this.toolCargar.Visible = false;
             this.toolCargar.Click += new System.EventHandler(this.toolCargar_Click);
             // 
             // toolStripSeparator3
@@ -359,12 +393,14 @@
             this.puntualidad,
             this.horas});
             this.dgvEmpleados.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvEmpleados.Location = new System.Drawing.Point(0, 0);
+            this.dgvEmpleados.Location = new System.Drawing.Point(3, 3);
             this.dgvEmpleados.Name = "dgvEmpleados";
-            this.dgvEmpleados.Size = new System.Drawing.Size(1303, 546);
+            this.dgvEmpleados.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.dgvEmpleados.Size = new System.Drawing.Size(1065, 646);
             this.dgvEmpleados.TabIndex = 11;
             this.dgvEmpleados.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmpleados_CellContentClick);
             this.dgvEmpleados.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmpleados_CellDoubleClick);
+            this.dgvEmpleados.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmpleados_CellValueChanged);
             // 
             // seleccion
             // 
@@ -431,7 +467,6 @@
             this.despensa.DefaultCellStyle = dataGridViewCellStyle3;
             this.despensa.HeaderText = "Despensa";
             this.despensa.Name = "despensa";
-            this.despensa.ReadOnly = true;
             // 
             // asistencia
             // 
@@ -510,7 +545,7 @@
             this.toolEtapa});
             this.BarraEstado.Location = new System.Drawing.Point(0, 0);
             this.BarraEstado.Name = "BarraEstado";
-            this.BarraEstado.Size = new System.Drawing.Size(1303, 22);
+            this.BarraEstado.Size = new System.Drawing.Size(1079, 22);
             this.BarraEstado.TabIndex = 16;
             this.BarraEstado.Text = "statusStrip1";
             // 
@@ -536,19 +571,129 @@
             // 
             this.PanelBarra.Controls.Add(this.BarraEstado);
             this.PanelBarra.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.PanelBarra.Location = new System.Drawing.Point(0, 603);
+            this.PanelBarra.Location = new System.Drawing.Point(0, 735);
             this.PanelBarra.Name = "PanelBarra";
-            this.PanelBarra.Size = new System.Drawing.Size(1303, 22);
+            this.PanelBarra.Size = new System.Drawing.Size(1079, 22);
             this.PanelBarra.TabIndex = 17;
             // 
             // PanelGrid
             // 
-            this.PanelGrid.Controls.Add(this.dgvEmpleados);
+            this.PanelGrid.Controls.Add(this.tabGrid);
             this.PanelGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PanelGrid.Location = new System.Drawing.Point(0, 57);
             this.PanelGrid.Name = "PanelGrid";
-            this.PanelGrid.Size = new System.Drawing.Size(1303, 546);
+            this.PanelGrid.Size = new System.Drawing.Size(1079, 678);
             this.PanelGrid.TabIndex = 18;
+            // 
+            // tabGrid
+            // 
+            this.tabGrid.Alignment = System.Windows.Forms.TabAlignment.Bottom;
+            this.tabGrid.Controls.Add(this.tabCalculoNomina);
+            this.tabGrid.Controls.Add(this.tabFaltas);
+            this.tabGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabGrid.Location = new System.Drawing.Point(0, 0);
+            this.tabGrid.Name = "tabGrid";
+            this.tabGrid.SelectedIndex = 0;
+            this.tabGrid.Size = new System.Drawing.Size(1079, 678);
+            this.tabGrid.TabIndex = 12;
+            // 
+            // tabCalculoNomina
+            // 
+            this.tabCalculoNomina.Controls.Add(this.dgvEmpleados);
+            this.tabCalculoNomina.Location = new System.Drawing.Point(4, 4);
+            this.tabCalculoNomina.Name = "tabCalculoNomina";
+            this.tabCalculoNomina.Padding = new System.Windows.Forms.Padding(3);
+            this.tabCalculoNomina.Size = new System.Drawing.Size(1071, 652);
+            this.tabCalculoNomina.TabIndex = 0;
+            this.tabCalculoNomina.Text = "Percepciones y Deducciones";
+            this.tabCalculoNomina.UseVisualStyleBackColor = true;
+            // 
+            // tabFaltas
+            // 
+            this.tabFaltas.Controls.Add(this.dgvFaltas);
+            this.tabFaltas.Location = new System.Drawing.Point(4, 4);
+            this.tabFaltas.Name = "tabFaltas";
+            this.tabFaltas.Padding = new System.Windows.Forms.Padding(3);
+            this.tabFaltas.Size = new System.Drawing.Size(1071, 652);
+            this.tabFaltas.TabIndex = 1;
+            this.tabFaltas.Text = "Faltas e Incapacidades";
+            this.tabFaltas.UseVisualStyleBackColor = true;
+            // 
+            // dgvFaltas
+            // 
+            this.dgvFaltas.AllowUserToAddRows = false;
+            this.dgvFaltas.AllowUserToDeleteRows = false;
+            this.dgvFaltas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvFaltas.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.idtrabajadorfalta,
+            this.iddepartamentofalta,
+            this.idpuestofalta,
+            this.noempleadofalta,
+            this.nombrefalta,
+            this.paternofalta,
+            this.maternofalta,
+            this.falta,
+            this.incapacidad});
+            this.dgvFaltas.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvFaltas.Location = new System.Drawing.Point(3, 3);
+            this.dgvFaltas.Name = "dgvFaltas";
+            this.dgvFaltas.Size = new System.Drawing.Size(1065, 646);
+            this.dgvFaltas.TabIndex = 0;
+            this.dgvFaltas.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFaltas_CellValueChanged);
+            this.dgvFaltas.CurrentCellDirtyStateChanged += new System.EventHandler(this.dgvFaltas_CurrentCellDirtyStateChanged);
+            this.dgvFaltas.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvFaltas_KeyDown);
+            // 
+            // idtrabajadorfalta
+            // 
+            this.idtrabajadorfalta.HeaderText = "ID";
+            this.idtrabajadorfalta.Name = "idtrabajadorfalta";
+            this.idtrabajadorfalta.Visible = false;
+            // 
+            // iddepartamentofalta
+            // 
+            this.iddepartamentofalta.HeaderText = "IdDepartamento";
+            this.iddepartamentofalta.Name = "iddepartamentofalta";
+            this.iddepartamentofalta.Visible = false;
+            // 
+            // idpuestofalta
+            // 
+            this.idpuestofalta.HeaderText = "IdPuesto";
+            this.idpuestofalta.Name = "idpuestofalta";
+            this.idpuestofalta.Visible = false;
+            // 
+            // noempleadofalta
+            // 
+            this.noempleadofalta.HeaderText = "No. Empleado";
+            this.noempleadofalta.Name = "noempleadofalta";
+            this.noempleadofalta.ReadOnly = true;
+            // 
+            // nombrefalta
+            // 
+            this.nombrefalta.HeaderText = "Nombre";
+            this.nombrefalta.Name = "nombrefalta";
+            this.nombrefalta.ReadOnly = true;
+            // 
+            // paternofalta
+            // 
+            this.paternofalta.HeaderText = "Ap. Paterno";
+            this.paternofalta.Name = "paternofalta";
+            this.paternofalta.ReadOnly = true;
+            // 
+            // maternofalta
+            // 
+            this.maternofalta.HeaderText = "Ap. Materno";
+            this.maternofalta.Name = "maternofalta";
+            this.maternofalta.ReadOnly = true;
+            // 
+            // falta
+            // 
+            this.falta.HeaderText = "Falta";
+            this.falta.Name = "falta";
+            // 
+            // incapacidad
+            // 
+            this.incapacidad.HeaderText = "Incapacidad";
+            this.incapacidad.Name = "incapacidad";
             // 
             // workDescalculo
             // 
@@ -557,6 +702,14 @@
             this.workDescalculo.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workDescalculo_DoWork);
             this.workDescalculo.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.workDescalculo_ProgressChanged);
             this.workDescalculo.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workDescalculo_RunWorkerCompleted);
+            // 
+            // workHoras
+            // 
+            this.workHoras.WorkerReportsProgress = true;
+            this.workHoras.WorkerSupportsCancellation = true;
+            this.workHoras.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workHoras_DoWork);
+            this.workHoras.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.workHoras_ProgressChanged);
+            this.workHoras.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workHoras_RunWorkerCompleted);
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -614,6 +767,7 @@
             this.dataGridViewTextBoxColumn8.DefaultCellStyle = dataGridViewCellStyle7;
             this.dataGridViewTextBoxColumn8.HeaderText = "P. Puntualidad";
             this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            this.dataGridViewTextBoxColumn8.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn9
             // 
@@ -621,6 +775,7 @@
             this.dataGridViewTextBoxColumn9.DefaultCellStyle = dataGridViewCellStyle8;
             this.dataGridViewTextBoxColumn9.HeaderText = "H. Extras Dobles";
             this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            this.dataGridViewTextBoxColumn9.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn10
             // 
@@ -645,26 +800,65 @@
             this.dataGridViewTextBoxColumn12.HeaderText = "H. Extras Dobles";
             this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
             // 
-            // workHoras
+            // dataGridViewTextBoxColumn13
             // 
-            this.workHoras.WorkerReportsProgress = true;
-            this.workHoras.WorkerSupportsCancellation = true;
-            this.workHoras.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workHoras_DoWork);
-            this.workHoras.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.workHoras_ProgressChanged);
-            this.workHoras.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workHoras_RunWorkerCompleted);
+            this.dataGridViewTextBoxColumn13.HeaderText = "ID";
+            this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
+            this.dataGridViewTextBoxColumn13.Visible = false;
             // 
-            // toolReporteDepto
+            // dataGridViewTextBoxColumn14
             // 
-            this.toolReporteDepto.Name = "toolReporteDepto";
-            this.toolReporteDepto.Size = new System.Drawing.Size(155, 22);
-            this.toolReporteDepto.Text = "Departamentos";
-            this.toolReporteDepto.Click += new System.EventHandler(this.toolReporteDepto_Click);
+            this.dataGridViewTextBoxColumn14.HeaderText = "No. Empleado";
+            this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
+            this.dataGridViewTextBoxColumn14.ReadOnly = true;
+            this.dataGridViewTextBoxColumn14.Visible = false;
+            // 
+            // dataGridViewTextBoxColumn15
+            // 
+            this.dataGridViewTextBoxColumn15.HeaderText = "Nombre";
+            this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
+            this.dataGridViewTextBoxColumn15.ReadOnly = true;
+            this.dataGridViewTextBoxColumn15.Visible = false;
+            // 
+            // dataGridViewTextBoxColumn16
+            // 
+            this.dataGridViewTextBoxColumn16.HeaderText = "Ap. Paterno";
+            this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
+            this.dataGridViewTextBoxColumn16.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn17
+            // 
+            this.dataGridViewTextBoxColumn17.HeaderText = "Ap. Materno";
+            this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
+            this.dataGridViewTextBoxColumn17.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn18
+            // 
+            this.dataGridViewTextBoxColumn18.HeaderText = "Falta";
+            this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
+            this.dataGridViewTextBoxColumn18.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn19
+            // 
+            this.dataGridViewTextBoxColumn19.HeaderText = "Incapacidad";
+            this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
+            this.dataGridViewTextBoxColumn19.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn20
+            // 
+            this.dataGridViewTextBoxColumn20.HeaderText = "Falta";
+            this.dataGridViewTextBoxColumn20.Name = "dataGridViewTextBoxColumn20";
+            // 
+            // dataGridViewTextBoxColumn21
+            // 
+            this.dataGridViewTextBoxColumn21.HeaderText = "Incapacidad";
+            this.dataGridViewTextBoxColumn21.Name = "dataGridViewTextBoxColumn21";
             // 
             // frmListaCalculoNomina
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1303, 625);
+            this.ClientSize = new System.Drawing.Size(1079, 757);
             this.Controls.Add(this.PanelGrid);
             this.Controls.Add(this.PanelBarra);
             this.Controls.Add(this.dtpPeriodoFin);
@@ -687,6 +881,10 @@
             this.PanelBarra.ResumeLayout(false);
             this.PanelBarra.PerformLayout();
             this.PanelGrid.ResumeLayout(false);
+            this.tabGrid.ResumeLayout(false);
+            this.tabCalculoNomina.ResumeLayout(false);
+            this.tabFaltas.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFaltas)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -741,6 +939,34 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem toolAutorizar;
         private System.Windows.Forms.ToolStripMenuItem toolNoEmpleado;
+        private System.ComponentModel.BackgroundWorker workHoras;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem toolReportes;
+        private System.Windows.Forms.ToolStripMenuItem toolCaratula;
+        private System.Windows.Forms.ToolStripMenuItem empleadosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolReporteDepto;
+        private System.Windows.Forms.TabControl tabGrid;
+        private System.Windows.Forms.TabPage tabCalculoNomina;
+        private System.Windows.Forms.TabPage tabFaltas;
+        private System.Windows.Forms.DataGridView dgvFaltas;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idtrabajadorfalta;
+        private System.Windows.Forms.DataGridViewTextBoxColumn iddepartamentofalta;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idpuestofalta;
+        private System.Windows.Forms.DataGridViewTextBoxColumn noempleadofalta;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nombrefalta;
+        private System.Windows.Forms.DataGridViewTextBoxColumn paternofalta;
+        private System.Windows.Forms.DataGridViewTextBoxColumn maternofalta;
+        private System.Windows.Forms.DataGridViewTextBoxColumn falta;
+        private System.Windows.Forms.DataGridViewTextBoxColumn incapacidad;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn16;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn19;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn20;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn21;
         private System.Windows.Forms.DataGridViewCheckBoxColumn seleccion;
         private System.Windows.Forms.DataGridViewTextBoxColumn idtrabajador;
         private System.Windows.Forms.DataGridViewTextBoxColumn iddepartamento;
@@ -754,11 +980,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn asistencia;
         private System.Windows.Forms.DataGridViewTextBoxColumn puntualidad;
         private System.Windows.Forms.DataGridViewTextBoxColumn horas;
-        private System.ComponentModel.BackgroundWorker workHoras;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-        private System.Windows.Forms.ToolStripMenuItem toolReportes;
-        private System.Windows.Forms.ToolStripMenuItem toolCaratula;
-        private System.Windows.Forms.ToolStripMenuItem empleadosToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolReporteDepto;
     }
 }

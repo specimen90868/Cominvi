@@ -201,7 +201,7 @@ namespace Nominas
             Faltas.Core.Faltas falta = new Faltas.Core.Faltas();
             falta.idtrabajador = _idEmpleado;
             falta.idempresa = GLOBALES.IDEMPRESA;
-            falta.idperiodo = idperiodo;
+            falta.periodo = idperiodo;
             falta.faltas = int.Parse(txtFaltas.Text.Trim());
             falta.fechainicio = dtpInicio.Value;
             falta.fechafin = dtpFin.Value;

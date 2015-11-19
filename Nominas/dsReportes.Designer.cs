@@ -375,6 +375,8 @@ namespace Nominas {
             
             private global::System.Data.DataColumn columnCaratulaRfc;
             
+            private global::System.Data.DataColumn columnCaratulaTotalEmpleados;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public PreNominaCaratulaDataTable() {
@@ -514,6 +516,14 @@ namespace Nominas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CaratulaTotalEmpleadosColumn {
+                get {
+                    return this.columnCaratulaTotalEmpleados;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -549,7 +559,7 @@ namespace Nominas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PreNominaCaratulaRow AddPreNominaCaratulaRow(string CaratulaEmpresa, int CaratulaNoConcepto, string CaratulaTipoConcepto, string CaratulaConcepto, double CaratulaImporte, System.DateTime CaratulaFechaInicio, System.DateTime CaratulaFechaFin, System.DateTime CaratulaDia, System.DateTime CaratulaHora, string CaratulaSubConcepto, string CaratulaRegistro, string CaratulaDigitoVerificador, string CaratulaRfc) {
+            public PreNominaCaratulaRow AddPreNominaCaratulaRow(string CaratulaEmpresa, int CaratulaNoConcepto, string CaratulaTipoConcepto, string CaratulaConcepto, double CaratulaImporte, System.DateTime CaratulaFechaInicio, System.DateTime CaratulaFechaFin, System.DateTime CaratulaDia, System.DateTime CaratulaHora, string CaratulaSubConcepto, string CaratulaRegistro, string CaratulaDigitoVerificador, string CaratulaRfc, string CaratulaTotalEmpleados) {
                 PreNominaCaratulaRow rowPreNominaCaratulaRow = ((PreNominaCaratulaRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         CaratulaEmpresa,
@@ -564,7 +574,8 @@ namespace Nominas {
                         CaratulaSubConcepto,
                         CaratulaRegistro,
                         CaratulaDigitoVerificador,
-                        CaratulaRfc};
+                        CaratulaRfc,
+                        CaratulaTotalEmpleados};
                 rowPreNominaCaratulaRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowPreNominaCaratulaRow);
                 return rowPreNominaCaratulaRow;
@@ -600,6 +611,7 @@ namespace Nominas {
                 this.columnCaratulaRegistro = base.Columns["CaratulaRegistro"];
                 this.columnCaratulaDigitoVerificador = base.Columns["CaratulaDigitoVerificador"];
                 this.columnCaratulaRfc = base.Columns["CaratulaRfc"];
+                this.columnCaratulaTotalEmpleados = base.Columns["CaratulaTotalEmpleados"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -631,6 +643,8 @@ namespace Nominas {
                 base.Columns.Add(this.columnCaratulaDigitoVerificador);
                 this.columnCaratulaRfc = new global::System.Data.DataColumn("CaratulaRfc", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCaratulaRfc);
+                this.columnCaratulaTotalEmpleados = new global::System.Data.DataColumn("CaratulaTotalEmpleados", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCaratulaTotalEmpleados);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1948,6 +1962,23 @@ namespace Nominas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string CaratulaTotalEmpleados {
+                get {
+                    try {
+                        return ((string)(this[this.tablePreNominaCaratula.CaratulaTotalEmpleadosColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CaratulaTotalEmpleados\' in table \'PreNominaCaratula\' is DBN" +
+                                "ull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePreNominaCaratula.CaratulaTotalEmpleadosColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsCaratulaEmpresaNull() {
                 return this.IsNull(this.tablePreNominaCaratula.CaratulaEmpresaColumn);
             }
@@ -2100,6 +2131,18 @@ namespace Nominas {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetCaratulaRfcNull() {
                 this[this.tablePreNominaCaratula.CaratulaRfcColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsCaratulaTotalEmpleadosNull() {
+                return this.IsNull(this.tablePreNominaCaratula.CaratulaTotalEmpleadosColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetCaratulaTotalEmpleadosNull() {
+                this[this.tablePreNominaCaratula.CaratulaTotalEmpleadosColumn] = global::System.Convert.DBNull;
             }
         }
         

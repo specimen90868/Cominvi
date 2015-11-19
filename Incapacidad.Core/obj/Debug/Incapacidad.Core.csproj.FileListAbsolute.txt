@@ -2,6 +2,6 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Incapacidad.Core\bin\Debug\In
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Incapacidad.Core\bin\Debug\Incapacidad.Core.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Incapacidad.Core\bin\Debug\Data.Obj.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Incapacidad.Core\bin\Debug\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Incapacidad.Core\obj\Debug\Incapacidad.Core.csprojResolveAssemblyReference.cache
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Incapacidad.Core\obj\Debug\Incapacidad.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Incapacidad.Core\obj\Debug\Incapacidad.Core.pdb
-C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Incapacidad.Core\obj\Debug\Incapacidad.Core.csprojResolveAssemblyReference.cache

@@ -72,11 +72,29 @@ namespace Nominas
                     cmd.Parameters.AddWithValue("fechafin", _finPeriodo);
                     daPreNominaEmpleados.SelectCommand = cmd;
                     daPreNominaEmpleados.Fill(dtPreNominaEmpleados);
+
+                    dsReportes.PreNominaCaratulaDataTable dtPreNominaCaratula2 = new dsReportes.PreNominaCaratulaDataTable();
+                    SqlDataAdapter daPreNominaCaratula2 = new SqlDataAdapter();
+                    cmd2.CommandText = "exec stp_rptPreNominaCaratula @idempresa, @fechainicio, @fechafin";
+                    cmd2.Parameters.Clear();
+                    cmd2.Parameters.AddWithValue("idempresa", GLOBALES.IDEMPRESA);
+                    cmd2.Parameters.AddWithValue("fechainicio", _inicioPeriodo);
+                    cmd2.Parameters.AddWithValue("fechafin", _finPeriodo);
+                    daPreNominaCaratula2.SelectCommand = cmd2;
+                    daPreNominaCaratula2.Fill(dtPreNominaCaratula2);
+
                     rd = new ReportDataSource();
                     rd.Value = dtPreNominaEmpleados;
                     rd.Name = "dsReporteNominaEmpleados";
+
+                    rd2 = new ReportDataSource();
+                    rd2.Value = dtPreNominaCaratula2;
+                    rd2.Name = "dsReporteNominaGeneral";
+
                     rpvVisor.LocalReport.DataSources.Clear();
                     rpvVisor.LocalReport.DataSources.Add(rd);
+                    rpvVisor.LocalReport.DataSources.Add(rd2);
+
                     rpvVisor.LocalReport.ReportEmbeddedResource = "rptPreNominaEmpleados.rdlc";
                     rpvVisor.LocalReport.ReportPath = @"rptPreNominaEmpleados.rdlc";
                     break;

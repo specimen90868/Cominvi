@@ -13,9 +13,39 @@ namespace Incapacidad.Core
         {
             List<Incapacidades> lstIncapacidades = new List<Incapacidades>();
             DataTable dtIncapacidad = new DataTable();
-            Command.CommandText = "select * from Incapacidades where idempresa = @idempresa";
+            Command.CommandText = "select * from Incapacidades where idempresa = @idempresa and fechainicio = @fechainicio and fechafin = @fechafin";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", inc.idempresa);
+            Command.Parameters.AddWithValue("fechainicio", inc.fechainicio);
+            Command.Parameters.AddWithValue("fechafin", inc.fechafin);
+            dtIncapacidad = SelectData(Command);
+            for (int i = 0; i < dtIncapacidad.Rows.Count; i++)
+            {
+                Incapacidades incapacidad = new Incapacidades();
+                incapacidad.id = int.Parse(dtIncapacidad.Rows[i]["id"].ToString());
+                incapacidad.idtrabajador = int.Parse(dtIncapacidad.Rows[i]["idtrabajador"].ToString());
+                incapacidad.idempresa = int.Parse(dtIncapacidad.Rows[i]["idempresa"].ToString());
+                incapacidad.diasincapacidad = int.Parse(dtIncapacidad.Rows[i]["diasincapacidad"].ToString());
+                incapacidad.diastomados = int.Parse(dtIncapacidad.Rows[i]["diastomados"].ToString());
+                incapacidad.diasrestantes = int.Parse(dtIncapacidad.Rows[i]["diasrestantes"].ToString());
+                incapacidad.diasapagar = int.Parse(dtIncapacidad.Rows[i]["diasapagar"].ToString());
+                incapacidad.tipo = int.Parse(dtIncapacidad.Rows[i]["tipo"].ToString());
+                incapacidad.aplicada = int.Parse(dtIncapacidad.Rows[i]["aplicada"].ToString());
+                incapacidad.consecutiva = int.Parse(dtIncapacidad.Rows[i]["consecutiva"].ToString());
+                incapacidad.fechainicio = DateTime.Parse(dtIncapacidad.Rows[i]["fechainicio"].ToString());
+                incapacidad.fechafin = DateTime.Parse(dtIncapacidad.Rows[i]["fechafin"].ToString());
+                lstIncapacidades.Add(incapacidad);
+            }
+            return lstIncapacidades;
+        }
+
+        public List<Incapacidades> obtenerIncapacidades(int idempresa)
+        {
+            List<Incapacidades> lstIncapacidades = new List<Incapacidades>();
+            DataTable dtIncapacidad = new DataTable();
+            Command.CommandText = "select * from Incapacidades where idempresa = @idempresa";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idempresa);
             dtIncapacidad = SelectData(Command);
             for (int i = 0; i < dtIncapacidad.Rows.Count; i++)
             {
@@ -68,7 +98,7 @@ namespace Incapacidad.Core
 
         public object existeIncapacidad(Incapacidades inc)
         {
-            Command.CommandText = "select coalesce(SUM(diastomados),0) as diastomados from incapacidades where idtrabajador = @idtrabajador and fechainicio between @fechainicio and @fechafin";
+            Command.CommandText = "select coalesce(SUM(diastomados),0) as diastomados from incapacidades where idtrabajador = @idtrabajador and fechainicio = @fechainicio and  fechafin = @fechafin";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", inc.idtrabajador);
             Command.Parameters.AddWithValue("fechainicio", inc.fechainicio);
@@ -108,6 +138,16 @@ namespace Incapacidad.Core
             Command.Parameters.AddWithValue("diasapagar", inc.diasapagar);
             Command.Parameters.AddWithValue("fechainicio", inc.fechainicio);
             Command.Parameters.AddWithValue("fechafin", inc.fechafin);
+            return Command.ExecuteNonQuery();
+        }
+
+        public int eliminaIncapadidad(int idtrabajador, DateTime fechainicio, DateTime fechafin)
+        {
+            Command.CommandText = "delete from Incapacidades where idtrabajador = @idtrabajador and fechainicio = @fechainicio and fechafin = @fechafin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
+            Command.Parameters.AddWithValue("fechainicio", fechainicio);
+            Command.Parameters.AddWithValue("fechafin", fechafin);
             return Command.ExecuteNonQuery();
         }
 

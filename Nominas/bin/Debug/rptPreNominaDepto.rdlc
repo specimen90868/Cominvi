@@ -1123,6 +1123,75 @@
                 </TablixCell>
               </TablixCells>
             </TablixRow>
+            <TablixRow>
+              <Height>0.6cm</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="DeptoTotalEmpleados">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>="Total de empleados: " + CStr(Fields!DeptoTotalEmpleados.Value)</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>DeptoTotalEmpleados</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox8">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox8</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
           </TablixRows>
         </TablixBody>
         <TablixColumnHierarchy>
@@ -1185,13 +1254,14 @@
               <TablixMembers>
                 <TablixMember />
                 <TablixMember />
+                <TablixMember />
               </TablixMembers>
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>dsReporteNominaDepto</DataSetName>
         <Top>0.21573cm</Top>
-        <Height>2.86688cm</Height>
+        <Height>3.46688cm</Height>
         <Width>18.79516cm</Width>
         <Style>
           <Border>
@@ -1444,7 +1514,7 @@
             </FilterValues>
           </Filter>
         </Filters>
-        <Top>4.529cm</Top>
+        <Top>5.164cm</Top>
         <Left>2.81085cm</Left>
         <Height>1.2cm</Height>
         <Width>7.81813cm</Width>
@@ -1700,7 +1770,7 @@
             </FilterValues>
           </Filter>
         </Filters>
-        <Top>4.529cm</Top>
+        <Top>5.164cm</Top>
         <Left>10.62898cm</Left>
         <Height>1.2cm</Height>
         <Width>8.16618cm</Width>
@@ -1728,7 +1798,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox20</rd:DefaultName>
-        <Top>5.90539cm</Top>
+        <Top>6.54039cm</Top>
         <Left>11.57833cm</Left>
         <Height>0.51181cm</Height>
         <Width>1.84736cm</Width>
@@ -1753,6 +1823,7 @@
                 <Value>=Sum(IIF(Fields!CaratulaTipoConcepto.Value="P",Fields!CaratulaImporte.Value,0), "dsReporteNominaGeneral") - (sum(iif(Fields!CaratulaTipoConcepto.Value="D",Fields!CaratulaImporte.Value,0), "dsReporteNominaGeneral") - (Sum(IIF(Fields!CaratulaNoConcepto.Value=15,Fields!CaratulaImporte.Value,0), "dsReporteNominaGeneral") + Sum(IIF(Fields!CaratulaNoConcepto.Value=8,Fields!CaratulaImporte.Value,0), "dsReporteNominaGeneral")))</Value>
                 <Style>
                   <FontSize>9pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
                   <Format>#,0.00;(#,0.00)</Format>
                 </Style>
               </TextRun>
@@ -1763,7 +1834,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox18</rd:DefaultName>
-        <Top>5.90539cm</Top>
+        <Top>6.54039cm</Top>
         <Left>14.31961cm</Left>
         <Height>0.51181cm</Height>
         <Width>4.47555cm</Width>
@@ -1796,7 +1867,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox104</rd:DefaultName>
-        <Top>3.36875cm</Top>
+        <Top>4.00375cm</Top>
         <Height>0.6cm</Height>
         <Width>2.5cm</Width>
         <ZIndex>5</ZIndex>
@@ -1811,10 +1882,10 @@
         </Style>
       </Textbox>
       <Line Name="Line1">
-        <Top>4.31271cm</Top>
+        <Top>4.94771cm</Top>
         <Left>0.26458cm</Left>
         <Height>0cm</Height>
-        <Width>18.91017cm</Width>
+        <Width>18.53058cm</Width>
         <ZIndex>6</ZIndex>
         <Style>
           <Border>
@@ -1822,11 +1893,43 @@
           </Border>
         </Style>
       </Line>
+      <Textbox Name="Textbox1">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>="Total general de empleados: " + CStr(First(Fields!CaratulaTotalEmpleados.Value, "dsReporteNominaGeneral"))</Value>
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox1</rd:DefaultName>
+        <Top>6.50511cm</Top>
+        <Left>3.67064cm</Left>
+        <Height>0.6cm</Height>
+        <Width>4.35229cm</Width>
+        <ZIndex>7</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
     </ReportItems>
-    <Height>3.4375in</Height>
+    <Height>2.89584in</Height>
     <Style />
   </Body>
-  <Width>7.67411in</Width>
+  <Width>7.43453in</Width>
   <Page>
     <PageHeader>
       <Height>3.03099cm</Height>
@@ -2103,6 +2206,77 @@
         </Border>
       </Style>
     </PageHeader>
+    <PageFooter>
+      <Height>1.13769cm</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <ReportItems>
+        <Textbox Name="Textbox9">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=Globals!PageNumber</Value>
+                  <Style />
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox9</rd:DefaultName>
+          <Top>0.17639cm</Top>
+          <Left>16.00412cm</Left>
+          <Height>0.6cm</Height>
+          <Width>2.5cm</Width>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="Textbox10">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>Página:</Value>
+                  <Style />
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox10</rd:DefaultName>
+          <Top>0.17639cm</Top>
+          <Left>14.57127cm</Left>
+          <Height>0.6cm</Height>
+          <Width>1.36229cm</Width>
+          <ZIndex>1</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+      </ReportItems>
+      <Style>
+        <Border>
+          <Style>None</Style>
+        </Border>
+      </Style>
+    </PageFooter>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
     <LeftMargin>2cm</LeftMargin>
@@ -2185,6 +2359,10 @@
           <DataField>DeptoSubConcepto</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="DeptoTotalEmpleados">
+          <DataField>DeptoTotalEmpleados</DataField>
+          <rd:TypeName>System.UInt32</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>dsReportes</rd:DataSetName>
@@ -2251,6 +2429,10 @@
         </Field>
         <Field Name="CaratulaRfc">
           <DataField>CaratulaRfc</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CaratulaTotalEmpleados">
+          <DataField>CaratulaTotalEmpleados</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>

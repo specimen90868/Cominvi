@@ -51,13 +51,10 @@ namespace Nominas
             if(_tipoNomina == GLOBALES.ESPECIAL)
                 empleado.estatus = GLOBALES.INACTIVO;
 
-            Faltas.Core.Faltas falta = new Faltas.Core.Faltas();
-            falta.idempresa = GLOBALES.IDEMPRESA;
-
             try {
                 cnx.Open();
                 lstEmpleados = eh.obtenerEmpleados(empleado);
-                lstFaltas = fh.obtenerFaltas(falta);
+                lstFaltas = fh.obtenerFaltas(GLOBALES.IDEMPRESA);
                 cnx.Close();
                 cnx.Dispose();
             }

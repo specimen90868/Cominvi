@@ -33,11 +33,11 @@
             this.toolEmpleados = new System.Windows.Forms.ToolStripLabel();
             this.toolBusqueda = new System.Windows.Forms.ToolStrip();
             this.toolNuevo = new System.Windows.Forms.ToolStripButton();
+            this.toolEliminar = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.lblBuscar = new System.Windows.Forms.ToolStripLabel();
             this.txtBuscar = new System.Windows.Forms.ToolStripTextBox();
             this.dgvFaltas = new System.Windows.Forms.DataGridView();
-            this.toolEliminar = new System.Windows.Forms.ToolStripButton();
             this.toolTitulo.SuspendLayout();
             this.toolBusqueda.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFaltas)).BeginInit();
@@ -82,7 +82,18 @@
             this.toolNuevo.Name = "toolNuevo";
             this.toolNuevo.Size = new System.Drawing.Size(62, 22);
             this.toolNuevo.Text = "Nuevo";
+            this.toolNuevo.Visible = false;
             this.toolNuevo.Click += new System.EventHandler(this.toolNuevo_Click);
+            // 
+            // toolEliminar
+            // 
+            this.toolEliminar.Image = ((System.Drawing.Image)(resources.GetObject("toolEliminar.Image")));
+            this.toolEliminar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolEliminar.Name = "toolEliminar";
+            this.toolEliminar.Size = new System.Drawing.Size(70, 22);
+            this.toolEliminar.Text = "Eliminar";
+            this.toolEliminar.Visible = false;
+            this.toolEliminar.Click += new System.EventHandler(this.toolEliminar_Click);
             // 
             // toolStripSeparator1
             // 
@@ -117,15 +128,6 @@
             this.dgvFaltas.ReadOnly = true;
             this.dgvFaltas.Size = new System.Drawing.Size(814, 628);
             this.dgvFaltas.TabIndex = 9;
-            // 
-            // toolEliminar
-            // 
-            this.toolEliminar.Image = ((System.Drawing.Image)(resources.GetObject("toolEliminar.Image")));
-            this.toolEliminar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolEliminar.Name = "toolEliminar";
-            this.toolEliminar.Size = new System.Drawing.Size(70, 22);
-            this.toolEliminar.Text = "Eliminar";
-            this.toolEliminar.Click += new System.EventHandler(this.toolEliminar_Click);
             // 
             // frmListaFaltas
             // 

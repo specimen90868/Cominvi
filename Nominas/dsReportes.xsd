@@ -28,6 +28,7 @@
               <xs:element name="CaratulaRegistro" msprop:Generator_ColumnVarNameInTable="columnCaratulaRegistro" msprop:Generator_ColumnPropNameInRow="CaratulaRegistro" msprop:Generator_ColumnPropNameInTable="CaratulaRegistroColumn" msprop:Generator_UserColumnName="CaratulaRegistro" type="xs:string" minOccurs="0" />
               <xs:element name="CaratulaDigitoVerificador" msprop:Generator_ColumnVarNameInTable="columnCaratulaDigitoVerificador" msprop:Generator_ColumnPropNameInRow="CaratulaDigitoVerificador" msprop:Generator_ColumnPropNameInTable="CaratulaDigitoVerificadorColumn" msprop:Generator_UserColumnName="CaratulaDigitoVerificador" type="xs:string" minOccurs="0" />
               <xs:element name="CaratulaRfc" msprop:Generator_ColumnVarNameInTable="columnCaratulaRfc" msprop:Generator_ColumnPropNameInRow="CaratulaRfc" msprop:Generator_ColumnPropNameInTable="CaratulaRfcColumn" msprop:Generator_UserColumnName="CaratulaRfc" type="xs:string" minOccurs="0" />
+              <xs:element name="CaratulaTotalEmpleados" msprop:Generator_ColumnVarNameInTable="columnCaratulaTotalEmpleados" msprop:Generator_ColumnPropNameInRow="CaratulaTotalEmpleados" msprop:Generator_ColumnPropNameInTable="CaratulaTotalEmpleadosColumn" msprop:Generator_UserColumnName="CaratulaTotalEmpleados" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -74,6 +75,7 @@
               <xs:element name="DeptoDia" msprop:Generator_ColumnVarNameInTable="columnDeptoDia" msprop:Generator_ColumnPropNameInRow="DeptoDia" msprop:Generator_ColumnPropNameInTable="DeptoDiaColumn" msprop:Generator_UserColumnName="DeptoDia" type="xs:dateTime" minOccurs="0" />
               <xs:element name="DeptoHora" msprop:Generator_ColumnVarNameInTable="columnDeptoHora" msprop:Generator_ColumnPropNameInRow="DeptoHora" msprop:Generator_ColumnPropNameInTable="DeptoHoraColumn" msprop:Generator_UserColumnName="DeptoHora" type="xs:dateTime" minOccurs="0" />
               <xs:element name="DeptoSubConcepto" msprop:Generator_ColumnVarNameInTable="columnDeptoSubConcepto" msprop:Generator_ColumnPropNameInRow="DeptoSubConcepto" msprop:Generator_ColumnPropNameInTable="DeptoSubConceptoColumn" msprop:Generator_UserColumnName="DeptoSubConcepto" type="xs:string" minOccurs="0" />
+              <xs:element name="DeptoTotalEmpleados" msprop:Generator_ColumnVarNameInTable="columnDeptoTotalEmpleados" msprop:Generator_ColumnPropNameInRow="DeptoTotalEmpleados" msprop:Generator_ColumnPropNameInTable="DeptoTotalEmpleadosColumn" msprop:Generator_UserColumnName="DeptoTotalEmpleados" type="xs:int" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

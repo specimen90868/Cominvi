@@ -70,6 +70,33 @@ namespace CalculoNomina.Core
             return lstDatosEmpleados;
         }
 
+        public List<DatosFaltaIncapacidad> obtenerDatosFaltaInc(int idEmpresa, int estatus)
+        {
+            List<DatosFaltaIncapacidad> lstDatosEmpleados = new List<DatosFaltaIncapacidad>();
+            DataTable dtDatosEmpleados = new DataTable();
+            Command.CommandText = "select idtrabajador, iddepartamento, idpuesto, noempleado, nombres, paterno, materno, 0 as falta, 0 as incapacidad " +
+                "from Trabajadores where idempresa = @idempresa and estatus = @estatus";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idEmpresa);
+            Command.Parameters.AddWithValue("estatus", estatus);
+            dtDatosEmpleados = SelectData(Command);
+            for (int i = 0; i < dtDatosEmpleados.Rows.Count; i++)
+            {
+                DatosFaltaIncapacidad de = new DatosFaltaIncapacidad();
+                de.idtrabajador = int.Parse(dtDatosEmpleados.Rows[i]["idtrabajador"].ToString());
+                de.iddepartamento = int.Parse(dtDatosEmpleados.Rows[i]["iddepartamento"].ToString());
+                de.idpuesto = int.Parse(dtDatosEmpleados.Rows[i]["idpuesto"].ToString());
+                de.noempleado = dtDatosEmpleados.Rows[i]["noempleado"].ToString();
+                de.nombres = dtDatosEmpleados.Rows[i]["nombres"].ToString();
+                de.paterno = dtDatosEmpleados.Rows[i]["paterno"].ToString();
+                de.materno = dtDatosEmpleados.Rows[i]["materno"].ToString();
+                de.falta = int.Parse(dtDatosEmpleados.Rows[i]["falta"].ToString());
+                de.incapacidad = int.Parse(dtDatosEmpleados.Rows[i]["incapacidad"].ToString());
+                lstDatosEmpleados.Add(de);
+            }
+            return lstDatosEmpleados;
+        }
+
         public List<tmpPagoNomina> obtenerPagoNomina(tmpPagoNomina pn)
         {
             List<tmpPagoNomina> lstPagoNomina = new List<tmpPagoNomina>();
@@ -224,7 +251,7 @@ namespace CalculoNomina.Core
             return Command.ExecuteNonQuery();
         }
         
-        public int actualizaHorasExtras(tmpPagoNomina pn)
+        public int actualizaHorasExtrasDespensa(tmpPagoNomina pn)
         {
             Command.CommandText = "update tmpPagoNomina set cantidad = @cantidad, gravado = @gravado where idempresa = @idempresa and fechainicio = @fechainicio and fechafin = @fechafin and " +
                 "idtrabajador = @idtrabajador and idconcepto = @idconcepto";

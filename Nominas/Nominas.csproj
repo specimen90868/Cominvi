@@ -764,7 +764,7 @@
     <None Include="dsReportes.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>dsReportes.Designer.cs</LastGenOutput>
+      <LastGenOutput>dsReportes1.Designer.cs</LastGenOutput>
     </None>
     <None Include="dsReportes.xss">
       <DependentUpon>dsReportes.xsd</DependentUpon>

@@ -835,8 +835,42 @@
           </Border>
         </Style>
       </Line>
+      <Textbox Name="Textbox1">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>="Total de empleados: " + First(Fields!CaratulaTotalEmpleados.Value, "dsRptNominaCaratula")</Value>
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox1</rd:DefaultName>
+        <Top>4.37316cm</Top>
+        <Left>1.08161cm</Left>
+        <Height>0.51181cm</Height>
+        <Width>7.59292cm</Width>
+        <ZIndex>13</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
     </ReportItems>
-    <Height>2.04411in</Height>
+    <Height>2.17247in</Height>
     <Style>
       <Border>
         <Style>None</Style>
@@ -921,6 +955,10 @@
         </Field>
         <Field Name="CaratulaRfc">
           <DataField>CaratulaRfc</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CaratulaTotalEmpleados">
+          <DataField>CaratulaTotalEmpleados</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>

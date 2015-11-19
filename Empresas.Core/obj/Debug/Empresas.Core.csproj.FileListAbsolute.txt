@@ -12,10 +12,10 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Empresas.Core\bin\Debug
 C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Empresas.Core\obj\Debug\Empresas.Core.csprojResolveAssemblyReference.cache
 C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Empresas.Core\obj\Debug\Empresas.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Empresas.Core\obj\Debug\Empresas.Core.pdb
-C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Empresas.Core\obj\Debug\Empresas.Core.csprojResolveAssemblyReference.cache
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Empresas.Core\bin\Debug\Empresas.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Empresas.Core\bin\Debug\Empresas.Core.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Empresas.Core\bin\Debug\Data.Obj.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Empresas.Core\bin\Debug\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Empresas.Core\obj\Debug\Empresas.Core.csprojResolveAssemblyReference.cache
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Empresas.Core\obj\Debug\Empresas.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Empresas.Core\obj\Debug\Empresas.Core.pdb
