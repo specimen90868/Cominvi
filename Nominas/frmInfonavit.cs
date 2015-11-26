@@ -53,6 +53,7 @@ namespace Nominas
 
                 Infonavit.Core.Infonavit i = new Infonavit.Core.Infonavit();
                 i.idtrabajador = _idEmpleado;
+                i.activo = true;
 
                 try
                 {

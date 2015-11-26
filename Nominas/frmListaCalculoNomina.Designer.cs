@@ -51,6 +51,7 @@
             this.toolCaratula = new System.Windows.Forms.ToolStripMenuItem();
             this.empleadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolReporteDepto = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolTabular = new System.Windows.Forms.ToolStripMenuItem();
             this.toolBusqueda = new System.Windows.Forms.ToolStrip();
             this.toolFiltro = new System.Windows.Forms.ToolStripSplitButton();
             this.toolTodos = new System.Windows.Forms.ToolStripMenuItem();
@@ -128,6 +129,7 @@
             this.dataGridViewTextBoxColumn19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.workExcel = new System.ComponentModel.BackgroundWorker();
             this.toolTitulo.SuspendLayout();
             this.toolBusqueda.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmpleados)).BeginInit();
@@ -207,7 +209,8 @@
             this.toolReportes.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolCaratula,
             this.empleadosToolStripMenuItem,
-            this.toolReporteDepto});
+            this.toolReporteDepto,
+            this.toolTabular});
             this.toolReportes.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolReportes.Name = "toolReportes";
             this.toolReportes.Size = new System.Drawing.Size(126, 22);
@@ -233,6 +236,13 @@
             this.toolReporteDepto.Size = new System.Drawing.Size(155, 22);
             this.toolReporteDepto.Text = "Departamentos";
             this.toolReporteDepto.Click += new System.EventHandler(this.toolReporteDepto_Click);
+            // 
+            // toolTabular
+            // 
+            this.toolTabular.Name = "toolTabular";
+            this.toolTabular.Size = new System.Drawing.Size(155, 22);
+            this.toolTabular.Text = "Tabular";
+            this.toolTabular.Click += new System.EventHandler(this.toolTabular_Click);
             // 
             // toolBusqueda
             // 
@@ -854,6 +864,14 @@
             this.dataGridViewTextBoxColumn21.HeaderText = "Incapacidad";
             this.dataGridViewTextBoxColumn21.Name = "dataGridViewTextBoxColumn21";
             // 
+            // workExcel
+            // 
+            this.workExcel.WorkerReportsProgress = true;
+            this.workExcel.WorkerSupportsCancellation = true;
+            this.workExcel.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workExcel_DoWork);
+            this.workExcel.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.workExcel_ProgressChanged);
+            this.workExcel.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workExcel_RunWorkerCompleted);
+            // 
             // frmListaCalculoNomina
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -980,5 +998,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn asistencia;
         private System.Windows.Forms.DataGridViewTextBoxColumn puntualidad;
         private System.Windows.Forms.DataGridViewTextBoxColumn horas;
+        private System.Windows.Forms.ToolStripMenuItem toolTabular;
+        private System.ComponentModel.BackgroundWorker workExcel;
     }
 }

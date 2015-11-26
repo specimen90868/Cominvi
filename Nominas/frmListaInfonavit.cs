@@ -102,7 +102,6 @@ namespace Nominas
             int fila = 0;
             frmInfonavit i = new frmInfonavit();
             i.MdiParent = this.MdiParent;
-            i.OnNuevoInfonavit += i_OnNuevoInfonavit;
 
             if (edicion != GLOBALES.NUEVO)
             {
@@ -111,6 +110,7 @@ namespace Nominas
                 i._nombreEmpleado = dgvInfonavit.Rows[fila].Cells[2].Value.ToString();
             }
 
+            i.OnNuevoInfonavit += i_OnNuevoInfonavit;
             i._tipoOperacion = edicion;
             i.Show();
         }

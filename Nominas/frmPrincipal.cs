@@ -503,6 +503,13 @@ namespace Nominas
             sp.MdiParent = this;
             sp.Show();
         }
+
+        private void toolReportes_Click(object sender, EventArgs e)
+        {
+            frmReportes r = new frmReportes();
+            r.MdiParent = this;
+            r.Show();
+        }
       
     }
 }

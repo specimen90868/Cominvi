@@ -97,6 +97,8 @@
             this.workPerfil = new System.ComponentModel.BackgroundWorker();
             this.stsPrincipal = new System.Windows.Forms.StatusStrip();
             this.toolEstatusPerfil = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolReportes = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPrincipal.SuspendLayout();
             this.stsPrincipal.SuspendLayout();
             this.SuspendLayout();
@@ -361,7 +363,9 @@
             this.toolProgramacion,
             this.cálculoToolStripMenuItem,
             this.toolStripSeparator9,
-            this.toolAutorizarNomina});
+            this.toolAutorizarNomina,
+            this.toolStripSeparator8,
+            this.toolReportes});
             this.mnuNominas.Name = "mnuNominas";
             this.mnuNominas.Size = new System.Drawing.Size(67, 20);
             this.mnuNominas.Text = "Nominas";
@@ -374,6 +378,7 @@
             this.toolFaltas.Name = "toolFaltas";
             this.toolFaltas.Size = new System.Drawing.Size(218, 22);
             this.toolFaltas.Text = "Faltas";
+            this.toolFaltas.Visible = false;
             // 
             // toolHistorialFaltas
             // 
@@ -398,6 +403,7 @@
             this.toolIncapacidad.Name = "toolIncapacidad";
             this.toolIncapacidad.Size = new System.Drawing.Size(218, 22);
             this.toolIncapacidad.Text = "Incapacidades";
+            this.toolIncapacidad.Visible = false;
             // 
             // toolHistorialIncapacidad
             // 
@@ -638,6 +644,18 @@
             this.toolEstatusPerfil.Size = new System.Drawing.Size(98, 17);
             this.toolEstatusPerfil.Text = "Cargando perfil...";
             // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(215, 6);
+            // 
+            // toolReportes
+            // 
+            this.toolReportes.Name = "toolReportes";
+            this.toolReportes.Size = new System.Drawing.Size(218, 22);
+            this.toolReportes.Text = "Reportes";
+            this.toolReportes.Click += new System.EventHandler(this.toolReportes_Click);
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -731,6 +749,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripMenuItem toolNominaNormal;
         private System.Windows.Forms.ToolStripMenuItem toolNominaEspecial;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripMenuItem toolReportes;
     }
 }
 

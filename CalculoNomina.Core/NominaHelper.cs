@@ -201,6 +201,35 @@ namespace CalculoNomina.Core
             return lstPreNomina;
         }
 
+        public DataTable obtenerPreNominaTabular(tmpPagoNomina pn)
+        {
+            DataTable dtPagoNomina = new DataTable();
+            Command.CommandText = "exec stp_rptPreNominaTabular @fechainicio, @fechafin, @idempresa";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", pn.idempresa);
+            Command.Parameters.AddWithValue("fechainicio", pn.fechainicio);
+            Command.Parameters.AddWithValue("fechafin", pn.fechafin);
+            dtPagoNomina = SelectData(Command);
+            return dtPagoNomina;
+        }
+
+        public DataTable obtenerNominaTabular(tmpPagoNomina pn, int deptoInicial, int deptoFinal, int empleadoInicial, int empleadoFinal, int tiponomina)
+        {
+            DataTable dtPagoNomina = new DataTable();
+            Command.CommandText = "exec stp_rptNominaTabular @fechainicio, @fechafin, @idempresa, @deptoInicial, @deptoFinal, @empleadoInicial, @empleadoFinal, @tiponomina";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", pn.idempresa);
+            Command.Parameters.AddWithValue("fechainicio", pn.fechainicio);
+            Command.Parameters.AddWithValue("fechafin", pn.fechafin);
+            Command.Parameters.AddWithValue("deptoInicial", deptoInicial);
+            Command.Parameters.AddWithValue("deptoFinal", deptoFinal);
+            Command.Parameters.AddWithValue("empleadoInicial", empleadoInicial);
+            Command.Parameters.AddWithValue("empleadoFinal", empleadoFinal);
+            Command.Parameters.AddWithValue("tiponomina", tiponomina);
+            dtPagoNomina = SelectData(Command);
+            return dtPagoNomina;
+        }
+
         public object existePreNomina(DateTime inicio, DateTime fin)
         {
             Command.CommandText = "select count(*) from tmpPagoNomina where fechainicio = @fechainicio and fechafin = @fechafin";

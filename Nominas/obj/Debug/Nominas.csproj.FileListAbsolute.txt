@@ -295,3 +295,5 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Usuarios.Co
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Vacaciones.Core.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.exe
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.csproj.ResolveComReference.cache
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\obj\Debug\Nominas.frmReportes.resources

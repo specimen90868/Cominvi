@@ -1247,7 +1247,7 @@ namespace Nominas
                                     try
                                     {
                                         cnx.Open();
-                                        nh.actualizaHorasExtras(hora);
+                                        nh.actualizaHorasExtrasDespensa(hora);
                                         cnx.Close();
                                     }
                                     catch (Exception error)
@@ -1560,6 +1560,166 @@ namespace Nominas
                 }
             }
         }
+
+        private void toolTabular_Click(object sender, EventArgs e)
+        {
+            workExcel.RunWorkerAsync();
+        }
+
+        private void workExcel_DoWork(object sender, DoWorkEventArgs e)
+        {
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+            nh = new CalculoNomina.Core.NominaHelper();
+            nh.Command = cmd;
+
+            CalculoNomina.Core.tmpPagoNomina pn = new CalculoNomina.Core.tmpPagoNomina();
+            pn.idempresa = GLOBALES.IDEMPRESA;
+            pn.fechainicio = dtpPeriodoInicio.Value;
+            pn.fechafin = dtpPeriodoFin.Value;
+
+            DataTable dt = new DataTable();
+            try
+            {
+                cnx.Open();
+                dt = nh.obtenerPreNominaTabular(pn);
+                cnx.Close();
+                cnx.Dispose();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+            }
+
+            Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
+            excel.Workbooks.Add();
+
+            Microsoft.Office.Interop.Excel._Worksheet workSheet = excel.ActiveSheet;
+
+            excel.Cells[1, 1] = dt.Rows[0][0];
+            excel.Cells[1, 6] = "Periodo";
+            excel.Cells[2, 1] = "RFC:";
+            excel.Cells[3, 1] = "REG. PAT:";
+
+            excel.Cells[2, 2] = dt.Rows[0][1];
+            excel.Cells[3, 2] = dt.Rows[0][2];
+
+            excel.Cells[2, 6] = dt.Rows[0][3];
+            excel.Cells[2, 7] = dt.Rows[0][4];
+
+            //SE COLOCAN LOS TITULOS DE LAS COLUMNAS
+            int iCol = 1;
+            for (int i = 6; i < dt.Columns.Count; i++)
+            {
+                excel.Cells[5, iCol] = dt.Columns[i].ColumnName;
+                iCol++;
+            }
+            //SE COLOCAN LOS DATOS
+            int contadorDt = dt.Rows.Count;
+            int contador = 0;
+            int progreso = 0;
+            iCol = 1;
+            int iFil = 6;
+            Microsoft.Office.Interop.Excel.Range rng;
+            decimal totalPercepciones = 0, totalDeducciones = 0;
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                progreso = (contador * 100) / contadorDt;
+                workDescalculo.ReportProgress(progreso, "Reporte a Excel");
+                contador++;
+                if (i != dt.Rows.Count - 1)
+                {
+                    totalPercepciones += decimal.Parse(dt.Rows[i][14].ToString());
+                    totalDeducciones += decimal.Parse(dt.Rows[i][20].ToString());
+                    if (dt.Rows[i][5].ToString() == dt.Rows[i + 1][5].ToString())
+                        for (int j = 6; j < dt.Columns.Count; j++)
+                        {
+                            excel.Cells[iFil, iCol] = dt.Rows[i][j];
+                            iCol++;
+                        }
+                    else
+                    {
+                        for (int j = 6; j < dt.Columns.Count; j++)
+                        {
+                            excel.Cells[iFil, iCol] = dt.Rows[i][j];
+                            iCol++;
+                        }
+                        iFil++;
+                        rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 1];
+                        rng.Font.Bold = true;
+                        excel.Cells[iFil, 1] = dt.Rows[i][5];
+
+                        rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 9];
+                        rng.NumberFormat = "#,##0.00";
+                        rng.Font.Bold = true;
+                        excel.Cells[iFil, 9] = totalPercepciones.ToString();
+
+                        rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 15];
+                        rng.NumberFormat = "#,##0.00";
+                        rng.Font.Bold = true;
+                        excel.Cells[iFil, 15] = totalDeducciones.ToString();
+                        iFil++;
+
+                        totalPercepciones = 0;
+                        totalDeducciones = 0;
+                    }
+                }
+                else
+                {
+                    totalPercepciones += decimal.Parse(dt.Rows[i][14].ToString());
+                    totalDeducciones += decimal.Parse(dt.Rows[i][20].ToString());
+                    for (int j = 6; j < dt.Columns.Count; j++)
+                    {
+                        excel.Cells[iFil, iCol] = dt.Rows[i][j];
+                        iCol++;
+                    }
+                    iFil++;
+                    rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 1];
+                    rng.Font.Bold = true;
+                    excel.Cells[iFil, 1] = dt.Rows[i][5];
+
+                    rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 9];
+                    rng.NumberFormat = "#,##0.00";
+                    rng.Font.Bold = true;
+                    excel.Cells[iFil, 9] = totalPercepciones.ToString();
+
+                    rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 15];
+                    rng.NumberFormat = "#,##0.00";
+                    rng.Font.Bold = true;
+                    excel.Cells[iFil, 15] = totalDeducciones.ToString();
+                }
+                iFil++;
+                iCol = 1;
+
+            }
+
+            excel.Range["A1", "G3"].Font.Bold = true;
+            excel.Range["A5", "O5"].Font.Bold = true;
+            excel.Range["A5", "O5"].Interior.ColorIndex = 36;
+            excel.Range["A5", "H5"].Font.ColorIndex = 1;
+            excel.Range["J5", "N5"].Font.ColorIndex = 1;
+            excel.Range["I5"].Font.ColorIndex = 32;
+            excel.Range["O5"].Font.ColorIndex = 32;
+            excel.Range["B6", "O3000"].NumberFormat = "#,##0.00";
+
+            
+            workSheet.SaveAs("Reporte_Tabular.xlsx");
+            excel.Visible = true;
+
+            workDescalculo.ReportProgress(100, "Reporte a Excel");
+        }
+
+        private void workExcel_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            toolPorcentaje.Text = e.ProgressPercentage.ToString() + "%";
+            toolEtapa.Text = e.UserState.ToString();
+        }
+
+        private void workExcel_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            toolPorcentaje.Text = "Completado.";
+        } 
         
     }
 
