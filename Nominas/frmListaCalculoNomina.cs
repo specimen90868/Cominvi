@@ -249,7 +249,7 @@ namespace Nominas
             try
             {
                 cnx.Open();
-                existe = (int)nh.existeNomina(GLOBALES.IDEMPRESA, dtpPeriodoInicio.Value, dtpPeriodoFin.Value);
+                existe = (int)nh.existeNomina(GLOBALES.IDEMPRESA, dtpPeriodoInicio.Value.Date, dtpPeriodoFin.Value.Date);
                 cnx.Close();
                 cnx.Dispose();
 
@@ -277,7 +277,7 @@ namespace Nominas
         {
             if (_periodo == 7)
             {
-                DateTime dt = dtpPeriodoInicio.Value;
+                DateTime dt = dtpPeriodoInicio.Value.Date;
                 while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
                 dtpPeriodoInicio.Value = dt;
                 dtpPeriodoFin.Value = dt.AddDays(6);
@@ -308,8 +308,8 @@ namespace Nominas
             fila = dgvEmpleados.CurrentCell.RowIndex;
             frmReciboNomina rn = new frmReciboNomina();
             rn._idEmpleado = int.Parse(dgvEmpleados.Rows[fila].Cells[1].Value.ToString());
-            rn._inicioPeriodo = dtpPeriodoInicio.Value;
-            rn._finPeriodo = dtpPeriodoFin.Value;
+            rn._inicioPeriodo = dtpPeriodoInicio.Value.Date;
+            rn._finPeriodo = dtpPeriodoFin.Value.Date;
             rn.Show();
         }
 
@@ -369,9 +369,10 @@ namespace Nominas
                 vn.idtrabajador = lstDatosNomina[i].idtrabajador;
                 vn.idempresa = GLOBALES.IDEMPRESA;
                 vn.idconcepto = lstDatosNomina[i].id;
+                vn.noconcepto = lstDatosNomina[i].noconcepto;
                 vn.tipoconcepto = lstDatosNomina[i].tipoconcepto;
-                vn.fechainicio = dtpPeriodoInicio.Value;
-                vn.fechafin = dtpPeriodoFin.Value;
+                vn.fechainicio = dtpPeriodoInicio.Value.Date;
+                vn.fechafin = dtpPeriodoFin.Value.Date;
                 vn.guardada = false;
                 vn.tiponomina = _tipoNomina;
 
@@ -390,10 +391,35 @@ namespace Nominas
                 nt.formulaexento = lstDatosNomina[i].formulaexento;
                 lstDatoTrabajador.Add(nt);
 
-                FormulasValores f = new FormulasValores(lstDatoTrabajador, dtpPeriodoInicio.Value, dtpPeriodoFin.Value);
+                FormulasValores f = new FormulasValores(lstDatoTrabajador, dtpPeriodoInicio.Value.Date, dtpPeriodoFin.Value.Date);
                 vn.cantidad = double.Parse(f.calcularFormula().ToString());
                 vn.exento = double.Parse(f.calcularFormulaExento().ToString());
                 vn.gravado = double.Parse(f.calcularFormula().ToString()) - double.Parse(f.calcularFormulaExento().ToString());
+
+                switch (lstDatosNomina[i].noconcepto)
+                {
+                    case 2: // HORAS EXTRAS DOBLES
+                        if (vn.cantidad <= vn.exento)
+                        {
+                            vn.exento = vn.cantidad;
+                            vn.gravado = 0;
+                        }
+                        break;
+                    case 3: // PREMIO DE ASISTENCIA
+                        if (vn.cantidad <= vn.exento)
+                        {
+                            vn.exento = vn.cantidad;
+                            vn.gravado = 0;
+                        }
+                        break;
+                    case 5: // PREMIO DE PUNTUALIDAD
+                        if (vn.cantidad <= vn.exento)
+                        {
+                            vn.exento = vn.cantidad;
+                            vn.gravado = 0;
+                        }
+                        break;
+                }
 
                 lstValoresNomina.Add(vn);
                 workerCalculo.ReportProgress(progreso, "Calculo de Nómina");
@@ -417,8 +443,8 @@ namespace Nominas
                 {
                     Vacaciones.Core.Vacaciones vacacion = new Vacaciones.Core.Vacaciones();
                     vacacion.idtrabajador = int.Parse(fila.Cells["idtrabajador"].Value.ToString());
-                    vacacion.inicio = dtpPeriodoInicio.Value;
-                    vacacion.fin = dtpPeriodoFin.Value;
+                    vacacion.inicio = dtpPeriodoInicio.Value.Date;
+                    vacacion.fin = dtpPeriodoFin.Value.Date;
                     List<Vacaciones.Core.Vacaciones> lstPrima = new List<Vacaciones.Core.Vacaciones>();
                     double vacacionesPagadas = 0;
                     try
@@ -457,9 +483,10 @@ namespace Nominas
                         vn.idtrabajador = (int)fila.Cells["idtrabajador"].Value;
                         vn.idempresa = GLOBALES.IDEMPRESA;
                         vn.idconcepto = lstConcepto[0].id;
+                        vn.noconcepto = 4;
                         vn.tipoconcepto = lstConcepto[0].tipoconcepto;
-                        vn.fechainicio = dtpPeriodoInicio.Value;
-                        vn.fechafin = dtpPeriodoFin.Value;
+                        vn.fechainicio = dtpPeriodoInicio.Value.Date;
+                        vn.fechafin = dtpPeriodoFin.Value.Date;
                         vn.exento = lstPrima[0].pexenta;
                         vn.gravado = lstPrima[0].pgravada;
                         vn.cantidad = lstPrima[0].pv;
@@ -491,9 +518,10 @@ namespace Nominas
                         vn.idtrabajador = (int)fila.Cells["idtrabajador"].Value;
                         vn.idempresa = GLOBALES.IDEMPRESA;
                         vn.idconcepto = lstConcepto[0].id;
+                        vn.noconcepto = 7;
                         vn.tipoconcepto = lstConcepto[0].tipoconcepto;
-                        vn.fechainicio = dtpPeriodoInicio.Value;
-                        vn.fechafin = dtpPeriodoFin.Value;
+                        vn.fechainicio = dtpPeriodoInicio.Value.Date;
+                        vn.fechafin = dtpPeriodoFin.Value.Date;
                         vn.exento = 0;
                         vn.gravado = vacacionesPagadas;
                         vn.cantidad = vacacionesPagadas;
@@ -556,13 +584,26 @@ namespace Nominas
                         {
                             if (dtpPeriodoFin.Value <= lstProgramacion[i].fechafin)
                             {
+                                ch = new Conceptos.Core.ConceptosHelper();
+                                ch.Command = cmd;
+                                Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
+                                concepto.id = lstProgramacion[i].idconcepto;
+                                List<Conceptos.Core.Conceptos> lstNoConcepto = new List<Conceptos.Core.Conceptos>();
+                                try {
+                                    cnx.Open();
+                                    lstNoConcepto = ch.obtenerConcepto(concepto);
+                                    cnx.Close();
+                                }
+                                catch (Exception error) { MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error"); }
+
                                 tmpPagoNomina vn = new tmpPagoNomina();
                                 vn.idtrabajador = (int)fila.Cells["idtrabajador"].Value;
                                 vn.idempresa = GLOBALES.IDEMPRESA;
                                 vn.idconcepto = lstProgramacion[i].idconcepto;
+                                vn.noconcepto = lstNoConcepto[0].noconcepto;
                                 vn.tipoconcepto = "D";
-                                vn.fechainicio = dtpPeriodoInicio.Value;
-                                vn.fechafin = dtpPeriodoFin.Value;
+                                vn.fechainicio = dtpPeriodoInicio.Value.Date;
+                                vn.fechafin = dtpPeriodoFin.Value.Date;
                                 vn.exento = 0;
                                 vn.gravado = 0;
                                 vn.cantidad = lstProgramacion[i].cantidad;
@@ -586,10 +627,10 @@ namespace Nominas
             Conceptos.Core.Conceptos sub = new Conceptos.Core.Conceptos();
             Conceptos.Core.Conceptos isr = new Conceptos.Core.Conceptos();
 
-            conceptoSubsidio.noconcepto = 16; //SUBSIDIO PAGADO
+            conceptoSubsidio.noconcepto = 16; //SUBSIDIO AL EMPLEO
             conceptoSubsidio.idempresa = GLOBALES.IDEMPRESA;
 
-            conceptoIsr.noconcepto = 17; //ISR RETENIDO
+            conceptoIsr.noconcepto = 17; //ISR
             conceptoIsr.idempresa = GLOBALES.IDEMPRESA;
 
             sub.noconcepto = 15;
@@ -641,12 +682,13 @@ namespace Nominas
                         pSubsidio.idtrabajador = lstValoresNomina[i].idtrabajador;
                         pSubsidio.idempresa = GLOBALES.IDEMPRESA;
                         pSubsidio.idconcepto = lstConceptoSubsidio[0].id;
+                        pSubsidio.noconcepto = 16;
                         pSubsidio.tipoconcepto = lstConceptoSubsidio[0].tipoconcepto;
                         pSubsidio.exento = 0;
                         pSubsidio.gravado = 0;
                         pSubsidio.cantidad = subsidio - isrr;
-                        pSubsidio.fechainicio = dtpPeriodoInicio.Value;
-                        pSubsidio.fechafin = dtpPeriodoFin.Value;
+                        pSubsidio.fechainicio = dtpPeriodoInicio.Value.Date;
+                        pSubsidio.fechafin = dtpPeriodoFin.Value.Date;
                         pSubsidio.guardada = false;
                         pSubsidio.tiponomina = _tipoNomina;
                         lstValoresNomina.Add(pSubsidio);
@@ -655,12 +697,13 @@ namespace Nominas
                         pIsr.idtrabajador = lstValoresNomina[i].idtrabajador;
                         pIsr.idempresa = GLOBALES.IDEMPRESA;
                         pIsr.idconcepto = lstConceptoIsr[0].id;
+                        pIsr.noconcepto = 17;
                         pIsr.tipoconcepto = lstConceptoIsr[0].tipoconcepto;
                         pIsr.exento = 0;
                         pIsr.gravado = 0;
                         pIsr.cantidad = 0;
-                        pIsr.fechainicio = dtpPeriodoInicio.Value;
-                        pIsr.fechafin = dtpPeriodoFin.Value;
+                        pIsr.fechainicio = dtpPeriodoInicio.Value.Date;
+                        pIsr.fechafin = dtpPeriodoFin.Value.Date;
                         pIsr.guardada = false;
                         pIsr.tiponomina = _tipoNomina;
                         lstValoresNomina.Add(pIsr);
@@ -671,12 +714,13 @@ namespace Nominas
                         pSubsidio.idtrabajador = lstValoresNomina[i].idtrabajador;
                         pSubsidio.idempresa = GLOBALES.IDEMPRESA;
                         pSubsidio.idconcepto = lstConceptoSubsidio[0].id;
+                        pSubsidio.noconcepto = 16;
                         pSubsidio.tipoconcepto = lstConceptoSubsidio[0].tipoconcepto;
                         pSubsidio.exento = 0;
                         pSubsidio.gravado = 0;
                         pSubsidio.cantidad = 0;
-                        pSubsidio.fechainicio = dtpPeriodoInicio.Value;
-                        pSubsidio.fechafin = dtpPeriodoFin.Value;
+                        pSubsidio.fechainicio = dtpPeriodoInicio.Value.Date;
+                        pSubsidio.fechafin = dtpPeriodoFin.Value.Date;
                         pSubsidio.guardada = false;
                         pSubsidio.tiponomina = _tipoNomina;
                         lstValoresNomina.Add(pSubsidio);
@@ -685,12 +729,13 @@ namespace Nominas
                         pIsr.idtrabajador = lstValoresNomina[i].idtrabajador;
                         pIsr.idempresa = GLOBALES.IDEMPRESA;
                         pIsr.idconcepto = lstConceptoIsr[0].id;
+                        pIsr.noconcepto = 17;
                         pIsr.tipoconcepto = lstConceptoIsr[0].tipoconcepto;
                         pIsr.exento = 0;
                         pIsr.gravado = 0;
                         pIsr.cantidad = isrr - subsidio;
-                        pIsr.fechainicio = dtpPeriodoInicio.Value;
-                        pIsr.fechafin = dtpPeriodoFin.Value;
+                        pIsr.fechainicio = dtpPeriodoInicio.Value.Date;
+                        pIsr.fechafin = dtpPeriodoFin.Value.Date;
                         pIsr.guardada = false;
                         pIsr.tiponomina = _tipoNomina;
                         lstValoresNomina.Add(pIsr);
@@ -710,6 +755,7 @@ namespace Nominas
             dt.Columns.Add("idtrabajador", typeof(Int32));
             dt.Columns.Add("idempresa", typeof(Int32));
             dt.Columns.Add("idconcepto", typeof(Int32));
+            dt.Columns.Add("noconcepto", typeof(Int32));
             dt.Columns.Add("tipoconcepto", typeof(String));
             dt.Columns.Add("exento", typeof(Double));
             dt.Columns.Add("gravado", typeof(Double));
@@ -729,6 +775,7 @@ namespace Nominas
                 dtFila["idtrabajador"] = lstValoresNomina[i].idtrabajador;
                 dtFila["idempresa"] = lstValoresNomina[i].idempresa;
                 dtFila["idconcepto"] = lstValoresNomina[i].idconcepto;
+                dtFila["noconcepto"] = lstValoresNomina[i].noconcepto;
                 dtFila["tipoconcepto"] = lstValoresNomina[i].tipoconcepto;
                 dtFila["exento"] = lstValoresNomina[i].exento;
                 dtFila["gravado"] = lstValoresNomina[i].gravado;
@@ -769,7 +816,7 @@ namespace Nominas
                     {
                         if ((int)fila.Cells["idtrabajador"].Value == lstValoresNomina[i].idtrabajador)
                         {
-                            switch (lstValoresNomina[i].idconcepto)
+                            switch (lstValoresNomina[i].noconcepto)
                             {
                                 case 1:
                                     fila.Cells["sueldo"].Value = lstValoresNomina[i].cantidad;
@@ -817,8 +864,8 @@ namespace Nominas
 
             CalculoNomina.Core.tmpPagoNomina pn = new CalculoNomina.Core.tmpPagoNomina();
             pn.idempresa = GLOBALES.IDEMPRESA;
-            pn.fechainicio = dtpPeriodoInicio.Value;
-            pn.fechafin = dtpPeriodoFin.Value;
+            pn.fechainicio = dtpPeriodoInicio.Value.Date;
+            pn.fechafin = dtpPeriodoFin.Value.Date;
 
             int contadorGrid = dgvEmpleados.Rows.Count;
             int contador = 0;
@@ -874,8 +921,8 @@ namespace Nominas
 
             CalculoNomina.Core.tmpPagoNomina pn = new CalculoNomina.Core.tmpPagoNomina();
             pn.idempresa = GLOBALES.IDEMPRESA;
-            pn.fechainicio = dtpPeriodoInicio.Value;
-            pn.fechafin = dtpPeriodoFin.Value;
+            pn.fechainicio = dtpPeriodoInicio.Value.Date;
+            pn.fechafin = dtpPeriodoFin.Value.Date;
             pn.guardada = true;
 
             try
@@ -954,7 +1001,7 @@ namespace Nominas
                 {
                     if ((int)fila.Cells["idtrabajador"].Value == lstPreNomina[i].idtrabajador)
                     {
-                        switch (lstPreNomina[i].idconcepto)
+                        switch (lstPreNomina[i].noconcepto)
                         {
                             case 1:
                                 fila.Cells["sueldo"].Value = lstPreNomina[i].cantidad;
@@ -994,6 +1041,7 @@ namespace Nominas
                     }
                 }
             }
+            toolPrenomina.Enabled = false;
         }
 
         private void cargaEmpleados()
@@ -1132,8 +1180,8 @@ namespace Nominas
 
             CalculoNomina.Core.tmpPagoNomina pn = new CalculoNomina.Core.tmpPagoNomina();
             pn.idempresa = GLOBALES.IDEMPRESA;
-            pn.fechainicio = dtpPeriodoInicio.Value;
-            pn.fechafin = dtpPeriodoFin.Value;
+            pn.fechainicio = dtpPeriodoInicio.Value.Date;
+            pn.fechafin = dtpPeriodoFin.Value.Date;
             pn.guardada = false;
 
             try
@@ -1165,7 +1213,7 @@ namespace Nominas
                 try
                 {
                     cnx.Open();
-                    nh.stpAutorizaNomina(GLOBALES.IDEMPRESA, dtpPeriodoInicio.Value, dtpPeriodoFin.Value, GLOBALES.IDUSUARIO);
+                    nh.stpAutorizaNomina(GLOBALES.IDEMPRESA, dtpPeriodoInicio.Value.Date, dtpPeriodoFin.Value.Date, GLOBALES.IDUSUARIO);
                     cnx.Close();
                     cnx.Dispose();
                     MessageBox.Show("Nomina autorizada.", "Confirmación");
@@ -1217,7 +1265,7 @@ namespace Nominas
             int totalRegistroDt = dt.Rows.Count;
             int indice = 0;
             nombreEmpresa = dt.Columns[1].ColumnName;
-            if (DateTime.Parse(dt.Rows[2][5].ToString()) == dtpPeriodoInicio.Value)
+            if (DateTime.Parse(dt.Rows[2][5].ToString()) == dtpPeriodoInicio.Value.Date)
             {
                 for (int i = 2; i < dt.Rows.Count; i++)
                 {
@@ -1240,8 +1288,8 @@ namespace Nominas
                                     hora.idempresa = GLOBALES.IDEMPRESA;
                                     hora.idtrabajador = int.Parse(fila.Cells["idtrabajador"].Value.ToString());
                                     hora.idconcepto = 2;
-                                    hora.fechainicio = dtpPeriodoInicio.Value;
-                                    hora.fechafin = dtpPeriodoFin.Value;
+                                    hora.fechainicio = dtpPeriodoInicio.Value.Date;
+                                    hora.fechafin = dtpPeriodoFin.Value.Date;
                                     hora.cantidad = lstValoresNomina[j].cantidad;
                                     hora.gravado = lstValoresNomina[j].gravado;
                                     try
@@ -1287,8 +1335,8 @@ namespace Nominas
         {
             frmVisorReportes vr = new frmVisorReportes();
             vr._noReporte = 0;
-            vr._inicioPeriodo = dtpPeriodoInicio.Value;
-            vr._finPeriodo = dtpPeriodoFin.Value;
+            vr._inicioPeriodo = dtpPeriodoInicio.Value.Date;
+            vr._finPeriodo = dtpPeriodoFin.Value.Date;
             vr.Show();
         }
 
@@ -1296,8 +1344,8 @@ namespace Nominas
         {
             frmVisorReportes vr = new frmVisorReportes();
             vr._noReporte = 1;
-            vr._inicioPeriodo = dtpPeriodoInicio.Value;
-            vr._finPeriodo = dtpPeriodoFin.Value;
+            vr._inicioPeriodo = dtpPeriodoInicio.Value.Date;
+            vr._finPeriodo = dtpPeriodoFin.Value.Date;
             vr.Show();
         }
 
@@ -1305,8 +1353,8 @@ namespace Nominas
         {
             frmVisorReportes vr = new frmVisorReportes();
             vr._noReporte = 2;
-            vr._inicioPeriodo = dtpPeriodoInicio.Value;
-            vr._finPeriodo = dtpPeriodoFin.Value;
+            vr._inicioPeriodo = dtpPeriodoInicio.Value.Date;
+            vr._finPeriodo = dtpPeriodoFin.Value.Date;
             vr.Show();
         }
 
@@ -1339,8 +1387,8 @@ namespace Nominas
                     falta.idempresa = GLOBALES.IDEMPRESA;
                     falta.periodo = _periodo;
                     falta.faltas = int.Parse(dgvFaltas.Rows[e.RowIndex].Cells["falta"].Value.ToString());
-                    falta.fechainicio = dtpPeriodoInicio.Value;
-                    falta.fechafin = dtpPeriodoFin.Value;
+                    falta.fechainicio = dtpPeriodoInicio.Value.Date;
+                    falta.fechafin = dtpPeriodoFin.Value.Date;
 
                     try
                     {
@@ -1394,8 +1442,8 @@ namespace Nominas
                     incapacidad.tipo = 0;
                     incapacidad.aplicada = 1;
                     incapacidad.consecutiva = 1;
-                    incapacidad.fechainicio = dtpPeriodoInicio.Value;
-                    incapacidad.fechafin = dtpPeriodoFin.Value;
+                    incapacidad.fechainicio = dtpPeriodoInicio.Value.Date;
+                    incapacidad.fechafin = dtpPeriodoFin.Value.Date;
 
                     try
                     {
@@ -1451,8 +1499,8 @@ namespace Nominas
                 fh.Command = cmd;
                 Faltas.Core.Faltas falta = new Faltas.Core.Faltas();
                 falta.idtrabajador = int.Parse(dgvFaltas.Rows[fila].Cells["idtrabajadorfalta"].Value.ToString());
-                falta.fechainicio = dtpPeriodoInicio.Value;
-                falta.fechafin = dtpPeriodoFin.Value;
+                falta.fechainicio = dtpPeriodoInicio.Value.Date;
+                falta.fechafin = dtpPeriodoFin.Value.Date;
 
                 try
                 {
@@ -1482,7 +1530,7 @@ namespace Nominas
                 try
                 {
                     cnx.Open();
-                    ih.eliminaIncapadidad(int.Parse(dgvFaltas.Rows[fila].Cells["idtrabajadorfalta"].Value.ToString()), dtpPeriodoInicio.Value, dtpPeriodoFin.Value);
+                    ih.eliminaIncapadidad(int.Parse(dgvFaltas.Rows[fila].Cells["idtrabajadorfalta"].Value.ToString()), dtpPeriodoInicio.Value.Date, dtpPeriodoFin.Value.Date);
                     cnx.Close();
                     cnx.Dispose();
                 }
@@ -1496,11 +1544,14 @@ namespace Nominas
 
         private void dgvEmpleados_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
+            if (lstValoresNomina == null)
+                return;
+
             if (dgvEmpleados.Columns[e.ColumnIndex].Name == "horas")
             {
                 for (int i = 0; i < lstValoresNomina.Count(); i++)
                 {
-                    if (int.Parse(dgvEmpleados.Rows[e.RowIndex].Cells["idtrabajador"].Value.ToString()) == lstValoresNomina[i].idtrabajador && lstValoresNomina[i].idconcepto == 2)
+                    if (int.Parse(dgvEmpleados.Rows[e.RowIndex].Cells["idtrabajador"].Value.ToString()) == lstValoresNomina[i].idtrabajador && lstValoresNomina[i].noconcepto == 2)
                     {
                         nh = new CalculoNomina.Core.NominaHelper();
                         nh.Command = cmd;
@@ -1509,9 +1560,9 @@ namespace Nominas
                         CalculoNomina.Core.tmpPagoNomina hora = new CalculoNomina.Core.tmpPagoNomina();
                         hora.idempresa = GLOBALES.IDEMPRESA;
                         hora.idtrabajador = int.Parse(dgvEmpleados.Rows[e.RowIndex].Cells["idtrabajador"].Value.ToString());
-                        hora.idconcepto = 2;
-                        hora.fechainicio = dtpPeriodoInicio.Value;
-                        hora.fechafin = dtpPeriodoFin.Value;
+                        hora.noconcepto = 2; //CONCEPTO HORAS EXTRAS DOBLES
+                        hora.fechainicio = dtpPeriodoInicio.Value.Date;
+                        hora.fechafin = dtpPeriodoFin.Value.Date;
                         hora.cantidad = lstValoresNomina[i].cantidad;
                         hora.gravado = lstValoresNomina[i].gravado;
                         try
@@ -1532,7 +1583,7 @@ namespace Nominas
             {
                 for (int i = 0; i < lstValoresNomina.Count(); i++)
                 {
-                    if (int.Parse(dgvEmpleados.Rows[e.RowIndex].Cells["idtrabajador"].Value.ToString()) == lstValoresNomina[i].idtrabajador && lstValoresNomina[i].idconcepto == 6)
+                    if (int.Parse(dgvEmpleados.Rows[e.RowIndex].Cells["idtrabajador"].Value.ToString()) == lstValoresNomina[i].idtrabajador && lstValoresNomina[i].noconcepto == 6)
                     {
                         nh = new CalculoNomina.Core.NominaHelper();
                         nh.Command = cmd;
@@ -1541,9 +1592,9 @@ namespace Nominas
                         CalculoNomina.Core.tmpPagoNomina despensa = new CalculoNomina.Core.tmpPagoNomina();
                         despensa.idempresa = GLOBALES.IDEMPRESA;
                         despensa.idtrabajador = int.Parse(dgvEmpleados.Rows[e.RowIndex].Cells["idtrabajador"].Value.ToString());
-                        despensa.idconcepto = 2;
-                        despensa.fechainicio = dtpPeriodoInicio.Value;
-                        despensa.fechafin = dtpPeriodoFin.Value;
+                        despensa.noconcepto = 6; //CONCEPTO DESPENSA
+                        despensa.fechainicio = dtpPeriodoInicio.Value.Date;
+                        despensa.fechafin = dtpPeriodoFin.Value.Date;
                         despensa.cantidad = lstValoresNomina[i].cantidad;
                         despensa.gravado = lstValoresNomina[i].gravado;
                         try
@@ -1576,8 +1627,8 @@ namespace Nominas
 
             CalculoNomina.Core.tmpPagoNomina pn = new CalculoNomina.Core.tmpPagoNomina();
             pn.idempresa = GLOBALES.IDEMPRESA;
-            pn.fechainicio = dtpPeriodoInicio.Value;
-            pn.fechafin = dtpPeriodoFin.Value;
+            pn.fechainicio = dtpPeriodoInicio.Value.Date;
+            pn.fechafin = dtpPeriodoFin.Value.Date;
 
             DataTable dt = new DataTable();
             try
@@ -1626,7 +1677,7 @@ namespace Nominas
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 progreso = (contador * 100) / contadorDt;
-                workDescalculo.ReportProgress(progreso, "Reporte a Excel");
+                workExcel.ReportProgress(progreso, "Reporte a Excel");
                 contador++;
                 if (i != dt.Rows.Count - 1)
                 {
@@ -1707,7 +1758,7 @@ namespace Nominas
             workSheet.SaveAs("Reporte_Tabular.xlsx");
             excel.Visible = true;
 
-            workDescalculo.ReportProgress(100, "Reporte a Excel");
+            workExcel.ReportProgress(100, "Reporte a Excel");
         }
 
         private void workExcel_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -1729,6 +1780,7 @@ namespace Nominas
         public int idtrabajador { get; set; }
         public int idempresa { get; set; }
         public int idconcepto { get; set; }
+        public int noconcepto { get; set; }
         public string tipoconcepto { get; set; }
         public double exento { get; set; }
         public double gravado { get; set; }

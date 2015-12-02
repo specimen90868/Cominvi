@@ -55,6 +55,17 @@ namespace Nominas
 
             var fechas = from f in lstPreNominas select new { f.fechainicio, f.fechafin };
             dgvPreNomina.DataSource = fechas.ToList();
+
+            if (lstPreNominas.Count == 0)
+            {
+                toolAceptar.Enabled = false;
+                toolEliminar.Enabled = false;
+            }
+            else 
+            {
+                toolAceptar.Enabled = true;
+                toolEliminar.Enabled = true;
+            }
         }
 
         private void frmSeleccionarPreNomina_Load(object sender, EventArgs e)

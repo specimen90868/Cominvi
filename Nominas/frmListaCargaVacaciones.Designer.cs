@@ -313,6 +313,7 @@
             this.Controls.Add(this.toolTitulo);
             this.Name = "frmListaCargaVacaciones";
             this.Text = "Carga de vacaciones";
+            this.Load += new System.EventHandler(this.frmListaCargaVacaciones_Load);
             this.toolTitulo.ResumeLayout(false);
             this.toolTitulo.PerformLayout();
             this.toolBusqueda.ResumeLayout(false);

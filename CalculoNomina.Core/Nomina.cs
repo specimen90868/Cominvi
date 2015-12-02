@@ -45,6 +45,7 @@ namespace CalculoNomina.Core
         public int idtrabajador { get; set; }
         public int idempresa { get; set; }
         public int idconcepto { get; set; }
+        public int noconcepto { get; set; }
         public string tipoconcepto { get; set; }
         public double exento { get; set; }
         public double gravado { get; set; }

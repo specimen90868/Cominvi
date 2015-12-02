@@ -67,6 +67,12 @@
       <DependentUpon>dsReportes.xsd</DependentUpon>
     </Compile>
     <Compile Include="FormulasValores.cs" />
+    <Compile Include="frmAguinaldo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAguinaldo.Designer.cs">
+      <DependentUpon>frmAguinaldo.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmBaja.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -222,6 +228,12 @@
     </Compile>
     <Compile Include="frmListaCalculoNomina.Designer.cs">
       <DependentUpon>frmListaCalculoNomina.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmListaCargaAguinaldo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaCargaAguinaldo.Designer.cs">
+      <DependentUpon>frmListaCargaAguinaldo.cs</DependentUpon>
     </Compile>
     <Compile Include="frmListaCargaFaltas.cs">
       <SubType>Form</SubType>
@@ -527,6 +539,9 @@
     <Compile Include="MathParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmAguinaldo.resx">
+      <DependentUpon>frmAguinaldo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmBaja.resx">
       <DependentUpon>frmBaja.cs</DependentUpon>
     </EmbeddedResource>
@@ -604,6 +619,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmListaCalculoNomina.resx">
       <DependentUpon>frmListaCalculoNomina.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListaCargaAguinaldo.resx">
+      <DependentUpon>frmListaCargaAguinaldo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmListaCargaFaltas.resx">
       <DependentUpon>frmListaCargaFaltas.cs</DependentUpon>

@@ -25,7 +25,7 @@ namespace Nominas
         SqlCommand cmd;
         SqlBulkCopy bulk;
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-        string ruta, nombreEmpresa;
+        string ruta, nombreEmpresa = "";
         string ExcelConString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties='Excel 12.0;'";
         int idEmpresa;
         Empresas.Core.EmpresasHelper eh;
@@ -35,6 +35,10 @@ namespace Nominas
         TablaIsr.Core.IsrHelper ih;
         Periodos.Core.PeriodosHelper ph;
         string noempleados = "";
+        #endregion
+
+        #region VARIABLES PUBLICA
+        public int _tipoNomina;
         #endregion
 
         private void toolCargar_Click(object sender, EventArgs e)
@@ -219,6 +223,7 @@ namespace Nominas
         {
             frmVacaciones v = new frmVacaciones();
             v.OnVacacion += v_OnVacacion;
+            v._tipoNomina = _tipoNomina;
             v.MdiParent = this.MdiParent;
             v.Show();
         }
@@ -244,16 +249,19 @@ namespace Nominas
             eh = new Empresas.Core.EmpresasHelper();
             eh.Command = cmd;
 
-            try
-            {
-                cnx.Open();
-                idEmpresa = eh.obtenerIdEmpresa(nombreEmpresa);
-                cnx.Close();
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-            }
+            if (nombreEmpresa == "")
+                try
+                {
+                    cnx.Open();
+                    idEmpresa = eh.obtenerIdEmpresa(nombreEmpresa);
+                    cnx.Close();
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                }
+            else
+                idEmpresa = GLOBALES.IDEMPRESA;
 
             #region LISTAS
             List<Empleados.Core.Empleados> lstDatosEmpleado;
@@ -687,6 +695,11 @@ namespace Nominas
             {
                 MessageBox.Show("Error (DataTable): \r\n \r\n" + error.Message, "Error");
             }
+        }
+
+        private void frmListaCargaVacaciones_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

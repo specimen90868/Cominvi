@@ -172,6 +172,7 @@ namespace CalculoNomina.Core
                 pago.idtrabajador = int.Parse(dtRecibo.Rows[i]["idtrabajador"].ToString());
                 pago.idempresa = int.Parse(dtRecibo.Rows[i]["idempresa"].ToString());
                 pago.idconcepto = int.Parse(dtRecibo.Rows[i]["idconcepto"].ToString());
+                pago.noconcepto = int.Parse(dtRecibo.Rows[i]["noconcepto"].ToString());
                 pago.tipoconcepto = dtRecibo.Rows[i]["tipoconcepto"].ToString();
                 pago.exento = double.Parse(dtRecibo.Rows[i]["exento"].ToString());
                 pago.gravado = double.Parse(dtRecibo.Rows[i]["gravado"].ToString());
@@ -187,7 +188,7 @@ namespace CalculoNomina.Core
         {
             List<tmpPagoNomina> lstPreNomina = new List<tmpPagoNomina>();
             DataTable dtPreNomina = new DataTable();
-            Command.CommandText = "select distinct fechainicio, fechafin from tmpPagoNomina where idempresa = @idempresa";
+            Command.CommandText = "select distinct fechainicio, fechafin from tmpPagoNomina where idempresa = @idempresa and guardada = 1";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", pn.idempresa);
             dtPreNomina = SelectData(Command);
@@ -283,7 +284,7 @@ namespace CalculoNomina.Core
         public int actualizaHorasExtrasDespensa(tmpPagoNomina pn)
         {
             Command.CommandText = "update tmpPagoNomina set cantidad = @cantidad, gravado = @gravado where idempresa = @idempresa and fechainicio = @fechainicio and fechafin = @fechafin and " +
-                "idtrabajador = @idtrabajador and idconcepto = @idconcepto";
+                "idtrabajador = @idtrabajador and noconcepto = @noconcepto";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("cantidad", pn.cantidad);
             Command.Parameters.AddWithValue("gravado", pn.gravado);
@@ -291,7 +292,7 @@ namespace CalculoNomina.Core
             Command.Parameters.AddWithValue("fechafin", pn.fechafin);
             Command.Parameters.AddWithValue("idempresa", pn.idempresa);
             Command.Parameters.AddWithValue("idtrabajador", pn.idtrabajador);
-            Command.Parameters.AddWithValue("idconcepto", pn.idconcepto);
+            Command.Parameters.AddWithValue("noconcepto", pn.noconcepto);
             return Command.ExecuteNonQuery();
         }
 
@@ -308,7 +309,7 @@ namespace CalculoNomina.Core
 
         public int stpAutorizaNomina(int idempresa, DateTime inicio, DateTime fin, int idusuario)
         {
-            Command.CommandText = "exec stp_AutorizaNomina @idempresa, @fechainicio, @fechafin";
+            Command.CommandText = "exec stp_AutorizaNomina @idempresa, @fechainicio, @fechafin, @idusuario";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idempresa);
             Command.Parameters.AddWithValue("fechainicio", inicio);

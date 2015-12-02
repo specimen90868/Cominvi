@@ -97,6 +97,7 @@
             this.cmbEmpleados.Name = "cmbEmpleados";
             this.cmbEmpleados.Size = new System.Drawing.Size(138, 21);
             this.cmbEmpleados.TabIndex = 3;
+            this.cmbEmpleados.SelectedIndexChanged += new System.EventHandler(this.cmbEmpleados_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -292,6 +293,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cmbTipoReporte);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmReportes";

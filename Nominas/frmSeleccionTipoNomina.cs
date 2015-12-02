@@ -43,6 +43,20 @@ namespace Nominas
                     lf.Show();
                     this.Dispose();
                     break;
+
+                case "Aguinaldo":
+                    frmListaCargaVacaciones lcv = new frmListaCargaVacaciones();
+                    lcv.MdiParent = this.MdiParent;
+
+                    if (rbtnNormal.Checked)
+                        lcv._tipoNomina = GLOBALES.NORMAL;
+
+                    if (rbtnEspecial.Checked)
+                        lcv._tipoNomina = GLOBALES.ESPECIAL;
+
+                    lcv.Show();
+                    this.Dispose();
+                    break;
             }
         }
     }

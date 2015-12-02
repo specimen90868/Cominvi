@@ -476,9 +476,10 @@ namespace Nominas
 
         private void toolVacaciones_Click(object sender, EventArgs e)
         {
-            frmListaCargaVacaciones lcv = new frmListaCargaVacaciones();
-            lcv.MdiParent = this;
-            lcv.Show();
+            frmSeleccionTipoNomina stn = new frmSeleccionTipoNomina();
+            stn._ventana = "Aguinaldo";
+            stn.MdiParent = this;
+            stn.Show();
         }
 
         private void toolProgramacion_Click(object sender, EventArgs e)

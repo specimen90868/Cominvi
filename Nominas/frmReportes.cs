@@ -54,25 +54,14 @@ namespace Nominas
             depto.idempresa = GLOBALES.IDEMPRESA;
             depto.estatus = GLOBALES.ACTIVO;
 
-            eh = new Empleados.Core.EmpleadosHelper();
-            eh.Command = cmd;
-            Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
-            empleado.idempresa = GLOBALES.IDEMPRESA;
-            empleado.estatus = (cmbEmpleados.Text == "Alta" ? GLOBALES.ACTIVO : GLOBALES.INACTIVO);
-
             ph = new Periodos.Core.PeriodosHelper();
             ph.Command = cmd;
 
             Periodos.Core.Periodos periodo = new Periodos.Core.Periodos();
             periodo.idempresa = GLOBALES.IDEMPRESA;
             
-
             List<Departamento.Core.Depto> lstDeptosDe = new List<Departamento.Core.Depto>();
             List<Departamento.Core.Depto> lstDeptosHasta = new List<Departamento.Core.Depto>();
-
-            List<Empleados.Core.Empleados> lstEmpleadoDe = new List<Empleados.Core.Empleados>();
-            List<Empleados.Core.Empleados> lstEmpleadoHasta = new List<Empleados.Core.Empleados>();
-
             List<Periodos.Core.Periodos> lstPeriodos = new List<Periodos.Core.Periodos>();
 
             try
@@ -80,8 +69,6 @@ namespace Nominas
                 cnx.Open();
                 lstDeptosDe = dh.obtenerDepartamentos(depto);
                 lstDeptosHasta = dh.obtenerDepartamentos(depto);
-                lstEmpleadoDe = eh.obtenerEmpleados(empleado);
-                lstEmpleadoHasta = eh.obtenerEmpleados(empleado);
                 lstPeriodos = ph.obtenerPeriodos(periodo);
                 cnx.Close();
                 cnx.Dispose();
@@ -95,14 +82,6 @@ namespace Nominas
             cmbDeptoFinal.DataSource = lstDeptosHasta;
             cmbDeptoFinal.DisplayMember = "descripcion";
             cmbDeptoFinal.ValueMember = "id";
-
-            cmbEmpleadoInicial.DataSource = lstEmpleadoDe;
-            cmbEmpleadoInicial.DisplayMember = "noempleado";
-            cmbEmpleadoInicial.ValueMember = "idtrabajador";
-
-            cmbEmpleadoFinal.DataSource = lstEmpleadoHasta;
-            cmbEmpleadoFinal.DisplayMember = "noempleado";
-            cmbEmpleadoFinal.ValueMember = "idtrabajador";
 
             cmbPeriodo.DataSource = lstPeriodos;
             cmbPeriodo.DisplayMember = "pago";
@@ -229,6 +208,12 @@ namespace Nominas
                 MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
             }
 
+            if (dt.Rows.Count == 0)
+            {
+                MessageBox.Show("No es posible generar el reporte. \r\n \r\n Verifique los parametros del reporte.", "Error");
+                return;
+            }
+
             Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
             excel.Workbooks.Add();
 
@@ -347,6 +332,42 @@ namespace Nominas
 
             toolPorcentaje.Text = "100%";
             toolEtapa.Text = "Reporte a Excel";
+        }
+
+        private void cmbEmpleados_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            eh = new Empleados.Core.EmpleadosHelper();
+            eh.Command = cmd;
+            Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
+            empleado.idempresa = GLOBALES.IDEMPRESA;
+            empleado.estatus = (cmbEmpleados.Text == "Alta" ? GLOBALES.ACTIVO : GLOBALES.INACTIVO);
+
+            List<Empleados.Core.Empleados> lstEmpleadoDe = new List<Empleados.Core.Empleados>();
+            List<Empleados.Core.Empleados> lstEmpleadoHasta = new List<Empleados.Core.Empleados>();
+
+            try
+            {
+                cnx.Open();
+                
+                lstEmpleadoDe = eh.obtenerEmpleados(empleado);
+                lstEmpleadoHasta = eh.obtenerEmpleados(empleado);
+                
+                cnx.Close();
+                cnx.Dispose();
+            }
+            catch (Exception error) { MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error"); }
+
+            cmbEmpleadoInicial.DataSource = lstEmpleadoDe;
+            cmbEmpleadoInicial.DisplayMember = "noempleado";
+            cmbEmpleadoInicial.ValueMember = "idtrabajador";
+
+            cmbEmpleadoFinal.DataSource = lstEmpleadoHasta;
+            cmbEmpleadoFinal.DisplayMember = "noempleado";
+            cmbEmpleadoFinal.ValueMember = "idtrabajador";
         }
     }
 }

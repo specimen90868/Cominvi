@@ -35,6 +35,10 @@ namespace Nominas
         List<Empleados.Core.Empleados> lstEmpleado;
         #endregion
 
+        #region VARIABLES PUBLICAS
+        public int _tipoNomina;
+        #endregion
+
         private void toolGuardar_Click(object sender, EventArgs e)
         {
             if (idempleado != 0)
@@ -58,6 +62,7 @@ namespace Nominas
             frmBuscar b = new frmBuscar();
             b.OnBuscar += b_OnBuscar;
             b._catalogo = GLOBALES.EMPLEADOS;
+            b._tipoNomina = _tipoNomina;
             b.MdiParent = this.MdiParent;
             b.Show();
         }

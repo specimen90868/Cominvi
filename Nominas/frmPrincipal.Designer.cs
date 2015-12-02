@@ -68,6 +68,7 @@
             this.toolHistorialIncapacidad = new System.Windows.Forms.ToolStripMenuItem();
             this.toolCargaIncapacidad = new System.Windows.Forms.ToolStripMenuItem();
             this.toolVacaciones = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolAguinaldo = new System.Windows.Forms.ToolStripMenuItem();
             this.toolConceptoEmpleado = new System.Windows.Forms.ToolStripMenuItem();
             this.toolProgramacion = new System.Windows.Forms.ToolStripMenuItem();
             this.cálculoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -75,6 +76,8 @@
             this.toolNominaEspecial = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.toolAutorizarNomina = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolReportes = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuCatalogos = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuDepartamentos = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPuestos = new System.Windows.Forms.ToolStripMenuItem();
@@ -97,8 +100,6 @@
             this.workPerfil = new System.ComponentModel.BackgroundWorker();
             this.stsPrincipal = new System.Windows.Forms.StatusStrip();
             this.toolEstatusPerfil = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolReportes = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPrincipal.SuspendLayout();
             this.stsPrincipal.SuspendLayout();
             this.SuspendLayout();
@@ -359,6 +360,7 @@
             this.toolFaltas,
             this.toolIncapacidad,
             this.toolVacaciones,
+            this.toolAguinaldo,
             this.toolConceptoEmpleado,
             this.toolProgramacion,
             this.cálculoToolStripMenuItem,
@@ -427,6 +429,12 @@
             this.toolVacaciones.Text = "Vacaciones";
             this.toolVacaciones.Click += new System.EventHandler(this.toolVacaciones_Click);
             // 
+            // toolAguinaldo
+            // 
+            this.toolAguinaldo.Name = "toolAguinaldo";
+            this.toolAguinaldo.Size = new System.Drawing.Size(218, 22);
+            this.toolAguinaldo.Text = "Aguinaldo";
+            // 
             // toolConceptoEmpleado
             // 
             this.toolConceptoEmpleado.Name = "toolConceptoEmpleado";
@@ -474,6 +482,18 @@
             this.toolAutorizarNomina.Name = "toolAutorizarNomina";
             this.toolAutorizarNomina.Size = new System.Drawing.Size(218, 22);
             this.toolAutorizarNomina.Text = "Autorizar nómina";
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(215, 6);
+            // 
+            // toolReportes
+            // 
+            this.toolReportes.Name = "toolReportes";
+            this.toolReportes.Size = new System.Drawing.Size(218, 22);
+            this.toolReportes.Text = "Reportes";
+            this.toolReportes.Click += new System.EventHandler(this.toolReportes_Click);
             // 
             // mnuCatalogos
             // 
@@ -644,18 +664,6 @@
             this.toolEstatusPerfil.Size = new System.Drawing.Size(98, 17);
             this.toolEstatusPerfil.Text = "Cargando perfil...";
             // 
-            // toolStripSeparator8
-            // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(215, 6);
-            // 
-            // toolReportes
-            // 
-            this.toolReportes.Name = "toolReportes";
-            this.toolReportes.Size = new System.Drawing.Size(218, 22);
-            this.toolReportes.Text = "Reportes";
-            this.toolReportes.Click += new System.EventHandler(this.toolReportes_Click);
-            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -751,6 +759,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolNominaEspecial;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem toolReportes;
+        private System.Windows.Forms.ToolStripMenuItem toolAguinaldo;
     }
 }
 
