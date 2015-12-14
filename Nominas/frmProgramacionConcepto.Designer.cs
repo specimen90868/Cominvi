@@ -33,8 +33,8 @@
             this.toolVentana = new System.Windows.Forms.ToolStripLabel();
             this.toolAcciones = new System.Windows.Forms.ToolStrip();
             this.toolGuardar = new System.Windows.Forms.ToolStripButton();
-            this.toolCerrar = new System.Windows.Forms.ToolStripButton();
             this.toolBuscar = new System.Windows.Forms.ToolStripButton();
+            this.toolCerrar = new System.Windows.Forms.ToolStripButton();
             this.lblEmpleado = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -44,8 +44,6 @@
             this.txtCantidad = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.dtpFecha = new System.Windows.Forms.DateTimePicker();
-            this.label5 = new System.Windows.Forms.Label();
-            this.txtSubconcepto = new System.Windows.Forms.TextBox();
             this.toolTitulo.SuspendLayout();
             this.toolAcciones.SuspendLayout();
             this.SuspendLayout();
@@ -89,15 +87,6 @@
             this.toolGuardar.Text = "Guardar";
             this.toolGuardar.Click += new System.EventHandler(this.toolGuardar_Click);
             // 
-            // toolCerrar
-            // 
-            this.toolCerrar.Image = ((System.Drawing.Image)(resources.GetObject("toolCerrar.Image")));
-            this.toolCerrar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolCerrar.Name = "toolCerrar";
-            this.toolCerrar.Size = new System.Drawing.Size(59, 22);
-            this.toolCerrar.Text = "Cerrar";
-            this.toolCerrar.Click += new System.EventHandler(this.toolCerrar_Click);
-            // 
             // toolBuscar
             // 
             this.toolBuscar.Image = ((System.Drawing.Image)(resources.GetObject("toolBuscar.Image")));
@@ -106,6 +95,15 @@
             this.toolBuscar.Size = new System.Drawing.Size(62, 22);
             this.toolBuscar.Text = "Buscar";
             this.toolBuscar.Click += new System.EventHandler(this.toolBuscar_Click);
+            // 
+            // toolCerrar
+            // 
+            this.toolCerrar.Image = ((System.Drawing.Image)(resources.GetObject("toolCerrar.Image")));
+            this.toolCerrar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolCerrar.Name = "toolCerrar";
+            this.toolCerrar.Size = new System.Drawing.Size(59, 22);
+            this.toolCerrar.Text = "Cerrar";
+            this.toolCerrar.Click += new System.EventHandler(this.toolCerrar_Click);
             // 
             // lblEmpleado
             // 
@@ -141,7 +139,7 @@
             this.cmbConcepto.FormattingEnabled = true;
             this.cmbConcepto.Location = new System.Drawing.Point(131, 162);
             this.cmbConcepto.Name = "cmbConcepto";
-            this.cmbConcepto.Size = new System.Drawing.Size(117, 21);
+            this.cmbConcepto.Size = new System.Drawing.Size(201, 21);
             this.cmbConcepto.TabIndex = 1;
             // 
             // label2
@@ -158,7 +156,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.label3.Location = new System.Drawing.Point(73, 216);
+            this.label3.Location = new System.Drawing.Point(73, 192);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(52, 13);
             this.label3.TabIndex = 257;
@@ -166,7 +164,7 @@
             // 
             // txtCantidad
             // 
-            this.txtCantidad.Location = new System.Drawing.Point(131, 213);
+            this.txtCantidad.Location = new System.Drawing.Point(131, 189);
             this.txtCantidad.Name = "txtCantidad";
             this.txtCantidad.Size = new System.Drawing.Size(67, 20);
             this.txtCantidad.TabIndex = 3;
@@ -175,7 +173,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(33, 242);
+            this.label4.Location = new System.Drawing.Point(33, 218);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(92, 13);
             this.label4.TabIndex = 259;
@@ -184,35 +182,16 @@
             // dtpFecha
             // 
             this.dtpFecha.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFecha.Location = new System.Drawing.Point(131, 239);
+            this.dtpFecha.Location = new System.Drawing.Point(131, 215);
             this.dtpFecha.Name = "dtpFecha";
-            this.dtpFecha.Size = new System.Drawing.Size(117, 20);
+            this.dtpFecha.Size = new System.Drawing.Size(201, 20);
             this.dtpFecha.TabIndex = 4;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(51, 191);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(74, 13);
-            this.label5.TabIndex = 261;
-            this.label5.Text = "Subconcepto:";
-            // 
-            // txtSubconcepto
-            // 
-            this.txtSubconcepto.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtSubconcepto.Location = new System.Drawing.Point(131, 188);
-            this.txtSubconcepto.Name = "txtSubconcepto";
-            this.txtSubconcepto.Size = new System.Drawing.Size(164, 20);
-            this.txtSubconcepto.TabIndex = 2;
             // 
             // frmProgramacionConcepto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(491, 481);
-            this.Controls.Add(this.txtSubconcepto);
-            this.Controls.Add(this.label5);
             this.Controls.Add(this.dtpFecha);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtCantidad);
@@ -253,7 +232,5 @@
         private System.Windows.Forms.TextBox txtCantidad;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DateTimePicker dtpFecha;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox txtSubconcepto;
     }
 }

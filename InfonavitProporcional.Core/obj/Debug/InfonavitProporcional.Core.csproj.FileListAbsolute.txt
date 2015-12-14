@@ -1,0 +1,7 @@
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\InfonavitProporcional.Core\bin\Debug\InfonavitProporcional.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\InfonavitProporcional.Core\bin\Debug\InfonavitProporcional.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\InfonavitProporcional.Core\bin\Debug\Data.Obj.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\InfonavitProporcional.Core\bin\Debug\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\InfonavitProporcional.Core\obj\Debug\InfonavitProporcional.Core.csprojResolveAssemblyReference.cache
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\InfonavitProporcional.Core\obj\Debug\InfonavitProporcional.Core.dll
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\InfonavitProporcional.Core\obj\Debug\InfonavitProporcional.Core.pdb

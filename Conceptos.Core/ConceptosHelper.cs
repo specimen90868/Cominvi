@@ -35,6 +35,33 @@ namespace Conceptos.Core
             return lstConcepto;
         }
 
+        public List<Conceptos> obtenerConceptosDeducciones(Conceptos c)
+        {
+            List<Conceptos> lstConcepto = new List<Conceptos>();
+            DataTable dtConceptos = new DataTable();
+            Command.CommandText = "select * from conceptos where idempresa = @idempresa and tipoconcepto = @tipoconcepto";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", c.idempresa);
+            Command.Parameters.AddWithValue("tipoconcepto", c.tipoconcepto);
+            dtConceptos = SelectData(Command);
+            for (int i = 0; i < dtConceptos.Rows.Count; i++)
+            {
+                Conceptos concepto = new Conceptos();
+                concepto.id = int.Parse(dtConceptos.Rows[i]["id"].ToString());
+                concepto.concepto = dtConceptos.Rows[i]["concepto"].ToString();
+                concepto.noconcepto = int.Parse(dtConceptos.Rows[i]["noconcepto"].ToString());
+                concepto.tipoconcepto = dtConceptos.Rows[i]["tipoconcepto"].ToString();
+                concepto.formula = dtConceptos.Rows[i]["formula"].ToString();
+                concepto.formulaexento = dtConceptos.Rows[i]["formulaexento"].ToString();
+                concepto.gravado = bool.Parse(dtConceptos.Rows[i]["gravado"].ToString());
+                concepto.exento = bool.Parse(dtConceptos.Rows[i]["exento"].ToString());
+                concepto.gruposat = dtConceptos.Rows[i]["gruposat"].ToString();
+                concepto.visible = bool.Parse(dtConceptos.Rows[i]["visible"].ToString());
+                lstConcepto.Add(concepto);
+            }
+            return lstConcepto;
+        }
+
         public List<Conceptos> obtenerConcepto(Conceptos c)
         {
             List<Conceptos> lstConcepto = new List<Conceptos>();

@@ -24,7 +24,6 @@ namespace ProgramacionConcepto.Core
                 programacion.idtrabajador = int.Parse(dtProgramacion.Rows[i]["idtrabajador"].ToString());
                 programacion.idempresa = int.Parse(dtProgramacion.Rows[i]["idempresa"].ToString());
                 programacion.idconcepto = int.Parse(dtProgramacion.Rows[i]["idconcepto"].ToString());
-                programacion.concepto = dtProgramacion.Rows[i]["concepto"].ToString();
                 programacion.cantidad = double.Parse(dtProgramacion.Rows[i]["cantidad"].ToString());
                 programacion.fechafin = DateTime.Parse(dtProgramacion.Rows[i]["fechafin"].ToString());
                 lstProgramacion.Add(programacion);
@@ -47,7 +46,6 @@ namespace ProgramacionConcepto.Core
                 programacion.idtrabajador = int.Parse(dtProgramacion.Rows[i]["idtrabajador"].ToString());
                 programacion.idempresa = int.Parse(dtProgramacion.Rows[i]["idempresa"].ToString());
                 programacion.idconcepto = int.Parse(dtProgramacion.Rows[i]["idconcepto"].ToString());
-                programacion.concepto = dtProgramacion.Rows[i]["concepto"].ToString();
                 programacion.cantidad = double.Parse(dtProgramacion.Rows[i]["cantidad"].ToString());
                 programacion.fechafin = DateTime.Parse(dtProgramacion.Rows[i]["fechafin"].ToString());
                 lstProgramacion.Add(programacion);
@@ -66,13 +64,12 @@ namespace ProgramacionConcepto.Core
 
         public int insertaProgramacion(ProgramacionConcepto pc)
         {
-            Command.CommandText = "insert into ProgramacionConcepto (idtrabajador, idempresa, idconcepto, concepto, cantidad, fechafin) " +
-                "values (@idtrabajador, @idempresa, @idconcepto, @concepto, @cantidad, @fechafin)";
+            Command.CommandText = "insert into ProgramacionConcepto (idtrabajador, idempresa, idconcepto, cantidad, fechafin) " +
+                "values (@idtrabajador, @idempresa, @idconcepto, @cantidad, @fechafin)";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", pc.idtrabajador);
             Command.Parameters.AddWithValue("idempresa", pc.idempresa);
             Command.Parameters.AddWithValue("idconcepto", pc.idconcepto);
-            Command.Parameters.AddWithValue("concepto", pc.concepto);
             Command.Parameters.AddWithValue("cantidad", pc.cantidad);
             Command.Parameters.AddWithValue("fechafin", pc.fechafin);
             return Command.ExecuteNonQuery();
@@ -80,12 +77,11 @@ namespace ProgramacionConcepto.Core
 
         public int actualizaProgramacion(ProgramacionConcepto pc)
         {
-            Command.CommandText = "update ProgramacionConcepto set idconcepto = @idconcepto, concepto = @concepto, cantidad = @cantidad, fechafin = @fechafin " +
+            Command.CommandText = "update ProgramacionConcepto set idconcepto = @idconcepto, cantidad = @cantidad, fechafin = @fechafin " +
                 "where idtrabajador = @idtrabajador";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", pc.idtrabajador);
             Command.Parameters.AddWithValue("idconcepto", pc.idconcepto);
-            Command.Parameters.AddWithValue("concepto", pc.concepto);
             Command.Parameters.AddWithValue("cantidad", pc.cantidad);
             Command.Parameters.AddWithValue("fechafin", pc.fechafin);
             return Command.ExecuteNonQuery();

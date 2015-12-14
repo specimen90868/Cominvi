@@ -29,6 +29,7 @@ namespace Faltas.Core
                 falta.faltas = int.Parse(dtFaltas.Rows[i]["faltas"].ToString());
                 falta.fechainicio = DateTime.Parse(dtFaltas.Rows[i]["fechainicio"].ToString());
                 falta.fechafin = DateTime.Parse(dtFaltas.Rows[i]["fechafin"].ToString());
+                falta.fecha = DateTime.Parse(dtFaltas.Rows[i]["fecha"].ToString());
                 lstFaltas.Add(falta);
             }
             return lstFaltas;
@@ -94,8 +95,8 @@ namespace Faltas.Core
 
         public int insertaFalta(Faltas f)
         {
-            Command.CommandText = "insert into faltas (idtrabajador, idempresa, periodo, faltas, fechainicio, fechafin) " +
-                "values (@idtrabajador, @idempresa, @idperiodo, @faltas, @fechainicio, @fechafin)";
+            Command.CommandText = "insert into faltas (idtrabajador, idempresa, periodo, faltas, fechainicio, fechafin, fecha) " +
+                "values (@idtrabajador, @idempresa, @idperiodo, @faltas, @fechainicio, @fechafin, @fecha)";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador",f.idtrabajador);
             Command.Parameters.AddWithValue("idempresa", f.idempresa);
@@ -103,6 +104,7 @@ namespace Faltas.Core
             Command.Parameters.AddWithValue("faltas", f.faltas);
             Command.Parameters.AddWithValue("fechainicio", f.fechainicio);
             Command.Parameters.AddWithValue("fechafin", f.fechafin);
+            Command.Parameters.AddWithValue("fecha", f.fecha);
             return Command.ExecuteNonQuery();
         }
 

@@ -15,5 +15,6 @@ namespace Faltas.Core
         public int faltas { get; set; }
         public DateTime fechainicio { get; set; }
         public DateTime fechafin { get; set; }
+        public DateTime fecha { get; set; }
     }
 }

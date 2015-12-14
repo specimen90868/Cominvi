@@ -44,7 +44,14 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtDiasIncapacidad = new System.Windows.Forms.TextBox();
-            this.chkConsecutiva = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtCertificado = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtDescripcion = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.cmbTipoIncapacidad = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cmbTipoCaso = new System.Windows.Forms.ComboBox();
             this.toolTitulo.SuspendLayout();
             this.toolAcciones.SuspendLayout();
             this.SuspendLayout();
@@ -56,7 +63,7 @@
             this.toolVentana});
             this.toolTitulo.Location = new System.Drawing.Point(0, 0);
             this.toolTitulo.Name = "toolTitulo";
-            this.toolTitulo.Size = new System.Drawing.Size(512, 27);
+            this.toolTitulo.Size = new System.Drawing.Size(513, 27);
             this.toolTitulo.TabIndex = 6;
             this.toolTitulo.Text = "toolAcciones";
             // 
@@ -75,7 +82,7 @@
             this.toolCerrar});
             this.toolAcciones.Location = new System.Drawing.Point(0, 27);
             this.toolAcciones.Name = "toolAcciones";
-            this.toolAcciones.Size = new System.Drawing.Size(512, 25);
+            this.toolAcciones.Size = new System.Drawing.Size(513, 25);
             this.toolAcciones.TabIndex = 7;
             this.toolAcciones.Text = "toolEmpresa";
             // 
@@ -187,22 +194,88 @@
             this.txtDiasIncapacidad.TabIndex = 2;
             this.txtDiasIncapacidad.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // chkConsecutiva
+            // label4
             // 
-            this.chkConsecutiva.AutoSize = true;
-            this.chkConsecutiva.Location = new System.Drawing.Point(235, 122);
-            this.chkConsecutiva.Name = "chkConsecutiva";
-            this.chkConsecutiva.Size = new System.Drawing.Size(85, 17);
-            this.chkConsecutiva.TabIndex = 6;
-            this.chkConsecutiva.Text = "Consecutiva";
-            this.chkConsecutiva.UseVisualStyleBackColor = true;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(17, 227);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(60, 13);
+            this.label4.TabIndex = 264;
+            this.label4.Text = "Certificado:";
+            // 
+            // txtCertificado
+            // 
+            this.txtCertificado.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtCertificado.Location = new System.Drawing.Point(129, 224);
+            this.txtCertificado.Name = "txtCertificado";
+            this.txtCertificado.Size = new System.Drawing.Size(100, 20);
+            this.txtCertificado.TabIndex = 265;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(16, 253);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(66, 13);
+            this.label5.TabIndex = 266;
+            this.label5.Text = "Descripción:";
+            // 
+            // txtDescripcion
+            // 
+            this.txtDescripcion.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtDescripcion.Location = new System.Drawing.Point(129, 250);
+            this.txtDescripcion.Multiline = true;
+            this.txtDescripcion.Name = "txtDescripcion";
+            this.txtDescripcion.Size = new System.Drawing.Size(372, 199);
+            this.txtDescripcion.TabIndex = 267;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(251, 120);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(107, 13);
+            this.label6.TabIndex = 268;
+            this.label6.Text = "Tipo de incapacidad:";
+            // 
+            // cmbTipoIncapacidad
+            // 
+            this.cmbTipoIncapacidad.FormattingEnabled = true;
+            this.cmbTipoIncapacidad.Location = new System.Drawing.Point(360, 120);
+            this.cmbTipoIncapacidad.Name = "cmbTipoIncapacidad";
+            this.cmbTipoIncapacidad.Size = new System.Drawing.Size(142, 21);
+            this.cmbTipoIncapacidad.TabIndex = 269;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(251, 149);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(73, 13);
+            this.label7.TabIndex = 270;
+            this.label7.Text = "Tipo de Caso:";
+            // 
+            // cmbTipoCaso
+            // 
+            this.cmbTipoCaso.FormattingEnabled = true;
+            this.cmbTipoCaso.Location = new System.Drawing.Point(360, 147);
+            this.cmbTipoCaso.Name = "cmbTipoCaso";
+            this.cmbTipoCaso.Size = new System.Drawing.Size(142, 21);
+            this.cmbTipoCaso.TabIndex = 271;
             // 
             // frmIncapacidad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(512, 461);
-            this.Controls.Add(this.chkConsecutiva);
+            this.ClientSize = new System.Drawing.Size(513, 471);
+            this.Controls.Add(this.cmbTipoCaso);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.cmbTipoIncapacidad);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.txtDescripcion);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.txtCertificado);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.txtDiasIncapacidad);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.dtpFinPeriodo);
@@ -243,6 +316,13 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtDiasIncapacidad;
-        private System.Windows.Forms.CheckBox chkConsecutiva;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtCertificado;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox txtDescripcion;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox cmbTipoIncapacidad;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox cmbTipoCaso;
     }
 }

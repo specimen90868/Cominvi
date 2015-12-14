@@ -15,5 +15,8 @@ namespace Bajas.Core
         public string nss { get; set; }
         public int motivo { get; set; }
         public DateTime fecha { get; set; }
+        public int diasproporcionales { get; set; }
+        public DateTime periodoinicio { get; set; }
+        public DateTime periodofin { get; set; }
     }
 }

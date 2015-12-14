@@ -23,8 +23,10 @@ namespace Nominas
         SqlConnection cnx;
         SqlCommand cmd;
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
+        Empleados.Core.EmpleadosHelper eh;
+        Periodos.Core.PeriodosHelper ph;
         bool ausentismo = false;
-        int diasAusentismo = 0;
+        int diasAusentismo = 0, periodo = 0;
         #endregion
 
         #region VARIABLES PUBLICAS
@@ -45,6 +47,17 @@ namespace Nominas
             cmd = new SqlCommand();
             cmd.Connection = cnx;
 
+            eh = new Empleados.Core.EmpleadosHelper();
+            ph = new Periodos.Core.PeriodosHelper();
+            eh.Command = cmd;
+            ph.Command = cmd;
+
+            Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
+            empleado.idtrabajador = _idempleado;
+
+            Periodos.Core.Periodos per = new Periodos.Core.Periodos();
+            per.idempresa = GLOBALES.IDEMPRESA;
+
             Catalogos.Core.CatalogosHelper ch = new Catalogos.Core.CatalogosHelper();
             ch.Command = cmd;
 
@@ -52,10 +65,14 @@ namespace Nominas
             c.grupodescripcion = "BAJA";
 
             List<Catalogos.Core.Catalogo> lstBaja = new List<Catalogos.Core.Catalogo>();
+            List<Empleados.Core.Empleados> lstEmpleado = new List<Empleados.Core.Empleados>();
+            List<Periodos.Core.Periodos> lstPeriodos = new List<Periodos.Core.Periodos>();
 
             try
             {
                 cnx.Open();
+                lstEmpleado = eh.obtenerEmpleado(empleado);
+                lstPeriodos = ph.obtenerPeriodos(per);
                 lstBaja = ch.obtenerGrupo(c);
                 cnx.Close();
                 cnx.Dispose();
@@ -68,6 +85,40 @@ namespace Nominas
             cmbMotivoBaja.DataSource = lstBaja.ToList();
             cmbMotivoBaja.DisplayMember = "descripcion";
             cmbMotivoBaja.ValueMember = "id";
+
+            var datos = from emp in lstEmpleado
+                        join p in lstPeriodos on emp.idperiodo equals p.idperiodo
+                        select new
+                        {
+                            p.dias,
+                            emp.idperiodo
+                        };
+            foreach (var d in datos)
+            {
+                periodo = d.dias;
+            }
+
+            if (periodo == 7)
+            {
+                DateTime dt = DateTime.Now;
+                while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
+                dtpPeriodoInicio.Value = dt;
+                dtpPeriodoFin.Value = dt.AddDays(6);
+            }
+            else
+            {
+                if (DateTime.Now.Day <= 15)
+                {
+                    dtpPeriodoInicio.Value = new DateTime(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month, 1);
+                    dtpPeriodoFin.Value = new DateTime(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month, 15);
+                }
+                else
+                {
+                    dtpPeriodoInicio.Value = new DateTime(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month, 16);
+                    dtpPeriodoFin.Value = new DateTime(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month, DateTime.DaysInMonth(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month));
+                }
+
+            }
         }
 
         private bool CalculaDiaHabil()
@@ -198,14 +249,17 @@ namespace Nominas
                 baja.idtrabajador = _idempleado;
                 baja.idempresa = GLOBALES.IDEMPRESA;
                 baja.motivo = int.Parse(cmbMotivoBaja.SelectedValue.ToString());
-                baja.fecha = dtpFechaBaja.Value;
+                baja.fecha = dtpFechaBaja.Value.Date;
+                baja.diasproporcionales = (int)(dtpFechaBaja.Value.Date - dtpPeriodoInicio.Value.Date).TotalDays + 1;
+                baja.periodoinicio = dtpPeriodoInicio.Value.Date;
+                baja.periodofin = dtpPeriodoFin.Value.Date;
 
                 try
                 {
                     cnx.Open();
                     h.valor = (double)(decimal)eh.obtenerSalarioDiarioIntegrado(emp);
                     hp.insertarHistorial(h);
-                    eh.bajaEmpleado(emp);
+                    //eh.bajaEmpleado(emp);
 
                     baja.registropatronal = (string)ep.obtenerRegistroPatronal(empresa);
                     baja.nss = (string)eh.obtenerNss(emp);
@@ -230,7 +284,9 @@ namespace Nominas
                 }
                 MessageBox.Show("Baja exitosa.", "Información");
                 btnAceptar.Enabled = false;
+                this.Dispose();
             }
+            
         }
 
         void da_OnDiasAusentismo(int dias)
@@ -244,6 +300,30 @@ namespace Nominas
                 ausentismo = true;
             else
                 ausentismo = false;
+        }
+
+        private void dtpPeriodoInicio_ValueChanged(object sender, EventArgs e)
+        {
+            if (periodo == 7)
+            {
+                DateTime dt = dtpPeriodoInicio.Value;
+                while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
+                dtpPeriodoInicio.Value = dt;
+                dtpPeriodoFin.Value = dt.AddDays(6);
+            }
+            else
+            {
+                if (dtpPeriodoInicio.Value.Day <= 15)
+                {
+                    dtpPeriodoInicio.Value = new DateTime(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month, 1);
+                    dtpPeriodoFin.Value = new DateTime(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month, 15);
+                }
+                else
+                {
+                    dtpPeriodoInicio.Value = new DateTime(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month, 16);
+                    dtpPeriodoFin.Value = new DateTime(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month, DateTime.DaysInMonth(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month));
+                }
+            }
         }
     }
 }

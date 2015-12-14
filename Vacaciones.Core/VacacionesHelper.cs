@@ -116,6 +116,33 @@ namespace Vacaciones.Core
             return lstPrima;
         }
 
+        public int insertaVacacion(Vacaciones v)
+        {
+            Command.CommandText = "insert into PagoVacaciones (idtrabajador, idempresa, fechaingreso, inicio, fin, sd, diasderecho, diasapagar, diaspendientes, pv, pexenta, pgravada, isrgravada, pagovacaciones, totalprima, total, fechapago, pagada, pvpagada) " +
+                " values (@idtrabajador, @idempresa, @fechaingreso, @inicio, @fin, @sd, @diasderecho, @diasapagar, @diaspendientes, @pv, @pexenta, @pgravada, @isrgravada, @pagovacaciones, @totalprima, @total, @fechapago, @pagada, @pvpagada)";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", v.idtrabajador);
+            Command.Parameters.AddWithValue("idempresa", v.idempresa);
+            Command.Parameters.AddWithValue("fechaingreso", v.fechapago);
+            Command.Parameters.AddWithValue("inicio", v.inicio);
+            Command.Parameters.AddWithValue("fin", v.fin);
+            Command.Parameters.AddWithValue("sd", v.sd);
+            Command.Parameters.AddWithValue("diasderecho", v.diasderecho);
+            Command.Parameters.AddWithValue("diasapagar", v.diasapagar);
+            Command.Parameters.AddWithValue("diaspendientes", v.diaspendientes);
+            Command.Parameters.AddWithValue("pv", v.pv);
+            Command.Parameters.AddWithValue("pexenta", v.pexenta);
+            Command.Parameters.AddWithValue("pgravada", v.pgravada);
+            Command.Parameters.AddWithValue("isrgravada", v.isrgravada);
+            Command.Parameters.AddWithValue("pagovacaciones", v.pagovacaciones);
+            Command.Parameters.AddWithValue("totalprima", v.totalprima);
+            Command.Parameters.AddWithValue("total", v.total);
+            Command.Parameters.AddWithValue("fechapago", v.fechapago);
+            Command.Parameters.AddWithValue("pagada", v.pagada);
+            Command.Parameters.AddWithValue("pvpagada", v.pvpagada);
+            return Command.ExecuteNonQuery();
+        }
+
         public int eliminaVacacion(Vacaciones v)
         {
             Command.CommandText = "delete from PagoVacaciones where id = @id";

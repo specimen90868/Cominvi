@@ -44,7 +44,7 @@ namespace Nominas
                     this.Dispose();
                     break;
 
-                case "Aguinaldo":
+                case "CargaVacaciones":
                     frmListaCargaVacaciones lcv = new frmListaCargaVacaciones();
                     lcv.MdiParent = this.MdiParent;
 
@@ -55,6 +55,20 @@ namespace Nominas
                         lcv._tipoNomina = GLOBALES.ESPECIAL;
 
                     lcv.Show();
+                    this.Dispose();
+                    break;
+
+                case "Vacaciones":
+                    frmListaVacaciones lv = new frmListaVacaciones();
+                    lv.MdiParent = this.MdiParent;
+
+                    if (rbtnNormal.Checked)
+                        lv._tipoNomina = GLOBALES.NORMAL;
+
+                    if (rbtnEspecial.Checked)
+                        lv._tipoNomina = GLOBALES.ESPECIAL;
+
+                    lv.Show();
                     this.Dispose();
                     break;
             }

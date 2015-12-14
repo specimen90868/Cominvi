@@ -94,7 +94,7 @@ namespace Nominas
                                         dt.Rows[i][3].ToString(), //MATERNO
                                         (dt.Rows[i][4].ToString() == "Si" ? true : false), //PRIMA VACACIONAL
                                         (dt.Rows[i][5].ToString() == "Si" ? true : false), //PAGO TOTAL
-                                        (dt.Rows[i][5].ToString() == "Si" ? dt.Rows[i][6].ToString() : "0"), //DIAS A PAGAR
+                                        (dt.Rows[i][5].ToString() == "Si" ? "0" : dt.Rows[i][6].ToString()), //DIAS A PAGAR
 
                                         (dt.Rows[i][7].ToString() == "Si" ? true : false), //VACACIONES
                                         (dt.Rows[i][7].ToString() == "Si" ? dt.Rows[i][8].ToString() : "0"), //DIAS A PAGAR
@@ -310,7 +310,7 @@ namespace Nominas
                 }
                 catch (Exception error)
                 {
-                    MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                    MessageBox.Show("Error al obtener formula de Prima Vacacional. \r\n \r\n" + error.Message, "Error");
                 }
 
                 List<Empleados.Core.Empleados> lstEmpleado;
@@ -344,7 +344,7 @@ namespace Nominas
                         prima.pagovacaciones = 0;
                         prima.fechapago = DateTime.Now;
                         prima.pagada = false;
-                        prima.pvpagada = false;
+                        prima.pvpagada = true;
 
                         vh = new Vacaciones.Core.VacacionesHelper();
                         vh.Command = cmd;
@@ -358,7 +358,7 @@ namespace Nominas
                         }
                         catch (Exception error)
                         {
-                            MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                            MessageBox.Show("Error asl obtener los dias por derecho. \r\n \r\n" + error.Message, "Error");
                         }
 
                         if (bool.Parse(fila.Cells["pagototal"].Value.ToString()))
@@ -373,6 +373,8 @@ namespace Nominas
                         {
                             FormulasValores f = new FormulasValores(formulaPrimaVacacional, lstEmpleado, DateTime.Now, DateTime.Now, int.Parse(fila.Cells["diaspagopv"].Value.ToString()));
                             prima.pv = (double)f.calcularFormulaVacaciones();
+                            prima.diasapagar = int.Parse(fila.Cells["diaspagopv"].Value.ToString());
+                            prima.diaspendientes = prima.diasderecho - prima.diasapagar;
 
                             f = new FormulasValores(formulaExentoPrimaVacacional, lstEmpleado, DateTime.Now, DateTime.Now, int.Parse(fila.Cells["diaspagopv"].Value.ToString()));
                             exento = (double)f.calcularFormulaVacacionesExento();
@@ -396,6 +398,7 @@ namespace Nominas
                         indice++;
                     }
                 }
+
                 #region CALCULO PV COMENTADA
                 //for (int i = 0; i < lstDatosEmpleado.Count; i++)
                 //{
@@ -491,7 +494,7 @@ namespace Nominas
                 }
                 catch (Exception error)
                 {
-                    MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                    MessageBox.Show("Error al obtener la antiguedad del empleado. \r\n \r\n" + error.Message, "Error");
                     this.Dispose();
                 }
                 #endregion
@@ -524,7 +527,7 @@ namespace Nominas
                         }
                         catch (Exception error)
                         {
-                            MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                            MessageBox.Show("Error al obtener los dias por derecho (Vacaciones). \r\n \r\n" + error.Message, "Error");
                         }
 
                         vacacion.diaspendientes = vacacion.diasderecho - vacacion.diasapagar;
@@ -536,7 +539,7 @@ namespace Nominas
                         vacacion.totalprima = 0;
                         vacacion.total = lstDatosEmpleado[i].sd * int.Parse(fila.Cells["diaspago"].Value.ToString());
                         vacacion.fechapago = DateTime.Now;
-                        vacacion.pagada = false;
+                        vacacion.pagada = true;
                         vacacion.pvpagada = false;
                         lstVacaciones.Add(vacacion);
                         i++;

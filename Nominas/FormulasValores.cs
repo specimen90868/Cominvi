@@ -54,6 +54,7 @@ namespace Nominas
         
         private object evaluacionFormula(string formula)
         {
+            string _formula = "";
             if (formula.Equals("0"))
                 return 0;
 
@@ -118,23 +119,53 @@ namespace Nominas
                         break;
 
                     case "DiasLaborados":
-                        formula = formula.Replace("[" + variables[i] + "]", datosNomina[0].dias.ToString());
+                        int existe = 0, diasBaja = 0;
+                        Bajas.Core.BajasHelper bh = new Bajas.Core.BajasHelper();
+                        bh.Command = cmd;
+                        Bajas.Core.Bajas baja = new Bajas.Core.Bajas();
+                        baja.idtrabajador = datosNomina[0].idtrabajador;
+                        baja.periodoinicio = fechainicio.Date;
+                        baja.periodofin = fechafin.Date;
+
+                        cnx.Open();
+                        existe = (int)bh.existeBaja(baja);
+                        cnx.Close();
+
+                        if (existe != 0)
+                        {
+                            cnx.Open();
+                            diasBaja = (int)bh.diasProporcionales(baja);
+                            //bh.bajaEmpleado(baja);
+                            cnx.Close();
+                            formula = formula.Replace("[" + variables[i] + "]", diasBaja.ToString());
+                        }
+                        else
+                            formula = formula.Replace("[" + variables[i] + "]", datosNomina[0].dias.ToString());
                         break;
 
                     case "DiasIncapacidad":
-                        object diasIncapacidad;
-                        Incapacidad.Core.IncapacidadHelper ih = new Incapacidad.Core.IncapacidadHelper();
+                        object existeIncidencia = null, diasIncapacidad = 0;
+                        Incidencias.Core.IncidenciasHelper ih = new Incidencias.Core.IncidenciasHelper();
                         ih.Command = cmd;
-                        Incapacidad.Core.Incapacidades inc = new Incapacidad.Core.Incapacidades();
+
+                        Incidencias.Core.Incidencias inc = new Incidencias.Core.Incidencias();
                         inc.idtrabajador = datosNomina[0].idtrabajador;
-                        inc.fechainicio = fechainicio;
-                        inc.fechafin = fechafin;
+                        inc.periodoinicio = fechainicio;
+                        inc.periodofin = fechafin;
 
                         cnx.Open();
-                        diasIncapacidad = ih.existeIncapacidad(inc);
+                        existeIncidencia = ih.existeIncidencia(inc);
                         cnx.Close();
 
-                        formula = formula.Replace("[" + variables[i] + "]", diasIncapacidad.ToString());
+                        if ((int)existeIncidencia != 0)
+                        {
+                            cnx.Open();
+                            diasIncapacidad = (int)ih.diasIncidencia(inc);
+                            cnx.Close();
+                            formula = formula.Replace("[" + variables[i] + "]", diasIncapacidad.ToString());
+                        }
+                        else
+                            formula = formula.Replace("[" + variables[i] + "]", diasIncapacidad.ToString());
                         break;
 
                     case "ISR":
@@ -289,6 +320,35 @@ namespace Nominas
                         cnx.Dispose();
 
                         formula = formula.Replace("[" + variables[i] + "]", cantidad.ToString());
+                        break;
+                    case "PeriodoInfonavit":
+                        
+                        Infonavit.Core.InfonavitHelper iph = new Infonavit.Core.InfonavitHelper();
+                        iph.Command = cmd;
+
+                        Infonavit.Core.Infonavit infP = new Infonavit.Core.Infonavit();
+                        infP.idtrabajador = datosNomina[0].idtrabajador;
+                        List<Infonavit.Core.Infonavit> lstPeriodoInfonavit = new List<Infonavit.Core.Infonavit>();
+                        
+                        cnx.Open();
+                        lstPeriodoInfonavit = iph.obtenerDiasInfonavit(infP);
+                        cnx.Close();
+
+                        if (lstPeriodoInfonavit.Count == 1)
+                            if (lstPeriodoInfonavit[0].fecha >= fechainicio && lstPeriodoInfonavit[0].fecha <= fechafin)
+                                formula = formula.Replace("[" + variables[i] + "]", lstPeriodoInfonavit[0].dias.ToString());
+                            else
+                                formula = formula.Replace("[" + variables[i] + "]", datosNomina[0].dias.ToString());
+                        else if (lstPeriodoInfonavit.Count == 2)
+                            if (lstPeriodoInfonavit[0].fecha >= fechainicio && lstPeriodoInfonavit[0].fecha <= fechafin)
+                            {
+                                _formula = formula;
+                                formula = formula.Replace("[" + variables[i] + "]", lstPeriodoInfonavit[0].dias.ToString());
+                                _formula = _formula.Replace("[" + variables[i] + "]", lstPeriodoInfonavit[1].dias.ToString());
+                                formula = formula + "+" + _formula;
+                            }
+                            else
+                                formula = formula.Replace("[" + variables[i] + "]", datosNomina[0].dias.ToString());
                         break;
                 }
             }

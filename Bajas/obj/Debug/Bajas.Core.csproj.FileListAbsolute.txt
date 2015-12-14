@@ -2,5 +2,6 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Bajas\bin\Debug\Bajas.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Bajas\bin\Debug\Bajas.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Bajas\bin\Debug\Data.Obj.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Bajas\bin\Debug\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Bajas\obj\Debug\Bajas.Core.csprojResolveAssemblyReference.cache
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Bajas\obj\Debug\Bajas.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Bajas\obj\Debug\Bajas.pdb

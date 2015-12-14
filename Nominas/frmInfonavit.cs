@@ -23,6 +23,7 @@ namespace Nominas
         public int _idEmpleado;
         public string _nombreEmpleado;
         public int _tipoOperacion;
+        public int _modificar;
         #endregion
 
         #region VARIABLES GLOBALES
@@ -30,7 +31,8 @@ namespace Nominas
         SqlCommand cmd;
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
         Infonavit.Core.InfonavitHelper ih;
-        int Descuento;
+        Empleados.Core.EmpleadosHelper eh;
+        int Descuento, Periodo, IdInfonavit;
         #endregion
 
         #region DELEGADOS
@@ -42,12 +44,16 @@ namespace Nominas
         {
             if (_tipoOperacion == GLOBALES.CONSULTAR || _tipoOperacion == GLOBALES.MODIFICAR)
             {
+                
                 cnx = new SqlConnection();
                 cnx.ConnectionString = cdn;
                 cmd = new SqlCommand();
                 cmd.Connection = cnx;
                 ih = new Infonavit.Core.InfonavitHelper();
                 ih.Command = cmd;
+
+                eh = new Empleados.Core.EmpleadosHelper();
+                eh.Command = cmd;
 
                 List<Infonavit.Core.Infonavit> lstInfonavit;
 
@@ -59,14 +65,21 @@ namespace Nominas
                 {
                     cnx.Open();
                     lstInfonavit = ih.obtenerInfonavit(i);
+                    Periodo = (int)eh.obtenerDiasPeriodo(_idEmpleado);
                     cnx.Close();
                     cnx.Dispose();
 
                     for (int j = 0; j < lstInfonavit.Count; j++)
                     {
+                        IdInfonavit = int.Parse(lstInfonavit[j].idinfonavit.ToString());
                         txtNumeroCredito.Text = lstInfonavit[j].credito;
                         txtValor.Text = lstInfonavit[j].valordescuento.ToString();
                         chkActivo.Checked = lstInfonavit[j].activo;
+                        txtDescripcion.Text = lstInfonavit[j].descripcion;
+                        dtpFechaAplicacion.Value = lstInfonavit[j].fecha;
+                        dtpInicioPeriodo.Value = lstInfonavit[j].inicio.AddDays(1);
+                        dtpFinPeriodo.Value = lstInfonavit[j].fin;
+                        
                         switch (lstInfonavit[j].descuento)
                         {
                                 //Porcentaje
@@ -93,6 +106,7 @@ namespace Nominas
                     GLOBALES.INHABILITAR(this, typeof(TextBox));
                     GLOBALES.INHABILITAR(this, typeof(RadioButton));
                     GLOBALES.INHABILITAR(this, typeof(CheckBox));
+                    GLOBALES.INHABILITAR(this, typeof(DateTimePicker));
                     toolGuardar.Enabled = false;
                     toolBuscar.Enabled = false;
                 }
@@ -121,6 +135,18 @@ namespace Nominas
                 return;
             }
 
+            if (dtpFechaAplicacion.Value.Date > dtpFinPeriodo.Value.Date)
+            {
+                MessageBox.Show("La fecha de aplicacion es mayor al periodo.", "Error");
+                return;
+            }
+
+            if (dtpFechaAplicacion.Value.Date < dtpInicioPeriodo.Value.Date)
+            {
+                MessageBox.Show("La fecha de aplicacion es menor al periodo.", "Error");
+                return;
+            }
+
             cnx = new SqlConnection();
             cnx.ConnectionString = cdn;
             cmd = new SqlCommand();
@@ -129,11 +155,17 @@ namespace Nominas
             ih.Command = cmd;
 
             Infonavit.Core.Infonavit i = new Infonavit.Core.Infonavit();
+            i.idtrabajador = _idEmpleado;
             i.idempresa = GLOBALES.IDEMPRESA;
             i.credito = txtNumeroCredito.Text;
             i.descuento = Descuento;
             i.valordescuento = double.Parse(txtValor.Text);
             i.activo = chkActivo.Checked;
+            i.descripcion = txtDescripcion.Text;
+            i.dias = (int)(dtpFinPeriodo.Value.Date - dtpFechaAplicacion.Value.Date).TotalDays + 1;
+            i.fecha = dtpFechaAplicacion.Value.Date;
+            i.inicio = dtpInicioPeriodo.Value.Date;
+            i.fin = dtpFinPeriodo.Value.Date;
             
 
             switch (_tipoOperacion)
@@ -142,7 +174,6 @@ namespace Nominas
                     try
                     {
                         cnx.Open();
-                        i.idtrabajador = _idEmpleado;
                         ih.insertaInfonavit(i);
                         cnx.Close();
                         cnx.Dispose();
@@ -156,9 +187,17 @@ namespace Nominas
                 case 2:
                     try
                     {
-                        i.idtrabajador = _idEmpleado;
                         cnx.Open();
-                        ih.actualizaInfonavit(i);
+                        if (_modificar == 0)
+                        {
+                            i.idinfonavit = IdInfonavit;
+                            ih.actualizaInfonavit(i);
+                        }
+                        else if (_modificar == 1)
+                        {
+                            ih.insertaInfonavit(i);
+                            ih.actualizaEstatusInfonavit(IdInfonavit);
+                        }
                         cnx.Close();
                         cnx.Dispose();
                     }
@@ -187,6 +226,28 @@ namespace Nominas
         {
             _idEmpleado = id;
             lblEmpleado.Text = nombre;
+
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            eh = new Empleados.Core.EmpleadosHelper();
+            eh.Command = cmd;
+
+            try
+            {
+                cnx.Open();
+                Periodo = (int)eh.obtenerDiasPeriodo(_idEmpleado);
+                cnx.Close();
+                cnx.Dispose();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error al obtener los dias del periodo. \r\n \r\n La ventana se cerrará. \r\n \r\n" + error.Message, "Error");
+                cnx.Dispose();
+                this.Dispose();
+            }
+            periodo();
         }
 
         private void toolCerrar_Click(object sender, EventArgs e)
@@ -207,6 +268,36 @@ namespace Nominas
         private void rbtnPesos_CheckedChanged(object sender, EventArgs e)
         {
             Descuento = GLOBALES.dPESOS;
+        }
+
+        private void dtpInicioPeriodo_ValueChanged(object sender, EventArgs e)
+        {
+            periodo();
+        }
+
+        private void periodo()
+        {
+            if (Periodo == 7)
+            {
+                DateTime dt = dtpInicioPeriodo.Value.Date;
+                while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
+                dtpInicioPeriodo.Value = dt;
+                dtpFinPeriodo.Value = dt.AddDays(6);
+            }
+            else
+            {
+                if (dtpInicioPeriodo.Value.Day <= 15)
+                {
+                    dtpInicioPeriodo.Value = new DateTime(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month, 1);
+                    dtpFinPeriodo.Value = new DateTime(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month, 15);
+                }
+                else
+                {
+                    dtpInicioPeriodo.Value = new DateTime(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month, 16);
+                    dtpFinPeriodo.Value = new DateTime(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month, DateTime.DaysInMonth(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month));
+                }
+
+            }
         }
     }
 }

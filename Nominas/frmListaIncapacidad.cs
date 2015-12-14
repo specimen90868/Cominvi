@@ -24,9 +24,9 @@ namespace Nominas
         SqlCommand cmd;
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
         List<Empleados.Core.Empleados> lstEmpleados;
-        List<Incapacidad.Core.Incapacidades> lstIncapacidades;
+        List<Incidencias.Core.Incidencias> lstIncidencias;
         Empleados.Core.EmpleadosHelper eh;
-        Incapacidad.Core.IncapacidadHelper ih;
+        Incidencias.Core.IncidenciasHelper ih;
         #endregion
 
         private void ListaIncapacidad()
@@ -35,9 +35,12 @@ namespace Nominas
             cmd = new SqlCommand();
             cmd.Connection = cnx;
             eh = new Empleados.Core.EmpleadosHelper();
-            ih = new Incapacidad.Core.IncapacidadHelper();
+            ih = new Incidencias.Core.IncidenciasHelper();
             eh.Command = cmd;
             ih.Command = cmd;
+
+            Incidencias.Core.Incidencias incidencia = new Incidencias.Core.Incidencias();
+            incidencia.idempresa = GLOBALES.IDEMPRESA;
 
             Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
             empleado.idempresa = GLOBALES.IDEMPRESA;
@@ -47,7 +50,7 @@ namespace Nominas
             {
                 cnx.Open();
                 lstEmpleados = eh.obtenerEmpleados(empleado);
-                lstIncapacidades = ih.obtenerIncapacidades(GLOBALES.IDEMPRESA);
+                lstIncidencias = ih.obtenerIndicencias(incidencia);
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -57,22 +60,20 @@ namespace Nominas
             }
 
             var datos = from e in lstEmpleados
-                        join i in lstIncapacidades on e.idtrabajador equals i.idtrabajador
-                        orderby e.nombrecompleto ascending
+                        join i in lstIncidencias on e.idtrabajador equals i.idtrabajador
+                        orderby e.nombrecompleto ascending 
                         select new
                         {
-                            Id = i.id,
                             IdTrabajador = e.idtrabajador,
                             NoEmpleado = e.noempleado,
                             Nombre = e.nombrecompleto,
-                            DiasIncapacidad = i.diasincapacidad,
-                            DiasTomados = i.diastomados,
-                            DiasRestantes = i.diasrestantes,
-                            FechaInicio = i.fechainicio,
-                            FechaFin = i.fechafin
+                            Certificado = i.certificado,
+                            FechaInicio = i.periodoinicio,
+                            FechaFin = i.periodofin
                         };
+
             dgvIncapacidad.DataSource = datos.ToList();
-            dgvIncapacidad.Columns["Id"].Visible = false;
+
             dgvIncapacidad.Columns["IdTrabajador"].Visible = false;
 
             for (int i = 0; i < dgvIncapacidad.Columns.Count; i++)
@@ -117,7 +118,7 @@ namespace Nominas
             i.Show();
         }
 
-        void i_OnIncapacidad(string noempleado, string nombre, string paterno, string materno, int dias, DateTime fechainicio, DateTime inicio, DateTime fin)
+        void i_OnIncapacidad()
         {
             ListaIncapacidad();
         }
@@ -136,39 +137,33 @@ namespace Nominas
                 if (string.IsNullOrEmpty(txtBuscar.Text) || string.IsNullOrWhiteSpace(txtBuscar.Text))
                 {
                     var datos = from emp in lstEmpleados
-                                join i in lstIncapacidades on emp.idtrabajador equals i.idtrabajador
+                                join i in lstIncidencias on emp.idtrabajador equals i.idtrabajador
                                 orderby emp.nombrecompleto ascending
                                 select new
                                 {
-                                    Id = i.id,
                                     IdTrabajador = emp.idtrabajador,
                                     NoEmpleado = emp.noempleado,
                                     Nombre = emp.nombrecompleto,
-                                    DiasIncapacidad = i.diasincapacidad,
-                                    DiasTomados = i.diastomados,
-                                    DiasRestantes = i.diasrestantes,
-                                    FechaInicio = i.fechainicio,
-                                    FechaFin = i.fechafin
+                                    Certificado = i.certificado,
+                                    FechaInicio = i.periodoinicio,
+                                    FechaFin = i.periodofin
                                 };
                     dgvIncapacidad.DataSource = datos.ToList();
                 }
                 else
                 {
                     var busqueda = from be in lstEmpleados
-                                   join bi in lstIncapacidades on be.idtrabajador equals bi.idtrabajador
+                                   join bi in lstIncidencias on be.idtrabajador equals bi.idtrabajador
                                    where be.nombrecompleto.Contains(txtBuscar.Text)
                                    orderby be.nombrecompleto ascending
                                    select new
                                    {
-                                       Id = bi.id,
                                        IdTrabajador = be.idtrabajador,
                                        NoEmpleado = be.noempleado,
                                        Nombre = be.nombrecompleto,
-                                       DiasIncapacidad = bi.diasincapacidad,
-                                       DiasTomados = bi.diastomados,
-                                       DiasRestantes = bi.diasrestantes,
-                                       FechaInicio = bi.fechainicio,
-                                       FechaFin = bi.fechafin
+                                       Certificado = bi.certificado,
+                                       FechaInicio = bi.periodoinicio,
+                                       FechaFin = bi.periodofin
                                    };
                     dgvIncapacidad.DataSource = busqueda.ToList();
                 }
@@ -207,17 +202,18 @@ namespace Nominas
             cmd = new SqlCommand();
             cmd.Connection = cnx;
 
-            ih = new Incapacidad.Core.IncapacidadHelper();
+            ih = new Incidencias.Core.IncidenciasHelper();
             ih.Command = cmd;
 
             fila = dgvIncapacidad.CurrentCell.RowIndex;
-            Incapacidad.Core.Incapacidades incapacidad = new Incapacidad.Core.Incapacidades();
-            incapacidad.id = int.Parse(dgvIncapacidad.Rows[fila].Cells[0].Value.ToString());
+            Incidencias.Core.Incidencias incidencia = new Incidencias.Core.Incidencias();
+            incidencia.idtrabajador = int.Parse(dgvIncapacidad.Rows[fila].Cells[0].Value.ToString());
+            incidencia.certificado = dgvIncapacidad.Rows[fila].Cells[3].Value.ToString();
 
             try
             {
                 cnx.Open();
-                ih.eliminaIncapadidad(incapacidad);
+                ih.eliminaIncidencia(incidencia);
                 cnx.Close();
                 cnx.Dispose();
             }

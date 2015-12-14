@@ -409,6 +409,12 @@
     <Compile Include="frmListaUsuarios.Designer.cs">
       <DependentUpon>frmListaUsuarios.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmListaVacaciones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaVacaciones.Designer.cs">
+      <DependentUpon>frmListaVacaciones.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmLogIn.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -710,6 +716,9 @@
     <EmbeddedResource Include="frmListaUsuarios.resx">
       <DependentUpon>frmListaUsuarios.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmListaVacaciones.resx">
+      <DependentUpon>frmListaVacaciones.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmLogIn.resx">
       <DependentUpon>frmLogIn.cs</DependentUpon>
     </EmbeddedResource>
@@ -901,6 +910,10 @@
     <ProjectReference Include="..\Incapacidad.Core\Incapacidad.Core.csproj">
       <Project>{3e2fdc56-09c7-4b0c-8dd2-f5251ac2aadb}</Project>
       <Name>Incapacidad.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Incidencias.Core\Incidencias.Core.csproj">
+      <Project>{84522361-3292-4887-be8d-7aae8d9bf0e0}</Project>
+      <Name>Incidencias.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Infonavit.Core\Infonavit.Core.csproj">
       <Project>{0e040bf1-28a8-475e-a78a-02925549acd7}</Project>

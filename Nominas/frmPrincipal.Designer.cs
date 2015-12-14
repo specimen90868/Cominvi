@@ -48,6 +48,7 @@
             this.mnuExpedientes = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuInfonavit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolIncapacidades = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuSeguroSocial = new System.Windows.Forms.ToolStripMenuItem();
             this.toolSua = new System.Windows.Forms.ToolStripMenuItem();
             this.toolAltas = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,6 +69,8 @@
             this.toolHistorialIncapacidad = new System.Windows.Forms.ToolStripMenuItem();
             this.toolCargaIncapacidad = new System.Windows.Forms.ToolStripMenuItem();
             this.toolVacaciones = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolCargaVacaciones = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolHistorialVacaciones = new System.Windows.Forms.ToolStripMenuItem();
             this.toolAguinaldo = new System.Windows.Forms.ToolStripMenuItem();
             this.toolConceptoEmpleado = new System.Windows.Forms.ToolStripMenuItem();
             this.toolProgramacion = new System.Windows.Forms.ToolStripMenuItem();
@@ -184,7 +187,8 @@
             this.mnuEmpleados,
             this.mnuExpedientes,
             this.toolStripSeparator3,
-            this.mnuInfonavit});
+            this.mnuInfonavit,
+            this.toolIncapacidades});
             this.mnuRecursosHumanos.Name = "mnuRecursosHumanos";
             this.mnuRecursosHumanos.Size = new System.Drawing.Size(121, 20);
             this.mnuRecursosHumanos.Text = "Recursos Humanos";
@@ -199,7 +203,7 @@
             this.toolStripSeparator5,
             this.toolProcesoSalarial});
             this.mnuEmpleados.Name = "mnuEmpleados";
-            this.mnuEmpleados.Size = new System.Drawing.Size(136, 22);
+            this.mnuEmpleados.Size = new System.Drawing.Size(149, 22);
             this.mnuEmpleados.Text = "Empleados";
             // 
             // mnuEmpleadoNomina
@@ -243,21 +247,28 @@
             // mnuExpedientes
             // 
             this.mnuExpedientes.Name = "mnuExpedientes";
-            this.mnuExpedientes.Size = new System.Drawing.Size(136, 22);
+            this.mnuExpedientes.Size = new System.Drawing.Size(149, 22);
             this.mnuExpedientes.Text = "Expedientes";
             this.mnuExpedientes.Click += new System.EventHandler(this.mnuExpedientes_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(133, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(146, 6);
             // 
             // mnuInfonavit
             // 
             this.mnuInfonavit.Name = "mnuInfonavit";
-            this.mnuInfonavit.Size = new System.Drawing.Size(136, 22);
+            this.mnuInfonavit.Size = new System.Drawing.Size(149, 22);
             this.mnuInfonavit.Text = "Infonavit";
             this.mnuInfonavit.Click += new System.EventHandler(this.mnuInfonavit_Click);
+            // 
+            // toolIncapacidades
+            // 
+            this.toolIncapacidades.Name = "toolIncapacidades";
+            this.toolIncapacidades.Size = new System.Drawing.Size(149, 22);
+            this.toolIncapacidades.Text = "Incapacidades";
+            this.toolIncapacidades.Click += new System.EventHandler(this.toolIncapacidades_Click);
             // 
             // mnuSeguroSocial
             // 
@@ -424,16 +435,34 @@
             // 
             // toolVacaciones
             // 
+            this.toolVacaciones.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolCargaVacaciones,
+            this.toolHistorialVacaciones});
             this.toolVacaciones.Name = "toolVacaciones";
             this.toolVacaciones.Size = new System.Drawing.Size(218, 22);
             this.toolVacaciones.Text = "Vacaciones";
             this.toolVacaciones.Click += new System.EventHandler(this.toolVacaciones_Click);
+            // 
+            // toolCargaVacaciones
+            // 
+            this.toolCargaVacaciones.Name = "toolCargaVacaciones";
+            this.toolCargaVacaciones.Size = new System.Drawing.Size(196, 22);
+            this.toolCargaVacaciones.Text = "Cargar Vacaciones";
+            this.toolCargaVacaciones.Click += new System.EventHandler(this.toolCargaVacaciones_Click);
+            // 
+            // toolHistorialVacaciones
+            // 
+            this.toolHistorialVacaciones.Name = "toolHistorialVacaciones";
+            this.toolHistorialVacaciones.Size = new System.Drawing.Size(196, 22);
+            this.toolHistorialVacaciones.Text = "Historial de Vacaciones";
+            this.toolHistorialVacaciones.Click += new System.EventHandler(this.toolHistorialVacaciones_Click);
             // 
             // toolAguinaldo
             // 
             this.toolAguinaldo.Name = "toolAguinaldo";
             this.toolAguinaldo.Size = new System.Drawing.Size(218, 22);
             this.toolAguinaldo.Text = "Aguinaldo";
+            this.toolAguinaldo.Click += new System.EventHandler(this.toolAguinaldo_Click);
             // 
             // toolConceptoEmpleado
             // 
@@ -760,6 +789,9 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem toolReportes;
         private System.Windows.Forms.ToolStripMenuItem toolAguinaldo;
+        private System.Windows.Forms.ToolStripMenuItem toolIncapacidades;
+        private System.Windows.Forms.ToolStripMenuItem toolCargaVacaciones;
+        private System.Windows.Forms.ToolStripMenuItem toolHistorialVacaciones;
     }
 }
 

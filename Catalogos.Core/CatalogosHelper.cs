@@ -47,5 +47,22 @@ namespace Catalogos.Core
             }
             return lstCatalogo;
         }
+
+        public List<Catalogo> obtenerControlIncapacidad()
+        {
+            DataTable dtCatalogo = new DataTable();
+            List<Catalogo> lstCatalogo = new List<Catalogo>();
+            Command.CommandText = "select id, descripcion from catalogo where grupo in (15,16)";
+            Command.Parameters.Clear();
+            dtCatalogo = SelectData(Command);
+            for (int i = 0; i < dtCatalogo.Rows.Count; i++)
+            {
+                Catalogo cat = new Catalogo();
+                cat.id = int.Parse(dtCatalogo.Rows[i]["id"].ToString());
+                cat.descripcion = dtCatalogo.Rows[i]["descripcion"].ToString();
+                lstCatalogo.Add(cat);
+            }
+            return lstCatalogo;
+        }
     }
 }

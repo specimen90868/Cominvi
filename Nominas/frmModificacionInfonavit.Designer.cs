@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmModificacionInfonavit));
             this.rbtnTipoDescuento = new System.Windows.Forms.RadioButton();
-            this.rbtnValorDescuento = new System.Windows.Forms.RadioButton();
             this.rbtnCredito = new System.Windows.Forms.RadioButton();
             this.Label5 = new System.Windows.Forms.Label();
             this.dtpFecha = new System.Windows.Forms.DateTimePicker();
@@ -38,7 +37,6 @@
             this.rbtnFijoPesos = new System.Windows.Forms.RadioButton();
             this.rbtnVSM = new System.Windows.Forms.RadioButton();
             this.rbtnPorcentaje = new System.Windows.Forms.RadioButton();
-            this.grpValorDescuento = new System.Windows.Forms.GroupBox();
             this.txtValorDescuento = new System.Windows.Forms.TextBox();
             this.Label4 = new System.Windows.Forms.Label();
             this.grpCredito = new System.Windows.Forms.GroupBox();
@@ -52,8 +50,12 @@
             this.toolCerrar = new System.Windows.Forms.ToolStripButton();
             this.lblEmpleado = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
+            this.dtpFinPeriodo = new System.Windows.Forms.DateTimePicker();
+            this.dtpInicioPeriodo = new System.Windows.Forms.DateTimePicker();
+            this.dtpFechaAplicacion = new System.Windows.Forms.DateTimePicker();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.grpTipoDescuento.SuspendLayout();
-            this.grpValorDescuento.SuspendLayout();
             this.grpCredito.SuspendLayout();
             this.toolTitulo.SuspendLayout();
             this.toolAcciones.SuspendLayout();
@@ -62,7 +64,7 @@
             // rbtnTipoDescuento
             // 
             this.rbtnTipoDescuento.AutoSize = true;
-            this.rbtnTipoDescuento.Location = new System.Drawing.Point(21, 350);
+            this.rbtnTipoDescuento.Location = new System.Drawing.Point(23, 255);
             this.rbtnTipoDescuento.Name = "rbtnTipoDescuento";
             this.rbtnTipoDescuento.Size = new System.Drawing.Size(114, 17);
             this.rbtnTipoDescuento.TabIndex = 30;
@@ -70,18 +72,6 @@
             this.rbtnTipoDescuento.Text = "Tipo de descuento";
             this.rbtnTipoDescuento.UseVisualStyleBackColor = true;
             this.rbtnTipoDescuento.CheckedChanged += new System.EventHandler(this.rbtnTipoDescuento_CheckedChanged);
-            // 
-            // rbtnValorDescuento
-            // 
-            this.rbtnValorDescuento.AutoSize = true;
-            this.rbtnValorDescuento.Location = new System.Drawing.Point(21, 255);
-            this.rbtnValorDescuento.Name = "rbtnValorDescuento";
-            this.rbtnValorDescuento.Size = new System.Drawing.Size(117, 17);
-            this.rbtnValorDescuento.TabIndex = 29;
-            this.rbtnValorDescuento.TabStop = true;
-            this.rbtnValorDescuento.Text = "Valor de descuento";
-            this.rbtnValorDescuento.UseVisualStyleBackColor = true;
-            this.rbtnValorDescuento.CheckedChanged += new System.EventHandler(this.rbtnValorDescuento_CheckedChanged);
             // 
             // rbtnCredito
             // 
@@ -114,12 +104,14 @@
             // 
             // grpTipoDescuento
             // 
+            this.grpTipoDescuento.Controls.Add(this.txtValorDescuento);
+            this.grpTipoDescuento.Controls.Add(this.Label4);
             this.grpTipoDescuento.Controls.Add(this.rbtnFijoPesos);
             this.grpTipoDescuento.Controls.Add(this.rbtnVSM);
             this.grpTipoDescuento.Controls.Add(this.rbtnPorcentaje);
-            this.grpTipoDescuento.Location = new System.Drawing.Point(21, 373);
+            this.grpTipoDescuento.Location = new System.Drawing.Point(23, 278);
             this.grpTipoDescuento.Name = "grpTipoDescuento";
-            this.grpTipoDescuento.Size = new System.Drawing.Size(275, 53);
+            this.grpTipoDescuento.Size = new System.Drawing.Size(275, 92);
             this.grpTipoDescuento.TabIndex = 25;
             this.grpTipoDescuento.TabStop = false;
             this.grpTipoDescuento.Text = "Tipo de descuento";
@@ -160,20 +152,9 @@
             this.rbtnPorcentaje.UseVisualStyleBackColor = true;
             this.rbtnPorcentaje.CheckedChanged += new System.EventHandler(this.rbtnPorcentaje_CheckedChanged);
             // 
-            // grpValorDescuento
-            // 
-            this.grpValorDescuento.Controls.Add(this.txtValorDescuento);
-            this.grpValorDescuento.Controls.Add(this.Label4);
-            this.grpValorDescuento.Location = new System.Drawing.Point(21, 278);
-            this.grpValorDescuento.Name = "grpValorDescuento";
-            this.grpValorDescuento.Size = new System.Drawing.Size(275, 66);
-            this.grpValorDescuento.TabIndex = 24;
-            this.grpValorDescuento.TabStop = false;
-            this.grpValorDescuento.Text = "Valor de descuento";
-            // 
             // txtValorDescuento
             // 
-            this.txtValorDescuento.Location = new System.Drawing.Point(114, 29);
+            this.txtValorDescuento.Location = new System.Drawing.Point(117, 54);
             this.txtValorDescuento.Name = "txtValorDescuento";
             this.txtValorDescuento.Size = new System.Drawing.Size(68, 20);
             this.txtValorDescuento.TabIndex = 1;
@@ -181,7 +162,7 @@
             // Label4
             // 
             this.Label4.AutoSize = true;
-            this.Label4.Location = new System.Drawing.Point(11, 32);
+            this.Label4.Location = new System.Drawing.Point(14, 57);
             this.Label4.Name = "Label4";
             this.Label4.Size = new System.Drawing.Size(102, 13);
             this.Label4.TabIndex = 0;
@@ -290,22 +271,65 @@
             this.label23.TabIndex = 252;
             this.label23.Text = "Empleado:";
             // 
+            // dtpFinPeriodo
+            // 
+            this.dtpFinPeriodo.Enabled = false;
+            this.dtpFinPeriodo.Location = new System.Drawing.Point(80, 586);
+            this.dtpFinPeriodo.Name = "dtpFinPeriodo";
+            this.dtpFinPeriodo.Size = new System.Drawing.Size(200, 20);
+            this.dtpFinPeriodo.TabIndex = 278;
+            // 
+            // dtpInicioPeriodo
+            // 
+            this.dtpInicioPeriodo.Location = new System.Drawing.Point(80, 560);
+            this.dtpInicioPeriodo.Name = "dtpInicioPeriodo";
+            this.dtpInicioPeriodo.Size = new System.Drawing.Size(200, 20);
+            this.dtpInicioPeriodo.TabIndex = 277;
+            // 
+            // dtpFechaAplicacion
+            // 
+            this.dtpFechaAplicacion.Location = new System.Drawing.Point(80, 534);
+            this.dtpFechaAplicacion.Name = "dtpFechaAplicacion";
+            this.dtpFechaAplicacion.Size = new System.Drawing.Size(199, 20);
+            this.dtpFechaAplicacion.TabIndex = 276;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(20, 564);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(59, 13);
+            this.label2.TabIndex = 275;
+            this.label2.Text = "Aplicación:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(19, 537);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(46, 13);
+            this.label6.TabIndex = 274;
+            this.label6.Text = "Periodo:";
+            // 
             // frmModificacionInfonavit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(494, 641);
+            this.Controls.Add(this.dtpFinPeriodo);
+            this.Controls.Add(this.dtpInicioPeriodo);
+            this.Controls.Add(this.dtpFechaAplicacion);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.lblEmpleado);
             this.Controls.Add(this.label23);
             this.Controls.Add(this.toolAcciones);
             this.Controls.Add(this.toolTitulo);
             this.Controls.Add(this.rbtnTipoDescuento);
-            this.Controls.Add(this.rbtnValorDescuento);
             this.Controls.Add(this.rbtnCredito);
             this.Controls.Add(this.Label5);
             this.Controls.Add(this.dtpFecha);
             this.Controls.Add(this.grpTipoDescuento);
-            this.Controls.Add(this.grpValorDescuento);
             this.Controls.Add(this.grpCredito);
             this.Controls.Add(this.Label1);
             this.Name = "frmModificacionInfonavit";
@@ -313,8 +337,6 @@
             this.Load += new System.EventHandler(this.frmModificacionInfonavit_Load);
             this.grpTipoDescuento.ResumeLayout(false);
             this.grpTipoDescuento.PerformLayout();
-            this.grpValorDescuento.ResumeLayout(false);
-            this.grpValorDescuento.PerformLayout();
             this.grpCredito.ResumeLayout(false);
             this.grpCredito.PerformLayout();
             this.toolTitulo.ResumeLayout(false);
@@ -329,7 +351,6 @@
         #endregion
 
         internal System.Windows.Forms.RadioButton rbtnTipoDescuento;
-        internal System.Windows.Forms.RadioButton rbtnValorDescuento;
         internal System.Windows.Forms.RadioButton rbtnCredito;
         internal System.Windows.Forms.Label Label5;
         internal System.Windows.Forms.DateTimePicker dtpFecha;
@@ -337,7 +358,6 @@
         internal System.Windows.Forms.RadioButton rbtnFijoPesos;
         internal System.Windows.Forms.RadioButton rbtnVSM;
         internal System.Windows.Forms.RadioButton rbtnPorcentaje;
-        internal System.Windows.Forms.GroupBox grpValorDescuento;
         internal System.Windows.Forms.TextBox txtValorDescuento;
         internal System.Windows.Forms.Label Label4;
         internal System.Windows.Forms.GroupBox grpCredito;
@@ -351,5 +371,10 @@
         private System.Windows.Forms.ToolStripButton toolCerrar;
         private System.Windows.Forms.Label lblEmpleado;
         private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.DateTimePicker dtpFinPeriodo;
+        private System.Windows.Forms.DateTimePicker dtpInicioPeriodo;
+        private System.Windows.Forms.DateTimePicker dtpFechaAplicacion;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label6;
     }
 }

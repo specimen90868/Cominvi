@@ -28,6 +28,18 @@ namespace Nominas
         Periodos.Core.PeriodosHelper ph;
         CalculoNomina.Core.NominaHelper nh;
         int noReporte;
+        string netocero, orden;
+        #endregion
+
+        #region DELEGADOS
+        public delegate void delOnReporte(string netocero, string orden);
+        public event delOnReporte OnReporte;
+        #endregion
+
+        #region VARIABLES PUBLICA
+        public DateTime _inicio;
+        public DateTime _fin;
+        public bool _ReportePreNomina;
         #endregion
 
         private void frmReportes_Load(object sender, EventArgs e)
@@ -59,7 +71,7 @@ namespace Nominas
 
             Periodos.Core.Periodos periodo = new Periodos.Core.Periodos();
             periodo.idempresa = GLOBALES.IDEMPRESA;
-            
+
             List<Departamento.Core.Depto> lstDeptosDe = new List<Departamento.Core.Depto>();
             List<Departamento.Core.Depto> lstDeptosHasta = new List<Departamento.Core.Depto>();
             List<Periodos.Core.Periodos> lstPeriodos = new List<Periodos.Core.Periodos>();
@@ -86,27 +98,48 @@ namespace Nominas
             cmbPeriodo.DataSource = lstPeriodos;
             cmbPeriodo.DisplayMember = "pago";
             cmbPeriodo.ValueMember = "idperiodo";
-        }
+
+            if (_ReportePreNomina)
+            {
+                dtpInicioPeriodo.Value = _inicio;
+                dtpFinPeriodo.Value = _fin;
+                cmbPeriodo.Enabled = false;
+                dtpInicioPeriodo.Enabled = false;
+                dtpFinPeriodo.Enabled = false;
+                cmbTipoReporte.Enabled = false;
+                cmbEmpleados.Enabled = false;
+                cmbDeptoInicial.Enabled = false;
+                cmbDeptoFinal.Enabled = false;
+                cmbEmpleadoInicial.Enabled = false;
+                cmbEmpleadoFinal.Enabled = false;
+            }
+        } 
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            if (noReporte != 6)
+            if (!_ReportePreNomina)
             {
-                frmVisorReportes vr = new frmVisorReportes();
-                vr._inicioPeriodo = dtpInicioPeriodo.Value;
-                vr._finPeriodo = dtpFinPeriodo.Value;
-                vr._tipoNomina = (cmbEmpleados.Text == "Alta" ? 0 : 1);
-                vr._noReporte = noReporte;
-                vr._deptoInicio = int.Parse(cmbDeptoInicial.SelectedValue.ToString());
-                vr._deptoFin = int.Parse(cmbDeptoFinal.SelectedValue.ToString());
-                vr._empleadoInicio = int.Parse(cmbEmpleadoInicial.SelectedValue.ToString());
-                vr._empleadoFin = int.Parse(cmbEmpleadoFinal.SelectedValue.ToString());
-                vr.Show();
+                if (noReporte != 6)
+                {
+                    frmVisorReportes vr = new frmVisorReportes();
+                    vr._inicioPeriodo = dtpInicioPeriodo.Value;
+                    vr._finPeriodo = dtpFinPeriodo.Value;
+                    vr._tipoNomina = (cmbEmpleados.Text == "Alta" ? 0 : 1);
+                    vr._noReporte = noReporte;
+                    vr._deptoInicio = int.Parse(cmbDeptoInicial.SelectedValue.ToString());
+                    vr._deptoFin = int.Parse(cmbDeptoFinal.SelectedValue.ToString());
+                    vr._empleadoInicio = int.Parse(cmbEmpleadoInicial.SelectedValue.ToString());
+                    vr._empleadoFin = int.Parse(cmbEmpleadoFinal.SelectedValue.ToString());
+                    vr.Show();
+                }
+                else
+                {
+                    excelTabular();
+                }
             }
-            else 
-            {
-                excelTabular();
-            }
+            else
+                if (OnReporte != null)
+                    OnReporte(netocero, orden);
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -368,6 +401,26 @@ namespace Nominas
             cmbEmpleadoFinal.DataSource = lstEmpleadoHasta;
             cmbEmpleadoFinal.DisplayMember = "noempleado";
             cmbEmpleadoFinal.ValueMember = "idtrabajador";
+        }
+
+        private void cmbNetoCero_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (cmbNetoCero.Text)
+            {
+                case "Si": netocero = " "; break;
+                case "No": netocero = " and pn.cantidad <> 0 "; break;
+            }
+        }
+
+        private void cmbOrden_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch(cmbOrden.Text)
+            {
+                case "No. de Empleado": orden = " t.noempleado "; break;
+                case "Departamento": orden = " d.descripcion "; break;
+                case "No. de Empleado, Departamento": orden = " t.noempleado, d.descripcion "; break;
+                case "Departamento, No. de Empleado": orden = " d.descripcion, t.noempleado "; break;
+            }
         }
     }
 }

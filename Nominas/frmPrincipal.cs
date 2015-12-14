@@ -476,10 +476,7 @@ namespace Nominas
 
         private void toolVacaciones_Click(object sender, EventArgs e)
         {
-            frmSeleccionTipoNomina stn = new frmSeleccionTipoNomina();
-            stn._ventana = "Aguinaldo";
-            stn.MdiParent = this;
-            stn.Show();
+            
         }
 
         private void toolProgramacion_Click(object sender, EventArgs e)
@@ -510,6 +507,34 @@ namespace Nominas
             frmReportes r = new frmReportes();
             r.MdiParent = this;
             r.Show();
+        }
+
+        private void toolIncapacidades_Click(object sender, EventArgs e)
+        {
+            frmListaIncapacidad i = new frmListaIncapacidad();
+            i.MdiParent = this;
+            i.Show();
+        }
+
+        private void toolAguinaldo_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolCargaVacaciones_Click(object sender, EventArgs e)
+        {
+            frmSeleccionTipoNomina stn = new frmSeleccionTipoNomina();
+            stn._ventana = "CargaVacaciones";
+            stn.MdiParent = this;
+            stn.Show();
+        }
+
+        private void toolHistorialVacaciones_Click(object sender, EventArgs e)
+        {
+            frmSeleccionTipoNomina stn = new frmSeleccionTipoNomina();
+            stn._ventana = "Vacaciones";
+            stn.MdiParent = this;
+            stn.Show();
         }
       
     }

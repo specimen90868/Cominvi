@@ -35,6 +35,9 @@
             this.Cancelar = new System.Windows.Forms.Button();
             this.btnAceptar = new System.Windows.Forms.Button();
             this.lblNombreEmpleado = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.dtpPeriodoInicio = new System.Windows.Forms.DateTimePicker();
+            this.dtpPeriodoFin = new System.Windows.Forms.DateTimePicker();
             this.SuspendLayout();
             // 
             // label1
@@ -74,7 +77,7 @@
             // 
             // Cancelar
             // 
-            this.Cancelar.Location = new System.Drawing.Point(250, 114);
+            this.Cancelar.Location = new System.Drawing.Point(253, 157);
             this.Cancelar.Name = "Cancelar";
             this.Cancelar.Size = new System.Drawing.Size(75, 23);
             this.Cancelar.TabIndex = 5;
@@ -84,7 +87,7 @@
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Location = new System.Drawing.Point(169, 114);
+            this.btnAceptar.Location = new System.Drawing.Point(172, 157);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(75, 23);
             this.btnAceptar.TabIndex = 3;
@@ -102,11 +105,39 @@
             this.lblNombreEmpleado.TabIndex = 6;
             this.lblNombreEmpleado.Text = "Nombre del empleado";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(73, 87);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(46, 13);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Periodo:";
+            // 
+            // dtpPeriodoInicio
+            // 
+            this.dtpPeriodoInicio.Location = new System.Drawing.Point(125, 87);
+            this.dtpPeriodoInicio.Name = "dtpPeriodoInicio";
+            this.dtpPeriodoInicio.Size = new System.Drawing.Size(200, 20);
+            this.dtpPeriodoInicio.TabIndex = 8;
+            this.dtpPeriodoInicio.ValueChanged += new System.EventHandler(this.dtpPeriodoInicio_ValueChanged);
+            // 
+            // dtpPeriodoFin
+            // 
+            this.dtpPeriodoFin.Enabled = false;
+            this.dtpPeriodoFin.Location = new System.Drawing.Point(125, 113);
+            this.dtpPeriodoFin.Name = "dtpPeriodoFin";
+            this.dtpPeriodoFin.Size = new System.Drawing.Size(200, 20);
+            this.dtpPeriodoFin.TabIndex = 9;
+            // 
             // frmBaja
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(373, 149);
+            this.ClientSize = new System.Drawing.Size(340, 192);
+            this.Controls.Add(this.dtpPeriodoFin);
+            this.Controls.Add(this.dtpPeriodoInicio);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.lblNombreEmpleado);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.Cancelar);
@@ -134,5 +165,8 @@
         private System.Windows.Forms.Button Cancelar;
         private System.Windows.Forms.Button btnAceptar;
         private System.Windows.Forms.Label lblNombreEmpleado;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.DateTimePicker dtpPeriodoInicio;
+        private System.Windows.Forms.DateTimePicker dtpPeriodoFin;
     }
 }

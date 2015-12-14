@@ -111,6 +111,7 @@ namespace Nominas
             }
 
             i.OnNuevoInfonavit += i_OnNuevoInfonavit;
+            i._modificar = 0;
             i._tipoOperacion = edicion;
             i.Show();
         }
@@ -144,14 +145,28 @@ namespace Nominas
 
         private void toolModificar_Click(object sender, EventArgs e)
         {
+            //int fila = 0;
+            //fila = dgvInfonavit.CurrentCell.RowIndex;
+            //frmModificacionInfonavit mi = new frmModificacionInfonavit();
+            //mi.OnInfonavit += mi_OnInfonavit;
+            //mi._idEmpleado = int.Parse(dgvInfonavit.Rows[fila].Cells[0].Value.ToString());
+            //mi._nombreEmpleado = dgvInfonavit.Rows[fila].Cells[2].Value.ToString();
+            //mi._activo = dgvInfonavit.Rows[fila].Cells[7].Value.ToString();
+            //mi.MdiParent = this.MdiParent;
+            //mi.Show();
+
             int fila = 0;
             fila = dgvInfonavit.CurrentCell.RowIndex;
-            frmModificacionInfonavit mi = new frmModificacionInfonavit();
-            mi.OnInfonavit += mi_OnInfonavit;
-            mi._idEmpleado = int.Parse(dgvInfonavit.Rows[fila].Cells[0].Value.ToString());
-            mi._nombreEmpleado = dgvInfonavit.Rows[fila].Cells[2].Value.ToString();
-            mi.MdiParent = this.MdiParent;
-            mi.Show();
+            frmInfonavit i = new frmInfonavit();
+            i._tipoOperacion = GLOBALES.MODIFICAR;
+            i.OnNuevoInfonavit += i_OnNuevoInfonavit;
+            i._idEmpleado = int.Parse(dgvInfonavit.Rows[fila].Cells[0].Value.ToString());
+            i._nombreEmpleado = dgvInfonavit.Rows[fila].Cells[2].Value.ToString();
+            i._modificar = 1;
+            i.MdiParent = this.MdiParent;
+            i.Show();
+
+            
         }
 
         void mi_OnInfonavit()
@@ -182,7 +197,8 @@ namespace Nominas
                                  Credito = i.credito,
                                  Descuento = i.descuento == GLOBALES.dPORCENTAJE ? "PORCENTAJE" :
                                  i.descuento == GLOBALES.dVSMDF ? "VSMDF" : "PESOS",
-                                 Valor = i.valordescuento
+                                 Valor = i.valordescuento,
+                                 Activo = i.activo ? "ACTIVO" : "NO ACTIVO"
                              };
                     dgvInfonavit.DataSource = em.ToList();
                 }
@@ -199,7 +215,8 @@ namespace Nominas
                                        Credito = i.credito,
                                        Descuento = i.descuento == GLOBALES.dPORCENTAJE ? "PORCENTAJE" :
                                        i.descuento == GLOBALES.dVSMDF ? "VSMDF" : "PESOS",
-                                       Valor = i.valordescuento
+                                       Valor = i.valordescuento,
+                                       Activo = i.activo ? "ACTIVO" : "NO ACTIVO"
                                    };
                     dgvInfonavit.DataSource = busqueda.ToList();
                 }

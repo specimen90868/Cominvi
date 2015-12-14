@@ -25,8 +25,10 @@ namespace Nominas
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
         List<ProgramacionConcepto.Core.ProgramacionConcepto> lstProgramacion;
         List<Empleados.Core.Empleados> lstEmpleados;
+        List<Conceptos.Core.Conceptos> lstConceptos;
         ProgramacionConcepto.Core.ProgramacionHelper pch;
         Empleados.Core.EmpleadosHelper eh;
+        Conceptos.Core.ConceptosHelper ch;
         #endregion
 
         private void frmListaProgramacionConceptos_Load(object sender, EventArgs e)
@@ -44,7 +46,10 @@ namespace Nominas
             eh.Command = cmd;
 
             pch = new ProgramacionConcepto.Core.ProgramacionHelper();
-            pch.Command = cmd;            
+            pch.Command = cmd;
+
+            ch = new Conceptos.Core.ConceptosHelper();
+            ch.Command = cmd;
 
             Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
             empleado.idempresa = GLOBALES.IDEMPRESA;
@@ -53,11 +58,16 @@ namespace Nominas
             ProgramacionConcepto.Core.ProgramacionConcepto programacion = new ProgramacionConcepto.Core.ProgramacionConcepto();
             programacion.idempresa = GLOBALES.IDEMPRESA;
 
+            Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
+            concepto.idempresa = GLOBALES.IDEMPRESA;
+            concepto.tipoconcepto = "D";
+
             try
             {
                 cnx.Open();
                 lstEmpleados = eh.obtenerEmpleados(empleado);
                 lstProgramacion = pch.obtenerProgramaciones(programacion);
+                lstConceptos = ch.obtenerConceptosDeducciones(concepto);
                 cnx.Close();
                 cnx.Dispose(); 
             }
@@ -68,11 +78,12 @@ namespace Nominas
 
             var program = from e in lstEmpleados
                           join p in lstProgramacion on e.idtrabajador equals p.idtrabajador
+                          join c in lstConceptos on p.idconcepto equals c.id
                           select new { 
                               IdTrabajador = e.idtrabajador,
                               NoEmpleado = e.noempleado,
                               Nombre = e.nombrecompleto,
-                              Concepto = p.concepto,
+                              Concepto = c.concepto,
                               Cantidad = p.cantidad,
                               FechaTermino = p.fechafin.ToShortDateString(),
                           };
@@ -141,12 +152,13 @@ namespace Nominas
                 {
                     var program = from em in lstEmpleados
                                   join p in lstProgramacion on em.idtrabajador equals p.idtrabajador
+                                  join c in lstConceptos on p.idconcepto equals c.id
                                   select new
                                   {
                                       IdTrabajador = em.idtrabajador,
                                       NoEmpleado = em.noempleado,
                                       Nombre = em.nombrecompleto,
-                                      Concepto = p.concepto,
+                                      Concepto = c.concepto,
                                       Cantidad = p.cantidad,
                                       FechaTermino = p.fechafin,
                                   };
@@ -156,13 +168,14 @@ namespace Nominas
                 {
                     var busqueda = from b in lstEmpleados
                                    join p in lstProgramacion on b.idtrabajador equals p.idtrabajador
+                                   join c in lstConceptos on p.idconcepto equals c.id
                                    where b.nombrecompleto.Contains(txtBuscar.Text.ToUpper())
                                    select new
                                    {
                                        IdTrabajador = b.idtrabajador,
                                        NoEmpleado = b.noempleado,
                                        Nombre = b.nombrecompleto,
-                                       Concepto = p.concepto,
+                                       Concepto = c.concepto,
                                        Cantidad = p.cantidad,
                                        FechaTermino = p.fechafin,
                                    };

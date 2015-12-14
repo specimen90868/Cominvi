@@ -51,6 +51,29 @@ namespace Infonavit.Core
                 inf.descuento = int.Parse(dtInfonavit.Rows[i]["descuento"].ToString());
                 inf.valordescuento = double.Parse(dtInfonavit.Rows[i]["valordescuento"].ToString());
                 inf.activo = bool.Parse(dtInfonavit.Rows[i]["activo"].ToString());
+                inf.descripcion = dtInfonavit.Rows[i]["descripcion"].ToString();
+                inf.fecha = DateTime.Parse(dtInfonavit.Rows[i]["fecha"].ToString());
+                inf.inicio = DateTime.Parse(dtInfonavit.Rows[i]["inicio"].ToString());
+                inf.fin = DateTime.Parse(dtInfonavit.Rows[i]["fin"].ToString());
+                lstInfonavit.Add(inf);
+            }
+            return lstInfonavit;
+        }
+
+        public List<Infonavit> obtenerDiasInfonavit(Infonavit e)
+        {
+            List<Infonavit> lstInfonavit = new List<Infonavit>();
+            DataTable dtInfonavit = new DataTable();
+            Command.CommandText = "select top 2 dias, fecha from Infonavit where idtrabajador = @idtrabajador order by fecha desc";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", e.idtrabajador);
+            dtInfonavit = SelectData(Command);
+            for (int i = 0; i < dtInfonavit.Rows.Count; i++)
+            {
+                Infonavit inf = new Infonavit();
+                inf.idinfonavit = int.Parse(dtInfonavit.Rows[i]["dias"].ToString());
+                inf.fecha = DateTime.Parse(dtInfonavit.Rows[i]["fecha"].ToString());
+                
                 lstInfonavit.Add(inf);
             }
             return lstInfonavit;
@@ -59,6 +82,15 @@ namespace Infonavit.Core
         public object obtenerValorInfonavit(Infonavit e)
         {
             Command.CommandText = "select valordescuento from infonavit where idtrabajador = @idtrabajador";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", e.idtrabajador);
+            object dato = Select(Command);
+            return dato;
+        }
+
+        public object obtenerIdInfonavit(Infonavit e)
+        {
+            Command.CommandText = "select idinfonavit from infonavit where idtrabajador = @idtrabajador and activo = 1";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", e.idtrabajador);
             object dato = Select(Command);
@@ -76,8 +108,8 @@ namespace Infonavit.Core
 
         public int insertaInfonavit(Infonavit i)
         {
-            Command.CommandText = "insert into infonavit (idempresa,idtrabajador,credito,descuento,valordescuento, activo) " +
-                "values (@idempresa,@idtrabajador,@credito,@descuento,@valordescuento, @activo)";
+            Command.CommandText = "insert into infonavit (idempresa,idtrabajador,credito,descuento,valordescuento, activo, descripcion, dias, fecha, inicio, fin) " +
+                "values (@idempresa,@idtrabajador,@credito,@descuento,@valordescuento, @activo, @descripcion, @dias, @fecha, @inicio, @fin)";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", i.idempresa);
             Command.Parameters.AddWithValue("idtrabajador", i.idtrabajador);
@@ -85,18 +117,37 @@ namespace Infonavit.Core
             Command.Parameters.AddWithValue("descuento", i.descuento);
             Command.Parameters.AddWithValue("valordescuento", i.valordescuento);
             Command.Parameters.AddWithValue("activo", i.activo);
+            Command.Parameters.AddWithValue("descripcion", i.descripcion);
+            Command.Parameters.AddWithValue("dias", i.dias);
+            Command.Parameters.AddWithValue("fecha", i.fecha);
+            Command.Parameters.AddWithValue("inicio", i.inicio);
+            Command.Parameters.AddWithValue("fin", i.fin);
             return Command.ExecuteNonQuery();
         }
 
         public int actualizaInfonavit(Infonavit i)
         {
-            Command.CommandText = "update infonavit set credito = @credito, descuento = @descuento, valordescuento = @valordescuento, activo = @activo where idtrabajador = @idtrabajador";
+            Command.CommandText = "update infonavit set credito = @credito, descuento = @descuento, valordescuento = @valordescuento, activo = @activo, descripcion = @descripcion, " + 
+                "dias = @dias, fecha = @fecha, inicio = @inicio, fin = @fin where idinfonavit = @idinfonavit";
             Command.Parameters.Clear();
-            Command.Parameters.AddWithValue("idtrabajador", i.idtrabajador);
+            Command.Parameters.AddWithValue("idinfonavit", i.idinfonavit);
             Command.Parameters.AddWithValue("credito", i.credito);
             Command.Parameters.AddWithValue("descuento", i.descuento);
             Command.Parameters.AddWithValue("valordescuento", i.valordescuento);
             Command.Parameters.AddWithValue("activo", i.activo);
+            Command.Parameters.AddWithValue("descripcion", i.descripcion);
+            Command.Parameters.AddWithValue("dias", i.dias);
+            Command.Parameters.AddWithValue("fecha", i.fecha);
+            Command.Parameters.AddWithValue("inicio", i.inicio);
+            Command.Parameters.AddWithValue("fin", i.fin);
+            return Command.ExecuteNonQuery();
+        }
+
+        public int actualizaEstatusInfonavit(int id)
+        {
+            Command.CommandText = "update infonavit set activo = 0 where idinfonavit = @idinfonavit";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idinfonavit", id);
             return Command.ExecuteNonQuery();
         }
 
@@ -126,10 +177,38 @@ namespace Infonavit.Core
             return lstInfonavit;
         }
 
+        public object obtenerIdSuaInfonavit(suaInfonavit i)
+        {
+            Command.CommandText = "select id from suaInfonavit where idtrabajador = @idtrabajador and fecha = @fecha and nss = @nss";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", i.idtrabajador);
+            Command.Parameters.AddWithValue("fecha", i.fecha);
+            Command.Parameters.AddWithValue("nss", i.nss);
+            object dato = Select(Command);
+            return dato;
+        }
+
         public int insertarInfonavitSua(suaInfonavit i)
         {
             Command.CommandText = "insert into suaInfonavit (idtrabajador, idempresa, registropatronal, nss, credito, modificacion, fecha, descuento, valor) " +
                 "values (@idtrabajador, @idempresa, @registropatronal, @nss, @credito, @modificacion, @fecha, @descuento, @valor)";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", i.idtrabajador);
+            Command.Parameters.AddWithValue("idempresa", i.idempresa);
+            Command.Parameters.AddWithValue("registropatronal", i.registropatronal);
+            Command.Parameters.AddWithValue("nss", i.nss);
+            Command.Parameters.AddWithValue("credito", i.credito);
+            Command.Parameters.AddWithValue("modificacion", i.modificacion);
+            Command.Parameters.AddWithValue("fecha", i.fecha);
+            Command.Parameters.AddWithValue("descuento", i.descuento);
+            Command.Parameters.AddWithValue("valor", i.valor);
+            return Command.ExecuteNonQuery();
+        }
+
+        public int actualizaInfonavitSua(suaInfonavit i)
+        {
+            Command.CommandText = "update suaInfonavit credito = @credito, modificacion = @modificacion, fecha = @fecha, descuento = @descuento, valor= @valor where " +
+                "idtrabajador = @idtrabajador";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", i.idtrabajador);
             Command.Parameters.AddWithValue("idempresa", i.idempresa);

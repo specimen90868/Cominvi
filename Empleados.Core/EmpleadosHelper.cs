@@ -220,6 +220,15 @@ namespace Empleados.Core
             return dato;
         }
 
+        public object obtenerDiasPeriodo(int idtrabajador)
+        {
+            Command.CommandText = "select dias from dbo.Periodos where idperiodo = (select idperiodo from Trabajadores where idtrabajador = @idtrabajador)";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
+            object dato = Select(Command);
+            return dato;
+        }
+
         public object obtenerSalarioDiarioIntegrado(Empleados e)
         {
             Command.CommandText = "select sdi from trabajadores where idtrabajador = @idtrabajador";

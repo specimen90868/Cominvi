@@ -126,9 +126,9 @@ namespace Nominas
             i.ShowDialog();
         }
 
-        void i_OnIncapacidad(string noempleado, string nombre, string paterno, string materno, int dias, DateTime fechainicio, DateTime inicio, DateTime fin)
+        void i_OnIncapacidad()
         {
-            dgvCargaIncapacidades.Rows.Add(noempleado, nombre, paterno, materno, dias, fechainicio, inicio, fin);
+            //dgvCargaIncapacidades.Rows.Add(noempleado, nombre, paterno, materno, dias, fechainicio, inicio, fin);
         }
 
         private void txtBuscar_Click(object sender, EventArgs e)

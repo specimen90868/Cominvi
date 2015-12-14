@@ -44,7 +44,7 @@ namespace CalculoNomina.Core
             List<DatosEmpleado> lstDatosEmpleados = new List<DatosEmpleado>();
             DataTable dtDatosEmpleados = new DataTable();
             Command.CommandText = "select cast(0 as bit) as chk, idtrabajador, iddepartamento, idpuesto, noempleado, nombres, paterno, materno, 0 as sueldo, 0 as despensa," +
-                "0 as asistencia, 0 as puntualidad, 0 as horas from Trabajadores where idempresa = @idempresa and estatus = @estatus";
+                "0 as asistencia, 0 as puntualidad, 0 as horas from Trabajadores where idempresa = @idempresa and estatus = @estatus order by noempleado asc";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idEmpresa);
             Command.Parameters.AddWithValue("estatus", estatus);
@@ -74,8 +74,8 @@ namespace CalculoNomina.Core
         {
             List<DatosFaltaIncapacidad> lstDatosEmpleados = new List<DatosFaltaIncapacidad>();
             DataTable dtDatosEmpleados = new DataTable();
-            Command.CommandText = "select idtrabajador, iddepartamento, idpuesto, noempleado, nombres, paterno, materno, 0 as falta, 0 as incapacidad " +
-                "from Trabajadores where idempresa = @idempresa and estatus = @estatus";
+            Command.CommandText = "select idtrabajador, iddepartamento, idpuesto, noempleado, nombres, paterno, materno " +
+                "from Trabajadores where idempresa = @idempresa and estatus = @estatus order by noempleado asc";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idEmpresa);
             Command.Parameters.AddWithValue("estatus", estatus);
@@ -90,8 +90,6 @@ namespace CalculoNomina.Core
                 de.nombres = dtDatosEmpleados.Rows[i]["nombres"].ToString();
                 de.paterno = dtDatosEmpleados.Rows[i]["paterno"].ToString();
                 de.materno = dtDatosEmpleados.Rows[i]["materno"].ToString();
-                de.falta = int.Parse(dtDatosEmpleados.Rows[i]["falta"].ToString());
-                de.incapacidad = int.Parse(dtDatosEmpleados.Rows[i]["incapacidad"].ToString());
                 lstDatosEmpleados.Add(de);
             }
             return lstDatosEmpleados;
@@ -202,14 +200,16 @@ namespace CalculoNomina.Core
             return lstPreNomina;
         }
 
-        public DataTable obtenerPreNominaTabular(tmpPagoNomina pn)
+        public DataTable obtenerPreNominaTabular(tmpPagoNomina pn, string netocero, string order)
         {
             DataTable dtPagoNomina = new DataTable();
-            Command.CommandText = "exec stp_rptPreNominaTabular @fechainicio, @fechafin, @idempresa";
+            Command.CommandText = "exec stp_rptPreNominaTabular @fechainicio, @fechafin, @idempresa, @netocero, @order";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", pn.idempresa);
             Command.Parameters.AddWithValue("fechainicio", pn.fechainicio);
             Command.Parameters.AddWithValue("fechafin", pn.fechafin);
+            Command.Parameters.AddWithValue("netocero", netocero);
+            Command.Parameters.AddWithValue("order", order);
             dtPagoNomina = SelectData(Command);
             return dtPagoNomina;
         }

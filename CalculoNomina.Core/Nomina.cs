@@ -65,7 +65,5 @@ namespace CalculoNomina.Core
         public string nombres { get; set; }
         public string paterno { get; set; }
         public string materno { get; set; }
-        public int falta { get; set; }
-        public int incapacidad { get; set; }
     }
 }

@@ -52,6 +52,10 @@
             this.toolEstado = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolPorcentaje = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolEtapa = new System.Windows.Forms.ToolStripStatusLabel();
+            this.label10 = new System.Windows.Forms.Label();
+            this.cmbNetoCero = new System.Windows.Forms.ComboBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.cmbOrden = new System.Windows.Forms.ComboBox();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -169,7 +173,7 @@
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Location = new System.Drawing.Point(166, 258);
+            this.btnAceptar.Location = new System.Drawing.Point(166, 331);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(75, 23);
             this.btnAceptar.TabIndex = 12;
@@ -179,7 +183,7 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(245, 258);
+            this.btnCancelar.Location = new System.Drawing.Point(245, 331);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
             this.btnCancelar.TabIndex = 13;
@@ -243,7 +247,7 @@
             this.toolEstado,
             this.toolPorcentaje,
             this.toolEtapa});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 299);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 365);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(332, 22);
             this.statusStrip1.TabIndex = 20;
@@ -267,11 +271,59 @@
             this.toolEtapa.Size = new System.Drawing.Size(36, 17);
             this.toolEtapa.Text = "Etapa";
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(15, 265);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(92, 13);
+            this.label10.TabIndex = 21;
+            this.label10.Text = "Incluye neto cero:";
+            // 
+            // cmbNetoCero
+            // 
+            this.cmbNetoCero.FormattingEnabled = true;
+            this.cmbNetoCero.Items.AddRange(new object[] {
+            "Si",
+            "No"});
+            this.cmbNetoCero.Location = new System.Drawing.Point(16, 281);
+            this.cmbNetoCero.Name = "cmbNetoCero";
+            this.cmbNetoCero.Size = new System.Drawing.Size(138, 21);
+            this.cmbNetoCero.TabIndex = 22;
+            this.cmbNetoCero.SelectedIndexChanged += new System.EventHandler(this.cmbNetoCero_SelectedIndexChanged);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(179, 265);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(66, 13);
+            this.label11.TabIndex = 23;
+            this.label11.Text = "Ordenar por:";
+            // 
+            // cmbOrden
+            // 
+            this.cmbOrden.FormattingEnabled = true;
+            this.cmbOrden.Items.AddRange(new object[] {
+            "No. de Empleado",
+            "Departamento",
+            "No. de Empleado, Departamento",
+            "Departamento, No. de Empleado"});
+            this.cmbOrden.Location = new System.Drawing.Point(182, 281);
+            this.cmbOrden.Name = "cmbOrden";
+            this.cmbOrden.Size = new System.Drawing.Size(138, 21);
+            this.cmbOrden.TabIndex = 24;
+            this.cmbOrden.SelectedIndexChanged += new System.EventHandler(this.cmbOrden_SelectedIndexChanged);
+            // 
             // frmReportes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(332, 321);
+            this.ClientSize = new System.Drawing.Size(332, 387);
+            this.Controls.Add(this.cmbOrden);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.cmbNetoCero);
+            this.Controls.Add(this.label10);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.cmbPeriodo);
             this.Controls.Add(this.label9);
@@ -332,5 +384,9 @@
         private System.Windows.Forms.ToolStripStatusLabel toolEstado;
         private System.Windows.Forms.ToolStripStatusLabel toolPorcentaje;
         private System.Windows.Forms.ToolStripStatusLabel toolEtapa;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ComboBox cmbNetoCero;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ComboBox cmbOrden;
     }
 }

@@ -4,3 +4,4 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Vacaciones.Core\bin\Debug\Dat
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Vacaciones.Core\bin\Debug\Data.Obj.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Vacaciones.Core\obj\Debug\Vacaciones.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Vacaciones.Core\obj\Debug\Vacaciones.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Vacaciones.Core\obj\Debug\Vacaciones.Core.csprojResolveAssemblyReference.cache

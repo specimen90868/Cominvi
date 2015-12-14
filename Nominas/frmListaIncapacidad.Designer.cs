@@ -82,7 +82,6 @@
             this.toolNuevo.Name = "toolNuevo";
             this.toolNuevo.Size = new System.Drawing.Size(62, 22);
             this.toolNuevo.Text = "Nuevo";
-            this.toolNuevo.Visible = false;
             this.toolNuevo.Click += new System.EventHandler(this.toolNuevo_Click);
             // 
             // toolEliminar
@@ -92,7 +91,6 @@
             this.toolEliminar.Name = "toolEliminar";
             this.toolEliminar.Size = new System.Drawing.Size(70, 22);
             this.toolEliminar.Text = "Eliminar";
-            this.toolEliminar.Visible = false;
             this.toolEliminar.Click += new System.EventHandler(this.toolEliminar_Click);
             // 
             // toolStripSeparator1

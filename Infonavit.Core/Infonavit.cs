@@ -15,6 +15,11 @@ namespace Infonavit.Core
         public int descuento { get; set; }
         public double valordescuento { get; set; }
         public bool activo { get; set; }
+        public string descripcion { get; set; }
+        public int dias { get; set; }
+        public DateTime fecha { get; set; }
+        public DateTime inicio { get; set; }
+        public DateTime fin { get; set; }
     }
 
     public class suaInfonavit

@@ -82,7 +82,6 @@ namespace Nominas
                     for (int i = 0; i < lstProgramacion.Count; i++)
                     {
                         cmbConcepto.SelectedValue = lstProgramacion[i].idconcepto;
-                        txtSubconcepto.Text = lstProgramacion[i].concepto;
                         txtCantidad.Text = lstProgramacion[i].cantidad.ToString();
                         dtpFecha.Value = DateTime.Parse(lstProgramacion[i].fechafin.ToString());
                     }
@@ -116,12 +115,13 @@ namespace Nominas
 
             Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
             concepto.idempresa = GLOBALES.IDEMPRESA;
+            concepto.tipoconcepto = "D";
             List<Conceptos.Core.Conceptos> lstConceptos = new List<Conceptos.Core.Conceptos>();
 
             try
             {
                 cnx.Open();
-                lstConceptos = ch.obtenerConceptos(concepto);
+                lstConceptos = ch.obtenerConceptosDeducciones(concepto);
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -167,7 +167,6 @@ namespace Nominas
             ProgramacionConcepto.Core.ProgramacionConcepto programacion = new ProgramacionConcepto.Core.ProgramacionConcepto();
             programacion.idtrabajador = _idEmpleado;
             programacion.idconcepto = int.Parse(cmbConcepto.SelectedValue.ToString());
-            programacion.concepto = txtSubconcepto.Text;
             programacion.cantidad = double.Parse(txtCantidad.Text);
             programacion.fechafin = dtpFecha.Value;
 

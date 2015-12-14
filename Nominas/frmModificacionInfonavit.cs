@@ -22,6 +22,7 @@ namespace Nominas
         #region VARIABLES PUBLICAS
         public int _idEmpleado;
         public string _nombreEmpleado;
+        public string _activo;
         #endregion
 
         #region VARIABLES GLOBALES
@@ -41,6 +42,7 @@ namespace Nominas
 
         private void frmModificacionInfonavit_Load(object sender, EventArgs e)
         {
+            
             lblEmpleado.Text = _nombreEmpleado;
             cnx = new SqlConnection();
             cnx.ConnectionString = cdn;
@@ -91,15 +93,6 @@ namespace Nominas
             movimiento = GLOBALES.mCREDITO;
             grpCredito.Enabled = true;
             grpTipoDescuento.Enabled = false;
-            grpValorDescuento.Enabled = false;
-        }
-
-        private void rbtnValorDescuento_CheckedChanged(object sender, EventArgs e)
-        {
-            movimiento = GLOBALES.mVALORDESCUENTO;
-            grpCredito.Enabled = false;
-            grpTipoDescuento.Enabled = false;
-            grpValorDescuento.Enabled = true;
         }
 
         private void rbtnTipoDescuento_CheckedChanged(object sender, EventArgs e)
@@ -107,7 +100,6 @@ namespace Nominas
             movimiento = GLOBALES.mTIPODESCUENTO;
             grpCredito.Enabled = false;
             grpTipoDescuento.Enabled = true;
-            grpValorDescuento.Enabled = false;
         }
 
         private void toolGuardar_Click(object sender, EventArgs e)
