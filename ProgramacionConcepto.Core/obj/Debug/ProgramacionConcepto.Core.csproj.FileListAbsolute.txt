@@ -1,7 +1,6 @@
-C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\ProgramacionConcepto.Core\obj\Debug\ProgramacionConcepto.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\ProgramacionConcepto.Core\bin\Debug\ProgramacionConcepto.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\ProgramacionConcepto.Core\bin\Debug\ProgramacionConcepto.Core.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\ProgramacionConcepto.Core\bin\Debug\Data.Obj.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\ProgramacionConcepto.Core\bin\Debug\Data.Obj.pdb
-C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\ProgramacionConcepto.Core\obj\Debug\ProgramacionConcepto.Core.csprojResolveAssemblyReference.cache
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\ProgramacionConcepto.Core\obj\Debug\ProgramacionConcepto.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\ProgramacionConcepto.Core\obj\Debug\ProgramacionConcepto.Core.pdb

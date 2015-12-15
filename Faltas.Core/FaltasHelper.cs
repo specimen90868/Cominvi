@@ -130,11 +130,12 @@ namespace Faltas.Core
 
         public int eliminaFaltaExistente(Faltas f)
         {
-            Command.CommandText = "delete from faltas where idtrabajador = @idtrabajador and fechainicio = @fechainicio and fechafin = @fechafin";
+            Command.CommandText = "delete from faltas where idtrabajador = @idtrabajador and fechainicio = @fechainicio and fechafin = @fechafin and fecha = @fecha";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", f.idtrabajador);
             Command.Parameters.AddWithValue("fechainicio", f.fechainicio);
             Command.Parameters.AddWithValue("fechafin", f.fechafin);
+            Command.Parameters.AddWithValue("fecha", f.fecha);
             return Command.ExecuteNonQuery();
         }
 

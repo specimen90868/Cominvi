@@ -9,15 +9,15 @@ namespace CalculoNomina.Core
 {
     public class NominaHelper : Data.Obj.DataObj
     {
-        public List<Nomina> obtenerDatosNomina(int idEmpresa, int estatus, string idTrabajadorLista)
+        public List<Nomina> obtenerDatosNomina(int idEmpresa, int estatus, string idTrabajadorLista = "")
         {
             List<Nomina> lstDatosNomina = new List<Nomina>();
             DataTable dtDatosNomina = new DataTable();
-            Command.CommandText = "exec stp_DatosNomina @idempresa, @estatus, @lista";
+            Command.CommandText = "exec stp_DatosNomina @idempresa, @estatus";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idEmpresa);
             Command.Parameters.AddWithValue("estatus", estatus);
-            Command.Parameters.AddWithValue("lista", idTrabajadorLista);
+            //Command.Parameters.AddWithValue("lista", idTrabajadorLista);
             dtDatosNomina = SelectData(Command);
             for (int i = 0; i < dtDatosNomina.Rows.Count; i++)
             {
@@ -34,6 +34,37 @@ namespace CalculoNomina.Core
                 nom.tipoconcepto = dtDatosNomina.Rows[i]["tipoconcepto"].ToString();
                 nom.formula = dtDatosNomina.Rows[i]["formula"].ToString();
                 nom.formulaexento = dtDatosNomina.Rows[i]["formulaexento"].ToString();
+                lstDatosNomina.Add(nom);
+            }
+            return lstDatosNomina;
+        }
+
+        public List<NominaRecalculo> obtenerDatosNominaRecalculo(int idEmpresa, DateTime inicio, DateTime fin)
+        {
+            List<NominaRecalculo> lstDatosNomina = new List<NominaRecalculo>();
+            DataTable dtDatosNomina = new DataTable();
+            Command.CommandText = "exec stp_DatosNominaRecalculo @idempresa, @inicio, @fin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idEmpresa);
+            Command.Parameters.AddWithValue("inicio", inicio);
+            Command.Parameters.AddWithValue("fin", fin);
+            dtDatosNomina = SelectData(Command);
+            for (int i = 0; i < dtDatosNomina.Rows.Count; i++)
+            {
+                NominaRecalculo nom = new NominaRecalculo();
+                nom.id = int.Parse(dtDatosNomina.Rows[i]["id"].ToString());
+                nom.idtrabajador = int.Parse(dtDatosNomina.Rows[i]["idtrabajador"].ToString());
+                nom.dias = int.Parse(dtDatosNomina.Rows[i]["dias"].ToString());
+                nom.salariominimo = double.Parse(dtDatosNomina.Rows[i]["salariominimo"].ToString());
+                nom.antiguedadmod = int.Parse(dtDatosNomina.Rows[i]["antiguedadmod"].ToString());
+                nom.sdi = double.Parse(dtDatosNomina.Rows[i]["sdi"].ToString());
+                nom.sd = double.Parse(dtDatosNomina.Rows[i]["sd"].ToString());
+                nom.idconcepto = int.Parse(dtDatosNomina.Rows[i]["idconcepto"].ToString());
+                nom.noconcepto = int.Parse(dtDatosNomina.Rows[i]["noconcepto"].ToString());
+                nom.tipoconcepto = dtDatosNomina.Rows[i]["tipoconcepto"].ToString();
+                nom.formula = dtDatosNomina.Rows[i]["formula"].ToString();
+                nom.formulaexento = dtDatosNomina.Rows[i]["formulaexento"].ToString();
+                nom.modificado = bool.Parse(dtDatosNomina.Rows[i]["modificado"].ToString());
                 lstDatosNomina.Add(nom);
             }
             return lstDatosNomina;
@@ -200,6 +231,31 @@ namespace CalculoNomina.Core
             return lstPreNomina;
         }
 
+        public List<NetosNegativos> obtenerNetosNegativos(int idempresa, DateTime inicio, DateTime fin)
+        {
+            List<NetosNegativos> lstNetos = new List<NetosNegativos>();
+            DataTable dtNetos = new DataTable();
+            Command.CommandText = "exec stp_NetosNegativos @idempresa, @inicio, @fin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idempresa);
+            Command.Parameters.AddWithValue("inicio", inicio);
+            Command.Parameters.AddWithValue("fin", fin);
+            dtNetos = SelectData(Command);
+            for (int i = 0; i < dtNetos.Rows.Count; i++)
+            {
+                NetosNegativos neto = new NetosNegativos();
+                neto.idtrabajador = int.Parse(dtNetos.Rows[i]["idtrabajador"].ToString());
+                neto.noempleado = dtNetos.Rows[i]["noempleado"].ToString();
+                neto.nombrecompleto = dtNetos.Rows[i]["nombrecompleto"].ToString();
+                neto.noconcepto = int.Parse(dtNetos.Rows[i]["noconcepto"].ToString());
+                neto.tipoconcepto = dtNetos.Rows[i]["tipoconcepto"].ToString();
+                neto.concepto = dtNetos.Rows[i]["concepto"].ToString();
+                neto.cantidad = decimal.Parse(dtNetos.Rows[i]["cantidad"].ToString());
+                lstNetos.Add(neto);
+            }
+            return lstNetos;
+        }
+
         public DataTable obtenerPreNominaTabular(tmpPagoNomina pn, string netocero, string order)
         {
             DataTable dtPagoNomina = new DataTable();
@@ -283,7 +339,7 @@ namespace CalculoNomina.Core
         
         public int actualizaHorasExtrasDespensa(tmpPagoNomina pn)
         {
-            Command.CommandText = "update tmpPagoNomina set cantidad = @cantidad, gravado = @gravado where idempresa = @idempresa and fechainicio = @fechainicio and fechafin = @fechafin and " +
+            Command.CommandText = "update tmpPagoNomina set cantidad = @cantidad, gravado = @gravado, modificado = @modificado where idempresa = @idempresa and fechainicio = @fechainicio and fechafin = @fechafin and " +
                 "idtrabajador = @idtrabajador and noconcepto = @noconcepto";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("cantidad", pn.cantidad);
@@ -293,6 +349,24 @@ namespace CalculoNomina.Core
             Command.Parameters.AddWithValue("idempresa", pn.idempresa);
             Command.Parameters.AddWithValue("idtrabajador", pn.idtrabajador);
             Command.Parameters.AddWithValue("noconcepto", pn.noconcepto);
+            Command.Parameters.AddWithValue("modificado", pn.modificado);
+            return Command.ExecuteNonQuery();
+        }
+
+        public int actualizaConcepto(tmpPagoNomina pn)
+        {
+            Command.CommandText = @"update tmpPagoNomina set exento = @exento, gravado = @gravado, cantidad = @cantidad 
+            where idtrabajador = @idtrabajador and id = @id and fechainicio = @fechainicio and fechafin = @fechafin
+            and idempresa = @idempresa";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("exento", pn.exento);
+            Command.Parameters.AddWithValue("gravado", pn.gravado);
+            Command.Parameters.AddWithValue("cantidad", pn.cantidad);
+            Command.Parameters.AddWithValue("idtrabajador", pn.idtrabajador);
+            Command.Parameters.AddWithValue("id", pn.id);
+            Command.Parameters.AddWithValue("fechainicio", pn.fechainicio);
+            Command.Parameters.AddWithValue("fechafin", pn.fechafin);
+            Command.Parameters.AddWithValue("idempresa", pn.idempresa);
             return Command.ExecuteNonQuery();
         }
 

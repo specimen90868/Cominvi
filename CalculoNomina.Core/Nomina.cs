@@ -22,6 +22,23 @@ namespace CalculoNomina.Core
         public string formulaexento { get; set; }
     }
 
+    public class NominaRecalculo
+    {
+        public int id { get; set; }
+        public int idtrabajador { get; set; }
+        public int dias { get; set; }
+        public double salariominimo { get; set; }
+        public int antiguedadmod { get; set; }
+        public double sdi { get; set; }
+        public double sd { get; set; }
+        public int idconcepto { get; set; }
+        public int noconcepto { get; set; }
+        public string tipoconcepto { get; set; }
+        public string formula { get; set; }
+        public string formulaexento { get; set; }
+        public bool modificado { get; set; }
+    }
+
     public class DatosEmpleado
     {
         public bool chk { get; set; }
@@ -54,6 +71,7 @@ namespace CalculoNomina.Core
         public DateTime fechafin { get; set; }
         public bool guardada { get; set; }
         public int tiponomina { get; set; }
+        public bool modificado { get; set; }
     }
 
     public class DatosFaltaIncapacidad
@@ -65,5 +83,16 @@ namespace CalculoNomina.Core
         public string nombres { get; set; }
         public string paterno { get; set; }
         public string materno { get; set; }
+    }
+
+    public class NetosNegativos
+    {
+        public int idtrabajador { get; set; }
+        public string noempleado { get; set; }
+        public string nombrecompleto { get; set; }
+        public int noconcepto { get; set; }
+        public string tipoconcepto { get; set; }
+        public string concepto { get; set; }
+        public decimal cantidad { get; set; }
     }
 }

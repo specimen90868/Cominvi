@@ -32,7 +32,7 @@ namespace Nominas
         #endregion
 
         #region DELEGADOS
-        public delegate void delOnReporte(string netocero, string orden);
+        public delegate void delOnReporte(string netocero, string orden, int noreporte);
         public event delOnReporte OnReporte;
         #endregion
 
@@ -40,6 +40,7 @@ namespace Nominas
         public DateTime _inicio;
         public DateTime _fin;
         public bool _ReportePreNomina;
+        public int _noReporte;
         #endregion
 
         private void frmReportes_Load(object sender, EventArgs e)
@@ -130,6 +131,8 @@ namespace Nominas
                     vr._deptoFin = int.Parse(cmbDeptoFinal.SelectedValue.ToString());
                     vr._empleadoInicio = int.Parse(cmbEmpleadoInicial.SelectedValue.ToString());
                     vr._empleadoFin = int.Parse(cmbEmpleadoFinal.SelectedValue.ToString());
+                    vr._netoCero = netocero;
+                    vr._orden = orden;
                     vr.Show();
                 }
                 else
@@ -139,7 +142,7 @@ namespace Nominas
             }
             else
                 if (OnReporte != null)
-                    OnReporte(netocero, orden);
+                    OnReporte(netocero, orden, _noReporte);
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -157,6 +160,8 @@ namespace Nominas
                     cmbDeptoFinal.Enabled = true;
                     cmbEmpleadoInicial.Enabled = true;
                     cmbEmpleadoFinal.Enabled = true;
+                    cmbOrden.Enabled = true;
+                    cmbNetoCero.Enabled = true;
                     noReporte = 5;
                     break;
                 case "Departamentos":
@@ -165,6 +170,8 @@ namespace Nominas
                     cmbDeptoFinal.Enabled = true;
                     cmbEmpleadoInicial.Enabled = false;
                     cmbEmpleadoFinal.Enabled = false;
+                    cmbOrden.Enabled = true;
+                    cmbNetoCero.Enabled = false;
                     noReporte = 4;
                     break;
                 case "Total General":
@@ -173,6 +180,8 @@ namespace Nominas
                     cmbDeptoFinal.Enabled = false;
                     cmbEmpleadoInicial.Enabled = false;
                     cmbEmpleadoFinal.Enabled = false;
+                    cmbOrden.Enabled = false;
+                    cmbNetoCero.Enabled = false;
                     noReporte = 3;
                     break;
                 case "Tabular":
@@ -181,6 +190,8 @@ namespace Nominas
                     cmbDeptoFinal.Enabled = true;
                     cmbEmpleadoInicial.Enabled = true;
                     cmbEmpleadoFinal.Enabled = true;
+                    cmbOrden.Enabled = true;
+                    cmbNetoCero.Enabled = true;
                     noReporte = 6;
                     break;
             }
@@ -288,52 +299,37 @@ namespace Nominas
                 {
                     totalPercepciones += decimal.Parse(dt.Rows[i][14].ToString());
                     totalDeducciones += decimal.Parse(dt.Rows[i][20].ToString());
-                    if (dt.Rows[i][5].ToString() == dt.Rows[i + 1][5].ToString())
-                        for (int j = 6; j < dt.Columns.Count; j++)
-                        {
-                            excel.Cells[iFil, iCol] = dt.Rows[i][j];
-                            iCol++;
-                        }
-                    else
-                    {
-                        for (int j = 6; j < dt.Columns.Count; j++)
-                        {
-                            excel.Cells[iFil, iCol] = dt.Rows[i][j];
-                            iCol++;
-                        }
-                        iFil++;
-                        rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 1];
-                        rng.Font.Bold = true;
-                        excel.Cells[iFil, 1] = dt.Rows[i][5];
 
-                        rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 9];
-                        rng.NumberFormat = "#,##0.00";
-                        rng.Font.Bold = true;
-                        excel.Cells[iFil, 9] = totalPercepciones.ToString();
-
-                        rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 15];
-                        rng.NumberFormat = "#,##0.00";
-                        rng.Font.Bold = true;
-                        excel.Cells[iFil, 15] = totalDeducciones.ToString();
-                        iFil++;
-
-                        totalPercepciones = 0;
-                        totalDeducciones = 0;
-                    }
-                }
-                else
-                {
-                    totalPercepciones += decimal.Parse(dt.Rows[i][14].ToString());
-                    totalDeducciones += decimal.Parse(dt.Rows[i][20].ToString());
                     for (int j = 6; j < dt.Columns.Count; j++)
                     {
                         excel.Cells[iFil, iCol] = dt.Rows[i][j];
                         iCol++;
                     }
                     iFil++;
-                    rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 1];
+                    rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 9];
+                    rng.NumberFormat = "#,##0.00";
                     rng.Font.Bold = true;
-                    excel.Cells[iFil, 1] = dt.Rows[i][5];
+                    excel.Cells[iFil, 10] = totalPercepciones.ToString();
+
+                    rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 15];
+                    rng.NumberFormat = "#,##0.00";
+                    rng.Font.Bold = true;
+                    excel.Cells[iFil, 16] = totalDeducciones.ToString();
+                    iFil++;
+                }
+                else
+                {
+                    totalPercepciones += decimal.Parse(dt.Rows[i][15].ToString());
+                    totalDeducciones += decimal.Parse(dt.Rows[i][21].ToString());
+                    for (int j = 6; j < dt.Columns.Count; j++)
+                    {
+                        excel.Cells[iFil, iCol] = dt.Rows[i][j];
+                        iCol++;
+                    }
+                    iFil++;
+                    //rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 1];
+                    //rng.Font.Bold = true;
+                    //excel.Cells[iFil, 1] = dt.Rows[i][5];
 
                     rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 9];
                     rng.NumberFormat = "#,##0.00";

@@ -4,3 +4,4 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\CalculoNomina.Core\bin\Debug\
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\CalculoNomina.Core\bin\Debug\Data.Obj.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\CalculoNomina.Core\obj\Debug\CalculoNomina.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\CalculoNomina.Core\obj\Debug\CalculoNomina.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\CalculoNomina.Core\obj\Debug\CalculoNomina.Core.csprojResolveAssemblyReference.cache

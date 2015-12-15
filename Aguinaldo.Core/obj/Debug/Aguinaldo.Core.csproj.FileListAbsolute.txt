@@ -1,4 +1,5 @@
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Aguinaldo.Core\bin\Debug\Aguinaldo.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Aguinaldo.Core\bin\Debug\Aguinaldo.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Aguinaldo.Core\obj\Debug\Aguinaldo.Core.csprojResolveAssemblyReference.cache
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Aguinaldo.Core\obj\Debug\Aguinaldo.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Aguinaldo.Core\obj\Debug\Aguinaldo.Core.pdb

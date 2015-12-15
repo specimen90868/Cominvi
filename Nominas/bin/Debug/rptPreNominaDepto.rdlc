@@ -671,6 +671,7 @@
                                       <PaddingBottom>2pt</PaddingBottom>
                                     </Style>
                                   </Textbox>
+                                  <rd:Selected>true</rd:Selected>
                                 </CellContents>
                               </TablixCell>
                             </TablixCells>
@@ -922,13 +923,6 @@
                           <Operator>Equal</Operator>
                           <FilterValues>
                             <FilterValue>D</FilterValue>
-                          </FilterValues>
-                        </Filter>
-                        <Filter>
-                          <FilterExpression>=Fields!DeptoImporte.Value</FilterExpression>
-                          <Operator>NotEqual</Operator>
-                          <FilterValues>
-                            <FilterValue DataType="Float">0</FilterValue>
                           </FilterValues>
                         </Filter>
                       </Filters>

@@ -242,14 +242,14 @@
                               </TablixCell>
                               <TablixCell>
                                 <CellContents>
-                                  <Textbox Name="importe">
+                                  <Textbox Name="cantidad">
                                     <CanGrow>true</CanGrow>
                                     <KeepTogether>true</KeepTogether>
                                     <Paragraphs>
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Fields!importe.Value</Value>
+                                            <Value>=Fields!cantidad.Value</Value>
                                             <Style>
                                               <FontSize>6pt</FontSize>
                                               <Format>#,0.00;(#,0.00)</Format>
@@ -261,7 +261,7 @@
                                         </Style>
                                       </Paragraph>
                                     </Paragraphs>
-                                    <rd:DefaultName>importe</rd:DefaultName>
+                                    <rd:DefaultName>cantidad</rd:DefaultName>
                                     <Style>
                                       <Border>
                                         <Style>None</Style>
@@ -344,7 +344,7 @@
                               </TablixCell>
                               <TablixCell>
                                 <CellContents>
-                                  <Textbox Name="Textbox126">
+                                  <Textbox Name="Textbox4">
                                     <CanGrow>true</CanGrow>
                                     <KeepTogether>true</KeepTogether>
                                     <Paragraphs>
@@ -362,7 +362,7 @@
                                         </Style>
                                       </Paragraph>
                                     </Paragraphs>
-                                    <rd:DefaultName>Textbox126</rd:DefaultName>
+                                    <rd:DefaultName>Textbox4</rd:DefaultName>
                                     <Style>
                                       <Border>
                                         <Style>None</Style>
@@ -452,7 +452,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Sum(Fields!importe.Value)</Value>
+                                            <Value>=Sum(Fields!cantidad.Value)</Value>
                                             <Style>
                                               <FontSize>6pt</FontSize>
                                               <Format>n2</Format>
@@ -580,7 +580,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Iif(Fields!noconcepto.Value="13" Or Fields!noconcepto.Value="14", Fields!subconcepto.Value, Fields!concepto.Value)</Value>
+                                            <Value>=Fields!concepto.Value</Value>
                                             <Style>
                                               <FontSize>6pt</FontSize>
                                             </Style>
@@ -604,14 +604,14 @@
                               </TablixCell>
                               <TablixCell>
                                 <CellContents>
-                                  <Textbox Name="importe1">
+                                  <Textbox Name="cantidad1">
                                     <CanGrow>true</CanGrow>
                                     <KeepTogether>true</KeepTogether>
                                     <Paragraphs>
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Fields!importe.Value</Value>
+                                            <Value>=Fields!cantidad.Value</Value>
                                             <Style>
                                               <FontSize>6pt</FontSize>
                                               <Format>n2</Format>
@@ -623,7 +623,7 @@
                                         </Style>
                                       </Paragraph>
                                     </Paragraphs>
-                                    <rd:DefaultName>importe1</rd:DefaultName>
+                                    <rd:DefaultName>cantidad1</rd:DefaultName>
                                     <Style>
                                       <Border>
                                         <Style>None</Style>
@@ -706,7 +706,7 @@
                               </TablixCell>
                               <TablixCell>
                                 <CellContents>
-                                  <Textbox Name="Textbox129">
+                                  <Textbox Name="Textbox5">
                                     <CanGrow>true</CanGrow>
                                     <KeepTogether>true</KeepTogether>
                                     <Paragraphs>
@@ -724,7 +724,7 @@
                                         </Style>
                                       </Paragraph>
                                     </Paragraphs>
-                                    <rd:DefaultName>Textbox129</rd:DefaultName>
+                                    <rd:DefaultName>Textbox5</rd:DefaultName>
                                     <Style>
                                       <Border>
                                         <Style>None</Style>
@@ -812,7 +812,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Sum(Fields!importe.Value) - (Sum(IIF(Fields!noconcepto.Value=15,Fields!importe.Value,0)) + Sum(IIF(Fields!noconcepto.Value=8,Fields!importe.Value,0)))</Value>
+                                            <Value>=Sum(Fields!cantidad.Value) - (Sum(IIF(Fields!noconcepto.Value=15,Fields!cantidad.Value,0)) + Sum(IIF(Fields!noconcepto.Value=8,Fields!cantidad.Value,0)))</Value>
                                             <Style>
                                               <FontSize>6pt</FontSize>
                                               <Format>n2</Format>
@@ -868,13 +868,6 @@
                           <Operator>Equal</Operator>
                           <FilterValues>
                             <FilterValue>D</FilterValue>
-                          </FilterValues>
-                        </Filter>
-                        <Filter>
-                          <FilterExpression>=Fields!importe.Value</FilterExpression>
-                          <Operator>NotEqual</Operator>
-                          <FilterValues>
-                            <FilterValue DataType="Float">0</FilterValue>
                           </FilterValues>
                         </Filter>
                       </Filters>
@@ -979,7 +972,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Sum(IIF(Fields!tipoconcepto.Value="P",Fields!importe.Value,0)) - (sum(iif(Fields!tipoconcepto.Value="D",Fields!importe.Value,0)) - (Sum(IIF(Fields!noconcepto.Value=15,Fields!importe.Value,0)) + Sum(IIF(Fields!noconcepto.Value=8,Fields!importe.Value,0))))</Value>
+                                            <Value>=Sum(IIF(Fields!tipoconcepto.Value="P",Fields!cantidad.Value,0)) - (sum(iif(Fields!tipoconcepto.Value="D",Fields!cantidad.Value,0)) - (Sum(IIF(Fields!noconcepto.Value=15,Fields!cantidad.Value,0)) + Sum(IIF(Fields!noconcepto.Value=8,Fields!cantidad.Value,0))))</Value>
                                             <Style>
                                               <FontSize>6pt</FontSize>
                                               <Format>n2</Format>
@@ -1219,7 +1212,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Sum(Fields!importe.Value)</Value>
+                                            <Value>=Sum(Fields!cantidad.Value)</Value>
                                             <Style>
                                               <FontSize>6pt</FontSize>
                                               <Format>n2</Format>
@@ -1259,7 +1252,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Sum(Fields!importe.Value)</Value>
+                                            <Value>=Sum(Fields!cantidad.Value)</Value>
                                             <Style>
                                               <FontSize>6pt</FontSize>
                                               <Format>n2</Format>
@@ -1299,7 +1292,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Sum(IIF(Fields!tipoconcepto.Value="P",Fields!importe.Value,0)) - (sum(iif(Fields!tipoconcepto.Value="D",Fields!importe.Value,0)) - (Sum(IIF(Fields!noconcepto.Value=15,Fields!importe.Value,0)) + Sum(IIF(Fields!noconcepto.Value=8,Fields!importe.Value,0))))</Value>
+                                            <Value>=Sum(IIF(Fields!tipoconcepto.Value="P",Fields!cantidad.Value,0)) - (sum(iif(Fields!tipoconcepto.Value="D",Fields!cantidad.Value,0)) - (Sum(IIF(Fields!noconcepto.Value=15,Fields!cantidad.Value,0)) + Sum(IIF(Fields!noconcepto.Value=8,Fields!cantidad.Value,0))))</Value>
                                             <Style>
                                               <FontSize>6pt</FontSize>
                                               <Format>n2</Format>
@@ -1323,7 +1316,6 @@
                                       <PaddingBottom>2pt</PaddingBottom>
                                     </Style>
                                   </Textbox>
-                                  <rd:Selected>true</rd:Selected>
                                 </CellContents>
                               </TablixCell>
                             </TablixCells>
@@ -1707,7 +1699,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Sum(Fields!importe.Value)</Value>
+                                            <Value>=Sum(Fields!cantidad.Value)</Value>
                                             <Style>
                                               <FontSize>6pt</FontSize>
                                               <Format>n2</Format>
@@ -1747,7 +1739,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Sum(Fields!importe.Value) - (Sum(IIF(Fields!noconcepto.Value=15,Fields!importe.Value,0)) + Sum(IIF(Fields!noconcepto.Value=8,Fields!importe.Value,0)))</Value>
+                                            <Value>=Sum(Fields!cantidad.Value) - (Sum(IIF(Fields!noconcepto.Value=15,Fields!cantidad.Value,0)) + Sum(IIF(Fields!noconcepto.Value=8,Fields!cantidad.Value,0)))</Value>
                                             <Style>
                                               <FontSize>6pt</FontSize>
                                               <Format>n2</Format>
@@ -1939,7 +1931,7 @@
                                             <Paragraph>
                                               <TextRuns>
                                                 <TextRun>
-                                                  <Value>=Iif(Fields!noconcepto.Value="13" Or Fields!noconcepto.Value="14", Fields!subconcepto.Value, Fields!concepto.Value)</Value>
+                                                  <Value>=Fields!concepto.Value</Value>
                                                   <Style>
                                                     <FontSize>6pt</FontSize>
                                                   </Style>
@@ -2022,6 +2014,7 @@
                         </Border>
                       </Style>
                     </Tablix>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -3422,9 +3415,9 @@
           <DataField>concepto</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="importe">
-          <DataField>importe</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
+        <Field Name="cantidad">
+          <DataField>cantidad</DataField>
+          <rd:TypeName>System.Double</rd:TypeName>
         </Field>
         <Field Name="fechainicio">
           <DataField>fechainicio</DataField>
@@ -3441,10 +3434,6 @@
         <Field Name="hora">
           <DataField>hora</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="subconcepto">
-          <DataField>subconcepto</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>
