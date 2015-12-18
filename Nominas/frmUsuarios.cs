@@ -24,6 +24,7 @@ namespace Nominas
         SqlCommand cmd;
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
         Usuarios.Core.UsuariosHelper uh;
+        Perfil.Core.PerfilesHelper ph;
         #endregion
 
         #region DELEGADOS
@@ -66,8 +67,8 @@ namespace Nominas
             Usuarios.Core.Usuarios u = new Usuarios.Core.Usuarios();
             u.nombre = txtNombre.Text;
             u.usuario = txtUsuario.Text;
-            u.activo = 1;
-            u.idperfil = 1;
+            u.activo = true;
+            u.idperfil = int.Parse(cmbPerfil.SelectedValue.ToString());
 
             switch (_tipoOperacion)
             {
@@ -123,6 +124,7 @@ namespace Nominas
 
         private void frmUsuarios_Load(object sender, EventArgs e)
         {
+            CargaCombos();
             /// _tipoOperacion CONSULTA = 1, EDICION = 2
             if (_tipoOperacion == GLOBALES.CONSULTAR || _tipoOperacion == GLOBALES.MODIFICAR)
             {
@@ -151,6 +153,7 @@ namespace Nominas
                     {
                         txtNombre.Text = dtUsuario.Rows[i]["nombre"].ToString();
                         txtUsuario.Text = dtUsuario.Rows[i]["usuario"].ToString();
+                        cmbPerfil.SelectedValue = dtUsuario.Rows[i]["idperfil"].ToString();
                     }
                 }
                 catch (Exception error)
@@ -166,6 +169,35 @@ namespace Nominas
                 else
                     toolNombreVentana.Text = "Edición Usuario";
             }
+        }
+
+        private void CargaCombos()
+        {
+            cnx = new SqlConnection();
+            cnx.ConnectionString = cdn;
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            ph = new Perfil.Core.PerfilesHelper();
+            ph.Command = cmd;
+
+            List<Perfil.Core.Perfiles> lstPerfiles = new List<Perfil.Core.Perfiles>();
+
+            try
+            {
+                cnx.Open();
+                lstPerfiles = ph.obtenerPerfiles();
+                cnx.Close();
+                cnx.Dispose();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error: Al obtener lista de perfiles.\r\n \r\n" + error.Message, "Error");
+            }
+
+            cmbPerfil.DataSource = lstPerfiles.ToList();
+            cmbPerfil.DisplayMember = "nombre";
+            cmbPerfil.ValueMember = "idperfil";
         }
     }
 }

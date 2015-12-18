@@ -289,6 +289,9 @@ namespace Nominas
             int iFil = 6;
             Microsoft.Office.Interop.Excel.Range rng;
             decimal totalPercepciones = 0, totalDeducciones = 0;
+            decimal totalSueldo = 0, totalHoras = 0, totalAsistencia = 0, totalPuntualidad = 0, totalDespensa = 0,
+               totalPrimaVacacional = 0, totalVacaciones = 0, totalAguinaldo = 0, totalIsr = 0, totalInfonavitPorcentaje = 0, totalInfonavitVSM = 0, totalInfonavitFijo = 0,
+               totalResponsabilidades = 0, totalPrestamoEmpresa = 0, totalIsrRetenido = 0, totalPension = 0, totalDescTrab = 0;
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 progreso = (contador * 100) / contadorDt;
@@ -297,63 +300,169 @@ namespace Nominas
                 contador++;
                 if (i != dt.Rows.Count - 1)
                 {
-                    totalPercepciones += decimal.Parse(dt.Rows[i][14].ToString());
-                    totalDeducciones += decimal.Parse(dt.Rows[i][20].ToString());
+                    totalSueldo += decimal.Parse(dt.Rows[i][8].ToString());
+                    totalHoras += decimal.Parse(dt.Rows[i][9].ToString());
+                    totalAsistencia += decimal.Parse(dt.Rows[i][10].ToString());
+                    totalPuntualidad += decimal.Parse(dt.Rows[i][11].ToString());
+                    totalDespensa += decimal.Parse(dt.Rows[i][12].ToString());
+                    totalPrimaVacacional += decimal.Parse(dt.Rows[i][13].ToString());
+                    totalVacaciones += decimal.Parse(dt.Rows[i][14].ToString());
+                    totalAguinaldo += decimal.Parse(dt.Rows[i][15].ToString());
+                    totalPercepciones += decimal.Parse(dt.Rows[i][16].ToString());
+                    totalIsr += decimal.Parse(dt.Rows[i][17].ToString());
+                    totalInfonavitPorcentaje += decimal.Parse(dt.Rows[i][18].ToString());
+                    totalInfonavitVSM += decimal.Parse(dt.Rows[i][19].ToString());
+                    totalInfonavitFijo += decimal.Parse(dt.Rows[i][20].ToString());
+                    totalResponsabilidades += decimal.Parse(dt.Rows[i][21].ToString());
+                    totalPrestamoEmpresa += decimal.Parse(dt.Rows[i][22].ToString());
+                    totalIsrRetenido += decimal.Parse(dt.Rows[i][23].ToString());
+                    totalPension += decimal.Parse(dt.Rows[i][24].ToString());
+                    totalDescTrab += decimal.Parse(dt.Rows[i][25].ToString());
+                    totalDeducciones += decimal.Parse(dt.Rows[i][26].ToString());
 
                     for (int j = 6; j < dt.Columns.Count; j++)
                     {
                         excel.Cells[iFil, iCol] = dt.Rows[i][j];
                         iCol++;
                     }
-                    iFil++;
-                    rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 9];
-                    rng.NumberFormat = "#,##0.00";
-                    rng.Font.Bold = true;
-                    excel.Cells[iFil, 10] = totalPercepciones.ToString();
-
-                    rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 15];
-                    rng.NumberFormat = "#,##0.00";
-                    rng.Font.Bold = true;
-                    excel.Cells[iFil, 16] = totalDeducciones.ToString();
                     iFil++;
                 }
                 else
                 {
-                    totalPercepciones += decimal.Parse(dt.Rows[i][15].ToString());
-                    totalDeducciones += decimal.Parse(dt.Rows[i][21].ToString());
+                    totalSueldo += decimal.Parse(dt.Rows[i][8].ToString());
+                    totalHoras += decimal.Parse(dt.Rows[i][9].ToString());
+                    totalAsistencia += decimal.Parse(dt.Rows[i][10].ToString());
+                    totalPuntualidad += decimal.Parse(dt.Rows[i][11].ToString());
+                    totalDespensa += decimal.Parse(dt.Rows[i][12].ToString());
+                    totalPrimaVacacional += decimal.Parse(dt.Rows[i][13].ToString());
+                    totalVacaciones += decimal.Parse(dt.Rows[i][14].ToString());
+                    totalAguinaldo += decimal.Parse(dt.Rows[i][15].ToString());
+                    totalPercepciones += decimal.Parse(dt.Rows[i][16].ToString());
+                    totalIsr += decimal.Parse(dt.Rows[i][17].ToString());
+                    totalInfonavitPorcentaje += decimal.Parse(dt.Rows[i][18].ToString());
+                    totalInfonavitVSM += decimal.Parse(dt.Rows[i][19].ToString());
+                    totalInfonavitFijo += decimal.Parse(dt.Rows[i][20].ToString());
+                    totalResponsabilidades += decimal.Parse(dt.Rows[i][21].ToString());
+                    totalPrestamoEmpresa += decimal.Parse(dt.Rows[i][22].ToString());
+                    totalIsrRetenido += decimal.Parse(dt.Rows[i][23].ToString());
+                    totalPension += decimal.Parse(dt.Rows[i][24].ToString());
+                    totalDescTrab += decimal.Parse(dt.Rows[i][25].ToString());
+                    totalDeducciones += decimal.Parse(dt.Rows[i][26].ToString());
+
                     for (int j = 6; j < dt.Columns.Count; j++)
                     {
                         excel.Cells[iFil, iCol] = dt.Rows[i][j];
                         iCol++;
                     }
-                    iFil++;
-                    //rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 1];
-                    //rng.Font.Bold = true;
-                    //excel.Cells[iFil, 1] = dt.Rows[i][5];
-
-                    rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 9];
-                    rng.NumberFormat = "#,##0.00";
-                    rng.Font.Bold = true;
-                    excel.Cells[iFil, 9] = totalPercepciones.ToString();
-
-                    rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 15];
-                    rng.NumberFormat = "#,##0.00";
-                    rng.Font.Bold = true;
-                    excel.Cells[iFil, 15] = totalDeducciones.ToString();
                 }
-                iFil++;
+                
                 iCol = 1;
 
             }
+            iFil++;
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 3];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 3] = totalSueldo.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 4];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 4] = totalHoras.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 5];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 5] = totalAsistencia.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 6];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 6] = totalPuntualidad.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 7];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 7] = totalDespensa.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 8];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 8] = totalPrimaVacacional.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 9];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 9] = totalVacaciones.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 10];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 10] = totalAguinaldo.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 11];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 11] = totalPercepciones.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 12];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 12] = totalIsr.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 13];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 13] = totalInfonavitPorcentaje.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 14];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 14] = totalInfonavitVSM.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 15];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 15] = totalInfonavitFijo.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 16];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 16] = totalResponsabilidades.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 17];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 17] = totalPrestamoEmpresa.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 18];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 18] = totalIsrRetenido.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 19];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 19] = totalPension.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 20];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 20] = totalDescTrab.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 21];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 21] = totalDeducciones.ToString();
 
             excel.Range["A1", "G3"].Font.Bold = true;
-            excel.Range["A5", "O5"].Font.Bold = true;
-            excel.Range["A5", "O5"].Interior.ColorIndex = 36;
-            excel.Range["A5", "H5"].Font.ColorIndex = 1;
-            excel.Range["J5", "N5"].Font.ColorIndex = 1;
-            excel.Range["I5"].Font.ColorIndex = 32;
-            excel.Range["O5"].Font.ColorIndex = 32;
-            excel.Range["B6", "O3000"].NumberFormat = "#,##0.00";
+            excel.Range["A5", "U5"].Font.Bold = true;
+            excel.Range["A5", "U5"].Interior.ColorIndex = 36;
+            excel.Range["A5", "J5"].Font.ColorIndex = 1;
+            excel.Range["L5", "T5"].Font.ColorIndex = 1;
+            excel.Range["K5"].Font.ColorIndex = 32;
+            excel.Range["U5"].Font.ColorIndex = 32;
+            excel.Range["B6", "U2000"].NumberFormat = "#,##0.00";
 
 
             workSheet.SaveAs("Reporte_Tabular.xlsx");

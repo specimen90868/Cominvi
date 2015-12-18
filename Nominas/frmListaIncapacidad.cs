@@ -89,11 +89,12 @@ namespace Nominas
 
             for (int i = 0; i < lstEdiciones.Count; i++)
             {
-                switch (lstEdiciones[i].nombre.ToString())
+                switch (lstEdiciones[i].permiso.ToString())
                 {
-                    case "Incapacidades":
-                        toolNuevo.Enabled = Convert.ToBoolean(lstEdiciones[i].crear);
+                    case "Crear":
+                        toolNuevo.Enabled = Convert.ToBoolean(lstEdiciones[i].accion);
                         break;
+                    case "Eliminar": toolEliminar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
                 }
             }
         }
@@ -187,6 +188,7 @@ namespace Nominas
         {
             dgvIncapacidad.RowHeadersVisible = false;
             ListaIncapacidad();
+            CargaPerfil();
         }
 
         private void toolNuevo_Click(object sender, EventArgs e)

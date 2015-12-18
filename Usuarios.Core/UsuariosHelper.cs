@@ -22,7 +22,7 @@ namespace Usuarios.Core
                 usuario.idusuario = int.Parse(dtUsuarios.Rows[i]["idusuario"].ToString());
                 usuario.usuario = dtUsuarios.Rows[i]["usuario"].ToString();
                 usuario.nombre = dtUsuarios.Rows[i]["nombre"].ToString();
-                usuario.activo = int.Parse(dtUsuarios.Rows[i]["activo"].ToString());
+                usuario.activo = bool.Parse(dtUsuarios.Rows[i]["activo"].ToString());
                 usuario.fecharegistro = DateTime.Parse(dtUsuarios.Rows[i]["fecharegistro"].ToString());
                 lstUsuarios.Add(usuario);
             }
@@ -33,7 +33,7 @@ namespace Usuarios.Core
         public DataTable obtenerUsuario(int idusuario)
         {
             DataTable dtUsuario = new DataTable();
-            Command.CommandText = "select idusuario, usuario, nombre from usuarios where idusuario = @id";
+            Command.CommandText = "select idusuario, usuario, nombre, idperfil from usuarios where idusuario = @id";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("id", idusuario);
             return dtUsuario = SelectData(Command);

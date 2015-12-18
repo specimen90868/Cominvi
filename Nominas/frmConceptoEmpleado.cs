@@ -88,6 +88,23 @@ namespace Nominas
             dgvConceptosEmpleado.RowHeadersVisible = false;
             toolTitulo.Text += " - " + _nombreEmpleado;
             ListaConceptosEmpleado();
+            CargaPerfil();
+        }
+
+        private void CargaPerfil()
+        {
+            List<Autorizaciones.Core.Ediciones> lstEdiciones = GLOBALES.PERFILEDICIONES("Concepto - Empleado");
+
+            for (int i = 0; i < lstEdiciones.Count; i++)
+            {
+                switch (lstEdiciones[i].permiso.ToString())
+                {
+                    case "Crear":
+                        toolNuevo.Enabled = Convert.ToBoolean(lstEdiciones[i].accion);
+                        break;
+                    case "Baja": toolBaja.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                }
+            }
         }
 
         private void toolNuevo_Click(object sender, EventArgs e)

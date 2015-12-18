@@ -106,7 +106,16 @@ namespace Conceptos.Core
             }
             return lstConcepto;
         }
-        
+
+        public object obtenerIdConcepto(string concepto, int idempresa)
+        {
+            Command.CommandText = "select id from Conceptos where concepto = @concepto and idempresa = @idempresa";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("concepto", concepto);
+            Command.Parameters.AddWithValue("idempresa", idempresa);
+            object dato = Select(Command);
+            return dato;
+        }
         public object obtenerFormula(Conceptos c)
         {
             Command.CommandText = "select formula from conceptos where noconcepto = @noconcepto and idempresa = @idempresa";

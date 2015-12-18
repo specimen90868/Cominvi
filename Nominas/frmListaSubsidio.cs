@@ -78,6 +78,7 @@ namespace Nominas
         {
             dgvSubsidio.RowHeadersVisible = false;
             ListaSubsidio();
+            CargaPerfil();
         }
 
         private void CargaPerfil()
@@ -86,14 +87,14 @@ namespace Nominas
 
             for (int i = 0; i < lstEdiciones.Count; i++)
             {
-                switch (lstEdiciones[i].nombre.ToString())
+                switch (lstEdiciones[i].permiso.ToString())
                 {
-                    case "Subsidio":
-                        toolNuevo.Enabled = Convert.ToBoolean(lstEdiciones[i].crear);
-                        toolConsultar.Enabled = Convert.ToBoolean(lstEdiciones[i].consulta);
-                        toolEditar.Enabled = Convert.ToBoolean(lstEdiciones[i].modificar);
-                        toolBaja.Enabled = Convert.ToBoolean(lstEdiciones[i].baja);
+                    case "Crear":
+                        toolNuevo.Enabled = Convert.ToBoolean(lstEdiciones[i].accion);
                         break;
+                    case "Consultar": toolConsultar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                    case "Editar": toolEditar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                    case "Eliminar": toolBaja.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
                 }
             }
         }

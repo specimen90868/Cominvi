@@ -41,8 +41,6 @@ namespace Nominas
             Usuarios.Core.UsuariosHelper uh = new Usuarios.Core.UsuariosHelper();
             uh.Command = cmd;
 
-            Usuarios.Core.Usuarios usuario = new Usuarios.Core.Usuarios();
-
             try
             {
                 cnx.Open();
@@ -76,14 +74,14 @@ namespace Nominas
 
             for (int i = 0; i < lstEdiciones.Count; i++)
             {
-                switch (lstEdiciones[i].nombre.ToString())
+                switch (lstEdiciones[i].permiso.ToString())
                 {
-                    case "Usuarios":
-                        toolNuevo.Enabled = Convert.ToBoolean(lstEdiciones[i].crear);
-                        toolConsultar.Enabled = Convert.ToBoolean(lstEdiciones[i].consulta);
-                        toolEditar.Enabled = Convert.ToBoolean(lstEdiciones[i].modificar);
-                        toolBaja.Enabled = Convert.ToBoolean(lstEdiciones[i].baja);
+                    case "Crear":
+                        toolNuevo.Enabled = Convert.ToBoolean(lstEdiciones[i].accion);
                         break;
+                    case "Consultar": toolConsultar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                    case "Editar": toolEditar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                    case "Eliminar": toolBaja.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
                 }
             }
         }

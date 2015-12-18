@@ -86,13 +86,14 @@ namespace Nominas
 
             for (int i = 0; i < lstEdiciones.Count; i++)
             {
-                switch (lstEdiciones[i].nombre.ToString())
+                switch (lstEdiciones[i].permiso.ToString())
                 {
-                    case "Infonavit":
-                        toolNuevo.Enabled = Convert.ToBoolean(lstEdiciones[i].crear);
-                        toolConsultar.Enabled = Convert.ToBoolean(lstEdiciones[i].consulta);
-                        toolEditar.Enabled = Convert.ToBoolean(lstEdiciones[i].modificar);
+                    case "Crear":
+                        toolNuevo.Enabled = Convert.ToBoolean(lstEdiciones[i].accion);
                         break;
+                    case "Consultar": toolConsultar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                    case "Editar": toolEditar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                    case "Modificacion": toolModificar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
                 }
             }
         }
@@ -126,6 +127,7 @@ namespace Nominas
         {
             dgvInfonavit.RowHeadersVisible = false;
             ListaEmpleados();
+            CargaPerfil();
         }
 
         private void toolNuevo_Click(object sender, EventArgs e)

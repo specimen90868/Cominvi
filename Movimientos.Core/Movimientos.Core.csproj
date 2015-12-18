@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{064708FE-2541-4D22-A229-B646788702D2}</ProjectGuid>
+    <ProjectGuid>{A38AECCB-B2AB-4541-9B40-CE2C9E1439AD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Aguinaldo.Core</RootNamespace>
-    <AssemblyName>Aguinaldo.Core</AssemblyName>
+    <RootNamespace>Movimientos.Core</RootNamespace>
+    <AssemblyName>Movimientos.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,9 +39,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Aguinaldo.cs" />
-    <Compile Include="AguinaldoHelper.cs" />
+    <Compile Include="Movimientos.cs" />
+    <Compile Include="MovimientosHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Data.Obj\Data.Obj.csproj">
+      <Project>{2f926e34-44b7-49dc-b955-9b33f8b55c96}</Project>
+      <Name>Data.Obj</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

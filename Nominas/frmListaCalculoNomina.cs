@@ -40,6 +40,7 @@ namespace Nominas
         Faltas.Core.FaltasHelper fh;
         Incapacidad.Core.IncapacidadHelper ih;
         ProgramacionConcepto.Core.ProgramacionHelper pch;
+        Movimientos.Core.MovimientosHelper mh;
         List<tmpPagoNomina> lstValoresNomina;
         List<CalculoNomina.Core.DatosEmpleado> lstEmpleadosNomina;
         List<CalculoNomina.Core.DatosFaltaIncapacidad> lstEmpleadosFaltaIncapacidad;
@@ -132,6 +133,31 @@ namespace Nominas
             #endregion
 
             NominaActual();
+
+            if (_tipoNomina == GLOBALES.NORMAL)
+                CargaPerfil("Normal");
+            if (_tipoNomina == GLOBALES.ESPECIAL)
+                CargaPerfil("Especial");
+        }
+
+        private void CargaPerfil(string nombre)
+        {
+            List<Autorizaciones.Core.Ediciones> lstEdiciones = GLOBALES.PERFILEDICIONES(nombre);
+
+            for (int i = 0; i < lstEdiciones.Count; i++)
+            {
+                switch (lstEdiciones[i].permiso.ToString())
+                {
+                    case "Prenomina":
+                        toolPrenomina.Enabled = Convert.ToBoolean(lstEdiciones[i].accion);
+                        break;
+                    case "Calcular": toolCalcular.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                    case "Cargar Faltas": toolStripButton1.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                    case "Autorizar": toolAutorizar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                    case "Reportes": toolReportes.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+
+                }
+            }
         }
 
         void chk_CheckedChanged(object sender, EventArgs e)
@@ -701,6 +727,92 @@ namespace Nominas
                 workerCalculo.ReportProgress(100, "Otras Deducciones");
                 #endregion
 
+                #region MOVIMIENTOS
+                mh = new Movimientos.Core.MovimientosHelper();
+                mh.Command = cmd;
+                
+                contadorGrid = dgvEmpleados.Rows.Count;
+                contador = 0;
+                progreso = 0;
+                foreach (DataGridViewRow fila in dgvEmpleados.Rows)
+                {
+                    progreso = (contador * 100) / contadorGrid;
+                    workerCalculo.ReportProgress(progreso, "Movimientos");
+                    contador++;
+
+                    if (double.Parse(fila.Cells["sueldo"].Value.ToString()) != 0)
+                    {
+                        int existe = 0;
+                        Movimientos.Core.Movimientos mov = new Movimientos.Core.Movimientos();
+                        mov.idtrabajador = int.Parse(fila.Cells["idtrabajador"].Value.ToString());
+                        mov.fechainicio = dtpPeriodoInicio.Value.Date;
+                        mov.fechafin = dtpPeriodoFin.Value.Date;
+
+                        List<Movimientos.Core.Movimientos> lstMovimiento = new List<Movimientos.Core.Movimientos>();
+
+                        try
+                        {
+                            cnx.Open();
+                            existe = (int)mh.existeMovimiento(mov);
+                            cnx.Close();
+                        }
+                        catch (Exception error)
+                        {
+                            MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                            cnx.Dispose();
+                        }
+
+                        if (existe != 0)
+                        {
+                            try
+                            {
+                                cnx.Open();
+                                lstMovimiento = mh.obtenerMovimiento(mov);
+                                cnx.Close();
+                            }
+                            catch (Exception error)
+                            {
+                                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                                cnx.Dispose();
+                            }
+
+                            for (int i = 0; i < lstMovimiento.Count; i++)
+                            {
+                                ch = new Conceptos.Core.ConceptosHelper();
+                                ch.Command = cmd;
+                                Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
+                                concepto.id = lstMovimiento[i].idconcepto;
+                                List<Conceptos.Core.Conceptos> lstNoConcepto = new List<Conceptos.Core.Conceptos>();
+                                try
+                                {
+                                    cnx.Open();
+                                    lstNoConcepto = ch.obtenerConcepto(concepto);
+                                    cnx.Close();
+                                }
+                                catch (Exception error) { MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error"); }
+
+                                tmpPagoNomina vn = new tmpPagoNomina();
+                                vn.idtrabajador = (int)fila.Cells["idtrabajador"].Value;
+                                vn.idempresa = GLOBALES.IDEMPRESA;
+                                vn.idconcepto = lstMovimiento[i].idconcepto;
+                                vn.noconcepto = lstNoConcepto[0].noconcepto;
+                                vn.tipoconcepto = "D";
+                                vn.fechainicio = dtpPeriodoInicio.Value.Date;
+                                vn.fechafin = dtpPeriodoFin.Value.Date;
+                                vn.exento = 0;
+                                vn.gravado = 0;
+                                vn.cantidad = lstMovimiento[i].cantidad;
+                                vn.guardada = false;
+                                vn.tiponomina = _tipoNomina;
+                                vn.modificado = false;
+                                lstValoresNomina.Add(vn);
+                            }
+                        }
+                    }
+                }
+                workerCalculo.ReportProgress(100, "Otras Deducciones");
+                #endregion
+
                 #region CALCULO DE ISR RETENIDO Y SUBSIDIO PAGADO
 
                 ch = new Conceptos.Core.ConceptosHelper();
@@ -969,12 +1081,13 @@ namespace Nominas
                         {
                             for (int i = 0; i < lstPercepcion.Count; i++)
                             {
-                                noEmpleado = lstPercepcion[i].noempleado;
-                                nombreCompleto = lstPercepcion[i].nombrecompleto;
                                 if (int.Parse(fila.Cells["idtrabajador"].Value.ToString()) == lstPercepcion[i].idtrabajador)
                                 {
+                                    noEmpleado = lstPercepcion[i].noempleado;
+                                    nombreCompleto = lstPercepcion[i].nombrecompleto;
                                     percepciones += lstPercepcion[i].cantidad;
                                 }
+                                
                             }
                             for (int i = 0; i < lstDeduccion.Count; i++)
                             {
@@ -982,6 +1095,7 @@ namespace Nominas
                                 {
                                     deducciones += lstDeduccion[i].cantidad;
                                 }
+                                
                             }
                             total = percepciones - deducciones;
                             if (total < 0)
@@ -2894,6 +3008,7 @@ namespace Nominas
             r.OnReporte += r_OnReporte;
             r._inicio = dtpPeriodoInicio.Value.Date;
             r._fin = dtpPeriodoFin.Value.Date;
+            r._noReporte = 6;
             r._ReportePreNomina = true;
             r.Show();
         }
@@ -2977,6 +3092,9 @@ namespace Nominas
             int iFil = 6;
             Microsoft.Office.Interop.Excel.Range rng;
             decimal totalPercepciones = 0, totalDeducciones = 0;
+            decimal totalSueldo = 0, totalHoras = 0, totalAsistencia = 0, totalPuntualidad = 0, totalDespensa = 0,
+                totalPrimaVacacional = 0, totalVacaciones = 0, totalAguinaldo = 0, totalIsr = 0, totalInfonavitPorcentaje = 0, totalInfonavitVSM = 0, totalInfonavitFijo = 0,
+                totalResponsabilidades = 0, totalPrestamoEmpresa = 0, totalIsrRetenido = 0, totalPension = 0, totalDescTrab = 0;
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 progreso = (contador * 100) / contadorDt;
@@ -2985,8 +3103,25 @@ namespace Nominas
 
                 if (i != dt.Rows.Count - 1)
                 {
-                    totalPercepciones += decimal.Parse(dt.Rows[i][15].ToString());
-                    totalDeducciones += decimal.Parse(dt.Rows[i][21].ToString());
+                    totalSueldo += decimal.Parse(dt.Rows[i][8].ToString());
+                    totalHoras += decimal.Parse(dt.Rows[i][9].ToString());
+                    totalAsistencia += decimal.Parse(dt.Rows[i][10].ToString());
+                    totalPuntualidad += decimal.Parse(dt.Rows[i][11].ToString());
+                    totalDespensa += decimal.Parse(dt.Rows[i][12].ToString());
+                    totalPrimaVacacional += decimal.Parse(dt.Rows[i][13].ToString());
+                    totalVacaciones += decimal.Parse(dt.Rows[i][14].ToString());
+                    totalAguinaldo += decimal.Parse(dt.Rows[i][15].ToString());
+                    totalPercepciones += decimal.Parse(dt.Rows[i][16].ToString());
+                    totalIsr += decimal.Parse(dt.Rows[i][17].ToString());
+                    totalInfonavitPorcentaje += decimal.Parse(dt.Rows[i][18].ToString());
+                    totalInfonavitVSM += decimal.Parse(dt.Rows[i][19].ToString());
+                    totalInfonavitFijo += decimal.Parse(dt.Rows[i][20].ToString());
+                    totalResponsabilidades += decimal.Parse(dt.Rows[i][21].ToString());
+                    totalPrestamoEmpresa += decimal.Parse(dt.Rows[i][22].ToString());
+                    totalIsrRetenido += decimal.Parse(dt.Rows[i][23].ToString());
+                    totalPension += decimal.Parse(dt.Rows[i][24].ToString());
+                    totalDescTrab += decimal.Parse(dt.Rows[i][25].ToString());
+                    totalDeducciones += decimal.Parse(dt.Rows[i][26].ToString());
 
                     for (int j = 6; j < dt.Columns.Count; j++)
                     {
@@ -2999,16 +3134,16 @@ namespace Nominas
                     //rng.Font.Bold = true;
                     //excel.Cells[iFil, 1] = dt.Rows[i][5];
 
-                    rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 9];
-                    rng.NumberFormat = "#,##0.00";
-                    rng.Font.Bold = true;
-                    excel.Cells[iFil, 10] = totalPercepciones.ToString();
+                    //rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 9];
+                    //rng.NumberFormat = "#,##0.00";
+                    //rng.Font.Bold = true;
+                    //excel.Cells[iFil, 10] = totalPercepciones.ToString();
 
-                    rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 15];
-                    rng.NumberFormat = "#,##0.00";
-                    rng.Font.Bold = true;
-                    excel.Cells[iFil, 16] = totalDeducciones.ToString();
-                    iFil++;
+                    //rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 15];
+                    //rng.NumberFormat = "#,##0.00";
+                    //rng.Font.Bold = true;
+                    //excel.Cells[iFil, 16] = totalDeducciones.ToString();
+                    //iFil++;
 
                     #region AGRUPADO POR DEPARTAMENTO
                     //if (dt.Rows[i][5].ToString() == dt.Rows[i + 1][5].ToString())
@@ -3047,41 +3182,152 @@ namespace Nominas
                 }
                 else
                 {
-                    totalPercepciones += decimal.Parse(dt.Rows[i][15].ToString());
-                    totalDeducciones += decimal.Parse(dt.Rows[i][21].ToString());
+                    totalSueldo += decimal.Parse(dt.Rows[i][8].ToString());
+                    totalHoras += decimal.Parse(dt.Rows[i][9].ToString());
+                    totalAsistencia += decimal.Parse(dt.Rows[i][10].ToString());
+                    totalPuntualidad += decimal.Parse(dt.Rows[i][11].ToString());
+                    totalDespensa += decimal.Parse(dt.Rows[i][12].ToString());
+                    totalPrimaVacacional += decimal.Parse(dt.Rows[i][13].ToString());
+                    totalVacaciones += decimal.Parse(dt.Rows[i][14].ToString());
+                    totalAguinaldo += decimal.Parse(dt.Rows[i][15].ToString());
+                    totalPercepciones += decimal.Parse(dt.Rows[i][16].ToString());
+                    totalIsr += decimal.Parse(dt.Rows[i][17].ToString());
+                    totalInfonavitPorcentaje += decimal.Parse(dt.Rows[i][18].ToString());
+                    totalInfonavitVSM += decimal.Parse(dt.Rows[i][19].ToString());
+                    totalInfonavitFijo += decimal.Parse(dt.Rows[i][20].ToString());
+                    totalResponsabilidades += decimal.Parse(dt.Rows[i][21].ToString());
+                    totalPrestamoEmpresa += decimal.Parse(dt.Rows[i][22].ToString());
+                    totalIsrRetenido += decimal.Parse(dt.Rows[i][23].ToString());
+                    totalPension += decimal.Parse(dt.Rows[i][24].ToString());
+                    totalDescTrab += decimal.Parse(dt.Rows[i][25].ToString());
+                    totalDeducciones += decimal.Parse(dt.Rows[i][26].ToString());
+
                     for (int j = 6; j < dt.Columns.Count; j++)
                     {
                         excel.Cells[iFil, iCol] = dt.Rows[i][j];
                         iCol++;
                     }
-                    iFil++;
                     //rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 1];
                     //rng.Font.Bold = true;
                     //excel.Cells[iFil, 1] = dt.Rows[i][5];
 
-                    rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 9];
-                    rng.NumberFormat = "#,##0.00";
-                    rng.Font.Bold = true;
-                    excel.Cells[iFil, 9] = totalPercepciones.ToString();
+                    //rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 9];
+                    //rng.NumberFormat = "#,##0.00";
+                    //rng.Font.Bold = true;
+                    //excel.Cells[iFil, 9] = totalPercepciones.ToString();
 
-                    rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 15];
-                    rng.NumberFormat = "#,##0.00";
-                    rng.Font.Bold = true;
-                    excel.Cells[iFil, 15] = totalDeducciones.ToString();
+                    //rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 15];
+                    //rng.NumberFormat = "#,##0.00";
+                    //rng.Font.Bold = true;
+                    //excel.Cells[iFil, 15] = totalDeducciones.ToString();
                 }
-                iFil++;
                 iCol = 1;
-
             }
+            iFil++;
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 3];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 3] = totalSueldo.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 4];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 4] = totalHoras.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 5];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 5] = totalAsistencia.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 6];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 6] = totalPuntualidad.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 7];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 7] = totalDespensa.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 8];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 8] = totalPrimaVacacional.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 9];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 9] = totalVacaciones.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 10];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 10] = totalAguinaldo.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 11];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 11] = totalPercepciones.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 12];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 12] = totalIsr.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 13];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 13] = totalInfonavitPorcentaje.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 14];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 14] = totalInfonavitVSM.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 15];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 15] = totalInfonavitFijo.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 16];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 16] = totalResponsabilidades.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 17];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 17] = totalPrestamoEmpresa.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 18];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 18] = totalIsrRetenido.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 19];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 19] = totalPension.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 20];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 20] = totalDescTrab.ToString();
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 21];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 21] = totalDeducciones.ToString();
 
             excel.Range["A1", "G3"].Font.Bold = true;
-            excel.Range["A5", "O5"].Font.Bold = true;
-            excel.Range["A5", "O5"].Interior.ColorIndex = 36;
-            excel.Range["A5", "H5"].Font.ColorIndex = 1;
-            excel.Range["J5", "N5"].Font.ColorIndex = 1;
-            excel.Range["I5"].Font.ColorIndex = 32;
-            excel.Range["O5"].Font.ColorIndex = 32;
-            excel.Range["B6", "O3000"].NumberFormat = "#,##0.00";
+            excel.Range["A5", "U5"].Font.Bold = true;
+            excel.Range["A5", "U5"].Interior.ColorIndex = 36;
+            excel.Range["A5", "J5"].Font.ColorIndex = 1;
+            excel.Range["L5", "T5"].Font.ColorIndex = 1;
+            excel.Range["K5"].Font.ColorIndex = 32;
+            excel.Range["U5"].Font.ColorIndex = 32;
+            excel.Range["B6", "U2000"].NumberFormat = "#,##0.00";
 
             
             workSheet.SaveAs("Reporte_Tabular.xlsx");
@@ -3148,6 +3394,74 @@ namespace Nominas
                         }
                     }
                 }
+            }
+        }
+
+        private void toolOrdenEmpleado_Click(object sender, EventArgs e)
+        {
+            var ordenEmpleado = from f in lstEmpleadosNomina orderby f.noempleado ascending select f;
+            dgvEmpleados.DataSource = ordenEmpleado.ToList();
+            for (int i = 1; i < dgvEmpleados.Columns.Count; i++)
+            {
+                dgvEmpleados.AutoResizeColumn(i);
+            }
+
+            var ordenEmpleadoFalta = from f in lstEmpleadosFaltaIncapacidad orderby f.noempleado ascending select f;
+            dgvFaltas.DataSource = ordenEmpleadoFalta.ToList();
+            for (int i = 1; i < dgvFaltas.Columns.Count; i++)
+            {
+                dgvFaltas.AutoResizeColumn(i);
+            }
+        }
+
+        private void toolOrdenNombre_Click(object sender, EventArgs e)
+        {
+            var ordenNombre = from f in lstEmpleadosNomina orderby f.nombres ascending select f;
+            dgvEmpleados.DataSource = ordenNombre.ToList();
+            for (int i = 1; i < dgvEmpleados.Columns.Count; i++)
+            {
+                dgvEmpleados.AutoResizeColumn(i);
+            }
+
+            var ordenNombreFalta = from f in lstEmpleadosFaltaIncapacidad orderby f.nombres ascending select f;
+            dgvFaltas.DataSource = ordenNombreFalta.ToList();
+            for (int i = 1; i < dgvFaltas.Columns.Count; i++)
+            {
+                dgvFaltas.AutoResizeColumn(i);
+            }
+        }
+
+        private void toolOrdenPaterno_Click(object sender, EventArgs e)
+        {
+            var ordenPaterno = from f in lstEmpleadosNomina orderby f.paterno ascending select f;
+            dgvEmpleados.DataSource = ordenPaterno.ToList();
+            for (int i = 1; i < dgvEmpleados.Columns.Count; i++)
+            {
+                dgvEmpleados.AutoResizeColumn(i);
+            }
+
+            var ordenPaternoFalta = from f in lstEmpleadosFaltaIncapacidad orderby f.paterno ascending select f;
+            dgvFaltas.DataSource = ordenPaternoFalta.ToList();
+            for (int i = 1; i < dgvFaltas.Columns.Count; i++)
+            {
+                dgvFaltas.AutoResizeColumn(i);
+            }
+        }
+
+        private void toolOrdenMaterno_Click(object sender, EventArgs e)
+        {
+            var ordenMaterno = from f in lstEmpleadosNomina orderby f.materno ascending select f;
+            dgvEmpleados.DataSource = ordenMaterno.ToList();
+            for (int i = 1; i < dgvEmpleados.Columns.Count; i++)
+            {
+                dgvEmpleados.AutoResizeColumn(i);
+            }
+
+            var ordenMaternoFalta = from f in lstEmpleadosFaltaIncapacidad orderby f.materno ascending select f;
+            dgvFaltas.DataSource = ordenMaternoFalta.ToList();
+            for (int i = 1; i < dgvFaltas.Columns.Count; i++)
+            {
+                dgvFaltas.AutoResizeColumn(i);
             }
         }
         

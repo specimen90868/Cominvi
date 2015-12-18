@@ -160,7 +160,7 @@ namespace Nominas
                 dtFila["id"] = i;
                 try { 
                     cnx.Open();
-                    dtFila["idtrabajador"] = emph.obtenerIdTrabajador(fila.Cells["noempleado"].Value.ToString());
+                    dtFila["idtrabajador"] = emph.obtenerIdTrabajador(fila.Cells["noempleado"].Value.ToString(), idEmpresa);
                     dtFila["idperiodo"] = emph.obtenerIdPeriodo(fila.Cells["noempleado"].Value.ToString());
                     cnx.Close();
                 } catch (Exception error) { 

@@ -73,7 +73,7 @@
             this.toolEliminar.Name = "toolEliminar";
             this.toolEliminar.Size = new System.Drawing.Size(70, 22);
             this.toolEliminar.Text = "Eliminar";
-            this.toolEliminar.Visible = false;
+            this.toolEliminar.Click += new System.EventHandler(this.toolEliminar_Click);
             // 
             // toolStripSeparator1
             // 

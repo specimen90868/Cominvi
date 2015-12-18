@@ -71,6 +71,34 @@ namespace Nominas
                     lv.Show();
                     this.Dispose();
                     break;
+
+                case "Movimientos":
+                    frmListaMovimientos lm = new frmListaMovimientos();
+                    lm.MdiParent = this.MdiParent;
+
+                    if (rbtnNormal.Checked)
+                        lm._tipoNomina = GLOBALES.NORMAL;
+
+                    if (rbtnEspecial.Checked)
+                        lm._tipoNomina = GLOBALES.ESPECIAL;
+
+                    lm.Show();
+                    this.Dispose();
+                    break;
+
+                case "CargaMovimientos":
+                    frmListaCargaMovimientos lcm = new frmListaCargaMovimientos();
+                    lcm.MdiParent = this.MdiParent;
+
+                    if (rbtnNormal.Checked)
+                        lcm._tipoNomina = GLOBALES.NORMAL;
+
+                    if (rbtnEspecial.Checked)
+                        lcm._tipoNomina = GLOBALES.ESPECIAL;
+
+                    lcm.Show();
+                    this.Dispose();
+                    break;
             }
         }
     }

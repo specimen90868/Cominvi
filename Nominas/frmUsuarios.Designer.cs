@@ -44,6 +44,8 @@
             this.Label12 = new System.Windows.Forms.Label();
             this.txtUsuario = new System.Windows.Forms.TextBox();
             this.Label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cmbPerfil = new System.Windows.Forms.ComboBox();
             this.toolVentana.SuspendLayout();
             this.toolEmpresa.SuspendLayout();
             this.SuspendLayout();
@@ -181,11 +183,30 @@
             this.Label1.TabIndex = 174;
             this.Label1.Text = "Usuario:";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(103, 219);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(33, 13);
+            this.label2.TabIndex = 180;
+            this.label2.Text = "Perfil:";
+            // 
+            // cmbPerfil
+            // 
+            this.cmbPerfil.FormattingEnabled = true;
+            this.cmbPerfil.Location = new System.Drawing.Point(143, 216);
+            this.cmbPerfil.Name = "cmbPerfil";
+            this.cmbPerfil.Size = new System.Drawing.Size(121, 21);
+            this.cmbPerfil.TabIndex = 181;
+            // 
             // frmUsuarios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(712, 542);
+            this.Controls.Add(this.cmbPerfil);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.lblPassword);
             this.Controls.Add(this.lblPassword2);
             this.Controls.Add(this.txtPassword);
@@ -226,5 +247,7 @@
         internal System.Windows.Forms.Label Label12;
         internal System.Windows.Forms.TextBox txtUsuario;
         internal System.Windows.Forms.Label Label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox cmbPerfil;
     }
 }

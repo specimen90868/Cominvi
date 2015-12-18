@@ -32,18 +32,19 @@ namespace Nominas
         private void frmListaEmpleados_Load(object sender, EventArgs e) 
         {
             dgvEmpleados.RowHeadersVisible = false;
-            CargaPerfil();
             ListaEmpleados();
 
             if (_empleadoAltaBaja == GLOBALES.INACTIVO)
             {
+                CargaPerfil(GLOBALES.INACTIVO, "Empleados en Baja");
                 toolNuevo.Enabled = false;
-                toolEditar.Enabled = false;
+                //toolEditar.Enabled = false;
                 toolBaja.Enabled = false;
-                toolIncrementoSalario.Enabled = false;
+                //toolIncrementoSalario.Enabled = false;
             }
             else
             {
+                CargaPerfil(GLOBALES.ACTIVO, "Empleados de nómina");
                 toolReingreso.Visible = false;
             }
         }
@@ -101,20 +102,20 @@ namespace Nominas
             dgvEmpleados.Columns["IdTrabajador"].Visible = false;
         }
 
-        private void CargaPerfil()
+        private void CargaPerfil(int activo_inactivo, string nombre)
         {
-            List<Autorizaciones.Core.Ediciones> lstEdiciones = GLOBALES.PERFILEDICIONES("Trabajadores");
+            List<Autorizaciones.Core.Ediciones> lstEdiciones = GLOBALES.PERFILEDICIONES(nombre);
 
             for (int i = 0; i < lstEdiciones.Count; i++)
             {
-                switch (lstEdiciones[i].nombre.ToString())
+                switch (lstEdiciones[i].permiso.ToString())
                 {
-                    case "Trabajadores":
-                        toolNuevo.Enabled = Convert.ToBoolean(lstEdiciones[i].crear);
-                        toolConsultar.Enabled = Convert.ToBoolean(lstEdiciones[i].consulta);
-                        toolEditar.Enabled = Convert.ToBoolean(lstEdiciones[i].modificar);
-                        toolEliminar.Enabled = Convert.ToBoolean(lstEdiciones[i].baja);
-                        break;
+                    case "Consular": toolConsultar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                    case "Editar": toolEditar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                    case "Historial": toolHistorial.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                    case "Reingreso": toolReingreso.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                    case "Eliminar": toolEliminar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                    case "Incrementar Salario": toolIncrementoSalario.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
                 }
             }
         }

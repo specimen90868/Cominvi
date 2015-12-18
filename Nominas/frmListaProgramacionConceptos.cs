@@ -34,6 +34,7 @@ namespace Nominas
         private void frmListaProgramacionConceptos_Load(object sender, EventArgs e)
         {
             ListaEmpleados();
+            CargaPerfil();
         }
 
         private void ListaEmpleados()
@@ -100,17 +101,17 @@ namespace Nominas
 
         private void CargaPerfil()
         {
-            List<Autorizaciones.Core.Ediciones> lstEdiciones = GLOBALES.PERFILEDICIONES("ProgramacionConcepto");
+            List<Autorizaciones.Core.Ediciones> lstEdiciones = GLOBALES.PERFILEDICIONES("Programación de concepto");
 
             for (int i = 0; i < lstEdiciones.Count; i++)
             {
-                switch (lstEdiciones[i].nombre.ToString())
+                switch (lstEdiciones[i].permiso.ToString())
                 {
-                    case "ProgramacionConcepto":
-                        toolNuevo.Enabled = Convert.ToBoolean(lstEdiciones[i].crear);
-                        toolConsultar.Enabled = Convert.ToBoolean(lstEdiciones[i].consulta);
-                        toolEditar.Enabled = Convert.ToBoolean(lstEdiciones[i].modificar);
+                    case "Crear":
+                        toolNuevo.Enabled = Convert.ToBoolean(lstEdiciones[i].accion);
                         break;
+                    case "Consultar": toolConsultar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                    case "Editar": toolEditar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
                 }
             }
         }

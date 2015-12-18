@@ -247,7 +247,7 @@ namespace Nominas
                 try
                 {
                     cnx.Open();
-                    dtFila["idtrabajador"] = emph.obtenerIdTrabajador(fila.Cells["noempleado"].Value.ToString());
+                    dtFila["idtrabajador"] = emph.obtenerIdTrabajador(fila.Cells["noempleado"].Value.ToString(), idEmpresa);
                     cnx.Close();
                 }
                 catch (Exception error)

@@ -64,7 +64,7 @@ namespace Nominas
                             cmd.Connection = con;
                             con.Open();
                             DataTable dtExcelSchema = con.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                            sheetName = dtExcelSchema.Rows[6]["TABLE_NAME"].ToString();
+                            sheetName = dtExcelSchema.Rows[8]["TABLE_NAME"].ToString();
                             con.Close();
                         }
                     }
@@ -224,6 +224,7 @@ namespace Nominas
             frmVacaciones v = new frmVacaciones();
             v.OnVacacion += v_OnVacacion;
             v._tipoNomina = _tipoNomina;
+            v._ventana = "Carga";
             v.MdiParent = this.MdiParent;
             v.Show();
         }
@@ -275,7 +276,7 @@ namespace Nominas
                 emph.Command = cmd;
                 foreach (DataGridViewRow fila in dgvCargaVacaciones.Rows)
                 {
-                    if ((bool)fila.Cells["prima"].Value)
+                    if (bool.Parse(fila.Cells["prima"].Value.ToString()))
                         noempleados += fila.Cells["noempleado"].Value.ToString() + ",";
                 }
                 noempleados = noempleados.Substring(0, noempleados.Count() - 1);
@@ -702,7 +703,26 @@ namespace Nominas
 
         private void frmListaCargaVacaciones_Load(object sender, EventArgs e)
         {
+            CargaPerfil();
+        }
 
+        private void CargaPerfil()
+        {
+            List<Autorizaciones.Core.Ediciones> lstEdiciones = GLOBALES.PERFILEDICIONES("Carga Vacaciones");
+
+            for (int i = 0; i < lstEdiciones.Count; i++)
+            {
+                switch (lstEdiciones[i].permiso.ToString())
+                {
+                    case "Crear":
+                        toolNuevo.Enabled = Convert.ToBoolean(lstEdiciones[i].accion);
+                        break;
+                    case "Cargar": toolCargar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion);
+                        break;
+                    case "Aplicar": toolAplicar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion);
+                        break;
+                }
+            }
         }
     }
 }

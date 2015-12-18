@@ -68,25 +68,26 @@ namespace Nominas
             dgvEmpleados.Columns["IdTrabajador"].Visible = false;
         }
 
-        private void CargaPerfil()
-        {
-            List<Autorizaciones.Core.Ediciones> lstEdiciones = GLOBALES.PERFILEDICIONES("ConceptoEmpleado");
-
-            for (int i = 0; i < lstEdiciones.Count; i++)
-            {
-                switch (lstEdiciones[i].nombre.ToString())
-                {
-                    case "ConceptoEmpleado":
-                        toolConsultar.Enabled = Convert.ToBoolean(lstEdiciones[i].consulta);
-                        break;
-                }
-            }
-        }
-
         private void frmListaConceptoEmpleado_Load(object sender, EventArgs e)
         {
             dgvEmpleados.RowHeadersVisible = false;
             ListaEmpleados();
+            CargaPerfil();
+        }
+
+        private void CargaPerfil()
+        {
+            List<Autorizaciones.Core.Ediciones> lstEdiciones = GLOBALES.PERFILEDICIONES("Concepto - Empleado");
+
+            for (int i = 0; i < lstEdiciones.Count; i++)
+            {
+                switch (lstEdiciones[i].permiso.ToString())
+                {
+                    case "Consultar":
+                        toolConsultar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion);
+                        break;
+                }
+            }
         }
 
         private void toolConsultar_Click(object sender, EventArgs e)

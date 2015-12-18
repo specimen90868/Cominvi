@@ -767,19 +767,43 @@ namespace Nominas
                         break;
 
                     case "DiasIncapacidad":
-                        object diasIncapacidad;
-                        Incapacidad.Core.IncapacidadHelper ih = new Incapacidad.Core.IncapacidadHelper();
+                        //object diasIncapacidad;
+                        //Incapacidad.Core.IncapacidadHelper ih = new Incapacidad.Core.IncapacidadHelper();
+                        //ih.Command = cmd;
+                        //Incapacidad.Core.Incapacidades inc = new Incapacidad.Core.Incapacidades();
+                        //inc.idtrabajador = datosEmpleados[0].idtrabajador;
+                        //inc.fechainicio = fechainicio;
+                        //inc.fechafin = fechafin;
+
+                        //cnx.Open();
+                        //diasIncapacidad = ih.existeIncapacidad(inc);
+                        //cnx.Close();
+
+                        //formula = formula.Replace("[" + variables[i] + "]", diasIncapacidad.ToString());
+                        //break;
+
+                        object existeIncidencia = null, diasIncapacidad = 0;
+                        Incidencias.Core.IncidenciasHelper ih = new Incidencias.Core.IncidenciasHelper();
                         ih.Command = cmd;
-                        Incapacidad.Core.Incapacidades inc = new Incapacidad.Core.Incapacidades();
+
+                        Incidencias.Core.Incidencias inc = new Incidencias.Core.Incidencias();
                         inc.idtrabajador = datosEmpleados[0].idtrabajador;
-                        inc.fechainicio = fechainicio;
-                        inc.fechafin = fechafin;
+                        inc.periodoinicio = fechainicio;
+                        inc.periodofin = fechafin;
 
                         cnx.Open();
-                        diasIncapacidad = ih.existeIncapacidad(inc);
+                        existeIncidencia = ih.existeIncidencia(inc);
                         cnx.Close();
 
-                        formula = formula.Replace("[" + variables[i] + "]", diasIncapacidad.ToString());
+                        if ((int)existeIncidencia != 0)
+                        {
+                            cnx.Open();
+                            diasIncapacidad = (int)ih.diasIncidencia(inc);
+                            cnx.Close();
+                            formula = formula.Replace("[" + variables[i] + "]", diasIncapacidad.ToString());
+                        }
+                        else
+                            formula = formula.Replace("[" + variables[i] + "]", diasIncapacidad.ToString());
                         break;
 
                     case "ISR":

@@ -29,17 +29,17 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmListaCalculoNomina));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle45 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle46 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle47 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle48 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle49 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle50 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle51 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle52 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle53 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle54 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle55 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolTitulo = new System.Windows.Forms.ToolStrip();
             this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
             this.toolAbrir = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,11 +58,15 @@
             this.toolDepartamento = new System.Windows.Forms.ToolStripMenuItem();
             this.toolPuesto = new System.Windows.Forms.ToolStripMenuItem();
             this.toolNoEmpleado = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolOrdenar = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolOrdenEmpleado = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolOrdenNombre = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolOrdenPaterno = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolOrdenMaterno = new System.Windows.Forms.ToolStripMenuItem();
             this.toolPrenomina = new System.Windows.Forms.ToolStripButton();
             this.toolCalcular = new System.Windows.Forms.ToolStripButton();
             this.toolCargar = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolDescalcular = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolCerrar = new System.Windows.Forms.ToolStripButton();
@@ -247,11 +251,11 @@
             // 
             this.toolBusqueda.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolFiltro,
+            this.toolOrdenar,
             this.toolPrenomina,
             this.toolCalcular,
             this.toolCargar,
             this.toolStripButton1,
-            this.toolStripSeparator3,
             this.toolDescalcular,
             this.toolStripSeparator1,
             this.toolCerrar,
@@ -305,6 +309,47 @@
             this.toolNoEmpleado.Text = "No. Empleado";
             this.toolNoEmpleado.Click += new System.EventHandler(this.toolNoEmpleado_Click);
             // 
+            // toolOrdenar
+            // 
+            this.toolOrdenar.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolOrdenEmpleado,
+            this.toolOrdenNombre,
+            this.toolOrdenPaterno,
+            this.toolOrdenMaterno});
+            this.toolOrdenar.Image = ((System.Drawing.Image)(resources.GetObject("toolOrdenar.Image")));
+            this.toolOrdenar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolOrdenar.Name = "toolOrdenar";
+            this.toolOrdenar.Size = new System.Drawing.Size(82, 22);
+            this.toolOrdenar.Text = "Ordenar";
+            // 
+            // toolOrdenEmpleado
+            // 
+            this.toolOrdenEmpleado.Name = "toolOrdenEmpleado";
+            this.toolOrdenEmpleado.Size = new System.Drawing.Size(165, 22);
+            this.toolOrdenEmpleado.Text = "No. de Empleado";
+            this.toolOrdenEmpleado.Click += new System.EventHandler(this.toolOrdenEmpleado_Click);
+            // 
+            // toolOrdenNombre
+            // 
+            this.toolOrdenNombre.Name = "toolOrdenNombre";
+            this.toolOrdenNombre.Size = new System.Drawing.Size(165, 22);
+            this.toolOrdenNombre.Text = "Nombre(s)";
+            this.toolOrdenNombre.Click += new System.EventHandler(this.toolOrdenNombre_Click);
+            // 
+            // toolOrdenPaterno
+            // 
+            this.toolOrdenPaterno.Name = "toolOrdenPaterno";
+            this.toolOrdenPaterno.Size = new System.Drawing.Size(165, 22);
+            this.toolOrdenPaterno.Text = "Ap. Paterno";
+            this.toolOrdenPaterno.Click += new System.EventHandler(this.toolOrdenPaterno_Click);
+            // 
+            // toolOrdenMaterno
+            // 
+            this.toolOrdenMaterno.Name = "toolOrdenMaterno";
+            this.toolOrdenMaterno.Size = new System.Drawing.Size(165, 22);
+            this.toolOrdenMaterno.Text = "Ap. Materno";
+            this.toolOrdenMaterno.Click += new System.EventHandler(this.toolOrdenMaterno_Click);
+            // 
             // toolPrenomina
             // 
             this.toolPrenomina.Image = ((System.Drawing.Image)(resources.GetObject("toolPrenomina.Image")));
@@ -341,11 +386,6 @@
             this.toolStripButton1.Size = new System.Drawing.Size(95, 22);
             this.toolStripButton1.Text = "Cargar Faltas";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
             // 
             // toolDescalcular
             // 
@@ -424,9 +464,9 @@
             // 
             // seleccion
             // 
-            dataGridViewCellStyle45.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle45.NullValue = false;
-            this.seleccion.DefaultCellStyle = dataGridViewCellStyle45;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle1.NullValue = false;
+            this.seleccion.DefaultCellStyle = dataGridViewCellStyle1;
             this.seleccion.HeaderText = "Seleccion";
             this.seleccion.Name = "seleccion";
             this.seleccion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
@@ -474,40 +514,40 @@
             // 
             // sueldo
             // 
-            dataGridViewCellStyle46.Format = "C6";
-            dataGridViewCellStyle46.NullValue = null;
-            this.sueldo.DefaultCellStyle = dataGridViewCellStyle46;
+            dataGridViewCellStyle2.Format = "C6";
+            dataGridViewCellStyle2.NullValue = null;
+            this.sueldo.DefaultCellStyle = dataGridViewCellStyle2;
             this.sueldo.HeaderText = "Sueldo";
             this.sueldo.Name = "sueldo";
             this.sueldo.ReadOnly = true;
             // 
             // despensa
             // 
-            dataGridViewCellStyle47.Format = "C6";
-            this.despensa.DefaultCellStyle = dataGridViewCellStyle47;
+            dataGridViewCellStyle3.Format = "C6";
+            this.despensa.DefaultCellStyle = dataGridViewCellStyle3;
             this.despensa.HeaderText = "Despensa";
             this.despensa.Name = "despensa";
             // 
             // asistencia
             // 
-            dataGridViewCellStyle48.Format = "C6";
-            this.asistencia.DefaultCellStyle = dataGridViewCellStyle48;
+            dataGridViewCellStyle4.Format = "C6";
+            this.asistencia.DefaultCellStyle = dataGridViewCellStyle4;
             this.asistencia.HeaderText = "Asistencia";
             this.asistencia.Name = "asistencia";
             this.asistencia.ReadOnly = true;
             // 
             // puntualidad
             // 
-            dataGridViewCellStyle49.Format = "C6";
-            this.puntualidad.DefaultCellStyle = dataGridViewCellStyle49;
+            dataGridViewCellStyle5.Format = "C6";
+            this.puntualidad.DefaultCellStyle = dataGridViewCellStyle5;
             this.puntualidad.HeaderText = "Puntualidad";
             this.puntualidad.Name = "puntualidad";
             this.puntualidad.ReadOnly = true;
             // 
             // horas
             // 
-            dataGridViewCellStyle50.Format = "C6";
-            this.horas.DefaultCellStyle = dataGridViewCellStyle50;
+            dataGridViewCellStyle6.Format = "C6";
+            this.horas.DefaultCellStyle = dataGridViewCellStyle6;
             this.horas.HeaderText = "H. Extras Dobles";
             this.horas.Name = "horas";
             // 
@@ -778,41 +818,41 @@
             // 
             // dataGridViewTextBoxColumn8
             // 
-            dataGridViewCellStyle51.Format = "C6";
-            dataGridViewCellStyle51.NullValue = null;
-            this.dataGridViewTextBoxColumn8.DefaultCellStyle = dataGridViewCellStyle51;
+            dataGridViewCellStyle7.Format = "C6";
+            dataGridViewCellStyle7.NullValue = null;
+            this.dataGridViewTextBoxColumn8.DefaultCellStyle = dataGridViewCellStyle7;
             this.dataGridViewTextBoxColumn8.HeaderText = "P. Puntualidad";
             this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
             this.dataGridViewTextBoxColumn8.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn9
             // 
-            dataGridViewCellStyle52.Format = "C6";
-            this.dataGridViewTextBoxColumn9.DefaultCellStyle = dataGridViewCellStyle52;
+            dataGridViewCellStyle8.Format = "C6";
+            this.dataGridViewTextBoxColumn9.DefaultCellStyle = dataGridViewCellStyle8;
             this.dataGridViewTextBoxColumn9.HeaderText = "H. Extras Dobles";
             this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
             this.dataGridViewTextBoxColumn9.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn10
             // 
-            dataGridViewCellStyle53.Format = "C6";
-            this.dataGridViewTextBoxColumn10.DefaultCellStyle = dataGridViewCellStyle53;
+            dataGridViewCellStyle9.Format = "C6";
+            this.dataGridViewTextBoxColumn10.DefaultCellStyle = dataGridViewCellStyle9;
             this.dataGridViewTextBoxColumn10.HeaderText = "Inicio";
             this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
             this.dataGridViewTextBoxColumn10.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn11
             // 
-            dataGridViewCellStyle54.Format = "C6";
-            this.dataGridViewTextBoxColumn11.DefaultCellStyle = dataGridViewCellStyle54;
+            dataGridViewCellStyle10.Format = "C6";
+            this.dataGridViewTextBoxColumn11.DefaultCellStyle = dataGridViewCellStyle10;
             this.dataGridViewTextBoxColumn11.HeaderText = "Fin";
             this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
             this.dataGridViewTextBoxColumn11.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn12
             // 
-            dataGridViewCellStyle55.Format = "C6";
-            this.dataGridViewTextBoxColumn12.DefaultCellStyle = dataGridViewCellStyle55;
+            dataGridViewCellStyle11.Format = "C6";
+            this.dataGridViewTextBoxColumn12.DefaultCellStyle = dataGridViewCellStyle11;
             this.dataGridViewTextBoxColumn12.HeaderText = "H. Extras Dobles";
             this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
             // 
@@ -911,7 +951,6 @@
         internal System.Windows.Forms.ToolStrip toolTitulo;
         internal System.Windows.Forms.ToolStrip toolBusqueda;
         private System.Windows.Forms.ToolStripButton toolCargar;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         internal System.Windows.Forms.ToolStripLabel lblBuscar;
         internal System.Windows.Forms.ToolStripTextBox txtBuscar;
         private System.Windows.Forms.DataGridView dgvEmpleados;
@@ -997,5 +1036,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn puntualidad;
         private System.Windows.Forms.DataGridViewTextBoxColumn horas;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripSplitButton toolOrdenar;
+        private System.Windows.Forms.ToolStripMenuItem toolOrdenEmpleado;
+        private System.Windows.Forms.ToolStripMenuItem toolOrdenNombre;
+        private System.Windows.Forms.ToolStripMenuItem toolOrdenPaterno;
+        private System.Windows.Forms.ToolStripMenuItem toolOrdenMaterno;
     }
 }

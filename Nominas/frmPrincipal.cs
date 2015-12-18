@@ -32,7 +32,31 @@ namespace Nominas
             MenuInicial(0);
         }
 
-        private void workPerfil_DoWork(object sender, DoWorkEventArgs e)
+        private void mnuAbrirEmpresa_Click(object sender, EventArgs e)
+        {
+            if (GLOBALES.IDEMPRESA != 0)
+            {
+                foreach (Form frm in this.MdiChildren)
+                {
+                    frm.Dispose();
+                }
+            }
+
+            frmSeleccionarEmpresa frmEmpresa = new frmSeleccionarEmpresa();
+            frmEmpresa.OnAbrirEmpresa += frmEmpresa_OnAbrirEmpresa;
+            frmEmpresa.MdiParent = this;
+            frmEmpresa.Show();
+        }
+
+        void frmEmpresa_OnAbrirEmpresa()
+        {
+            this.Text = "Sistema de Nomina - [" + GLOBALES.NOMBREEMPRESA + "]";
+            MenuPerfil();
+            MenuInicial(2);
+            Permisos();
+        }
+
+        private void Permisos()
         {
             cnx = new SqlConnection();
             cmd = new SqlCommand();
@@ -56,19 +80,19 @@ namespace Nominas
                 switch (lstAuth[i].modulo.ToString())
                 {
                     case "Recursos Humanos":
-                        mnuRecursosHumanos.Enabled = Convert.ToBoolean(lstAuth[i].acceso);
+                        mnuRecursosHumanos.Enabled = lstAuth[i].acceso;
                         break;
                     case "Seguro Social":
-                        mnuSeguroSocial.Enabled = Convert.ToBoolean(lstAuth[i].acceso);
+                        mnuSeguroSocial.Enabled = lstAuth[i].acceso;
                         break;
                     case "Nominas":
-                        mnuNominas.Enabled = Convert.ToBoolean(lstAuth[i].acceso);
+                        mnuNominas.Enabled = lstAuth[i].acceso;
                         break;
                     case "Catálogos":
-                        mnuCatalogos.Enabled = Convert.ToBoolean(lstAuth[i].acceso);
+                        mnuCatalogos.Enabled = lstAuth[i].acceso;
                         break;
                     case "Configuración":
-                        mnuConfiguracion.Enabled = Convert.ToBoolean(lstAuth[i].acceso);
+                        mnuConfiguracion.Enabled = lstAuth[i].acceso;
                         break;
                 }
             }
@@ -78,95 +102,183 @@ namespace Nominas
                 switch (lstMenu[i].nombre.ToString())
                 {
                     case "Empleados":
-                        mnuEmpleados.Enabled = Convert.ToBoolean(lstMenu[i].ver);
+                        mnuEmpleados.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Empleados de nómina":
+                        mnuEmpleadoNomina.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Complementos":
+                        mnuComplementos.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Empleados en Baja":
+                        mnuEmpleadosBaja.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "Expedientes":
-                        mnuExpedientes.Enabled = Convert.ToBoolean(lstMenu[i].ver);
+                        mnuExpedientes.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
-                    case "Empresas":
-                        mnuEmpresa.Enabled = Convert.ToBoolean(lstMenu[i].ver);
+                    case "Infonavit":
+                        mnuInfonavit.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Incapacidades":
+                        toolIncapacidades.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Operaciones SUA":
+                        toolSua.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Altas":
+                        toolAltas.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Modificaciones":
+                        toolModificaciones.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Reingresos":
+                        toolReingresos.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Bajas":
+                        toolBajas.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Ausentismos":
+                        toolAusentismos.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Infonavit SUA":
+                        toolInfonavit.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Operaciones Idse":
+                        toolIdse.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Altas Idse":
+                        toolAltasIdse.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Modificaciones Idse":
+                        toolModificacionIdse.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Bajas Idse":
+                        toolBajaIdse.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Vacaciones":
+                        toolVacaciones.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Cargar Vacaciones":
+                        toolCargaVacaciones.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Historial de Vacaciones":
+                        toolHistorialVacaciones.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Conceptos - Empleado":
+                        toolConceptoEmpleado.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Programación de concepto":
+                        toolProgramacion.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Movimientos":
+                        toolMovimientos.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Carga movimientos":
+                        toolCargaMovimientos.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Historial de movimientos":
+                        toolHistorialMovimientos.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Calculo de nómina":
+                        toolCalculoNomina.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Normal":
+                        toolNominaNormal.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Especial":
+                        toolNominaEspecial.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Autorizar nómina":
+                        toolAutorizarNomina.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Reportes":
+                        toolReportes.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "Departamentos":
-                        mnuDepartamentos.Enabled = Convert.ToBoolean(lstMenu[i].ver);
+                        mnuDepartamentos.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "Puestos":
-                        mnuPuestos.Enabled = Convert.ToBoolean(lstMenu[i].ver);
+                        mnuPuestos.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "Periodos":
-                        mnuPeriodos.Enabled = Convert.ToBoolean(lstMenu[i].ver);
+                        mnuPeriodos.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
-                    case "Factores":
-                        mnuFactores.Enabled = Convert.ToBoolean(lstMenu[i].ver);
+                    case "Conceptos":
+                        toolConceptos.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
-                    case "Salario minimo":
-                        mnuSalarioMinimo.Enabled = Convert.ToBoolean(lstMenu[i].ver);
+                    case "Empresas":
+                        mnuEmpresa.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "Usuarios":
-                        mnuUsuarios.Enabled = Convert.ToBoolean(lstMenu[i].ver);
+                        mnuUsuarios.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "Perfiles":
-                        mnuPerfiles.Enabled = Convert.ToBoolean(lstMenu[i].ver);
+                        mnuPerfiles.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Cambiar contraseña":
+                        mnuCambiarContrasenia.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "Preferencias":
-                        mnuPreferencias.Enabled = Convert.ToBoolean(lstMenu[i].ver);
+                        mnuPreferencias.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Tablas":
+                        mnuTablas.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Factores":
+                        mnuFactores.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Salario minimo":
+                        mnuSalarioMinimo.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "ISR":
+                        toolIsr.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Subsidio":
+                        toolSubsidio.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "IMSS":
+                        toolImss.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                 }
             }
-
-            workPerfil.ReportProgress(100);
-        }
-
-        private void workPerfil_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            //cargaPerfil.Value = e.ProgressPercentage;
-            toolEstatusPerfil.Text = "Cargando perfil...";
-        }
-
-        private void mnuAbrirEmpresa_Click(object sender, EventArgs e)
-        {
-            if (GLOBALES.IDEMPRESA != 0)
-            {
-                foreach (Form frm in this.MdiChildren)
-                {
-                    frm.Dispose();
-                }
-            }
-
-            frmSeleccionarEmpresa frmEmpresa = new frmSeleccionarEmpresa();
-            frmEmpresa.OnAbrirEmpresa += frmEmpresa_OnAbrirEmpresa;
-            frmEmpresa.MdiParent = this;
-            frmEmpresa.Show();
-        }
-
-        void frmEmpresa_OnAbrirEmpresa()
-        {
-            this.Text = "Sistema de Nomina - [" + GLOBALES.NOMBREEMPRESA + "]";
-            workPerfil.RunWorkerAsync();
-            MenuPerfil();
         }
 
         private void MenuInicial(int sesion)
         {
-            mnuRecursosHumanos.Visible = false;
-            mnuSeguroSocial.Visible = false;
-            mnuNominas.Visible = false;
-            mnuCatalogos.Visible = false;
-            mnuConfiguracion.Visible = false;
             if (sesion == 0)
             {
+                mnuRecursosHumanos.Visible = false;
+                mnuSeguroSocial.Visible = false;
+                mnuNominas.Visible = false;
+                mnuCatalogos.Visible = false;
+                mnuConfiguracion.Visible = false;
                 /// MENUS DE SESION
                 mnuAbrirEmpresa.Enabled = true;
+                mnuCerrarEmpresa.Enabled = false;
+                mnuCerrarSesion.Enabled = true;
+                mnuIniciarSesion.Enabled = false;
+            }
+            else if (sesion == 2)
+            {
+                mnuAbrirEmpresa.Enabled = false;
                 mnuCerrarEmpresa.Enabled = true;
                 mnuCerrarSesion.Enabled = true;
                 mnuIniciarSesion.Enabled = false;
             }
             else
             {
+                mnuRecursosHumanos.Visible = false;
+                mnuSeguroSocial.Visible = false;
+                mnuNominas.Visible = false;
+                mnuCatalogos.Visible = false;
+                mnuConfiguracion.Visible = false;
+
                 mnuAbrirEmpresa.Enabled = false;
                 mnuCerrarEmpresa.Enabled = false;
                 mnuCerrarSesion.Enabled = false;
                 mnuIniciarSesion.Enabled = true;
             }
+
         }
 
         private void MenuPerfil()
@@ -445,35 +557,6 @@ namespace Nominas
             li.Show();
         }
 
-        private void toolHistorialFaltas_Click(object sender, EventArgs e)
-        {
-            frmSeleccionTipoNomina stn = new frmSeleccionTipoNomina();
-            stn._ventana = "HistorialFaltas";
-            stn.MdiParent = this;
-            stn.Show();
-        }
-
-        private void toolCargaFaltas_Click(object sender, EventArgs e)
-        {
-            frmListaCargaFaltas lcf = new frmListaCargaFaltas();
-            lcf.MdiParent = this;
-            lcf.Show();
-        }
-
-        private void toolHistorialIncapacidad_Click(object sender, EventArgs e)
-        {
-            frmListaIncapacidad li = new frmListaIncapacidad();
-            li.MdiParent = this;
-            li.Show();
-        }
-
-        private void toolCargaIncapacidad_Click(object sender, EventArgs e)
-        {
-            frmListaCargaIncapacidades lci = new frmListaCargaIncapacidades();
-            lci.MdiParent = this;
-            lci.Show();
-        }
-
         private void toolVacaciones_Click(object sender, EventArgs e)
         {
             
@@ -516,11 +599,6 @@ namespace Nominas
             i.Show();
         }
 
-        private void toolAguinaldo_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void toolCargaVacaciones_Click(object sender, EventArgs e)
         {
             frmSeleccionTipoNomina stn = new frmSeleccionTipoNomina();
@@ -535,6 +613,32 @@ namespace Nominas
             stn._ventana = "Vacaciones";
             stn.MdiParent = this;
             stn.Show();
+        }
+
+        private void toolAutorizarNomina_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolHistorialMovimientos_Click(object sender, EventArgs e)
+        {
+            frmSeleccionTipoNomina stn = new frmSeleccionTipoNomina();
+            stn._ventana = "Movimientos";
+            stn.MdiParent = this;
+            stn.Show();
+        }
+
+        private void toolCargaMovimientos_Click(object sender, EventArgs e)
+        {
+            frmSeleccionTipoNomina stn = new frmSeleccionTipoNomina();
+            stn._ventana = "CargaMovimientos";
+            stn.MdiParent = this;
+            stn.Show();
+        }
+
+        private void mnuArchivo_Click(object sender, EventArgs e)
+        {
+
         }
       
     }

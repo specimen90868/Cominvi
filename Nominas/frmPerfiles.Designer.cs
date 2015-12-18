@@ -41,12 +41,21 @@
             this.label2 = new System.Windows.Forms.Label();
             this.chkRecursosHumanos = new System.Windows.Forms.CheckBox();
             this.chkSeguroSocial = new System.Windows.Forms.CheckBox();
-            this.chkContratos = new System.Windows.Forms.CheckBox();
             this.chkNominas = new System.Windows.Forms.CheckBox();
             this.chkCatalogos = new System.Windows.Forms.CheckBox();
             this.chkConfiguracion = new System.Windows.Forms.CheckBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.cmbMenus = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cmbPermiso = new System.Windows.Forms.ComboBox();
+            this.chkAccion = new System.Windows.Forms.CheckBox();
+            this.btnAgregar = new System.Windows.Forms.Button();
+            this.btnQuitar = new System.Windows.Forms.Button();
+            this.dgvPermisos = new System.Windows.Forms.DataGridView();
             this.toolPerfil.SuspendLayout();
             this.toolAcciones.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPermisos)).BeginInit();
             this.SuspendLayout();
             // 
             // toolPerfil
@@ -57,7 +66,7 @@
             this.toolCerrar});
             this.toolPerfil.Location = new System.Drawing.Point(0, 27);
             this.toolPerfil.Name = "toolPerfil";
-            this.toolPerfil.Size = new System.Drawing.Size(663, 25);
+            this.toolPerfil.Size = new System.Drawing.Size(601, 25);
             this.toolPerfil.TabIndex = 4;
             this.toolPerfil.Text = "toolEmpresa";
             // 
@@ -96,7 +105,7 @@
             this.toolTitulo});
             this.toolAcciones.Location = new System.Drawing.Point(0, 0);
             this.toolAcciones.Name = "toolAcciones";
-            this.toolAcciones.Size = new System.Drawing.Size(663, 27);
+            this.toolAcciones.Size = new System.Drawing.Size(601, 27);
             this.toolAcciones.TabIndex = 3;
             this.toolAcciones.Text = "toolAcciones";
             // 
@@ -164,20 +173,10 @@
             this.chkSeguroSocial.Text = "Seguro Social";
             this.chkSeguroSocial.UseVisualStyleBackColor = true;
             // 
-            // chkContratos
-            // 
-            this.chkContratos.AutoSize = true;
-            this.chkContratos.Location = new System.Drawing.Point(261, 188);
-            this.chkContratos.Name = "chkContratos";
-            this.chkContratos.Size = new System.Drawing.Size(71, 17);
-            this.chkContratos.TabIndex = 106;
-            this.chkContratos.Text = "Contratos";
-            this.chkContratos.UseVisualStyleBackColor = true;
-            // 
             // chkNominas
             // 
             this.chkNominas.AutoSize = true;
-            this.chkNominas.Location = new System.Drawing.Point(345, 188);
+            this.chkNominas.Location = new System.Drawing.Point(281, 188);
             this.chkNominas.Name = "chkNominas";
             this.chkNominas.Size = new System.Drawing.Size(67, 17);
             this.chkNominas.TabIndex = 107;
@@ -187,7 +186,7 @@
             // chkCatalogos
             // 
             this.chkCatalogos.AutoSize = true;
-            this.chkCatalogos.Location = new System.Drawing.Point(425, 188);
+            this.chkCatalogos.Location = new System.Drawing.Point(372, 188);
             this.chkCatalogos.Name = "chkCatalogos";
             this.chkCatalogos.Size = new System.Drawing.Size(73, 17);
             this.chkCatalogos.TabIndex = 108;
@@ -197,22 +196,115 @@
             // chkConfiguracion
             // 
             this.chkConfiguracion.AutoSize = true;
-            this.chkConfiguracion.Location = new System.Drawing.Point(511, 188);
+            this.chkConfiguracion.Location = new System.Drawing.Point(468, 188);
             this.chkConfiguracion.Name = "chkConfiguracion";
             this.chkConfiguracion.Size = new System.Drawing.Size(91, 17);
             this.chkConfiguracion.TabIndex = 109;
             this.chkConfiguracion.Text = "Configuración";
             this.chkConfiguracion.UseVisualStyleBackColor = true;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
+            this.label3.Location = new System.Drawing.Point(21, 236);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(80, 18);
+            this.label3.TabIndex = 110;
+            this.label3.Text = "Permisos";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(26, 284);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(37, 13);
+            this.label4.TabIndex = 111;
+            this.label4.Text = "Menu:";
+            // 
+            // cmbMenus
+            // 
+            this.cmbMenus.FormattingEnabled = true;
+            this.cmbMenus.Location = new System.Drawing.Point(89, 281);
+            this.cmbMenus.Name = "cmbMenus";
+            this.cmbMenus.Size = new System.Drawing.Size(159, 21);
+            this.cmbMenus.TabIndex = 112;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(26, 315);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(44, 13);
+            this.label5.TabIndex = 113;
+            this.label5.Text = "Permiso";
+            // 
+            // cmbPermiso
+            // 
+            this.cmbPermiso.FormattingEnabled = true;
+            this.cmbPermiso.Location = new System.Drawing.Point(89, 312);
+            this.cmbPermiso.Name = "cmbPermiso";
+            this.cmbPermiso.Size = new System.Drawing.Size(159, 21);
+            this.cmbPermiso.TabIndex = 114;
+            // 
+            // chkAccion
+            // 
+            this.chkAccion.AutoSize = true;
+            this.chkAccion.Location = new System.Drawing.Point(254, 314);
+            this.chkAccion.Name = "chkAccion";
+            this.chkAccion.Size = new System.Drawing.Size(64, 17);
+            this.chkAccion.TabIndex = 115;
+            this.chkAccion.Text = "Habilitar";
+            this.chkAccion.UseVisualStyleBackColor = true;
+            // 
+            // btnAgregar
+            // 
+            this.btnAgregar.Location = new System.Drawing.Point(89, 339);
+            this.btnAgregar.Name = "btnAgregar";
+            this.btnAgregar.Size = new System.Drawing.Size(75, 23);
+            this.btnAgregar.TabIndex = 116;
+            this.btnAgregar.Text = "Agregar";
+            this.btnAgregar.UseVisualStyleBackColor = true;
+            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
+            // 
+            // btnQuitar
+            // 
+            this.btnQuitar.Location = new System.Drawing.Point(173, 339);
+            this.btnQuitar.Name = "btnQuitar";
+            this.btnQuitar.Size = new System.Drawing.Size(75, 23);
+            this.btnQuitar.TabIndex = 117;
+            this.btnQuitar.Text = "Quitar";
+            this.btnQuitar.UseVisualStyleBackColor = true;
+            this.btnQuitar.Click += new System.EventHandler(this.btnQuitar_Click);
+            // 
+            // dgvPermisos
+            // 
+            this.dgvPermisos.AllowUserToAddRows = false;
+            this.dgvPermisos.AllowUserToDeleteRows = false;
+            this.dgvPermisos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPermisos.Location = new System.Drawing.Point(29, 368);
+            this.dgvPermisos.Name = "dgvPermisos";
+            this.dgvPermisos.ReadOnly = true;
+            this.dgvPermisos.Size = new System.Drawing.Size(530, 216);
+            this.dgvPermisos.TabIndex = 118;
+            // 
             // frmPerfiles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(663, 613);
+            this.ClientSize = new System.Drawing.Size(601, 613);
+            this.Controls.Add(this.dgvPermisos);
+            this.Controls.Add(this.btnQuitar);
+            this.Controls.Add(this.btnAgregar);
+            this.Controls.Add(this.chkAccion);
+            this.Controls.Add(this.cmbPermiso);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.cmbMenus);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.chkConfiguracion);
             this.Controls.Add(this.chkCatalogos);
             this.Controls.Add(this.chkNominas);
-            this.Controls.Add(this.chkContratos);
             this.Controls.Add(this.chkSeguroSocial);
             this.Controls.Add(this.chkRecursosHumanos);
             this.Controls.Add(this.label2);
@@ -228,6 +320,7 @@
             this.toolPerfil.PerformLayout();
             this.toolAcciones.ResumeLayout(false);
             this.toolAcciones.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPermisos)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -247,9 +340,17 @@
         internal System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox chkRecursosHumanos;
         private System.Windows.Forms.CheckBox chkSeguroSocial;
-        private System.Windows.Forms.CheckBox chkContratos;
         private System.Windows.Forms.CheckBox chkNominas;
         private System.Windows.Forms.CheckBox chkCatalogos;
         private System.Windows.Forms.CheckBox chkConfiguracion;
+        internal System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox cmbMenus;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox cmbPermiso;
+        private System.Windows.Forms.CheckBox chkAccion;
+        private System.Windows.Forms.Button btnAgregar;
+        private System.Windows.Forms.Button btnQuitar;
+        private System.Windows.Forms.DataGridView dgvPermisos;
     }
 }

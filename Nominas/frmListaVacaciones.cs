@@ -97,6 +97,7 @@ namespace Nominas
         private void frmListaVacaciones_Load(object sender, EventArgs e)
         {
             ListaVacaciones();
+            CargaPerfil();
         }
 
         private void toolNuevo_Click(object sender, EventArgs e)
@@ -111,6 +112,51 @@ namespace Nominas
         void v_OnVacacionNueva()
         {
             ListaVacaciones();
+        }
+
+        private void toolEliminar_Click(object sender, EventArgs e)
+        {
+            int fila = 0;
+
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            vh = new Vacaciones.Core.VacacionesHelper();
+            vh.Command = cmd;
+
+            fila = dgvVacaciones.CurrentCell.RowIndex;
+            Vacaciones.Core.Vacaciones vacacion = new Vacaciones.Core.Vacaciones();
+            vacacion.id = int.Parse(dgvVacaciones.Rows[fila].Cells[0].Value.ToString());
+
+            try
+            {
+                cnx.Open();
+                vh.eliminaVacacion(vacacion);
+                cnx.Close();
+                cnx.Dispose();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+            }
+            ListaVacaciones();
+        }
+
+        private void CargaPerfil()
+        {
+            List<Autorizaciones.Core.Ediciones> lstEdiciones = GLOBALES.PERFILEDICIONES("Historial Vacaciones");
+
+            for (int i = 0; i < lstEdiciones.Count; i++)
+            {
+                switch (lstEdiciones[i].permiso.ToString())
+                {
+                    case "Crear":
+                        toolNuevo.Enabled = Convert.ToBoolean(lstEdiciones[i].accion);
+                        break;
+                    case "Eliminar": toolEliminar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                }
+            }
         }
     }
 }
