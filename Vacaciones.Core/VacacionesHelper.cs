@@ -116,6 +116,22 @@ namespace Vacaciones.Core
             return lstPrima;
         }
 
+        public object pagoVacacionesPrima(VacacionesPrima vp)
+        {
+            Command.CommandText = @"select isnull(sum(diaspago),0) from VacacionesPrima where idtrabajador = @idtrabajador
+                                    and idempresa = @idempresa
+                                    and periodoinicio = @inicio and periodofin = @fin
+                                    and vacacionesprima = @vacacionprima";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", vp.idtrabajador);
+            Command.Parameters.AddWithValue("idempresa", vp.idempresa);
+            Command.Parameters.AddWithValue("inicio", vp.periodoinicio);
+            Command.Parameters.AddWithValue("fin", vp.periodofin);
+            Command.Parameters.AddWithValue("vacacionprima", vp.vacacionesprima);
+            object dato = Select(Command);
+            return dato;
+        }
+
         public int insertaVacacion(Vacaciones v)
         {
             Command.CommandText = "insert into PagoVacaciones (idtrabajador, idempresa, fechaingreso, inicio, fin, sd, diasderecho, diasapagar, diaspendientes, pv, pexenta, pgravada, isrgravada, pagovacaciones, totalprima, total, fechapago, pagada, pvpagada) " +

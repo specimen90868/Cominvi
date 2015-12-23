@@ -36,6 +36,9 @@ namespace Nominas
         #region DELEGADOS
         public delegate void delOnNuevaProgramacion(int edicion);
         public event delOnNuevaProgramacion OnNuevaProgramacion;
+
+        public delegate void delOnProgramacion();
+        public event delOnProgramacion OnProgramacion;
         #endregion
 
         private void toolBuscar_Click(object sender, EventArgs e)
@@ -56,7 +59,6 @@ namespace Nominas
         {
             cargaCombo();
 
-            /// _tipoOperacion CONSULTA = 1, EDICION = 2
             if (_tipoOperacion == GLOBALES.CONSULTAR || _tipoOperacion == GLOBALES.MODIFICAR)
             {
                 lblEmpleado.Text = _nombreEmpleado;
@@ -102,6 +104,13 @@ namespace Nominas
                 }
                 else
                     toolTitulo.Text = "Edición programación";
+            }
+            else
+            {
+                if (_idEmpleado != 0)
+                {
+                    lblEmpleado.Text = _nombreEmpleado;
+                }
             }
         }
 
@@ -208,6 +217,9 @@ namespace Nominas
 
             if (OnNuevaProgramacion != null)
                 OnNuevaProgramacion(_tipoOperacion);
+
+            if (OnProgramacion != null)
+                OnProgramacion();
             this.Dispose();
         }
     }

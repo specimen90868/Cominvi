@@ -42,6 +42,8 @@ namespace Nominas
         #region VARIABLES PUBLICAS
         public int _tipoNomina;
         public string _ventana;
+        public int _idEmpleado = 0;
+        public string _nombreEmpleado = "";
         #endregion
 
         private void toolBuscar_Click(object sender, EventArgs e)
@@ -177,6 +179,8 @@ namespace Nominas
         {
             rbtnDeducciones.Checked = true;
             cargaCombo();
+            if (_idEmpleado != 0)
+                lblEmpleado.Text = _nombreEmpleado;
         }
 
         private void cargaCombo()

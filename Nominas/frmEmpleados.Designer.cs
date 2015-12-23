@@ -89,6 +89,15 @@
             this.txtAntiguedad = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.cmbZona = new System.Windows.Forms.ComboBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.mtxtCuentaBancaria = new System.Windows.Forms.MaskedTextBox();
+            this.mtxtCuentaClabe = new System.Windows.Forms.MaskedTextBox();
+            this.mtxtIdBancario = new System.Windows.Forms.MaskedTextBox();
+            this.dtpFechaAplicacionHistorico = new System.Windows.Forms.DateTimePicker();
+            this.lblFechaAplicacionHistorico = new System.Windows.Forms.Label();
             this.toolAcciones.SuspendLayout();
             this.toolEmpleado.SuspendLayout();
             this.SuspendLayout();
@@ -164,7 +173,7 @@
             // lblSalario
             // 
             this.lblSalario.AutoSize = true;
-            this.lblSalario.BackColor = System.Drawing.Color.White;
+            this.lblSalario.BackColor = System.Drawing.SystemColors.Control;
             this.lblSalario.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
             this.lblSalario.Location = new System.Drawing.Point(13, 362);
             this.lblSalario.Name = "lblSalario";
@@ -175,7 +184,7 @@
             // Label16
             // 
             this.Label16.AutoSize = true;
-            this.Label16.BackColor = System.Drawing.Color.White;
+            this.Label16.BackColor = System.Drawing.SystemColors.Control;
             this.Label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
             this.Label16.Location = new System.Drawing.Point(14, 73);
             this.Label16.Name = "Label16";
@@ -487,6 +496,7 @@
             this.cmbDepartamento.Name = "cmbDepartamento";
             this.cmbDepartamento.Size = new System.Drawing.Size(151, 21);
             this.cmbDepartamento.TabIndex = 16;
+            this.cmbDepartamento.SelectedIndexChanged += new System.EventHandler(this.cmbDepartamento_SelectedIndexChanged);
             // 
             // cmbPuesto
             // 
@@ -495,6 +505,7 @@
             this.cmbPuesto.Name = "cmbPuesto";
             this.cmbPuesto.Size = new System.Drawing.Size(151, 21);
             this.cmbPuesto.TabIndex = 17;
+            this.cmbPuesto.SelectedIndexChanged += new System.EventHandler(this.cmbPuesto_SelectedIndexChanged);
             // 
             // label10
             // 
@@ -636,11 +647,99 @@
             this.cmbZona.Size = new System.Drawing.Size(151, 21);
             this.cmbZona.TabIndex = 237;
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.BackColor = System.Drawing.SystemColors.Control;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
+            this.label15.Location = new System.Drawing.Point(14, 514);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(132, 18);
+            this.label15.TabIndex = 238;
+            this.label15.Text = "Datos bancarios";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(32, 554);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(88, 13);
+            this.label17.TabIndex = 239;
+            this.label17.Text = "Cuenta bancaria:";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(47, 580);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(73, 13);
+            this.label18.TabIndex = 240;
+            this.label18.Text = "Cuenta clabe:";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(55, 606);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(65, 13);
+            this.label19.TabIndex = 241;
+            this.label19.Text = "ID bancario:";
+            // 
+            // mtxtCuentaBancaria
+            // 
+            this.mtxtCuentaBancaria.Location = new System.Drawing.Point(126, 551);
+            this.mtxtCuentaBancaria.Mask = "9999999999";
+            this.mtxtCuentaBancaria.Name = "mtxtCuentaBancaria";
+            this.mtxtCuentaBancaria.Size = new System.Drawing.Size(152, 20);
+            this.mtxtCuentaBancaria.TabIndex = 242;
+            // 
+            // mtxtCuentaClabe
+            // 
+            this.mtxtCuentaClabe.Location = new System.Drawing.Point(126, 577);
+            this.mtxtCuentaClabe.Mask = "999 999 99999999999 9";
+            this.mtxtCuentaClabe.Name = "mtxtCuentaClabe";
+            this.mtxtCuentaClabe.Size = new System.Drawing.Size(152, 20);
+            this.mtxtCuentaClabe.TabIndex = 243;
+            // 
+            // mtxtIdBancario
+            // 
+            this.mtxtIdBancario.Location = new System.Drawing.Point(126, 603);
+            this.mtxtIdBancario.Mask = "9999";
+            this.mtxtIdBancario.Name = "mtxtIdBancario";
+            this.mtxtIdBancario.Size = new System.Drawing.Size(152, 20);
+            this.mtxtIdBancario.TabIndex = 244;
+            // 
+            // dtpFechaAplicacionHistorico
+            // 
+            this.dtpFechaAplicacionHistorico.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpFechaAplicacionHistorico.Location = new System.Drawing.Point(572, 220);
+            this.dtpFechaAplicacionHistorico.Name = "dtpFechaAplicacionHistorico";
+            this.dtpFechaAplicacionHistorico.Size = new System.Drawing.Size(84, 20);
+            this.dtpFechaAplicacionHistorico.TabIndex = 245;
+            // 
+            // lblFechaAplicacionHistorico
+            // 
+            this.lblFechaAplicacionHistorico.AutoSize = true;
+            this.lblFechaAplicacionHistorico.Location = new System.Drawing.Point(569, 204);
+            this.lblFechaAplicacionHistorico.Name = "lblFechaAplicacionHistorico";
+            this.lblFechaAplicacionHistorico.Size = new System.Drawing.Size(106, 13);
+            this.lblFechaAplicacionHistorico.TabIndex = 246;
+            this.lblFechaAplicacionHistorico.Text = "Fecha de aplicación:";
+            // 
             // frmEmpleados
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(696, 609);
+            this.ClientSize = new System.Drawing.Size(696, 656);
+            this.Controls.Add(this.lblFechaAplicacionHistorico);
+            this.Controls.Add(this.dtpFechaAplicacionHistorico);
+            this.Controls.Add(this.mtxtIdBancario);
+            this.Controls.Add(this.mtxtCuentaClabe);
+            this.Controls.Add(this.mtxtCuentaBancaria);
+            this.Controls.Add(this.label19);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.label17);
+            this.Controls.Add(this.label15);
             this.Controls.Add(this.cmbZona);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.txtAntiguedad);
@@ -770,5 +869,14 @@
         private System.Windows.Forms.ToolStripButton toolHistorial;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.ComboBox cmbZona;
+        internal System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.MaskedTextBox mtxtCuentaBancaria;
+        private System.Windows.Forms.MaskedTextBox mtxtCuentaClabe;
+        private System.Windows.Forms.MaskedTextBox mtxtIdBancario;
+        private System.Windows.Forms.DateTimePicker dtpFechaAplicacionHistorico;
+        private System.Windows.Forms.Label lblFechaAplicacionHistorico;
     }
 }

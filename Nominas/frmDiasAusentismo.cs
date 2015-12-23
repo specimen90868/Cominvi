@@ -20,6 +20,12 @@ namespace Nominas
         #region DELEGADOS
         public delegate void delOnDiasAusentismo(int dias);
         public event delOnDiasAusentismo OnDiasAusentismo;
+
+        public delegate void delOnCantidad(double cantidad);
+        public event delOnCantidad OnCantidad;
+
+        public delegate void delOnDespensa(double cantidad);
+        public event delOnDespensa OnDespensa;
         #endregion
 
         private void frmDiasAusentismo_Load(object sender, EventArgs e)
@@ -31,6 +37,10 @@ namespace Nominas
         {
             if (OnDiasAusentismo != null)
                 OnDiasAusentismo(0);
+            if (OnCantidad != null)
+                OnCantidad(0);
+            if (OnDespensa != null)
+                OnDespensa(0);
             this.Dispose();
         }
 
@@ -38,6 +48,10 @@ namespace Nominas
         {
             if (OnDiasAusentismo != null)
                 OnDiasAusentismo(int.Parse(txtDias.Text));
+            if (OnCantidad != null)
+                OnCantidad(double.Parse(txtDias.Text));
+            if (OnDespensa != null)
+                OnDespensa(double.Parse(txtDias.Text));
             this.Dispose();
         }
     }

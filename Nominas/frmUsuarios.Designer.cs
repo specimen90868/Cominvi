@@ -130,15 +130,17 @@
             // 
             this.txtPassword.Location = new System.Drawing.Point(143, 164);
             this.txtPassword.Name = "txtPassword";
+            this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(121, 20);
-            this.txtPassword.TabIndex = 166;
+            this.txtPassword.TabIndex = 3;
             // 
             // txtPassword2
             // 
             this.txtPassword2.Location = new System.Drawing.Point(143, 190);
             this.txtPassword2.Name = "txtPassword2";
+            this.txtPassword2.PasswordChar = '*';
             this.txtPassword2.Size = new System.Drawing.Size(121, 20);
-            this.txtPassword2.TabIndex = 167;
+            this.txtPassword2.TabIndex = 4;
             // 
             // txtNombre
             // 
@@ -146,7 +148,7 @@
             this.txtNombre.Location = new System.Drawing.Point(143, 112);
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(260, 20);
-            this.txtNombre.TabIndex = 165;
+            this.txtNombre.TabIndex = 1;
             // 
             // Label16
             // 
@@ -172,7 +174,7 @@
             this.txtUsuario.Location = new System.Drawing.Point(143, 138);
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(121, 20);
-            this.txtUsuario.TabIndex = 164;
+            this.txtUsuario.TabIndex = 2;
             // 
             // Label1
             // 
@@ -198,7 +200,7 @@
             this.cmbPerfil.Location = new System.Drawing.Point(143, 216);
             this.cmbPerfil.Name = "cmbPerfil";
             this.cmbPerfil.Size = new System.Drawing.Size(121, 21);
-            this.cmbPerfil.TabIndex = 181;
+            this.cmbPerfil.TabIndex = 5;
             // 
             // frmUsuarios
             // 

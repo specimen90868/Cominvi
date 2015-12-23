@@ -46,6 +46,7 @@
             this.toolTitulo = new System.Windows.Forms.ToolStrip();
             this.toolEmpleados = new System.Windows.Forms.ToolStripLabel();
             this.dgvEmpleados = new System.Windows.Forms.DataGridView();
+            this.toolExportar = new System.Windows.Forms.ToolStripButton();
             this.toolBusqueda.SuspendLayout();
             this.toolTitulo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmpleados)).BeginInit();
@@ -64,6 +65,7 @@
             this.toolEliminar,
             this.toolStripSeparator1,
             this.toolIncrementoSalario,
+            this.toolExportar,
             this.toolStripSeparator2,
             this.lblBuscar,
             this.txtBuscar});
@@ -209,6 +211,15 @@
             this.dgvEmpleados.TabIndex = 5;
             this.dgvEmpleados.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmpleados_CellDoubleClick);
             // 
+            // toolExportar
+            // 
+            this.toolExportar.Image = ((System.Drawing.Image)(resources.GetObject("toolExportar.Image")));
+            this.toolExportar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolExportar.Name = "toolExportar";
+            this.toolExportar.Size = new System.Drawing.Size(70, 22);
+            this.toolExportar.Text = "Exportar";
+            this.toolExportar.Click += new System.EventHandler(this.toolExportar_Click);
+            // 
             // frmListaEmpleados
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -250,5 +261,6 @@
         private System.Windows.Forms.ToolStripButton toolBaja;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton toolReingreso;
+        private System.Windows.Forms.ToolStripButton toolExportar;
     }
 }

@@ -69,7 +69,7 @@ namespace Nominas
             ph.Command = cmd;
 
             Puestos.Core.Puestos puesto = new Puestos.Core.Puestos();
-            puesto.descripcion = txtDescripcion.Text;
+            puesto.nombre = txtDescripcion.Text;
             puesto.estatus = 1;
             puesto.idempresa = GLOBALES.IDEMPRESA;
 
@@ -92,7 +92,7 @@ namespace Nominas
                     try
                     {
                         puesto.id = _idPuesto;
-                        puesto.descripcion = txtDescripcion.Text;
+                        puesto.nombre = txtDescripcion.Text;
                         cnx.Open();
                         ph.actualizaPuesto(puesto);
                         cnx.Close();
@@ -145,7 +145,7 @@ namespace Nominas
 
                     for (int i = 0; i < lstPuesto.Count; i++)
                     {
-                        txtDescripcion.Text = lstPuesto[i].descripcion;
+                        txtDescripcion.Text = lstPuesto[i].nombre;
                     }
                 }
                 catch (Exception error)

@@ -54,6 +54,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Calculo.cs" />
+    <Compile Include="CalculoFormula.cs" />
+    <Compile Include="CalculoTrabajadores.cs" />
     <Compile Include="Calendario.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -90,6 +93,12 @@
     </Compile>
     <Compile Include="frmBuscar.Designer.cs">
       <DependentUpon>frmBuscar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmCambioContrasena.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCambioContrasena.Designer.cs">
+      <DependentUpon>frmCambioContrasena.cs</DependentUpon>
     </Compile>
     <Compile Include="frmComplementos.cs">
       <SubType>Form</SubType>
@@ -144,6 +153,12 @@
     </Compile>
     <Compile Include="frmExpediente.Designer.cs">
       <DependentUpon>frmExpediente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmExportarEmpleado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmExportarEmpleado.Designer.cs">
+      <DependentUpon>frmExportarEmpleado.cs</DependentUpon>
     </Compile>
     <Compile Include="frmFactores.cs">
       <SubType>Form</SubType>
@@ -535,6 +550,12 @@
     <Compile Include="frmSeleccionTipoNomina.Designer.cs">
       <DependentUpon>frmSeleccionTipoNomina.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmSobreRecibo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSobreRecibo.Designer.cs">
+      <DependentUpon>frmSobreRecibo.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmSubsidio.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -575,6 +596,9 @@
     <EmbeddedResource Include="frmBuscar.resx">
       <DependentUpon>frmBuscar.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmCambioContrasena.resx">
+      <DependentUpon>frmCambioContrasena.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmComplementos.resx">
       <DependentUpon>frmComplementos.cs</DependentUpon>
     </EmbeddedResource>
@@ -601,6 +625,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmExpediente.resx">
       <DependentUpon>frmExpediente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmExportarEmpleado.resx">
+      <DependentUpon>frmExportarEmpleado.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmFactores.resx">
       <DependentUpon>frmFactores.cs</DependentUpon>
@@ -797,6 +824,9 @@
     <EmbeddedResource Include="frmSeleccionTipoNomina.resx">
       <DependentUpon>frmSeleccionTipoNomina.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmSobreRecibo.resx">
+      <DependentUpon>frmSobreRecibo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmSubsidio.resx">
       <DependentUpon>frmSubsidio.cs</DependentUpon>
     </EmbeddedResource>
@@ -909,6 +939,10 @@
     <ProjectReference Include="..\Expediente.Core\Expediente.Core.csproj">
       <Project>{32ddd81b-67ff-4dcb-91ee-f478c1e152f5}</Project>
       <Name>Expediente.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Exportacion.Core\Exportacion.Core.csproj">
+      <Project>{656b8f15-f950-46e4-bfa1-a36fbed92713}</Project>
+      <Name>Exportacion.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Factores.Core\Factores.Core.csproj">
       <Project>{4975efe5-7f1e-4648-89c1-ff4b4fcafd7a}</Project>

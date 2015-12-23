@@ -28,38 +28,39 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblTexto = new System.Windows.Forms.Label();
+            this.lblCantidad = new System.Windows.Forms.Label();
             this.txtDias = new System.Windows.Forms.TextBox();
             this.btnAceptar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // label1
+            // lblTexto
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(270, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Ingrese el número de días que se ausentó el trabajador.";
+            this.lblTexto.AutoSize = true;
+            this.lblTexto.Location = new System.Drawing.Point(12, 9);
+            this.lblTexto.Name = "lblTexto";
+            this.lblTexto.Size = new System.Drawing.Size(270, 13);
+            this.lblTexto.TabIndex = 0;
+            this.lblTexto.Text = "Ingrese el número de días que se ausentó el trabajador.";
             // 
-            // label2
+            // lblCantidad
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 40);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(31, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Dias:";
+            this.lblCantidad.AutoSize = true;
+            this.lblCantidad.Location = new System.Drawing.Point(12, 40);
+            this.lblCantidad.Name = "lblCantidad";
+            this.lblCantidad.Size = new System.Drawing.Size(31, 13);
+            this.lblCantidad.TabIndex = 1;
+            this.lblCantidad.Text = "Dias:";
             // 
             // txtDias
             // 
             this.txtDias.Location = new System.Drawing.Point(49, 37);
             this.txtDias.Name = "txtDias";
-            this.txtDias.Size = new System.Drawing.Size(30, 20);
+            this.txtDias.Size = new System.Drawing.Size(71, 20);
             this.txtDias.TabIndex = 2;
             this.txtDias.Text = "0";
+            this.txtDias.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // btnAceptar
             // 
@@ -89,8 +90,8 @@
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.txtDias);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblCantidad);
+            this.Controls.Add(this.lblTexto);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -104,10 +105,10 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtDias;
         private System.Windows.Forms.Button btnAceptar;
         private System.Windows.Forms.Button btnCancelar;
+        public System.Windows.Forms.Label lblTexto;
+        public System.Windows.Forms.Label lblCantidad;
     }
 }

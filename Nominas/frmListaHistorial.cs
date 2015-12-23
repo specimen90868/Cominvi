@@ -25,8 +25,12 @@ namespace Nominas
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
         Empleados.Core.EmpleadosHelper eh;
         Historial.Core.HistorialHelper hh;
+        Departamento.Core.DeptoHelper dh;
+        Puestos.Core.PuestosHelper ph;
         List<Empleados.Core.Empleados> lstEmpleados;
         List<Historial.Core.Historial> lstHistorial;
+        List<Departamento.Core.Depto> lstDepto;
+        List<Puestos.Core.Puestos> lstPuesto;
         #endregion
 
         #region VARIABLES PUBLICAS
@@ -41,24 +45,36 @@ namespace Nominas
 
             eh = new Empleados.Core.EmpleadosHelper();
             hh = new Historial.Core.HistorialHelper();
+            dh = new Departamento.Core.DeptoHelper();
+            ph = new Puestos.Core.PuestosHelper();
 
             eh.Command = cmd;
             hh.Command = cmd;
+            dh.Command = cmd;
+            ph.Command = cmd;
 
             Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
             empleado.idtrabajador = _idempleado;
             Historial.Core.Historial historial = new Historial.Core.Historial();
             historial.idtrabajador = _idempleado;
+            Departamento.Core.Depto depto = new Departamento.Core.Depto();
+            depto.idempresa = GLOBALES.IDEMPRESA;
+            Puestos.Core.Puestos puesto = new Puestos.Core.Puestos();
+            puesto.idempresa = GLOBALES.IDEMPRESA;
 
             try
             {
                 cnx.Open();
                 lstEmpleados = eh.obtenerEmpleado(empleado);
                 lstHistorial = hh.obtenerHistoriales(historial);
+                lstDepto = dh.obtenerDepartamentos(depto);
+                lstPuesto = ph.obtenerPuestos(puesto);
                 cnx.Close();
                 cnx.Dispose();
 
                 var lista = from emp in lstEmpleados join his in lstHistorial on emp.idtrabajador equals his.idtrabajador
+                            join d in lstDepto on emp.iddepartamento equals d.id
+                            join p in lstPuesto on emp.idpuesto equals p.id
                          select new
                          {
                              IdTrabajador = emp.idtrabajador,
@@ -67,10 +83,14 @@ namespace Nominas
                              Movimiento = 
                                 his.tipomovimiento == GLOBALES.mALTA ? "ALTA" :
                                 his.tipomovimiento == GLOBALES.mMODIFICACIONSALARIO ? "MODIFICACION" :
-                                his.tipomovimiento == GLOBALES.mREINGRESO ? "REINGRESO" : "BAJA",
+                                his.tipomovimiento == GLOBALES.mREINGRESO ? "REINGRESO" :
+                                his.tipomovimiento == GLOBALES.mBAJA ? "BAJA" :
+                                his.tipomovimiento == GLOBALES.mCAMBIODEPARTAMENTO ? "CAMBIO DE DEPARTAMENTO" : "CAMBIO DE PUESTO",
                              SDI = his.valor,
-                             FechaImss = his.fecha_imss,
-                             FechaSistema = his.fecha_sistema
+                             FechaAplicacion = his.fecha_imss,
+                             FechaSistema = his.fecha_sistema,
+                             Depto = d.descripcion,
+                             Puesto = p.nombre
                          };
                 dgvHistorial.DataSource = lista.ToList();
 

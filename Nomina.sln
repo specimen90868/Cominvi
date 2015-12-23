@@ -79,6 +79,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Incidencias.Core", "Inciden
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movimientos.Core", "Movimientos.Core\Movimientos.Core.csproj", "{A38AECCB-B2AB-4541-9B40-CE2C9E1439AD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exportacion.Core", "Exportacion.Core\Exportacion.Core.csproj", "{656B8F15-F950-46E4-BFA1-A36FBED92713}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -237,6 +239,10 @@ Global
 		{A38AECCB-B2AB-4541-9B40-CE2C9E1439AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A38AECCB-B2AB-4541-9B40-CE2C9E1439AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A38AECCB-B2AB-4541-9B40-CE2C9E1439AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{656B8F15-F950-46E4-BFA1-A36FBED92713}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{656B8F15-F950-46E4-BFA1-A36FBED92713}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{656B8F15-F950-46E4-BFA1-A36FBED92713}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{656B8F15-F950-46E4-BFA1-A36FBED92713}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

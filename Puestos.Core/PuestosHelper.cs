@@ -22,7 +22,7 @@ namespace Puestos.Core
             {
                 Puestos p = new Puestos();
                 p.id = int.Parse(dtPuestos.Rows[i]["id"].ToString());
-                p.descripcion = dtPuestos.Rows[i]["descripcion"].ToString();
+                p.nombre = dtPuestos.Rows[i]["descripcion"].ToString();
                 lstPuestos.Add(p);
             }
             return lstPuestos;
@@ -40,7 +40,7 @@ namespace Puestos.Core
             {
                 Puestos puesto = new Puestos();
                 puesto.id = int.Parse(dtPuestos.Rows[i]["id"].ToString());
-                puesto.descripcion = dtPuestos.Rows[i]["descripcion"].ToString();
+                puesto.nombre = dtPuestos.Rows[i]["descripcion"].ToString();
                 lstPuestos.Add(puesto);
             }
             return lstPuestos;
@@ -50,7 +50,7 @@ namespace Puestos.Core
         {
             Command.CommandText = "insert into puestos (descripcion, estatus, idempresa) values (@descripcion,@estatus,@idempresa)";
             Command.Parameters.Clear();
-            Command.Parameters.AddWithValue("descripcion", p.descripcion);
+            Command.Parameters.AddWithValue("descripcion", p.nombre);
             Command.Parameters.AddWithValue("estatus",p.estatus);
             Command.Parameters.AddWithValue("idempresa", p.idempresa);
             return Command.ExecuteNonQuery();
@@ -61,7 +61,7 @@ namespace Puestos.Core
             Command.CommandText = "update puestos set descripcion = @descripcion where id = @id";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("id",p.id);
-            Command.Parameters.AddWithValue("descripcion", p.descripcion);
+            Command.Parameters.AddWithValue("descripcion", p.nombre);
             return Command.ExecuteNonQuery();
         }
 

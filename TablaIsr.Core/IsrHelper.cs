@@ -55,9 +55,8 @@ namespace TablaIsr.Core
         {
             List<TablaIsr> lstIsr = new List<TablaIsr>();
             DataTable dtIsr = new DataTable();
-            Command.CommandText = "select top 1 * from tablaIsr where periodo = @periodo and inferior <= @cantidad order by inferior desc";
+            Command.CommandText = "select top 1 * from tablaIsr where inferior <= @cantidad order by inferior desc";
             Command.Parameters.Clear();
-            Command.Parameters.AddWithValue("periodo", ti.periodo);
             Command.Parameters.AddWithValue("cantidad", ti.inferior);
             dtIsr = SelectData(Command);
             for (int i = 0; i < dtIsr.Rows.Count; i++)

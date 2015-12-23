@@ -60,6 +60,7 @@ namespace Usuarios.Core
             Command.Parameters.AddWithValue("password", usr.password);
             Command.Parameters.AddWithValue("activo", usr.activo);
             Command.Parameters.AddWithValue("fecharegistro", usr.fecharegistro);
+            Command.Parameters.AddWithValue("idperfil", usr.idperfil);
             return Command.ExecuteNonQuery();
         }
 
@@ -80,6 +81,15 @@ namespace Usuarios.Core
             Command.CommandText = "update usuarios set activo = 0 where idusuario = @id";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("id", usr.usuario);
+            return Command.ExecuteNonQuery();
+        }
+
+        public int cambioPassword(Usuarios usr)
+        {
+            Command.CommandText = "update usuarios set password = @password where idusuario = @idusuario";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("password", usr.password);
+            Command.Parameters.AddWithValue("idusuario", usr.idusuario);
             return Command.ExecuteNonQuery();
         }
     }

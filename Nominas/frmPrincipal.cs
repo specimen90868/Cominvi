@@ -419,7 +419,9 @@ namespace Nominas
 
         private void mnuCambiarContrasenia_Click(object sender, EventArgs e)
         {
-
+            frmCambioContrasena cp = new frmCambioContrasena();
+            cp.MdiParent = this;
+            cp.Show();
         }
 
         private void mnuPreferencias_Click(object sender, EventArgs e)

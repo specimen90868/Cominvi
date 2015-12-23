@@ -116,6 +116,11 @@ namespace Nominas
                     lblEmpleado.Text = _nombreEmpleado;
                     toolBuscar.Enabled = false;
                 }
+
+                if (_modificar == 1)
+                {
+                    dtpInicioPeriodo.Enabled = true;
+                }
             }
         }
 

@@ -36,9 +36,32 @@ namespace Movimientos.Core
         {
             Command.CommandText = "select * from movimientos where idtrabajador = @idtrabajador and fechainicio = @fechainicio and fechafin = @fechafin";
             Command.Parameters.Clear();
-            Command.Parameters.AddWithValue("idtrabajador", m.idempresa);
+            Command.Parameters.AddWithValue("idtrabajador", m.idtrabajador);
             Command.Parameters.AddWithValue("fechainicio", m.fechainicio);
             Command.Parameters.AddWithValue("fechafin", m.fechafin);
+            DataTable dtMovimientos = new DataTable();
+            List<Movimientos> lstMovimientos = new List<Movimientos>();
+            dtMovimientos = SelectData(Command);
+            for (int i = 0; i < dtMovimientos.Rows.Count; i++)
+            {
+                Movimientos mov = new Movimientos();
+                mov.id = int.Parse(dtMovimientos.Rows[i]["id"].ToString());
+                mov.idtrabajador = int.Parse(dtMovimientos.Rows[i]["idtrabajador"].ToString());
+                mov.idempresa = int.Parse(dtMovimientos.Rows[i]["idempresa"].ToString());
+                mov.idconcepto = int.Parse(dtMovimientos.Rows[i]["idconcepto"].ToString());
+                mov.cantidad = double.Parse(dtMovimientos.Rows[i]["cantidad"].ToString());
+                mov.fechainicio = DateTime.Parse(dtMovimientos.Rows[i]["fechainicio"].ToString());
+                mov.fechafin = DateTime.Parse(dtMovimientos.Rows[i]["fechafin"].ToString());
+                lstMovimientos.Add(mov);
+            }
+            return lstMovimientos;
+        }
+
+        public List<Movimientos> obtenerMovimientosTrabajador(Movimientos m)
+        {
+            Command.CommandText = "select * from movimientos where idtrabajador = @idtrabajador";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", m.idtrabajador);
             DataTable dtMovimientos = new DataTable();
             List<Movimientos> lstMovimientos = new List<Movimientos>();
             dtMovimientos = SelectData(Command);

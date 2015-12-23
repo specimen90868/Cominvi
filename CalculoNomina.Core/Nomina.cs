@@ -20,6 +20,7 @@ namespace CalculoNomina.Core
         public string tipoconcepto { get; set; }
         public string formula { get; set; }
         public string formulaexento { get; set; }
+        public bool modificado { get; set; }
     }
 
     public class NominaRecalculo

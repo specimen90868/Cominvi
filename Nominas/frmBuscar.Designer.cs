@@ -36,6 +36,9 @@
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.txtBuscar = new System.Windows.Forms.ToolStripTextBox();
             this.dgvCatalogo = new System.Windows.Forms.DataGridView();
+            this.idtrabajador = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.noempleado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCatalogo)).BeginInit();
             this.SuspendLayout();
@@ -98,6 +101,10 @@
             this.dgvCatalogo.AllowUserToAddRows = false;
             this.dgvCatalogo.AllowUserToDeleteRows = false;
             this.dgvCatalogo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCatalogo.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.idtrabajador,
+            this.noempleado,
+            this.nombre});
             this.dgvCatalogo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCatalogo.Location = new System.Drawing.Point(0, 25);
             this.dgvCatalogo.MultiSelect = false;
@@ -106,6 +113,25 @@
             this.dgvCatalogo.Size = new System.Drawing.Size(522, 272);
             this.dgvCatalogo.TabIndex = 1;
             this.dgvCatalogo.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmpleados_CellDoubleClick);
+            // 
+            // idtrabajador
+            // 
+            this.idtrabajador.HeaderText = "Id Trabajador";
+            this.idtrabajador.Name = "idtrabajador";
+            this.idtrabajador.ReadOnly = true;
+            this.idtrabajador.Visible = false;
+            // 
+            // noempleado
+            // 
+            this.noempleado.HeaderText = "No. Empleado";
+            this.noempleado.Name = "noempleado";
+            this.noempleado.ReadOnly = true;
+            // 
+            // nombre
+            // 
+            this.nombre.HeaderText = "Nombre";
+            this.nombre.Name = "nombre";
+            this.nombre.ReadOnly = true;
             // 
             // frmBuscar
             // 
@@ -136,5 +162,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripTextBox txtBuscar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idtrabajador;
+        private System.Windows.Forms.DataGridViewTextBoxColumn noempleado;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nombre;
     }
 }

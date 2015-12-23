@@ -47,7 +47,7 @@ namespace Nominas
                           select new
                           {
                               Id = p.id,
-                              Descripcion = p.descripcion
+                              Descripcion = p.nombre
                           };
                 dgvPuestos.DataSource = puesto.ToList();
 
@@ -176,18 +176,18 @@ namespace Nominas
                                 select new
                                 {
                                     Id = p.id,
-                                    Nombre = p.descripcion
+                                    Nombre = p.nombre
                                 };
                     dgvPuestos.DataSource = puesto.ToList();
                 }
                 else
                 {
                     var busqueda = from b in lstPuestos
-                                   where b.descripcion.Contains(txtBuscar.Text.ToUpper())
+                                   where b.nombre.Contains(txtBuscar.Text.ToUpper())
                                    select new
                                    {
                                        Id = b.id,
-                                       Nombre = b.descripcion
+                                       Nombre = b.nombre
                                    };
                     dgvPuestos.DataSource = busqueda.ToList();
                 }

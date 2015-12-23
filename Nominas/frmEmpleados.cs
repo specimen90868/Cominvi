@@ -36,7 +36,9 @@ namespace Nominas
         string sexo;
         string estado;
         Bitmap bmp;
-        bool ImagenAsignada = false;
+        bool ImagenAsignada = false, historicoDepto = false, historicoPuesto = false;
+        bool FLAGHISTORICO = false;
+        string departamento = "", puesto = "";
         #endregion
 
         #region DELEGADOS
@@ -135,7 +137,9 @@ namespace Nominas
         private void frmEmpleados_Load(object sender, EventArgs e)
         {
             CargaComboBox();
-            /// _tipoOperacion CONSULTA = 1, EDICION = 2
+            lblFechaAplicacionHistorico.Visible = false;
+            dtpFechaAplicacionHistorico.Visible = false;
+
             if (_tipoOperacion == GLOBALES.CONSULTAR || _tipoOperacion == GLOBALES.MODIFICAR)
             {
                 cnx = new SqlConnection();
@@ -183,6 +187,13 @@ namespace Nominas
                         txtSueldo.Text = lstEmpleado[i].sueldo.ToString("F6");
                         txtSD.Text = lstEmpleado[i].sd.ToString("F6");
                         txtSDI.Text = lstEmpleado[i].sdi.ToString("F6");
+
+                        mtxtCuentaBancaria.Text = lstEmpleado[i].cuenta.ToString();
+                        mtxtCuentaClabe.Text = lstEmpleado[i].clabe.ToString();
+                        mtxtIdBancario.Text = lstEmpleado[i].idbancario.ToString();
+
+                        departamento = cmbDepartamento.Text;
+                        puesto = cmbPeriodo.Text;
                     }
                 }
                 catch (Exception error)
@@ -350,6 +361,10 @@ namespace Nominas
             em.sd = double.Parse(txtSD.Text);
             em.sueldo = double.Parse(txtSueldo.Text);
 
+            em.cuenta = mtxtCuentaBancaria.Text;
+            em.clabe = mtxtCuentaClabe.Text;
+            em.idbancario = mtxtIdBancario.Text;
+
             hh = new Historial.Core.HistorialHelper();
             hh.Command = cmd;
             Historial.Core.Historial h = new Historial.Core.Historial();
@@ -438,6 +453,32 @@ namespace Nominas
                 case 2:
                     try
                     {
+                        Historial.Core.Historial hDepto = null;
+                        Historial.Core.Historial hPuesto = null;
+                        if (historicoDepto)
+                        {
+                            hDepto = new Historial.Core.Historial();
+                            hDepto.idtrabajador = _idempleado;
+                            hDepto.idempresa = GLOBALES.IDEMPRESA;
+                            hDepto.valor = double.Parse(txtSDI.Text);
+                            hDepto.fecha_sistema = DateTime.Now;
+                            hDepto.motivobaja = 0;
+                            hDepto.tipomovimiento = GLOBALES.mCAMBIODEPARTAMENTO;
+                            hDepto.fecha_imss = dtpFechaAplicacionHistorico.Value.Date;
+                        }
+
+                        if (historicoPuesto)
+                        {
+                            hPuesto = new Historial.Core.Historial();
+                            hPuesto.idtrabajador = _idempleado;
+                            hPuesto.idempresa = GLOBALES.IDEMPRESA;
+                            hPuesto.valor = double.Parse(txtSDI.Text);
+                            hPuesto.fecha_sistema = DateTime.Now;
+                            hPuesto.motivobaja = 0;
+                            hPuesto.tipomovimiento = GLOBALES.mCAMBIOPUESTO;
+                            hPuesto.fecha_imss = dtpFechaAplicacionHistorico.Value.Date;
+                        }
+                            
                         em.idtrabajador = _idempleado;
                         cnx.Open();
                         eh.actualizaEmpleado(em);
@@ -455,7 +496,10 @@ namespace Nominas
                             else
                                 ih.insertaImagen(img);
                         }
-
+                        if (historicoDepto)
+                            hh.insertarHistorial(hDepto);
+                        if (historicoPuesto)
+                            hh.insertarHistorial(hPuesto);
                         cnx.Close();
                         cnx.Dispose();
                     }
@@ -632,6 +676,28 @@ namespace Nominas
             frmListaHistorial lh = new frmListaHistorial();
             lh._idempleado = _idempleado;
             lh.Show();
+        }
+
+        private void cmbDepartamento_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!departamento.Equals(""))
+                if (!departamento.Equals(cmbDepartamento.Text))
+                {
+                    historicoDepto = true;
+                    lblFechaAplicacionHistorico.Visible = true;
+                    dtpFechaAplicacionHistorico.Visible = true;
+                }
+        }
+
+        private void cmbPuesto_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(!puesto.Equals(""))
+                if (!puesto.Equals(cmbPuesto.Text))
+                {
+                    historicoPuesto = true;
+                    lblFechaAplicacionHistorico.Visible = true;
+                    dtpFechaAplicacionHistorico.Visible = true;
+                }
         }
     }
 }

@@ -57,6 +57,12 @@
             this.rbtnMujer = new System.Windows.Forms.RadioButton();
             this.rbtnHombre = new System.Windows.Forms.RadioButton();
             this.label12 = new System.Windows.Forms.Label();
+            this.mtxtIdBancario = new System.Windows.Forms.MaskedTextBox();
+            this.mtxtCuentaClabe = new System.Windows.Forms.MaskedTextBox();
+            this.mtxtCuentaBancaria = new System.Windows.Forms.MaskedTextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -198,7 +204,7 @@
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Location = new System.Drawing.Point(298, 308);
+            this.btnAceptar.Location = new System.Drawing.Point(298, 421);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(75, 23);
             this.btnAceptar.TabIndex = 16;
@@ -208,7 +214,7 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(379, 308);
+            this.btnCancelar.Location = new System.Drawing.Point(379, 421);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
             this.btnCancelar.TabIndex = 17;
@@ -317,11 +323,68 @@
             this.label12.TabIndex = 233;
             this.label12.Text = "Sexo:";
             // 
+            // mtxtIdBancario
+            // 
+            this.mtxtIdBancario.Location = new System.Drawing.Point(127, 388);
+            this.mtxtIdBancario.Mask = "9999";
+            this.mtxtIdBancario.Name = "mtxtIdBancario";
+            this.mtxtIdBancario.Size = new System.Drawing.Size(129, 20);
+            this.mtxtIdBancario.TabIndex = 250;
+            // 
+            // mtxtCuentaClabe
+            // 
+            this.mtxtCuentaClabe.Location = new System.Drawing.Point(127, 362);
+            this.mtxtCuentaClabe.Mask = "999 999 99999999999 9";
+            this.mtxtCuentaClabe.Name = "mtxtCuentaClabe";
+            this.mtxtCuentaClabe.Size = new System.Drawing.Size(129, 20);
+            this.mtxtCuentaClabe.TabIndex = 249;
+            // 
+            // mtxtCuentaBancaria
+            // 
+            this.mtxtCuentaBancaria.Location = new System.Drawing.Point(127, 336);
+            this.mtxtCuentaBancaria.Mask = "9999999999";
+            this.mtxtCuentaBancaria.Name = "mtxtCuentaBancaria";
+            this.mtxtCuentaBancaria.Size = new System.Drawing.Size(128, 20);
+            this.mtxtCuentaBancaria.TabIndex = 248;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(56, 391);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(65, 13);
+            this.label19.TabIndex = 247;
+            this.label19.Text = "ID bancario:";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(48, 365);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(73, 13);
+            this.label18.TabIndex = 246;
+            this.label18.Text = "Cuenta clabe:";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(33, 339);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(88, 13);
+            this.label17.TabIndex = 245;
+            this.label17.Text = "Cuenta bancaria:";
+            // 
             // frmReingresoEmpleado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(466, 340);
+            this.ClientSize = new System.Drawing.Size(466, 453);
+            this.Controls.Add(this.mtxtIdBancario);
+            this.Controls.Add(this.mtxtCuentaClabe);
+            this.Controls.Add(this.mtxtCuentaBancaria);
+            this.Controls.Add(this.label19);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.label17);
             this.Controls.Add(this.rbtnMujer);
             this.Controls.Add(this.rbtnHombre);
             this.Controls.Add(this.label12);
@@ -393,5 +456,11 @@
         private System.Windows.Forms.RadioButton rbtnMujer;
         private System.Windows.Forms.RadioButton rbtnHombre;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.MaskedTextBox mtxtIdBancario;
+        private System.Windows.Forms.MaskedTextBox mtxtCuentaClabe;
+        private System.Windows.Forms.MaskedTextBox mtxtCuentaBancaria;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label17;
     }
 }

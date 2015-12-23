@@ -84,7 +84,7 @@ namespace Nominas
                     }
                     catch (Exception error)
                     {
-                        MessageBox.Show("Error al ingresar la empresa. \r\n \r\n Error: " + error.Message);
+                        MessageBox.Show("Error al ingresar el usuario. \r\n \r\n Error: " + error.Message);
                     }
                     break;
                 case 2:
@@ -98,7 +98,7 @@ namespace Nominas
                     }
                     catch (Exception error)
                     {
-                        MessageBox.Show("Error al actualizar la empresa. \r\n \r\n Error: " + error.Message);
+                        MessageBox.Show("Error al actualizar el usuario. \r\n \r\n Error: " + error.Message);
                     }
                     break;
             }

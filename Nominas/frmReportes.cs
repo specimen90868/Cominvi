@@ -243,7 +243,8 @@ namespace Nominas
                     int.Parse(cmbDeptoFinal.SelectedValue.ToString()),
                     int.Parse(cmbEmpleadoInicial.SelectedValue.ToString()),
                     int.Parse(cmbEmpleadoFinal.SelectedValue.ToString()),
-                    (cmbEmpleados.Text == "Alta" ? 0 : 1));
+                    (cmbEmpleados.Text == "Alta" ? 0 : 1),
+                    netocero, orden);
                 cnx.Close();
                 cnx.Dispose();
             }

@@ -77,5 +77,10 @@ namespace Nominas
             txtUsuario.Clear();
             txtPassword.Clear();
         }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
+        }
     }
 }

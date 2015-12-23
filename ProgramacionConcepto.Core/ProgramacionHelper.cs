@@ -86,5 +86,13 @@ namespace ProgramacionConcepto.Core
             Command.Parameters.AddWithValue("fechafin", pc.fechafin);
             return Command.ExecuteNonQuery();
         }
+
+        public int eliminaProgramacion(ProgramacionConcepto pc)
+        {
+            Command.CommandText = "delete from ProgramacionConcepto where id = @id";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("id", pc.id);
+            return Command.ExecuteNonQuery();
+        }
     }
 }

@@ -38,6 +38,8 @@ namespace Nominas
         public static int mREINGRESO = 2;
         public static int mMODIFICACIONSALARIO = 3;
         public static int mBAJA = 4;
+        public static int mCAMBIOPUESTO = 5;
+        public static int mCAMBIODEPARTAMENTO = 6;
         #endregion
 
         #region TIPOS DE ESTATUS

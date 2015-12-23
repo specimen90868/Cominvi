@@ -368,6 +368,12 @@ namespace Nominas
                             else
                                 formula = formula.Replace("[" + variables[i] + "]", datosNomina[0].dias.ToString());
                         break;
+                    case "SeguroInfonavit":
+                        if (datosNomina[0].dias == 7)
+                            formula = formula.Replace("[" + variables[i] + "]", (1.5).ToString());
+                        else
+                            formula = formula.Replace("[" + variables[i] + "]", (3).ToString());
+                        break;
                 }
             }
             cnx.Dispose();
@@ -673,6 +679,12 @@ namespace Nominas
                             }
                             else
                                 formula = formula.Replace("[" + variables[i] + "]", datosNominaRecalculo[0].dias.ToString());
+                        break;
+                    case "SeguroInfonavit":
+                        if (datosNominaRecalculo[0].dias == 7)
+                            formula = formula.Replace("[" + variables[i] + "]", (1.5).ToString());
+                        else
+                            formula = formula.Replace("[" + variables[i] + "]", (3).ToString());
                         break;
                 }
             }

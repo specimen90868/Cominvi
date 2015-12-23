@@ -103,7 +103,7 @@ namespace Nominas
 
             var deduccion = from r in lstRecibo
                             join c in lstConceptos on r.idconcepto equals c.id
-                            where c.tipoconcepto.Contains("D") && c.visible == true
+                            where c.tipoconcepto.Contains("D") && c.visible == true && r.cantidad != 0
                             select new
                             {
                                 NoConcepto = c.noconcepto,
@@ -159,7 +159,7 @@ namespace Nominas
 
             foreach (DataGridViewRow fila in dgvDeducciones.Rows)
             {
-                sumaDeducciones += double.Parse(fila.Cells[2].Value.ToString());
+               sumaDeducciones += double.Parse(fila.Cells[2].Value.ToString());
             }
 
             netoPagar = sumaPercepciones - sumaDeducciones;

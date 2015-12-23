@@ -36,4 +36,18 @@ namespace Vacaciones.Core
         public int anio { get; set; }
         public int dias { get; set; }
     }
+
+    public class VacacionesPrima
+    {
+        public int id { get; set; }
+        public int idtrabajador { get; set; }
+        public int idempresa { get; set; }
+        public DateTime periodoinicio { get; set; }
+        public DateTime periodofin { get; set; }
+        public int diasderecho { get; set; }
+        public int diaspago { get; set; }
+        public int diaspendientes { get; set; }
+        public DateTime fechapago { get; set; }
+        public string vacacionesprima { get; set; }
+    }
 }

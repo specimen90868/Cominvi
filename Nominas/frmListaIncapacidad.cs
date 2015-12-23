@@ -69,7 +69,8 @@ namespace Nominas
                             Nombre = e.nombrecompleto,
                             Certificado = i.certificado,
                             FechaInicio = i.periodoinicio,
-                            FechaFin = i.periodofin
+                            FechaFin = i.periodofin,
+                            FinIncapacidad = i.finincapacidad
                         };
 
             dgvIncapacidad.DataSource = datos.ToList();
@@ -146,8 +147,9 @@ namespace Nominas
                                     NoEmpleado = emp.noempleado,
                                     Nombre = emp.nombrecompleto,
                                     Certificado = i.certificado,
-                                    FechaInicio = i.periodoinicio,
-                                    FechaFin = i.periodofin
+                                    InicioPeriodo = i.periodoinicio,
+                                    FinPeriodo = i.periodofin,
+                                    FinIncapacidad = i.finincapacidad
                                 };
                     dgvIncapacidad.DataSource = datos.ToList();
                 }
@@ -163,8 +165,9 @@ namespace Nominas
                                        NoEmpleado = be.noempleado,
                                        Nombre = be.nombrecompleto,
                                        Certificado = bi.certificado,
-                                       FechaInicio = bi.periodoinicio,
-                                       FechaFin = bi.periodofin
+                                       InicioPeriodo = bi.periodoinicio,
+                                       FinPeriodo = bi.periodofin,
+                                       FinIncapacidad = bi.finincapacidad
                                    };
                     dgvIncapacidad.DataSource = busqueda.ToList();
                 }

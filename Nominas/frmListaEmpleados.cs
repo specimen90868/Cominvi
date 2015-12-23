@@ -343,5 +343,12 @@ namespace Nominas
             if (edicion == GLOBALES.NUEVO)
                 ListaEmpleados();
         }
+
+        private void toolExportar_Click(object sender, EventArgs e)
+        {
+            frmExportarEmpleado ee = new frmExportarEmpleado();
+            ee.MdiParent = this.MdiParent;
+            ee.Show();
+        }
     }
 }

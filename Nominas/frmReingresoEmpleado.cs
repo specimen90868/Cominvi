@@ -184,6 +184,13 @@ namespace Nominas
                 return;
             }
 
+            control = GLOBALES.VALIDAR(this, typeof(MaskedTextBox));
+            if (!control.Equals(""))
+            {
+                MessageBox.Show("Falta el campo: " + control, "Información");
+                return;
+            }
+
             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();
             cmd.Connection = cnx;
@@ -224,6 +231,9 @@ namespace Nominas
             empleado.sdi = double.Parse(txtSDI.Text);
             empleado.idusuario = GLOBALES.IDUSUARIO;
             empleado.estatus = GLOBALES.ACTIVO;
+            empleado.cuenta = mtxtCuentaBancaria.Text;
+            empleado.clabe = mtxtCuentaClabe.Text;
+            empleado.idbancario = mtxtIdBancario.Text;
 
             historia.idtrabajador = _idempleado;
             historia.idempresa = int.Parse(cmbRegistroPatronal.SelectedValue.ToString());

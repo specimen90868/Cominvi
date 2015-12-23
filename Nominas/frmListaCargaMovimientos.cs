@@ -85,6 +85,7 @@ namespace Nominas
             ofd.Title = "Seleccionar Excel";
             ofd.RestoreDirectory = false;
             ofd.InitialDirectory = @"C:\";
+            ofd.Filter = "Documento de Excel|*.xls;*.xlsx";
             if (DialogResult.OK == ofd.ShowDialog())
             {
                 ruta = ofd.FileName;
@@ -129,7 +130,7 @@ namespace Nominas
                                     this.Dispose();
                                 }
 
-                                for (int i = 5; i < dt.Rows.Count; i++)
+                                for (int i = 6; i < dt.Rows.Count; i++)
                                 {
                                     for (int j = 1; j < 5; j++)
                                     {
@@ -281,7 +282,7 @@ namespace Nominas
 
         private void CargaPerfil()
         {
-            List<Autorizaciones.Core.Ediciones> lstEdiciones = GLOBALES.PERFILEDICIONES("Programación de concepto");
+            List<Autorizaciones.Core.Ediciones> lstEdiciones = GLOBALES.PERFILEDICIONES("Carga movimientos");
 
             for (int i = 0; i < lstEdiciones.Count; i++)
             {

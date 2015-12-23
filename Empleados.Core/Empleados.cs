@@ -34,7 +34,10 @@ namespace Empleados.Core
         public double sd { get; set; }
         public double sueldo { get; set; }
         public int estatus { get; set; }
-        public int idusuario { get; set; }      
+        public int idusuario { get; set; }
+        public string cuenta { get; set; }
+        public string clabe { get; set; }
+        public string idbancario { get; set; }
     }
 
     public class IncrementoSalarial

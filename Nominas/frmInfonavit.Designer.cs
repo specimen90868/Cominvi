@@ -277,6 +277,7 @@
             // 
             // dtpInicioPeriodo
             // 
+            this.dtpInicioPeriodo.Enabled = false;
             this.dtpInicioPeriodo.Location = new System.Drawing.Point(265, 193);
             this.dtpInicioPeriodo.Name = "dtpInicioPeriodo";
             this.dtpInicioPeriodo.Size = new System.Drawing.Size(200, 20);

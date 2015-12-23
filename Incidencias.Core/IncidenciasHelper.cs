@@ -13,8 +13,8 @@ namespace Incidencias.Core
         {
             List<Incidencias> lstIncidencias = new List<Incidencias>();
             DataTable dtIncidencias = new DataTable();
-            Command.CommandText = "select idtrabajador, idempresa, certificado, periodoinicio, periodofin from Incidencias " +
-                "where idempresa = @idempresa group by idtrabajador, idempresa, certificado, periodoinicio, periodofin";
+            Command.CommandText = "select idtrabajador, idempresa, certificado, periodoinicio, periodofin, finincapacidad from Incidencias " +
+                "where idempresa = @idempresa group by idtrabajador, idempresa, certificado, periodoinicio, periodofin, finincapacidad";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", i.idempresa);
             dtIncidencias = SelectData(Command);
@@ -26,10 +26,53 @@ namespace Incidencias.Core
                 incidencia.certificado = dtIncidencias.Rows[j]["certificado"].ToString();
                 incidencia.periodoinicio = DateTime.Parse(dtIncidencias.Rows[j]["periodoinicio"].ToString());
                 incidencia.periodofin = DateTime.Parse(dtIncidencias.Rows[j]["periodofin"].ToString());
+                incidencia.finincapacidad = DateTime.Parse(dtIncidencias.Rows[j]["finincapacidad"].ToString());
                 lstIncidencias.Add(incidencia);
             }
             return lstIncidencias;
         }
+
+        public List<Incidencias> obtenerIndicenciasTrabajador(Incidencias i)
+        {
+            List<Incidencias> lstIncidencias = new List<Incidencias>();
+            DataTable dtIncidencias = new DataTable();
+            Command.CommandText = @"select distinct certificado from Incidencias where idtrabajador = @idtrabajador";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", i.idtrabajador);
+            dtIncidencias = SelectData(Command);
+            for (int j = 0; j < dtIncidencias.Rows.Count; j++)
+            {
+                Incidencias incidencia = new Incidencias();
+                incidencia.certificado = dtIncidencias.Rows[j]["certificado"].ToString();
+                lstIncidencias.Add(incidencia);
+            }
+            return lstIncidencias;
+        }
+
+        public List<Incidencias> obtenerIndicenciaTrabajador(Incidencias i)
+        {
+            List<Incidencias> lstIncidencias = new List<Incidencias>();
+            DataTable dtIncidencias = new DataTable();
+            Command.CommandText = @"select certificado, sum(dias) as dias, inicioincapacidad, finincapacidad from Incidencias where idtrabajador = @idtrabajador 
+                                    and certificado = @certificado group by certificado, inicioincapacidad, finincapacidad";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", i.idtrabajador);
+            Command.Parameters.AddWithValue("inicio", i.fechainicio);
+            Command.Parameters.AddWithValue("fin", i.fechafin);
+            Command.Parameters.AddWithValue("certificado", i.certificado);
+            dtIncidencias = SelectData(Command);
+            for (int j = 0; j < dtIncidencias.Rows.Count; j++)
+            {
+                Incidencias incidencia = new Incidencias();
+                incidencia.certificado = dtIncidencias.Rows[j]["certificado"].ToString();
+                incidencia.dias = int.Parse(dtIncidencias.Rows[j]["dias"].ToString());
+                incidencia.inicioincapacidad = DateTime.Parse(dtIncidencias.Rows[j]["inicioincapacidad"].ToString());
+                incidencia.finincapacidad = DateTime.Parse(dtIncidencias.Rows[j]["finincapacidad"].ToString());
+                lstIncidencias.Add(incidencia);
+            }
+            return lstIncidencias;
+        }
+
 
         public object existeIncidencia(Incidencias i)
         {

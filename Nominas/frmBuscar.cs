@@ -66,7 +66,11 @@ namespace Nominas
                     cnx.Close();
                     cnx.Dispose();
 
-                    var empleados = from a in lstEmpleados select new { Id = a.idtrabajador, Nombre = a.nombrecompleto };
+                    dgvCatalogo.Columns["idtrabajador"].DataPropertyName = "idtrabajador";
+                    dgvCatalogo.Columns["noempleado"].DataPropertyName = "noempleado";
+                    dgvCatalogo.Columns["nombre"].DataPropertyName = "nombrecompleto";
+
+                    var empleados = from a in lstEmpleados select new { a.idtrabajador, a.noempleado, a.nombrecompleto };
                     dgvCatalogo.DataSource = empleados.ToList();
 
                     for (int i = 0; i < dgvCatalogo.Columns.Count; i++)
@@ -111,8 +115,9 @@ namespace Nominas
                         var empleado = from em in lstEmpleados
                                        select new
                                        {
-                                           Id = em.idtrabajador,
-                                           Nombre = em.nombrecompleto
+                                           em.idtrabajador,
+                                           em.noempleado,
+                                           em.nombrecompleto
                                        };
                         dgvCatalogo.DataSource = empleado.ToList();
                     }
@@ -122,11 +127,12 @@ namespace Nominas
                     if (_catalogo == GLOBALES.EMPLEADOS)
                     {
                         var busqueda = from b in lstEmpleados
-                                       where b.nombrecompleto.Contains(txtBuscar.Text.ToUpper())
+                                       where b.nombrecompleto.Contains(txtBuscar.Text.ToUpper()) || b.noempleado.Contains(txtBuscar.Text)
                                        select new
                                        {
-                                           Id = b.idtrabajador,
-                                           Nombre = b.nombrecompleto
+                                           b.idtrabajador,
+                                           b.noempleado,
+                                           b.nombrecompleto
                                        };
                         dgvCatalogo.DataSource = busqueda.ToList();
                     }
@@ -149,7 +155,7 @@ namespace Nominas
             if (OnBuscar != null)
             {
                 int fila = dgvCatalogo.CurrentCell.RowIndex;
-                OnBuscar(int.Parse(dgvCatalogo.Rows[fila].Cells[0].Value.ToString()), dgvCatalogo.Rows[fila].Cells[1].Value.ToString());
+                OnBuscar(int.Parse(dgvCatalogo.Rows[fila].Cells[0].Value.ToString()), dgvCatalogo.Rows[fila].Cells[2].Value.ToString());
                 this.Dispose();
             }
         }
