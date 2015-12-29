@@ -107,14 +107,16 @@
             this.Label50 = new System.Windows.Forms.Label();
             this.Label51 = new System.Windows.Forms.Label();
             this.tabVacaciones = new System.Windows.Forms.TabPage();
-            this.btnEliminarVP = new System.Windows.Forms.Button();
-            this.btnGuardarVP = new System.Windows.Forms.Button();
-            this.txtDiasPendientes = new System.Windows.Forms.TextBox();
-            this.label20 = new System.Windows.Forms.Label();
-            this.txtDiasPago = new System.Windows.Forms.TextBox();
-            this.label19 = new System.Windows.Forms.Label();
+            this.ContenedorVacaciones = new System.Windows.Forms.SplitContainer();
+            this.lstvVacaciones = new System.Windows.Forms.ListView();
             this.cmbConceptoVacaciones = new System.Windows.Forms.ComboBox();
+            this.btnEliminarVP = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
+            this.btnGuardarVP = new System.Windows.Forms.Button();
+            this.label19 = new System.Windows.Forms.Label();
+            this.txtDiasPendientes = new System.Windows.Forms.TextBox();
+            this.txtDiasPago = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.txtSueldo = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -143,8 +145,6 @@
             this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ContenedorVacaciones = new System.Windows.Forms.SplitContainer();
-            this.lstvVacaciones = new System.Windows.Forms.ListView();
             this.toolAcciones.SuspendLayout();
             this.TabPrincipal.SuspendLayout();
             this.tabPercepcionesDeducciones.SuspendLayout();
@@ -173,13 +173,13 @@
             this.ContenedorInfonavit.Panel2.SuspendLayout();
             this.ContenedorInfonavit.SuspendLayout();
             this.tabVacaciones.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ContenedorVacaciones)).BeginInit();
             this.ContenedorVacaciones.Panel1.SuspendLayout();
             this.ContenedorVacaciones.Panel2.SuspendLayout();
             this.ContenedorVacaciones.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolAcciones
@@ -992,61 +992,39 @@
             this.tabVacaciones.TabIndex = 6;
             this.tabVacaciones.Text = "Vacaciones";
             // 
-            // btnEliminarVP
+            // ContenedorVacaciones
             // 
-            this.btnEliminarVP.Location = new System.Drawing.Point(147, 94);
-            this.btnEliminarVP.Name = "btnEliminarVP";
-            this.btnEliminarVP.Size = new System.Drawing.Size(75, 23);
-            this.btnEliminarVP.TabIndex = 7;
-            this.btnEliminarVP.Text = "Eliminar";
-            this.btnEliminarVP.UseVisualStyleBackColor = true;
-            this.btnEliminarVP.Click += new System.EventHandler(this.btnEliminarVP_Click);
+            this.ContenedorVacaciones.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ContenedorVacaciones.Location = new System.Drawing.Point(0, 0);
+            this.ContenedorVacaciones.Name = "ContenedorVacaciones";
             // 
-            // btnGuardarVP
+            // ContenedorVacaciones.Panel1
             // 
-            this.btnGuardarVP.Location = new System.Drawing.Point(66, 94);
-            this.btnGuardarVP.Name = "btnGuardarVP";
-            this.btnGuardarVP.Size = new System.Drawing.Size(75, 23);
-            this.btnGuardarVP.TabIndex = 6;
-            this.btnGuardarVP.Text = "Guardar";
-            this.btnGuardarVP.UseVisualStyleBackColor = true;
-            this.btnGuardarVP.Click += new System.EventHandler(this.btnGuardarVP_Click);
+            this.ContenedorVacaciones.Panel1.Controls.Add(this.lstvVacaciones);
             // 
-            // txtDiasPendientes
+            // ContenedorVacaciones.Panel2
             // 
-            this.txtDiasPendientes.BackColor = System.Drawing.SystemColors.Control;
-            this.txtDiasPendientes.Location = new System.Drawing.Point(122, 68);
-            this.txtDiasPendientes.Name = "txtDiasPendientes";
-            this.txtDiasPendientes.Size = new System.Drawing.Size(100, 20);
-            this.txtDiasPendientes.TabIndex = 5;
+            this.ContenedorVacaciones.Panel2.Controls.Add(this.cmbConceptoVacaciones);
+            this.ContenedorVacaciones.Panel2.Controls.Add(this.btnEliminarVP);
+            this.ContenedorVacaciones.Panel2.Controls.Add(this.label18);
+            this.ContenedorVacaciones.Panel2.Controls.Add(this.btnGuardarVP);
+            this.ContenedorVacaciones.Panel2.Controls.Add(this.label19);
+            this.ContenedorVacaciones.Panel2.Controls.Add(this.txtDiasPendientes);
+            this.ContenedorVacaciones.Panel2.Controls.Add(this.txtDiasPago);
+            this.ContenedorVacaciones.Panel2.Controls.Add(this.label20);
+            this.ContenedorVacaciones.Size = new System.Drawing.Size(704, 342);
+            this.ContenedorVacaciones.SplitterDistance = 203;
+            this.ContenedorVacaciones.TabIndex = 8;
             // 
-            // label20
+            // lstvVacaciones
             // 
-            this.label20.AutoSize = true;
-            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.Location = new System.Drawing.Point(12, 71);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(102, 13);
-            this.label20.TabIndex = 4;
-            this.label20.Text = "Dias pendientes:";
-            // 
-            // txtDiasPago
-            // 
-            this.txtDiasPago.BackColor = System.Drawing.SystemColors.Control;
-            this.txtDiasPago.Location = new System.Drawing.Point(122, 42);
-            this.txtDiasPago.Name = "txtDiasPago";
-            this.txtDiasPago.Size = new System.Drawing.Size(54, 20);
-            this.txtDiasPago.TabIndex = 3;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(12, 45);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(83, 13);
-            this.label19.TabIndex = 2;
-            this.label19.Text = "Dias a pagar:";
+            this.lstvVacaciones.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstvVacaciones.Location = new System.Drawing.Point(0, 0);
+            this.lstvVacaciones.Name = "lstvVacaciones";
+            this.lstvVacaciones.Size = new System.Drawing.Size(203, 342);
+            this.lstvVacaciones.TabIndex = 0;
+            this.lstvVacaciones.UseCompatibleStateImageBehavior = false;
+            this.lstvVacaciones.Click += new System.EventHandler(this.lstvVacaciones_Click);
             // 
             // cmbConceptoVacaciones
             // 
@@ -1060,6 +1038,16 @@
             this.cmbConceptoVacaciones.Size = new System.Drawing.Size(100, 21);
             this.cmbConceptoVacaciones.TabIndex = 1;
             // 
+            // btnEliminarVP
+            // 
+            this.btnEliminarVP.Location = new System.Drawing.Point(147, 94);
+            this.btnEliminarVP.Name = "btnEliminarVP";
+            this.btnEliminarVP.Size = new System.Drawing.Size(75, 23);
+            this.btnEliminarVP.TabIndex = 7;
+            this.btnEliminarVP.Text = "Eliminar";
+            this.btnEliminarVP.UseVisualStyleBackColor = true;
+            this.btnEliminarVP.Click += new System.EventHandler(this.btnEliminarVP_Click);
+            // 
             // label18
             // 
             this.label18.AutoSize = true;
@@ -1069,6 +1057,52 @@
             this.label18.Size = new System.Drawing.Size(65, 13);
             this.label18.TabIndex = 0;
             this.label18.Text = "Concepto:";
+            // 
+            // btnGuardarVP
+            // 
+            this.btnGuardarVP.Location = new System.Drawing.Point(66, 94);
+            this.btnGuardarVP.Name = "btnGuardarVP";
+            this.btnGuardarVP.Size = new System.Drawing.Size(75, 23);
+            this.btnGuardarVP.TabIndex = 6;
+            this.btnGuardarVP.Text = "Guardar";
+            this.btnGuardarVP.UseVisualStyleBackColor = true;
+            this.btnGuardarVP.Click += new System.EventHandler(this.btnGuardarVP_Click);
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.Location = new System.Drawing.Point(12, 45);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(83, 13);
+            this.label19.TabIndex = 2;
+            this.label19.Text = "Dias a pagar:";
+            // 
+            // txtDiasPendientes
+            // 
+            this.txtDiasPendientes.BackColor = System.Drawing.SystemColors.Control;
+            this.txtDiasPendientes.Location = new System.Drawing.Point(122, 68);
+            this.txtDiasPendientes.Name = "txtDiasPendientes";
+            this.txtDiasPendientes.Size = new System.Drawing.Size(100, 20);
+            this.txtDiasPendientes.TabIndex = 5;
+            // 
+            // txtDiasPago
+            // 
+            this.txtDiasPago.BackColor = System.Drawing.SystemColors.Control;
+            this.txtDiasPago.Location = new System.Drawing.Point(122, 42);
+            this.txtDiasPago.Name = "txtDiasPago";
+            this.txtDiasPago.Size = new System.Drawing.Size(54, 20);
+            this.txtDiasPago.TabIndex = 3;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.Location = new System.Drawing.Point(12, 71);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(102, 13);
+            this.label20.TabIndex = 4;
+            this.label20.Text = "Dias pendientes:";
             // 
             // panel1
             // 
@@ -1283,40 +1317,6 @@
             this.dataGridViewTextBoxColumn15.HeaderText = "Fin";
             this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
             // 
-            // ContenedorVacaciones
-            // 
-            this.ContenedorVacaciones.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ContenedorVacaciones.Location = new System.Drawing.Point(0, 0);
-            this.ContenedorVacaciones.Name = "ContenedorVacaciones";
-            // 
-            // ContenedorVacaciones.Panel1
-            // 
-            this.ContenedorVacaciones.Panel1.Controls.Add(this.lstvVacaciones);
-            // 
-            // ContenedorVacaciones.Panel2
-            // 
-            this.ContenedorVacaciones.Panel2.Controls.Add(this.cmbConceptoVacaciones);
-            this.ContenedorVacaciones.Panel2.Controls.Add(this.btnEliminarVP);
-            this.ContenedorVacaciones.Panel2.Controls.Add(this.label18);
-            this.ContenedorVacaciones.Panel2.Controls.Add(this.btnGuardarVP);
-            this.ContenedorVacaciones.Panel2.Controls.Add(this.label19);
-            this.ContenedorVacaciones.Panel2.Controls.Add(this.txtDiasPendientes);
-            this.ContenedorVacaciones.Panel2.Controls.Add(this.txtDiasPago);
-            this.ContenedorVacaciones.Panel2.Controls.Add(this.label20);
-            this.ContenedorVacaciones.Size = new System.Drawing.Size(704, 342);
-            this.ContenedorVacaciones.SplitterDistance = 203;
-            this.ContenedorVacaciones.TabIndex = 8;
-            // 
-            // lstvVacaciones
-            // 
-            this.lstvVacaciones.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lstvVacaciones.Location = new System.Drawing.Point(0, 0);
-            this.lstvVacaciones.Name = "lstvVacaciones";
-            this.lstvVacaciones.Size = new System.Drawing.Size(203, 342);
-            this.lstvVacaciones.TabIndex = 0;
-            this.lstvVacaciones.UseCompatibleStateImageBehavior = false;
-            this.lstvVacaciones.Click += new System.EventHandler(this.lstvVacaciones_Click);
-            // 
             // frmSobreRecibo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1368,16 +1368,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.ContenedorInfonavit)).EndInit();
             this.ContenedorInfonavit.ResumeLayout(false);
             this.tabVacaciones.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
-            this.panel3.ResumeLayout(false);
             this.ContenedorVacaciones.Panel1.ResumeLayout(false);
             this.ContenedorVacaciones.Panel2.ResumeLayout(false);
             this.ContenedorVacaciones.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ContenedorVacaciones)).EndInit();
             this.ContenedorVacaciones.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

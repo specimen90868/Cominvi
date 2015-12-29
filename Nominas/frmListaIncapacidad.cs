@@ -68,8 +68,10 @@ namespace Nominas
                             NoEmpleado = e.noempleado,
                             Nombre = e.nombrecompleto,
                             Certificado = i.certificado,
-                            FechaInicio = i.periodoinicio,
-                            FechaFin = i.periodofin,
+                            PeriodoInicio = i.periodoinicio,
+                            PeriodoFin = i.periodofin,
+                            Dias = i.dias,
+                            InicioIncapacidad = i.inicioincapacidad,
                             FinIncapacidad = i.finincapacidad
                         };
 
@@ -147,8 +149,10 @@ namespace Nominas
                                     NoEmpleado = emp.noempleado,
                                     Nombre = emp.nombrecompleto,
                                     Certificado = i.certificado,
-                                    InicioPeriodo = i.periodoinicio,
-                                    FinPeriodo = i.periodofin,
+                                    PeriodoInicio = i.periodoinicio,
+                                    PeriodoFin = i.periodofin,
+                                    Dias = i.dias,
+                                    InicioIncapacidad = i.inicioincapacidad,
                                     FinIncapacidad = i.finincapacidad
                                 };
                     dgvIncapacidad.DataSource = datos.ToList();
@@ -165,8 +169,10 @@ namespace Nominas
                                        NoEmpleado = be.noempleado,
                                        Nombre = be.nombrecompleto,
                                        Certificado = bi.certificado,
-                                       InicioPeriodo = bi.periodoinicio,
-                                       FinPeriodo = bi.periodofin,
+                                       PeriodoInicio = bi.periodoinicio,
+                                       PeriodoFin = bi.periodofin,
+                                       Dias = bi.dias,
+                                       InicioIncapacidad = bi.inicioincapacidad,
                                        FinIncapacidad = bi.finincapacidad
                                    };
                     dgvIncapacidad.DataSource = busqueda.ToList();

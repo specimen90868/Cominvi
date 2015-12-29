@@ -32,8 +32,8 @@
             this.dgvPreNomina = new System.Windows.Forms.DataGridView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolAceptar = new System.Windows.Forms.ToolStripButton();
-            this.toolCerrar = new System.Windows.Forms.ToolStripButton();
             this.toolEliminar = new System.Windows.Forms.ToolStripButton();
+            this.toolCerrar = new System.Windows.Forms.ToolStripButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPreNomina)).BeginInit();
@@ -75,15 +75,6 @@
             this.toolAceptar.Text = "Aceptar";
             this.toolAceptar.Click += new System.EventHandler(this.toolAceptar_Click);
             // 
-            // toolCerrar
-            // 
-            this.toolCerrar.Image = ((System.Drawing.Image)(resources.GetObject("toolCerrar.Image")));
-            this.toolCerrar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolCerrar.Name = "toolCerrar";
-            this.toolCerrar.Size = new System.Drawing.Size(59, 22);
-            this.toolCerrar.Text = "Cerrar";
-            this.toolCerrar.Click += new System.EventHandler(this.toolCerrar_Click);
-            // 
             // toolEliminar
             // 
             this.toolEliminar.Image = ((System.Drawing.Image)(resources.GetObject("toolEliminar.Image")));
@@ -92,6 +83,15 @@
             this.toolEliminar.Size = new System.Drawing.Size(70, 22);
             this.toolEliminar.Text = "Eliminar";
             this.toolEliminar.Click += new System.EventHandler(this.toolEliminar_Click);
+            // 
+            // toolCerrar
+            // 
+            this.toolCerrar.Image = ((System.Drawing.Image)(resources.GetObject("toolCerrar.Image")));
+            this.toolCerrar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolCerrar.Name = "toolCerrar";
+            this.toolCerrar.Size = new System.Drawing.Size(59, 22);
+            this.toolCerrar.Text = "Cerrar";
+            this.toolCerrar.Click += new System.EventHandler(this.toolCerrar_Click);
             // 
             // panel1
             // 

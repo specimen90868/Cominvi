@@ -13,8 +13,8 @@ namespace Incidencias.Core
         {
             List<Incidencias> lstIncidencias = new List<Incidencias>();
             DataTable dtIncidencias = new DataTable();
-            Command.CommandText = "select idtrabajador, idempresa, certificado, periodoinicio, periodofin, finincapacidad from Incidencias " +
-                "where idempresa = @idempresa group by idtrabajador, idempresa, certificado, periodoinicio, periodofin, finincapacidad";
+            Command.CommandText = "select idtrabajador, idempresa, certificado, periodoinicio, periodofin, SUM(dias) as dias, inicioincapacidad, finincapacidad from Incidencias " +
+                "where idempresa = @idempresa group by idtrabajador, idempresa, certificado, periodoinicio, periodofin, inicioincapacidad, finincapacidad";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", i.idempresa);
             dtIncidencias = SelectData(Command);
@@ -26,6 +26,8 @@ namespace Incidencias.Core
                 incidencia.certificado = dtIncidencias.Rows[j]["certificado"].ToString();
                 incidencia.periodoinicio = DateTime.Parse(dtIncidencias.Rows[j]["periodoinicio"].ToString());
                 incidencia.periodofin = DateTime.Parse(dtIncidencias.Rows[j]["periodofin"].ToString());
+                incidencia.dias = int.Parse(dtIncidencias.Rows[j]["dias"].ToString());
+                incidencia.inicioincapacidad = DateTime.Parse(dtIncidencias.Rows[j]["inicioincapacidad"].ToString());
                 incidencia.finincapacidad = DateTime.Parse(dtIncidencias.Rows[j]["finincapacidad"].ToString());
                 lstIncidencias.Add(incidencia);
             }
@@ -132,10 +134,12 @@ namespace Incidencias.Core
             dt.Clear();
         }
 
-        public int stpIncidencia()
+        public int stpIncidencia(DateTime inicio, DateTime fin)
         {
-            Command.CommandText = "exec stp_InsertaIncidencias";
+            Command.CommandText = "exec stp_InsertaIncidencias @inicio, @fin";
             Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("inicio", inicio);
+            Command.Parameters.AddWithValue("fin", fin);
             return Command.ExecuteNonQuery();
         }
     }

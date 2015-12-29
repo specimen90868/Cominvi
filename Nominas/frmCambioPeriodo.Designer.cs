@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCambioPeriodo));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.dtpPeriodoFin = new System.Windows.Forms.DateTimePicker();
@@ -40,7 +41,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(30, 9);
+            this.label1.Location = new System.Drawing.Point(30, 7);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(27, 13);
             this.label1.TabIndex = 0;
@@ -50,7 +51,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(30, 35);
+            this.label2.Location = new System.Drawing.Point(30, 33);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(17, 13);
             this.label2.TabIndex = 1;
@@ -59,14 +60,14 @@
             // dtpPeriodoFin
             // 
             this.dtpPeriodoFin.Enabled = false;
-            this.dtpPeriodoFin.Location = new System.Drawing.Point(63, 35);
+            this.dtpPeriodoFin.Location = new System.Drawing.Point(63, 30);
             this.dtpPeriodoFin.Name = "dtpPeriodoFin";
             this.dtpPeriodoFin.Size = new System.Drawing.Size(200, 20);
             this.dtpPeriodoFin.TabIndex = 17;
             // 
             // dtpPeriodoInicio
             // 
-            this.dtpPeriodoInicio.Location = new System.Drawing.Point(63, 9);
+            this.dtpPeriodoInicio.Location = new System.Drawing.Point(63, 5);
             this.dtpPeriodoInicio.Name = "dtpPeriodoInicio";
             this.dtpPeriodoInicio.Size = new System.Drawing.Size(200, 20);
             this.dtpPeriodoInicio.TabIndex = 16;
@@ -74,21 +75,27 @@
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Location = new System.Drawing.Point(107, 61);
+            this.btnAceptar.Image = ((System.Drawing.Image)(resources.GetObject("btnAceptar.Image")));
+            this.btnAceptar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAceptar.Location = new System.Drawing.Point(107, 56);
             this.btnAceptar.Name = "btnAceptar";
-            this.btnAceptar.Size = new System.Drawing.Size(75, 23);
+            this.btnAceptar.Size = new System.Drawing.Size(75, 28);
             this.btnAceptar.TabIndex = 18;
             this.btnAceptar.Text = "Aceptar";
+            this.btnAceptar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnAceptar.UseVisualStyleBackColor = true;
             this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(188, 61);
+            this.btnCancelar.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelar.Image")));
+            this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCancelar.Location = new System.Drawing.Point(188, 56);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(75, 23);
+            this.btnCancelar.Size = new System.Drawing.Size(75, 28);
             this.btnCancelar.TabIndex = 19;
             this.btnCancelar.Text = "Cancelar";
+            this.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 

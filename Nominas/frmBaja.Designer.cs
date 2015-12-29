@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmBaja));
             this.label1 = new System.Windows.Forms.Label();
             this.dtpFechaBaja = new System.Windows.Forms.DateTimePicker();
             this.label2 = new System.Windows.Forms.Label();
@@ -77,21 +78,27 @@
             // 
             // Cancelar
             // 
-            this.Cancelar.Location = new System.Drawing.Point(253, 157);
+            this.Cancelar.Image = ((System.Drawing.Image)(resources.GetObject("Cancelar.Image")));
+            this.Cancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Cancelar.Location = new System.Drawing.Point(253, 139);
             this.Cancelar.Name = "Cancelar";
-            this.Cancelar.Size = new System.Drawing.Size(75, 23);
+            this.Cancelar.Size = new System.Drawing.Size(75, 32);
             this.Cancelar.TabIndex = 5;
             this.Cancelar.Text = "Cancelar";
+            this.Cancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Cancelar.UseVisualStyleBackColor = true;
             this.Cancelar.Click += new System.EventHandler(this.Cancelar_Click);
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Location = new System.Drawing.Point(172, 157);
+            this.btnAceptar.Image = ((System.Drawing.Image)(resources.GetObject("btnAceptar.Image")));
+            this.btnAceptar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAceptar.Location = new System.Drawing.Point(176, 139);
             this.btnAceptar.Name = "btnAceptar";
-            this.btnAceptar.Size = new System.Drawing.Size(75, 23);
+            this.btnAceptar.Size = new System.Drawing.Size(71, 32);
             this.btnAceptar.TabIndex = 3;
             this.btnAceptar.Text = "Aceptar";
+            this.btnAceptar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnAceptar.UseVisualStyleBackColor = true;
             this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
             // 
@@ -134,7 +141,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(340, 192);
+            this.ClientSize = new System.Drawing.Size(340, 181);
             this.Controls.Add(this.dtpPeriodoFin);
             this.Controls.Add(this.dtpPeriodoInicio);
             this.Controls.Add(this.label3);

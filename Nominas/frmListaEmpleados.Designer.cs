@@ -40,13 +40,13 @@
             this.toolEliminar = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolIncrementoSalario = new System.Windows.Forms.ToolStripButton();
+            this.toolExportar = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.lblBuscar = new System.Windows.Forms.ToolStripLabel();
             this.txtBuscar = new System.Windows.Forms.ToolStripTextBox();
             this.toolTitulo = new System.Windows.Forms.ToolStrip();
             this.toolEmpleados = new System.Windows.Forms.ToolStripLabel();
             this.dgvEmpleados = new System.Windows.Forms.DataGridView();
-            this.toolExportar = new System.Windows.Forms.ToolStripButton();
             this.toolBusqueda.SuspendLayout();
             this.toolTitulo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmpleados)).BeginInit();
@@ -157,6 +157,15 @@
             this.toolIncrementoSalario.Text = "Incrementar Salario";
             this.toolIncrementoSalario.Click += new System.EventHandler(this.toolIncrementoSalario_Click);
             // 
+            // toolExportar
+            // 
+            this.toolExportar.Image = ((System.Drawing.Image)(resources.GetObject("toolExportar.Image")));
+            this.toolExportar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolExportar.Name = "toolExportar";
+            this.toolExportar.Size = new System.Drawing.Size(70, 22);
+            this.toolExportar.Text = "Exportar";
+            this.toolExportar.Click += new System.EventHandler(this.toolExportar_Click);
+            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
@@ -210,15 +219,6 @@
             this.dgvEmpleados.Size = new System.Drawing.Size(1198, 672);
             this.dgvEmpleados.TabIndex = 5;
             this.dgvEmpleados.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmpleados_CellDoubleClick);
-            // 
-            // toolExportar
-            // 
-            this.toolExportar.Image = ((System.Drawing.Image)(resources.GetObject("toolExportar.Image")));
-            this.toolExportar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolExportar.Name = "toolExportar";
-            this.toolExportar.Size = new System.Drawing.Size(70, 22);
-            this.toolExportar.Text = "Exportar";
-            this.toolExportar.Click += new System.EventHandler(this.toolExportar_Click);
             // 
             // frmListaEmpleados
             // 

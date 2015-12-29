@@ -69,12 +69,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsReportes.xsd</DependentUpon>
     </Compile>
-    <Compile Include="frmAguinaldo.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmAguinaldo.Designer.cs">
-      <DependentUpon>frmAguinaldo.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmBaja.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -501,12 +495,6 @@
     <Compile Include="frmPuestos.Designer.cs">
       <DependentUpon>frmPuestos.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmReciboNomina.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmReciboNomina.Designer.cs">
-      <DependentUpon>frmReciboNomina.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmReingresoEmpleado.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -583,9 +571,6 @@
     <Compile Include="MathParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="frmAguinaldo.resx">
-      <DependentUpon>frmAguinaldo.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="frmBaja.resx">
       <DependentUpon>frmBaja.cs</DependentUpon>
     </EmbeddedResource>
@@ -798,9 +783,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmPuestos.resx">
       <DependentUpon>frmPuestos.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmReciboNomina.resx">
-      <DependentUpon>frmReciboNomina.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmReingresoEmpleado.resx">
       <DependentUpon>frmReingresoEmpleado.cs</DependentUpon>

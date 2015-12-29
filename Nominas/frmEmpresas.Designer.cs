@@ -414,21 +414,27 @@
             // 
             // btnVer
             // 
+            this.btnVer.Image = ((System.Drawing.Image)(resources.GetObject("btnVer.Image")));
+            this.btnVer.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnVer.Location = new System.Drawing.Point(136, 480);
             this.btnVer.Name = "btnVer";
-            this.btnVer.Size = new System.Drawing.Size(75, 23);
+            this.btnVer.Size = new System.Drawing.Size(67, 35);
             this.btnVer.TabIndex = 167;
             this.btnVer.Text = "Ver";
+            this.btnVer.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnVer.UseVisualStyleBackColor = true;
             this.btnVer.Click += new System.EventHandler(this.btnVer_Click);
             // 
             // btnAsignar
             // 
-            this.btnAsignar.Location = new System.Drawing.Point(217, 480);
+            this.btnAsignar.Image = ((System.Drawing.Image)(resources.GetObject("btnAsignar.Image")));
+            this.btnAsignar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAsignar.Location = new System.Drawing.Point(209, 482);
             this.btnAsignar.Name = "btnAsignar";
-            this.btnAsignar.Size = new System.Drawing.Size(75, 23);
+            this.btnAsignar.Size = new System.Drawing.Size(67, 35);
             this.btnAsignar.TabIndex = 168;
             this.btnAsignar.Text = "Asignar";
+            this.btnAsignar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnAsignar.UseVisualStyleBackColor = true;
             this.btnAsignar.Click += new System.EventHandler(this.btnAsignar_Click);
             // 

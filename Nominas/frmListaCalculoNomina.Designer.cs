@@ -29,17 +29,17 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmListaCalculoNomina));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolTitulo = new System.Windows.Forms.ToolStrip();
             this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
             this.toolAbrir = new System.Windows.Forms.ToolStripMenuItem();
@@ -78,6 +78,18 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.dgvEmpleados = new System.Windows.Forms.DataGridView();
             this.seleccion = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.idtrabajador = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.iddepartamento = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idpuesto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.noempleado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombres = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.paterno = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.materno = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sueldo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.despensa = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.asistencia = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.puntualidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.horas = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.workerCalculo = new System.ComponentModel.BackgroundWorker();
             this.BarraEstado = new System.Windows.Forms.StatusStrip();
             this.toolEstado = new System.Windows.Forms.ToolStripStatusLabel();
@@ -102,18 +114,6 @@
             this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idtrabajador = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.iddepartamento = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idpuesto = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.noempleado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombres = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.paterno = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.materno = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sueldo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.despensa = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.asistencia = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.puntualidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.horas = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -293,28 +293,28 @@
             // toolTodos
             // 
             this.toolTodos.Name = "toolTodos";
-            this.toolTodos.Size = new System.Drawing.Size(150, 22);
+            this.toolTodos.Size = new System.Drawing.Size(152, 22);
             this.toolTodos.Text = "Todos";
             this.toolTodos.Click += new System.EventHandler(this.toolTodos_Click);
             // 
             // toolDepartamento
             // 
             this.toolDepartamento.Name = "toolDepartamento";
-            this.toolDepartamento.Size = new System.Drawing.Size(150, 22);
+            this.toolDepartamento.Size = new System.Drawing.Size(152, 22);
             this.toolDepartamento.Text = "Departamento";
             this.toolDepartamento.Click += new System.EventHandler(this.toolDepartamento_Click);
             // 
             // toolPuesto
             // 
             this.toolPuesto.Name = "toolPuesto";
-            this.toolPuesto.Size = new System.Drawing.Size(150, 22);
+            this.toolPuesto.Size = new System.Drawing.Size(152, 22);
             this.toolPuesto.Text = "Puesto";
             this.toolPuesto.Click += new System.EventHandler(this.toolPuesto_Click);
             // 
             // toolNoEmpleado
             // 
             this.toolNoEmpleado.Name = "toolNoEmpleado";
-            this.toolNoEmpleado.Size = new System.Drawing.Size(150, 22);
+            this.toolNoEmpleado.Size = new System.Drawing.Size(152, 22);
             this.toolNoEmpleado.Text = "No. Empleado";
             this.toolNoEmpleado.Click += new System.EventHandler(this.toolNoEmpleado_Click);
             // 
@@ -361,10 +361,11 @@
             // 
             // toolSobreRecibo
             // 
+            this.toolSobreRecibo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolSobreRecibo.Image = ((System.Drawing.Image)(resources.GetObject("toolSobreRecibo.Image")));
             this.toolSobreRecibo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolSobreRecibo.Name = "toolSobreRecibo";
-            this.toolSobreRecibo.Size = new System.Drawing.Size(104, 22);
+            this.toolSobreRecibo.Size = new System.Drawing.Size(88, 22);
             this.toolSobreRecibo.Text = "Sobre - Recibo";
             this.toolSobreRecibo.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
@@ -471,17 +472,97 @@
             this.dgvEmpleados.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dgvEmpleados.Size = new System.Drawing.Size(998, 339);
             this.dgvEmpleados.TabIndex = 11;
-            this.dgvEmpleados.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmpleados_CellContentClick);
+            this.dgvEmpleados.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFaltas_CellValueChanged);
             this.dgvEmpleados.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmpleados_CellValueChanged);
             // 
             // seleccion
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle1.NullValue = false;
-            this.seleccion.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle12.NullValue = false;
+            this.seleccion.DefaultCellStyle = dataGridViewCellStyle12;
             this.seleccion.HeaderText = "Seleccion";
             this.seleccion.Name = "seleccion";
             this.seleccion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // idtrabajador
+            // 
+            this.idtrabajador.HeaderText = "Id";
+            this.idtrabajador.Name = "idtrabajador";
+            this.idtrabajador.Visible = false;
+            // 
+            // iddepartamento
+            // 
+            this.iddepartamento.HeaderText = "iddepartamento";
+            this.iddepartamento.Name = "iddepartamento";
+            this.iddepartamento.Visible = false;
+            // 
+            // idpuesto
+            // 
+            this.idpuesto.HeaderText = "idpuesto";
+            this.idpuesto.Name = "idpuesto";
+            this.idpuesto.Visible = false;
+            // 
+            // noempleado
+            // 
+            this.noempleado.HeaderText = "No. Empleado";
+            this.noempleado.Name = "noempleado";
+            this.noempleado.ReadOnly = true;
+            this.noempleado.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // nombres
+            // 
+            this.nombres.HeaderText = "Nombre";
+            this.nombres.Name = "nombres";
+            this.nombres.ReadOnly = true;
+            // 
+            // paterno
+            // 
+            this.paterno.HeaderText = "Paterno";
+            this.paterno.Name = "paterno";
+            // 
+            // materno
+            // 
+            this.materno.HeaderText = "Materno";
+            this.materno.Name = "materno";
+            // 
+            // sueldo
+            // 
+            dataGridViewCellStyle13.Format = "C6";
+            dataGridViewCellStyle13.NullValue = null;
+            this.sueldo.DefaultCellStyle = dataGridViewCellStyle13;
+            this.sueldo.HeaderText = "Sueldo";
+            this.sueldo.Name = "sueldo";
+            this.sueldo.ReadOnly = true;
+            // 
+            // despensa
+            // 
+            dataGridViewCellStyle14.Format = "C6";
+            this.despensa.DefaultCellStyle = dataGridViewCellStyle14;
+            this.despensa.HeaderText = "Despensa";
+            this.despensa.Name = "despensa";
+            // 
+            // asistencia
+            // 
+            dataGridViewCellStyle15.Format = "C6";
+            this.asistencia.DefaultCellStyle = dataGridViewCellStyle15;
+            this.asistencia.HeaderText = "Asistencia";
+            this.asistencia.Name = "asistencia";
+            this.asistencia.ReadOnly = true;
+            // 
+            // puntualidad
+            // 
+            dataGridViewCellStyle16.Format = "C6";
+            this.puntualidad.DefaultCellStyle = dataGridViewCellStyle16;
+            this.puntualidad.HeaderText = "Puntualidad";
+            this.puntualidad.Name = "puntualidad";
+            this.puntualidad.ReadOnly = true;
+            // 
+            // horas
+            // 
+            dataGridViewCellStyle17.Format = "C6";
+            this.horas.DefaultCellStyle = dataGridViewCellStyle17;
+            this.horas.HeaderText = "H. Extras Dobles";
+            this.horas.Name = "horas";
             // 
             // workerCalculo
             // 
@@ -645,123 +726,43 @@
             // 
             // dataGridViewTextBoxColumn8
             // 
-            dataGridViewCellStyle7.Format = "C6";
-            dataGridViewCellStyle7.NullValue = null;
-            this.dataGridViewTextBoxColumn8.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle18.Format = "C6";
+            dataGridViewCellStyle18.NullValue = null;
+            this.dataGridViewTextBoxColumn8.DefaultCellStyle = dataGridViewCellStyle18;
             this.dataGridViewTextBoxColumn8.HeaderText = "P. Puntualidad";
             this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
             this.dataGridViewTextBoxColumn8.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn9
             // 
-            dataGridViewCellStyle8.Format = "C6";
-            this.dataGridViewTextBoxColumn9.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle19.Format = "C6";
+            this.dataGridViewTextBoxColumn9.DefaultCellStyle = dataGridViewCellStyle19;
             this.dataGridViewTextBoxColumn9.HeaderText = "H. Extras Dobles";
             this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
             this.dataGridViewTextBoxColumn9.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn10
             // 
-            dataGridViewCellStyle9.Format = "C6";
-            this.dataGridViewTextBoxColumn10.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle20.Format = "C6";
+            this.dataGridViewTextBoxColumn10.DefaultCellStyle = dataGridViewCellStyle20;
             this.dataGridViewTextBoxColumn10.HeaderText = "Inicio";
             this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
             this.dataGridViewTextBoxColumn10.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn11
             // 
-            dataGridViewCellStyle10.Format = "C6";
-            this.dataGridViewTextBoxColumn11.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle21.Format = "C6";
+            this.dataGridViewTextBoxColumn11.DefaultCellStyle = dataGridViewCellStyle21;
             this.dataGridViewTextBoxColumn11.HeaderText = "Fin";
             this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
             this.dataGridViewTextBoxColumn11.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn12
             // 
-            dataGridViewCellStyle11.Format = "C6";
-            this.dataGridViewTextBoxColumn12.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle22.Format = "C6";
+            this.dataGridViewTextBoxColumn12.DefaultCellStyle = dataGridViewCellStyle22;
             this.dataGridViewTextBoxColumn12.HeaderText = "H. Extras Dobles";
             this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
-            // 
-            // idtrabajador
-            // 
-            this.idtrabajador.HeaderText = "Id";
-            this.idtrabajador.Name = "idtrabajador";
-            this.idtrabajador.Visible = false;
-            // 
-            // iddepartamento
-            // 
-            this.iddepartamento.HeaderText = "iddepartamento";
-            this.iddepartamento.Name = "iddepartamento";
-            this.iddepartamento.Visible = false;
-            // 
-            // idpuesto
-            // 
-            this.idpuesto.HeaderText = "idpuesto";
-            this.idpuesto.Name = "idpuesto";
-            this.idpuesto.Visible = false;
-            // 
-            // noempleado
-            // 
-            this.noempleado.HeaderText = "No. Empleado";
-            this.noempleado.Name = "noempleado";
-            this.noempleado.ReadOnly = true;
-            this.noempleado.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // nombres
-            // 
-            this.nombres.HeaderText = "Nombre";
-            this.nombres.Name = "nombres";
-            this.nombres.ReadOnly = true;
-            // 
-            // paterno
-            // 
-            this.paterno.HeaderText = "Paterno";
-            this.paterno.Name = "paterno";
-            // 
-            // materno
-            // 
-            this.materno.HeaderText = "Materno";
-            this.materno.Name = "materno";
-            // 
-            // sueldo
-            // 
-            dataGridViewCellStyle2.Format = "C6";
-            dataGridViewCellStyle2.NullValue = null;
-            this.sueldo.DefaultCellStyle = dataGridViewCellStyle2;
-            this.sueldo.HeaderText = "Sueldo";
-            this.sueldo.Name = "sueldo";
-            this.sueldo.ReadOnly = true;
-            // 
-            // despensa
-            // 
-            dataGridViewCellStyle3.Format = "C6";
-            this.despensa.DefaultCellStyle = dataGridViewCellStyle3;
-            this.despensa.HeaderText = "Despensa";
-            this.despensa.Name = "despensa";
-            // 
-            // asistencia
-            // 
-            dataGridViewCellStyle4.Format = "C6";
-            this.asistencia.DefaultCellStyle = dataGridViewCellStyle4;
-            this.asistencia.HeaderText = "Asistencia";
-            this.asistencia.Name = "asistencia";
-            this.asistencia.ReadOnly = true;
-            // 
-            // puntualidad
-            // 
-            dataGridViewCellStyle5.Format = "C6";
-            this.puntualidad.DefaultCellStyle = dataGridViewCellStyle5;
-            this.puntualidad.HeaderText = "Puntualidad";
-            this.puntualidad.Name = "puntualidad";
-            this.puntualidad.ReadOnly = true;
-            // 
-            // horas
-            // 
-            dataGridViewCellStyle6.Format = "C6";
-            this.horas.DefaultCellStyle = dataGridViewCellStyle6;
-            this.horas.HeaderText = "H. Extras Dobles";
-            this.horas.Name = "horas";
             // 
             // dataGridViewTextBoxColumn13
             // 

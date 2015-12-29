@@ -127,16 +127,18 @@
   <data name="toolAplicar.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIDSURBVDhPpZLrS5NhGMb3j4SWh0oRQVExD4gonkDpg4hG
-        YKxG6WBogkMZKgPNCEVJFBGdGETEvgwyO9DJE5syZw3PIlPEE9pgBCLZ5XvdMB8Ew8gXbl54nuf63dd9
-        0OGSnwCahxbPRNPAPMw9Xpg6ZmF46kZZ0xSKzJPIrhpDWsVnpBhGkKx3nAX8Pv7z1zg8OoY/cITdn4fw
-        bf/C0kYAN3Ma/w3gWfZL5kzTKBxjWyK2DftwI9tyMYCZKXbNHaD91bLYJrDXsYbrWfUKwJrPE9M2M1Oc
-        VzOOpHI7Jr376Hi9ogHqFIANO0/MmmmbmSmm9a8ze+I4MrNWAdjtoJgWcx+PSzg166yZZ8xM8XvXDix9
-        c4jIqFYAjoriBV9AhEPv1mH/sonogha0afbZMMZz+yreTGyhpusHwtNNCsA5U1zS4BLxzJIfg299qO32
-        Ir7UJtZfftyATqeT+8o2D8JSjQrAJblrncYL7ZJ2+bfaFnC/1S1NjL3diRat7qrO7wLRP3HjWsojBeCo
-        mDEo5mNjuweFGvjWg2EBhCbpkW78htSHHwRyNdmgAFzPEee2iFkzayy2OLXzT4gr6UdUnlXrullsxxQ+
-        kx0g8BTA3aZlButjSTyjODq/WcQcW/B/Je4OQhLvKQDnzN1mp0nnkvAhR8VuMzNrpm1mpjgkoVwB/v8D
-        TgDQASA1MVpwzwAAAABJRU5ErkJggg==
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJ4SURBVDhPY0AHmUvlBGfd1sld8cRnw4onfmdWPPU/sfSJ
+        x6JpN9RD6+sZWKDKsIMZt3VTlj7x+TD/gc3/STdlgFgajKfcUvy/+JHr/2WPvW/0X1A1hypHBbPvmjXP
+        v2//f8INaZx44g25/0seeX2feE3bDaoNAvovaQbMumP9r++a7H9i8Lx7Lu+r9shIgzUD/cU0/bblne4r
+        cv/x4Tm37P4vvxcCZvddVfk/7ZbZLLABpZtk7CdeM/jfeVEBJ55z0/X/518v///++/3//FueYLEJ1ww/
+        e0xUYWfoOKdV0XZe6X/reUUwXn8/93//JSM4f+4Nn/9ff7/9DwJ3Px7633VBCyzedUn7PzDGjBmaz6r1
+        NJ1R/g/CG+4X///379//9z8e/Z91zff/3OvB/7///gDWfOP9nv9tZ7XA6kC4+azq/+ylMu4MdSdU6utP
+        qv4H4f4Ljv+ffL4E1vD774//v4BOBoHLb7b9bzylCVaDjFPnyVkxZK9V8Ks+qv4fhuuO6/4//mwp2CUg
+        cO7l+v81x7Tg8nB8RO1XdL0QH0NIoQxn6UHNN+UHNf8j42XXSv7vfzTnf/khbRRxGC47qLERHAsgULRb
+        q6hon85/YnHhXu3fGatVDKHagQCYFnJ36m3M26X3nyDeqfcvb5duPlQnAoTWa7FlbzWdkbnV8F/mNsP/
+        2HDGVqMvuVstUqBaEGD58uXKixcvdpi/aE7ApBVNU6rWRL/O2mj/N2Wjyb/Ujab/8je4/GlYnXpn6rLu
+        ykWL5geA1IL0QLUzMC5btkwPKBi4aNGixCVLluQBcQkQ1y9asgiMQWyQGFBNPhAnAdlBQLX6DAwMjABs
+        ZBpdJC2bWAAAAABJRU5ErkJggg==
 </value>
   </data>
   <metadata name="seleccion.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

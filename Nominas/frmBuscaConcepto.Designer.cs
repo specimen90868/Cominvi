@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmBuscaConcepto));
             this.lblNombreEmpleado = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.cmbConcepto = new System.Windows.Forms.ComboBox();
@@ -64,21 +65,27 @@
             // 
             // btnAgregar
             // 
+            this.btnAgregar.Image = ((System.Drawing.Image)(resources.GetObject("btnAgregar.Image")));
+            this.btnAgregar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnAgregar.Location = new System.Drawing.Point(172, 66);
             this.btnAgregar.Name = "btnAgregar";
-            this.btnAgregar.Size = new System.Drawing.Size(75, 23);
+            this.btnAgregar.Size = new System.Drawing.Size(75, 31);
             this.btnAgregar.TabIndex = 10;
             this.btnAgregar.Text = "Agregar";
+            this.btnAgregar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnAgregar.UseVisualStyleBackColor = true;
             this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
             // 
             // btnCerrar
             // 
+            this.btnCerrar.Image = ((System.Drawing.Image)(resources.GetObject("btnCerrar.Image")));
+            this.btnCerrar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCerrar.Location = new System.Drawing.Point(253, 66);
             this.btnCerrar.Name = "btnCerrar";
-            this.btnCerrar.Size = new System.Drawing.Size(75, 23);
+            this.btnCerrar.Size = new System.Drawing.Size(75, 31);
             this.btnCerrar.TabIndex = 11;
             this.btnCerrar.Text = "Cerrar";
+            this.btnCerrar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnCerrar.UseVisualStyleBackColor = true;
             this.btnCerrar.Click += new System.EventHandler(this.btnCerrar_Click);
             // 

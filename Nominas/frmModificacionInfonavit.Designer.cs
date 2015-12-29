@@ -34,11 +34,11 @@
             this.Label5 = new System.Windows.Forms.Label();
             this.dtpFecha = new System.Windows.Forms.DateTimePicker();
             this.grpTipoDescuento = new System.Windows.Forms.GroupBox();
+            this.txtValorDescuento = new System.Windows.Forms.TextBox();
+            this.Label4 = new System.Windows.Forms.Label();
             this.rbtnFijoPesos = new System.Windows.Forms.RadioButton();
             this.rbtnVSM = new System.Windows.Forms.RadioButton();
             this.rbtnPorcentaje = new System.Windows.Forms.RadioButton();
-            this.txtValorDescuento = new System.Windows.Forms.TextBox();
-            this.Label4 = new System.Windows.Forms.Label();
             this.grpCredito = new System.Windows.Forms.GroupBox();
             this.txtCredito = new System.Windows.Forms.TextBox();
             this.Label3 = new System.Windows.Forms.Label();
@@ -116,6 +116,22 @@
             this.grpTipoDescuento.TabStop = false;
             this.grpTipoDescuento.Text = "Tipo de descuento";
             // 
+            // txtValorDescuento
+            // 
+            this.txtValorDescuento.Location = new System.Drawing.Point(117, 54);
+            this.txtValorDescuento.Name = "txtValorDescuento";
+            this.txtValorDescuento.Size = new System.Drawing.Size(68, 20);
+            this.txtValorDescuento.TabIndex = 1;
+            // 
+            // Label4
+            // 
+            this.Label4.AutoSize = true;
+            this.Label4.Location = new System.Drawing.Point(14, 57);
+            this.Label4.Name = "Label4";
+            this.Label4.Size = new System.Drawing.Size(102, 13);
+            this.Label4.TabIndex = 0;
+            this.Label4.Text = "Valor de descuento:";
+            // 
             // rbtnFijoPesos
             // 
             this.rbtnFijoPesos.AutoSize = true;
@@ -151,22 +167,6 @@
             this.rbtnPorcentaje.Text = "Porcentaje";
             this.rbtnPorcentaje.UseVisualStyleBackColor = true;
             this.rbtnPorcentaje.CheckedChanged += new System.EventHandler(this.rbtnPorcentaje_CheckedChanged);
-            // 
-            // txtValorDescuento
-            // 
-            this.txtValorDescuento.Location = new System.Drawing.Point(117, 54);
-            this.txtValorDescuento.Name = "txtValorDescuento";
-            this.txtValorDescuento.Size = new System.Drawing.Size(68, 20);
-            this.txtValorDescuento.TabIndex = 1;
-            // 
-            // Label4
-            // 
-            this.Label4.AutoSize = true;
-            this.Label4.Location = new System.Drawing.Point(14, 57);
-            this.Label4.Name = "Label4";
-            this.Label4.Size = new System.Drawing.Size(102, 13);
-            this.Label4.TabIndex = 0;
-            this.Label4.Text = "Valor de descuento:";
             // 
             // grpCredito
             // 

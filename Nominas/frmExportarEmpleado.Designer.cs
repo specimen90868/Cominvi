@@ -94,6 +94,7 @@
             this.Controls.Add(this.toolAcciones);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(245, 467);
             this.MinimizeBox = false;
             this.Name = "frmExportarEmpleado";
             this.Text = "Datos para exportar";

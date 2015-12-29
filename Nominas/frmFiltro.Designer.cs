@@ -28,11 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmFiltro));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.dtpDesde = new System.Windows.Forms.DateTimePicker();
             this.dtpHasta = new System.Windows.Forms.DateTimePicker();
+            this.dtpDesde = new System.Windows.Forms.DateTimePicker();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.toolAceptar = new System.Windows.Forms.Button();
             this.toolCancelar = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
@@ -51,14 +52,19 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Fechas:";
             // 
-            // label1
+            // dtpHasta
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(19, 66);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Hasta:";
+            this.dtpHasta.Location = new System.Drawing.Point(69, 63);
+            this.dtpHasta.Name = "dtpHasta";
+            this.dtpHasta.Size = new System.Drawing.Size(200, 20);
+            this.dtpHasta.TabIndex = 3;
+            // 
+            // dtpDesde
+            // 
+            this.dtpDesde.Location = new System.Drawing.Point(69, 31);
+            this.dtpDesde.Name = "dtpDesde";
+            this.dtpDesde.Size = new System.Drawing.Size(200, 20);
+            this.dtpDesde.TabIndex = 2;
             // 
             // label2
             // 
@@ -69,37 +75,38 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Desde:";
             // 
-            // dtpDesde
+            // label1
             // 
-            this.dtpDesde.Location = new System.Drawing.Point(69, 31);
-            this.dtpDesde.Name = "dtpDesde";
-            this.dtpDesde.Size = new System.Drawing.Size(200, 20);
-            this.dtpDesde.TabIndex = 2;
-            // 
-            // dtpHasta
-            // 
-            this.dtpHasta.Location = new System.Drawing.Point(69, 63);
-            this.dtpHasta.Name = "dtpHasta";
-            this.dtpHasta.Size = new System.Drawing.Size(200, 20);
-            this.dtpHasta.TabIndex = 3;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(19, 66);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(38, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Hasta:";
             // 
             // toolAceptar
             // 
+            this.toolAceptar.Image = ((System.Drawing.Image)(resources.GetObject("toolAceptar.Image")));
+            this.toolAceptar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolAceptar.Location = new System.Drawing.Point(149, 130);
             this.toolAceptar.Name = "toolAceptar";
-            this.toolAceptar.Size = new System.Drawing.Size(75, 23);
+            this.toolAceptar.Size = new System.Drawing.Size(75, 33);
             this.toolAceptar.TabIndex = 1;
             this.toolAceptar.Text = "Aceptar";
+            this.toolAceptar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.toolAceptar.UseVisualStyleBackColor = true;
             this.toolAceptar.Click += new System.EventHandler(this.toolAceptar_Click);
             // 
             // toolCancelar
             // 
+            this.toolCancelar.Image = ((System.Drawing.Image)(resources.GetObject("toolCancelar.Image")));
+            this.toolCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolCancelar.Location = new System.Drawing.Point(230, 130);
             this.toolCancelar.Name = "toolCancelar";
-            this.toolCancelar.Size = new System.Drawing.Size(75, 23);
+            this.toolCancelar.Size = new System.Drawing.Size(75, 33);
             this.toolCancelar.TabIndex = 2;
             this.toolCancelar.Text = "Cancelar";
+            this.toolCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.toolCancelar.UseVisualStyleBackColor = true;
             this.toolCancelar.Click += new System.EventHandler(this.toolCancelar_Click);
             // 

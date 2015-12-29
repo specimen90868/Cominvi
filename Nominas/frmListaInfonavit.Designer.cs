@@ -36,11 +36,11 @@
             this.toolConsultar = new System.Windows.Forms.ToolStripButton();
             this.toolEditar = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolModificar = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.lblBuscar = new System.Windows.Forms.ToolStripLabel();
             this.txtBuscar = new System.Windows.Forms.ToolStripTextBox();
             this.dgvInfonavit = new System.Windows.Forms.DataGridView();
-            this.toolModificar = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolTitulo.SuspendLayout();
             this.toolBusqueda.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvInfonavit)).BeginInit();
@@ -113,6 +113,20 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
+            // toolModificar
+            // 
+            this.toolModificar.Image = ((System.Drawing.Image)(resources.GetObject("toolModificar.Image")));
+            this.toolModificar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolModificar.Name = "toolModificar";
+            this.toolModificar.Size = new System.Drawing.Size(97, 22);
+            this.toolModificar.Text = "Modificación";
+            this.toolModificar.Click += new System.EventHandler(this.toolModificar_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
             // lblBuscar
             // 
             this.lblBuscar.Name = "lblBuscar";
@@ -143,20 +157,6 @@
             this.dgvInfonavit.Size = new System.Drawing.Size(783, 614);
             this.dgvInfonavit.TabIndex = 9;
             this.dgvInfonavit.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvInfonavit_CellClick);
-            // 
-            // toolModificar
-            // 
-            this.toolModificar.Image = ((System.Drawing.Image)(resources.GetObject("toolModificar.Image")));
-            this.toolModificar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolModificar.Name = "toolModificar";
-            this.toolModificar.Size = new System.Drawing.Size(97, 22);
-            this.toolModificar.Text = "Modificación";
-            this.toolModificar.Click += new System.EventHandler(this.toolModificar_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // frmListaInfonavit
             // 

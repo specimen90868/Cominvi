@@ -2,5 +2,6 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Movimientos.Core\bin\Debug\Mo
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Movimientos.Core\bin\Debug\Movimientos.Core.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Movimientos.Core\bin\Debug\Data.Obj.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Movimientos.Core\bin\Debug\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Movimientos.Core\obj\Debug\Movimientos.Core.csprojResolveAssemblyReference.cache
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Movimientos.Core\obj\Debug\Movimientos.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Movimientos.Core\obj\Debug\Movimientos.Core.pdb

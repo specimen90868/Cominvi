@@ -346,8 +346,9 @@ namespace Nominas
 
                             cnx.Open();
                             ih.bulkIncidencia(dt, "tmpIncidencias");
-                            ih.stpIncidencia();
+                            ih.stpIncidencia(dtpInicioPeriodo.Value.Date, dtpFinPeriodo.Value.Date);
                             cnx.Close();
+                            cnx.Dispose();
 
                             if (OnIncapacidad != null)
                                 OnIncapacidad();
@@ -382,30 +383,6 @@ namespace Nominas
                 //        MessageBox.Show("Error al ingresar la incapacidad. \r\n \r\n Descripcion: " + error.Message, "Error");
                 //    }
                 //    break;
-            }
-        }
-
-        private void dtpInicio_ValueChanged(object sender, EventArgs e)
-        {
-            if (periodo == 7)
-            {
-                DateTime dt = dtpInicioPeriodo.Value;
-                while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
-                dtpInicioPeriodo.Value = dt;
-                dtpFinPeriodo.Value = dt.AddDays(6);
-            }
-            else
-            {
-                if (DateTime.Now.Day <= 15)
-                {
-                    dtpInicioPeriodo.Value = new DateTime(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month, 1);
-                    dtpFinPeriodo.Value = new DateTime(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month, 15);
-                }
-                else
-                {
-                    dtpInicioPeriodo.Value = new DateTime(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month, 16);
-                    dtpFinPeriodo.Value = new DateTime(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month, DateTime.DaysInMonth(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month));
-                }
             }
         }
 

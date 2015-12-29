@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPrincipal));
             this.mnuPrincipal = new System.Windows.Forms.MenuStrip();
             this.mnuArchivo = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuAbrirEmpresa = new System.Windows.Forms.ToolStripMenuItem();
@@ -74,6 +75,8 @@
             this.mnuPuestos = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPeriodos = new System.Windows.Forms.ToolStripMenuItem();
             this.toolConceptos = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolConceptoEmpleado = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolProgramacionConcepto = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuConfiguracion = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuEmpresa = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuUsuarios = new System.Windows.Forms.ToolStripMenuItem();
@@ -90,8 +93,6 @@
             this.toolImss = new System.Windows.Forms.ToolStripMenuItem();
             this.stsPrincipal = new System.Windows.Forms.StatusStrip();
             this.toolEstatusPerfil = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolConceptoEmpleado = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolProgramacionConcepto = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPrincipal.SuspendLayout();
             this.stsPrincipal.SuspendLayout();
             this.SuspendLayout();
@@ -127,6 +128,7 @@
             // 
             // mnuAbrirEmpresa
             // 
+            this.mnuAbrirEmpresa.Image = ((System.Drawing.Image)(resources.GetObject("mnuAbrirEmpresa.Image")));
             this.mnuAbrirEmpresa.Name = "mnuAbrirEmpresa";
             this.mnuAbrirEmpresa.Size = new System.Drawing.Size(154, 22);
             this.mnuAbrirEmpresa.Text = "Abrir Empresa";
@@ -146,6 +148,7 @@
             // 
             // mnuIniciarSesion
             // 
+            this.mnuIniciarSesion.Image = ((System.Drawing.Image)(resources.GetObject("mnuIniciarSesion.Image")));
             this.mnuIniciarSesion.Name = "mnuIniciarSesion";
             this.mnuIniciarSesion.Size = new System.Drawing.Size(154, 22);
             this.mnuIniciarSesion.Text = "Iniciar sesión";
@@ -192,7 +195,7 @@
             this.toolStripSeparator5,
             this.toolProcesoSalarial});
             this.mnuEmpleados.Name = "mnuEmpleados";
-            this.mnuEmpleados.Size = new System.Drawing.Size(149, 22);
+            this.mnuEmpleados.Size = new System.Drawing.Size(152, 22);
             this.mnuEmpleados.Text = "Empleados";
             // 
             // mnuEmpleadoNomina
@@ -238,26 +241,26 @@
             // mnuExpedientes
             // 
             this.mnuExpedientes.Name = "mnuExpedientes";
-            this.mnuExpedientes.Size = new System.Drawing.Size(149, 22);
+            this.mnuExpedientes.Size = new System.Drawing.Size(152, 22);
             this.mnuExpedientes.Text = "Expedientes";
             this.mnuExpedientes.Click += new System.EventHandler(this.mnuExpedientes_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(146, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
             // 
             // mnuInfonavit
             // 
             this.mnuInfonavit.Name = "mnuInfonavit";
-            this.mnuInfonavit.Size = new System.Drawing.Size(149, 22);
+            this.mnuInfonavit.Size = new System.Drawing.Size(152, 22);
             this.mnuInfonavit.Text = "Infonavit";
             this.mnuInfonavit.Click += new System.EventHandler(this.mnuInfonavit_Click);
             // 
             // toolIncapacidades
             // 
             this.toolIncapacidades.Name = "toolIncapacidades";
-            this.toolIncapacidades.Size = new System.Drawing.Size(149, 22);
+            this.toolIncapacidades.Size = new System.Drawing.Size(152, 22);
             this.toolIncapacidades.Text = "Incapacidades";
             this.toolIncapacidades.Click += new System.EventHandler(this.toolIncapacidades_Click);
             // 
@@ -380,14 +383,14 @@
             // toolNominaNormal
             // 
             this.toolNominaNormal.Name = "toolNominaNormal";
-            this.toolNominaNormal.Size = new System.Drawing.Size(152, 22);
+            this.toolNominaNormal.Size = new System.Drawing.Size(116, 22);
             this.toolNominaNormal.Text = "Normal";
             this.toolNominaNormal.Click += new System.EventHandler(this.toolNominaNormal_Click);
             // 
             // toolNominaEspecial
             // 
             this.toolNominaEspecial.Name = "toolNominaEspecial";
-            this.toolNominaEspecial.Size = new System.Drawing.Size(152, 22);
+            this.toolNominaEspecial.Size = new System.Drawing.Size(116, 22);
             this.toolNominaEspecial.Text = "Especial";
             this.toolNominaEspecial.Click += new System.EventHandler(this.toolNominaEspecial_Click);
             // 
@@ -455,6 +458,20 @@
             this.toolConceptos.Size = new System.Drawing.Size(220, 22);
             this.toolConceptos.Text = "Conceptos";
             this.toolConceptos.Click += new System.EventHandler(this.toolConceptos_Click);
+            // 
+            // toolConceptoEmpleado
+            // 
+            this.toolConceptoEmpleado.Name = "toolConceptoEmpleado";
+            this.toolConceptoEmpleado.Size = new System.Drawing.Size(220, 22);
+            this.toolConceptoEmpleado.Text = "Conceptos - Empleado";
+            this.toolConceptoEmpleado.Click += new System.EventHandler(this.toolConceptoEmpleado_Click_1);
+            // 
+            // toolProgramacionConcepto
+            // 
+            this.toolProgramacionConcepto.Name = "toolProgramacionConcepto";
+            this.toolProgramacionConcepto.Size = new System.Drawing.Size(220, 22);
+            this.toolProgramacionConcepto.Text = "Programación de Concepto";
+            this.toolProgramacionConcepto.Click += new System.EventHandler(this.toolProgramacionConcepto_Click);
             // 
             // mnuConfiguracion
             // 
@@ -578,20 +595,6 @@
             this.toolEstatusPerfil.Name = "toolEstatusPerfil";
             this.toolEstatusPerfil.Size = new System.Drawing.Size(98, 17);
             this.toolEstatusPerfil.Text = "Cargando perfil...";
-            // 
-            // toolConceptoEmpleado
-            // 
-            this.toolConceptoEmpleado.Name = "toolConceptoEmpleado";
-            this.toolConceptoEmpleado.Size = new System.Drawing.Size(220, 22);
-            this.toolConceptoEmpleado.Text = "Conceptos - Empleado";
-            this.toolConceptoEmpleado.Click += new System.EventHandler(this.toolConceptoEmpleado_Click_1);
-            // 
-            // toolProgramacionConcepto
-            // 
-            this.toolProgramacionConcepto.Name = "toolProgramacionConcepto";
-            this.toolProgramacionConcepto.Size = new System.Drawing.Size(220, 22);
-            this.toolProgramacionConcepto.Text = "Programación de Concepto";
-            this.toolProgramacionConcepto.Click += new System.EventHandler(this.toolProgramacionConcepto_Click);
             // 
             // frmPrincipal
             // 

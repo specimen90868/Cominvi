@@ -132,7 +132,7 @@ namespace Nominas
                         break;
 
                     case "DiasLaborados":
-                        int existe = 0, diasBaja = 0, idperiodo = 0;
+                        int existe = 0, diasBaja = 0, idperiodo = 0, diasPago = 0, diasMesLaborados = 0;
                         Bajas.Core.BajasHelper bh = new Bajas.Core.BajasHelper();
                         bh.Command = cmd;
                         Bajas.Core.Bajas baja = new Bajas.Core.Bajas();
@@ -167,8 +167,24 @@ namespace Nominas
                             p.idperiodo = idperiodo;
 
                             cnx.Open();
-                            formula = formula.Replace("[" + variables[i] + "]", ph.DiasDePago(p).ToString());
+                            diasPago = (int)ph.DiasDePago(p);
                             cnx.Close();
+
+                            if (diasPago == 7)
+                                formula = formula.Replace("[" + variables[i] + "]", diasPago.ToString());
+                            else
+                            {
+                                if (inicioPeriodo.Day <= 15)
+                                {
+                                    formula = formula.Replace("[" + variables[i] + "]", diasPago.ToString());
+                                }
+                                else
+                                {
+                                    diasMesLaborados = DateTime.DaysInMonth(inicioPeriodo.Year, inicioPeriodo.Month);
+                                    diasMesLaborados = diasMesLaborados - 15;
+                                    formula = formula.Replace("[" + variables[i] + "]", diasMesLaborados.ToString());
+                                }
+                            }
                         }
                             
                         break;

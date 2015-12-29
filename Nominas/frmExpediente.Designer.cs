@@ -33,6 +33,7 @@
             this.toolVentana = new System.Windows.Forms.ToolStripLabel();
             this.toolAcciones = new System.Windows.Forms.ToolStrip();
             this.toolGuardar = new System.Windows.Forms.ToolStripButton();
+            this.toolBuscar = new System.Windows.Forms.ToolStripButton();
             this.toolCerrar = new System.Windows.Forms.ToolStripButton();
             this.lblEmpleado = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
@@ -53,7 +54,6 @@
             this.chkContrato = new System.Windows.Forms.CheckBox();
             this.txtObservaciones = new System.Windows.Forms.TextBox();
             this.Label3 = new System.Windows.Forms.Label();
-            this.toolBuscar = new System.Windows.Forms.ToolStripButton();
             this.toolTitulo.SuspendLayout();
             this.toolAcciones.SuspendLayout();
             this.SuspendLayout();
@@ -96,6 +96,15 @@
             this.toolGuardar.Size = new System.Drawing.Size(69, 22);
             this.toolGuardar.Text = "Guardar";
             this.toolGuardar.Click += new System.EventHandler(this.toolGuardar_Click);
+            // 
+            // toolBuscar
+            // 
+            this.toolBuscar.Image = ((System.Drawing.Image)(resources.GetObject("toolBuscar.Image")));
+            this.toolBuscar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolBuscar.Name = "toolBuscar";
+            this.toolBuscar.Size = new System.Drawing.Size(62, 22);
+            this.toolBuscar.Text = "Buscar";
+            this.toolBuscar.Click += new System.EventHandler(this.toolBuscar_Click);
             // 
             // toolCerrar
             // 
@@ -293,15 +302,6 @@
             this.Label3.Size = new System.Drawing.Size(78, 13);
             this.Label3.TabIndex = 269;
             this.Label3.Text = "Observaciones";
-            // 
-            // toolBuscar
-            // 
-            this.toolBuscar.Image = ((System.Drawing.Image)(resources.GetObject("toolBuscar.Image")));
-            this.toolBuscar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolBuscar.Name = "toolBuscar";
-            this.toolBuscar.Size = new System.Drawing.Size(62, 22);
-            this.toolBuscar.Text = "Buscar";
-            this.toolBuscar.Click += new System.EventHandler(this.toolBuscar_Click);
             // 
             // frmExpediente
             // 

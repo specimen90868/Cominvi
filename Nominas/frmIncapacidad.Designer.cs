@@ -169,7 +169,6 @@
             this.dtpInicioPeriodo.Name = "dtpInicioPeriodo";
             this.dtpInicioPeriodo.Size = new System.Drawing.Size(141, 20);
             this.dtpInicioPeriodo.TabIndex = 3;
-            this.dtpInicioPeriodo.ValueChanged += new System.EventHandler(this.dtpInicio_ValueChanged);
             // 
             // label3
             // 

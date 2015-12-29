@@ -259,21 +259,27 @@
             // 
             // btnAgregar
             // 
+            this.btnAgregar.Image = ((System.Drawing.Image)(resources.GetObject("btnAgregar.Image")));
+            this.btnAgregar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnAgregar.Location = new System.Drawing.Point(89, 339);
             this.btnAgregar.Name = "btnAgregar";
             this.btnAgregar.Size = new System.Drawing.Size(75, 23);
             this.btnAgregar.TabIndex = 116;
             this.btnAgregar.Text = "Agregar";
+            this.btnAgregar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnAgregar.UseVisualStyleBackColor = true;
             this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
             // 
             // btnQuitar
             // 
+            this.btnQuitar.Image = ((System.Drawing.Image)(resources.GetObject("btnQuitar.Image")));
+            this.btnQuitar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnQuitar.Location = new System.Drawing.Point(173, 339);
             this.btnQuitar.Name = "btnQuitar";
             this.btnQuitar.Size = new System.Drawing.Size(75, 23);
             this.btnQuitar.TabIndex = 117;
             this.btnQuitar.Text = "Quitar";
+            this.btnQuitar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnQuitar.UseVisualStyleBackColor = true;
             this.btnQuitar.Click += new System.EventHandler(this.btnQuitar_Click);
             // 

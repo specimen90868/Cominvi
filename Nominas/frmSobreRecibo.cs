@@ -189,14 +189,19 @@ namespace Nominas
 
                 #region PROGRAMACION DE MOVIMIENTOS
                 List<CalculoNomina.Core.tmpPagoNomina> lstOtrasDeducciones = new List<CalculoNomina.Core.tmpPagoNomina>();
-                ProgramacionConcepto.Core.ProgramacionHelper pch = new ProgramacionConcepto.Core.ProgramacionHelper();
-                pch.Command = cmd;
 
                 double sueldo = lstPercepciones.Where(f => f.noconcepto == 1).Sum(f => f.cantidad);
 
                 if (sueldo != 0)
                 {
+                    cnx = new SqlConnection(cdn);
+                    cmd = new SqlCommand();
+                    cmd.Connection = cnx;
+
                     int existe = 0;
+                    ProgramacionConcepto.Core.ProgramacionHelper pch = new ProgramacionConcepto.Core.ProgramacionHelper();
+                    pch.Command = cmd;
+
                     ProgramacionConcepto.Core.ProgramacionConcepto programacion = new ProgramacionConcepto.Core.ProgramacionConcepto();
                     programacion.idtrabajador = idTrabajador;
 
@@ -1326,19 +1331,38 @@ namespace Nominas
             }
             else
             {
+                Incidencias.Core.IncidenciasHelper ih = new Incidencias.Core.IncidenciasHelper();
+                ih.Command = cmd;
+
                 try
                 {
                     cnx.Open();
-                    fh.insertaFalta(falta);
+                    existe = (int)ih.existeIncidenciaEnFalta(idTrabajador, dtpFecha.Value.Date);
                     cnx.Close();
-                    cnx.Dispose();
-                    muestraFaltas();
                 }
                 catch
                 {
                     MessageBox.Show("Error: Al guardar la falta.", "Error");
                     cnx.Dispose();
+                    return;
                 }
+
+                if (existe == 0)
+                    try
+                    {
+                        cnx.Open();
+                        fh.insertaFalta(falta);
+                        cnx.Close();
+                        cnx.Dispose();
+                        muestraFaltas();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Error: Al guardar la falta.", "Error");
+                        cnx.Dispose();
+                    }
+                else
+                    MessageBox.Show("La falta ingresada, se empalma con una incapacidad del trabajador.", "Error");
             }
 
         }
@@ -1417,7 +1441,7 @@ namespace Nominas
             frmProgramacionConcepto pc = new frmProgramacionConcepto();
             pc.OnProgramacion += pc_OnProgramacion;
             pc._idEmpleado = idTrabajador;
-            pc._nombreEmpleado = dgvProgramacion.Rows[0].Cells[3].Value.ToString();
+            pc._nombreEmpleado = txtNombreCompleto.Text;
             pc._tipoOperacion = GLOBALES.NUEVO;
             pc.Show();
         }
