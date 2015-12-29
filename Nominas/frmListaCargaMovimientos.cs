@@ -192,6 +192,7 @@ namespace Nominas
         {
             string formulaexento = "";
             int idConcepto = 0, idEmpleado = 0;
+            int existeConcepto = 0;
             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();
             cmd.Connection = cnx;
@@ -265,7 +266,8 @@ namespace Nominas
                             formulaexento = ch.obtenerFormulaExento(concepto).ToString();
                             cnx.Close();
                         }
-                        catch {
+                        catch 
+                        {
                             MessageBox.Show("Error al obtener la formula de exento.\r\n \r\n Esta ventana se cerrará.", "Error");
                             cnx.Dispose();
                             workMovimientos.CancelAsync();
@@ -302,14 +304,97 @@ namespace Nominas
                             pn.exento = exento;
                             pn.gravado = gravado;
                         }
-                        lstMovimientos.Add(pn);
+
+                        try
+                        {
+                            CalculoNomina.Core.tmpPagoNomina pne = new CalculoNomina.Core.tmpPagoNomina();
+                            pne.idempresa = GLOBALES.IDEMPRESA;
+                            pne.idtrabajador = idEmpleado;
+                            pne.fechainicio = DateTime.Parse(dgvMovimientos.Rows[0].Cells["inicio"].Value.ToString());
+                            pne.fechafin = DateTime.Parse(dgvMovimientos.Rows[0].Cells["fin"].Value.ToString());
+                            pne.noconcepto = lstConcepto[0].noconcepto;
+
+                            cnx.Open();
+                            existeConcepto = (int)nh.existeConcepto(pne);
+                            cnx.Close();
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Error al obtener la existencia del concepto.\r\n \r\n Esta ventana se cerrará.", "Error");
+                            cnx.Dispose();
+                            workMovimientos.CancelAsync();
+                            this.Dispose();
+                        }
+
+                        if (existeConcepto == 0)
+                        {
+                            lstMovimientos.Add(pn);
+                        }
+                        else
+                        {
+                            try
+                            {
+                                cnx.Open();
+                                nh.actualizaConceptoModificado(pn);
+                                cnx.Close();
+                            }
+                            catch
+                            {
+                                MessageBox.Show("Error al obtener la existencia del concepto.\r\n \r\n Esta ventana se cerrará.", "Error");
+                                cnx.Dispose();
+                                workMovimientos.CancelAsync();
+                                this.Dispose();
+                            }
+                        }
+                        
                         break;
 
                     case "D":
                         pn.cantidad = double.Parse(fila.Cells["cantidad"].Value.ToString());
                         pn.exento = 0;
                         pn.gravado = 0;
-                        lstMovimientos.Add(pn);
+
+                        try
+                        {
+                            CalculoNomina.Core.tmpPagoNomina pne = new CalculoNomina.Core.tmpPagoNomina();
+                            pne.idempresa = GLOBALES.IDEMPRESA;
+                            pne.idtrabajador = idEmpleado;
+                            pne.fechainicio = DateTime.Parse(dgvMovimientos.Rows[0].Cells["inicio"].Value.ToString());
+                            pne.fechafin = DateTime.Parse(dgvMovimientos.Rows[0].Cells["fin"].Value.ToString());
+                            pne.noconcepto = lstConcepto[0].noconcepto;
+
+                            cnx.Open();
+                            existeConcepto = (int)nh.existeConcepto(pne);
+                            cnx.Close();
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Error al obtener la existencia del concepto.\r\n \r\n Esta ventana se cerrará.", "Error");
+                            cnx.Dispose();
+                            workMovimientos.CancelAsync();
+                            this.Dispose();
+                        }
+
+                        if (existeConcepto == 0)
+                        {
+                            lstMovimientos.Add(pn);
+                        }
+                        else
+                        {
+                            try
+                            {
+                                cnx.Open();
+                                nh.actualizaConceptoModificado(pn);
+                                cnx.Close();
+                            }
+                            catch
+                            {
+                                MessageBox.Show("Error al obtener la existencia del concepto.\r\n \r\n Esta ventana se cerrará.", "Error");
+                                cnx.Dispose();
+                                workMovimientos.CancelAsync();
+                                this.Dispose();
+                            }
+                        }
                         break;
                 }
 

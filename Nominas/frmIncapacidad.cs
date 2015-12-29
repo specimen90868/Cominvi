@@ -83,9 +83,7 @@ namespace Nominas
                 lstPeriodos = ph.obtenerPeriodos(per);
                 cnx.Close();
                 cnx.Dispose();
-
-                obtenerPeriodoActual();
-                btnCambiar.Enabled = true;
+                
             }
             catch (Exception error)
             {
@@ -104,6 +102,9 @@ namespace Nominas
                 periodo = d.dias;
                 idperiodo = d.idperiodo;
             }
+
+            obtenerPeriodoActual();
+            btnCambiar.Enabled = true;
         }
 
         private void frmIncapacidad_Load(object sender, EventArgs e)
