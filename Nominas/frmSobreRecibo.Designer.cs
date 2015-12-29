@@ -33,6 +33,7 @@
             this.toolCalcular = new System.Windows.Forms.ToolStripButton();
             this.toolHoraExtra = new System.Windows.Forms.ToolStripButton();
             this.toolAyudaDespensa = new System.Windows.Forms.ToolStripButton();
+            this.toolEliminar = new System.Windows.Forms.ToolStripButton();
             this.TabPrincipal = new System.Windows.Forms.TabControl();
             this.tabPercepcionesDeducciones = new System.Windows.Forms.TabPage();
             this.label9 = new System.Windows.Forms.Label();
@@ -145,6 +146,8 @@
             this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.txtObservaciones = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
             this.toolAcciones.SuspendLayout();
             this.TabPrincipal.SuspendLayout();
             this.tabPercepcionesDeducciones.SuspendLayout();
@@ -187,7 +190,8 @@
             this.toolAcciones.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolCalcular,
             this.toolHoraExtra,
-            this.toolAyudaDespensa});
+            this.toolAyudaDespensa,
+            this.toolEliminar});
             this.toolAcciones.Location = new System.Drawing.Point(0, 0);
             this.toolAcciones.Name = "toolAcciones";
             this.toolAcciones.Size = new System.Drawing.Size(712, 25);
@@ -220,6 +224,15 @@
             this.toolAyudaDespensa.Size = new System.Drawing.Size(130, 22);
             this.toolAyudaDespensa.Text = "Ayuda de Despensa";
             this.toolAyudaDespensa.Click += new System.EventHandler(this.toolAyudaDespensa_Click);
+            // 
+            // toolEliminar
+            // 
+            this.toolEliminar.Image = ((System.Drawing.Image)(resources.GetObject("toolEliminar.Image")));
+            this.toolEliminar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolEliminar.Name = "toolEliminar";
+            this.toolEliminar.Size = new System.Drawing.Size(70, 22);
+            this.toolEliminar.Text = "Eliminar";
+            this.toolEliminar.Click += new System.EventHandler(this.toolEliminar_Click);
             // 
             // TabPrincipal
             // 
@@ -1004,6 +1017,8 @@
             // 
             // ContenedorVacaciones.Panel2
             // 
+            this.ContenedorVacaciones.Panel2.Controls.Add(this.label21);
+            this.ContenedorVacaciones.Panel2.Controls.Add(this.txtObservaciones);
             this.ContenedorVacaciones.Panel2.Controls.Add(this.cmbConceptoVacaciones);
             this.ContenedorVacaciones.Panel2.Controls.Add(this.btnEliminarVP);
             this.ContenedorVacaciones.Panel2.Controls.Add(this.label18);
@@ -1040,7 +1055,7 @@
             // 
             // btnEliminarVP
             // 
-            this.btnEliminarVP.Location = new System.Drawing.Point(147, 94);
+            this.btnEliminarVP.Location = new System.Drawing.Point(414, 300);
             this.btnEliminarVP.Name = "btnEliminarVP";
             this.btnEliminarVP.Size = new System.Drawing.Size(75, 23);
             this.btnEliminarVP.TabIndex = 7;
@@ -1060,7 +1075,7 @@
             // 
             // btnGuardarVP
             // 
-            this.btnGuardarVP.Location = new System.Drawing.Point(66, 94);
+            this.btnGuardarVP.Location = new System.Drawing.Point(333, 300);
             this.btnGuardarVP.Name = "btnGuardarVP";
             this.btnGuardarVP.Size = new System.Drawing.Size(75, 23);
             this.btnGuardarVP.TabIndex = 6;
@@ -1317,6 +1332,24 @@
             this.dataGridViewTextBoxColumn15.HeaderText = "Fin";
             this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
             // 
+            // txtObservaciones
+            // 
+            this.txtObservaciones.Location = new System.Drawing.Point(15, 114);
+            this.txtObservaciones.Multiline = true;
+            this.txtObservaciones.Name = "txtObservaciones";
+            this.txtObservaciones.Size = new System.Drawing.Size(474, 180);
+            this.txtObservaciones.TabIndex = 8;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.Location = new System.Drawing.Point(12, 98);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(95, 13);
+            this.label21.TabIndex = 9;
+            this.label21.Text = "Observaciones:";
+            // 
             // frmSobreRecibo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1500,5 +1533,8 @@
         private System.Windows.Forms.Button btnGuardarVP;
         private System.Windows.Forms.SplitContainer ContenedorVacaciones;
         private System.Windows.Forms.ListView lstvVacaciones;
+        private System.Windows.Forms.ToolStripButton toolEliminar;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.TextBox txtObservaciones;
     }
 }

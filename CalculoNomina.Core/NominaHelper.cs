@@ -69,25 +69,23 @@ namespace CalculoNomina.Core
         {
             List<tmpPagoNomina> lstRecibo = new List<tmpPagoNomina>();
             DataTable dtRecibo = new DataTable();
-            Command.CommandText = "select * from tmpPagoNomina where idtrabajador = @idtrabajador and fechainicio = @fechainicio and fechafin = @fechafin";
+            Command.CommandText = @"select idtrabajador, idconcepto, noconcepto, sum(cantidad) as cantidad 
+                                    from tmpPagoNomina where tipoconcepto = @tipoconcepto and fechainicio = @fechainicio and fechafin = @fechafin
+                                    and idtrabajador = @idtrabajador
+                                    group by idtrabajador, idconcepto, noconcepto";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", pn.idtrabajador);
             Command.Parameters.AddWithValue("fechainicio", pn.fechainicio);
             Command.Parameters.AddWithValue("fechafin", pn.fechafin);
+            Command.Parameters.AddWithValue("tipoconcepto", pn.tipoconcepto);
             dtRecibo = SelectData(Command);
             for (int i = 0; i < dtRecibo.Rows.Count; i++)
             {
                 tmpPagoNomina pago = new tmpPagoNomina();
-                pago.id = int.Parse(dtRecibo.Rows[i]["id"].ToString());
                 pago.idtrabajador = int.Parse(dtRecibo.Rows[i]["idtrabajador"].ToString());
-                pago.idempresa = int.Parse(dtRecibo.Rows[i]["idempresa"].ToString());
                 pago.idconcepto = int.Parse(dtRecibo.Rows[i]["idconcepto"].ToString());
-                pago.tipoconcepto = dtRecibo.Rows[i]["tipoconcepto"].ToString();
-                pago.exento = double.Parse(dtRecibo.Rows[i]["exento"].ToString());
-                pago.gravado = double.Parse(dtRecibo.Rows[i]["gravado"].ToString());
+                pago.noconcepto = int.Parse(dtRecibo.Rows[i]["noconcepto"].ToString());
                 pago.cantidad = double.Parse(dtRecibo.Rows[i]["cantidad"].ToString());
-                pago.fechainicio = DateTime.Parse(dtRecibo.Rows[i]["fechainicio"].ToString());
-                pago.fechafin = DateTime.Parse(dtRecibo.Rows[i]["fechafin"].ToString());
                 lstRecibo.Add(pago);
             }
             return lstRecibo;

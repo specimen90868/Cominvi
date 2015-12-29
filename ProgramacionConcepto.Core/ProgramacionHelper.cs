@@ -35,7 +35,7 @@ namespace ProgramacionConcepto.Core
         {
             List<ProgramacionConcepto> lstProgramacion = new List<ProgramacionConcepto>();
             DataTable dtProgramacion = new DataTable();
-            Command.CommandText = "select * from ProgramacionConcepto where idtrabajador = @idtrabajador";
+            Command.CommandText = "select * from ProgramacionConcepto where idtrabajador = @idtrabajador order by idconcepto asc";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", pc.idtrabajador);
             dtProgramacion = SelectData(Command);

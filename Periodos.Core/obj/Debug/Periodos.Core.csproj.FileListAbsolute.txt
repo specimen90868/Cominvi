@@ -16,6 +16,5 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Periodos.Core\bin\Debug\Perio
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Periodos.Core\bin\Debug\Periodos.Core.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Periodos.Core\bin\Debug\Data.Obj.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Periodos.Core\bin\Debug\Data.Obj.pdb
-C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Periodos.Core\obj\Debug\Periodos.Core.csprojResolveAssemblyReference.cache
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Periodos.Core\obj\Debug\Periodos.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Periodos.Core\obj\Debug\Periodos.Core.pdb

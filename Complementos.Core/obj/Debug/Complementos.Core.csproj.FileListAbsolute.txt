@@ -8,6 +8,5 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Complementos.Core\bin\Debug\C
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Complementos.Core\bin\Debug\Complementos.Core.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Complementos.Core\bin\Debug\Data.Obj.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Complementos.Core\bin\Debug\Data.Obj.pdb
-C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Complementos.Core\obj\Debug\Complementos.Core.csprojResolveAssemblyReference.cache
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Complementos.Core\obj\Debug\Complementos.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Complementos.Core\obj\Debug\Complementos.Core.pdb

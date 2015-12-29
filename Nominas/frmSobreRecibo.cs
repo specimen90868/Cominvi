@@ -377,7 +377,7 @@ namespace Nominas
                 CALCULOTRABAJADORES.RECALCULO_PERCEPCIONES(lstConceptosPercepciones, _inicioPeriodo.Date, _finPeriodo.Date, _tipoNormalEspecial);
                 #endregion
 
-                #region CALCULO DE DEDUCCIONES
+                #region RECALCULO DE DEDUCCIONES
                 List<CalculoNomina.Core.tmpPagoNomina> lstRecalculoPercepciones = new List<CalculoNomina.Core.tmpPagoNomina>();
                 CalculoNomina.Core.tmpPagoNomina recalculopercepciones = new CalculoNomina.Core.tmpPagoNomina();
                 recalculopercepciones.idempresa = GLOBALES.IDEMPRESA;
@@ -401,7 +401,6 @@ namespace Nominas
                 #endregion
 
                 #region PROGRAMACION DE MOVIMIENTOS
-                
                 ProgramacionConcepto.Core.ProgramacionHelper pch = new ProgramacionConcepto.Core.ProgramacionHelper();
                 pch.Command = cmd;
 
@@ -409,6 +408,7 @@ namespace Nominas
 
                 if (sueldo != 0)
                 {
+
                     int existe = 0;
                     ProgramacionConcepto.Core.ProgramacionConcepto programacion = new ProgramacionConcepto.Core.ProgramacionConcepto();
                     programacion.idtrabajador = idTrabajador;
@@ -634,17 +634,26 @@ namespace Nominas
             CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
             nh.Command = cmd;
 
-            CalculoNomina.Core.tmpPagoNomina pre = new CalculoNomina.Core.tmpPagoNomina();
-            pre.idtrabajador = idTrabajador;
-            pre.fechainicio = _inicioPeriodo;
-            pre.fechafin = _finPeriodo;
+            List<CalculoNomina.Core.tmpPagoNomina> lstReciboPercepciones = new List<CalculoNomina.Core.tmpPagoNomina>();
+            List<CalculoNomina.Core.tmpPagoNomina> lstReciboDeducciones = new List<CalculoNomina.Core.tmpPagoNomina>();
 
-            List<CalculoNomina.Core.tmpPagoNomina> lstRecibo = new List<CalculoNomina.Core.tmpPagoNomina>();
+            CalculoNomina.Core.tmpPagoNomina pnp = new CalculoNomina.Core.tmpPagoNomina();
+            pnp.idtrabajador = idTrabajador;
+            pnp.fechainicio = _inicioPeriodo.Date;
+            pnp.fechafin = _finPeriodo.Date;
+            pnp.tipoconcepto = "P";
+
+            CalculoNomina.Core.tmpPagoNomina pnd = new CalculoNomina.Core.tmpPagoNomina();
+            pnd.idtrabajador = idTrabajador;
+            pnd.fechainicio = _inicioPeriodo.Date;
+            pnd.fechafin = _finPeriodo.Date;
+            pnd.tipoconcepto = "D";
             
             try
             {
                 cnx.Open();
-                lstRecibo = nh.obtenerDatosRecibo(pre);
+                lstReciboPercepciones = nh.obtenerDatosRecibo(pnp);
+                lstReciboDeducciones = nh.obtenerDatosRecibo(pnd);
                 cnx.Close();
                 
             }
@@ -653,7 +662,7 @@ namespace Nominas
                 this.Dispose();
             }
 
-            if (lstRecibo.Count != 0)
+            if (lstReciboPercepciones.Count != 0)
             {
                 FLAGCALCULO = true;
 
@@ -677,9 +686,9 @@ namespace Nominas
                     MessageBox.Show("Eror: \r\n \r\n" + error.Message, "Error");
                 }
 
-                var percepcion = from r in lstRecibo
+                var percepcion = from r in lstReciboPercepciones
                                  join co in lstConceptos on r.idconcepto equals co.id
-                                 where co.tipoconcepto.Contains("P") && co.visible == true && r.cantidad != 0
+                                 where co.visible == true && r.cantidad != 0
                                  select new
                                  {
                                      NoConcepto = co.noconcepto,
@@ -687,10 +696,10 @@ namespace Nominas
                                      Importe = r.cantidad
                                  };
 
-                var deduccion = from r in lstRecibo
+                var deduccion = from r in lstReciboDeducciones
                                 join co in lstConceptos on r.idconcepto equals co.id
-                                where co.tipoconcepto.Contains("D") && co.visible == true && r.cantidad != 0
-                                select new
+                                where co.visible == true && r.cantidad != 0
+                                select new 
                                 {
                                     NoConcepto = co.noconcepto,
                                     concepto = co.concepto,
@@ -1757,6 +1766,36 @@ namespace Nominas
                 }
             }
 
+        }
+
+        private void toolEliminar_Click(object sender, EventArgs e)
+        {
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
+            nh.Command = cmd;
+
+            CalculoNomina.Core.tmpPagoNomina pn = new CalculoNomina.Core.tmpPagoNomina();
+            pn.idempresa = GLOBALES.IDEMPRESA;
+            pn.idtrabajador = idTrabajador;
+            pn.fechainicio = _inicioPeriodo.Date;
+            pn.fechafin = _finPeriodo.Date;
+
+            try{
+                cnx.Open();
+                nh.eliminaCalculo(pn);
+                cnx.Close();
+
+                dgvPercepciones.DataSource = null;
+                dgvDeducciones.DataSource = null;
+                FLAGCALCULO = false;
+            }
+            catch{
+                MessageBox.Show("Error: Al eliminar los datos de la nomina.", "Error");
+                this.Dispose();
+            }
         }
     }
 }
