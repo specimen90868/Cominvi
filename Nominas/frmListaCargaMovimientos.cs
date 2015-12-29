@@ -35,6 +35,8 @@ namespace Nominas
 
         #region VARIABLES PUBLICA
         public int _tipoNomina;
+        public DateTime _inicioPeriodo;
+        public DateTime _finPeriodo;
         #endregion
 
         private void toolNuevo_Click(object sender, EventArgs e)
@@ -81,6 +83,7 @@ namespace Nominas
             cmd = new SqlCommand();
             cmd.Connection = cnx;
             string conStr, sheetName;
+            DateTime inicio, fin;
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Title = "Seleccionar Excel";
             ofd.RestoreDirectory = false;
@@ -102,7 +105,7 @@ namespace Nominas
                             cmdOle.Connection = con;
                             con.Open();
                             DataTable dtExcelSchema = con.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                            sheetName = dtExcelSchema.Rows[6]["TABLE_NAME"].ToString();
+                            sheetName = dtExcelSchema.Rows[5]["TABLE_NAME"].ToString();
                             con.Close();
                         }
                     }
@@ -123,6 +126,8 @@ namespace Nominas
 
                                 nombreEmpresa = dt.Columns[1].ColumnName;
                                 idEmpresa = int.Parse(dt.Columns[3].ColumnName.ToString());
+                                inicio = DateTime.Parse(dt.Rows[1][1].ToString());
+                                fin = DateTime.Parse(dt.Rows[2][1].ToString());
 
                                 if (GLOBALES.IDEMPRESA != idEmpresa)
                                 {
@@ -130,15 +135,21 @@ namespace Nominas
                                     this.Dispose();
                                 }
 
-                                for (int i = 6; i < dt.Rows.Count; i++)
+                                if (inicio != _inicioPeriodo && fin != _finPeriodo)
                                 {
-                                    for (int j = 1; j < 5; j++)
+                                    MessageBox.Show("Los datos a ingresar pertenecen a otro periodo. Verifique. \r\n \r\n La ventana se cerrara.", "Error");
+                                    this.Dispose();
+                                }
+
+                                for (int i = 5; i < dt.Rows.Count; i++)
+                                {
+                                    for (int j = 1; j < dt.Columns.Count; j++)
                                     {
                                         if (dt.Rows[i][j].ToString() != "")
                                         {
                                             dgvMovimientos.Rows.Add(
                                                 dt.Rows[i][0].ToString(), //no empleado
-                                                dt.Rows[i][1].ToString(), //cantidad
+                                                dt.Rows[i][j].ToString(), //cantidad
                                                 dt.Rows[4][j].ToString(), //concepto
                                                 dt.Rows[1][1].ToString(), //fecha inicio
                                                 dt.Rows[2][1].ToString()); //fecha fin
@@ -179,15 +190,16 @@ namespace Nominas
 
         private void workMovimientos_DoWork(object sender, DoWorkEventArgs e)
         {
+            string formulaexento = "";
             int idConcepto = 0, idEmpleado = 0;
             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();
             cmd.Connection = cnx;
 
-            List<Movimientos.Core.Movimientos> lstMovimientos = new List<Movimientos.Core.Movimientos>();
+            List<CalculoNomina.Core.tmpPagoNomina> lstMovimientos = new List<CalculoNomina.Core.tmpPagoNomina>();
 
-            mh = new Movimientos.Core.MovimientosHelper();
-            mh.Command = cmd;
+            CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
+            nh.Command = cmd;
 
             ch = new Conceptos.Core.ConceptosHelper();
             ch.Command = cmd;
@@ -211,18 +223,100 @@ namespace Nominas
                     return;
                 }
 
-                Movimientos.Core.Movimientos mov = new Movimientos.Core.Movimientos();
-                mov.idtrabajador = idEmpleado;
-                mov.idempresa = idEmpresa;
-                mov.idconcepto = idConcepto;
-                mov.cantidad = double.Parse(fila.Cells["cantidad"].Value.ToString());
-                mov.fechainicio = DateTime.Parse(fila.Cells["inicio"].Value.ToString());
-                mov.fechafin = DateTime.Parse(fila.Cells["fin"].Value.ToString());
-                lstMovimientos.Add(mov);
+                Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
+                concepto.id = idConcepto;
+
+                List<Conceptos.Core.Conceptos> lstConcepto = new List<Conceptos.Core.Conceptos>();
+
+                try
+                {
+                    cnx.Open();
+                    lstConcepto = ch.obtenerConcepto(concepto);
+                    cnx.Close();
+                }
+                catch {
+                    MessageBox.Show("Error al obtener el concepto. \r\n \r\n Esta ventana se cerrará.", "Error");
+                    cnx.Dispose();
+                    this.Dispose();
+                }
+
+                CalculoNomina.Core.tmpPagoNomina pn = new CalculoNomina.Core.tmpPagoNomina();
+                pn.idempresa = GLOBALES.IDEMPRESA;
+                pn.idtrabajador = idEmpleado;
+                pn.idconcepto = idConcepto;
+                pn.noconcepto = lstConcepto[0].noconcepto;
+                pn.tipoconcepto = lstConcepto[0].tipoconcepto;
+                pn.fechainicio = DateTime.Parse(dgvMovimientos.Rows[0].Cells["inicio"].Value.ToString());
+                pn.fechafin = DateTime.Parse(dgvMovimientos.Rows[0].Cells["fin"].Value.ToString());
+                pn.modificado = true;
+                pn.guardada = false;
+                pn.tiponomina = _tipoNomina;
+
+                switch (lstConcepto[0].tipoconcepto)
+                {
+                    case "P":
+                        Conceptos.Core.Conceptos _concepto = new Conceptos.Core.Conceptos();
+                        concepto.noconcepto = lstConcepto[0].noconcepto;
+                        concepto.idempresa = GLOBALES.IDEMPRESA;
+
+                        try
+                        {
+                            cnx.Open();
+                            formulaexento = ch.obtenerFormulaExento(concepto).ToString();
+                            cnx.Close();
+                        }
+                        catch {
+                            MessageBox.Show("Error al obtener la formula de exento.\r\n \r\n Esta ventana se cerrará.", "Error");
+                            cnx.Dispose();
+                            workMovimientos.CancelAsync();
+                            this.Dispose();
+                        }
+
+                        if (formulaexento == "0")
+                        {
+                            pn.cantidad = double.Parse(fila.Cells["cantidad"].Value.ToString());
+                            pn.exento = 0;
+                            pn.gravado = double.Parse(fila.Cells["cantidad"].Value.ToString());
+                        }
+                        else {
+                            CalculoFormula cf = new CalculoFormula(idEmpleado,
+                                DateTime.Parse(dgvMovimientos.Rows[0].Cells["inicio"].Value.ToString()),
+                                DateTime.Parse(dgvMovimientos.Rows[0].Cells["fin"].Value.ToString()),
+                                formulaexento);
+
+                            double exento = double.Parse(cf.calcularFormula().ToString());
+                            double cantidad = double.Parse(fila.Cells["cantidad"].Value.ToString());
+                            double gravado = 0;
+
+                            if (cantidad <= exento)
+                            {
+                                exento = cantidad;
+                                gravado = 0;
+                            }
+                            else
+                            {
+                                gravado = cantidad - exento;
+                            }
+
+                            pn.cantidad = cantidad;
+                            pn.exento = exento;
+                            pn.gravado = gravado;
+                        }
+                        lstMovimientos.Add(pn);
+                        break;
+
+                    case "D":
+                        pn.cantidad = double.Parse(fila.Cells["cantidad"].Value.ToString());
+                        pn.exento = 0;
+                        pn.gravado = 0;
+                        lstMovimientos.Add(pn);
+                        break;
+                }
+
             }
 
             bulk = new SqlBulkCopy(cnx);
-            mh.bulkCommand = bulk;
+            nh.bulkCommand = bulk;
 
             DataTable dt = new DataTable();
             DataRow dtFila;
@@ -230,21 +324,35 @@ namespace Nominas
             dt.Columns.Add("idtrabajador", typeof(Int32));
             dt.Columns.Add("idempresa", typeof(Int32));
             dt.Columns.Add("idconcepto", typeof(Int32));
+            dt.Columns.Add("noconcepto", typeof(Int32));
+            dt.Columns.Add("tipoconcepto", typeof(String));
+            dt.Columns.Add("exento", typeof(Double));
+            dt.Columns.Add("gravado", typeof(Double));
             dt.Columns.Add("cantidad", typeof(Double));
             dt.Columns.Add("fechainicio", typeof(DateTime));
             dt.Columns.Add("fechafin", typeof(DateTime));
+            dt.Columns.Add("guardada", typeof(Boolean));
+            dt.Columns.Add("tiponomina", typeof(Int32));
+            dt.Columns.Add("modificado", typeof(Boolean));
             
             int index = 1;
             for (int i = 0; i < lstMovimientos.Count; i++)
             {
                 dtFila = dt.NewRow();
-                dtFila["id"] = index;
+                dtFila["id"] = i + 1;
                 dtFila["idtrabajador"] = lstMovimientos[i].idtrabajador;
                 dtFila["idempresa"] = lstMovimientos[i].idempresa;
                 dtFila["idconcepto"] = lstMovimientos[i].idconcepto;
+                dtFila["noconcepto"] = lstMovimientos[i].noconcepto;
+                dtFila["tipoconcepto"] = lstMovimientos[i].tipoconcepto;
+                dtFila["exento"] = lstMovimientos[i].exento;
+                dtFila["gravado"] = lstMovimientos[i].gravado;
                 dtFila["cantidad"] = lstMovimientos[i].cantidad;
                 dtFila["fechainicio"] = lstMovimientos[i].fechainicio;
                 dtFila["fechafin"] = lstMovimientos[i].fechafin;
+                dtFila["guardada"] = lstMovimientos[i].guardada;
+                dtFila["tiponomina"] = lstMovimientos[i].tiponomina;
+                dtFila["modificado"] = lstMovimientos[i].modificado;
                 dt.Rows.Add(dtFila);
                 index++;
             }
@@ -252,8 +360,7 @@ namespace Nominas
             try
             {
                 cnx.Open();
-                mh.bulkMovimientos(dt, "tmpMovimientos");
-                mh.stpMovimientos();
+                nh.bulkNomina(dt, "tmpPagoNomina");
                 cnx.Close();
                 cnx.Dispose();
             }

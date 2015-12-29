@@ -170,7 +170,7 @@ namespace Nominas
                     var busqueda = from b in lstEmpleados
                                    join p in lstProgramacion on b.idtrabajador equals p.idtrabajador
                                    join c in lstConceptos on p.idconcepto equals c.id
-                                   where b.nombrecompleto.Contains(txtBuscar.Text.ToUpper())
+                                   where b.nombrecompleto.Contains(txtBuscar.Text.ToUpper()) || b.noempleado.Contains(txtBuscar.Text)
                                    select new
                                    {
                                        IdTrabajador = b.idtrabajador,

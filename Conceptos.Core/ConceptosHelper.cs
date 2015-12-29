@@ -116,6 +116,7 @@ namespace Conceptos.Core
             object dato = Select(Command);
             return dato;
         }
+
         public object obtenerFormula(Conceptos c)
         {
             Command.CommandText = "select formula from conceptos where noconcepto = @noconcepto and idempresa = @idempresa";

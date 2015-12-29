@@ -157,7 +157,7 @@ namespace Nominas
                 {
                     var busqueda = from be in lstEmpleados
                                    join bi in lstIncidencias on be.idtrabajador equals bi.idtrabajador
-                                   where be.nombrecompleto.Contains(txtBuscar.Text)
+                                   where be.nombrecompleto.Contains(txtBuscar.Text.ToUpper()) || be.noempleado.Contains(txtBuscar.Text)
                                    orderby be.nombrecompleto ascending
                                    select new
                                    {
@@ -171,7 +171,7 @@ namespace Nominas
                                    };
                     dgvIncapacidad.DataSource = busqueda.ToList();
                 }
-                dgvIncapacidad.Columns["Id"].Visible = false;
+                
                 dgvIncapacidad.Columns["IdTrabajador"].Visible = false;
                 for (int i = 0; i < dgvIncapacidad.Columns.Count; i++)
                 {

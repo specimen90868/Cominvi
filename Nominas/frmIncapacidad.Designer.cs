@@ -52,6 +52,7 @@
             this.cmbTipoIncapacidad = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.cmbTipoCaso = new System.Windows.Forms.ComboBox();
+            this.btnCambiar = new System.Windows.Forms.Button();
             this.toolTitulo.SuspendLayout();
             this.toolAcciones.SuspendLayout();
             this.SuspendLayout();
@@ -153,25 +154,27 @@
             // 
             // dtpFinPeriodo
             // 
+            this.dtpFinPeriodo.Enabled = false;
             this.dtpFinPeriodo.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFinPeriodo.Location = new System.Drawing.Point(129, 198);
+            this.dtpFinPeriodo.Location = new System.Drawing.Point(360, 200);
             this.dtpFinPeriodo.Name = "dtpFinPeriodo";
-            this.dtpFinPeriodo.Size = new System.Drawing.Size(100, 20);
+            this.dtpFinPeriodo.Size = new System.Drawing.Size(141, 20);
             this.dtpFinPeriodo.TabIndex = 4;
             // 
             // dtpInicioPeriodo
             // 
+            this.dtpInicioPeriodo.Enabled = false;
             this.dtpInicioPeriodo.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpInicioPeriodo.Location = new System.Drawing.Point(129, 172);
+            this.dtpInicioPeriodo.Location = new System.Drawing.Point(360, 174);
             this.dtpInicioPeriodo.Name = "dtpInicioPeriodo";
-            this.dtpInicioPeriodo.Size = new System.Drawing.Size(100, 20);
+            this.dtpInicioPeriodo.Size = new System.Drawing.Size(141, 20);
             this.dtpInicioPeriodo.TabIndex = 3;
             this.dtpInicioPeriodo.ValueChanged += new System.EventHandler(this.dtpInicio_ValueChanged);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(17, 172);
+            this.label3.Location = new System.Drawing.Point(251, 180);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(46, 13);
             this.label3.TabIndex = 260;
@@ -197,7 +200,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(17, 227);
+            this.label4.Location = new System.Drawing.Point(17, 175);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(60, 13);
             this.label4.TabIndex = 264;
@@ -206,7 +209,7 @@
             // txtCertificado
             // 
             this.txtCertificado.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtCertificado.Location = new System.Drawing.Point(129, 224);
+            this.txtCertificado.Location = new System.Drawing.Point(129, 172);
             this.txtCertificado.Name = "txtCertificado";
             this.txtCertificado.Size = new System.Drawing.Size(100, 20);
             this.txtCertificado.TabIndex = 265;
@@ -214,7 +217,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(16, 253);
+            this.label5.Location = new System.Drawing.Point(17, 229);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(66, 13);
             this.label5.TabIndex = 266;
@@ -223,7 +226,7 @@
             // txtDescripcion
             // 
             this.txtDescripcion.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtDescripcion.Location = new System.Drawing.Point(129, 250);
+            this.txtDescripcion.Location = new System.Drawing.Point(129, 226);
             this.txtDescripcion.Multiline = true;
             this.txtDescripcion.Name = "txtDescripcion";
             this.txtDescripcion.Size = new System.Drawing.Size(372, 199);
@@ -243,7 +246,7 @@
             this.cmbTipoIncapacidad.FormattingEnabled = true;
             this.cmbTipoIncapacidad.Location = new System.Drawing.Point(360, 120);
             this.cmbTipoIncapacidad.Name = "cmbTipoIncapacidad";
-            this.cmbTipoIncapacidad.Size = new System.Drawing.Size(142, 21);
+            this.cmbTipoIncapacidad.Size = new System.Drawing.Size(141, 21);
             this.cmbTipoIncapacidad.TabIndex = 269;
             // 
             // label7
@@ -260,14 +263,26 @@
             this.cmbTipoCaso.FormattingEnabled = true;
             this.cmbTipoCaso.Location = new System.Drawing.Point(360, 147);
             this.cmbTipoCaso.Name = "cmbTipoCaso";
-            this.cmbTipoCaso.Size = new System.Drawing.Size(142, 21);
+            this.cmbTipoCaso.Size = new System.Drawing.Size(141, 21);
             this.cmbTipoCaso.TabIndex = 271;
+            // 
+            // btnCambiar
+            // 
+            this.btnCambiar.Enabled = false;
+            this.btnCambiar.Location = new System.Drawing.Point(292, 199);
+            this.btnCambiar.Name = "btnCambiar";
+            this.btnCambiar.Size = new System.Drawing.Size(62, 23);
+            this.btnCambiar.TabIndex = 272;
+            this.btnCambiar.Text = "Cambiar";
+            this.btnCambiar.UseVisualStyleBackColor = true;
+            this.btnCambiar.Click += new System.EventHandler(this.btnCambiar_Click);
             // 
             // frmIncapacidad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(513, 471);
+            this.ClientSize = new System.Drawing.Size(513, 440);
+            this.Controls.Add(this.btnCambiar);
             this.Controls.Add(this.cmbTipoCaso);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.cmbTipoIncapacidad);
@@ -324,5 +339,6 @@
         private System.Windows.Forms.ComboBox cmbTipoIncapacidad;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cmbTipoCaso;
+        private System.Windows.Forms.Button btnCambiar;
     }
 }

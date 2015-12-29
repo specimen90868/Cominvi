@@ -671,7 +671,6 @@
                                       <PaddingBottom>2pt</PaddingBottom>
                                     </Style>
                                   </Textbox>
-                                  <rd:Selected>true</rd:Selected>
                                 </CellContents>
                               </TablixCell>
                             </TablixCells>
@@ -863,7 +862,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Sum(Fields!DeptoImporte.Value) - (Sum(IIF(Fields!DeptoNoConcepto.Value=15,Fields!DeptoImporte.Value,0)) + Sum(IIF(Fields!DeptoNoConcepto.Value=8,Fields!DeptoImporte.Value,0)))</Value>
+                                            <Value>=Sum(Fields!DeptoImporte.Value)</Value>
                                             <Style>
                                               <FontSize>8pt</FontSize>
                                               <Format>n2</Format>
@@ -1578,7 +1577,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Microsoft.VisualBasic.Interaction.Iif(Fields!CaratulaNoConcepto.Value = "13" Or Fields!CaratulaNoConcepto.Value = "14", Fields!CaratulaSubConcepto.Value, Fields!CaratulaConcepto.Value)</Value>
+                              <Value>=Fields!CaratulaConcepto.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -1708,7 +1707,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!CaratulaImporte.Value) - (Sum(Microsoft.VisualBasic.Interaction.IIF(Fields!CaratulaNoConcepto.Value = 15, Fields!CaratulaImporte.Value, 0)) + Sum(Microsoft.VisualBasic.Interaction.IIF(Fields!CaratulaNoConcepto.Value = 8, Fields!CaratulaImporte.Value, 0)))</Value>
+                              <Value>=Sum(Fields!CaratulaImporte.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>#,0.00;(#,0.00)</Format>
@@ -1814,7 +1813,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Sum(IIF(Fields!CaratulaTipoConcepto.Value="P",Fields!CaratulaImporte.Value,0), "dsReporteNominaGeneral") - (sum(iif(Fields!CaratulaTipoConcepto.Value="D",Fields!CaratulaImporte.Value,0), "dsReporteNominaGeneral") - (Sum(IIF(Fields!CaratulaNoConcepto.Value=15,Fields!CaratulaImporte.Value,0), "dsReporteNominaGeneral") + Sum(IIF(Fields!CaratulaNoConcepto.Value=8,Fields!CaratulaImporte.Value,0), "dsReporteNominaGeneral")))</Value>
+                <Value>=Sum(IIF(Fields!DeptoTipoConcepto.Value="P",Fields!DeptoImporte,0), "dsReporteNominaDepto")-Sum(IIF(Fields!DeptoTipoConcepto.Value="D",Fields!DeptoImporte,0), "dsReporteNominaDepto")</Value>
                 <Style>
                   <FontSize>9pt</FontSize>
                   <FontWeight>Bold</FontWeight>
@@ -2349,13 +2348,9 @@
           <DataField>DeptoHora</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
-        <Field Name="DeptoSubConcepto">
-          <DataField>DeptoSubConcepto</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="DeptoTotalEmpleados">
           <DataField>DeptoTotalEmpleados</DataField>
-          <rd:TypeName>System.UInt32</rd:TypeName>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>
@@ -2408,10 +2403,6 @@
         <Field Name="CaratulaHora">
           <DataField>CaratulaHora</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="CaratulaSubConcepto">
-          <DataField>CaratulaSubConcepto</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="CaratulaRegistro">
           <DataField>CaratulaRegistro</DataField>

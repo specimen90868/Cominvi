@@ -156,28 +156,28 @@ namespace Nominas
                         toolBajaIdse.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "Vacaciones":
-                        toolVacaciones.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        //toolVacaciones.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "Cargar Vacaciones":
-                        toolCargaVacaciones.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        //toolCargaVacaciones.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "Historial de Vacaciones":
-                        toolHistorialVacaciones.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        //toolHistorialVacaciones.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "Conceptos - Empleado":
-                        toolConceptoEmpleado.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        //tool.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "Programación de concepto":
-                        toolProgramacion.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        //toolProgramacion.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "Movimientos":
-                        toolMovimientos.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        //toolMovimientos.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "Carga movimientos":
-                        toolCargaMovimientos.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        //toolCargaMovimientos.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "Historial de movimientos":
-                        toolHistorialMovimientos.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        //toolHistorialMovimientos.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "Calculo de nómina":
                         toolCalculoNomina.Enabled = Convert.ToBoolean(lstMenu[i].accion);
@@ -337,11 +337,6 @@ namespace Nominas
         private void mnuSalir_Click(object sender, EventArgs e)
         {
             Application.Exit();
-        }
-
-        private void workPerfil_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            toolEstatusPerfil.Text = "Perfil cargado.";
         }
 
         private void mnuPerfiles_Click(object sender, EventArgs e)
@@ -545,30 +540,11 @@ namespace Nominas
             lc.Show();
         }
 
-        private void toolConceptoEmpleado_Click(object sender, EventArgs e)
-        {
-            frmListaConceptoEmpleado lce = new frmListaConceptoEmpleado();
-            lce.MdiParent = this;
-            lce.Show();
-        }
-
         private void toolImss_Click(object sender, EventArgs e)
         {
             frmListaImss li = new frmListaImss();
             li.MdiParent = this;
             li.Show();
-        }
-
-        private void toolVacaciones_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void toolProgramacion_Click(object sender, EventArgs e)
-        {
-            frmListaProgramacionConceptos lpc = new frmListaProgramacionConceptos();
-            lpc.MdiParent = this;
-            lpc.Show();
         }
 
         private void toolNominaNormal_Click(object sender, EventArgs e)
@@ -601,46 +577,23 @@ namespace Nominas
             i.Show();
         }
 
-        private void toolCargaVacaciones_Click(object sender, EventArgs e)
-        {
-            frmSeleccionTipoNomina stn = new frmSeleccionTipoNomina();
-            stn._ventana = "CargaVacaciones";
-            stn.MdiParent = this;
-            stn.Show();
-        }
-
-        private void toolHistorialVacaciones_Click(object sender, EventArgs e)
-        {
-            frmSeleccionTipoNomina stn = new frmSeleccionTipoNomina();
-            stn._ventana = "Vacaciones";
-            stn.MdiParent = this;
-            stn.Show();
-        }
-
         private void toolAutorizarNomina_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void toolHistorialMovimientos_Click(object sender, EventArgs e)
+        private void toolConceptoEmpleado_Click_1(object sender, EventArgs e)
         {
-            frmSeleccionTipoNomina stn = new frmSeleccionTipoNomina();
-            stn._ventana = "Movimientos";
-            stn.MdiParent = this;
-            stn.Show();
+            frmListaConceptoEmpleado lce = new frmListaConceptoEmpleado();
+            lce.MdiParent = this;
+            lce.Show();
         }
 
-        private void toolCargaMovimientos_Click(object sender, EventArgs e)
+        private void toolProgramacionConcepto_Click(object sender, EventArgs e)
         {
-            frmSeleccionTipoNomina stn = new frmSeleccionTipoNomina();
-            stn._ventana = "CargaMovimientos";
-            stn.MdiParent = this;
-            stn.Show();
-        }
-
-        private void mnuArchivo_Click(object sender, EventArgs e)
-        {
-
+            frmListaProgramacionConceptos lpc = new frmListaProgramacionConceptos();
+            lpc.MdiParent = this;
+            lpc.Show();
         }
       
     }

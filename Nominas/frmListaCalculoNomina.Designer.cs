@@ -52,6 +52,8 @@
             this.empleadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolReporteDepto = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTabular = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolPeriodo = new System.Windows.Forms.ToolStripLabel();
+            this.toolCambiaPeriodo = new System.Windows.Forms.ToolStripButton();
             this.toolBusqueda = new System.Windows.Forms.ToolStrip();
             this.toolFiltro = new System.Windows.Forms.ToolStripSplitButton();
             this.toolTodos = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,23 +65,19 @@
             this.toolOrdenNombre = new System.Windows.Forms.ToolStripMenuItem();
             this.toolOrdenPaterno = new System.Windows.Forms.ToolStripMenuItem();
             this.toolOrdenMaterno = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolPrenomina = new System.Windows.Forms.ToolStripButton();
+            this.toolSobreRecibo = new System.Windows.Forms.ToolStripButton();
             this.toolCalcular = new System.Windows.Forms.ToolStripButton();
-            this.toolCargar = new System.Windows.Forms.ToolStripButton();
+            this.toolMostrarDatos = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolDescalcular = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolCargar = new System.Windows.Forms.ToolStripButton();
+            this.toolCargaVacaciones = new System.Windows.Forms.ToolStripButton();
+            this.toolCargaFaltas = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolCerrar = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.lblBuscar = new System.Windows.Forms.ToolStripLabel();
-            this.txtBuscar = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.dgvEmpleados = new System.Windows.Forms.DataGridView();
             this.seleccion = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.label1 = new System.Windows.Forms.Label();
-            this.dtpPeriodoInicio = new System.Windows.Forms.DateTimePicker();
-            this.label2 = new System.Windows.Forms.Label();
-            this.dtpPeriodoFin = new System.Windows.Forms.DateTimePicker();
             this.workerCalculo = new System.ComponentModel.BackgroundWorker();
             this.BarraEstado = new System.Windows.Forms.StatusStrip();
             this.toolEstado = new System.Windows.Forms.ToolStripStatusLabel();
@@ -91,8 +89,6 @@
             this.tabCalculoNomina = new System.Windows.Forms.TabPage();
             this.tabFaltas = new System.Windows.Forms.TabPage();
             this.dgvFaltas = new System.Windows.Forms.DataGridView();
-            this.workDescalculo = new System.ComponentModel.BackgroundWorker();
-            this.workHoras = new System.ComponentModel.BackgroundWorker();
             this.workExcel = new System.ComponentModel.BackgroundWorker();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -106,13 +102,6 @@
             this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idtrabajador = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.iddepartamento = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idpuesto = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -125,13 +114,13 @@
             this.asistencia = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.puntualidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.horas = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idtrabajadorfalta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.iddepartamentofalta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idpuestofalta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.noempleadofalta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombrefalta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.paternofalta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.maternofalta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolTitulo.SuspendLayout();
@@ -150,10 +139,12 @@
             // 
             this.toolTitulo.BackColor = System.Drawing.Color.DarkGray;
             this.toolTitulo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripSplitButton1});
+            this.toolStripSplitButton1,
+            this.toolPeriodo,
+            this.toolCambiaPeriodo});
             this.toolTitulo.Location = new System.Drawing.Point(0, 0);
             this.toolTitulo.Name = "toolTitulo";
-            this.toolTitulo.Size = new System.Drawing.Size(1137, 32);
+            this.toolTitulo.Size = new System.Drawing.Size(1012, 32);
             this.toolTitulo.TabIndex = 9;
             this.toolTitulo.Text = "ToolStrip1";
             // 
@@ -248,25 +239,41 @@
             this.toolTabular.Text = "Tabular";
             this.toolTabular.Click += new System.EventHandler(this.toolTabular_Click);
             // 
+            // toolPeriodo
+            // 
+            this.toolPeriodo.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.toolPeriodo.Name = "toolPeriodo";
+            this.toolPeriodo.Size = new System.Drawing.Size(132, 29);
+            this.toolPeriodo.Text = "Fecha del periodo";
+            // 
+            // toolCambiaPeriodo
+            // 
+            this.toolCambiaPeriodo.Image = ((System.Drawing.Image)(resources.GetObject("toolCambiaPeriodo.Image")));
+            this.toolCambiaPeriodo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolCambiaPeriodo.Name = "toolCambiaPeriodo";
+            this.toolCambiaPeriodo.Size = new System.Drawing.Size(72, 29);
+            this.toolCambiaPeriodo.Text = "Cambiar";
+            this.toolCambiaPeriodo.Click += new System.EventHandler(this.toolCambiaPeriodo_Click);
+            // 
             // toolBusqueda
             // 
             this.toolBusqueda.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolFiltro,
             this.toolOrdenar,
-            this.toolPrenomina,
+            this.toolSobreRecibo,
             this.toolCalcular,
+            this.toolMostrarDatos,
             this.toolStripButton1,
+            this.toolStripSeparator3,
             this.toolCargar,
-            this.toolDescalcular,
+            this.toolCargaVacaciones,
+            this.toolCargaFaltas,
             this.toolStripSeparator1,
             this.toolCerrar,
-            this.toolStripSeparator4,
-            this.lblBuscar,
-            this.txtBuscar,
-            this.toolStripButton2});
+            this.toolStripSeparator4});
             this.toolBusqueda.Location = new System.Drawing.Point(0, 32);
             this.toolBusqueda.Name = "toolBusqueda";
-            this.toolBusqueda.Size = new System.Drawing.Size(1137, 25);
+            this.toolBusqueda.Size = new System.Drawing.Size(1012, 25);
             this.toolBusqueda.TabIndex = 10;
             this.toolBusqueda.Text = "ToolStrip1";
             // 
@@ -352,14 +359,14 @@
             this.toolOrdenMaterno.Text = "Ap. Materno";
             this.toolOrdenMaterno.Click += new System.EventHandler(this.toolOrdenMaterno_Click);
             // 
-            // toolPrenomina
+            // toolSobreRecibo
             // 
-            this.toolPrenomina.Image = ((System.Drawing.Image)(resources.GetObject("toolPrenomina.Image")));
-            this.toolPrenomina.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolPrenomina.Name = "toolPrenomina";
-            this.toolPrenomina.Size = new System.Drawing.Size(85, 22);
-            this.toolPrenomina.Text = "Prenomina";
-            this.toolPrenomina.Click += new System.EventHandler(this.toolPrenomina_Click);
+            this.toolSobreRecibo.Image = ((System.Drawing.Image)(resources.GetObject("toolSobreRecibo.Image")));
+            this.toolSobreRecibo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolSobreRecibo.Name = "toolSobreRecibo";
+            this.toolSobreRecibo.Size = new System.Drawing.Size(104, 22);
+            this.toolSobreRecibo.Text = "Sobre - Recibo";
+            this.toolSobreRecibo.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
             // toolCalcular
             // 
@@ -370,34 +377,55 @@
             this.toolCalcular.Text = "Calcular";
             this.toolCalcular.Click += new System.EventHandler(this.toolCalcular_Click);
             // 
-            // toolCargar
+            // toolMostrarDatos
             // 
-            this.toolCargar.Image = ((System.Drawing.Image)(resources.GetObject("toolCargar.Image")));
-            this.toolCargar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolCargar.Name = "toolCargar";
-            this.toolCargar.Size = new System.Drawing.Size(96, 22);
-            this.toolCargar.Text = "Cargar Horas";
-            this.toolCargar.Visible = false;
-            this.toolCargar.Click += new System.EventHandler(this.toolCargar_Click);
+            this.toolMostrarDatos.Image = ((System.Drawing.Image)(resources.GetObject("toolMostrarDatos.Image")));
+            this.toolMostrarDatos.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolMostrarDatos.Name = "toolMostrarDatos";
+            this.toolMostrarDatos.Size = new System.Drawing.Size(100, 22);
+            this.toolMostrarDatos.Text = "Mostrar datos";
+            this.toolMostrarDatos.Click += new System.EventHandler(this.toolMostrarDatos_Click);
             // 
             // toolStripButton1
             // 
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(95, 22);
-            this.toolStripButton1.Text = "Cargar Faltas";
+            this.toolStripButton1.Size = new System.Drawing.Size(77, 22);
+            this.toolStripButton1.Text = "Ver Faltas";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
-            // toolDescalcular
+            // toolStripSeparator3
             // 
-            this.toolDescalcular.Image = ((System.Drawing.Image)(resources.GetObject("toolDescalcular.Image")));
-            this.toolDescalcular.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolDescalcular.Name = "toolDescalcular";
-            this.toolDescalcular.Size = new System.Drawing.Size(87, 22);
-            this.toolDescalcular.Text = "Descalcular";
-            this.toolDescalcular.Visible = false;
-            this.toolDescalcular.Click += new System.EventHandler(this.toolDescalcular_Click);
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolCargar
+            // 
+            this.toolCargar.Image = ((System.Drawing.Image)(resources.GetObject("toolCargar.Image")));
+            this.toolCargar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolCargar.Name = "toolCargar";
+            this.toolCargar.Size = new System.Drawing.Size(146, 22);
+            this.toolCargar.Text = "Importar Movimientos";
+            this.toolCargar.Click += new System.EventHandler(this.toolCargar_Click);
+            // 
+            // toolCargaVacaciones
+            // 
+            this.toolCargaVacaciones.Image = ((System.Drawing.Image)(resources.GetObject("toolCargaVacaciones.Image")));
+            this.toolCargaVacaciones.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolCargaVacaciones.Name = "toolCargaVacaciones";
+            this.toolCargaVacaciones.Size = new System.Drawing.Size(135, 22);
+            this.toolCargaVacaciones.Text = "Importar Vacaciones";
+            this.toolCargaVacaciones.Click += new System.EventHandler(this.toolCargaVacaciones_Click);
+            // 
+            // toolCargaFaltas
+            // 
+            this.toolCargaFaltas.Image = ((System.Drawing.Image)(resources.GetObject("toolCargaFaltas.Image")));
+            this.toolCargaFaltas.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolCargaFaltas.Name = "toolCargaFaltas";
+            this.toolCargaFaltas.Size = new System.Drawing.Size(106, 22);
+            this.toolCargaFaltas.Text = "Importar Faltas";
+            this.toolCargaFaltas.Click += new System.EventHandler(this.toolCargaFaltas_Click);
             // 
             // toolStripSeparator1
             // 
@@ -417,33 +445,6 @@
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
-            // 
-            // lblBuscar
-            // 
-            this.lblBuscar.Name = "lblBuscar";
-            this.lblBuscar.Size = new System.Drawing.Size(45, 22);
-            this.lblBuscar.Text = "Buscar:";
-            // 
-            // txtBuscar
-            // 
-            this.txtBuscar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic);
-            this.txtBuscar.ForeColor = System.Drawing.Color.Gray;
-            this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(300, 25);
-            this.txtBuscar.Text = "Buscar no. empleado...";
-            this.txtBuscar.Leave += new System.EventHandler(this.txtBuscar_Leave);
-            this.txtBuscar.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBuscar_KeyPress);
-            this.txtBuscar.Click += new System.EventHandler(this.txtBuscar_Click);
-            // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton2.Text = "toolStripButton2";
-            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
             // dgvEmpleados
             // 
@@ -468,10 +469,9 @@
             this.dgvEmpleados.Location = new System.Drawing.Point(3, 3);
             this.dgvEmpleados.Name = "dgvEmpleados";
             this.dgvEmpleados.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dgvEmpleados.Size = new System.Drawing.Size(1123, 321);
+            this.dgvEmpleados.Size = new System.Drawing.Size(998, 339);
             this.dgvEmpleados.TabIndex = 11;
             this.dgvEmpleados.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmpleados_CellContentClick);
-            this.dgvEmpleados.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmpleados_CellDoubleClick);
             this.dgvEmpleados.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmpleados_CellValueChanged);
             // 
             // seleccion
@@ -482,44 +482,6 @@
             this.seleccion.HeaderText = "Seleccion";
             this.seleccion.Name = "seleccion";
             this.seleccion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.DarkGray;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(119, 14);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(54, 13);
-            this.label1.TabIndex = 12;
-            this.label1.Text = "Periodo:";
-            // 
-            // dtpPeriodoInicio
-            // 
-            this.dtpPeriodoInicio.Location = new System.Drawing.Point(171, 9);
-            this.dtpPeriodoInicio.Name = "dtpPeriodoInicio";
-            this.dtpPeriodoInicio.Size = new System.Drawing.Size(200, 20);
-            this.dtpPeriodoInicio.TabIndex = 13;
-            this.dtpPeriodoInicio.ValueChanged += new System.EventHandler(this.dtpPeriodoInicio_ValueChanged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.DarkGray;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(377, 14);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(17, 13);
-            this.label2.TabIndex = 14;
-            this.label2.Text = "al";
-            // 
-            // dtpPeriodoFin
-            // 
-            this.dtpPeriodoFin.Enabled = false;
-            this.dtpPeriodoFin.Location = new System.Drawing.Point(398, 9);
-            this.dtpPeriodoFin.Name = "dtpPeriodoFin";
-            this.dtpPeriodoFin.Size = new System.Drawing.Size(200, 20);
-            this.dtpPeriodoFin.TabIndex = 15;
             // 
             // workerCalculo
             // 
@@ -537,7 +499,7 @@
             this.toolEtapa});
             this.BarraEstado.Location = new System.Drawing.Point(0, 0);
             this.BarraEstado.Name = "BarraEstado";
-            this.BarraEstado.Size = new System.Drawing.Size(1137, 22);
+            this.BarraEstado.Size = new System.Drawing.Size(1012, 22);
             this.BarraEstado.TabIndex = 16;
             this.BarraEstado.Text = "statusStrip1";
             // 
@@ -563,9 +525,9 @@
             // 
             this.PanelBarra.Controls.Add(this.BarraEstado);
             this.PanelBarra.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.PanelBarra.Location = new System.Drawing.Point(0, 410);
+            this.PanelBarra.Location = new System.Drawing.Point(0, 428);
             this.PanelBarra.Name = "PanelBarra";
-            this.PanelBarra.Size = new System.Drawing.Size(1137, 22);
+            this.PanelBarra.Size = new System.Drawing.Size(1012, 22);
             this.PanelBarra.TabIndex = 17;
             // 
             // PanelGrid
@@ -574,7 +536,7 @@
             this.PanelGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PanelGrid.Location = new System.Drawing.Point(0, 57);
             this.PanelGrid.Name = "PanelGrid";
-            this.PanelGrid.Size = new System.Drawing.Size(1137, 353);
+            this.PanelGrid.Size = new System.Drawing.Size(1012, 371);
             this.PanelGrid.TabIndex = 18;
             // 
             // tabGrid
@@ -586,7 +548,7 @@
             this.tabGrid.Location = new System.Drawing.Point(0, 0);
             this.tabGrid.Name = "tabGrid";
             this.tabGrid.SelectedIndex = 0;
-            this.tabGrid.Size = new System.Drawing.Size(1137, 353);
+            this.tabGrid.Size = new System.Drawing.Size(1012, 371);
             this.tabGrid.TabIndex = 12;
             // 
             // tabCalculoNomina
@@ -595,7 +557,7 @@
             this.tabCalculoNomina.Location = new System.Drawing.Point(4, 4);
             this.tabCalculoNomina.Name = "tabCalculoNomina";
             this.tabCalculoNomina.Padding = new System.Windows.Forms.Padding(3);
-            this.tabCalculoNomina.Size = new System.Drawing.Size(1129, 327);
+            this.tabCalculoNomina.Size = new System.Drawing.Size(1004, 345);
             this.tabCalculoNomina.TabIndex = 0;
             this.tabCalculoNomina.Text = "Percepciones y Deducciones";
             this.tabCalculoNomina.UseVisualStyleBackColor = true;
@@ -606,7 +568,7 @@
             this.tabFaltas.Location = new System.Drawing.Point(4, 4);
             this.tabFaltas.Name = "tabFaltas";
             this.tabFaltas.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFaltas.Size = new System.Drawing.Size(1129, 327);
+            this.tabFaltas.Size = new System.Drawing.Size(1004, 345);
             this.tabFaltas.TabIndex = 1;
             this.tabFaltas.Text = "Faltas";
             this.tabFaltas.UseVisualStyleBackColor = true;
@@ -616,38 +578,13 @@
             this.dgvFaltas.AllowUserToAddRows = false;
             this.dgvFaltas.AllowUserToDeleteRows = false;
             this.dgvFaltas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvFaltas.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idtrabajadorfalta,
-            this.iddepartamentofalta,
-            this.idpuestofalta,
-            this.noempleadofalta,
-            this.nombrefalta,
-            this.paternofalta,
-            this.maternofalta});
             this.dgvFaltas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvFaltas.Location = new System.Drawing.Point(3, 3);
             this.dgvFaltas.Name = "dgvFaltas";
-            this.dgvFaltas.Size = new System.Drawing.Size(1123, 321);
+            this.dgvFaltas.Size = new System.Drawing.Size(998, 339);
             this.dgvFaltas.TabIndex = 0;
             this.dgvFaltas.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFaltas_CellValueChanged);
-            this.dgvFaltas.CurrentCellDirtyStateChanged += new System.EventHandler(this.dgvFaltas_CurrentCellDirtyStateChanged);
             this.dgvFaltas.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvFaltas_KeyDown);
-            // 
-            // workDescalculo
-            // 
-            this.workDescalculo.WorkerReportsProgress = true;
-            this.workDescalculo.WorkerSupportsCancellation = true;
-            this.workDescalculo.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workDescalculo_DoWork);
-            this.workDescalculo.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.workDescalculo_ProgressChanged);
-            this.workDescalculo.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workDescalculo_RunWorkerCompleted);
-            // 
-            // workHoras
-            // 
-            this.workHoras.WorkerReportsProgress = true;
-            this.workHoras.WorkerSupportsCancellation = true;
-            this.workHoras.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workHoras_DoWork);
-            this.workHoras.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.workHoras_ProgressChanged);
-            this.workHoras.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workHoras_RunWorkerCompleted);
             // 
             // workExcel
             // 
@@ -746,50 +683,6 @@
             this.dataGridViewTextBoxColumn12.HeaderText = "H. Extras Dobles";
             this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
             // 
-            // dataGridViewTextBoxColumn13
-            // 
-            this.dataGridViewTextBoxColumn13.HeaderText = "ID";
-            this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
-            this.dataGridViewTextBoxColumn13.Visible = false;
-            // 
-            // dataGridViewTextBoxColumn14
-            // 
-            this.dataGridViewTextBoxColumn14.HeaderText = "No. Empleado";
-            this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
-            this.dataGridViewTextBoxColumn14.ReadOnly = true;
-            this.dataGridViewTextBoxColumn14.Visible = false;
-            // 
-            // dataGridViewTextBoxColumn15
-            // 
-            this.dataGridViewTextBoxColumn15.HeaderText = "Nombre";
-            this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
-            this.dataGridViewTextBoxColumn15.ReadOnly = true;
-            this.dataGridViewTextBoxColumn15.Visible = false;
-            // 
-            // dataGridViewTextBoxColumn16
-            // 
-            this.dataGridViewTextBoxColumn16.HeaderText = "Ap. Paterno";
-            this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
-            this.dataGridViewTextBoxColumn16.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn17
-            // 
-            this.dataGridViewTextBoxColumn17.HeaderText = "Ap. Materno";
-            this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
-            this.dataGridViewTextBoxColumn17.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn18
-            // 
-            this.dataGridViewTextBoxColumn18.HeaderText = "Falta";
-            this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
-            this.dataGridViewTextBoxColumn18.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn19
-            // 
-            this.dataGridViewTextBoxColumn19.HeaderText = "Incapacidad";
-            this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
-            this.dataGridViewTextBoxColumn19.ReadOnly = true;
-            // 
             // idtrabajador
             // 
             this.idtrabajador.HeaderText = "Id";
@@ -870,47 +763,49 @@
             this.horas.HeaderText = "H. Extras Dobles";
             this.horas.Name = "horas";
             // 
-            // idtrabajadorfalta
+            // dataGridViewTextBoxColumn13
             // 
-            this.idtrabajadorfalta.HeaderText = "ID";
-            this.idtrabajadorfalta.Name = "idtrabajadorfalta";
-            this.idtrabajadorfalta.Visible = false;
+            this.dataGridViewTextBoxColumn13.HeaderText = "ID";
+            this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
+            this.dataGridViewTextBoxColumn13.Visible = false;
             // 
-            // iddepartamentofalta
+            // dataGridViewTextBoxColumn14
             // 
-            this.iddepartamentofalta.HeaderText = "IdDepartamento";
-            this.iddepartamentofalta.Name = "iddepartamentofalta";
-            this.iddepartamentofalta.Visible = false;
+            this.dataGridViewTextBoxColumn14.HeaderText = "No. Empleado";
+            this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
+            this.dataGridViewTextBoxColumn14.ReadOnly = true;
+            this.dataGridViewTextBoxColumn14.Visible = false;
             // 
-            // idpuestofalta
+            // dataGridViewTextBoxColumn15
             // 
-            this.idpuestofalta.HeaderText = "IdPuesto";
-            this.idpuestofalta.Name = "idpuestofalta";
-            this.idpuestofalta.Visible = false;
+            this.dataGridViewTextBoxColumn15.HeaderText = "Nombre";
+            this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
+            this.dataGridViewTextBoxColumn15.ReadOnly = true;
+            this.dataGridViewTextBoxColumn15.Visible = false;
             // 
-            // noempleadofalta
+            // dataGridViewTextBoxColumn16
             // 
-            this.noempleadofalta.HeaderText = "No. Empleado";
-            this.noempleadofalta.Name = "noempleadofalta";
-            this.noempleadofalta.ReadOnly = true;
+            this.dataGridViewTextBoxColumn16.HeaderText = "Ap. Paterno";
+            this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
+            this.dataGridViewTextBoxColumn16.ReadOnly = true;
             // 
-            // nombrefalta
+            // dataGridViewTextBoxColumn17
             // 
-            this.nombrefalta.HeaderText = "Nombre";
-            this.nombrefalta.Name = "nombrefalta";
-            this.nombrefalta.ReadOnly = true;
+            this.dataGridViewTextBoxColumn17.HeaderText = "Ap. Materno";
+            this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
+            this.dataGridViewTextBoxColumn17.ReadOnly = true;
             // 
-            // paternofalta
+            // dataGridViewTextBoxColumn18
             // 
-            this.paternofalta.HeaderText = "Ap. Paterno";
-            this.paternofalta.Name = "paternofalta";
-            this.paternofalta.ReadOnly = true;
+            this.dataGridViewTextBoxColumn18.HeaderText = "Falta";
+            this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
+            this.dataGridViewTextBoxColumn18.ReadOnly = true;
             // 
-            // maternofalta
+            // dataGridViewTextBoxColumn19
             // 
-            this.maternofalta.HeaderText = "Ap. Materno";
-            this.maternofalta.Name = "maternofalta";
-            this.maternofalta.ReadOnly = true;
+            this.dataGridViewTextBoxColumn19.HeaderText = "Incapacidad";
+            this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
+            this.dataGridViewTextBoxColumn19.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn20
             // 
@@ -926,13 +821,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1137, 432);
+            this.ClientSize = new System.Drawing.Size(1012, 450);
             this.Controls.Add(this.PanelGrid);
             this.Controls.Add(this.PanelBarra);
-            this.Controls.Add(this.dtpPeriodoFin);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.dtpPeriodoInicio);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.toolBusqueda);
             this.Controls.Add(this.toolTitulo);
             this.Name = "frmListaCalculoNomina";
@@ -963,8 +854,6 @@
         internal System.Windows.Forms.ToolStrip toolTitulo;
         internal System.Windows.Forms.ToolStrip toolBusqueda;
         private System.Windows.Forms.ToolStripButton toolCargar;
-        internal System.Windows.Forms.ToolStripLabel lblBuscar;
-        internal System.Windows.Forms.ToolStripTextBox txtBuscar;
         private System.Windows.Forms.DataGridView dgvEmpleados;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
@@ -977,24 +866,17 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
-        private System.Windows.Forms.ToolStripButton toolPrenomina;
         private System.Windows.Forms.ToolStripButton toolCalcular;
         private System.Windows.Forms.ToolStripSplitButton toolFiltro;
         private System.Windows.Forms.ToolStripMenuItem toolDepartamento;
         private System.Windows.Forms.ToolStripMenuItem toolPuesto;
         private System.Windows.Forms.ToolStripMenuItem toolTodos;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DateTimePicker dtpPeriodoInicio;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DateTimePicker dtpPeriodoFin;
-        private System.Windows.Forms.ToolStripButton toolDescalcular;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.ComponentModel.BackgroundWorker workerCalculo;
         private System.Windows.Forms.StatusStrip BarraEstado;
         private System.Windows.Forms.Panel PanelBarra;
         private System.Windows.Forms.Panel PanelGrid;
-        private System.ComponentModel.BackgroundWorker workDescalculo;
         private System.Windows.Forms.ToolStripStatusLabel toolEstado;
         private System.Windows.Forms.ToolStripStatusLabel toolPorcentaje;
         private System.Windows.Forms.ToolStripStatusLabel toolEtapa;
@@ -1006,7 +888,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem toolAutorizar;
         private System.Windows.Forms.ToolStripMenuItem toolNoEmpleado;
-        private System.ComponentModel.BackgroundWorker workHoras;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem toolReportes;
         private System.Windows.Forms.ToolStripMenuItem toolCaratula;
@@ -1027,13 +908,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn21;
         private System.Windows.Forms.ToolStripMenuItem toolTabular;
         private System.ComponentModel.BackgroundWorker workExcel;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idtrabajadorfalta;
-        private System.Windows.Forms.DataGridViewTextBoxColumn iddepartamentofalta;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idpuestofalta;
-        private System.Windows.Forms.DataGridViewTextBoxColumn noempleadofalta;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombrefalta;
-        private System.Windows.Forms.DataGridViewTextBoxColumn paternofalta;
-        private System.Windows.Forms.DataGridViewTextBoxColumn maternofalta;
         private System.Windows.Forms.DataGridViewCheckBoxColumn seleccion;
         private System.Windows.Forms.DataGridViewTextBoxColumn idtrabajador;
         private System.Windows.Forms.DataGridViewTextBoxColumn iddepartamento;
@@ -1053,6 +927,12 @@
         private System.Windows.Forms.ToolStripMenuItem toolOrdenNombre;
         private System.Windows.Forms.ToolStripMenuItem toolOrdenPaterno;
         private System.Windows.Forms.ToolStripMenuItem toolOrdenMaterno;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton toolSobreRecibo;
+        private System.Windows.Forms.ToolStripButton toolMostrarDatos;
+        private System.Windows.Forms.ToolStripLabel toolPeriodo;
+        private System.Windows.Forms.ToolStripButton toolCambiaPeriodo;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripButton toolCargaVacaciones;
+        private System.Windows.Forms.ToolStripButton toolCargaFaltas;
     }
 }

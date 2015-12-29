@@ -208,7 +208,7 @@ namespace Nominas
                 {
                     var busqueda = from b in lstEmpleados
                                    join i in lstInfonavit on b.idtrabajador equals i.idtrabajador
-                                   where b.nombrecompleto.Contains(txtBuscar.Text.ToUpper())
+                                   where b.nombrecompleto.Contains(txtBuscar.Text.ToUpper()) || b.noempleado.Contains(txtBuscar.Text)
                                    select new
                                    {
                                        IdTrabajador = b.idtrabajador,

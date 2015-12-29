@@ -116,6 +116,61 @@ namespace Vacaciones.Core
             return lstPrima;
         }
 
+        public List<VacacionesPrima> obtenerVacacionesPrimaTrabajador(VacacionesPrima v)
+        {
+            List<VacacionesPrima> lstPrima = new List<VacacionesPrima>();
+            DataTable dtPrima = new DataTable();
+            Command.CommandText = "select * from VacacionesPrima where idtrabajador = @idtrabajador";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", v.idtrabajador);
+            dtPrima = SelectData(Command);
+            for (int i = 0; i < dtPrima.Rows.Count; i++)
+            {
+                VacacionesPrima vp = new VacacionesPrima();
+                vp.id = int.Parse(dtPrima.Rows[i]["id"].ToString());
+                vp.idtrabajador = int.Parse(dtPrima.Rows[i]["idtrabajador"].ToString());
+                vp.idempresa = int.Parse(dtPrima.Rows[i]["idempresa"].ToString());
+                vp.periodoinicio = DateTime.Parse(dtPrima.Rows[i]["periodoinicio"].ToString());
+                vp.periodofin = DateTime.Parse(dtPrima.Rows[i]["periodofin"].ToString());
+                vp.diasderecho = int.Parse(dtPrima.Rows[i]["diasderecho"].ToString());
+                vp.diaspago = int.Parse(dtPrima.Rows[i]["diaspago"].ToString());
+                vp.diaspendientes = int.Parse(dtPrima.Rows[i]["diaspendientes"].ToString());
+                vp.fechapago = DateTime.Parse(dtPrima.Rows[i]["fechapago"].ToString());
+                vp.vacacionesprima = dtPrima.Rows[i]["vacacionesprima"].ToString();
+                lstPrima.Add(vp);
+            }
+            return lstPrima;
+        }
+
+        public List<VacacionesPrima> obtenerVacacionesPrimaTrabajador(int id, int idTrabajador, DateTime inicio, DateTime fin)
+        {
+            List<VacacionesPrima> lstPrima = new List<VacacionesPrima>();
+            DataTable dtPrima = new DataTable();
+            Command.CommandText = "select * from VacacionesPrima where id = @id and idtrabajador = @idtrabajador and periodoinicio = @periodoinicio and periodofin = @periodofin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("id", id);
+            Command.Parameters.AddWithValue("idtrabajador", idTrabajador);
+            Command.Parameters.AddWithValue("periodoinicio", inicio);
+            Command.Parameters.AddWithValue("periodofin", fin);
+            dtPrima = SelectData(Command);
+            for (int i = 0; i < dtPrima.Rows.Count; i++)
+            {
+                VacacionesPrima vp = new VacacionesPrima();
+                vp.id = int.Parse(dtPrima.Rows[i]["id"].ToString());
+                vp.idtrabajador = int.Parse(dtPrima.Rows[i]["idtrabajador"].ToString());
+                vp.idempresa = int.Parse(dtPrima.Rows[i]["idempresa"].ToString());
+                vp.periodoinicio = DateTime.Parse(dtPrima.Rows[i]["periodoinicio"].ToString());
+                vp.periodofin = DateTime.Parse(dtPrima.Rows[i]["periodofin"].ToString());
+                vp.diasderecho = int.Parse(dtPrima.Rows[i]["diasderecho"].ToString());
+                vp.diaspago = int.Parse(dtPrima.Rows[i]["diaspago"].ToString());
+                vp.diaspendientes = int.Parse(dtPrima.Rows[i]["diaspendientes"].ToString());
+                vp.fechapago = DateTime.Parse(dtPrima.Rows[i]["fechapago"].ToString());
+                vp.vacacionesprima = dtPrima.Rows[i]["vacacionesprima"].ToString();
+                lstPrima.Add(vp);
+            }
+            return lstPrima;
+        }
+
         public object pagoVacacionesPrima(VacacionesPrima vp)
         {
             Command.CommandText = @"select isnull(sum(diaspago),0) from VacacionesPrima where idtrabajador = @idtrabajador
@@ -130,6 +185,44 @@ namespace Vacaciones.Core
             Command.Parameters.AddWithValue("vacacionprima", vp.vacacionesprima);
             object dato = Select(Command);
             return dato;
+        }
+
+        public object existeVacacionesPrima(VacacionesPrima vp)
+        {
+            Command.CommandText = @"select count(id) from VacacionesPrima where idtrabajador = @idtrabajador
+                                    and periodoinicio = @inicio and periodofin = @fin and vacacionesprima = @vacacionesprima";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", vp.idtrabajador);
+            Command.Parameters.AddWithValue("inicio", vp.periodoinicio);
+            Command.Parameters.AddWithValue("fin", vp.periodofin);
+            Command.Parameters.AddWithValue("vacacionesprima", vp.vacacionesprima);
+            object dato = Select(Command);
+            return dato;
+        }
+
+        public int insertaVacacion(VacacionesPrima vp)
+        {
+            Command.CommandText = @"insert into VacacionesPrima (idtrabajador,idempresa,periodoinicio,periodofin,diasderecho,diaspago,diaspendientes,fechapago,vacacionesprima) 
+                                    values (@idtrabajador,@idempresa,@periodoinicio,@periodofin,@diasderecho,@diaspago,@diaspendientes,@fechapago,@vacacionesprima)";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", vp.idtrabajador);
+            Command.Parameters.AddWithValue("idempresa", vp.idempresa);
+            Command.Parameters.AddWithValue("periodoinicio", vp.periodoinicio);
+            Command.Parameters.AddWithValue("periodofin", vp.periodofin);
+            Command.Parameters.AddWithValue("diasderecho", vp.diasderecho);
+            Command.Parameters.AddWithValue("diaspago", vp.diaspago);
+            Command.Parameters.AddWithValue("diaspendientes", vp.diaspendientes);
+            Command.Parameters.AddWithValue("fechapago", vp.fechapago);
+            Command.Parameters.AddWithValue("vacacionesprima", vp.vacacionesprima);
+            return Command.ExecuteNonQuery();
+        }
+
+        public int eliminaVacacion(VacacionesPrima vp)
+        {
+            Command.CommandText = "delete from VacacionesPrima where id = @id";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("id", vp.id);
+            return Command.ExecuteNonQuery();
         }
 
         public int insertaVacacion(Vacaciones v)
@@ -176,7 +269,7 @@ namespace Vacaciones.Core
 
         public int stpVacaciones()
         {
-            Command.CommandText = "exec stp_InsertaPagoVacaciones";
+            Command.CommandText = "exec stp_InsertaVacacionesPrima";
             Command.Parameters.Clear();
             return Command.ExecuteNonQuery();
         }

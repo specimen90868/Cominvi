@@ -812,7 +812,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Sum(Fields!cantidad.Value) - (Sum(IIF(Fields!noconcepto.Value=15,Fields!cantidad.Value,0)) + Sum(IIF(Fields!noconcepto.Value=8,Fields!cantidad.Value,0)))</Value>
+                                            <Value>=Sum(Fields!cantidad.Value)</Value>
                                             <Style>
                                               <FontSize>6pt</FontSize>
                                               <Format>n2</Format>
@@ -1292,7 +1292,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Sum(IIF(Fields!tipoconcepto.Value="P",Fields!cantidad.Value,0)) - (sum(iif(Fields!tipoconcepto.Value="D",Fields!cantidad.Value,0)) - (Sum(IIF(Fields!noconcepto.Value=15,Fields!cantidad.Value,0)) + Sum(IIF(Fields!noconcepto.Value=8,Fields!cantidad.Value,0))))</Value>
+                                            <Value>=Sum(IIF(Fields!tipoconcepto.Value="P",Fields!cantidad.Value,0)) - Sum(iif(Fields!tipoconcepto.Value="D",Fields!cantidad.Value,0))</Value>
                                             <Style>
                                               <FontSize>6pt</FontSize>
                                               <Format>n2</Format>
@@ -1739,7 +1739,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Sum(Fields!cantidad.Value) - (Sum(IIF(Fields!noconcepto.Value=15,Fields!cantidad.Value,0)) + Sum(IIF(Fields!noconcepto.Value=8,Fields!cantidad.Value,0)))</Value>
+                                            <Value>=Sum(Fields!cantidad.Value)</Value>
                                             <Style>
                                               <FontSize>6pt</FontSize>
                                               <Format>n2</Format>
@@ -2014,7 +2014,6 @@
                         </Border>
                       </Style>
                     </Tablix>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -2642,7 +2641,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Microsoft.VisualBasic.Interaction.Iif(Fields!CaratulaNoConcepto.Value = "13" Or Fields!CaratulaNoConcepto.Value = "14", Fields!CaratulaSubConcepto.Value, Fields!CaratulaConcepto.Value)</Value>
+                              <Value>=Fields!CaratulaConcepto.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -2772,7 +2771,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!CaratulaImporte.Value) - (Sum(Microsoft.VisualBasic.Interaction.IIF(Fields!CaratulaNoConcepto.Value = 15, Fields!CaratulaImporte.Value, 0)) + Sum(Microsoft.VisualBasic.Interaction.IIF(Fields!CaratulaNoConcepto.Value = 8, Fields!CaratulaImporte.Value, 0)))</Value>
+                              <Value>=Sum(Fields!CaratulaImporte.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>#,0.00;(#,0.00)</Format>
@@ -2878,7 +2877,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Sum(Microsoft.VisualBasic.Interaction.IIF(Fields!CaratulaTipoConcepto.Value = "P", Fields!CaratulaImporte.Value, 0), "dsReporteNominaGeneral") - (Sum(Microsoft.VisualBasic.Interaction.iif(Fields!CaratulaTipoConcepto.Value = "D", Fields!CaratulaImporte.Value, 0), "dsReporteNominaGeneral") - (Sum(Microsoft.VisualBasic.Interaction.IIF(Fields!CaratulaNoConcepto.Value = 15, Fields!CaratulaImporte.Value, 0), "dsReporteNominaGeneral") + Sum(Microsoft.VisualBasic.Interaction.IIF(Fields!CaratulaNoConcepto.Value = 8, Fields!CaratulaImporte.Value, 0), "dsReporteNominaGeneral")))</Value>
+                <Value>=Sum(IIF(Fields!CaratulaTipoConcepto.Value="P", Fields!CaratulaImporte.Value, 0), "dsReporteNominaGeneral")-Sum(IIF(Fields!CaratulaTipoConcepto.Value="D", Fields!CaratulaImporte.Value, 0), "dsReporteNominaGeneral")</Value>
                 <Style>
                   <FontSize>9pt</FontSize>
                   <FontWeight>Bold</FontWeight>
@@ -3486,10 +3485,6 @@
         <Field Name="CaratulaHora">
           <DataField>CaratulaHora</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="CaratulaSubConcepto">
-          <DataField>CaratulaSubConcepto</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="CaratulaRegistro">
           <DataField>CaratulaRegistro</DataField>

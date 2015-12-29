@@ -31,6 +31,13 @@ namespace Nominas
         Empresas.Core.EmpresasHelper eh;
         Empleados.Core.EmpleadosHelper emph;
         Faltas.Core.FaltasHelper fh;
+        DateTime inicio, fin;
+        #endregion
+
+        #region VARIABLES PUBLICAS
+        public int _tipoNomina;
+        public DateTime _inicioPeriodo;
+        public DateTime _finPeriodo;
         #endregion
 
         private void toolCargar_Click(object sender, EventArgs e)
@@ -40,6 +47,8 @@ namespace Nominas
             ofd.Title = "Seleccionar Excel";
             ofd.RestoreDirectory = false;
             ofd.InitialDirectory = @"C:\";
+            ofd.Filter = "Documentos de Excel|*.xls; *.xlsx";
+
             if (DialogResult.OK == ofd.ShowDialog())
             {
                 ruta = ofd.FileName;
@@ -76,17 +85,33 @@ namespace Nominas
                                 con.Close();
 
                                 nombreEmpresa = dt.Columns[1].ColumnName;
+                                idEmpresa = int.Parse(dt.Columns[3].ColumnName.ToString());
+                                inicio = DateTime.Parse(dt.Rows[1][1].ToString());
+                                fin = DateTime.Parse(dt.Rows[2][1].ToString());
 
-                                for (int i = 2; i < dt.Rows.Count; i++)
+                                if (GLOBALES.IDEMPRESA != idEmpresa)
                                 {
-                                    dgvCargaFaltas.Rows.Add(
-                                        dt.Rows[i][0].ToString(), //NO EMPLEADO
-                                        dt.Rows[i][1].ToString(), //NOMBRE
-                                        dt.Rows[i][2].ToString(), //PATERNO
-                                        dt.Rows[i][3].ToString(), //MATERNO
-                                        dt.Rows[i][4].ToString(), //FALTAS
-                                        dt.Rows[i][5].ToString(), //FECHA INICIO
-                                        dt.Rows[i][6].ToString()); //FECHA FIN
+                                    MessageBox.Show("Los datos a ingresar pertenecen a otra empresa. Verifique. \r\n \r\n La ventana se cerrara.", "Error");
+                                    this.Dispose();
+                                }
+
+                                if (inicio != _inicioPeriodo && fin != _finPeriodo)
+                                {
+                                    MessageBox.Show("Los datos a ingresar pertenecen a otro periodo. Verifique. \r\n \r\n La ventana se cerrara.", "Error");
+                                    this.Dispose();
+                                }
+
+                                for (int i = 5; i < dt.Rows.Count; i++)
+                                {
+                                    if (dt.Rows[i][0].ToString() != "")
+                                        dgvCargaFaltas.Rows.Add(
+                                            dt.Rows[i][0].ToString(), //NO EMPLEADO
+                                            dt.Rows[i][1].ToString(), //NOMBRE
+                                            dt.Rows[i][2].ToString(), //PATERNO
+                                            dt.Rows[i][3].ToString(), //MATERNO
+                                            dt.Rows[i][4].ToString(), //FECHA FALTA
+                                            dt.Rows[1][1].ToString(), //FECHA INICIO
+                                            dt.Rows[2][1].ToString()); //FECHA FIN
                                 }
 
                                 for (int i = 0; i < dt.Columns.Count; i++)
@@ -112,66 +137,108 @@ namespace Nominas
                 return;
             }
 
-            int i = 1;
+            int idEmpleado = 0;
             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();
             bulk = new SqlBulkCopy(cnx);
             cmd.Connection = cnx;
-            eh = new Empresas.Core.EmpresasHelper();
-            eh.Command = cmd;
-
+            
             fh = new Faltas.Core.FaltasHelper();
-            fh.bulkCommand = bulk;
             fh.Command = cmd;
 
             emph = new Empleados.Core.EmpleadosHelper();
             emph.Command = cmd;
 
-            try
+            Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
+            ph.Command = cmd;
+
+            List<Faltas.Core.Faltas> lstMovimientos = new List<Faltas.Core.Faltas>();
+
+            foreach (DataGridViewRow fila in dgvCargaFaltas.Rows)
             {
-                cnx.Open();
-                idEmpresa = eh.obtenerIdEmpresa(nombreEmpresa);
-                cnx.Close();
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                try
+                {
+                    cnx.Open();
+                    idEmpleado = (int)emph.obtenerIdTrabajador(fila.Cells["noempleado"].Value.ToString(), idEmpresa);
+                    cnx.Close();
+
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show("Error: Obtener ID del empleado. \r\n \r\n" + error.Message, "Error");
+                    return;
+                }
+
+                int idperiodo = 0;
+                try
+                {
+                    cnx.Open();
+                    idperiodo = (int)emph.obtenerIdPeriodo(idEmpleado);
+                    cnx.Close();
+                }
+                catch
+                {
+                    MessageBox.Show("Error: al obtener el Id del Periodo.", "Error");
+                    cnx.Dispose();
+                    return;
+                }
+
+                Periodos.Core.Periodos p = new Periodos.Core.Periodos();
+                p.idperiodo = idperiodo;
+
+                int periodo = 0;
+                try
+                {
+                    cnx.Open();
+                    periodo = (int)ph.DiasDePago(p);
+                    cnx.Close();
+                }
+                catch
+                {
+                    MessageBox.Show("Error: al obtener los dias de pago.", "Error");
+                    cnx.Dispose();
+                    return;
+                }
+
+                Faltas.Core.Faltas f = new Faltas.Core.Faltas();
+                f.idempresa = GLOBALES.IDEMPRESA;
+                f.idtrabajador = idEmpleado;
+                f.periodo = periodo;
+                f.faltas = 1;
+                f.fechainicio = DateTime.Parse(dgvCargaFaltas.Rows[0].Cells["fechainicio"].Value.ToString());
+                f.fechafin = DateTime.Parse(dgvCargaFaltas.Rows[0].Cells["fechafin"].Value.ToString());
+                f.fecha = DateTime.Parse(dgvCargaFaltas.Rows[0].Cells["fecha"].Value.ToString());
+
+                lstMovimientos.Add(f);
             }
 
-            if (idEmpresa != GLOBALES.IDEMPRESA)
-            {
-                MessageBox.Show("Intenta aplicar las faltas en un empresa diferente. \r\n \r\n La ventana se cerrará.", "Error");
-                this.Dispose();
-            }
-
+            fh.bulkCommand = bulk;
             DataTable dt = new DataTable();
             DataRow dtFila;
             dt.Columns.Add("id", typeof(Int32));
             dt.Columns.Add("idtrabajador", typeof(Int32));
             dt.Columns.Add("idempresa", typeof(Int32));
-            dt.Columns.Add("idperiodo", typeof(Int32));
+            dt.Columns.Add("periodo", typeof(Int32));
             dt.Columns.Add("faltas", typeof(Int32));
             dt.Columns.Add("fechainicio", typeof(DateTime));
             dt.Columns.Add("fechafin", typeof(DateTime));
+            dt.Columns.Add("fecha", typeof(DateTime));
 
-            foreach (DataGridViewRow fila in dgvCargaFaltas.Rows)
+
+            int index = 1;
+            for (int i = 0; i < lstMovimientos.Count; i++)
             {
                 dtFila = dt.NewRow();
-                dtFila["id"] = i;
-                try { 
-                    cnx.Open();
-                    dtFila["idtrabajador"] = emph.obtenerIdTrabajador(fila.Cells["noempleado"].Value.ToString(), idEmpresa);
-                    dtFila["idperiodo"] = emph.obtenerIdPeriodo(fila.Cells["noempleado"].Value.ToString());
-                    cnx.Close();
-                } catch (Exception error) { 
-                    MessageBox.Show("Error: \r\n \r\n" + error.Message,"Error"); 
-                }
-                dtFila["idempresa"] = GLOBALES.IDEMPRESA;
-                dtFila["faltas"] = fila.Cells["nofaltas"].Value;
-                dtFila["fechainicio"] = fila.Cells["fechainicio"].Value;
-                dtFila["fechafin"] = fila.Cells["fechafin"].Value;
+                dtFila["id"] = index;
+                dtFila["idtrabajador"] = lstMovimientos[i].idtrabajador;
+                dtFila["periodo"] = lstMovimientos[i].periodo;
+                dtFila["idempresa"] = lstMovimientos[i].idempresa;
+                dtFila["faltas"] = lstMovimientos[i].faltas;
+                dtFila["fechainicio"] = lstMovimientos[i].fechainicio;
+                dtFila["fechafin"] = lstMovimientos[i].fechafin;
+                dtFila["fecha"] = lstMovimientos[i].fecha;
                 dt.Rows.Add(dtFila);
-                i++;
+                index++;
             }
 
             try
@@ -214,30 +281,5 @@ namespace Nominas
             dgvCargaFaltas.Rows.Add(noempleado, nombre, paterno, materno, faltas, fechainicio, fechafin);
         }
 
-        private void txtBuscar_Click(object sender, EventArgs e)
-        {
-            txtBuscar.Text = "";
-            txtBuscar.Font = new Font("Arial", 9);
-            txtBuscar.ForeColor = System.Drawing.Color.Black;
-        }
-
-        private void txtBuscar_Leave(object sender, EventArgs e)
-        {
-            txtBuscar.Text = "Buscar no. empleado...";
-            txtBuscar.Font = new Font("Segoe UI", 9, FontStyle.Italic);
-            txtBuscar.ForeColor = System.Drawing.Color.Gray;
-        }
-
-        private void txtBuscar_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)Keys.Enter)
-            {
-                for (int i = 0; i < dgvCargaFaltas.Rows.Count; i++)
-                {
-                    if (txtBuscar.Text.Trim() == dgvCargaFaltas.Rows[i].Cells["noempleado"].Value.ToString())
-                        dgvCargaFaltas.Rows[i].Selected = true;
-                }
-            }
-        }
     }
 }

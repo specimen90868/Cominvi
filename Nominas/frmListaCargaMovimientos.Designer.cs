@@ -34,9 +34,6 @@
             this.toolCargar = new System.Windows.Forms.ToolStripButton();
             this.toolLimpiar = new System.Windows.Forms.ToolStripButton();
             this.toolAplicar = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.lblBuscar = new System.Windows.Forms.ToolStripLabel();
-            this.txtBuscar = new System.Windows.Forms.ToolStripTextBox();
             this.toolTitulo = new System.Windows.Forms.ToolStrip();
             this.toolEmpleados = new System.Windows.Forms.ToolStripLabel();
             this.dgvMovimientos = new System.Windows.Forms.DataGridView();
@@ -57,10 +54,7 @@
             this.toolNuevo,
             this.toolCargar,
             this.toolLimpiar,
-            this.toolAplicar,
-            this.toolStripSeparator1,
-            this.lblBuscar,
-            this.txtBuscar});
+            this.toolAplicar});
             this.toolBusqueda.Location = new System.Drawing.Point(0, 27);
             this.toolBusqueda.Name = "toolBusqueda";
             this.toolBusqueda.Size = new System.Drawing.Size(769, 25);
@@ -74,6 +68,7 @@
             this.toolNuevo.Name = "toolNuevo";
             this.toolNuevo.Size = new System.Drawing.Size(62, 22);
             this.toolNuevo.Text = "Nuevo";
+            this.toolNuevo.Visible = false;
             this.toolNuevo.Click += new System.EventHandler(this.toolNuevo_Click);
             // 
             // toolCargar
@@ -102,25 +97,6 @@
             this.toolAplicar.Size = new System.Drawing.Size(64, 22);
             this.toolAplicar.Text = "Aplicar";
             this.toolAplicar.Click += new System.EventHandler(this.toolAplicar_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // lblBuscar
-            // 
-            this.lblBuscar.Name = "lblBuscar";
-            this.lblBuscar.Size = new System.Drawing.Size(45, 22);
-            this.lblBuscar.Text = "Buscar:";
-            // 
-            // txtBuscar
-            // 
-            this.txtBuscar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic);
-            this.txtBuscar.ForeColor = System.Drawing.Color.Gray;
-            this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(300, 25);
-            this.txtBuscar.Text = "Buscar no. empleado...";
             // 
             // toolTitulo
             // 
@@ -224,9 +200,6 @@
         private System.Windows.Forms.ToolStripButton toolCargar;
         private System.Windows.Forms.ToolStripButton toolLimpiar;
         private System.Windows.Forms.ToolStripButton toolAplicar;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        internal System.Windows.Forms.ToolStripLabel lblBuscar;
-        internal System.Windows.Forms.ToolStripTextBox txtBuscar;
         internal System.Windows.Forms.ToolStrip toolTitulo;
         internal System.Windows.Forms.ToolStripLabel toolEmpleados;
         private System.Windows.Forms.DataGridView dgvMovimientos;

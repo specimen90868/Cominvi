@@ -40,15 +40,12 @@
             this.toolCargar = new System.Windows.Forms.ToolStripButton();
             this.toolLimpiar = new System.Windows.Forms.ToolStripButton();
             this.toolAplicar = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.lblBuscar = new System.Windows.Forms.ToolStripLabel();
-            this.txtBuscar = new System.Windows.Forms.ToolStripTextBox();
             this.dgvCargaFaltas = new System.Windows.Forms.DataGridView();
             this.noempleado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.paterno = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.materno = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nofaltas = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fechainicio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fechafin = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -87,10 +84,7 @@
             this.toolNuevo,
             this.toolCargar,
             this.toolLimpiar,
-            this.toolAplicar,
-            this.toolStripSeparator1,
-            this.lblBuscar,
-            this.txtBuscar});
+            this.toolAplicar});
             this.toolBusqueda.Location = new System.Drawing.Point(0, 27);
             this.toolBusqueda.Name = "toolBusqueda";
             this.toolBusqueda.Size = new System.Drawing.Size(778, 25);
@@ -104,6 +98,7 @@
             this.toolNuevo.Name = "toolNuevo";
             this.toolNuevo.Size = new System.Drawing.Size(62, 22);
             this.toolNuevo.Text = "Nuevo";
+            this.toolNuevo.Visible = false;
             this.toolNuevo.Click += new System.EventHandler(this.toolNuevo_Click);
             // 
             // toolCargar
@@ -133,44 +128,24 @@
             this.toolAplicar.Text = "Aplicar";
             this.toolAplicar.Click += new System.EventHandler(this.toolAplicar_Click);
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // lblBuscar
-            // 
-            this.lblBuscar.Name = "lblBuscar";
-            this.lblBuscar.Size = new System.Drawing.Size(45, 22);
-            this.lblBuscar.Text = "Buscar:";
-            // 
-            // txtBuscar
-            // 
-            this.txtBuscar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic);
-            this.txtBuscar.ForeColor = System.Drawing.Color.Gray;
-            this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(300, 25);
-            this.txtBuscar.Text = "Buscar no. empleado...";
-            this.txtBuscar.Leave += new System.EventHandler(this.txtBuscar_Leave);
-            this.txtBuscar.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBuscar_KeyPress);
-            this.txtBuscar.Click += new System.EventHandler(this.txtBuscar_Click);
-            // 
             // dgvCargaFaltas
             // 
             this.dgvCargaFaltas.AllowUserToAddRows = false;
+            this.dgvCargaFaltas.AllowUserToDeleteRows = false;
             this.dgvCargaFaltas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCargaFaltas.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.noempleado,
             this.nombre,
             this.paterno,
             this.materno,
-            this.nofaltas,
+            this.fecha,
             this.fechainicio,
             this.fechafin});
             this.dgvCargaFaltas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCargaFaltas.Location = new System.Drawing.Point(0, 52);
             this.dgvCargaFaltas.MultiSelect = false;
             this.dgvCargaFaltas.Name = "dgvCargaFaltas";
+            this.dgvCargaFaltas.ReadOnly = true;
             this.dgvCargaFaltas.Size = new System.Drawing.Size(778, 540);
             this.dgvCargaFaltas.TabIndex = 10;
             // 
@@ -186,33 +161,39 @@
             // 
             this.nombre.HeaderText = "Nombre";
             this.nombre.Name = "nombre";
+            this.nombre.ReadOnly = true;
             // 
             // paterno
             // 
             this.paterno.HeaderText = "Paterno";
             this.paterno.Name = "paterno";
+            this.paterno.ReadOnly = true;
             // 
             // materno
             // 
             this.materno.HeaderText = "Materno";
             this.materno.Name = "materno";
+            this.materno.ReadOnly = true;
             // 
-            // nofaltas
+            // fecha
             // 
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.nofaltas.DefaultCellStyle = dataGridViewCellStyle2;
-            this.nofaltas.HeaderText = "No. Faltas";
-            this.nofaltas.Name = "nofaltas";
+            this.fecha.DefaultCellStyle = dataGridViewCellStyle2;
+            this.fecha.HeaderText = "Fecha Falta";
+            this.fecha.Name = "fecha";
+            this.fecha.ReadOnly = true;
             // 
             // fechainicio
             // 
             this.fechainicio.HeaderText = "Fecha Inicio";
             this.fechainicio.Name = "fechainicio";
+            this.fechainicio.ReadOnly = true;
             // 
             // fechafin
             // 
             this.fechafin.HeaderText = "Fecha Fin";
             this.fechafin.Name = "fechafin";
+            this.fechafin.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -281,20 +262,10 @@
         internal System.Windows.Forms.ToolStripLabel toolEmpleados;
         internal System.Windows.Forms.ToolStrip toolBusqueda;
         private System.Windows.Forms.ToolStripButton toolNuevo;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        internal System.Windows.Forms.ToolStripLabel lblBuscar;
-        internal System.Windows.Forms.ToolStripTextBox txtBuscar;
         private System.Windows.Forms.DataGridView dgvCargaFaltas;
         private System.Windows.Forms.ToolStripButton toolCargar;
         private System.Windows.Forms.ToolStripButton toolAplicar;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn noempleado;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombre;
-        private System.Windows.Forms.DataGridViewTextBoxColumn paterno;
-        private System.Windows.Forms.DataGridViewTextBoxColumn materno;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nofaltas;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fechainicio;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fechafin;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
@@ -302,5 +273,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
         private System.Windows.Forms.ToolStripButton toolLimpiar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn noempleado;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nombre;
+        private System.Windows.Forms.DataGridViewTextBoxColumn paterno;
+        private System.Windows.Forms.DataGridViewTextBoxColumn materno;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fecha;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fechainicio;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fechafin;
     }
 }

@@ -476,14 +476,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="concepto1">
+                    <Textbox Name="CaratulaConcepto">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Iif(Fields!CaratulaNoConcepto.Value="13" Or Fields!CaratulaNoConcepto.Value="14", Fields!CaratulaSubConcepto.Value, Fields!CaratulaConcepto.Value)</Value>
+                              <Value>=Fields!CaratulaConcepto.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -492,7 +492,7 @@
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>concepto1</rd:DefaultName>
+                      <rd:DefaultName>CaratulaConcepto</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>None</Style>
@@ -613,7 +613,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!CaratulaImporte.Value) - (Sum(IIF(Fields!CaratulaNoConcepto.Value=15,Fields!CaratulaImporte.Value,0)) + Sum(IIF(Fields!CaratulaNoConcepto.Value=8,Fields!CaratulaImporte.Value,0)))</Value>
+                              <Value>=Sum(Fields!CaratulaImporte.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>#,0.00;(#,0.00)</Format>
@@ -763,7 +763,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Sum(IIF(Fields!CaratulaTipoConcepto.Value="P",Fields!CaratulaImporte.Value,0)) - (sum(iif(Fields!CaratulaTipoConcepto.Value="D",Fields!CaratulaImporte.Value,0)) - (Sum(IIF(Fields!CaratulaNoConcepto.Value=15,Fields!CaratulaImporte.Value,0)) + Sum(IIF(Fields!CaratulaNoConcepto.Value=8,Fields!CaratulaImporte.Value,0))))</Value>
+                <Value>=Sum(IIF(Fields!CaratulaTipoConcepto.Value="P",Fields!CaratulaImporte.Value,0)) - Sum(IIF(Fields!CaratulaTipoConcepto.Value="D",Fields!CaratulaImporte.Value,0))</Value>
                 <Style>
                   <FontSize>9pt</FontSize>
                   <Format>#,0.00;(#,0.00)</Format>
@@ -940,10 +940,6 @@
         <Field Name="CaratulaHora">
           <DataField>CaratulaHora</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="CaratulaSubConcepto">
-          <DataField>CaratulaSubConcepto</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="CaratulaRegistro">
           <DataField>CaratulaRegistro</DataField>

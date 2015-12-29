@@ -106,16 +106,21 @@ namespace Nominas
             muestraProgramacion();
             muestraMovimientos();
             muestraInfonavit();
+            muestraVacaciones();
         }
 
         private void toolCalcular_Click(object sender, EventArgs e)
         {
+            string noConceptosPercepciones = "", noConceptosDeducciones = "";
             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();
             cmd.Connection = cnx;
 
             List<CalculoNomina.Core.Nomina> lstConceptosPercepciones = new List<CalculoNomina.Core.Nomina>();
             List<CalculoNomina.Core.Nomina> lstConceptosDeducciones = new List<CalculoNomina.Core.Nomina>();
+
+            List<CalculoNomina.Core.Nomina> lstConceptosPercepcionesModificados = new List<CalculoNomina.Core.Nomina>();
+            List<CalculoNomina.Core.Nomina> lstConceptosDeduccionesModificados = new List<CalculoNomina.Core.Nomina>();
 
             CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
             nh.Command = cmd;
@@ -126,8 +131,35 @@ namespace Nominas
                 try
                 {
                     cnx.Open();
-                    lstConceptosPercepciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "P", idTrabajador);
-                    lstConceptosDeducciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "D", idTrabajador);
+                    lstConceptosPercepcionesModificados = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "P", idTrabajador,
+                        _tipoNormalEspecial, _inicioPeriodo.Date, _finPeriodo.Date);
+                    lstConceptosDeduccionesModificados = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "D", idTrabajador,
+                        _tipoNormalEspecial, _inicioPeriodo.Date, _finPeriodo.Date);
+                    cnx.Close();
+
+                    if (lstConceptosPercepcionesModificados.Count != 0)
+                    {
+                        for (int i = 0; i < lstConceptosPercepcionesModificados.Count; i++)
+                            if (lstConceptosPercepcionesModificados[i].modificado)
+                                noConceptosPercepciones += lstConceptosPercepcionesModificados[i].noconcepto + ",";
+                        noConceptosPercepciones = noConceptosPercepciones.Substring(0, noConceptosPercepciones.Length - 1);
+                    }
+                    else
+                        noConceptosPercepciones = "";
+
+                    if (lstConceptosDeduccionesModificados.Count != 0)
+                    {
+                        for (int i = 0; i < lstConceptosDeduccionesModificados.Count; i++)
+                            if (lstConceptosDeduccionesModificados[i].modificado)
+                                noConceptosDeducciones += lstConceptosDeduccionesModificados[i].noconcepto + ",";
+                        noConceptosDeducciones = noConceptosDeducciones.Substring(0, noConceptosDeducciones.Length - 1);
+                    }
+                    else
+                        noConceptosDeducciones = "";
+
+                    cnx.Open();
+                    lstConceptosPercepciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "P", idTrabajador, noConceptosPercepciones);
+                    lstConceptosDeducciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "D", idTrabajador, noConceptosDeducciones);
                     cnx.Close();
                 }
                 catch
@@ -224,7 +256,7 @@ namespace Nominas
                                 vn.exento = 0;
                                 vn.gravado = 0;
                                 vn.cantidad = lstProgramacion[i].cantidad;
-                                vn.guardada = false;
+                                vn.guardada = true;
                                 vn.tiponomina = _tipoNormalEspecial;
                                 vn.modificado = false;
                                 lstOtrasDeducciones.Add(vn);
@@ -302,7 +334,7 @@ namespace Nominas
                             vn.exento = 0;
                             vn.gravado = 0;
                             vn.cantidad = lstMovimiento[i].cantidad;
-                            vn.guardada = false;
+                            vn.guardada = true;
                             vn.tiponomina = _tipoNormalEspecial;
                             vn.modificado = false;
                             lstOtrasDeducciones.Add(vn);
@@ -432,7 +464,7 @@ namespace Nominas
                                 vn.exento = 0;
                                 vn.gravado = 0;
                                 vn.cantidad = lstProgramacion[i].cantidad;
-                                vn.guardada = false;
+                                vn.guardada = true;
                                 vn.tiponomina = _tipoNormalEspecial;
                                 vn.modificado = false;
                                 cnx.Open();
@@ -512,7 +544,7 @@ namespace Nominas
                             vn.exento = 0;
                             vn.gravado = 0;
                             vn.cantidad = lstMovimiento[i].cantidad;
-                            vn.guardada = false;
+                            vn.guardada = true;
                             vn.tiponomina = _tipoNormalEspecial;
                             vn.modificado = false;
                             cnx.Open();
@@ -569,8 +601,9 @@ namespace Nominas
                 dt.Rows.Add(dtFila);
             }
 
-            CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
+            cnx = new SqlConnection(cdn);
             SqlBulkCopy bulk = new SqlBulkCopy(cnx);
+            CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
             nh.bulkCommand = bulk;
 
             try
@@ -578,7 +611,6 @@ namespace Nominas
                 cnx.Open();
                 nh.bulkNomina(dt, "tmpPagoNomina");
                 cnx.Close();
-                cnx.Dispose();
             }
             catch (Exception error)
             {
@@ -959,6 +991,48 @@ namespace Nominas
             {
                 lstvInfonavit.Items.Add(lstInfonavit[i].credito);
             }
+        }
+
+        private void muestraVacaciones()
+        {
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            Vacaciones.Core.VacacionesHelper vh = new Vacaciones.Core.VacacionesHelper();
+            vh.Command = cmd;
+
+            Vacaciones.Core.VacacionesPrima v = new Vacaciones.Core.VacacionesPrima();
+            v.idtrabajador = idTrabajador;
+
+            List<Vacaciones.Core.VacacionesPrima> lstVacacionesPrima = new List<Vacaciones.Core.VacacionesPrima>();
+
+            try
+            {
+                cnx.Open();
+                lstVacacionesPrima = vh.obtenerVacacionesPrimaTrabajador(v);
+                cnx.Close();
+                cnx.Dispose();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+            }
+
+            lstvVacaciones.Clear();
+            lstvVacaciones.View = View.Details;
+            lstvVacaciones.GridLines = true;
+            lstvVacaciones.Columns.Add("ID", 30, HorizontalAlignment.Right);
+            lstvVacaciones.Columns.Add("Periodo Inicio", 80, HorizontalAlignment.Right);
+            lstvVacaciones.Columns.Add("Periodo Fin", 80, HorizontalAlignment.Right);
+
+            for (int i = 0; i < lstVacacionesPrima.Count; i++)
+            {
+                lstvVacaciones.Items.Add(lstVacacionesPrima[i].id.ToString());
+                lstvVacaciones.Items[i].SubItems.Add(lstVacacionesPrima[i].periodoinicio.ToShortDateString());
+                lstvVacaciones.Items[i].SubItems.Add(lstVacacionesPrima[i].periodofin.ToShortDateString());
+            }
+            
         }
 
         private void frmSobreRecibo_Load(object sender, EventArgs e)
@@ -1471,6 +1545,194 @@ namespace Nominas
                 if (lstInfonavit[i].descuento == GLOBALES.dVSMDF)
                     rbtnVsmdf.Checked = true;
             }
+        }
+
+        private void lstvVacaciones_Click(object sender, EventArgs e)
+        {
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            Vacaciones.Core.VacacionesHelper vh = new Vacaciones.Core.VacacionesHelper();
+            vh.Command = cmd;
+
+            List<Vacaciones.Core.VacacionesPrima> lstVacacionesPrima = new List<Vacaciones.Core.VacacionesPrima>();
+
+            if (lstvVacaciones.SelectedItems.Count > 0)
+            {
+                ListViewItem listItem = lstvVacaciones.SelectedItems[0];
+                try
+                {
+                    cnx.Open();
+                    lstVacacionesPrima = vh.obtenerVacacionesPrimaTrabajador(int.Parse(listItem.Text), idTrabajador, DateTime.Parse(listItem.SubItems[1].Text), DateTime.Parse(listItem.SubItems[2].Text));
+                    cnx.Close();
+                    cnx.Dispose();
+                }
+                catch
+                {
+                    MessageBox.Show("Error al obtener la informacion de las vacaciones.", "Error");
+                    cnx.Dispose();
+                }
+            }
+
+            for (int i = 0; i < lstVacacionesPrima.Count; i++)
+            {
+                txtDiasPago.Text = lstVacacionesPrima[i].diaspago.ToString();
+                txtDiasPendientes.Text = lstVacacionesPrima[i].diaspendientes.ToString();
+                if (lstVacacionesPrima[i].vacacionesprima == "P")
+                    cmbConceptoVacaciones.SelectedIndex = 0;
+                else
+                    cmbConceptoVacaciones.SelectedIndex = 1;
+            }
+        }
+
+        private void btnEliminarVP_Click(object sender, EventArgs e)
+        {
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            Vacaciones.Core.VacacionesHelper vh = new Vacaciones.Core.VacacionesHelper();
+            vh.Command = cmd;
+
+            Vacaciones.Core.VacacionesPrima vp = new Vacaciones.Core.VacacionesPrima();
+            
+            if (lstvVacaciones.SelectedItems.Count > 0)
+            {
+                ListViewItem listItem = lstvVacaciones.SelectedItems[0];
+                vp.id = int.Parse(listItem.Text);
+                vp.periodoinicio = DateTime.Parse(listItem.SubItems[1].Text);
+                vp.periodofin = DateTime.Parse(listItem.SubItems[2].Text);
+            }
+
+            try
+            {
+                cnx.Open();
+                vh.eliminaVacacion(vp);
+                cnx.Close();
+                cnx.Dispose();
+                muestraVacaciones();
+
+                txtDiasPago.Clear();
+                txtDiasPendientes.Clear();
+            }
+            catch
+            {
+                MessageBox.Show("Error: Al eliminar el registro de vacacion.", "Error");
+                cnx.Dispose();
+            }
+
+        }
+
+        private void btnGuardarVP_Click(object sender, EventArgs e)
+        {
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            Empleados.Core.EmpleadosHelper emph = new Empleados.Core.EmpleadosHelper();
+            emph.Command = cmd;
+
+            Vacaciones.Core.VacacionesHelper vh = new Vacaciones.Core.VacacionesHelper();
+            vh.Command = cmd;
+
+            Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
+            empleado.idtrabajador = idTrabajador;
+
+            List<Empleados.Core.Empleados> lstEmpleado = new List<Empleados.Core.Empleados>();
+
+            try
+            {
+                cnx.Open();
+                lstEmpleado = emph.obtenerEmpleado(empleado);
+                cnx.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Error: Al obtener la antigüedad del empleado.", "Error");
+                cnx.Dispose();
+                return;
+            }
+
+            Vacaciones.Core.DiasDerecho dd = new Vacaciones.Core.DiasDerecho();
+            dd.anio = lstEmpleado[0].antiguedadmod;
+
+            int dias = 0;
+            try
+            {
+                cnx.Open();
+                dias = (int)vh.diasDerecho(dd);
+                cnx.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Error: Al obtener los dias por derecho del empleado.", "Error");
+                cnx.Dispose();
+                return;
+            }
+
+            Vacaciones.Core.VacacionesPrima vp = new Vacaciones.Core.VacacionesPrima();
+            vp.idtrabajador = idTrabajador;
+            vp.periodoinicio = _inicioPeriodo;
+            vp.periodofin = _finPeriodo;
+            if (cmbConceptoVacaciones.SelectedIndex == 0)
+                vp.vacacionesprima = "P";
+            else
+                vp.vacacionesprima = "V";
+ 
+            int existe = 0;
+            try
+            {
+                cnx.Open();
+                existe = (int)vh.existeVacacionesPrima(vp);
+                cnx.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Error: Al obtener la existencia de vacaciones del empleado.", "Error");
+                cnx.Dispose();
+                return;
+            }
+
+            if (existe != 0)
+            {
+                MessageBox.Show("Error: Los datos a ingresar ya existen.", "Error");
+                cnx.Dispose();
+                return;
+            }
+            else
+            {
+                vp = new Vacaciones.Core.VacacionesPrima();
+                vp.idtrabajador = idTrabajador;
+                vp.idempresa = GLOBALES.IDEMPRESA;
+                vp.periodoinicio = _inicioPeriodo;
+                vp.periodofin = _finPeriodo;
+                vp.diasderecho = dias;
+                vp.diaspago = int.Parse(txtDiasPago.Text);
+                vp.diaspendientes = dias - int.Parse(txtDiasPago.Text);
+                vp.fechapago = DateTime.Now.Date;
+
+                if (cmbConceptoVacaciones.SelectedIndex == 0)
+                    vp.vacacionesprima = "P";
+                else
+                    vp.vacacionesprima = "V";
+
+                try
+                {
+                    cnx.Open();
+                    vh.insertaVacacion(vp);
+                    cnx.Close();
+                    cnx.Dispose();
+                    muestraVacaciones();
+                }
+                catch
+                {
+                    MessageBox.Show("Error: Al ingresar el registro de vacacion.", "Error");
+                    cnx.Dispose();
+                    return;
+                }
+            }
+
         }
     }
 }

@@ -33,6 +33,7 @@ namespace Nominas
         Infonavit.Core.InfonavitHelper ih;
         Empleados.Core.EmpleadosHelper eh;
         int Descuento, Periodo, IdInfonavit;
+        DateTime periodoInicio, periodoFin;
         #endregion
 
         #region DELEGADOS
@@ -44,7 +45,6 @@ namespace Nominas
         {
             if (_tipoOperacion == GLOBALES.CONSULTAR || _tipoOperacion == GLOBALES.MODIFICAR)
             {
-                
                 cnx = new SqlConnection();
                 cnx.ConnectionString = cdn;
                 cmd = new SqlCommand();
@@ -115,6 +115,8 @@ namespace Nominas
                     toolVentana.Text = "Edición del Crédito";
                     lblEmpleado.Text = _nombreEmpleado;
                     toolBuscar.Enabled = false;
+                    btnCambiar.Enabled = true;
+                    obtenerPeriodoActual();
                 }
 
                 if (_modificar == 1)
@@ -172,7 +174,6 @@ namespace Nominas
             i.inicio = dtpInicioPeriodo.Value.Date;
             i.fin = dtpFinPeriodo.Value.Date;
             
-
             switch (_tipoOperacion)
             {
                 case 0:
@@ -244,7 +245,8 @@ namespace Nominas
                 cnx.Open();
                 Periodo = (int)eh.obtenerDiasPeriodo(_idEmpleado);
                 cnx.Close();
-                cnx.Dispose();
+                obtenerPeriodoActual();
+                btnCambiar.Enabled = true;
             }
             catch (Exception error)
             {
@@ -252,7 +254,6 @@ namespace Nominas
                 cnx.Dispose();
                 this.Dispose();
             }
-            periodo();
         }
 
         private void toolCerrar_Click(object sender, EventArgs e)
@@ -303,6 +304,77 @@ namespace Nominas
                 }
 
             }
+        }
+
+        private void obtenerPeriodoActual()
+        {
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
+            nh.Command = cmd;
+
+            List<CalculoNomina.Core.tmpPagoNomina> lstUltimaNomina = new List<CalculoNomina.Core.tmpPagoNomina>();
+
+            try
+            {
+                cnx.Open();
+                lstUltimaNomina = nh.obtenerUltimaNomina(GLOBALES.IDEMPRESA);
+                cnx.Close();
+                cnx.Dispose();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+            }
+
+            if (lstUltimaNomina.Count != 0)
+            {
+                if (Periodo == 7)
+                {
+                    periodoInicio = lstUltimaNomina[0].fechafin.AddDays(1);
+                    periodoFin = lstUltimaNomina[0].fechafin.AddDays(7);
+                }
+                else
+                {
+                    periodoInicio = lstUltimaNomina[0].fechafin.AddDays(1);
+                    if (periodoInicio.Day <= 15)
+                        periodoFin = lstUltimaNomina[0].fechafin.AddDays(15);
+                    else
+                        periodoFin = lstUltimaNomina[0].fechafin.AddDays(
+                            DateTime.DaysInMonth(periodoInicio.Year, periodoInicio.Month) - 15);
+                }
+                lblPeriodo.Visible = true;
+                dtpInicioPeriodo.Visible = true;
+                dtpFinPeriodo.Visible = true;
+
+                dtpInicioPeriodo.Enabled = false;
+                dtpFinPeriodo.Enabled = false;
+                dtpInicioPeriodo.Value = periodoInicio;
+                dtpFinPeriodo.Value = periodoFin;
+            }
+            else
+            {
+                lblPeriodo.Visible = true;
+                dtpInicioPeriodo.Visible = true;
+                dtpFinPeriodo.Visible = true;
+                periodo();
+            }
+        }
+
+        private void btnCambiar_Click(object sender, EventArgs e)
+        {
+            frmCambioPeriodo cp = new frmCambioPeriodo();
+            cp.OnNuevoPeriodo += cp_OnNuevoPeriodo;
+            cp._periodo = Periodo;
+            cp.ShowDialog();
+        }
+
+        void cp_OnNuevoPeriodo(DateTime inicio, DateTime fin)
+        {
+            dtpInicioPeriodo.Value = inicio;
+            dtpFinPeriodo.Value = fin;
         }
     }
 }

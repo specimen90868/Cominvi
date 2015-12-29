@@ -161,25 +161,25 @@ namespace Nominas
                         MessageBox.Show("Error asl obtener los dias por derecho. \r\n \r\n" + error.Message, "Error");
                     }
 
-                    if (chkPagoTotal.Checked)
-                    {
-                        FormulasValores f = new FormulasValores(formulaPrimaVacacional, lstEmpleado, DateTime.Now, DateTime.Now);
-                        prima.pv = (double)f.calcularFormulaVacaciones();
-                        prima.diasapagar = prima.diasderecho;
+                    //if (chkPagoTotal.Checked)
+                    //{
+                    //    FormulasValores f = new FormulasValores(formulaPrimaVacacional, lstEmpleado, DateTime.Now, DateTime.Now);
+                    //    prima.pv = (double)f.calcularFormulaVacaciones();
+                    //    prima.diasapagar = prima.diasderecho;
 
-                        f = new FormulasValores(formulaExentoPrimaVacacional, lstEmpleado, DateTime.Now, DateTime.Now);
-                        exento = (double)f.calcularFormulaVacacionesExento();
-                    }
-                    else
-                    {
-                        FormulasValores f = new FormulasValores(formulaPrimaVacacional, lstEmpleado, DateTime.Now, DateTime.Now, int.Parse(txtDiasPagoPV.Text));
-                        prima.pv = (double)f.calcularFormulaVacaciones();
-                        prima.diasapagar = int.Parse(txtDiasPagoPV.Text);
-                        prima.diaspendientes = prima.diasderecho - prima.diasapagar;
+                    //    f = new FormulasValores(formulaExentoPrimaVacacional, lstEmpleado, DateTime.Now, DateTime.Now);
+                    //    exento = (double)f.calcularFormulaVacacionesExento();
+                    //}
+                    //else
+                    //{
+                    //    FormulasValores f = new FormulasValores(formulaPrimaVacacional, lstEmpleado, DateTime.Now, DateTime.Now, int.Parse(txtDiasPagoPV.Text));
+                    //    prima.pv = (double)f.calcularFormulaVacaciones();
+                    //    prima.diasapagar = int.Parse(txtDiasPagoPV.Text);
+                    //    prima.diaspendientes = prima.diasderecho - prima.diasapagar;
 
-                        f = new FormulasValores(formulaExentoPrimaVacacional, lstEmpleado, DateTime.Now, DateTime.Now, int.Parse(txtDiasPagoPV.Text));
-                        exento = (double)f.calcularFormulaVacacionesExento();
-                    }
+                    //    f = new FormulasValores(formulaExentoPrimaVacacional, lstEmpleado, DateTime.Now, DateTime.Now, int.Parse(txtDiasPagoPV.Text));
+                    //    exento = (double)f.calcularFormulaVacacionesExento();
+                    //}
 
                     if (prima.pv > exento)
                     {

@@ -170,7 +170,7 @@ namespace Nominas
                 {
                     var busqueda = from be in lstEmpleados
                                    join bf in lstFaltas on be.idtrabajador equals bf.idtrabajador
-                                   where be.nombrecompleto.Contains(txtBuscar.Text)
+                                   where be.nombrecompleto.Contains(txtBuscar.Text.ToUpper()) || be.noempleado.Contains(txtBuscar.Text) 
                                    orderby be.nombrecompleto ascending
                                    select new
                                    {
