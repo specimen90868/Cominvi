@@ -49,5 +49,7 @@ namespace Vacaciones.Core
         public int diaspendientes { get; set; }
         public DateTime fechapago { get; set; }
         public string vacacionesprima { get; set; }
+        public DateTime fechainicio { get; set; }
+        public DateTime fechafin { get; set; }
     }
 }

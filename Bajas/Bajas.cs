@@ -18,5 +18,6 @@ namespace Bajas.Core
         public int diasproporcionales { get; set; }
         public DateTime periodoinicio { get; set; }
         public DateTime periodofin { get; set; }
+        public string observaciones { get; set; }
     }
 }

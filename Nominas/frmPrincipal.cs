@@ -28,7 +28,6 @@ namespace Nominas
 
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
-            toolEstatusPerfil.Text = "";
             MenuInicial(0);
         }
 
@@ -54,6 +53,7 @@ namespace Nominas
             MenuPerfil();
             MenuInicial(2);
             Permisos();
+            workAntiguedad.RunWorkerAsync();
         }
 
         private void Permisos()
@@ -594,6 +594,96 @@ namespace Nominas
             frmListaProgramacionConceptos lpc = new frmListaProgramacionConceptos();
             lpc.MdiParent = this;
             lpc.Show();
+        }
+
+        private void toolExtraordinario_Click(object sender, EventArgs e)
+        {
+            frmSeleccionPeriodo sp = new frmSeleccionPeriodo();
+            sp._TipoNomina = GLOBALES.EXTRAORDINARIO_NORMAL;
+            sp.MdiParent = this;
+            sp.Show();
+        }
+
+        private void toolExtraordinarioEspecial_Click(object sender, EventArgs e)
+        {
+            frmSeleccionPeriodo sp = new frmSeleccionPeriodo();
+            sp._TipoNomina = GLOBALES.EXTRAORDINARIO_ESPECIAL;
+            sp.MdiParent = this;
+            sp.Show();
+        }
+
+        private void workAntiguedad_DoWork(object sender, DoWorkEventArgs e)
+        {
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            List<Empleados.Core.Empleados> lstFechas = new List<Empleados.Core.Empleados>();
+
+            Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
+            eh.Command = cmd;
+
+            Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
+            empleado.idempresa = GLOBALES.IDEMPRESA;
+
+            try
+            {
+                cnx.Open();
+                lstFechas = eh.obtenerFechaAntiguedad(empleado);
+                cnx.Close();
+
+                int antiguedad = 0, antiguedadmod = 0;
+                DateTime fechaAntiguedad, fechaAntiguedadMod;
+                int progreso = 0;
+                int total = lstFechas.Count;
+                for (int i = 0; i < lstFechas.Count; i++)
+                {
+                    progreso = (i * 100) / total;
+                    workAntiguedad.ReportProgress(progreso);
+
+                    fechaAntiguedad = lstFechas[i].fechaingreso;
+                    antiguedad = (DateTime.Now.Subtract(fechaAntiguedad).Days / 365);
+
+                    fechaAntiguedadMod = lstFechas[i].fechaantiguedad;
+                    antiguedadmod = (DateTime.Now.Subtract(fechaAntiguedadMod).Days / 365);
+
+                    empleado = new Empleados.Core.Empleados();
+                    empleado.antiguedad = antiguedad;
+                    empleado.antiguedadmod = antiguedadmod;
+                    empleado.idtrabajador = lstFechas[i].idtrabajador;
+
+                    try
+                    {
+                        cnx.Open();
+                        eh.actualizaAntiguedad(empleado);
+                        cnx.Close();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Error: Al actualizar la antiguedad del trabajador. ID: " + lstFechas[i].idtrabajador + "\r\n Se detendra la actualización.", "Error");
+                        cnx.Dispose();
+                        return;
+                    }
+                }
+                workAntiguedad.ReportProgress(100);
+                cnx.Dispose();
+            }
+            catch
+            {
+                MessageBox.Show("Error: Al obtener las fechas del trabajador. \r\n Incremento de Antiguedad.", "Error");
+                cnx.Dispose();
+                return;
+            }
+        }
+
+        private void workAntiguedad_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            toolPorcentaje.Text = e.ProgressPercentage + "%";
+        }
+
+        private void workAntiguedad_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            toolPorcentaje.Text = "Terminado.";
         }
       
     }

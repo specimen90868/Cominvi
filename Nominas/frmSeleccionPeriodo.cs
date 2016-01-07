@@ -73,6 +73,7 @@ namespace Nominas
             lcn.MdiParent = this.MdiParent;
             lcn._tipoNomina = _TipoNomina;
             lcn._periodo = periodoSeleccionado;
+            lcn.WindowState = FormWindowState.Maximized;
             lcn.Show();
             this.Dispose();
         }

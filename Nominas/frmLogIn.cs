@@ -21,6 +21,30 @@ namespace Nominas
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
+            logIn();
+        }
+
+        private void frmLogIn_Load(object sender, EventArgs e)
+        {
+            txtUsuario.Clear();
+            txtPassword.Clear();
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
+        }
+
+        private void txtUsuario_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                logIn();
+            }
+        }
+
+        private void logIn()
+        {
             string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
             SqlConnection cnx = new SqlConnection();
             SqlCommand cmd = new SqlCommand();
@@ -37,7 +61,7 @@ namespace Nominas
             {
                 uh.Command = cmd;
                 cnx.Open();
-                
+
                 DataTable usr = new DataTable();
                 usr = uh.ValidaUsuario(u);
 
@@ -68,19 +92,16 @@ namespace Nominas
             }
             catch (Exception error)
             {
-                MessageBox.Show("Ocurrió un error al arbir la bace de datos: \r\n" + error.Message,"Error");
+                MessageBox.Show("Ocurrió un error al arbir la bace de datos: \r\n" + error.Message, "Error");
             }
         }
 
-        private void frmLogIn_Load(object sender, EventArgs e)
+        private void txtPassword_KeyPress(object sender, KeyPressEventArgs e)
         {
-            txtUsuario.Clear();
-            txtPassword.Clear();
-        }
-
-        private void btnCancelar_Click(object sender, EventArgs e)
-        {
-            this.Dispose();
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                logIn();
+            }
         }
     }
 }

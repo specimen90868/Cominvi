@@ -234,6 +234,8 @@ namespace Nominas
             empleado.cuenta = mtxtCuentaBancaria.Text;
             empleado.clabe = mtxtCuentaClabe.Text;
             empleado.idbancario = mtxtIdBancario.Text;
+            empleado.metodopago = cmbMetodoPago.Text;
+            
 
             historia.idtrabajador = _idempleado;
             historia.idempresa = int.Parse(cmbRegistroPatronal.SelectedValue.ToString());

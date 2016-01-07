@@ -37,14 +37,6 @@
             this.toolLimpiar = new System.Windows.Forms.ToolStripButton();
             this.toolAplicar = new System.Windows.Forms.ToolStripButton();
             this.dgvCargaVacaciones = new System.Windows.Forms.DataGridView();
-            this.noempleado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.paterno = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.materno = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.concepto = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.diaspago = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.inicio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fin = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.workVacaciones = new System.ComponentModel.BackgroundWorker();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -55,6 +47,15 @@
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.noempleado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.paterno = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.materno = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.concepto = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.diaspago = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.inicio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fin = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fechaaplicacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolTitulo.SuspendLayout();
             this.toolBusqueda.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCargaVacaciones)).BeginInit();
@@ -67,7 +68,7 @@
             this.toolEmpleados});
             this.toolTitulo.Location = new System.Drawing.Point(0, 0);
             this.toolTitulo.Name = "toolTitulo";
-            this.toolTitulo.Size = new System.Drawing.Size(846, 27);
+            this.toolTitulo.Size = new System.Drawing.Size(951, 27);
             this.toolTitulo.TabIndex = 9;
             this.toolTitulo.Text = "ToolStrip1";
             // 
@@ -87,7 +88,7 @@
             this.toolAplicar});
             this.toolBusqueda.Location = new System.Drawing.Point(0, 27);
             this.toolBusqueda.Name = "toolBusqueda";
-            this.toolBusqueda.Size = new System.Drawing.Size(846, 25);
+            this.toolBusqueda.Size = new System.Drawing.Size(951, 25);
             this.toolBusqueda.TabIndex = 10;
             this.toolBusqueda.Text = "ToolStrip1";
             // 
@@ -141,63 +142,13 @@
             this.concepto,
             this.diaspago,
             this.inicio,
-            this.fin});
+            this.fin,
+            this.fechaaplicacion});
             this.dgvCargaVacaciones.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCargaVacaciones.Location = new System.Drawing.Point(0, 52);
             this.dgvCargaVacaciones.Name = "dgvCargaVacaciones";
-            this.dgvCargaVacaciones.Size = new System.Drawing.Size(846, 356);
+            this.dgvCargaVacaciones.Size = new System.Drawing.Size(951, 356);
             this.dgvCargaVacaciones.TabIndex = 11;
-            // 
-            // noempleado
-            // 
-            this.noempleado.HeaderText = "No. Empleado";
-            this.noempleado.Name = "noempleado";
-            this.noempleado.ReadOnly = true;
-            // 
-            // nombre
-            // 
-            this.nombre.HeaderText = "Nombre";
-            this.nombre.Name = "nombre";
-            this.nombre.ReadOnly = true;
-            // 
-            // paterno
-            // 
-            this.paterno.HeaderText = "Ap. Paterno";
-            this.paterno.Name = "paterno";
-            this.paterno.ReadOnly = true;
-            // 
-            // materno
-            // 
-            this.materno.HeaderText = "Ap. Materno";
-            this.materno.Name = "materno";
-            this.materno.ReadOnly = true;
-            // 
-            // concepto
-            // 
-            this.concepto.HeaderText = "Concepto";
-            this.concepto.Items.AddRange(new object[] {
-            "Prima Vacacional",
-            "Vacaciones"});
-            this.concepto.Name = "concepto";
-            // 
-            // diaspago
-            // 
-            this.diaspago.HeaderText = "Dias";
-            this.diaspago.Name = "diaspago";
-            this.diaspago.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.diaspago.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // inicio
-            // 
-            this.inicio.HeaderText = "Fecha inicio";
-            this.inicio.Name = "inicio";
-            this.inicio.ReadOnly = true;
-            // 
-            // fin
-            // 
-            this.fin.HeaderText = "Fecha fin";
-            this.fin.Name = "fin";
-            this.fin.ReadOnly = true;
             // 
             // workVacaciones
             // 
@@ -265,11 +216,67 @@
             this.dataGridViewTextBoxColumn9.HeaderText = "Fecha fin";
             this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
             // 
+            // noempleado
+            // 
+            this.noempleado.HeaderText = "No. Empleado";
+            this.noempleado.Name = "noempleado";
+            this.noempleado.ReadOnly = true;
+            // 
+            // nombre
+            // 
+            this.nombre.HeaderText = "Nombre";
+            this.nombre.Name = "nombre";
+            this.nombre.ReadOnly = true;
+            // 
+            // paterno
+            // 
+            this.paterno.HeaderText = "Ap. Paterno";
+            this.paterno.Name = "paterno";
+            this.paterno.ReadOnly = true;
+            // 
+            // materno
+            // 
+            this.materno.HeaderText = "Ap. Materno";
+            this.materno.Name = "materno";
+            this.materno.ReadOnly = true;
+            // 
+            // concepto
+            // 
+            this.concepto.HeaderText = "Concepto";
+            this.concepto.Items.AddRange(new object[] {
+            "Prima Vacacional",
+            "Vacaciones"});
+            this.concepto.Name = "concepto";
+            // 
+            // diaspago
+            // 
+            this.diaspago.HeaderText = "Dias";
+            this.diaspago.Name = "diaspago";
+            this.diaspago.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.diaspago.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // inicio
+            // 
+            this.inicio.HeaderText = "Fecha inicio";
+            this.inicio.Name = "inicio";
+            this.inicio.ReadOnly = true;
+            // 
+            // fin
+            // 
+            this.fin.HeaderText = "Fecha fin";
+            this.fin.Name = "fin";
+            this.fin.ReadOnly = true;
+            // 
+            // fechaaplicacion
+            // 
+            this.fechaaplicacion.HeaderText = "Fecha de Inicio";
+            this.fechaaplicacion.Name = "fechaaplicacion";
+            // 
             // frmListaCargaVacaciones
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(846, 408);
+            this.ClientSize = new System.Drawing.Size(951, 408);
             this.Controls.Add(this.dgvCargaVacaciones);
             this.Controls.Add(this.toolBusqueda);
             this.Controls.Add(this.toolTitulo);
@@ -314,5 +321,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn diaspago;
         private System.Windows.Forms.DataGridViewTextBoxColumn inicio;
         private System.Windows.Forms.DataGridViewTextBoxColumn fin;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fechaaplicacion;
     }
 }

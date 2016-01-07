@@ -4,3 +4,4 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Expediente.Core\bin\Debug\Dat
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Expediente.Core\bin\Debug\Data.Obj.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Expediente.Core\obj\Debug\Expediente.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Expediente.Core\obj\Debug\Expediente.Core.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Expediente.Core\obj\Debug\Expediente.Core.csprojResolveAssemblyReference.cache

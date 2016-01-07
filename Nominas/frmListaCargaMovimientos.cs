@@ -198,9 +198,13 @@ namespace Nominas
             cmd.Connection = cnx;
 
             List<CalculoNomina.Core.tmpPagoNomina> lstMovimientos = new List<CalculoNomina.Core.tmpPagoNomina>();
+            List<Movimientos.Core.Movimientos> lstOtrasDeducciones = new List<Movimientos.Core.Movimientos>();
 
             CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
             nh.Command = cmd;
+
+            Movimientos.Core.MovimientosHelper mh = new Movimientos.Core.MovimientosHelper();
+            mh.Command = cmd;
 
             ch = new Conceptos.Core.ConceptosHelper();
             ch.Command = cmd;
@@ -255,6 +259,7 @@ namespace Nominas
 
                 switch (lstConcepto[0].tipoconcepto)
                 {
+                    #region PERCEPCIONES
                     case "P":
                         Conceptos.Core.Conceptos _concepto = new Conceptos.Core.Conceptos();
                         concepto.noconcepto = lstConcepto[0].noconcepto;
@@ -305,15 +310,15 @@ namespace Nominas
                             pn.gravado = gravado;
                         }
 
+                        CalculoNomina.Core.tmpPagoNomina pne = new CalculoNomina.Core.tmpPagoNomina();
+                        pne.idempresa = GLOBALES.IDEMPRESA;
+                        pne.idtrabajador = idEmpleado;
+                        pne.fechainicio = DateTime.Parse(dgvMovimientos.Rows[0].Cells["inicio"].Value.ToString());
+                        pne.fechafin = DateTime.Parse(dgvMovimientos.Rows[0].Cells["fin"].Value.ToString());
+                        pne.noconcepto = lstConcepto[0].noconcepto;
+
                         try
                         {
-                            CalculoNomina.Core.tmpPagoNomina pne = new CalculoNomina.Core.tmpPagoNomina();
-                            pne.idempresa = GLOBALES.IDEMPRESA;
-                            pne.idtrabajador = idEmpleado;
-                            pne.fechainicio = DateTime.Parse(dgvMovimientos.Rows[0].Cells["inicio"].Value.ToString());
-                            pne.fechafin = DateTime.Parse(dgvMovimientos.Rows[0].Cells["fin"].Value.ToString());
-                            pne.noconcepto = lstConcepto[0].noconcepto;
-
                             cnx.Open();
                             existeConcepto = (int)nh.existeConcepto(pne);
                             cnx.Close();
@@ -348,43 +353,51 @@ namespace Nominas
                         }
                         
                         break;
+                    #endregion
 
+                    #region DEDUCCIONES
                     case "D":
-                        pn.cantidad = double.Parse(fila.Cells["cantidad"].Value.ToString());
-                        pn.exento = 0;
-                        pn.gravado = 0;
+
+                        //*****SE OBTIENE LA FORMULA DEL CONCEPTO DE DEDUCCION
+                        string formula = "";
+                        Conceptos.Core.ConceptosHelper conceptoh = new Conceptos.Core.ConceptosHelper();
+                        conceptoh.Command = cmd;
+                        Conceptos.Core.Conceptos conceptoDeduccion = new Conceptos.Core.Conceptos();
+                        conceptoDeduccion.idempresa = GLOBALES.IDEMPRESA;
+                        conceptoDeduccion.noconcepto = lstConcepto[0].noconcepto;
 
                         try
                         {
-                            CalculoNomina.Core.tmpPagoNomina pne = new CalculoNomina.Core.tmpPagoNomina();
+                            cnx.Open();
+                            formula = conceptoh.obtenerFormula(conceptoDeduccion).ToString();
+                            cnx.Close();
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Error al obtener la formula del concepto.\r\n \r\n Esta ventana se cerrará.", "Error");
+                            cnx.Dispose();
+                            workMovimientos.CancelAsync();
+                            return;
+                        }
+                        //*****FIN
+
+                        if (formula != "[Deduccion]")
+                        {
+                            pn.cantidad = double.Parse(fila.Cells["cantidad"].Value.ToString());
+                            pn.exento = 0;
+                            pn.gravado = 0;
+
+                            pne = new CalculoNomina.Core.tmpPagoNomina();
                             pne.idempresa = GLOBALES.IDEMPRESA;
                             pne.idtrabajador = idEmpleado;
                             pne.fechainicio = DateTime.Parse(dgvMovimientos.Rows[0].Cells["inicio"].Value.ToString());
                             pne.fechafin = DateTime.Parse(dgvMovimientos.Rows[0].Cells["fin"].Value.ToString());
                             pne.noconcepto = lstConcepto[0].noconcepto;
 
-                            cnx.Open();
-                            existeConcepto = (int)nh.existeConcepto(pne);
-                            cnx.Close();
-                        }
-                        catch
-                        {
-                            MessageBox.Show("Error al obtener la existencia del concepto.\r\n \r\n Esta ventana se cerrará.", "Error");
-                            cnx.Dispose();
-                            workMovimientos.CancelAsync();
-                            this.Dispose();
-                        }
-
-                        if (existeConcepto == 0)
-                        {
-                            lstMovimientos.Add(pn);
-                        }
-                        else
-                        {
                             try
                             {
                                 cnx.Open();
-                                nh.actualizaConceptoModificado(pn);
+                                existeConcepto = (int)nh.existeConcepto(pne);
                                 cnx.Close();
                             }
                             catch
@@ -394,66 +407,148 @@ namespace Nominas
                                 workMovimientos.CancelAsync();
                                 this.Dispose();
                             }
+
+                            if (existeConcepto == 0)
+                            {
+                                lstMovimientos.Add(pn);
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    cnx.Open();
+                                    nh.actualizaConceptoModificado(pn);
+                                    cnx.Close();
+                                }
+                                catch
+                                {
+                                    MessageBox.Show("Error al obtener la existencia del concepto.\r\n \r\n Esta ventana se cerrará.", "Error");
+                                    cnx.Dispose();
+                                    workMovimientos.CancelAsync();
+                                    this.Dispose();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Movimientos.Core.Movimientos mov = new Movimientos.Core.Movimientos();
+                            mov.idtrabajador = idEmpleado;
+                            mov.idempresa = GLOBALES.IDEMPRESA;
+                            mov.idconcepto = lstConcepto[0].id;
+                            mov.cantidad = double.Parse(fila.Cells["cantidad"].Value.ToString());
+                            mov.fechainicio = DateTime.Parse(fila.Cells["inicio"].Value.ToString());
+                            mov.fechafin = DateTime.Parse(fila.Cells["fin"].Value.ToString());
+                            lstOtrasDeducciones.Add(mov);
                         }
                         break;
+                    #endregion
                 }
 
             }
 
-            bulk = new SqlBulkCopy(cnx);
-            nh.bulkCommand = bulk;
-
-            DataTable dt = new DataTable();
-            DataRow dtFila;
-            dt.Columns.Add("id", typeof(Int32));
-            dt.Columns.Add("idtrabajador", typeof(Int32));
-            dt.Columns.Add("idempresa", typeof(Int32));
-            dt.Columns.Add("idconcepto", typeof(Int32));
-            dt.Columns.Add("noconcepto", typeof(Int32));
-            dt.Columns.Add("tipoconcepto", typeof(String));
-            dt.Columns.Add("exento", typeof(Double));
-            dt.Columns.Add("gravado", typeof(Double));
-            dt.Columns.Add("cantidad", typeof(Double));
-            dt.Columns.Add("fechainicio", typeof(DateTime));
-            dt.Columns.Add("fechafin", typeof(DateTime));
-            dt.Columns.Add("guardada", typeof(Boolean));
-            dt.Columns.Add("tiponomina", typeof(Int32));
-            dt.Columns.Add("modificado", typeof(Boolean));
-            
-            int index = 1;
-            for (int i = 0; i < lstMovimientos.Count; i++)
+            if (lstMovimientos.Count != 0)
             {
-                dtFila = dt.NewRow();
-                dtFila["id"] = i + 1;
-                dtFila["idtrabajador"] = lstMovimientos[i].idtrabajador;
-                dtFila["idempresa"] = lstMovimientos[i].idempresa;
-                dtFila["idconcepto"] = lstMovimientos[i].idconcepto;
-                dtFila["noconcepto"] = lstMovimientos[i].noconcepto;
-                dtFila["tipoconcepto"] = lstMovimientos[i].tipoconcepto;
-                dtFila["exento"] = lstMovimientos[i].exento;
-                dtFila["gravado"] = lstMovimientos[i].gravado;
-                dtFila["cantidad"] = lstMovimientos[i].cantidad;
-                dtFila["fechainicio"] = lstMovimientos[i].fechainicio;
-                dtFila["fechafin"] = lstMovimientos[i].fechafin;
-                dtFila["guardada"] = lstMovimientos[i].guardada;
-                dtFila["tiponomina"] = lstMovimientos[i].tiponomina;
-                dtFila["modificado"] = lstMovimientos[i].modificado;
-                dt.Rows.Add(dtFila);
-                index++;
+                bulk = new SqlBulkCopy(cnx);
+                nh.bulkCommand = bulk;
+
+                DataTable dt = new DataTable();
+                DataRow dtFila;
+                dt.Columns.Add("id", typeof(Int32));
+                dt.Columns.Add("idtrabajador", typeof(Int32));
+                dt.Columns.Add("idempresa", typeof(Int32));
+                dt.Columns.Add("idconcepto", typeof(Int32));
+                dt.Columns.Add("noconcepto", typeof(Int32));
+                dt.Columns.Add("tipoconcepto", typeof(String));
+                dt.Columns.Add("exento", typeof(Double));
+                dt.Columns.Add("gravado", typeof(Double));
+                dt.Columns.Add("cantidad", typeof(Double));
+                dt.Columns.Add("fechainicio", typeof(DateTime));
+                dt.Columns.Add("fechafin", typeof(DateTime));
+                dt.Columns.Add("diaslaborados", typeof(Int32));
+                dt.Columns.Add("guardada", typeof(Boolean));
+                dt.Columns.Add("tiponomina", typeof(Int32));
+                dt.Columns.Add("modificado", typeof(Boolean));
+                dt.Columns.Add("fechapago", typeof(DateTime));
+
+                int index = 1;
+                for (int i = 0; i < lstMovimientos.Count; i++)
+                {
+                    dtFila = dt.NewRow();
+                    dtFila["id"] = i + 1;
+                    dtFila["idtrabajador"] = lstMovimientos[i].idtrabajador;
+                    dtFila["idempresa"] = lstMovimientos[i].idempresa;
+                    dtFila["idconcepto"] = lstMovimientos[i].idconcepto;
+                    dtFila["noconcepto"] = lstMovimientos[i].noconcepto;
+                    dtFila["tipoconcepto"] = lstMovimientos[i].tipoconcepto;
+                    dtFila["exento"] = lstMovimientos[i].exento;
+                    dtFila["gravado"] = lstMovimientos[i].gravado;
+                    dtFila["cantidad"] = lstMovimientos[i].cantidad;
+                    dtFila["fechainicio"] = lstMovimientos[i].fechainicio;
+                    dtFila["fechafin"] = lstMovimientos[i].fechafin;
+                    dtFila["diaslaborados"] = 0;
+                    dtFila["guardada"] = lstMovimientos[i].guardada;
+                    dtFila["tiponomina"] = lstMovimientos[i].tiponomina;
+                    dtFila["modificado"] = lstMovimientos[i].modificado;
+                    dtFila["fechapago"] = new DateTime(1900,1,1);
+                    dt.Rows.Add(dtFila);
+                    index++;
+                }
+
+                try
+                {
+                    cnx.Open();
+                    nh.bulkNomina(dt, "tmpPagoNomina");
+                    cnx.Close();
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show("Error (DataTable): \r\n \r\n" + error.Message, "Error");
+                }
             }
 
-            try
+            if (lstOtrasDeducciones.Count != 0)
             {
-                cnx.Open();
-                nh.bulkNomina(dt, "tmpPagoNomina");
-                cnx.Close();
-                cnx.Dispose();
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show("Error (DataTable): \r\n \r\n" + error.Message, "Error");
-            }
+                bulk = new SqlBulkCopy(cnx);
+                mh.bulkCommand = bulk;
 
+                DataTable dt = new DataTable();
+                DataRow dtFila;
+                dt.Columns.Add("id", typeof(Int32));
+                dt.Columns.Add("idtrabajador", typeof(Int32));
+                dt.Columns.Add("idempresa", typeof(Int32));
+                dt.Columns.Add("idconcepto", typeof(Int32));
+                dt.Columns.Add("cantidad", typeof(Decimal));
+                dt.Columns.Add("fechainicio", typeof(DateTime));
+                dt.Columns.Add("fechafin", typeof(DateTime));
+
+                int index = 1;
+                for (int i = 0; i < lstOtrasDeducciones.Count; i++)
+                {
+                    dtFila = dt.NewRow();
+                    dtFila["id"] = i + 1;
+                    dtFila["idtrabajador"] = lstOtrasDeducciones[i].idtrabajador;
+                    dtFila["idempresa"] = lstOtrasDeducciones[i].idempresa;
+                    dtFila["idconcepto"] = lstOtrasDeducciones[i].idconcepto;
+                    dtFila["cantidad"] = lstOtrasDeducciones[i].cantidad;
+                    dtFila["fechainicio"] = lstOtrasDeducciones[i].fechainicio;
+                    dtFila["fechafin"] = lstOtrasDeducciones[i].fechafin;
+                    dt.Rows.Add(dtFila);
+                    index++;
+                }
+
+                try
+                {
+                    cnx.Open();
+                    mh.bulkMovimientos(dt, "tmpMovimientos");
+                    mh.stpMovimientos();
+                    cnx.Close();
+                    cnx.Dispose();
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show("Error (DataTable): \r\n \r\n" + error.Message, "Error");
+                }
+            }
         }
 
         private void workMovimientos_ProgressChanged(object sender, ProgressChangedEventArgs e)

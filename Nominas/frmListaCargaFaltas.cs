@@ -109,7 +109,7 @@ namespace Nominas
                                             dt.Rows[i][1].ToString(), //NOMBRE
                                             dt.Rows[i][2].ToString(), //PATERNO
                                             dt.Rows[i][3].ToString(), //MATERNO
-                                            dt.Rows[i][4].ToString(), //FECHA FALTA
+                                            dt.Rows[i][4].ToString(), //NO. FALTAS
                                             dt.Rows[1][1].ToString(), //FECHA INICIO
                                             dt.Rows[2][1].ToString()); //FECHA FIN
                                 }
@@ -200,16 +200,70 @@ namespace Nominas
                     return;
                 }
 
-                Faltas.Core.Faltas f = new Faltas.Core.Faltas();
-                f.idempresa = GLOBALES.IDEMPRESA;
-                f.idtrabajador = idEmpleado;
-                f.periodo = periodo;
-                f.faltas = 1;
-                f.fechainicio = DateTime.Parse(dgvCargaFaltas.Rows[0].Cells["fechainicio"].Value.ToString());
-                f.fechafin = DateTime.Parse(dgvCargaFaltas.Rows[0].Cells["fechafin"].Value.ToString());
-                f.fecha = DateTime.Parse(dgvCargaFaltas.Rows[0].Cells["fecha"].Value.ToString());
+                int falta = int.Parse(fila.Cells["faltas"].Value.ToString());
+                DateTime fecha = DateTime.Parse(fila.Cells["fechainicio"].Value.ToString());
 
-                lstMovimientos.Add(f);
+                for (int i = 0; i < falta; i++)
+                {
+                    int existe = 0;
+                    int existeVacacion = 0;
+                    try
+                    {
+                        cnx.Open();
+                        existe = (int)fh.existeFalta(idEmpleado, fecha.AddDays(i).Date);
+                        cnx.Close();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Error: Al verificar existencia de falta.", "Error");
+                        cnx.Dispose();
+                        return;
+                    }
+
+                    if (existe == 0)
+                    {
+                        Incidencias.Core.IncidenciasHelper ih = new Incidencias.Core.IncidenciasHelper();
+                        ih.Command = cmd;
+
+                        Vacaciones.Core.VacacionesHelper vh = new Vacaciones.Core.VacacionesHelper();
+                        vh.Command = cmd;
+
+                        try
+                        {
+                            cnx.Open();
+                            existe = (int)ih.existeIncidenciaEnFalta(idEmpleado, fecha.AddDays(i).Date);
+                            existeVacacion = (int)vh.existeVacacionEnFalta(idEmpleado, fecha.AddDays(i).Date);
+                            cnx.Close();
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Error: Al guardar la falta.", "Error");
+                            cnx.Dispose();
+                            return;
+                        }
+
+                        if (existe == 0 && existeVacacion == 0)
+                            try
+                            {
+                                Faltas.Core.Faltas f = new Faltas.Core.Faltas();
+                                f.idempresa = GLOBALES.IDEMPRESA;
+                                f.idtrabajador = idEmpleado;
+                                f.periodo = periodo;
+                                f.faltas = 1;
+                                f.fechainicio = DateTime.Parse(dgvCargaFaltas.Rows[0].Cells["fechainicio"].Value.ToString());
+                                f.fechafin = DateTime.Parse(dgvCargaFaltas.Rows[0].Cells["fechafin"].Value.ToString());
+                                f.fecha = fecha.AddDays(i).Date;
+                                lstMovimientos.Add(f);
+                            }
+                            catch
+                            {
+                                MessageBox.Show("Error: Al guardar la falta.", "Error");
+                                cnx.Dispose();
+                            }
+                        else
+                            MessageBox.Show("La falta ingresada, se empalma con una incapacidad y/o dia de vacación del trabajador.", "Error");
+                    }
+                }
             }
 
             fh.bulkCommand = bulk;

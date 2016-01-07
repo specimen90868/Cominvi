@@ -53,9 +53,10 @@ namespace Nominas
                 case 0: //CARATULA PRENOMINA
                     dsReportes.PreNominaCaratulaDataTable dtPreNominaCaratula = new dsReportes.PreNominaCaratulaDataTable();
                     SqlDataAdapter daPreNominaCaratula = new SqlDataAdapter();
-                    cmd.CommandText = "exec stp_rptPreNominaCaratula @idempresa, @fechainicio, @fechafin";
+                    cmd.CommandText = "exec stp_rptPreNominaCaratula @idempresa, @tiponomina, @fechainicio, @fechafin";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("idempresa", GLOBALES.IDEMPRESA);
+                    cmd.Parameters.AddWithValue("tiponomina", _tipoNomina);
                     cmd.Parameters.AddWithValue("fechainicio", _inicioPeriodo);
                     cmd.Parameters.AddWithValue("fechafin", _finPeriodo);
                     daPreNominaCaratula.SelectCommand = cmd;
@@ -72,9 +73,10 @@ namespace Nominas
                 case 1: //EMPLEADOS PRENOMINA
                     dsReportes.PreNominaEmpleadosDataTable dtPreNominaEmpleados = new dsReportes.PreNominaEmpleadosDataTable();
                     SqlDataAdapter daPreNominaEmpleados = new SqlDataAdapter();
-                    cmd.CommandText = "exec stp_rptPreNominaEmpleados @idempresa, @fechainicio, @fechafin, @neto, @order";
+                    cmd.CommandText = "exec stp_rptPreNominaEmpleados @idempresa, @tiponomina, @fechainicio, @fechafin, @neto, @order";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("idempresa", GLOBALES.IDEMPRESA);
+                    cmd.Parameters.AddWithValue("tiponomina", _tipoNomina);
                     cmd.Parameters.AddWithValue("fechainicio", _inicioPeriodo);
                     cmd.Parameters.AddWithValue("fechafin", _finPeriodo);
                     cmd.Parameters.AddWithValue("neto", _netoCero);
@@ -84,9 +86,10 @@ namespace Nominas
 
                     dsReportes.PreNominaCaratulaDataTable dtPreNominaCaratula2 = new dsReportes.PreNominaCaratulaDataTable();
                     SqlDataAdapter daPreNominaCaratula2 = new SqlDataAdapter();
-                    cmd2.CommandText = "exec stp_rptPreNominaCaratula @idempresa, @fechainicio, @fechafin";
+                    cmd2.CommandText = "exec stp_rptPreNominaCaratula @idempresa, @tiponomina, @fechainicio, @fechafin";
                     cmd2.Parameters.Clear();
                     cmd2.Parameters.AddWithValue("idempresa", GLOBALES.IDEMPRESA);
+                    cmd2.Parameters.AddWithValue("tiponomina", _tipoNomina);
                     cmd2.Parameters.AddWithValue("fechainicio", _inicioPeriodo);
                     cmd2.Parameters.AddWithValue("fechafin", _finPeriodo);
                     daPreNominaCaratula2.SelectCommand = cmd2;
@@ -111,9 +114,10 @@ namespace Nominas
                 case 2: //DEPARTAMENTOS PRENOMINA
                     dsReportes.PreNominaDeptoDataTable dtPreNominaDepto = new dsReportes.PreNominaDeptoDataTable();
                     SqlDataAdapter daPreNominaDepto = new SqlDataAdapter();
-                    cmd.CommandText = "exec stp_rptPreNominaDepto @idempresa, @fechainicio, @fechafin, @neto, @order";
+                    cmd.CommandText = "exec stp_rptPreNominaDepto @idempresa, @tiponomina, @fechainicio, @fechafin, @neto, @order";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("idempresa", GLOBALES.IDEMPRESA);
+                    cmd.Parameters.AddWithValue("tiponomina", _tipoNomina);
                     cmd.Parameters.AddWithValue("fechainicio", _inicioPeriodo);
                     cmd.Parameters.AddWithValue("fechafin", _finPeriodo);
                     cmd.Parameters.AddWithValue("neto", _netoCero);
@@ -123,9 +127,10 @@ namespace Nominas
 
                     dsReportes.PreNominaCaratulaDataTable dtPreNominaCaratula1 = new dsReportes.PreNominaCaratulaDataTable();
                     SqlDataAdapter daPreNominaCaratula1 = new SqlDataAdapter();
-                    cmd.CommandText = "exec stp_rptPreNominaCaratula @idempresa, @fechainicio, @fechafin";
+                    cmd.CommandText = "exec stp_rptPreNominaCaratula @idempresa, @tiponomina, @fechainicio, @fechafin";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("idempresa", GLOBALES.IDEMPRESA);
+                    cmd.Parameters.AddWithValue("tiponomina", _tipoNomina);
                     cmd.Parameters.AddWithValue("fechainicio", _inicioPeriodo);
                     cmd.Parameters.AddWithValue("fechafin", _finPeriodo);
                     daPreNominaCaratula1.SelectCommand = cmd;

@@ -117,6 +117,16 @@ namespace Conceptos.Core
             return dato;
         }
 
+        public object obtenerIdConcepto(int noconcepto, int idempresa)
+        {
+            Command.CommandText = "select id from Conceptos where noconcepto = @noconcepto and idempresa = @idempresa";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("noconcepto", noconcepto);
+            Command.Parameters.AddWithValue("idempresa", idempresa);
+            object dato = Select(Command);
+            return dato;
+        }
+
         public object obtenerFormula(Conceptos c)
         {
             Command.CommandText = "select formula from conceptos where noconcepto = @noconcepto and idempresa = @idempresa";
@@ -139,8 +149,8 @@ namespace Conceptos.Core
 
         public int insertaConcepto(Conceptos c)
         {
-            Command.CommandText = "insert into conceptos (idempresa, concepto, tipoconcepto, formula, formulaexento, gravado, exento, visible) " +
-                "values (@idempresa, @concepto, @tipoconcepto, @formula, @formulaexento, @gravado, @exento, @visible)";
+            Command.CommandText = "insert into conceptos (idempresa, concepto, tipoconcepto, formula, formulaexento, gravado, exento, gruposat, visible) " +
+                "values (@idempresa, @concepto, @tipoconcepto, @formula, @formulaexento, @gravado, @exento, @gruposat, @visible)";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa",c.idempresa);
             Command.Parameters.AddWithValue("concepto", c.concepto);
@@ -149,6 +159,7 @@ namespace Conceptos.Core
             Command.Parameters.AddWithValue("formulaexento", c.formulaexento);
             Command.Parameters.AddWithValue("gravado", c.gravado);
             Command.Parameters.AddWithValue("exento", c.exento);
+            Command.Parameters.AddWithValue("gruposat", c.gruposat);
             Command.Parameters.AddWithValue("visible", c.visible);
             return Command.ExecuteNonQuery();
         }
@@ -156,7 +167,7 @@ namespace Conceptos.Core
         public int actualizaConcepto(Conceptos c)
         {
             Command.CommandText = "update conceptos set concepto = @concepto, tipoconcepto = @tipoconcepto, formula = @formula, formulaexento = @formulaexento, gravado = @gravado, " + 
-                "exento = @exento, visible = @visible where id = @id";
+                "exento = @exento, gruposat = @gruposat, visible = @visible where id = @id";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("id", c.id);
             Command.Parameters.AddWithValue("concepto", c.concepto);
@@ -165,6 +176,7 @@ namespace Conceptos.Core
             Command.Parameters.AddWithValue("formulaexento", c.formulaexento);
             Command.Parameters.AddWithValue("gravado", c.gravado);
             Command.Parameters.AddWithValue("exento", c.exento);
+            Command.Parameters.AddWithValue("gruposat", c.gruposat);
             Command.Parameters.AddWithValue("visible", c.visible);
             return Command.ExecuteNonQuery();
         }

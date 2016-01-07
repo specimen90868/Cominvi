@@ -145,6 +145,7 @@
             this.Name = "frmBuscar";
             this.Text = "Buscar";
             this.Load += new System.EventHandler(this.frmBuscar_Load);
+            this.Shown += new System.EventHandler(this.frmBuscar_Shown);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCatalogo)).EndInit();

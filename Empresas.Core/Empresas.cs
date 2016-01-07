@@ -15,5 +15,12 @@ namespace Empresas.Core
         public int digitoverificador { get; set; }
         public string representante { get; set; }
         public int estatus { get; set; }
+        public string certificado { get; set; }
+        public string llave { get; set; }
+        public string password { get; set; }
+        public string regimen { get; set; }
+        public string nocertificado { get; set; }
+        public DateTime vigenciacertificado { get; set; }
+
     }
 }

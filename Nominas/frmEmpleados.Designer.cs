@@ -98,6 +98,10 @@
             this.mtxtIdBancario = new System.Windows.Forms.MaskedTextBox();
             this.dtpFechaAplicacionHistorico = new System.Windows.Forms.DateTimePicker();
             this.lblFechaAplicacionHistorico = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.cmbMetodoPago = new System.Windows.Forms.ComboBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.cmbTipoRegimen = new System.Windows.Forms.ComboBox();
             this.toolAcciones.SuspendLayout();
             this.toolEmpleado.SuspendLayout();
             this.SuspendLayout();
@@ -597,7 +601,7 @@
             // 
             this.btnVer.Image = ((System.Drawing.Image)(resources.GetObject("btnVer.Image")));
             this.btnVer.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnVer.Location = new System.Drawing.Point(415, 327);
+            this.btnVer.Location = new System.Drawing.Point(415, 356);
             this.btnVer.Name = "btnVer";
             this.btnVer.Size = new System.Drawing.Size(67, 35);
             this.btnVer.TabIndex = 19;
@@ -610,7 +614,7 @@
             // 
             this.btnAsignar.Image = ((System.Drawing.Image)(resources.GetObject("btnAsignar.Image")));
             this.btnAsignar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAsignar.Location = new System.Drawing.Point(499, 327);
+            this.btnAsignar.Location = new System.Drawing.Point(499, 356);
             this.btnAsignar.Name = "btnAsignar";
             this.btnAsignar.Size = new System.Drawing.Size(67, 35);
             this.btnAsignar.TabIndex = 20;
@@ -622,7 +626,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(378, 338);
+            this.label13.Location = new System.Drawing.Point(378, 367);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(31, 13);
             this.label13.TabIndex = 234;
@@ -732,11 +736,53 @@
             this.lblFechaAplicacionHistorico.TabIndex = 246;
             this.lblFechaAplicacionHistorico.Text = "Fecha de aplicación:";
             // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(32, 632);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(88, 13);
+            this.label20.TabIndex = 247;
+            this.label20.Text = "Metodo de pago:";
+            // 
+            // cmbMetodoPago
+            // 
+            this.cmbMetodoPago.FormattingEnabled = true;
+            this.cmbMetodoPago.Items.AddRange(new object[] {
+            "EFECTIVO",
+            "CHEQUE",
+            "TRANSFERENCIA"});
+            this.cmbMetodoPago.Location = new System.Drawing.Point(126, 629);
+            this.cmbMetodoPago.Name = "cmbMetodoPago";
+            this.cmbMetodoPago.Size = new System.Drawing.Size(152, 21);
+            this.cmbMetodoPago.TabIndex = 248;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(323, 330);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(86, 13);
+            this.label21.TabIndex = 249;
+            this.label21.Text = "Tipo de régimen:";
+            // 
+            // cmbTipoRegimen
+            // 
+            this.cmbTipoRegimen.FormattingEnabled = true;
+            this.cmbTipoRegimen.Location = new System.Drawing.Point(415, 327);
+            this.cmbTipoRegimen.Name = "cmbTipoRegimen";
+            this.cmbTipoRegimen.Size = new System.Drawing.Size(151, 21);
+            this.cmbTipoRegimen.TabIndex = 250;
+            // 
             // frmEmpleados
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(696, 656);
+            this.ClientSize = new System.Drawing.Size(696, 670);
+            this.Controls.Add(this.cmbTipoRegimen);
+            this.Controls.Add(this.label21);
+            this.Controls.Add(this.cmbMetodoPago);
+            this.Controls.Add(this.label20);
             this.Controls.Add(this.lblFechaAplicacionHistorico);
             this.Controls.Add(this.dtpFechaAplicacionHistorico);
             this.Controls.Add(this.mtxtIdBancario);
@@ -884,5 +930,9 @@
         private System.Windows.Forms.MaskedTextBox mtxtIdBancario;
         private System.Windows.Forms.DateTimePicker dtpFechaAplicacionHistorico;
         private System.Windows.Forms.Label lblFechaAplicacionHistorico;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.ComboBox cmbMetodoPago;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.ComboBox cmbTipoRegimen;
     }
 }

@@ -1813,7 +1813,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Sum(IIF(Fields!DeptoTipoConcepto.Value="P",Fields!DeptoImporte,0), "dsReporteNominaDepto")-Sum(IIF(Fields!DeptoTipoConcepto.Value="D",Fields!DeptoImporte,0), "dsReporteNominaDepto")</Value>
+                <Value>=Sum(IIF(Fields!CaratulaTipoConcepto.Value="P",Fields!CaratulaImporte.Value,0), "dsReporteNominaGeneral") - Sum(IIF(Fields!CaratulaTipoConcepto.Value="D",Fields!CaratulaImporte.Value,0), "dsReporteNominaGeneral")</Value>
                 <Style>
                   <FontSize>9pt</FontSize>
                   <FontWeight>Bold</FontWeight>

@@ -41,6 +41,7 @@ namespace Nominas
         public DateTime _fin;
         public bool _ReportePreNomina;
         public int _noReporte;
+        public int _tipoNomina;
         #endregion
 
         private void frmReportes_Load(object sender, EventArgs e)
@@ -125,7 +126,10 @@ namespace Nominas
                     frmVisorReportes vr = new frmVisorReportes();
                     vr._inicioPeriodo = dtpInicioPeriodo.Value;
                     vr._finPeriodo = dtpFinPeriodo.Value;
-                    vr._tipoNomina = (cmbEmpleados.Text == "Alta" ? 0 : 1);
+                    if (_ReportePreNomina)
+                        vr._tipoNomina = _tipoNomina;
+                    else
+                        vr._tipoNomina = (cmbEmpleados.Text == "Alta" ? 0 : 1);
                     vr._noReporte = noReporte;
                     vr._deptoInicio = int.Parse(cmbDeptoInicial.SelectedValue.ToString());
                     vr._deptoFin = int.Parse(cmbDeptoFinal.SelectedValue.ToString());

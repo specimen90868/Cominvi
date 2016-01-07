@@ -27,6 +27,7 @@ namespace Nominas
         Periodos.Core.PeriodosHelper ph;
         bool ausentismo = false;
         int diasAusentismo = 0, periodo = 0;
+        DateTime periodoInicio, periodoFin;
         #endregion
 
         #region VARIABLES PUBLICAS
@@ -97,17 +98,74 @@ namespace Nominas
             {
                 periodo = d.dias;
             }
+            obtenerPeriodoActual();
+        }
 
+        private void obtenerPeriodoActual()
+        {
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
+            nh.Command = cmd;
+
+            List<CalculoNomina.Core.tmpPagoNomina> lstUltimaNomina = new List<CalculoNomina.Core.tmpPagoNomina>();
+
+            try
+            {
+                cnx.Open();
+                lstUltimaNomina = nh.obtenerUltimaNomina(GLOBALES.IDEMPRESA);
+                cnx.Close();
+                cnx.Dispose();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+            }
+
+            if (lstUltimaNomina.Count != 0)
+            {
+                if (periodo == 7)
+                {
+                    periodoInicio = lstUltimaNomina[0].fechafin.AddDays(1);
+                    periodoFin = lstUltimaNomina[0].fechafin.AddDays(7);
+                }
+                else
+                {
+                    periodoInicio = lstUltimaNomina[0].fechafin.AddDays(1);
+                    if (periodoInicio.Day <= 15)
+                        periodoFin = lstUltimaNomina[0].fechafin.AddDays(15);
+                    else
+                        periodoFin = lstUltimaNomina[0].fechafin.AddDays(
+                            DateTime.DaysInMonth(periodoInicio.Year, periodoInicio.Month) - 15);
+                }
+
+                dtpPeriodoInicio.Enabled = false;
+                dtpPeriodoFin.Enabled = false;
+                dtpPeriodoInicio.Value = periodoInicio;
+                dtpPeriodoFin.Value = periodoFin;
+            }
+            else
+            {
+                dtpPeriodoInicio.Visible = true;
+                dtpPeriodoFin.Visible = true;
+                Periodo();
+            }
+        }
+
+        private void Periodo()
+        {
             if (periodo == 7)
             {
-                DateTime dt = DateTime.Now;
+                DateTime dt = dtpPeriodoInicio.Value.Date;
                 while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
                 dtpPeriodoInicio.Value = dt;
                 dtpPeriodoFin.Value = dt.AddDays(6);
             }
             else
             {
-                if (DateTime.Now.Day <= 15)
+                if (dtpPeriodoInicio.Value.Day <= 15)
                 {
                     dtpPeriodoInicio.Value = new DateTime(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month, 1);
                     dtpPeriodoFin.Value = new DateTime(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month, 15);
@@ -117,8 +175,10 @@ namespace Nominas
                     dtpPeriodoInicio.Value = new DateTime(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month, 16);
                     dtpPeriodoFin.Value = new DateTime(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month, DateTime.DaysInMonth(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month));
                 }
-
             }
+
+            periodoInicio = dtpPeriodoInicio.Value.Date;
+            periodoFin = dtpPeriodoFin.Value.Date;
         }
 
         private bool CalculaDiaHabil()
@@ -142,7 +202,7 @@ namespace Nominas
                 MessageBox.Show("Error: \r\n \r\n " + error.Message,"Error");
             }
 
-            double totalDias = (DateTime.Now - dtpFechaBaja.Value).TotalHours / 24;
+            double totalDias = (DateTime.Now.Date - dtpFechaBaja.Value).TotalHours / 24;
             double contador = 0;
             double diasNoLaborables = 0;
             double diasHabiles = 0;
@@ -172,14 +232,14 @@ namespace Nominas
 
         private void dtpFechaBaja_Leave(object sender, EventArgs e)
         {
-            bool excede = CalculaDiaHabil();
-            if (excede)
-            {
-                MessageBox.Show("Fecha excede los 5 dias hábiles.", "Información");
-                btnAceptar.Enabled = false;
-            }
-            else
-                btnAceptar.Enabled = true;
+            //bool excede = CalculaDiaHabil();
+            //if (excede)
+            //{
+            //    MessageBox.Show("Fecha excede los 5 dias hábiles.", "Información");
+            //    btnAceptar.Enabled = false;
+            //}
+            //else
+            //    btnAceptar.Enabled = true;
         }
 
         private void Cancelar_Click(object sender, EventArgs e)
@@ -189,6 +249,7 @@ namespace Nominas
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
+            int existeVacaciones = 0, existeIncapacidad = 0;
             DialogResult respuesta = MessageBox.Show("¿Desea dar de baja al empleado?","Confirmación",MessageBoxButtons.YesNo);
             if (respuesta == DialogResult.Yes)
             {
@@ -208,6 +269,55 @@ namespace Nominas
                 cnx = new SqlConnection(cdn);
                 cmd = new SqlCommand();
                 cmd.Connection = cnx;
+
+                Incidencias.Core.IncidenciasHelper ih = new Incidencias.Core.IncidenciasHelper();
+                ih.Command = cmd;
+
+                Incidencias.Core.Incidencias incidencia = new Incidencias.Core.Incidencias();
+                incidencia.idtrabajador = _idempleado;
+                incidencia.fechainicio = periodoInicio.Date;
+                incidencia.fechafin = periodoFin.Date;
+
+                try
+                {
+                    cnx.Open();
+                    existeIncapacidad = (int)ih.existeIncidenciaBaja(incidencia);
+                    cnx.Close();
+                }
+                catch
+                {
+                    MessageBox.Show("Error: Al obtener existencia de Incapacidad.","Error");
+                    cnx.Dispose();
+                    return;
+                }
+
+                Vacaciones.Core.VacacionesHelper vh = new Vacaciones.Core.VacacionesHelper();
+                vh.Command = cmd;
+
+                Vacaciones.Core.VacacionesPrima vp = new Vacaciones.Core.VacacionesPrima();
+                vp.idtrabajador = _idempleado;
+                vp.periodoinicio = periodoInicio;
+                vp.periodofin = periodoFin;
+                vp.vacacionesprima = "V";
+
+                try
+                {
+                    cnx.Open();
+                    existeVacaciones = (int)vh.existeVacacionesPrima(vp);
+                    cnx.Close();
+                }
+                catch
+                {
+                    MessageBox.Show("Error: Al obtener existencia de Vacaciones.", "Error");
+                    cnx.Dispose();
+                    return;
+                }
+
+                if (existeIncapacidad != 0 || existeVacaciones != 0)
+                {
+                    MessageBox.Show("No se pued dar de baja. Existe una Incapacidad y/o Vacacion del trabajador.", "Error");
+                    return;
+                }
 
                 Empresas.Core.EmpresasHelper ep = new Empresas.Core.EmpresasHelper();
                 ep.Command = cmd;
@@ -253,6 +363,7 @@ namespace Nominas
                 baja.diasproporcionales = (int)(dtpFechaBaja.Value.Date - dtpPeriodoInicio.Value.Date).TotalDays + 1;
                 baja.periodoinicio = dtpPeriodoInicio.Value.Date;
                 baja.periodofin = dtpPeriodoFin.Value.Date;
+                baja.observaciones = txtObservaciones.Text;
 
                 try
                 {

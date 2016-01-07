@@ -47,6 +47,9 @@
             this.txtExento = new System.Windows.Forms.TextBox();
             this.btnEditor2 = new System.Windows.Forms.Button();
             this.chkVisible = new System.Windows.Forms.CheckBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtGrupoSat = new System.Windows.Forms.TextBox();
+            this.btnGrupoSat = new System.Windows.Forms.Button();
             this.toolTitulo.SuspendLayout();
             this.toolAcciones.SuspendLayout();
             this.SuspendLayout();
@@ -218,11 +221,42 @@
             this.chkVisible.Text = "Visible";
             this.chkVisible.UseVisualStyleBackColor = true;
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(3, 216);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(56, 13);
+            this.label6.TabIndex = 119;
+            this.label6.Text = "Clave Sat:";
+            // 
+            // txtGrupoSat
+            // 
+            this.txtGrupoSat.Location = new System.Drawing.Point(65, 213);
+            this.txtGrupoSat.Name = "txtGrupoSat";
+            this.txtGrupoSat.Size = new System.Drawing.Size(148, 20);
+            this.txtGrupoSat.TabIndex = 120;
+            this.txtGrupoSat.Text = "000";
+            this.txtGrupoSat.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // btnGrupoSat
+            // 
+            this.btnGrupoSat.Image = ((System.Drawing.Image)(resources.GetObject("btnGrupoSat.Image")));
+            this.btnGrupoSat.Location = new System.Drawing.Point(219, 212);
+            this.btnGrupoSat.Name = "btnGrupoSat";
+            this.btnGrupoSat.Size = new System.Drawing.Size(43, 23);
+            this.btnGrupoSat.TabIndex = 121;
+            this.btnGrupoSat.UseVisualStyleBackColor = true;
+            this.btnGrupoSat.Click += new System.EventHandler(this.btnGrupoSat_Click);
+            // 
             // frmConceptos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(678, 583);
+            this.Controls.Add(this.btnGrupoSat);
+            this.Controls.Add(this.txtGrupoSat);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.chkVisible);
             this.Controls.Add(this.btnEditor2);
             this.Controls.Add(this.txtExento);
@@ -269,5 +303,8 @@
         private System.Windows.Forms.TextBox txtExento;
         private System.Windows.Forms.Button btnEditor2;
         private System.Windows.Forms.CheckBox chkVisible;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txtGrupoSat;
+        private System.Windows.Forms.Button btnGrupoSat;
     }
 }

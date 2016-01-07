@@ -63,6 +63,9 @@ namespace Nominas
             Catalogos.Core.Catalogo ts = new Catalogos.Core.Catalogo();
             ts.grupodescripcion = "SALARIO";
 
+            Catalogos.Core.Catalogo tr = new Catalogos.Core.Catalogo();
+            tr.grupodescripcion = "TIPO DE REGIMEN";
+
             dh = new Departamento.Core.DeptoHelper();
             dh.Command = cmd;
             Departamento.Core.Depto depto = new Departamento.Core.Depto();
@@ -90,6 +93,7 @@ namespace Nominas
             List<Estados.Core.Estados> lstEstados = new List<Estados.Core.Estados>();
             List<Periodos.Core.Periodos> lstPeriodos = new List<Periodos.Core.Periodos>();
             List<Salario.Core.Salarios> lstSalario = new List<Salario.Core.Salarios>();
+            List<Catalogos.Core.Catalogo> lstTipoRegimen = new List<Catalogos.Core.Catalogo>();
 
             try
             {
@@ -100,6 +104,7 @@ namespace Nominas
                 lstEstados = edoh.obtenerEstados();
                 lstPeriodos = pdh.obtenerPeriodos(periodo);
                 lstSalario = sh.obtenerSalarios();
+                lstTipoRegimen = cath.obtenerGrupo(tr);
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -132,6 +137,12 @@ namespace Nominas
             cmbZona.DataSource = lstSalario.ToList();
             cmbZona.DisplayMember = "zona";
             cmbZona.ValueMember = "idsalario";
+
+            cmbTipoRegimen.DataSource = lstTipoRegimen.ToList();
+            cmbTipoRegimen.DisplayMember = "descripcion";
+            cmbTipoRegimen.ValueMember = "id";
+
+            cmbMetodoPago.SelectedIndex = 2;
         }
 
         private void frmEmpleados_Load(object sender, EventArgs e)
@@ -183,6 +194,7 @@ namespace Nominas
                         cmbPeriodo.SelectedValue = int.Parse(lstEmpleado[i].idperiodo.ToString());
                         cmbZona.SelectedValue = int.Parse(lstEmpleado[i].idsalario.ToString());
                         cmbTipoSalario.SelectedValue = int.Parse(lstEmpleado[i].tiposalario.ToString());
+                        cmbTipoRegimen.SelectedValue = int.Parse(lstEmpleado[i].tiporegimen.ToString());
 
                         txtSueldo.Text = lstEmpleado[i].sueldo.ToString("F6");
                         txtSD.Text = lstEmpleado[i].sd.ToString("F6");
@@ -191,6 +203,13 @@ namespace Nominas
                         mtxtCuentaBancaria.Text = lstEmpleado[i].cuenta.ToString();
                         mtxtCuentaClabe.Text = lstEmpleado[i].clabe.ToString();
                         mtxtIdBancario.Text = lstEmpleado[i].idbancario.ToString();
+
+                        if (lstEmpleado[i].metodopago == "EFECTIVO")
+                            cmbMetodoPago.SelectedIndex = 0;
+                        if (lstEmpleado[i].metodopago == "CHEQUE")
+                            cmbMetodoPago.SelectedIndex = 1;
+                        if (lstEmpleado[i].metodopago == "TRANSFERENCIA")
+                            cmbMetodoPago.SelectedIndex = 2;
 
                         departamento = cmbDepartamento.Text;
                         puesto = cmbPeriodo.Text;
@@ -356,6 +375,7 @@ namespace Nominas
             em.idperiodo = int.Parse(cmbPeriodo.SelectedValue.ToString());
             em.idsalario = int.Parse(cmbZona.SelectedValue.ToString());
             em.tiposalario = int.Parse(cmbTipoSalario.SelectedValue.ToString());
+            em.tiporegimen = int.Parse(cmbTipoRegimen.SelectedValue.ToString());
 
             em.sdi = double.Parse(txtSDI.Text);
             em.sd = double.Parse(txtSD.Text);
@@ -364,6 +384,7 @@ namespace Nominas
             em.cuenta = mtxtCuentaBancaria.Text;
             em.clabe = mtxtCuentaClabe.Text;
             em.idbancario = mtxtIdBancario.Text;
+            em.metodopago = cmbMetodoPago.Text;
 
             hh = new Historial.Core.HistorialHelper();
             hh.Command = cmd;

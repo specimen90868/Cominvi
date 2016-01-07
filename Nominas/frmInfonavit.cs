@@ -173,6 +173,25 @@ namespace Nominas
             i.fecha = dtpFechaAplicacion.Value.Date;
             i.inicio = dtpInicioPeriodo.Value.Date;
             i.fin = dtpFinPeriodo.Value.Date;
+
+            Conceptos.Core.ConceptosHelper ch = new Conceptos.Core.ConceptosHelper();
+            ch.Command = cmd;
+
+            Conceptos.Core.ConceptoTrabajador ct = new Conceptos.Core.ConceptoTrabajador();
+            ct.idempleado = _idEmpleado;
+
+            try
+            {
+                cnx.Open();
+                ct.idconcepto = (int)ch.obtenerIdConcepto(9, GLOBALES.IDEMPRESA);
+                cnx.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Error: Al obtener el ID del Concepto Infonavit.", "Error");
+                cnx.Dispose();
+                return;
+            }
             
             switch (_tipoOperacion)
             {
@@ -181,6 +200,7 @@ namespace Nominas
                     {
                         cnx.Open();
                         ih.insertaInfonavit(i);
+                        ch.insertaConceptoTrabajador(ct);
                         cnx.Close();
                         cnx.Dispose();
                     }

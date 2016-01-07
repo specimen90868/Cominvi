@@ -27,6 +27,7 @@ namespace Bajas.Core
                 baja.nss = dtBajas.Rows[i]["nss"].ToString();
                 baja.motivo = int.Parse(dtBajas.Rows[i]["motivo"].ToString());
                 baja.fecha = DateTime.Parse(dtBajas.Rows[i]["fecha"].ToString());
+                baja.observaciones = dtBajas.Rows[i]["observaciones"].ToString();
                 lstBaja.Add(baja);
             }
             return lstBaja;
@@ -56,8 +57,8 @@ namespace Bajas.Core
 
         public int insertaBaja(Bajas a)
         {
-            Command.CommandText = "insert into suaBajas (idtrabajador, idempresa, registropatronal, nss, motivo, fecha, diasproporcionales, periodoinicio, periodofin) " +
-                "values (@idtrabajador, @idempresa, @registropatronal, @nss, @motivo, @fecha, @dias, @inicio, @fin)";
+            Command.CommandText = "insert into suaBajas (idtrabajador, idempresa, registropatronal, nss, motivo, fecha, diasproporcionales, periodoinicio, periodofin, observaciones) " +
+                "values (@idtrabajador, @idempresa, @registropatronal, @nss, @motivo, @fecha, @dias, @inicio, @fin, @observaciones)";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador",a.idtrabajador);
             Command.Parameters.AddWithValue("idempresa", a.idempresa);
@@ -68,6 +69,7 @@ namespace Bajas.Core
             Command.Parameters.AddWithValue("dias", a.diasproporcionales);
             Command.Parameters.AddWithValue("inicio", a.periodoinicio);
             Command.Parameters.AddWithValue("fin", a.periodofin);
+            Command.Parameters.AddWithValue("observaciones", a.observaciones);
             return Command.ExecuteNonQuery();
         }
 

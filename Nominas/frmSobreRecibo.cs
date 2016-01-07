@@ -269,6 +269,87 @@ namespace Nominas
                         }
                     }
                 }
+                else
+                {
+                    double vacacion = lstPercepciones.Where(f => f.noconcepto == 7).Sum(f => f.cantidad);
+                    if (vacacion != 0)
+                    {
+                        cnx = new SqlConnection(cdn);
+                        cmd = new SqlCommand();
+                        cmd.Connection = cnx;
+
+                        int existe = 0;
+                        ProgramacionConcepto.Core.ProgramacionHelper pch = new ProgramacionConcepto.Core.ProgramacionHelper();
+                        pch.Command = cmd;
+
+                        ProgramacionConcepto.Core.ProgramacionConcepto programacion = new ProgramacionConcepto.Core.ProgramacionConcepto();
+                        programacion.idtrabajador = idTrabajador;
+
+                        List<ProgramacionConcepto.Core.ProgramacionConcepto> lstProgramacion = new List<ProgramacionConcepto.Core.ProgramacionConcepto>();
+
+                        try
+                        {
+                            cnx.Open();
+                            existe = (int)pch.existeProgramacion(programacion);
+                            cnx.Close();
+                        }
+                        catch (Exception error)
+                        {
+                            MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                            cnx.Dispose();
+                        }
+
+                        if (existe != 0)
+                        {
+                            try
+                            {
+                                cnx.Open();
+                                lstProgramacion = pch.obtenerProgramacion(programacion);
+                                cnx.Close();
+                            }
+                            catch (Exception error)
+                            {
+                                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                                cnx.Dispose();
+                            }
+
+                            for (int i = 0; i < lstProgramacion.Count; i++)
+                            {
+                                if (_finPeriodo.Date <= lstProgramacion[i].fechafin)
+                                {
+                                    Conceptos.Core.ConceptosHelper ch = new Conceptos.Core.ConceptosHelper();
+                                    ch.Command = cmd;
+                                    Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
+                                    concepto.id = lstProgramacion[i].idconcepto;
+                                    List<Conceptos.Core.Conceptos> lstNoConcepto = new List<Conceptos.Core.Conceptos>();
+                                    try
+                                    {
+                                        cnx.Open();
+                                        lstNoConcepto = ch.obtenerConcepto(concepto);
+                                        cnx.Close();
+                                    }
+                                    catch (Exception error) { MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error"); }
+
+                                    CalculoNomina.Core.tmpPagoNomina vn = new CalculoNomina.Core.tmpPagoNomina();
+                                    vn.idtrabajador = idTrabajador;
+                                    vn.idempresa = GLOBALES.IDEMPRESA;
+                                    vn.idconcepto = lstProgramacion[i].idconcepto;
+                                    vn.noconcepto = lstNoConcepto[0].noconcepto;
+                                    vn.tipoconcepto = lstNoConcepto[0].tipoconcepto;
+                                    vn.fechainicio = _inicioPeriodo.Date;
+                                    vn.fechafin = _finPeriodo.Date;
+                                    vn.exento = 0;
+                                    vn.gravado = 0;
+                                    vn.cantidad = lstProgramacion[i].cantidad;
+                                    vn.guardada = true;
+                                    vn.tiponomina = _tipoNormalEspecial;
+                                    vn.modificado = false;
+                                    lstOtrasDeducciones.Add(vn);
+                                }
+                            }
+                        }
+                    }
+                }
                 #endregion
 
                 #region MOVIMIENTOS
@@ -346,6 +427,79 @@ namespace Nominas
                         }
                     }
                 }
+                else
+                {
+                    double vacacion = lstPercepciones.Where(f => f.noconcepto == 7).Sum(f => f.cantidad);
+                    if (vacacion != 0)
+                    {
+                        int existe = 0;
+                        Movimientos.Core.Movimientos mov = new Movimientos.Core.Movimientos();
+                        mov.idtrabajador = idTrabajador;
+                        mov.fechainicio = _inicioPeriodo.Date;
+                        mov.fechafin = _finPeriodo.Date;
+
+                        List<Movimientos.Core.Movimientos> lstMovimiento = new List<Movimientos.Core.Movimientos>();
+
+                        try
+                        {
+                            cnx.Open();
+                            existe = (int)mh.existeMovimiento(mov);
+                            cnx.Close();
+                        }
+                        catch (Exception error)
+                        {
+                            MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                            cnx.Dispose();
+                        }
+
+                        if (existe != 0)
+                        {
+                            try
+                            {
+                                cnx.Open();
+                                lstMovimiento = mh.obtenerMovimiento(mov);
+                                cnx.Close();
+                            }
+                            catch (Exception error)
+                            {
+                                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                                cnx.Dispose();
+                            }
+
+                            for (int i = 0; i < lstMovimiento.Count; i++)
+                            {
+                                Conceptos.Core.ConceptosHelper ch = new Conceptos.Core.ConceptosHelper();
+                                ch.Command = cmd;
+                                Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
+                                concepto.id = lstMovimiento[i].idconcepto;
+                                List<Conceptos.Core.Conceptos> lstNoConcepto = new List<Conceptos.Core.Conceptos>();
+                                try
+                                {
+                                    cnx.Open();
+                                    lstNoConcepto = ch.obtenerConcepto(concepto);
+                                    cnx.Close();
+                                }
+                                catch (Exception error) { MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error"); }
+
+                                CalculoNomina.Core.tmpPagoNomina vn = new CalculoNomina.Core.tmpPagoNomina();
+                                vn.idtrabajador = idTrabajador;
+                                vn.idempresa = GLOBALES.IDEMPRESA;
+                                vn.idconcepto = lstMovimiento[i].idconcepto;
+                                vn.noconcepto = lstNoConcepto[0].noconcepto;
+                                vn.tipoconcepto = lstNoConcepto[0].tipoconcepto;
+                                vn.fechainicio = _inicioPeriodo.Date;
+                                vn.fechafin = _finPeriodo.Date;
+                                vn.exento = 0;
+                                vn.gravado = 0;
+                                vn.cantidad = lstMovimiento[i].cantidad;
+                                vn.guardada = true;
+                                vn.tiponomina = _tipoNormalEspecial;
+                                vn.modificado = false;
+                                lstOtrasDeducciones.Add(vn);
+                            }
+                        }
+                    }
+                }
                 #endregion
 
                 #region BULK DATOS PROGRAMACION DE MOVIMIENTOS
@@ -405,10 +559,10 @@ namespace Nominas
                 pch.Command = cmd;
 
                 double sueldo = lstRecalculoPercepciones.Where(f => f.noconcepto == 1).Sum(f => f.cantidad);
+                double vacacion = lstRecalculoPercepciones.Where(f => f.noconcepto == 7).Sum(f => f.cantidad);
 
                 if (sueldo != 0)
                 {
-
                     int existe = 0;
                     ProgramacionConcepto.Core.ProgramacionConcepto programacion = new ProgramacionConcepto.Core.ProgramacionConcepto();
                     programacion.idtrabajador = idTrabajador;
@@ -479,6 +633,81 @@ namespace Nominas
                         }
                     }
                 }
+                else
+                {
+                    if (vacacion != 0)
+                    {
+                        int existe = 0;
+                        ProgramacionConcepto.Core.ProgramacionConcepto programacion = new ProgramacionConcepto.Core.ProgramacionConcepto();
+                        programacion.idtrabajador = idTrabajador;
+
+                        List<ProgramacionConcepto.Core.ProgramacionConcepto> lstProgramacion = new List<ProgramacionConcepto.Core.ProgramacionConcepto>();
+
+                        try
+                        {
+                            cnx.Open();
+                            existe = (int)pch.existeProgramacion(programacion);
+                            cnx.Close();
+                        }
+                        catch (Exception error)
+                        {
+                            MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                            cnx.Dispose();
+                        }
+
+                        if (existe != 0)
+                        {
+                            try
+                            {
+                                cnx.Open();
+                                lstProgramacion = pch.obtenerProgramacion(programacion);
+                                cnx.Close();
+                            }
+                            catch (Exception error)
+                            {
+                                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                                cnx.Dispose();
+                            }
+
+                            for (int i = 0; i < lstProgramacion.Count; i++)
+                            {
+                                if (_finPeriodo.Date <= lstProgramacion[i].fechafin)
+                                {
+                                    Conceptos.Core.ConceptosHelper ch = new Conceptos.Core.ConceptosHelper();
+                                    ch.Command = cmd;
+                                    Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
+                                    concepto.id = lstProgramacion[i].idconcepto;
+                                    List<Conceptos.Core.Conceptos> lstNoConcepto = new List<Conceptos.Core.Conceptos>();
+                                    try
+                                    {
+                                        cnx.Open();
+                                        lstNoConcepto = ch.obtenerConcepto(concepto);
+                                        cnx.Close();
+                                    }
+                                    catch (Exception error) { MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error"); }
+
+                                    CalculoNomina.Core.tmpPagoNomina vn = new CalculoNomina.Core.tmpPagoNomina();
+                                    vn.idtrabajador = idTrabajador;
+                                    vn.idempresa = GLOBALES.IDEMPRESA;
+                                    vn.idconcepto = lstProgramacion[i].idconcepto;
+                                    vn.noconcepto = lstNoConcepto[0].noconcepto;
+                                    vn.tipoconcepto = lstNoConcepto[0].tipoconcepto;
+                                    vn.fechainicio = _inicioPeriodo.Date;
+                                    vn.fechafin = _finPeriodo.Date;
+                                    vn.exento = 0;
+                                    vn.gravado = 0;
+                                    vn.cantidad = lstProgramacion[i].cantidad;
+                                    vn.guardada = true;
+                                    vn.tiponomina = _tipoNormalEspecial;
+                                    vn.modificado = false;
+                                    cnx.Open();
+                                    nh.actualizaConcepto(vn);
+                                    cnx.Close();
+                                }
+                            }
+                        }
+                    }
+                }
                 #endregion
 
                 #region MOVIMIENTOS
@@ -486,6 +715,7 @@ namespace Nominas
                 mh.Command = cmd;
 
                 sueldo = lstRecalculoPercepciones.Where(f => f.noconcepto == 1).Sum(f => f.cantidad);
+                vacacion = lstRecalculoPercepciones.Where(f => f.noconcepto == 7).Sum(f => f.cantidad);
 
                 if (sueldo != 0)
                 {
@@ -558,6 +788,80 @@ namespace Nominas
                         }
                     }
                 }
+                else
+                {
+                    if (vacacion != 0)
+                    {
+                        int existe = 0;
+                        Movimientos.Core.Movimientos mov = new Movimientos.Core.Movimientos();
+                        mov.idtrabajador = idTrabajador;
+                        mov.fechainicio = _inicioPeriodo.Date;
+                        mov.fechafin = _finPeriodo.Date;
+
+                        List<Movimientos.Core.Movimientos> lstMovimiento = new List<Movimientos.Core.Movimientos>();
+
+                        try
+                        {
+                            cnx.Open();
+                            existe = (int)mh.existeMovimiento(mov);
+                            cnx.Close();
+                        }
+                        catch (Exception error)
+                        {
+                            MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                            cnx.Dispose();
+                        }
+
+                        if (existe != 0)
+                        {
+                            try
+                            {
+                                cnx.Open();
+                                lstMovimiento = mh.obtenerMovimiento(mov);
+                                cnx.Close();
+                            }
+                            catch (Exception error)
+                            {
+                                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                                cnx.Dispose();
+                            }
+
+                            for (int i = 0; i < lstMovimiento.Count; i++)
+                            {
+                                Conceptos.Core.ConceptosHelper ch = new Conceptos.Core.ConceptosHelper();
+                                ch.Command = cmd;
+                                Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
+                                concepto.id = lstMovimiento[i].idconcepto;
+                                List<Conceptos.Core.Conceptos> lstNoConcepto = new List<Conceptos.Core.Conceptos>();
+                                try
+                                {
+                                    cnx.Open();
+                                    lstNoConcepto = ch.obtenerConcepto(concepto);
+                                    cnx.Close();
+                                }
+                                catch (Exception error) { MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error"); }
+
+                                CalculoNomina.Core.tmpPagoNomina vn = new CalculoNomina.Core.tmpPagoNomina();
+                                vn.idtrabajador = idTrabajador;
+                                vn.idempresa = GLOBALES.IDEMPRESA;
+                                vn.idconcepto = lstMovimiento[i].idconcepto;
+                                vn.noconcepto = lstNoConcepto[0].noconcepto;
+                                vn.tipoconcepto = lstNoConcepto[0].tipoconcepto;
+                                vn.fechainicio = _inicioPeriodo.Date;
+                                vn.fechafin = _finPeriodo.Date;
+                                vn.exento = 0;
+                                vn.gravado = 0;
+                                vn.cantidad = lstMovimiento[i].cantidad;
+                                vn.guardada = true;
+                                vn.tiponomina = _tipoNormalEspecial;
+                                vn.modificado = false;
+                                cnx.Open();
+                                nh.actualizaConcepto(vn);
+                                cnx.Close();
+                            }
+                        }
+                    }
+                }
                 #endregion
 
                 #region MOSTRAR DATOS
@@ -582,9 +886,11 @@ namespace Nominas
             dt.Columns.Add("cantidad", typeof(Double));
             dt.Columns.Add("fechainicio", typeof(DateTime));
             dt.Columns.Add("fechafin", typeof(DateTime));
+            dt.Columns.Add("diaslaborados", typeof(Int32));
             dt.Columns.Add("guardada", typeof(Boolean));
             dt.Columns.Add("tiponomina", typeof(Int32));
             dt.Columns.Add("modificado", typeof(Boolean));
+            dt.Columns.Add("fechapago", typeof(DateTime));
 
             for (int i = 0; i < lstValores.Count; i++)
             {
@@ -600,9 +906,11 @@ namespace Nominas
                 dtFila["cantidad"] = lstValores[i].cantidad;
                 dtFila["fechainicio"] = lstValores[i].fechainicio;
                 dtFila["fechafin"] = lstValores[i].fechafin;
+                dtFila["diaslaborados"] = 0;
                 dtFila["guardada"] = lstValores[i].guardada;
                 dtFila["tiponomina"] = lstValores[i].tiponomina;
                 dtFila["modificado"] = lstValores[i].modificado;
+                dtFila["fechapago"] = new DateTime(1900,1,1);
                 dt.Rows.Add(dtFila);
             }
 
@@ -626,7 +934,9 @@ namespace Nominas
 
         private void muestraDatos()
         {
-            
+            dgvPercepciones.DataSource = null;
+            dgvPercepciones.Columns.Clear();
+
             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();
             cmd.Connection = cnx;
@@ -664,6 +974,7 @@ namespace Nominas
 
             if (lstReciboPercepciones.Count != 0)
             {
+                string formulaDiasAPagar = "[DiasLaborados]-[Faltas]-[DiasIncapacidad]-[DiasVacaciones]";
                 FLAGCALCULO = true;
 
                 Conceptos.Core.ConceptosHelper conceptoh = new Conceptos.Core.ConceptosHelper();
@@ -673,6 +984,9 @@ namespace Nominas
                 c.idempresa = GLOBALES.IDEMPRESA;
 
                 List<Conceptos.Core.Conceptos> lstConceptos = new List<Conceptos.Core.Conceptos>();
+
+                CalculoFormula cf = new CalculoFormula(idTrabajador, _inicioPeriodo, _finPeriodo, formulaDiasAPagar);
+                int diasAPagar = int.Parse(cf.calcularFormula().ToString());
 
                 try
                 {
@@ -692,7 +1006,7 @@ namespace Nominas
                                  select new
                                  {
                                      NoConcepto = co.noconcepto,
-                                     concepto = co.concepto,
+                                     Concepto = co.concepto,
                                      Importe = r.cantidad
                                  };
 
@@ -702,7 +1016,7 @@ namespace Nominas
                                 select new 
                                 {
                                     NoConcepto = co.noconcepto,
-                                    concepto = co.concepto,
+                                    Concepto = co.concepto,
                                     Importe = r.cantidad
                                 };
 
@@ -725,6 +1039,7 @@ namespace Nominas
                 dgvDeducciones.Columns[2].DefaultCellStyle = estilo;
 
                 double sumaPercepciones = 0, sumaDeducciones = 0, netoPagar = 0;
+                double subsidio = lstReciboDeducciones.Where(d => d.noconcepto == 16).Sum(d => d.cantidad);
                 foreach (DataGridViewRow fila in dgvPercepciones.Rows)
                 {
                     sumaPercepciones += double.Parse(fila.Cells[2].Value.ToString());
@@ -735,10 +1050,14 @@ namespace Nominas
                     sumaDeducciones += double.Parse(fila.Cells[2].Value.ToString());
                 }
 
-                netoPagar = sumaPercepciones - sumaDeducciones;
+                netoPagar = (sumaPercepciones + subsidio) - sumaDeducciones;
                 txtPercepciones.Text = "$ " + sumaPercepciones.ToString("#,##0.00");
                 txtDeducciones.Text = "$ " + sumaDeducciones.ToString("#,##0.00");
                 txtNeto.Text = "$ " + netoPagar.ToString("#,##0.00");
+
+                dgvPercepciones.Columns.Add("dias", "dias");
+                if (diasAPagar != 0)
+                    dgvPercepciones.Rows[0].Cells[3].Value = diasAPagar.ToString() + " dias";
             }
             else
                 FLAGCALCULO = false;
@@ -1016,15 +1335,22 @@ namespace Nominas
             Vacaciones.Core.VacacionesHelper vh = new Vacaciones.Core.VacacionesHelper();
             vh.Command = cmd;
 
+            Complementos.Core.ComplementoHelper comh = new Complementos.Core.ComplementoHelper();
+            comh.Command = cmd;
+
             Vacaciones.Core.VacacionesPrima v = new Vacaciones.Core.VacacionesPrima();
             v.idtrabajador = idTrabajador;
 
+            Complementos.Core.Complemento comp = new Complementos.Core.Complemento();
+            comp.idtrabajador = idTrabajador;
+ 
             List<Vacaciones.Core.VacacionesPrima> lstVacacionesPrima = new List<Vacaciones.Core.VacacionesPrima>();
 
             try
             {
                 cnx.Open();
                 lstVacacionesPrima = vh.obtenerVacacionesPrimaTrabajador(v);
+                txtObservaciones.Text = comh.obtenerObservacionesTrabajador(comp).ToString();
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -1220,7 +1546,7 @@ namespace Nominas
             frmBuscar b = new frmBuscar();
             b.OnBuscar += b_OnBuscar;
             b._catalogo = GLOBALES.EMPLEADOS;
-            b._tipoNomina = GLOBALES.NORMAL;
+            b._tipoNomina = _tipoNormalEspecial;
             b.Show();
         }
 
@@ -1235,11 +1561,11 @@ namespace Nominas
                 return;
             }
 
-            if (int.Parse(txtFalta.Text) > 1 || int.Parse(txtFalta.Text) <= 0)
-            {
-                MessageBox.Show("Error: El valor ingreso debe ser 1.", "Error");
-                return;
-            }
+            //if (int.Parse(txtFalta.Text) > 1 || int.Parse(txtFalta.Text) <= 0)
+            //{
+            //    MessageBox.Show("Error: El valor ingreso debe ser 1.", "Error");
+            //    return;
+            //}
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)
@@ -1308,72 +1634,125 @@ namespace Nominas
                 }
             }
 
+
             Faltas.Core.FaltasHelper fh = new Faltas.Core.FaltasHelper();
             fh.Command = cmd;
 
-            Faltas.Core.Faltas falta = new Faltas.Core.Faltas();
-            falta.idtrabajador = idTrabajador;
-            falta.idempresa = GLOBALES.IDEMPRESA;
-            falta.faltas = int.Parse(txtFalta.Text);
-            falta.fechainicio = periodoInicio.Date;
-            falta.fechafin = periodoFin.Date;
-            falta.fecha = dtpFecha.Value.Date;
-            falta.periodo = periodo;
+            List<Faltas.Core.Faltas> lstFaltas = new List<Faltas.Core.Faltas>();
 
-            int existe = 0;
-            try
+            for (int i = 0; i < int.Parse(txtFalta.Text); i++)
             {
-                cnx.Open();
-                existe = (int)fh.existeFalta(idTrabajador, dtpFecha.Value.Date);
-                cnx.Close();
-            }
-            catch 
-            {
-                MessageBox.Show("Error: Al verificar existencia de falta.","Error");
-                cnx.Dispose();
-            }
-
-            if (existe != 0)
-            {
-                MessageBox.Show("Ya existe una falta con esa fecha.", "Error");
-                return;
-            }
-            else
-            {
-                Incidencias.Core.IncidenciasHelper ih = new Incidencias.Core.IncidenciasHelper();
-                ih.Command = cmd;
-
+                int existe = 0;
+                int existeVacacion = 0;
                 try
                 {
                     cnx.Open();
-                    existe = (int)ih.existeIncidenciaEnFalta(idTrabajador, dtpFecha.Value.Date);
+                    existe = (int)fh.existeFalta(idTrabajador, dtpFecha.Value.AddDays(i).Date);
                     cnx.Close();
                 }
                 catch
                 {
-                    MessageBox.Show("Error: Al guardar la falta.", "Error");
+                    MessageBox.Show("Error: Al verificar existencia de falta.", "Error");
                     cnx.Dispose();
                     return;
                 }
 
-                if (existe == 0)
+                if (existe != 0)
+                {
+                    MessageBox.Show("Ya existe una falta con esa fecha.", "Error");
+                    //return;
+                }
+                else
+                {
+                    Incidencias.Core.IncidenciasHelper ih = new Incidencias.Core.IncidenciasHelper();
+                    ih.Command = cmd;
+
+                    Vacaciones.Core.VacacionesHelper vh = new Vacaciones.Core.VacacionesHelper();
+                    vh.Command = cmd;
+
                     try
                     {
                         cnx.Open();
-                        fh.insertaFalta(falta);
+                        existe = (int)ih.existeIncidenciaEnFalta(idTrabajador, dtpFecha.Value.AddDays(i).Date);
+                        existeVacacion = (int)vh.existeVacacionEnFalta(idTrabajador, dtpFecha.Value.AddDays(i).Date);
                         cnx.Close();
-                        cnx.Dispose();
-                        muestraFaltas();
                     }
                     catch
                     {
                         MessageBox.Show("Error: Al guardar la falta.", "Error");
                         cnx.Dispose();
+                        return;
                     }
-                else
-                    MessageBox.Show("La falta ingresada, se empalma con una incapacidad del trabajador.", "Error");
+
+                    if (existe == 0 && existeVacacion == 0)
+                        try
+                        {
+                            //cnx.Open();
+                            //fh.insertaFalta(falta);
+                            //cnx.Close();
+                            //cnx.Dispose();
+                            //muestraFaltas();
+                            Faltas.Core.Faltas falta = new Faltas.Core.Faltas();
+                            falta.idtrabajador = idTrabajador;
+                            falta.idempresa = GLOBALES.IDEMPRESA;
+                            falta.faltas = 1;
+                            falta.fechainicio = periodoInicio.Date;
+                            falta.fechafin = periodoFin.Date;
+                            falta.fecha = dtpFecha.Value.AddDays(i).Date;
+                            falta.periodo = periodo;
+                            lstFaltas.Add(falta);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Error: Al guardar la falta.", "Error");
+                            cnx.Dispose();
+                        }
+                    else
+                        MessageBox.Show("La falta ingresada, se empalma con una incapacidad y/o dia de vacación del trabajador.", "Error");
+                }
             }
 
+            SqlBulkCopy bulk = new SqlBulkCopy(cnx);
+            fh.bulkCommand = bulk;
+
+            DataTable dtFalta = new DataTable();
+            DataRow dtFilaFalta;
+            dtFalta.Columns.Add("id", typeof(Int32));
+            dtFalta.Columns.Add("idtrabajador", typeof(Int32));
+            dtFalta.Columns.Add("idempresa", typeof(Int32));
+            dtFalta.Columns.Add("periodo", typeof(Int32));
+            dtFalta.Columns.Add("faltas", typeof(Int32));
+            dtFalta.Columns.Add("fechainicio", typeof(DateTime));
+            dtFalta.Columns.Add("fechafin", typeof(DateTime));
+            dtFalta.Columns.Add("fecha", typeof(DateTime));
+
+            for (int i = 0; i < lstFaltas.Count; i++)
+            {
+                dtFilaFalta = dtFalta.NewRow();
+                dtFilaFalta["id"] = i + 1;
+                dtFilaFalta["idtrabajador"] = lstFaltas[i].idtrabajador;
+                dtFilaFalta["idempresa"] = lstFaltas[i].idempresa;
+                dtFilaFalta["periodo"] = lstFaltas[i].periodo;
+                dtFilaFalta["faltas"] = lstFaltas[i].faltas;
+                dtFilaFalta["fechainicio"] = lstFaltas[i].fechainicio;
+                dtFilaFalta["fechafin"] = lstFaltas[i].fechafin;
+                dtFilaFalta["fecha"] = lstFaltas[i].fecha;
+                dtFalta.Rows.Add(dtFilaFalta);
+            }
+
+            try
+            {
+                cnx.Open();
+                fh.bulkFaltas(dtFalta, "tmpFaltas");
+                fh.stpFaltas();
+                cnx.Close();
+                cnx.Dispose();
+                muestraFaltas();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error: \r\n \r\n" + error.Message + "\r\n \r\n Error Bulk Faltas.", "Error");
+            }
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)
@@ -1610,12 +1989,22 @@ namespace Nominas
 
             for (int i = 0; i < lstVacacionesPrima.Count; i++)
             {
-                txtDiasPago.Text = lstVacacionesPrima[i].diaspago.ToString();
-                txtDiasPendientes.Text = lstVacacionesPrima[i].diaspendientes.ToString();
                 if (lstVacacionesPrima[i].vacacionesprima == "P")
-                    cmbConceptoVacaciones.SelectedIndex = 0;
-                else
+                {
+                    txtDiasPagoPV.Text = lstVacacionesPrima[i].diaspago.ToString();
+                    txtDiasPagoV.Text = "0";
                     cmbConceptoVacaciones.SelectedIndex = 1;
+                }
+                else
+                {
+                    txtDiasPagoV.Text = lstVacacionesPrima[i].diaspago.ToString();
+                    txtDiasPagoPV.Text = "0";
+                    dtpFechaInicioVacaciones.Value = lstVacacionesPrima[i].fechainicio;
+                    cmbConceptoVacaciones.SelectedIndex = 0;
+                }
+                    
+                txtDiasPendientes.Text = lstVacacionesPrima[i].diaspendientes.ToString();
+
             }
         }
 
@@ -1646,7 +2035,7 @@ namespace Nominas
                 cnx.Dispose();
                 muestraVacaciones();
 
-                txtDiasPago.Clear();
+                txtDiasPagoPV.Clear();
                 txtDiasPendientes.Clear();
             }
             catch
@@ -1669,8 +2058,15 @@ namespace Nominas
             Vacaciones.Core.VacacionesHelper vh = new Vacaciones.Core.VacacionesHelper();
             vh.Command = cmd;
 
+            Complementos.Core.ComplementoHelper ch = new Complementos.Core.ComplementoHelper();
+            ch.Command = cmd;
+
             Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
             empleado.idtrabajador = idTrabajador;
+
+            Complementos.Core.Complemento c = new Complementos.Core.Complemento();
+            c.idtrabajador = idTrabajador;
+            c.observaciones = txtObservaciones.Text;
 
             List<Empleados.Core.Empleados> lstEmpleado = new List<Empleados.Core.Empleados>();
 
@@ -1704,68 +2100,172 @@ namespace Nominas
                 return;
             }
 
-            Vacaciones.Core.VacacionesPrima vp = new Vacaciones.Core.VacacionesPrima();
-            vp.idtrabajador = idTrabajador;
-            vp.periodoinicio = _inicioPeriodo;
-            vp.periodofin = _finPeriodo;
-            if (cmbConceptoVacaciones.SelectedIndex == 0)
-                vp.vacacionesprima = "P";
-            else
-                vp.vacacionesprima = "V";
- 
-            int existe = 0;
-            try
-            {
-                cnx.Open();
-                existe = (int)vh.existeVacacionesPrima(vp);
-                cnx.Close();
-            }
-            catch
-            {
-                MessageBox.Show("Error: Al obtener la existencia de vacaciones del empleado.", "Error");
-                cnx.Dispose();
-                return;
-            }
+            int existePrima = 0;
+            int existeVacacion = 0;
 
-            if (existe != 0)
+            if (cmbConceptoVacaciones.SelectedIndex == 0) // PRIMA VACACIONAL Y VACACIONES
             {
-                MessageBox.Show("Error: Los datos a ingresar ya existen.", "Error");
-                cnx.Dispose();
-                return;
-            }
-            else
-            {
-                vp = new Vacaciones.Core.VacacionesPrima();
+                Vacaciones.Core.VacacionesPrima vp = new Vacaciones.Core.VacacionesPrima();
                 vp.idtrabajador = idTrabajador;
-                vp.idempresa = GLOBALES.IDEMPRESA;
                 vp.periodoinicio = _inicioPeriodo;
                 vp.periodofin = _finPeriodo;
-                vp.diasderecho = dias;
-                vp.diaspago = int.Parse(txtDiasPago.Text);
-                vp.diaspendientes = dias - int.Parse(txtDiasPago.Text);
-                vp.fechapago = DateTime.Now.Date;
+                vp.vacacionesprima = "P";
+               
+                try
+                {
+                    cnx.Open();
+                    existePrima = (int)vh.existeVacacionesPrima(vp);
+                    cnx.Close();
+                }
+                catch
+                {
+                    MessageBox.Show("Error: Al obtener la existencia de vacaciones del empleado.", "Error");
+                    cnx.Dispose();
+                    return;
+                }
 
-                if (cmbConceptoVacaciones.SelectedIndex == 0)
-                    vp.vacacionesprima = "P";
-                else
-                    vp.vacacionesprima = "V";
+                vp = new Vacaciones.Core.VacacionesPrima();
+                vp.idtrabajador = idTrabajador;
+                vp.periodoinicio = _inicioPeriodo;
+                vp.periodofin = _finPeriodo;
+                vp.vacacionesprima = "V";
 
                 try
                 {
                     cnx.Open();
-                    vh.insertaVacacion(vp);
+                    existeVacacion = (int)vh.existeVacacionesPrima(vp);
                     cnx.Close();
-                    cnx.Dispose();
-                    muestraVacaciones();
                 }
                 catch
                 {
-                    MessageBox.Show("Error: Al ingresar el registro de vacacion.", "Error");
+                    MessageBox.Show("Error: Al obtener la existencia de vacaciones del empleado.", "Error");
                     cnx.Dispose();
                     return;
                 }
-            }
 
+                //VALIDACION DE EXISTENCIA DE PRIMA VACACIONAL Y VACACIONES
+                if (existePrima != 0 || existeVacacion != 0)
+                {
+                    MessageBox.Show("Error: Los datos a ingresar ya existen y/o existe la Prima Vacaciona o Vacaciones.", "Error");
+                    cnx.Dispose();
+                    return;
+                }
+                else
+                {
+                    vp = new Vacaciones.Core.VacacionesPrima();
+                    vp.idtrabajador = idTrabajador;
+                    vp.idempresa = GLOBALES.IDEMPRESA;
+                    vp.periodoinicio = _inicioPeriodo;
+                    vp.periodofin = _finPeriodo;
+                    vp.diasderecho = dias;
+                    vp.diaspago = int.Parse(txtDiasPagoPV.Text);
+                    vp.diaspendientes = dias - int.Parse(txtDiasPagoPV.Text);
+                    vp.fechapago = DateTime.Now.Date;
+                    vp.fechainicio = DateTime.Now.Date;
+                    vp.fechafin = DateTime.Now.Date;
+                    vp.vacacionesprima = "P";
+
+                    try
+                    {
+                        cnx.Open();
+                        vh.insertaVacacion(vp);
+                        cnx.Close();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Error: Al ingresar el registro de prima vacacional.", "Error");
+                        cnx.Dispose();
+                        return;
+                    }
+
+                    vp = new Vacaciones.Core.VacacionesPrima();
+                    vp.idtrabajador = idTrabajador;
+                    vp.idempresa = GLOBALES.IDEMPRESA;
+                    vp.periodoinicio = _inicioPeriodo;
+                    vp.periodofin = _finPeriodo;
+                    vp.diasderecho = dias;
+                    vp.diaspago = int.Parse(txtDiasPagoV.Text);
+                    vp.diaspendientes = dias - int.Parse(txtDiasPagoV.Text);
+                    vp.fechapago = DateTime.Now.Date;
+                    vp.fechainicio = dtpFechaInicioVacaciones.Value.Date;
+                    vp.fechafin = dtpFechaInicioVacaciones.Value.AddDays(double.Parse(txtDiasPagoPV.Text) - 1);
+                    vp.vacacionesprima = "V";
+
+                    try
+                    {
+                        cnx.Open();
+                        vh.insertaVacacion(vp);
+                        cnx.Close();
+                        cnx.Dispose();
+                        muestraVacaciones();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Error: Al ingresar el registro de prima vacacional.", "Error");
+                        cnx.Dispose();
+                        return;
+                    }
+                }
+            }
+            else // SOLO PRIMA VACACIONAL
+            {
+                Vacaciones.Core.VacacionesPrima vp = new Vacaciones.Core.VacacionesPrima();
+                vp.idtrabajador = idTrabajador;
+                vp.periodoinicio = _inicioPeriodo;
+                vp.periodofin = _finPeriodo;
+                vp.vacacionesprima = "P";
+
+                try
+                {
+                    cnx.Open();
+                    existePrima = (int)vh.existeVacacionesPrima(vp);
+                    cnx.Close();
+                }
+                catch
+                {
+                    MessageBox.Show("Error: Al obtener la existencia de vacaciones del empleado.", "Error");
+                    cnx.Dispose();
+                    return;
+                }
+
+                //VALIDACION DE EXISTENCIA DE PRIMA VACACIONAL
+                if (existePrima != 0)
+                {
+                    MessageBox.Show("Error: Los datos a ingresar ya existen.", "Error");
+                    cnx.Dispose();
+                    return;
+                }
+                else
+                {
+                    vp = new Vacaciones.Core.VacacionesPrima();
+                    vp.idtrabajador = idTrabajador;
+                    vp.idempresa = GLOBALES.IDEMPRESA;
+                    vp.periodoinicio = _inicioPeriodo;
+                    vp.periodofin = _finPeriodo;
+                    vp.diasderecho = dias;
+                    vp.diaspago = int.Parse(txtDiasPagoPV.Text);
+                    vp.diaspendientes = dias - int.Parse(txtDiasPagoPV.Text);
+                    vp.fechapago = DateTime.Now.Date;
+                    vp.fechainicio = DateTime.Now.Date;
+                    vp.fechafin = DateTime.Now.Date;
+                    vp.vacacionesprima = "P";
+
+                    try
+                    {
+                        cnx.Open();
+                        vh.insertaVacacion(vp);
+                        cnx.Close();
+                        cnx.Dispose();
+                        muestraVacaciones();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Error: Al ingresar el registro de prima vacacional.", "Error");
+                        cnx.Dispose();
+                        return;
+                    }
+                }
+            }
         }
 
         private void toolEliminar_Click(object sender, EventArgs e)
@@ -1790,6 +2290,7 @@ namespace Nominas
 
                 dgvPercepciones.DataSource = null;
                 dgvDeducciones.DataSource = null;
+                dgvPercepciones.Columns.Clear();
                 FLAGCALCULO = false;
             }
             catch{
@@ -1797,5 +2298,58 @@ namespace Nominas
                 this.Dispose();
             }
         }
+
+        private void btnGuardarObservaciones_Click(object sender, EventArgs e)
+        {
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+         
+            Complementos.Core.ComplementoHelper ch = new Complementos.Core.ComplementoHelper();
+            ch.Command = cmd;
+
+            Complementos.Core.Complemento c = new Complementos.Core.Complemento();
+            c.idtrabajador = idTrabajador;
+            c.observaciones = txtObservaciones.Text;
+
+            try
+            {
+                cnx.Open();
+                ch.actualizaObservacionesTrabajador(c);
+                cnx.Close();
+                cnx.Dispose();
+            }
+            catch
+            {
+                MessageBox.Show("Error: Al actualizar las observaciones.", "Error");
+                cnx.Dispose();
+                return;
+            }
+        }
+
+        private void cmbConceptoVacaciones_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbConceptoVacaciones.Text == "Prima Vacacional y Vacaciones")
+            {
+                dtpFechaInicioVacaciones.Enabled = true;
+                txtDiasPagoPV.Enabled = true;
+                txtDiasPagoV.Enabled = true;
+            }
+            else if (cmbConceptoVacaciones.Text == "Prima Vacacional")
+            {
+                dtpFechaInicioVacaciones.Enabled = false;
+                txtDiasPagoPV.Enabled = true;
+                txtDiasPagoV.Enabled = false;
+            }
+        }
+
+        private void frmSobreRecibo_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.F3)
+            {
+                btnBuscar_Click_1(sender, e);
+            }
+        }
+
     }
 }

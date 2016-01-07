@@ -158,7 +158,13 @@ namespace Nominas
         private void btnAceptar_Click(object sender, EventArgs e)
         {
             if (OnFiltro != null)
-                OnFiltro(_filtro, int.Parse(cmbDe.SelectedValue.ToString()), int.Parse(cmbHasta.SelectedValue.ToString()));
+            {
+                if(cmbDe.SelectedValue == null || cmbHasta.SelectedValue == null)
+                    OnFiltro(_filtro, 0, 0);
+                else
+                    OnFiltro(_filtro, int.Parse(cmbDe.SelectedValue.ToString()), int.Parse(cmbHasta.SelectedValue.ToString()));
+            }
+            
             this.Dispose();
         }
     }

@@ -25,6 +25,7 @@ namespace Nominas
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
         Conceptos.Core.ConceptosHelper ch;
         string TipoConcepto;
+        string concepto;
         #endregion
 
         #region VARIABLES PUBLICAS
@@ -63,6 +64,7 @@ namespace Nominas
             concepto.gravado = false;
             concepto.exento = false;
             concepto.visible = chkVisible.Checked;
+            concepto.gruposat = txtGrupoSat.Text;
 
             switch (_tipoOperacion)
             {
@@ -111,9 +113,16 @@ namespace Nominas
         private void cmbTipo_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbTipo.Text == "PERCEPCION")
+            {
                 TipoConcepto = "P";
+                concepto = "SAT PERCEPCIONES";
+            }
             else
+            {
                 TipoConcepto = "D";
+                concepto = "SAT DEDUCCIONES";
+            }
+                
         }
 
         private void toolGuardarCerrar_Click(object sender, EventArgs e)
@@ -163,6 +172,7 @@ namespace Nominas
                         txtFormula.Text = lstConcepto[i].formula;
                         txtExento.Text = lstConcepto[i].formulaexento;
                         chkVisible.Checked = lstConcepto[i].visible;
+                        txtGrupoSat.Text = lstConcepto[i].gruposat;
                     }
                 }
                 catch (Exception error)
@@ -204,6 +214,19 @@ namespace Nominas
             ef.OnFormula += ef_OnFormula;
             ef._tipo = 1;
             ef.ShowDialog();
+        }
+
+        private void btnGrupoSat_Click(object sender, EventArgs e)
+        {
+            frmGrupoSat gs = new frmGrupoSat();
+            gs.OnSeleccion += gs_OnSeleccion;
+            gs._percepcionDeduccion = concepto;
+            gs.Show();
+        }
+
+        void gs_OnSeleccion(string grupo)
+        {
+            txtGrupoSat.Text = grupo;
         }
     }
 }

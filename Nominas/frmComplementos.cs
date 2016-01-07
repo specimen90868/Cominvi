@@ -174,6 +174,10 @@ namespace Nominas
                 else
                     toolTitulo.Text = "Edición del Complemento";
             }
+            else
+            {
+                lblEmpleado.Text = _nombreEmpleado;
+            }
         }
 
         private void toolGuardar_Click(object sender, EventArgs e)

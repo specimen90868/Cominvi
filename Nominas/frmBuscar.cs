@@ -83,6 +83,8 @@ namespace Nominas
                     MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
                 }
             }
+
+            txtBuscar.Select();
         }
 
         private void toolCerrar_Click(object sender, EventArgs e)
@@ -158,6 +160,12 @@ namespace Nominas
                 OnBuscar(int.Parse(dgvCatalogo.Rows[fila].Cells[0].Value.ToString()), dgvCatalogo.Rows[fila].Cells[2].Value.ToString());
                 this.Dispose();
             }
+        }
+
+        private void frmBuscar_Shown(object sender, EventArgs e)
+        {
+            txtBuscar_Click(sender, e);
+            txtBuscar.Focus();
         }
     }
 }

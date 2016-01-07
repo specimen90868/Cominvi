@@ -126,7 +126,7 @@ namespace Infonavit.Core
             for (int i = 0; i < dtInfonavit.Rows.Count; i++)
             {
                 Infonavit inf = new Infonavit();
-                inf.idinfonavit = int.Parse(dtInfonavit.Rows[i]["dias"].ToString());
+                inf.dias = int.Parse(dtInfonavit.Rows[i]["dias"].ToString());
                 inf.fecha = DateTime.Parse(dtInfonavit.Rows[i]["fecha"].ToString());
                 
                 lstInfonavit.Add(inf);
@@ -136,7 +136,7 @@ namespace Infonavit.Core
 
         public object obtenerValorInfonavit(Infonavit e)
         {
-            Command.CommandText = "select valordescuento from infonavit where idtrabajador = @idtrabajador";
+            Command.CommandText = "select valordescuento from infonavit where idtrabajador = @idtrabajador and activo = 1";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", e.idtrabajador);
             object dato = Select(Command);

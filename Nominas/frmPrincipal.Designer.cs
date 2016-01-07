@@ -66,6 +66,8 @@
             this.toolCalculoNomina = new System.Windows.Forms.ToolStripMenuItem();
             this.toolNominaNormal = new System.Windows.Forms.ToolStripMenuItem();
             this.toolNominaEspecial = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolExtraordinario = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolExtraordinarioEspecial = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.toolAutorizarNomina = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
@@ -93,6 +95,8 @@
             this.toolImss = new System.Windows.Forms.ToolStripMenuItem();
             this.stsPrincipal = new System.Windows.Forms.StatusStrip();
             this.toolEstatusPerfil = new System.Windows.Forms.ToolStripStatusLabel();
+            this.workAntiguedad = new System.ComponentModel.BackgroundWorker();
+            this.toolPorcentaje = new System.Windows.Forms.ToolStripStatusLabel();
             this.mnuPrincipal.SuspendLayout();
             this.stsPrincipal.SuspendLayout();
             this.SuspendLayout();
@@ -375,7 +379,9 @@
             // 
             this.toolCalculoNomina.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolNominaNormal,
-            this.toolNominaEspecial});
+            this.toolNominaEspecial,
+            this.toolExtraordinario,
+            this.toolExtraordinarioEspecial});
             this.toolCalculoNomina.Name = "toolCalculoNomina";
             this.toolCalculoNomina.Size = new System.Drawing.Size(174, 22);
             this.toolCalculoNomina.Text = "Cálculo de nómina";
@@ -383,16 +389,30 @@
             // toolNominaNormal
             // 
             this.toolNominaNormal.Name = "toolNominaNormal";
-            this.toolNominaNormal.Size = new System.Drawing.Size(116, 22);
+            this.toolNominaNormal.Size = new System.Drawing.Size(192, 22);
             this.toolNominaNormal.Text = "Normal";
             this.toolNominaNormal.Click += new System.EventHandler(this.toolNominaNormal_Click);
             // 
             // toolNominaEspecial
             // 
             this.toolNominaEspecial.Name = "toolNominaEspecial";
-            this.toolNominaEspecial.Size = new System.Drawing.Size(116, 22);
+            this.toolNominaEspecial.Size = new System.Drawing.Size(192, 22);
             this.toolNominaEspecial.Text = "Especial";
             this.toolNominaEspecial.Click += new System.EventHandler(this.toolNominaEspecial_Click);
+            // 
+            // toolExtraordinario
+            // 
+            this.toolExtraordinario.Name = "toolExtraordinario";
+            this.toolExtraordinario.Size = new System.Drawing.Size(192, 22);
+            this.toolExtraordinario.Text = "Extraordinario normal";
+            this.toolExtraordinario.Click += new System.EventHandler(this.toolExtraordinario_Click);
+            // 
+            // toolExtraordinarioEspecial
+            // 
+            this.toolExtraordinarioEspecial.Name = "toolExtraordinarioEspecial";
+            this.toolExtraordinarioEspecial.Size = new System.Drawing.Size(192, 22);
+            this.toolExtraordinarioEspecial.Text = "Extraordinario especial";
+            this.toolExtraordinarioEspecial.Click += new System.EventHandler(this.toolExtraordinarioEspecial_Click);
             // 
             // toolStripSeparator9
             // 
@@ -583,7 +603,8 @@
             // stsPrincipal
             // 
             this.stsPrincipal.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolEstatusPerfil});
+            this.toolEstatusPerfil,
+            this.toolPorcentaje});
             this.stsPrincipal.Location = new System.Drawing.Point(0, 448);
             this.stsPrincipal.Name = "stsPrincipal";
             this.stsPrincipal.Size = new System.Drawing.Size(842, 22);
@@ -593,8 +614,21 @@
             // toolEstatusPerfil
             // 
             this.toolEstatusPerfil.Name = "toolEstatusPerfil";
-            this.toolEstatusPerfil.Size = new System.Drawing.Size(98, 17);
-            this.toolEstatusPerfil.Text = "Cargando perfil...";
+            this.toolEstatusPerfil.Size = new System.Drawing.Size(159, 17);
+            this.toolEstatusPerfil.Text = "Actualizando antiguedades...";
+            // 
+            // workAntiguedad
+            // 
+            this.workAntiguedad.WorkerReportsProgress = true;
+            this.workAntiguedad.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workAntiguedad_DoWork);
+            this.workAntiguedad.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.workAntiguedad_ProgressChanged);
+            this.workAntiguedad.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workAntiguedad_RunWorkerCompleted);
+            // 
+            // toolPorcentaje
+            // 
+            this.toolPorcentaje.Name = "toolPorcentaje";
+            this.toolPorcentaje.Size = new System.Drawing.Size(23, 17);
+            this.toolPorcentaje.Text = "0%";
             // 
             // frmPrincipal
             // 
@@ -685,6 +719,10 @@
         private System.Windows.Forms.ToolStripMenuItem toolIncapacidades;
         private System.Windows.Forms.ToolStripMenuItem toolConceptoEmpleado;
         private System.Windows.Forms.ToolStripMenuItem toolProgramacionConcepto;
+        private System.Windows.Forms.ToolStripMenuItem toolExtraordinario;
+        private System.Windows.Forms.ToolStripMenuItem toolExtraordinarioEspecial;
+        private System.ComponentModel.BackgroundWorker workAntiguedad;
+        private System.Windows.Forms.ToolStripStatusLabel toolPorcentaje;
     }
 }
 

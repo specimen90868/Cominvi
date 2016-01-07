@@ -183,6 +183,12 @@
     <Compile Include="frmFiltroNomina.Designer.cs">
       <DependentUpon>frmFiltroNomina.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmGrupoSat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGrupoSat.Designer.cs">
+      <DependentUpon>frmGrupoSat.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmImagen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -627,6 +633,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmFiltroNomina.resx">
       <DependentUpon>frmFiltroNomina.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGrupoSat.resx">
+      <DependentUpon>frmGrupoSat.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmImagen.resx">
       <DependentUpon>frmImagen.cs</DependentUpon>

@@ -110,13 +110,18 @@
             this.tabVacaciones = new System.Windows.Forms.TabPage();
             this.ContenedorVacaciones = new System.Windows.Forms.SplitContainer();
             this.lstvVacaciones = new System.Windows.Forms.ListView();
+            this.dtpFechaInicioVacaciones = new System.Windows.Forms.DateTimePicker();
+            this.label22 = new System.Windows.Forms.Label();
+            this.btnGuardarObservaciones = new System.Windows.Forms.Button();
+            this.label21 = new System.Windows.Forms.Label();
+            this.txtObservaciones = new System.Windows.Forms.TextBox();
             this.cmbConceptoVacaciones = new System.Windows.Forms.ComboBox();
             this.btnEliminarVP = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
             this.btnGuardarVP = new System.Windows.Forms.Button();
             this.label19 = new System.Windows.Forms.Label();
             this.txtDiasPendientes = new System.Windows.Forms.TextBox();
-            this.txtDiasPago = new System.Windows.Forms.TextBox();
+            this.txtDiasPagoPV = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.txtSueldo = new System.Windows.Forms.TextBox();
@@ -146,8 +151,8 @@
             this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.txtObservaciones = new System.Windows.Forms.TextBox();
-            this.label21 = new System.Windows.Forms.Label();
+            this.txtDiasPagoV = new System.Windows.Forms.TextBox();
+            this.label23 = new System.Windows.Forms.Label();
             this.toolAcciones.SuspendLayout();
             this.TabPrincipal.SuspendLayout();
             this.tabPercepcionesDeducciones.SuspendLayout();
@@ -333,19 +338,25 @@
             // 
             // dgvDeducciones
             // 
+            this.dgvDeducciones.AllowUserToAddRows = false;
+            this.dgvDeducciones.AllowUserToDeleteRows = false;
             this.dgvDeducciones.BackgroundColor = System.Drawing.Color.White;
             this.dgvDeducciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDeducciones.Location = new System.Drawing.Point(352, 29);
             this.dgvDeducciones.Name = "dgvDeducciones";
+            this.dgvDeducciones.ReadOnly = true;
             this.dgvDeducciones.Size = new System.Drawing.Size(344, 256);
             this.dgvDeducciones.TabIndex = 14;
             // 
             // dgvPercepciones
             // 
+            this.dgvPercepciones.AllowUserToAddRows = false;
+            this.dgvPercepciones.AllowUserToDeleteRows = false;
             this.dgvPercepciones.BackgroundColor = System.Drawing.Color.White;
             this.dgvPercepciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPercepciones.Location = new System.Drawing.Point(9, 29);
             this.dgvPercepciones.Name = "dgvPercepciones";
+            this.dgvPercepciones.ReadOnly = true;
             this.dgvPercepciones.Size = new System.Drawing.Size(344, 256);
             this.dgvPercepciones.TabIndex = 13;
             // 
@@ -452,6 +463,7 @@
             this.txtFalta.Name = "txtFalta";
             this.txtFalta.Size = new System.Drawing.Size(45, 20);
             this.txtFalta.TabIndex = 2;
+            this.txtFalta.Text = "1";
             this.txtFalta.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtFalta.Leave += new System.EventHandler(this.txtFalta_Leave);
             // 
@@ -1017,6 +1029,11 @@
             // 
             // ContenedorVacaciones.Panel2
             // 
+            this.ContenedorVacaciones.Panel2.Controls.Add(this.label23);
+            this.ContenedorVacaciones.Panel2.Controls.Add(this.txtDiasPagoV);
+            this.ContenedorVacaciones.Panel2.Controls.Add(this.dtpFechaInicioVacaciones);
+            this.ContenedorVacaciones.Panel2.Controls.Add(this.label22);
+            this.ContenedorVacaciones.Panel2.Controls.Add(this.btnGuardarObservaciones);
             this.ContenedorVacaciones.Panel2.Controls.Add(this.label21);
             this.ContenedorVacaciones.Panel2.Controls.Add(this.txtObservaciones);
             this.ContenedorVacaciones.Panel2.Controls.Add(this.cmbConceptoVacaciones);
@@ -1025,7 +1042,7 @@
             this.ContenedorVacaciones.Panel2.Controls.Add(this.btnGuardarVP);
             this.ContenedorVacaciones.Panel2.Controls.Add(this.label19);
             this.ContenedorVacaciones.Panel2.Controls.Add(this.txtDiasPendientes);
-            this.ContenedorVacaciones.Panel2.Controls.Add(this.txtDiasPago);
+            this.ContenedorVacaciones.Panel2.Controls.Add(this.txtDiasPagoPV);
             this.ContenedorVacaciones.Panel2.Controls.Add(this.label20);
             this.ContenedorVacaciones.Size = new System.Drawing.Size(704, 342);
             this.ContenedorVacaciones.SplitterDistance = 203;
@@ -1041,21 +1058,70 @@
             this.lstvVacaciones.UseCompatibleStateImageBehavior = false;
             this.lstvVacaciones.Click += new System.EventHandler(this.lstvVacaciones_Click);
             // 
+            // dtpFechaInicioVacaciones
+            // 
+            this.dtpFechaInicioVacaciones.CalendarMonthBackground = System.Drawing.SystemColors.Control;
+            this.dtpFechaInicioVacaciones.Enabled = false;
+            this.dtpFechaInicioVacaciones.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpFechaInicioVacaciones.Location = new System.Drawing.Point(244, 68);
+            this.dtpFechaInicioVacaciones.Name = "dtpFechaInicioVacaciones";
+            this.dtpFechaInicioVacaciones.Size = new System.Drawing.Size(104, 20);
+            this.dtpFechaInicioVacaciones.TabIndex = 12;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.Location = new System.Drawing.Point(241, 45);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(167, 13);
+            this.label22.TabIndex = 11;
+            this.label22.Text = "Fecha inicio de vacaciones:";
+            // 
+            // btnGuardarObservaciones
+            // 
+            this.btnGuardarObservaciones.Location = new System.Drawing.Point(414, 316);
+            this.btnGuardarObservaciones.Name = "btnGuardarObservaciones";
+            this.btnGuardarObservaciones.Size = new System.Drawing.Size(75, 23);
+            this.btnGuardarObservaciones.TabIndex = 10;
+            this.btnGuardarObservaciones.Text = "Guardar";
+            this.btnGuardarObservaciones.UseVisualStyleBackColor = true;
+            this.btnGuardarObservaciones.Click += new System.EventHandler(this.btnGuardarObservaciones_Click);
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.Location = new System.Drawing.Point(12, 123);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(95, 13);
+            this.label21.TabIndex = 9;
+            this.label21.Text = "Observaciones:";
+            // 
+            // txtObservaciones
+            // 
+            this.txtObservaciones.Location = new System.Drawing.Point(17, 139);
+            this.txtObservaciones.Multiline = true;
+            this.txtObservaciones.Name = "txtObservaciones";
+            this.txtObservaciones.Size = new System.Drawing.Size(474, 171);
+            this.txtObservaciones.TabIndex = 8;
+            // 
             // cmbConceptoVacaciones
             // 
             this.cmbConceptoVacaciones.BackColor = System.Drawing.SystemColors.Control;
             this.cmbConceptoVacaciones.FormattingEnabled = true;
             this.cmbConceptoVacaciones.Items.AddRange(new object[] {
-            "Prima Vacacional",
-            "Vacaciones"});
-            this.cmbConceptoVacaciones.Location = new System.Drawing.Point(122, 15);
+            "Prima Vacacional y Vacaciones",
+            "Prima Vacacional"});
+            this.cmbConceptoVacaciones.Location = new System.Drawing.Point(129, 15);
             this.cmbConceptoVacaciones.Name = "cmbConceptoVacaciones";
-            this.cmbConceptoVacaciones.Size = new System.Drawing.Size(100, 21);
+            this.cmbConceptoVacaciones.Size = new System.Drawing.Size(230, 21);
             this.cmbConceptoVacaciones.TabIndex = 1;
+            this.cmbConceptoVacaciones.SelectedIndexChanged += new System.EventHandler(this.cmbConceptoVacaciones_SelectedIndexChanged);
             // 
             // btnEliminarVP
             // 
-            this.btnEliminarVP.Location = new System.Drawing.Point(414, 300);
+            this.btnEliminarVP.Location = new System.Drawing.Point(414, 110);
             this.btnEliminarVP.Name = "btnEliminarVP";
             this.btnEliminarVP.Size = new System.Drawing.Size(75, 23);
             this.btnEliminarVP.TabIndex = 7;
@@ -1075,7 +1141,7 @@
             // 
             // btnGuardarVP
             // 
-            this.btnGuardarVP.Location = new System.Drawing.Point(333, 300);
+            this.btnGuardarVP.Location = new System.Drawing.Point(333, 110);
             this.btnGuardarVP.Name = "btnGuardarVP";
             this.btnGuardarVP.Size = new System.Drawing.Size(75, 23);
             this.btnGuardarVP.TabIndex = 6;
@@ -1089,31 +1155,34 @@
             this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label19.Location = new System.Drawing.Point(12, 45);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(83, 13);
+            this.label19.Size = new System.Drawing.Size(111, 13);
             this.label19.TabIndex = 2;
-            this.label19.Text = "Dias a pagar:";
+            this.label19.Text = "Dias a pagar P.V.:";
             // 
             // txtDiasPendientes
             // 
             this.txtDiasPendientes.BackColor = System.Drawing.SystemColors.Control;
-            this.txtDiasPendientes.Location = new System.Drawing.Point(122, 68);
+            this.txtDiasPendientes.Enabled = false;
+            this.txtDiasPendientes.Location = new System.Drawing.Point(129, 94);
             this.txtDiasPendientes.Name = "txtDiasPendientes";
             this.txtDiasPendientes.Size = new System.Drawing.Size(100, 20);
             this.txtDiasPendientes.TabIndex = 5;
             // 
-            // txtDiasPago
+            // txtDiasPagoPV
             // 
-            this.txtDiasPago.BackColor = System.Drawing.SystemColors.Control;
-            this.txtDiasPago.Location = new System.Drawing.Point(122, 42);
-            this.txtDiasPago.Name = "txtDiasPago";
-            this.txtDiasPago.Size = new System.Drawing.Size(54, 20);
-            this.txtDiasPago.TabIndex = 3;
+            this.txtDiasPagoPV.BackColor = System.Drawing.SystemColors.Control;
+            this.txtDiasPagoPV.Location = new System.Drawing.Point(129, 42);
+            this.txtDiasPagoPV.Name = "txtDiasPagoPV";
+            this.txtDiasPagoPV.Size = new System.Drawing.Size(54, 20);
+            this.txtDiasPagoPV.TabIndex = 3;
+            this.txtDiasPagoPV.Text = "1";
+            this.txtDiasPagoPV.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label20
             // 
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.Location = new System.Drawing.Point(12, 71);
+            this.label20.Location = new System.Drawing.Point(12, 97);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(102, 13);
             this.label20.TabIndex = 4;
@@ -1211,11 +1280,12 @@
             // 
             // btnBuscar
             // 
+            this.btnBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBuscar.Location = new System.Drawing.Point(117, 7);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(24, 21);
             this.btnBuscar.TabIndex = 22;
-            this.btnBuscar.Text = "...";
+            this.btnBuscar.Text = "F3";
             this.btnBuscar.UseVisualStyleBackColor = true;
             this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click_1);
             // 
@@ -1332,23 +1402,25 @@
             this.dataGridViewTextBoxColumn15.HeaderText = "Fin";
             this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
             // 
-            // txtObservaciones
+            // txtDiasPagoV
             // 
-            this.txtObservaciones.Location = new System.Drawing.Point(15, 114);
-            this.txtObservaciones.Multiline = true;
-            this.txtObservaciones.Name = "txtObservaciones";
-            this.txtObservaciones.Size = new System.Drawing.Size(474, 180);
-            this.txtObservaciones.TabIndex = 8;
+            this.txtDiasPagoV.BackColor = System.Drawing.SystemColors.Control;
+            this.txtDiasPagoV.Location = new System.Drawing.Point(129, 68);
+            this.txtDiasPagoV.Name = "txtDiasPagoV";
+            this.txtDiasPagoV.Size = new System.Drawing.Size(54, 20);
+            this.txtDiasPagoV.TabIndex = 13;
+            this.txtDiasPagoV.Text = "1";
+            this.txtDiasPagoV.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // label21
+            // label23
             // 
-            this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label21.Location = new System.Drawing.Point(12, 98);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(95, 13);
-            this.label21.TabIndex = 9;
-            this.label21.Text = "Observaciones:";
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label23.Location = new System.Drawing.Point(12, 71);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(99, 13);
+            this.label23.TabIndex = 14;
+            this.label23.Text = "Dias a pagar V.:";
             // 
             // frmSobreRecibo
             // 
@@ -1358,12 +1430,14 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel3);
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(728, 489);
             this.MinimizeBox = false;
             this.Name = "frmSobreRecibo";
             this.Text = "Sobre-recibo";
             this.Load += new System.EventHandler(this.frmSobreRecibo_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmSobreRecibo_KeyDown);
             this.toolAcciones.ResumeLayout(false);
             this.toolAcciones.PerformLayout();
             this.TabPrincipal.ResumeLayout(false);
@@ -1523,7 +1597,7 @@
         internal System.Windows.Forms.TextBox txtNumeroCredito;
         internal System.Windows.Forms.Label Label50;
         internal System.Windows.Forms.Label Label51;
-        private System.Windows.Forms.TextBox txtDiasPago;
+        private System.Windows.Forms.TextBox txtDiasPagoPV;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.ComboBox cmbConceptoVacaciones;
         private System.Windows.Forms.Label label18;
@@ -1536,5 +1610,10 @@
         private System.Windows.Forms.ToolStripButton toolEliminar;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.TextBox txtObservaciones;
+        private System.Windows.Forms.Button btnGuardarObservaciones;
+        private System.Windows.Forms.DateTimePicker dtpFechaInicioVacaciones;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.TextBox txtDiasPagoV;
     }
 }

@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmListaCargaFaltas));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolTitulo = new System.Windows.Forms.ToolStrip();
             this.toolEmpleados = new System.Windows.Forms.ToolStripLabel();
             this.toolBusqueda = new System.Windows.Forms.ToolStrip();
@@ -41,13 +41,6 @@
             this.toolLimpiar = new System.Windows.Forms.ToolStripButton();
             this.toolAplicar = new System.Windows.Forms.ToolStripButton();
             this.dgvCargaFaltas = new System.Windows.Forms.DataGridView();
-            this.noempleado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.paterno = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.materno = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fechainicio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fechafin = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -55,6 +48,13 @@
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.noempleado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.paterno = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.materno = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.faltas = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fechainicio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fechafin = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolTitulo.SuspendLayout();
             this.toolBusqueda.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCargaFaltas)).BeginInit();
@@ -138,7 +138,7 @@
             this.nombre,
             this.paterno,
             this.materno,
-            this.fecha,
+            this.faltas,
             this.fechainicio,
             this.fechafin});
             this.dgvCargaFaltas.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -148,52 +148,6 @@
             this.dgvCargaFaltas.ReadOnly = true;
             this.dgvCargaFaltas.Size = new System.Drawing.Size(778, 540);
             this.dgvCargaFaltas.TabIndex = 10;
-            // 
-            // noempleado
-            // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.noempleado.DefaultCellStyle = dataGridViewCellStyle1;
-            this.noempleado.HeaderText = "No. Empleado";
-            this.noempleado.Name = "noempleado";
-            this.noempleado.ReadOnly = true;
-            // 
-            // nombre
-            // 
-            this.nombre.HeaderText = "Nombre";
-            this.nombre.Name = "nombre";
-            this.nombre.ReadOnly = true;
-            // 
-            // paterno
-            // 
-            this.paterno.HeaderText = "Paterno";
-            this.paterno.Name = "paterno";
-            this.paterno.ReadOnly = true;
-            // 
-            // materno
-            // 
-            this.materno.HeaderText = "Materno";
-            this.materno.Name = "materno";
-            this.materno.ReadOnly = true;
-            // 
-            // fecha
-            // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.fecha.DefaultCellStyle = dataGridViewCellStyle2;
-            this.fecha.HeaderText = "Fecha Falta";
-            this.fecha.Name = "fecha";
-            this.fecha.ReadOnly = true;
-            // 
-            // fechainicio
-            // 
-            this.fechainicio.HeaderText = "Fecha Inicio";
-            this.fechainicio.Name = "fechainicio";
-            this.fechainicio.ReadOnly = true;
-            // 
-            // fechafin
-            // 
-            this.fechafin.HeaderText = "Fecha Fin";
-            this.fechafin.Name = "fechafin";
-            this.fechafin.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -234,6 +188,52 @@
             // 
             this.dataGridViewTextBoxColumn7.HeaderText = "Fecha Fin";
             this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            // 
+            // noempleado
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.noempleado.DefaultCellStyle = dataGridViewCellStyle1;
+            this.noempleado.HeaderText = "No. Empleado";
+            this.noempleado.Name = "noempleado";
+            this.noempleado.ReadOnly = true;
+            // 
+            // nombre
+            // 
+            this.nombre.HeaderText = "Nombre";
+            this.nombre.Name = "nombre";
+            this.nombre.ReadOnly = true;
+            // 
+            // paterno
+            // 
+            this.paterno.HeaderText = "Paterno";
+            this.paterno.Name = "paterno";
+            this.paterno.ReadOnly = true;
+            // 
+            // materno
+            // 
+            this.materno.HeaderText = "Materno";
+            this.materno.Name = "materno";
+            this.materno.ReadOnly = true;
+            // 
+            // faltas
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.faltas.DefaultCellStyle = dataGridViewCellStyle2;
+            this.faltas.HeaderText = "Faltas";
+            this.faltas.Name = "faltas";
+            this.faltas.ReadOnly = true;
+            // 
+            // fechainicio
+            // 
+            this.fechainicio.HeaderText = "Fecha Inicio";
+            this.fechainicio.Name = "fechainicio";
+            this.fechainicio.ReadOnly = true;
+            // 
+            // fechafin
+            // 
+            this.fechafin.HeaderText = "Fecha Fin";
+            this.fechafin.Name = "fechafin";
+            this.fechafin.ReadOnly = true;
             // 
             // frmListaCargaFaltas
             // 
@@ -277,7 +277,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn nombre;
         private System.Windows.Forms.DataGridViewTextBoxColumn paterno;
         private System.Windows.Forms.DataGridViewTextBoxColumn materno;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fecha;
+        private System.Windows.Forms.DataGridViewTextBoxColumn faltas;
         private System.Windows.Forms.DataGridViewTextBoxColumn fechainicio;
         private System.Windows.Forms.DataGridViewTextBoxColumn fechafin;
     }

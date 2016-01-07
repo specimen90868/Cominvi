@@ -33,6 +33,7 @@ namespace Nominas
 
         #region VARIABLES PUBLICAS
         public int _periodo;
+        public int _tipoNomina;
         #endregion
 
         private void btnAceptar_Click(object sender, EventArgs e)
@@ -65,54 +66,63 @@ namespace Nominas
             CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
             nh.Command = cmd;
 
-            if (_periodo == 7)
+            if (_tipoNomina != GLOBALES.EXTRAORDINARIO_NORMAL && _tipoNomina != GLOBALES.EXTRAORDINARIO_ESPECIAL)
             {
-                DateTime dt = dtpSeleccionaFecha.Value.Date;
-                while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
+                if (_periodo == 7)
+                {
+                    DateTime dt = dtpSeleccionaFecha.Value.Date;
+                    while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
 
-                dtpPeriodoInicio.Value = dt;
-                dtpPeriodoFin.Value = dt.AddDays(6);
+                    dtpPeriodoInicio.Value = dt;
+                    dtpPeriodoFin.Value = dt.AddDays(6);
 
-                periodoInicio = dtpPeriodoInicio.Value.Date;
-                periodoFin = dtpPeriodoFin.Value.Date;
+                    periodoInicio = dtpPeriodoInicio.Value.Date;
+                    periodoFin = dtpPeriodoFin.Value.Date;
+                }
+                else
+                {
+                    if (dtpSeleccionaFecha.Value.Day <= 15)
+                    {
+                        dtpPeriodoInicio.Value = new DateTime(dtpSeleccionaFecha.Value.Year, dtpSeleccionaFecha.Value.Month, 1);
+                        dtpPeriodoFin.Value = new DateTime(dtpSeleccionaFecha.Value.Year, dtpSeleccionaFecha.Value.Month, 15);
+                    }
+                    else
+                    {
+                        dtpPeriodoInicio.Value = new DateTime(dtpSeleccionaFecha.Value.Year, dtpSeleccionaFecha.Value.Month, 16);
+                        dtpPeriodoFin.Value = new DateTime(dtpSeleccionaFecha.Value.Year, dtpSeleccionaFecha.Value.Month, DateTime.DaysInMonth(dtpSeleccionaFecha.Value.Year, dtpSeleccionaFecha.Value.Month));
+                    }
+                    periodoInicio = dtpPeriodoInicio.Value.Date;
+                    periodoFin = dtpPeriodoFin.Value.Date;
+                }
+
+
+                try
+                {
+                    cnx.Open();
+                    existe = (int)nh.existeNomina(GLOBALES.IDEMPRESA, periodoInicio.Date, periodoFin.Date);
+                    cnx.Close();
+                    if (existe != 0)
+                    {
+                        MessageBox.Show("NOMINA CALCULADA \r\n \r\n " +
+                                            "El periodo seleccionado se encuenta: \r\n " +
+                                            "Calculado y Autorizado.", "Información");
+                        btnAceptar.Enabled = false;
+                    }
+                    else
+                    {
+                        btnAceptar.Enabled = true;
+                    }
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                }
             }
             else
             {
-                if (dtpSeleccionaFecha.Value.Day <= 15)
-                {
-                    dtpPeriodoInicio.Value = new DateTime(dtpSeleccionaFecha.Value.Year, dtpSeleccionaFecha.Value.Month, 1);
-                    dtpPeriodoFin.Value = new DateTime(dtpSeleccionaFecha.Value.Year, dtpSeleccionaFecha.Value.Month, 15);
-                }
-                else
-                {
-                    dtpPeriodoInicio.Value = new DateTime(dtpSeleccionaFecha.Value.Year, dtpSeleccionaFecha.Value.Month, 16);
-                    dtpPeriodoFin.Value = new DateTime(dtpSeleccionaFecha.Value.Year, dtpSeleccionaFecha.Value.Month, DateTime.DaysInMonth(dtpSeleccionaFecha.Value.Year, dtpSeleccionaFecha.Value.Month));
-                }
-                periodoInicio = dtpPeriodoInicio.Value.Date;
-                periodoFin = dtpPeriodoFin.Value.Date;
-            }
-
-
-            try
-            {
-                cnx.Open();
-                existe = (int)nh.existeNomina(GLOBALES.IDEMPRESA, periodoInicio.Date, periodoFin.Date);
-                cnx.Close();
-                if (existe != 0)
-                {
-                    MessageBox.Show("NOMINA CALCULADA \r\n \r\n " +
-                                        "El periodo seleccionado se encuenta: \r\n " +
-                                        "Calculado y Autorizado.", "Información");
-                    btnAceptar.Enabled = false;
-                }
-                else
-                {
-                    btnAceptar.Enabled = true;
-                }
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                periodoInicio = dtpSeleccionaFecha.Value.Date;
+                periodoFin = dtpSeleccionaFecha.Value.Date;
+                btnAceptar.Enabled = true;
             }
         }
     }

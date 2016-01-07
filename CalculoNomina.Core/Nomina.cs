@@ -70,6 +70,7 @@ namespace CalculoNomina.Core
         public double cantidad { get; set; }
         public DateTime fechainicio { get; set; }
         public DateTime fechafin { get; set; }
+        public int diaslaborados { get; set; }
         public bool guardada { get; set; }
         public int tiponomina { get; set; }
         public bool modificado { get; set; }

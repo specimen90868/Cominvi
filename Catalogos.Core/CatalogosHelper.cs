@@ -48,6 +48,24 @@ namespace Catalogos.Core
             return lstCatalogo;
         }
 
+        public List<Catalogo> obtenerGrupo(string grupo)
+        {
+            DataTable dtCatalogo = new DataTable();
+            List<Catalogo> lstCatalogo = new List<Catalogo>();
+            Command.CommandText = "select valor, valor + ' - ' + descripcion as descripcion from catalogo where grupodescripcion = @grupodescripcion";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("grupodescripcion", grupo);
+            dtCatalogo = SelectData(Command);
+            for (int i = 0; i < dtCatalogo.Rows.Count; i++)
+            {
+                Catalogo cat = new Catalogo();
+                cat.valor = dtCatalogo.Rows[i]["valor"].ToString();
+                cat.descripcion = dtCatalogo.Rows[i]["descripcion"].ToString();
+                lstCatalogo.Add(cat);
+            }
+            return lstCatalogo;
+        }
+
         public List<Catalogo> obtenerControlIncapacidad()
         {
             DataTable dtCatalogo = new DataTable();

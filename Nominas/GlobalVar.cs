@@ -60,6 +60,8 @@ namespace Nominas
         #region TIPO NOMINA
         public static int NORMAL = 0;
         public static int ESPECIAL = 1;
+        public static int EXTRAORDINARIO_NORMAL = 2;
+        public static int EXTRAORDINARIO_ESPECIAL = 3;
         #endregion
 
         public static int IDUSUARIO { get; set; }

@@ -38,6 +38,8 @@ namespace Empleados.Core
         public string cuenta { get; set; }
         public string clabe { get; set; }
         public string idbancario { get; set; }
+        public string metodopago { get; set; }
+        public int tiporegimen { get; set; }
     }
 
     public class IncrementoSalarial

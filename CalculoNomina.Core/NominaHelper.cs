@@ -185,8 +185,9 @@ namespace CalculoNomina.Core
         public DataTable obtenerPreNominaTabular(tmpPagoNomina pn, string netocero, string order)
         {
             DataTable dtPagoNomina = new DataTable();
-            Command.CommandText = "exec stp_rptPreNominaTabular @fechainicio, @fechafin, @idempresa, @netocero, @order";
+            Command.CommandText = "exec stp_rptPreNominaTabular @tiponomina, @fechainicio, @fechafin, @idempresa, @netocero, @order";
             Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("tiponomina", pn.tiponomina);
             Command.Parameters.AddWithValue("idempresa", pn.idempresa);
             Command.Parameters.AddWithValue("fechainicio", pn.fechainicio);
             Command.Parameters.AddWithValue("fechafin", pn.fechafin);
@@ -342,6 +343,19 @@ namespace CalculoNomina.Core
             Command.Parameters.AddWithValue("fechainicio", inicio);
             Command.Parameters.AddWithValue("fechafin", fin);
             Command.Parameters.AddWithValue("idusuario", idusuario);
+            return Command.ExecuteNonQuery();
+        }
+
+        public int actualizaDiasFechaPago(tmpPagoNomina pn, DateTime fechapago)
+        {
+            Command.CommandText = @"update tmpPagoNomina set diaslaborados = @diaslaborados, fechapago = @fechapago 
+                                    where idtrabajador = @idtrabajador and fechainicio = @fechainicio and fechafin = @fechafin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("diaslaborados", pn.diaslaborados);
+            Command.Parameters.AddWithValue("idtrabajador", pn.idtrabajador);
+            Command.Parameters.AddWithValue("fechainicio", pn.fechainicio);
+            Command.Parameters.AddWithValue("fechafin", pn.fechafin);
+            Command.Parameters.AddWithValue("fechapago", fechapago);
             return Command.ExecuteNonQuery();
         }
 

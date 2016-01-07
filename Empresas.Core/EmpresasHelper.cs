@@ -35,7 +35,7 @@ namespace Empresas.Core
         public List<Empresas> obtenerEmpresa(int idempresa)
         {
             DataTable dtEmpresas = new DataTable();
-            Command.CommandText = "select idempresa, nombre, rfc, registro, digitoverificador, representante from empresas where idempresa = @idempresa";
+            Command.CommandText = "select idempresa, nombre, rfc, registro, digitoverificador, representante, regimen, certificado, llave, password, nocertificado, vigenciacertificado from empresas where idempresa = @idempresa";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idempresa);
             dtEmpresas = SelectData(Command);
@@ -49,6 +49,12 @@ namespace Empresas.Core
                 e.registro = dtEmpresas.Rows[i]["registro"].ToString();
                 e.digitoverificador = int.Parse(dtEmpresas.Rows[i]["digitoverificador"].ToString());
                 e.representante = dtEmpresas.Rows[i]["representante"].ToString();
+                e.regimen = dtEmpresas.Rows[i]["regimen"].ToString();
+                e.certificado = dtEmpresas.Rows[i]["certificado"].ToString();
+                e.llave = dtEmpresas.Rows[i]["llave"].ToString();
+                e.password = dtEmpresas.Rows[i]["password"].ToString();
+                e.nocertificado = dtEmpresas.Rows[i]["nocertificado"].ToString();
+                e.vigenciacertificado = DateTime.Parse(dtEmpresas.Rows[i]["vigenciacertificado"].ToString());
                 lstEmpresa.Add(e);
             }
             return lstEmpresa;
@@ -103,8 +109,8 @@ namespace Empresas.Core
 
         public int insertaEmpresa(Empresas e)
         {
-            Command.CommandText = "insert into empresas (nombre, rfc, registro, digitoverificador, representante, estatus) " + 
-                "values (@nombre, @rfc, @registro, @digitoverificador, @representante, @estatus)";
+            Command.CommandText = "insert into empresas (nombre, rfc, registro, digitoverificador, representante, estatus, certificado, llave, password, regimen, nocertificado, vigenciacertificado) " +
+                "values (@nombre, @rfc, @registro, @digitoverificador, @representante, @estatus, @certificado, @llave, @password, @regimen, @nocertificado, @vigenciacertificado)";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("nombre",e.nombre);
             Command.Parameters.AddWithValue("rfc", e.rfc);
@@ -112,13 +118,19 @@ namespace Empresas.Core
             Command.Parameters.AddWithValue("digitoverificador", e.digitoverificador);
             Command.Parameters.AddWithValue("representante", e.representante);
             Command.Parameters.AddWithValue("estatus", e.estatus);
+            Command.Parameters.AddWithValue("certificado", e.certificado);
+            Command.Parameters.AddWithValue("llave", e.llave);
+            Command.Parameters.AddWithValue("password", e.password);
+            Command.Parameters.AddWithValue("regimen", e.regimen);
+            Command.Parameters.AddWithValue("nocertificado", e.certificado);
+            Command.Parameters.AddWithValue("vigenciacertificado", e.vigenciacertificado);
             return Command.ExecuteNonQuery();
         }
 
         public int actualizaEmpresa(Empresas e)
         {
-            Command.CommandText = "update empresas set nombre = @nombre, rfc = @rfc, registro = @registro, digitoverificador = @digitoverificador, representante = @representante " +
-                "where idempresa = @idempresa";
+            Command.CommandText = "update empresas set nombre = @nombre, rfc = @rfc, registro = @registro, digitoverificador = @digitoverificador, representante = @representante, " +
+                "certificado = @certificado, llave = @llave, password = @password, regimen = @regimen, nocertificado = @certificado, vigenciacertificado = @vigencia where idempresa = @idempresa";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", e.idempresa);
             Command.Parameters.AddWithValue("nombre", e.nombre);
@@ -126,6 +138,12 @@ namespace Empresas.Core
             Command.Parameters.AddWithValue("registro", e.registro);
             Command.Parameters.AddWithValue("digitoverificador", e.digitoverificador);
             Command.Parameters.AddWithValue("representante", e.representante);
+            Command.Parameters.AddWithValue("certificado", e.certificado);
+            Command.Parameters.AddWithValue("llave", e.llave);
+            Command.Parameters.AddWithValue("password", e.password);
+            Command.Parameters.AddWithValue("regimen", e.regimen);
+            Command.Parameters.AddWithValue("nocertificado", e.certificado);
+            Command.Parameters.AddWithValue("vigencia", e.vigenciacertificado);
             return Command.ExecuteNonQuery();
         }
 

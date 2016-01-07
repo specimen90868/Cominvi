@@ -112,7 +112,8 @@ namespace Nominas
                                         dt.Rows[i][4].ToString(), //CONCEPTO
                                         dt.Rows[i][5].ToString(), //DIAS
                                         dt.Rows[1][1].ToString(), //FECHA INICIO
-                                        dt.Rows[2][1].ToString()); //FECHA FIN
+                                        dt.Rows[2][1].ToString(), //FECHA FIN
+                                        dt.Rows[i][6].ToString()); //FECHA INICIO VACACIONES
                                 }
 
                                 for (int i = 0; i < dt.Columns.Count; i++)
@@ -233,10 +234,22 @@ namespace Nominas
                 vp.periodoinicio = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["inicio"].Value.ToString());
                 vp.periodofin = DateTime.Parse(dgvCargaVacaciones.Rows[0].Cells["fin"].Value.ToString());
                 vp.diasderecho = dias;
-                vp.diaspago = int.Parse(dgvCargaVacaciones.Rows[0].Cells["diaspago"].Value.ToString());
+                vp.diaspago = int.Parse(fila.Cells["diaspago"].Value.ToString());
                 vp.diaspendientes = dias - vp.diaspago;
                 vp.fechapago = DateTime.Now.Date;
-                vp.vacacionesprima = dgvCargaVacaciones.Rows[0].Cells["concepto"].Value.ToString() == "Prima Vacacional" ? "P" : "V";
+                vp.vacacionesprima = fila.Cells["concepto"].Value.ToString() == "Prima Vacacional" ? "P" : "V";
+
+                if (fila.Cells["concepto"].Value.ToString() == "Prima Vacacional")
+                {
+                    vp.fechainicio = DateTime.Now.Date;
+                    vp.fechafin = DateTime.Now.Date;
+                }
+                else
+                {
+                    vp.fechainicio = DateTime.Parse(fila.Cells["fechaaplicacion"].Value.ToString());
+                    vp.fechafin = DateTime.Parse(fila.Cells["fechaaplicacion"].Value.ToString()).AddDays(double.Parse(fila.Cells["diaspago"].Value.ToString()) - 1);
+                }
+                
                 lstMovimientos.Add(vp);
             }
 
@@ -255,6 +268,8 @@ namespace Nominas
             dt.Columns.Add("diaspendientes", typeof(Int32));
             dt.Columns.Add("fechapago", typeof(DateTime));
             dt.Columns.Add("vacacionesprima", typeof(String));
+            dt.Columns.Add("fechainicio", typeof(DateTime));
+            dt.Columns.Add("fechafin", typeof(DateTime));
 
             int index = 1;
             for (int i = 0; i < lstMovimientos.Count; i++)
@@ -270,6 +285,8 @@ namespace Nominas
                 dtFila["diaspendientes"] = lstMovimientos[i].diaspendientes;
                 dtFila["fechapago"] = lstMovimientos[i].fechapago;
                 dtFila["vacacionesprima"] = lstMovimientos[i].vacacionesprima;
+                dtFila["fechainicio"] = lstMovimientos[i].fechainicio;
+                dtFila["fechafin"] = lstMovimientos[i].fechafin;
                 dt.Rows.Add(dtFila);
                 index++;
             }

@@ -64,6 +64,8 @@
             this.label19 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
+            this.cmbMetodoPago = new System.Windows.Forms.ComboBox();
+            this.label20 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -381,11 +383,34 @@
             this.label17.TabIndex = 245;
             this.label17.Text = "Cuenta bancaria:";
             // 
+            // cmbMetodoPago
+            // 
+            this.cmbMetodoPago.FormattingEnabled = true;
+            this.cmbMetodoPago.Items.AddRange(new object[] {
+            "Efectivo",
+            "Cheque",
+            "Transferencia"});
+            this.cmbMetodoPago.Location = new System.Drawing.Point(126, 414);
+            this.cmbMetodoPago.Name = "cmbMetodoPago";
+            this.cmbMetodoPago.Size = new System.Drawing.Size(129, 21);
+            this.cmbMetodoPago.TabIndex = 252;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(33, 417);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(88, 13);
+            this.label20.TabIndex = 251;
+            this.label20.Text = "Metodo de pago:";
+            // 
             // frmReingresoEmpleado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(466, 453);
+            this.Controls.Add(this.cmbMetodoPago);
+            this.Controls.Add(this.label20);
             this.Controls.Add(this.mtxtIdBancario);
             this.Controls.Add(this.mtxtCuentaClabe);
             this.Controls.Add(this.mtxtCuentaBancaria);
@@ -469,5 +494,7 @@
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.ComboBox cmbMetodoPago;
+        private System.Windows.Forms.Label label20;
     }
 }

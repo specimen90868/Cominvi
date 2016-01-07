@@ -35,6 +35,25 @@ namespace Complementos.Core
             return lstComplemento;
         }
 
+        public object obtenerObservacionesTrabajador(Complemento c)
+        {
+            Command.CommandText = "select observaciones from complementos where idtrabajador = @idtrabajador";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", c.idtrabajador);
+            object dato = Select(Command);
+            return dato;
+        }
+
+        public object actualizaObservacionesTrabajador(Complemento c)
+        {
+            Command.CommandText = "update complementos set observaciones = @observaciones where idtrabajador = @idtrabajador";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", c.idtrabajador);
+            Command.Parameters.AddWithValue("observaciones", c.observaciones);
+            object dato = Select(Command);
+            return dato;
+        }
+
         public object existeComplemento(Complemento c)
         {
             Command.CommandText = "select count(idtrabajador) from complementos where idtrabajador = @idtrabajador";

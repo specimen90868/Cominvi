@@ -39,6 +39,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.dtpPeriodoInicio = new System.Windows.Forms.DateTimePicker();
             this.dtpPeriodoFin = new System.Windows.Forms.DateTimePicker();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtObservaciones = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -80,7 +82,7 @@
             // 
             this.Cancelar.Image = ((System.Drawing.Image)(resources.GetObject("Cancelar.Image")));
             this.Cancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Cancelar.Location = new System.Drawing.Point(253, 139);
+            this.Cancelar.Location = new System.Drawing.Point(250, 288);
             this.Cancelar.Name = "Cancelar";
             this.Cancelar.Size = new System.Drawing.Size(75, 32);
             this.Cancelar.TabIndex = 5;
@@ -93,7 +95,7 @@
             // 
             this.btnAceptar.Image = ((System.Drawing.Image)(resources.GetObject("btnAceptar.Image")));
             this.btnAceptar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAceptar.Location = new System.Drawing.Point(176, 139);
+            this.btnAceptar.Location = new System.Drawing.Point(173, 288);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(71, 32);
             this.btnAceptar.TabIndex = 3;
@@ -115,7 +117,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(73, 87);
+            this.label3.Location = new System.Drawing.Point(70, 236);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(46, 13);
             this.label3.TabIndex = 7;
@@ -123,7 +125,8 @@
             // 
             // dtpPeriodoInicio
             // 
-            this.dtpPeriodoInicio.Location = new System.Drawing.Point(125, 87);
+            this.dtpPeriodoInicio.Enabled = false;
+            this.dtpPeriodoInicio.Location = new System.Drawing.Point(122, 236);
             this.dtpPeriodoInicio.Name = "dtpPeriodoInicio";
             this.dtpPeriodoInicio.Size = new System.Drawing.Size(200, 20);
             this.dtpPeriodoInicio.TabIndex = 8;
@@ -132,16 +135,35 @@
             // dtpPeriodoFin
             // 
             this.dtpPeriodoFin.Enabled = false;
-            this.dtpPeriodoFin.Location = new System.Drawing.Point(125, 113);
+            this.dtpPeriodoFin.Location = new System.Drawing.Point(122, 262);
             this.dtpPeriodoFin.Name = "dtpPeriodoFin";
             this.dtpPeriodoFin.Size = new System.Drawing.Size(200, 20);
             this.dtpPeriodoFin.TabIndex = 9;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(35, 86);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(81, 13);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "Observaciones:";
+            // 
+            // txtObservaciones
+            // 
+            this.txtObservaciones.Location = new System.Drawing.Point(125, 87);
+            this.txtObservaciones.Multiline = true;
+            this.txtObservaciones.Name = "txtObservaciones";
+            this.txtObservaciones.Size = new System.Drawing.Size(197, 143);
+            this.txtObservaciones.TabIndex = 11;
             // 
             // frmBaja
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(340, 181);
+            this.ClientSize = new System.Drawing.Size(340, 335);
+            this.Controls.Add(this.txtObservaciones);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.dtpPeriodoFin);
             this.Controls.Add(this.dtpPeriodoInicio);
             this.Controls.Add(this.label3);
@@ -175,5 +197,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DateTimePicker dtpPeriodoInicio;
         private System.Windows.Forms.DateTimePicker dtpPeriodoFin;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtObservaciones;
     }
 }

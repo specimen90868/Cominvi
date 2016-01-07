@@ -118,38 +118,56 @@ namespace Nominas
                     case 1:
                         if (vn.cantidad == 0)
                         {
-                            i++;
+                            
                             vn.gravado = 0;
                             lstValoresNomina.Add(vn);
-                            int contadorDatosNomina = i;
-                            for (int j = i; j < lstConceptosPercepciones.Count; j++)
+
+                            Vacaciones.Core.VacacionesHelper vh = new Vacaciones.Core.VacacionesHelper();
+                            vh.Command = cmd;
+                            Vacaciones.Core.VacacionesPrima vp = new Vacaciones.Core.VacacionesPrima();
+                            vp.idtrabajador = lstConceptosPercepciones[i].idtrabajador;
+                            vp.idempresa = GLOBALES.IDEMPRESA;
+                            vp.periodofin = fin.Date;
+                            vp.periodoinicio = inicio.Date;
+                            vp.vacacionesprima = "V";
+
+                            cnx.Open();
+                            int diasVacaciones = (int)vh.pagoVacacionesPrima(vp);
+                            cnx.Close();
+
+                            if (diasVacaciones == 0)
                             {
-                                contadorDatosNomina = j;
-                                if (lstConceptosPercepciones[j].idtrabajador == vn.idtrabajador)
+                                i++;
+                                int contadorDatosNomina = i;
+                                for (int j = i; j < lstConceptosPercepciones.Count; j++)
                                 {
-                                    CalculoNomina.Core.tmpPagoNomina vnCero = new CalculoNomina.Core.tmpPagoNomina();
-                                    vnCero.idtrabajador = lstConceptosPercepciones[j].idtrabajador;
-                                    vnCero.idempresa = GLOBALES.IDEMPRESA;
-                                    vnCero.idconcepto = lstConceptosPercepciones[j].id;
-                                    vnCero.noconcepto = lstConceptosPercepciones[j].noconcepto;
-                                    vnCero.tipoconcepto = lstConceptosPercepciones[j].tipoconcepto;
-                                    vnCero.fechainicio = inicio.Date;
-                                    vnCero.fechafin = fin.Date;
-                                    vnCero.guardada = true;
-                                    vnCero.tiponomina = tipoNomina;
-                                    vnCero.modificado = false;
-                                    vnCero.cantidad = 0;
-                                    vnCero.exento = 0;
-                                    vnCero.gravado = 0;
-                                    lstValoresNomina.Add(vnCero);
+                                    contadorDatosNomina = j;
+                                    if (lstConceptosPercepciones[j].idtrabajador == vn.idtrabajador)
+                                    {
+                                        CalculoNomina.Core.tmpPagoNomina vnCero = new CalculoNomina.Core.tmpPagoNomina();
+                                        vnCero.idtrabajador = lstConceptosPercepciones[j].idtrabajador;
+                                        vnCero.idempresa = GLOBALES.IDEMPRESA;
+                                        vnCero.idconcepto = lstConceptosPercepciones[j].id;
+                                        vnCero.noconcepto = lstConceptosPercepciones[j].noconcepto;
+                                        vnCero.tipoconcepto = lstConceptosPercepciones[j].tipoconcepto;
+                                        vnCero.fechainicio = inicio.Date;
+                                        vnCero.fechafin = fin.Date;
+                                        vnCero.guardada = true;
+                                        vnCero.tiponomina = tipoNomina;
+                                        vnCero.modificado = false;
+                                        vnCero.cantidad = 0;
+                                        vnCero.exento = 0;
+                                        vnCero.gravado = 0;
+                                        lstValoresNomina.Add(vnCero);
+                                    }
+                                    else
+                                    {
+                                        --contadorDatosNomina;
+                                        break;
+                                    }
                                 }
-                                else
-                                {
-                                    --contadorDatosNomina;
-                                    break;
-                                }
+                                i = contadorDatosNomina;
                             }
-                            i = contadorDatosNomina;
                         }
                         else
                             lstValoresNomina.Add(vn);
@@ -247,8 +265,47 @@ namespace Nominas
                         }
                         else
                         {
-                            isrAntes = 0;
-                            isrAntesSubsidio.cantidad = 0;
+                            double vacaciones = lstPercepciones.Where(e => e.idtrabajador == lstConceptosDeducciones[i].idtrabajador && e.noconcepto == 7).Sum(e => e.cantidad);
+                            if (vacaciones != 0)
+                            {
+                                double baseGravableIsr = lstPercepciones.Where(e => e.idtrabajador == lstConceptosDeducciones[i].idtrabajador).Sum(e => e.gravado);
+
+                                Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
+                                eh.Command = cmd;
+
+                                cnx.Open();
+                                int idperiodo = (int)eh.obtenerIdPeriodo(lstConceptosDeducciones[i].idtrabajador);
+                                cnx.Close();
+
+                                Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
+                                ph.Command = cmd;
+
+                                Periodos.Core.Periodos p = new Periodos.Core.Periodos();
+                                p.idperiodo = idperiodo;
+
+                                cnx.Open();
+                                int dias = (int)ph.DiasDePago(p);
+                                cnx.Close();
+
+                                TablaIsr.Core.TablaIsr _isr = new TablaIsr.Core.TablaIsr();
+                                _isr.inferior = (baseGravableIsr / dias) * 30.4;
+
+                                cnx.Open();
+                                lstIsr = isrh.isrCorrespondiente(_isr);
+                                cnx.Close();
+
+                                excedente = ((baseGravableIsr / dias) * 30.4) - lstIsr[0].inferior;
+                                ImpMarginal = excedente * (lstIsr[0].porcentaje / 100);
+                                isr = ImpMarginal + lstIsr[0].cuota;
+
+                                isrAntesSubsidio.cantidad = isr;
+                                isrAntes = isr;
+                            }
+                            else
+                            {
+                                isrAntes = 0;
+                                isrAntesSubsidio.cantidad = 0;
+                            }
                         }
 
                         isrAntesSubsidio.guardada = true;
@@ -309,8 +366,46 @@ namespace Nominas
                         }
                         else
                         {
-                            subsidioNomina.cantidad = 0;
-                            subsidioAntes = 0;
+                            double vacacionesSubsidio = lstPercepciones.Where(e => e.idtrabajador == lstConceptosDeducciones[i].idtrabajador && e.noconcepto == 7).Sum(e => e.cantidad);
+                            if (vacacionesSubsidio != 0)
+                            {
+                                double baseGravableSubsidio = lstPercepciones.Where(e => e.idtrabajador == lstConceptosDeducciones[i].idtrabajador).Sum(e => e.gravado);
+
+                                Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
+                                eh.Command = cmd;
+
+                                cnx.Open();
+                                int idperiodo = (int)eh.obtenerIdPeriodo(lstConceptosDeducciones[i].idtrabajador);
+                                cnx.Close();
+
+                                Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
+                                ph.Command = cmd;
+
+                                Periodos.Core.Periodos p = new Periodos.Core.Periodos();
+                                p.idperiodo = idperiodo;
+
+                                cnx.Open();
+                                int dias = (int)ph.DiasDePago(p);
+                                cnx.Close();
+
+                                TablaSubsidio.Core.SubsidioHelper ts = new TablaSubsidio.Core.SubsidioHelper();
+                                ts.Command = cmd;
+                                TablaSubsidio.Core.TablaSubsidio subsidio = new TablaSubsidio.Core.TablaSubsidio();
+                                subsidio.desde = (baseGravableSubsidio / dias) * 30.4;
+
+                                double cantidad = 0;
+                                cnx.Open();
+                                cantidad = double.Parse(ts.obtenerCantidadSubsidio(subsidio).ToString());
+                                cnx.Close();
+
+                                subsidioNomina.cantidad = cantidad;
+                                subsidioAntes = cantidad;
+                            }
+                            else 
+                            {
+                                subsidioNomina.cantidad = 0;
+                                subsidioAntes = 0;
+                            }
                         }
 
                         subsidioNomina.guardada = true;
@@ -354,19 +449,42 @@ namespace Nominas
                             int diasSubsidio = (int)psh.DiasDePago(ps);
                             cnx.Close();
 
-                            double ispt = ((isrAntes - subsidioAntes) / 30.4) * diasSubsidio;
-
-                            if (ispt <= 0)
-                            {
-                                subsidioDefinitivo.cantidad = 0;
-                            }
+                            if (subsidioAntes > isrAntes)
+                                subsidioDefinitivo.cantidad = subsidioAntes - isrAntes;
                             else
-                            {
                                 subsidioDefinitivo.cantidad = 0;
-                            }
                         }
                         else
-                            subsidioDefinitivo.cantidad = 0;
+                        {
+                            double vacacionSubsidioDefinitivo = lstPercepciones.Where(e => e.idtrabajador == lstConceptosDeducciones[i].idtrabajador && e.noconcepto == 7).Sum(e => e.cantidad);
+                            if (vacacionSubsidioDefinitivo != 0)
+                            {
+                                Empleados.Core.EmpleadosHelper esh = new Empleados.Core.EmpleadosHelper();
+                                esh.Command = cmd;
+
+                                cnx.Open();
+                                int idperiodoSubsidio = (int)esh.obtenerIdPeriodo(lstConceptosDeducciones[i].idtrabajador);
+                                cnx.Close();
+
+                                Periodos.Core.PeriodosHelper psh = new Periodos.Core.PeriodosHelper();
+                                psh.Command = cmd;
+
+                                Periodos.Core.Periodos ps = new Periodos.Core.Periodos();
+                                ps.idperiodo = idperiodoSubsidio;
+
+                                cnx.Open();
+                                int diasSubsidio = (int)psh.DiasDePago(ps);
+                                cnx.Close();
+
+                                if (subsidioAntes > isrAntes)
+                                    subsidioDefinitivo.cantidad = subsidioAntes - isrAntes;
+                                else
+                                    subsidioDefinitivo.cantidad = 0;
+                            }
+                            else
+                                subsidioDefinitivo.cantidad = 0;
+                        }
+                            
 
                         subsidioDefinitivo.guardada = true;
                         subsidioDefinitivo.tiponomina = tipoNomina;
@@ -409,19 +527,69 @@ namespace Nominas
                             int diasIsr = (int)pih.DiasDePago(pi);
                             cnx.Close();
 
-                            double isptIsr = ((isrAntes - subsidioAntes) / 30.4) * diasIsr;
-
-                            if (isptIsr <= 0)
+                            double isptIsr = 0;
+                            if (subsidioAntes > isrAntes)
                             {
                                 isrDefinitivo.cantidad = 0;
                             }
                             else
                             {
-                                isrDefinitivo.cantidad = isptIsr;
+                                isptIsr = ((isrAntes - subsidioAntes) / 30.4) * diasIsr;
+
+                                if (isptIsr <= 0)
+                                {
+                                    isrDefinitivo.cantidad = 0;
+                                }
+                                else
+                                {
+                                    isrDefinitivo.cantidad = isptIsr;
+                                }
                             }
                         }
                         else
-                            isrDefinitivo.cantidad = 0;
+                        {
+                            double vacacionIsrDefinitivo = lstPercepciones.Where(e => e.idtrabajador == lstConceptosDeducciones[i].idtrabajador && e.noconcepto == 7).Sum(e => e.cantidad);
+                            if (vacacionIsrDefinitivo != 0)
+                            {
+                                Empleados.Core.EmpleadosHelper eih = new Empleados.Core.EmpleadosHelper();
+                                eih.Command = cmd;
+
+                                cnx.Open();
+                                int idperiodoIsr = (int)eih.obtenerIdPeriodo(lstConceptosDeducciones[i].idtrabajador);
+                                cnx.Close();
+
+                                Periodos.Core.PeriodosHelper pih = new Periodos.Core.PeriodosHelper();
+                                pih.Command = cmd;
+
+                                Periodos.Core.Periodos pi = new Periodos.Core.Periodos();
+                                pi.idperiodo = idperiodoIsr;
+
+                                cnx.Open();
+                                int diasIsr = (int)pih.DiasDePago(pi);
+                                cnx.Close();
+
+                                double isptIsr = 0;
+                                if (subsidioAntes > isrAntes)
+                                {
+                                    isrDefinitivo.cantidad = 0;
+                                }
+                                else
+                                {
+                                    isptIsr = ((isrAntes - subsidioAntes) / 30.4) * diasIsr;
+
+                                    if (isptIsr <= 0)
+                                    {
+                                        isrDefinitivo.cantidad = 0;
+                                    }
+                                    else
+                                    {
+                                        isrDefinitivo.cantidad = isptIsr;
+                                    }
+                                }
+                            }
+                            else
+                                isrDefinitivo.cantidad = 0;
+                        }
 
                         isrDefinitivo.guardada = true;
                         isrDefinitivo.tiponomina = tipoNomina;
@@ -488,10 +656,53 @@ namespace Nominas
                         }
                         else
                         {
-                            vn.cantidad = 0;
-                            vn.exento = 0;
-                            vn.gravado = 0;
-                            lstValoresNomina.Add(vn);
+                            double vacacionDeducciones = lstPercepciones.Where(e => e.idtrabajador == lstConceptosDeducciones[i].idtrabajador && e.noconcepto == 7).Sum(e => e.cantidad);
+                            if (vacacionDeducciones != 0)
+                            {
+                                Infonavit.Core.InfonavitHelper infh = new Infonavit.Core.InfonavitHelper();
+                                infh.Command = cmd;
+
+                                Infonavit.Core.Infonavit inf = new Infonavit.Core.Infonavit();
+                                inf.idtrabajador = lstConceptosDeducciones[i].idtrabajador;
+                                inf.idempresa = GLOBALES.IDEMPRESA;
+
+                                if (lstConceptosDeducciones[i].noconcepto == 9)
+                                {
+                                    cnx.Open();
+                                    activoInfonavit = (bool)infh.activoInfonavit(inf);
+                                    cnx.Close();
+
+                                    if (!activoInfonavit)
+                                    {
+                                        vn.cantidad = 0;
+                                        vn.exento = 0;
+                                        vn.gravado = 0;
+                                    }
+                                    else
+                                    {
+                                        CalculoFormula cf = new CalculoFormula(lstConceptosDeducciones[i].idtrabajador, inicio.Date, fin.Date, lstConceptosDeducciones[i].formula);
+                                        vn.cantidad = double.Parse(cf.calcularFormula().ToString());
+                                        vn.exento = 0;
+                                        vn.gravado = 0;
+                                    }
+                                }
+                                else
+                                {
+                                    CalculoFormula cf = new CalculoFormula(lstConceptosDeducciones[i].idtrabajador, inicio.Date, fin.Date, lstConceptosDeducciones[i].formula);
+                                    vn.cantidad = double.Parse(cf.calcularFormula().ToString());
+                                    vn.exento = 0;
+                                    vn.gravado = 0;
+                                }
+
+                                lstValoresNomina.Add(vn);
+                            }
+                            else
+                            {
+                                vn.cantidad = 0;
+                                vn.exento = 0;
+                                vn.gravado = 0;
+                                lstValoresNomina.Add(vn);
+                            }
                         }
                         break;
                         #endregion
@@ -615,42 +826,59 @@ namespace Nominas
                         case 1:
                             if (vn.cantidad == 0)
                             {
-                                i++;
                                 vn.gravado = 0;
                                 cnx.Open();
                                 nh.actualizaConcepto(vn);
                                 cnx.Close();
-                                int contadorDatosNomina = i;
-                                for (int j = i; j < lstConceptosPercepciones.Count; j++)
+
+                                Vacaciones.Core.VacacionesHelper vh = new Vacaciones.Core.VacacionesHelper();
+                                vh.Command = cmd;
+                                Vacaciones.Core.VacacionesPrima vp = new Vacaciones.Core.VacacionesPrima();
+                                vp.idtrabajador = lstConceptosPercepciones[i].idtrabajador;
+                                vp.idempresa = GLOBALES.IDEMPRESA;
+                                vp.periodofin = fin.Date;
+                                vp.periodoinicio = inicio.Date;
+                                vp.vacacionesprima = "V";
+
+                                cnx.Open();
+                                int diasVacaciones = (int)vh.pagoVacacionesPrima(vp);
+                                cnx.Close();
+
+                                if (diasVacaciones == 0)
                                 {
-                                    contadorDatosNomina = j;
-                                    if (lstConceptosPercepciones[j].idtrabajador == vn.idtrabajador)
+                                    i++;
+                                    int contadorDatosNomina = i;
+                                    for (int j = i; j < lstConceptosPercepciones.Count; j++)
                                     {
-                                        CalculoNomina.Core.tmpPagoNomina vnCero = new CalculoNomina.Core.tmpPagoNomina();
-                                        vnCero.idtrabajador = lstConceptosPercepciones[j].idtrabajador;
-                                        vnCero.idempresa = GLOBALES.IDEMPRESA;
-                                        vnCero.idconcepto = lstConceptosPercepciones[j].id;
-                                        vnCero.noconcepto = lstConceptosPercepciones[j].noconcepto;
-                                        vnCero.tipoconcepto = lstConceptosPercepciones[j].tipoconcepto;
-                                        vnCero.fechainicio = inicio.Date;
-                                        vnCero.fechafin = fin.Date;
-                                        vnCero.guardada = true;
-                                        vnCero.tiponomina = tipoNomina;
-                                        vnCero.modificado = false;
-                                        vnCero.cantidad = 0;
-                                        vnCero.exento = 0;
-                                        vnCero.gravado = 0;
-                                        cnx.Open();
-                                        nh.actualizaConcepto(vn);
-                                        cnx.Close();
+                                        contadorDatosNomina = j;
+                                        if (lstConceptosPercepciones[j].idtrabajador == vn.idtrabajador)
+                                        {
+                                            CalculoNomina.Core.tmpPagoNomina vnCero = new CalculoNomina.Core.tmpPagoNomina();
+                                            vnCero.idtrabajador = lstConceptosPercepciones[j].idtrabajador;
+                                            vnCero.idempresa = GLOBALES.IDEMPRESA;
+                                            vnCero.idconcepto = lstConceptosPercepciones[j].id;
+                                            vnCero.noconcepto = lstConceptosPercepciones[j].noconcepto;
+                                            vnCero.tipoconcepto = lstConceptosPercepciones[j].tipoconcepto;
+                                            vnCero.fechainicio = inicio.Date;
+                                            vnCero.fechafin = fin.Date;
+                                            vnCero.guardada = true;
+                                            vnCero.tiponomina = tipoNomina;
+                                            vnCero.modificado = false;
+                                            vnCero.cantidad = 0;
+                                            vnCero.exento = 0;
+                                            vnCero.gravado = 0;
+                                            cnx.Open();
+                                            nh.actualizaConcepto(vn);
+                                            cnx.Close();
+                                        }
+                                        else
+                                        {
+                                            --contadorDatosNomina;
+                                            break;
+                                        }
                                     }
-                                    else
-                                    {
-                                        --contadorDatosNomina;
-                                        break;
-                                    }
+                                    i = contadorDatosNomina;
                                 }
-                                i = contadorDatosNomina;
                             }
                             else
                             {
@@ -753,8 +981,47 @@ namespace Nominas
                         }
                         else
                         {
-                            isrAntes = 0;
-                            isrAntesSubsidio.cantidad = 0;
+                            double vacacion = lstPercepciones.Where(e => e.idtrabajador == lstConceptosDeducciones[i].idtrabajador && e.noconcepto == 7).Sum(e => e.cantidad);
+                            if (vacacion != 0)
+                            {
+                                double baseGravableIsr = lstPercepciones.Where(e => e.idtrabajador == lstConceptosDeducciones[i].idtrabajador).Sum(e => e.gravado);
+
+                                Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
+                                eh.Command = cmd;
+
+                                cnx.Open();
+                                int idperiodo = (int)eh.obtenerIdPeriodo(lstConceptosDeducciones[i].idtrabajador);
+                                cnx.Close();
+
+                                Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
+                                ph.Command = cmd;
+
+                                Periodos.Core.Periodos p = new Periodos.Core.Periodos();
+                                p.idperiodo = idperiodo;
+
+                                cnx.Open();
+                                int dias = (int)ph.DiasDePago(p);
+                                cnx.Close();
+
+                                TablaIsr.Core.TablaIsr _isr = new TablaIsr.Core.TablaIsr();
+                                _isr.inferior = (baseGravableIsr / dias) * 30.4;
+
+                                cnx.Open();
+                                lstIsr = isrh.isrCorrespondiente(_isr);
+                                cnx.Close();
+
+                                excedente = ((baseGravableIsr / dias) * 30.4) - lstIsr[0].inferior;
+                                ImpMarginal = excedente * (lstIsr[0].porcentaje / 100);
+                                isr = ImpMarginal + lstIsr[0].cuota;
+
+                                isrAntesSubsidio.cantidad = isr;
+                                isrAntes = isr;
+                            }
+                            else
+                            {
+                                isrAntes = 0;
+                                isrAntesSubsidio.cantidad = 0;
+                            }
                         }
 
                         isrAntesSubsidio.guardada = true;
@@ -818,8 +1085,46 @@ namespace Nominas
                         }
                         else
                         {
-                            subsidioNomina.cantidad = 0;
-                            subsidioAntes = 0;
+                            double vacacionSubsidio = lstPercepciones.Where(e => e.idtrabajador == lstConceptosDeducciones[i].idtrabajador && e.noconcepto == 7).Sum(e => e.cantidad);
+                            if (vacacionSubsidio != 0)
+                            {
+                                double baseGravableSubsidio = lstPercepciones.Where(e => e.idtrabajador == lstConceptosDeducciones[i].idtrabajador).Sum(e => e.gravado);
+
+                                Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
+                                eh.Command = cmd;
+
+                                cnx.Open();
+                                int idperiodo = (int)eh.obtenerIdPeriodo(lstConceptosDeducciones[i].idtrabajador);
+                                cnx.Close();
+
+                                Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
+                                ph.Command = cmd;
+
+                                Periodos.Core.Periodos p = new Periodos.Core.Periodos();
+                                p.idperiodo = idperiodo;
+
+                                cnx.Open();
+                                int dias = (int)ph.DiasDePago(p);
+                                cnx.Close();
+
+                                TablaSubsidio.Core.SubsidioHelper ts = new TablaSubsidio.Core.SubsidioHelper();
+                                ts.Command = cmd;
+                                TablaSubsidio.Core.TablaSubsidio subsidio = new TablaSubsidio.Core.TablaSubsidio();
+                                subsidio.desde = (baseGravableSubsidio / dias) * 30.4;
+
+                                double cantidad = 0;
+                                cnx.Open();
+                                cantidad = double.Parse(ts.obtenerCantidadSubsidio(subsidio).ToString());
+                                cnx.Close();
+
+                                subsidioNomina.cantidad = cantidad;
+                                subsidioAntes = cantidad;
+                            }
+                            else
+                            {
+                                subsidioNomina.cantidad = 0;
+                                subsidioAntes = 0;
+                            }
                         }
 
                         subsidioNomina.guardada = true;
@@ -865,19 +1170,42 @@ namespace Nominas
                             int diasSubsidio = (int)psh.DiasDePago(ps);
                             cnx.Close();
 
-                            double ispt = ((isrAntes - subsidioAntes) / 30.4) * diasSubsidio;
-
-                            if (ispt <= 0)
-                            {
-                                subsidioDefinitivo.cantidad = 0;
-                            }
+                            if (subsidioAntes > isrAntes)
+                                subsidioDefinitivo.cantidad = subsidioAntes - isrAntes;
                             else
-                            {
                                 subsidioDefinitivo.cantidad = 0;
-                            }
                         }
                         else
-                            subsidioDefinitivo.cantidad = 0;
+                        {
+                            double vacacionSubsidioDefinitivo = lstPercepciones.Where(e => e.idtrabajador == lstConceptosDeducciones[i].idtrabajador && e.noconcepto == 7).Sum(e => e.cantidad);
+                            if (vacacionSubsidioDefinitivo != 0)
+                            {
+                                Empleados.Core.EmpleadosHelper esh = new Empleados.Core.EmpleadosHelper();
+                                esh.Command = cmd;
+
+                                cnx.Open();
+                                int idperiodoSubsidio = (int)esh.obtenerIdPeriodo(lstConceptosDeducciones[i].idtrabajador);
+                                cnx.Close();
+
+                                Periodos.Core.PeriodosHelper psh = new Periodos.Core.PeriodosHelper();
+                                psh.Command = cmd;
+
+                                Periodos.Core.Periodos ps = new Periodos.Core.Periodos();
+                                ps.idperiodo = idperiodoSubsidio;
+
+                                cnx.Open();
+                                int diasSubsidio = (int)psh.DiasDePago(ps);
+                                cnx.Close();
+
+                                if (subsidioAntes > isrAntes)
+                                    subsidioDefinitivo.cantidad = subsidioAntes - isrAntes;
+                                else
+                                    subsidioDefinitivo.cantidad = 0;
+                            }
+                            else
+                                subsidioDefinitivo.cantidad = 0;
+                        }
+                            
 
                         subsidioDefinitivo.guardada = true;
                         subsidioDefinitivo.tiponomina = tipoNomina;
@@ -922,19 +1250,70 @@ namespace Nominas
                             int diasIsr = (int)pih.DiasDePago(pi);
                             cnx.Close();
 
-                            double isptIsr = ((isrAntes - subsidioAntes) / 30.4) * diasIsr;
-
-                            if (isptIsr <= 0)
+                            double isptIsr = 0;
+                            if (subsidioAntes > isrAntes)
                             {
                                 isrDefinitivo.cantidad = 0;
                             }
                             else
                             {
-                                isrDefinitivo.cantidad = isptIsr;
+                                isptIsr = ((isrAntes - subsidioAntes) / 30.4) * diasIsr;
+
+                                if (isptIsr <= 0)
+                                {
+                                    isrDefinitivo.cantidad = 0;
+                                }
+                                else
+                                {
+                                    isrDefinitivo.cantidad = isptIsr;
+                                }
                             }
                         }
                         else
-                            isrDefinitivo.cantidad = 0;
+                        {
+                            double vacacionIsrDefinitivo = lstPercepciones.Where(e => e.idtrabajador == lstConceptosDeducciones[i].idtrabajador && e.noconcepto == 7).Sum(e => e.cantidad);
+                            if (vacacionIsrDefinitivo != 0)
+                            {
+                                Empleados.Core.EmpleadosHelper eih = new Empleados.Core.EmpleadosHelper();
+                                eih.Command = cmd;
+
+                                cnx.Open();
+                                int idperiodoIsr = (int)eih.obtenerIdPeriodo(lstConceptosDeducciones[i].idtrabajador);
+                                cnx.Close();
+
+                                Periodos.Core.PeriodosHelper pih = new Periodos.Core.PeriodosHelper();
+                                pih.Command = cmd;
+
+                                Periodos.Core.Periodos pi = new Periodos.Core.Periodos();
+                                pi.idperiodo = idperiodoIsr;
+
+                                cnx.Open();
+                                int diasIsr = (int)pih.DiasDePago(pi);
+                                cnx.Close();
+
+                                double isptIsr = 0;
+                                if (subsidioAntes > isrAntes)
+                                {
+                                    isrDefinitivo.cantidad = 0;
+                                }
+                                else
+                                {
+                                    isptIsr = ((isrAntes - subsidioAntes) / 30.4) * diasIsr;
+
+                                    if (isptIsr <= 0)
+                                    {
+                                        isrDefinitivo.cantidad = 0;
+                                    }
+                                    else
+                                    {
+                                        isrDefinitivo.cantidad = isptIsr;
+                                    }
+                                }
+                            }
+                            else
+                                isrDefinitivo.cantidad = 0;
+                        }
+                            
 
                         isrDefinitivo.guardada = true;
                         isrDefinitivo.tiponomina = tipoNomina;
@@ -1005,13 +1384,58 @@ namespace Nominas
                         }
                         else
                         {
-                            vn.cantidad = 0;
-                            vn.exento = 0;
-                            vn.gravado = 0;
-                            
-                            cnx.Open();
-                            nh.actualizaConcepto(vn);
-                            cnx.Close();
+                            double vacacionDeducciones = lstPercepciones.Where(e => e.idtrabajador == lstConceptosDeducciones[i].idtrabajador && e.noconcepto == 7).Sum(e => e.cantidad);
+                            if (vacacionDeducciones != 0)
+                            {
+                                Infonavit.Core.InfonavitHelper infh = new Infonavit.Core.InfonavitHelper();
+                                infh.Command = cmd;
+
+                                Infonavit.Core.Infonavit inf = new Infonavit.Core.Infonavit();
+                                inf.idtrabajador = lstConceptosDeducciones[i].idtrabajador;
+                                inf.idempresa = GLOBALES.IDEMPRESA;
+
+                                if (lstConceptosDeducciones[i].noconcepto == 9)
+                                {
+                                    cnx.Open();
+                                    activoInfonavit = (bool)infh.activoInfonavit(inf);
+                                    cnx.Close();
+
+                                    if (!activoInfonavit)
+                                    {
+                                        vn.cantidad = 0;
+                                        vn.exento = 0;
+                                        vn.gravado = 0;
+                                    }
+                                    else
+                                    {
+                                        CalculoFormula cf = new CalculoFormula(lstConceptosDeducciones[i].idtrabajador, inicio.Date, fin.Date, lstConceptosDeducciones[i].formula);
+                                        vn.cantidad = double.Parse(cf.calcularFormula().ToString());
+                                        vn.exento = 0;
+                                        vn.gravado = 0;
+                                    }
+                                }
+                                else
+                                {
+                                    CalculoFormula cf = new CalculoFormula(lstConceptosDeducciones[i].idtrabajador, inicio.Date, fin.Date, lstConceptosDeducciones[i].formula);
+                                    vn.cantidad = double.Parse(cf.calcularFormula().ToString());
+                                    vn.exento = 0;
+                                    vn.gravado = 0;
+                                }
+
+                                cnx.Open();
+                                nh.actualizaConcepto(vn);
+                                cnx.Close();
+                            }
+                            else
+                            {
+                                vn.cantidad = 0;
+                                vn.exento = 0;
+                                vn.gravado = 0;
+
+                                cnx.Open();
+                                nh.actualizaConcepto(vn);
+                                cnx.Close();
+                            }
                         }
                         break;
                         #endregion

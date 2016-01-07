@@ -86,6 +86,12 @@ namespace Nominas
             em.digitoverificador = int.Parse(txtDigitoVerificador.Text);
             em.representante = txtRepresentante.Text;
             em.estatus = 1;
+            em.regimen = txtRegimen.Text;
+            em.certificado = txtCertificado.Text;
+            em.llave = txtLlave.Text;
+            em.password = txtPassword.Text;
+            em.nocertificado = txtNoCertificado.Text;
+            em.vigenciacertificado = dtpVigencia.Value.Date;
 
             dh = new Direccion.Core.DireccionesHelper();
             dh.Command = cmd;
@@ -234,6 +240,12 @@ namespace Nominas
                         txtRfc.Text = lstEmpresa[i].rfc;
                         txtRegistroPatronal.Text = lstEmpresa[i].registro;
                         txtDigitoVerificador.Text = lstEmpresa[i].digitoverificador.ToString();
+                        txtRegimen.Text = lstEmpresa[i].regimen.ToString();
+                        txtCertificado.Text = lstEmpresa[i].certificado;
+                        txtLlave.Text = lstEmpresa[i].llave;
+                        txtPassword.Text = lstEmpresa[i].password;
+                        txtNoCertificado.Text = lstEmpresa[i].nocertificado;
+                        dtpVigencia.Value = lstEmpresa[i].vigenciacertificado;
                     }
 
                     for (int i = 0; i < lstDireccion.Count; i++)
@@ -293,6 +305,32 @@ namespace Nominas
             i._idpersona = _idempresa;
             i._tipopersona = GLOBALES.pEMPRESA;
             i.Show();
+        }
+
+        private void btnExaminarCertificado_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog pfd = new OpenFileDialog();
+            pfd.Title = "Seleccionar Certificado Digital";
+            pfd.InitialDirectory = @"C:\";
+            pfd.Filter = "Certificado Digital|*.cer";
+            pfd.RestoreDirectory = true;
+            if (DialogResult.OK == pfd.ShowDialog())
+            {
+                txtCertificado.Text = pfd.FileName;
+            }
+        }
+
+        private void btnExaminarLlave_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog pfd = new OpenFileDialog();
+            pfd.Title = "Seleccionar Llave Digital";
+            pfd.InitialDirectory = @"C:\";
+            pfd.Filter = "Llave Digital|*.key";
+            pfd.RestoreDirectory = true;
+            if (DialogResult.OK == pfd.ShowDialog())
+            {
+                txtLlave.Text = pfd.FileName;
+            }
         }
     }
 }
