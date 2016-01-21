@@ -135,6 +135,31 @@ namespace Nominas
 
                     case "DiasLaborados":
                         int existe = 0, diasBaja = 0, idperiodo = 0, diasPago = 0, diasMesLaborados = 0, diasFaltas = 0;
+                        int existeAlta = 0, diasAlta = 0;
+                        int existeReingreso = 0, diasReingreso = 0;
+
+                        Altas.Core.AltasHelper ah = new Altas.Core.AltasHelper();
+                        ah.Command = cmd;
+                        Altas.Core.Altas a = new Altas.Core.Altas();
+                        a.idtrabajador = idTrabajador;
+                        a.periodoInicio = inicioPeriodo;
+                        a.periodoFin = finPeriodo;
+
+                        cnx.Open();
+                        existeAlta = (int)ah.existeAlta(a);
+                        cnx.Close();
+
+                        Reingreso.Core.ReingresoHelper rh = new Reingreso.Core.ReingresoHelper();
+                        rh.Command = cmd;
+                        Reingreso.Core.Reingresos r = new Reingreso.Core.Reingresos();
+                        r.idtrabajador = idTrabajador;
+                        r.periodoinicio = inicioPeriodo;
+                        r.periodofin = finPeriodo;
+
+                        cnx.Open();
+                        existeReingreso = (int)rh.existeReingreso(r);
+                        cnx.Close();
+
                         Bajas.Core.BajasHelper bh = new Bajas.Core.BajasHelper();
                         bh.Command = cmd;
                         Bajas.Core.Bajas baja = new Bajas.Core.Bajas();
@@ -149,7 +174,78 @@ namespace Nominas
                         Empleados.Core.EmpleadosHelper edlh = new Empleados.Core.EmpleadosHelper();
                         edlh.Command = cmd;
 
-                        if (existe != 0)
+                        #region EXISTE ALTA Y BAJA
+                        if (existeAlta != 0 && existe != 0 && existeReingreso == 0)
+                        {
+                            cnx.Open();
+                            idperiodo = (int)edlh.obtenerIdPeriodo(idTrabajador);
+                            cnx.Close();
+
+                            Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
+                            ph.Command = cmd;
+
+                            Periodos.Core.Periodos p = new Periodos.Core.Periodos();
+                            p.idperiodo = idperiodo;
+
+                            cnx.Open();
+                            diasPago = (int)ph.DiasDePago(p);
+                            cnx.Close();
+
+                            cnx.Open();
+                            diasAlta = (int)ah.diasProporcionales(a);
+                            cnx.Close();
+
+                            cnx.Open();
+                            diasBaja = (int)bh.diasProporcionales(baja);
+                            cnx.Close();
+
+                            int totalDias = diasPago - ((diasPago - diasAlta) + (diasPago - diasBaja));
+
+                            Faltas.Core.FaltasHelper faltaHelper = new Faltas.Core.FaltasHelper();
+                            faltaHelper.Command = cmd;
+                            Faltas.Core.Faltas faltasDL = new Faltas.Core.Faltas();
+                            faltasDL.idtrabajador = idTrabajador;
+                            faltasDL.fechainicio = inicioPeriodo;
+                            faltasDL.fechafin = finPeriodo;
+
+                            cnx.Open();
+                            diasFaltas = (int)faltaHelper.existeFalta(faltasDL);
+                            cnx.Close();
+
+                            if (diasFaltas >= totalDias)
+                                formula = formula.Replace("[" + variables[i] + "]", diasFaltas.ToString());
+                            else
+                                formula = formula.Replace("[" + variables[i] + "]", totalDias.ToString());
+                        }
+                        #endregion
+
+                        #region EXISTE ALTA, NO EXISTE BAJA
+                        if (existeAlta != 0 && existe == 0 && existeReingreso == 0)
+                        {
+                            cnx.Open();
+                            diasAlta = (int)ah.diasProporcionales(a);
+                            cnx.Close();
+
+                            Faltas.Core.FaltasHelper faltaHelper = new Faltas.Core.FaltasHelper();
+                            faltaHelper.Command = cmd;
+                            Faltas.Core.Faltas faltasDL = new Faltas.Core.Faltas();
+                            faltasDL.idtrabajador = idTrabajador;
+                            faltasDL.fechainicio = inicioPeriodo;
+                            faltasDL.fechafin = finPeriodo;
+
+                            cnx.Open();
+                            diasFaltas = (int)faltaHelper.existeFalta(faltasDL);
+                            cnx.Close();
+
+                            if (diasFaltas >= diasAlta)
+                                formula = formula.Replace("[" + variables[i] + "]", diasFaltas.ToString());
+                            else
+                                formula = formula.Replace("[" + variables[i] + "]", diasAlta.ToString());
+                        }
+                        #endregion
+
+                        #region NO EXISTE ALTA, EXISTE BAJA
+                        if (existeAlta == 0 && existe != 0 && existeReingreso == 0)
                         {
                             cnx.Open();
                             diasBaja = (int)bh.diasProporcionales(baja);
@@ -167,11 +263,14 @@ namespace Nominas
                             cnx.Close();
 
                             if (diasFaltas >= diasBaja)
-                                formula = formula.Replace("[" + variables[i] + "]", (diasFaltas + diasBaja).ToString());
+                                formula = formula.Replace("[" + variables[i] + "]", diasFaltas.ToString());
                             else
                                 formula = formula.Replace("[" + variables[i] + "]", diasBaja.ToString());
                         }
-                        else
+                        #endregion
+
+                        #region EXISTE REINGRESO Y BAJA
+                        if (existeReingreso != 0 && existe != 0 && existeAlta == 0)
                         {
                             cnx.Open();
                             idperiodo = (int)edlh.obtenerIdPeriodo(idTrabajador);
@@ -187,23 +286,121 @@ namespace Nominas
                             diasPago = (int)ph.DiasDePago(p);
                             cnx.Close();
 
-                            if (diasPago == 7)
-                                formula = formula.Replace("[" + variables[i] + "]", diasPago.ToString());
+                            cnx.Open();
+                            diasReingreso = (int)rh.diasProporcionales(r);
+                            cnx.Close();
+
+                            cnx.Open();
+                            diasBaja = (int)bh.diasProporcionales(baja);
+                            cnx.Close();
+
+                            int totalDias = diasPago - ((diasPago - diasReingreso) + (diasPago - diasBaja));
+
+                            Faltas.Core.FaltasHelper faltaHelper = new Faltas.Core.FaltasHelper();
+                            faltaHelper.Command = cmd;
+                            Faltas.Core.Faltas faltasDL = new Faltas.Core.Faltas();
+                            faltasDL.idtrabajador = idTrabajador;
+                            faltasDL.fechainicio = inicioPeriodo;
+                            faltasDL.fechafin = finPeriodo;
+
+                            cnx.Open();
+                            diasFaltas = (int)faltaHelper.existeFalta(faltasDL);
+                            cnx.Close();
+
+                            if (diasFaltas >= totalDias)
+                                formula = formula.Replace("[" + variables[i] + "]", diasFaltas.ToString());
                             else
-                            {
-                                if (inicioPeriodo.Day <= 15)
-                                {
-                                    formula = formula.Replace("[" + variables[i] + "]", diasPago.ToString());
-                                }
-                                else
-                                {
-                                    diasMesLaborados = DateTime.DaysInMonth(inicioPeriodo.Year, inicioPeriodo.Month);
-                                    diasMesLaborados = diasMesLaborados - 15;
-                                    formula = formula.Replace("[" + variables[i] + "]", diasMesLaborados.ToString());
-                                }
-                            }
+                                formula = formula.Replace("[" + variables[i] + "]", totalDias.ToString());
                         }
-                            
+                        #endregion
+
+                        #region EXISTE REINGRESO, NO EXISTE BAJA
+                        if (existeReingreso != 0 && existe == 0 && existeAlta == 0)
+                        {
+                            cnx.Open();
+                            diasReingreso = (int)rh.diasProporcionales(r);
+                            cnx.Close();
+
+                            Faltas.Core.FaltasHelper faltaHelper = new Faltas.Core.FaltasHelper();
+                            faltaHelper.Command = cmd;
+                            Faltas.Core.Faltas faltasDL = new Faltas.Core.Faltas();
+                            faltasDL.idtrabajador = idTrabajador;
+                            faltasDL.fechainicio = inicioPeriodo;
+                            faltasDL.fechafin = finPeriodo;
+
+                            cnx.Open();
+                            diasFaltas = (int)faltaHelper.existeFalta(faltasDL);
+                            cnx.Close();
+
+                            if (diasFaltas >= diasReingreso)
+                                formula = formula.Replace("[" + variables[i] + "]", diasFaltas.ToString());
+                            else
+                                formula = formula.Replace("[" + variables[i] + "]", diasReingreso.ToString());
+                        }
+                        #endregion
+
+                        #region NO EXISTE REINGRESO, EXISTE BAJA
+                        if (existeReingreso == 0 && existe != 0 && existeAlta == 0)
+                        {
+                            cnx.Open();
+                            diasBaja = (int)bh.diasProporcionales(baja);
+                            cnx.Close();
+
+                            Faltas.Core.FaltasHelper faltaHelper = new Faltas.Core.FaltasHelper();
+                            faltaHelper.Command = cmd;
+                            Faltas.Core.Faltas faltasDL = new Faltas.Core.Faltas();
+                            faltasDL.idtrabajador = idTrabajador;
+                            faltasDL.fechainicio = inicioPeriodo;
+                            faltasDL.fechafin = finPeriodo;
+
+                            cnx.Open();
+                            diasFaltas = (int)faltaHelper.existeFalta(faltasDL);
+                            cnx.Close();
+
+                            if (diasFaltas >= diasBaja)
+                                formula = formula.Replace("[" + variables[i] + "]", diasFaltas.ToString());
+                            else
+                                formula = formula.Replace("[" + variables[i] + "]", diasBaja.ToString());
+                        }
+                        #endregion
+
+                        #region NO EXISTE REINGRESO, BAJAS
+                        if (existeAlta == 0 && existe == 0 && existeReingreso == 0)
+                        {
+                            cnx.Open();
+                            idperiodo = (int)edlh.obtenerIdPeriodo(idTrabajador);
+                            cnx.Close();
+
+                            Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
+                            ph.Command = cmd;
+
+                            Periodos.Core.Periodos p = new Periodos.Core.Periodos();
+                            p.idperiodo = idperiodo;
+
+                            cnx.Open();
+                            diasPago = (int)ph.DiasDePago(p);
+                            cnx.Close();
+
+                            formula = formula.Replace("[" + variables[i] + "]", diasPago.ToString());
+
+                            //if (diasPago == 7)
+                            //    formula = formula.Replace("[" + variables[i] + "]", diasPago.ToString());
+                            //else
+                            //{
+                            //    if (inicioPeriodo.Day <= 15)
+                            //    {
+                            //        formula = formula.Replace("[" + variables[i] + "]", diasPago.ToString());
+                            //    }
+                            //    else
+                            //    {
+                            //        diasMesLaborados = DateTime.DaysInMonth(inicioPeriodo.Year, inicioPeriodo.Month);
+                            //        diasMesLaborados = diasMesLaborados - 15;
+                            //        formula = formula.Replace("[" + variables[i] + "]", diasMesLaborados.ToString());
+                            //    }
+                            //}
+                        }
+                        #endregion
+
                         break;
 
                     case "DiasIncapacidad":
@@ -290,46 +487,92 @@ namespace Nominas
                         formula = formula.Replace("[" + variables[i] + "]", valorInfonavit.ToString());
                         break;
 
+                    case "DiasBimestre":
+                        int diasBimestre = 0;
+                        int mesBimestre = DateTime.Now.Month;
+                        switch (mesBimestre)
+                        {
+                            case 1:
+                                diasBimestre = DateTime.DaysInMonth(DateTime.Now.Year, 1) + DateTime.DaysInMonth(DateTime.Now.Year, 2);
+                                break;
+                            case 2:
+                                diasBimestre = DateTime.DaysInMonth(DateTime.Now.Year, 1) + DateTime.DaysInMonth(DateTime.Now.Year, 2);
+                                break;
+                            case 3:
+                                diasBimestre = DateTime.DaysInMonth(DateTime.Now.Year, 3) + DateTime.DaysInMonth(DateTime.Now.Year, 4);
+                                break;
+                            case 4:
+                                diasBimestre = DateTime.DaysInMonth(DateTime.Now.Year, 3) + DateTime.DaysInMonth(DateTime.Now.Year, 4);
+                                break;
+                            case 5:
+                                diasBimestre = DateTime.DaysInMonth(DateTime.Now.Year, 5) + DateTime.DaysInMonth(DateTime.Now.Year, 6);
+                                break;
+                            case 6:
+                                diasBimestre = DateTime.DaysInMonth(DateTime.Now.Year, 5) + DateTime.DaysInMonth(DateTime.Now.Year, 6);
+                                break;
+                            case 7:
+                                diasBimestre = DateTime.DaysInMonth(DateTime.Now.Year, 7) + DateTime.DaysInMonth(DateTime.Now.Year, 8);
+                                break;
+                            case 8:
+                                diasBimestre = DateTime.DaysInMonth(DateTime.Now.Year, 7) + DateTime.DaysInMonth(DateTime.Now.Year, 8);
+                                break;
+                            case 9:
+                                diasBimestre = DateTime.DaysInMonth(DateTime.Now.Year, 9) + DateTime.DaysInMonth(DateTime.Now.Year, 10);
+                                break;
+                            case 10:
+                                diasBimestre = DateTime.DaysInMonth(DateTime.Now.Year, 9) + DateTime.DaysInMonth(DateTime.Now.Year, 10);
+                                break;
+                            case 11:
+                                diasBimestre = DateTime.DaysInMonth(DateTime.Now.Year, 11) + DateTime.DaysInMonth(DateTime.Now.Year, 12);
+                                break;
+                            case 12:
+                                diasBimestre = DateTime.DaysInMonth(DateTime.Now.Year, 11) + DateTime.DaysInMonth(DateTime.Now.Year, 12);
+                                break;
+                        }
+
+                        formula = formula.Replace("[" + variables[i] + "]", diasBimestre.ToString());
+                        break;
+
                     case "DiasMes":
                         int diasMes = 0;
                         int mes = DateTime.Now.Month;
                         switch (mes)
                         {
                             case 1:
-                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 1) + DateTime.DaysInMonth(DateTime.Now.Year, 2);
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 1);
                                 break;
                             case 2:
-                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 1) + DateTime.DaysInMonth(DateTime.Now.Year, 2);
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 2);
                                 break;
                             case 3:
-                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 3) + DateTime.DaysInMonth(DateTime.Now.Year, 4);
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 3);
                                 break;
                             case 4:
-                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 3) + DateTime.DaysInMonth(DateTime.Now.Year, 4);
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 4);
                                 break;
                             case 5:
-                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 5) + DateTime.DaysInMonth(DateTime.Now.Year, 6);
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 5);
                                 break;
                             case 6:
-                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 5) + DateTime.DaysInMonth(DateTime.Now.Year, 6);
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 6);
                                 break;
                             case 7:
-                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 7) + DateTime.DaysInMonth(DateTime.Now.Year, 8);
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 7);
                                 break;
                             case 8:
-                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 7) + DateTime.DaysInMonth(DateTime.Now.Year, 8);
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 8);
                                 break;
                             case 9:
-                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 9) + DateTime.DaysInMonth(DateTime.Now.Year, 10);
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 9);
                                 break;
                             case 10:
-                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 9) + DateTime.DaysInMonth(DateTime.Now.Year, 10);
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 10);
                                 break;
                             case 11:
-                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 11) + DateTime.DaysInMonth(DateTime.Now.Year, 12);
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 11);
                                 break;
                             case 12:
-                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 11) + DateTime.DaysInMonth(DateTime.Now.Year, 12);
+                                diasMes = DateTime.DaysInMonth(DateTime.Now.Year, 12);
                                 break;
                         }
 
@@ -371,6 +614,8 @@ namespace Nominas
                                 formula = formula.Replace("[" + variables[i] + "]", lstPeriodoInfonavit[0].dias.ToString());
                             else
                             {
+                                CalculoFormula cf = new CalculoFormula(idTrabajador, inicioPeriodo, finPeriodo, "[DiasLaborados]-[Faltas]-[DiasIncapacidad]");
+                                diasPI = int.Parse(cf.calcularFormula().ToString());
                                 formula = formula.Replace("[" + variables[i] + "]", diasPI.ToString());
                             }
                              
@@ -383,7 +628,12 @@ namespace Nominas
                                 formula = formula + "+" + _formula;
                             }
                             else
+                            {
+                                CalculoFormula cf = new CalculoFormula(idTrabajador, inicioPeriodo, finPeriodo, "[DiasLaborados]-[Faltas]-[DiasIncapacidad]");
+                                diasPI = (int)cf.calcularFormula();
                                 formula = formula.Replace("[" + variables[i] + "]", diasPI.ToString());
+                            }
+                            
                         break;
                     case "SeguroInfonavit":
 
@@ -432,8 +682,8 @@ namespace Nominas
                         TablaIsr.Core.IsrHelper isrh = new TablaIsr.Core.IsrHelper();
                         isrh.Command = cmd;
 
-                        double sueldo = lstPercepciones.Where(e => e.idtrabajador == idTrabajador && e.noconcepto == 1).Sum(e => e.cantidad);
-                        if (sueldo != 0)
+                        double percepciones = lstPercepciones.Where(e => e.idtrabajador == idTrabajador && e.tipoconcepto == "P").Sum(e => e.cantidad);
+                        if (percepciones != 0)
                         {
                             double baseGravableIsr = lstPercepciones.Where(e => e.idtrabajador == idTrabajador).Sum(e => e.gravado);
 
@@ -465,55 +715,18 @@ namespace Nominas
                             ImpMarginal = excedente * (lstIsr[0].porcentaje / 100);
                             isr = ImpMarginal + lstIsr[0].cuota;
 
-                            return isr;
+                            return (isr/  30.4) * diasISR;
                         }
                         else
                         {
-                            double vacaciones = lstPercepciones.Where(e => e.idtrabajador == idTrabajador && e.noconcepto == 7).Sum(e => e.cantidad);
-                            if (vacaciones != 0)
-                            {
-                                double baseGravableIsr = lstPercepciones.Where(e => e.idtrabajador == idTrabajador).Sum(e => e.gravado);
-
-                                Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
-                                eh.Command = cmd;
-
-                                cnx.Open();
-                                idperiodoISR = (int)eh.obtenerIdPeriodo(idTrabajador);
-                                cnx.Close();
-
-                                Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
-                                ph.Command = cmd;
-
-                                Periodos.Core.Periodos p = new Periodos.Core.Periodos();
-                                p.idperiodo = idperiodoISR;
-
-                                cnx.Open();
-                                diasISR = (int)ph.DiasDePago(p);
-                                cnx.Close();
-
-                                TablaIsr.Core.TablaIsr _isr = new TablaIsr.Core.TablaIsr();
-                                _isr.inferior = (baseGravableIsr / diasISR) * 30.4;
-
-                                cnx.Open();
-                                lstIsr = isrh.isrCorrespondiente(_isr);
-                                cnx.Close();
-
-                                excedente = ((baseGravableIsr / diasISR) * 30.4) - lstIsr[0].inferior;
-                                ImpMarginal = excedente * (lstIsr[0].porcentaje / 100);
-                                isr = ImpMarginal + lstIsr[0].cuota;
-
-                                return isr;
-                            }
-                            else
-                            {
-                                return 0;
-                            }
+                            return 0;
                         }
+
                     case "Subsidio Acreditado":
-                        double sueldoSubsidio = lstPercepciones.Where(e => e.idtrabajador == idTrabajador && e.noconcepto == 1).Sum(e => e.cantidad);
+                        double percepcionSubsidio = lstPercepciones.Where(e => e.idtrabajador == idTrabajador && e.tipoconcepto == "P").Sum(e => e.cantidad);
                         int idperiodoSubsidio = 0, diasSubsidio = 0;
 
-                        if (sueldoSubsidio != 0)
+                        if (percepcionSubsidio != 0)
                         {
                             double baseGravableSubsidio = lstPercepciones.Where(e => e.idtrabajador == idTrabajador).Sum(e => e.gravado);
 
@@ -544,55 +757,209 @@ namespace Nominas
                             cantidad = double.Parse(ts.obtenerCantidadSubsidio(subsidio).ToString());
                             cnx.Close();
 
-                            return cantidad;
+                            return (cantidad / 30.4) * diasSubsidio;
                         }
                         else
                         {
-                            double vacacionesSubsidio = lstPercepciones.Where(e => e.idtrabajador == idTrabajador && e.noconcepto == 7).Sum(e => e.cantidad);
-                            if (vacacionesSubsidio != 0)
+                            return 0;
+                        }
+
+                    case "Concepto ISR":
+                        int noConceptoISR = 0, noConceptoSubsidio = 0, existeConceptoISR = 0, existeConceptoSubisdio = 0;
+                        double percepcionISR = lstPercepciones.Where(e => e.idtrabajador == idTrabajador && e.tipoconcepto == "P").Sum(e => e.cantidad);
+
+                        if (percepcionISR != 0)
+                        {
+                            CalculoNomina.Core.NominaHelper cnh = new CalculoNomina.Core.NominaHelper();
+                            cnh.Command = cmd;
+
+                            Conceptos.Core.ConceptosHelper cisrh = new Conceptos.Core.ConceptosHelper();
+                            cisrh.Command = cmd;
+                            Conceptos.Core.Conceptos cisr = new Conceptos.Core.Conceptos();
+                            cisr.formula = "[ISR ASE]";
+                            cisr.idempresa = GLOBALES.IDEMPRESA;
+
+                            cnx.Open();
+                            noConceptoISR = (int)cisrh.obtenerNoConcepto(cisr);
+                            cnx.Close();
+
+                            CalculoNomina.Core.tmpPagoNomina cpnIsr = new CalculoNomina.Core.tmpPagoNomina();
+                            cpnIsr.idtrabajador = idTrabajador;
+                            cpnIsr.idempresa = GLOBALES.IDEMPRESA;
+                            cpnIsr.fechainicio = inicioPeriodo;
+                            cpnIsr.fechafin = finPeriodo;
+                            cpnIsr.noconcepto = noConceptoISR;
+
+                            cnx.Open();
+                            existeConceptoISR = (int)cnh.existeConcepto(cpnIsr);
+                            cnx.Close();
+
+                            
+                            Conceptos.Core.ConceptosHelper csubsidioh = new Conceptos.Core.ConceptosHelper();
+                            csubsidioh.Command = cmd;
+                            Conceptos.Core.Conceptos csubsidio = new Conceptos.Core.Conceptos();
+                            csubsidio.formula = "[Subsidio Acreditado]";
+                            csubsidio.idempresa = GLOBALES.IDEMPRESA;
+
+                            cnx.Open();
+                            noConceptoSubsidio = (int)csubsidioh.obtenerNoConcepto(csubsidio);
+                            cnx.Close();
+
+                            CalculoNomina.Core.tmpPagoNomina cpnSubsidio = new CalculoNomina.Core.tmpPagoNomina();
+                            cpnSubsidio.idtrabajador = idTrabajador;
+                            cpnSubsidio.idempresa = GLOBALES.IDEMPRESA;
+                            cpnSubsidio.fechainicio = inicioPeriodo;
+                            cpnSubsidio.fechafin = finPeriodo;
+                            cpnSubsidio.noconcepto = noConceptoSubsidio;
+
+                            cnx.Open();
+                            existeConceptoSubisdio = (int)cnh.existeConcepto(cpnSubsidio);
+                            cnx.Close();
+
+                            
+                            if (existeConceptoISR != 0 && existeConceptoSubisdio != 0)
                             {
-                                double baseGravableSubsidio = lstPercepciones.Where(e => e.idtrabajador == idTrabajador).Sum(e => e.gravado);
-
-                                Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
-                                eh.Command = cmd;
-
                                 cnx.Open();
-                                idperiodoSubsidio = (int)eh.obtenerIdPeriodo(idTrabajador);
+                                double cantidadIsr = double.Parse(cnh.obtenerImporteConcepto(cpnIsr).ToString());
+                                double cantidadSubsidio = double.Parse(cnh.obtenerImporteConcepto(cpnSubsidio).ToString());
                                 cnx.Close();
 
-                                Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
-                                ph.Command = cmd;
-
-                                Periodos.Core.Periodos p = new Periodos.Core.Periodos();
-                                p.idperiodo = idperiodoSubsidio;
+                                Empleados.Core.EmpleadosHelper eih = new Empleados.Core.EmpleadosHelper();
+                                eih.Command = cmd;
 
                                 cnx.Open();
-                                diasSubsidio = (int)ph.DiasDePago(p);
+                                int idperiodoIsr = (int)eih.obtenerIdPeriodo(idTrabajador);
                                 cnx.Close();
 
-                                TablaSubsidio.Core.SubsidioHelper ts = new TablaSubsidio.Core.SubsidioHelper();
-                                ts.Command = cmd;
-                                TablaSubsidio.Core.TablaSubsidio subsidio = new TablaSubsidio.Core.TablaSubsidio();
-                                subsidio.desde = (baseGravableSubsidio / diasSubsidio) * 30.4;
+                                Periodos.Core.PeriodosHelper pih = new Periodos.Core.PeriodosHelper();
+                                pih.Command = cmd;
 
-                                double cantidad = 0;
+                                Periodos.Core.Periodos pi = new Periodos.Core.Periodos();
+                                pi.idperiodo = idperiodoIsr;
+
                                 cnx.Open();
-                                cantidad = double.Parse(ts.obtenerCantidadSubsidio(subsidio).ToString());
+                                int diasIsr = (int)pih.DiasDePago(pi);
                                 cnx.Close();
 
-                                return cantidad;
+                                if (cantidadSubsidio > cantidadIsr)
+                                {
+                                    formula = formula.Replace("[" + variables[i] + "]", (0).ToString());
+                                }
+                                else
+                                {
+                                    formula = formula.Replace("[" + variables[i] + "]", (cantidadIsr - cantidadSubsidio).ToString());
+                                }
                             }
-                            else 
+                            else
+                                formula = formula.Replace("[" + variables[i] + "]", (0).ToString());
+                        }
+                        else
+                            formula = formula.Replace("[" + variables[i] + "]", (0).ToString());
+                        break;
+
+                    case "Concepto Subsidio":
+                        double percepcionSubs = lstPercepciones.Where(e => e.idtrabajador == idTrabajador && e.tipoconcepto == "P").Sum(e => e.cantidad);
+                        int noConceptoSub = 0, noConceptoISRSAE = 0, existeConceptoSub = 0, existeConceptoISRSAE = 0;
+
+                        if (percepcionSubs != 0)
+                        {
+                            CalculoNomina.Core.NominaHelper cnh = new CalculoNomina.Core.NominaHelper();
+                            cnh.Command = cmd;
+
+                            Conceptos.Core.ConceptosHelper cisrh = new Conceptos.Core.ConceptosHelper();
+                            cisrh.Command = cmd;
+                            Conceptos.Core.Conceptos cisr = new Conceptos.Core.Conceptos();
+                            cisr.formula = "[ISR ASE]";
+                            cisr.idempresa = GLOBALES.IDEMPRESA;
+
+                            cnx.Open();
+                            noConceptoISRSAE = (int)cisrh.obtenerNoConcepto(cisr);
+                            cnx.Close();
+
+                            CalculoNomina.Core.tmpPagoNomina cpnIsr = new CalculoNomina.Core.tmpPagoNomina();
+                            cpnIsr.idtrabajador = idTrabajador;
+                            cpnIsr.idempresa = GLOBALES.IDEMPRESA;
+                            cpnIsr.fechainicio = inicioPeriodo;
+                            cpnIsr.fechafin = finPeriodo;
+                            cpnIsr.noconcepto = noConceptoISRSAE;
+
+                            cnx.Open();
+                            existeConceptoISRSAE = (int)cnh.existeConcepto(cpnIsr);
+                            cnx.Close();
+
+
+                            Conceptos.Core.ConceptosHelper csubsidioh = new Conceptos.Core.ConceptosHelper();
+                            csubsidioh.Command = cmd;
+                            Conceptos.Core.Conceptos csubsidio = new Conceptos.Core.Conceptos();
+                            csubsidio.formula = "[Subsidio Acreditado]";
+                            csubsidio.idempresa = GLOBALES.IDEMPRESA;
+
+                            cnx.Open();
+                            noConceptoSub = (int)csubsidioh.obtenerNoConcepto(csubsidio);
+                            cnx.Close();
+
+                            CalculoNomina.Core.tmpPagoNomina cpnSubsidio = new CalculoNomina.Core.tmpPagoNomina();
+                            cpnSubsidio.idtrabajador = idTrabajador;
+                            cpnSubsidio.idempresa = GLOBALES.IDEMPRESA;
+                            cpnSubsidio.fechainicio = inicioPeriodo;
+                            cpnSubsidio.fechafin = finPeriodo;
+                            cpnSubsidio.noconcepto = noConceptoSub;
+
+                            cnx.Open();
+                            existeConceptoSub = (int)cnh.existeConcepto(cpnSubsidio);
+                            cnx.Close();
+
+                            if (existeConceptoSub != 0 && existeConceptoISRSAE != 0)
                             {
-                                return 0;
+                                cnx.Open();
+                                double cantidadIsr = double.Parse(cnh.obtenerImporteConcepto(cpnIsr).ToString());
+                                double cantidadSubsidio = double.Parse(cnh.obtenerImporteConcepto(cpnSubsidio).ToString());
+                                cnx.Close();
+
+                                Empleados.Core.EmpleadosHelper eih = new Empleados.Core.EmpleadosHelper();
+                                eih.Command = cmd;
+
+                                cnx.Open();
+                                int idperiodoIsr = (int)eih.obtenerIdPeriodo(idTrabajador);
+                                cnx.Close();
+
+                                Periodos.Core.PeriodosHelper pih = new Periodos.Core.PeriodosHelper();
+                                pih.Command = cmd;
+
+                                Periodos.Core.Periodos pi = new Periodos.Core.Periodos();
+                                pi.idperiodo = idperiodoIsr;
+
+                                cnx.Open();
+                                int diasIsr = (int)pih.DiasDePago(pi);
+                                cnx.Close();
+
+                                if (cantidadSubsidio > cantidadIsr)
+                                {
+                                    formula = formula.Replace("[" + variables[i] + "]", (cantidadSubsidio - cantidadIsr).ToString());
+                                }
+                                else
+                                {
+                                    formula = formula.Replace("[" + variables[i] + "]", (0).ToString());
+                                }
                             }
                         }
+                       
+                        break;
                 }
             }
             cnx.Dispose();
-            MathParserTK.MathParser parser = new MathParserTK.MathParser();
-            resultado = parser.Parse(formula.ToString());
-            return resultado;
+            try
+            {
+                MathParserTK.MathParser parser = new MathParserTK.MathParser();
+                resultado = parser.Parse(formula.ToString());
+                return resultado;
+            }
+            catch (Exception error)
+            {
+                string err = "";
+                err = "IdTrabajador: " + idTrabajador.ToString() + " " + error.Message.ToString();
+                return err;
+            }
         }
     }
 }

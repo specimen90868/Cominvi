@@ -169,7 +169,7 @@
             // 
             this.toolAbrir.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolAbrir.Name = "toolAbrir";
-            this.toolAbrir.Size = new System.Drawing.Size(126, 22);
+            this.toolAbrir.Size = new System.Drawing.Size(152, 22);
             this.toolAbrir.Text = "Abrir";
             this.toolAbrir.Click += new System.EventHandler(this.toolAbrir_Click);
             // 
@@ -177,27 +177,28 @@
             // 
             this.toolGuardar.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolGuardar.Name = "toolGuardar";
-            this.toolGuardar.Size = new System.Drawing.Size(126, 22);
+            this.toolGuardar.Size = new System.Drawing.Size(152, 22);
             this.toolGuardar.Text = "Guardar";
+            this.toolGuardar.Visible = false;
             this.toolGuardar.Click += new System.EventHandler(this.toolGuardar_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(123, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(149, 6);
             // 
             // toolAutorizar
             // 
             this.toolAutorizar.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.toolAutorizar.Name = "toolAutorizar";
-            this.toolAutorizar.Size = new System.Drawing.Size(126, 22);
+            this.toolAutorizar.Size = new System.Drawing.Size(152, 22);
             this.toolAutorizar.Text = "Autorizar";
             this.toolAutorizar.Click += new System.EventHandler(this.toolAutorizar_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(123, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
             // 
             // toolReportes
             // 
@@ -208,7 +209,7 @@
             this.toolTabular});
             this.toolReportes.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolReportes.Name = "toolReportes";
-            this.toolReportes.Size = new System.Drawing.Size(126, 22);
+            this.toolReportes.Size = new System.Drawing.Size(152, 22);
             this.toolReportes.Text = "Reportes";
             // 
             // toolCaratula
@@ -650,7 +651,7 @@
             this.tabFaltas.Location = new System.Drawing.Point(4, 4);
             this.tabFaltas.Name = "tabFaltas";
             this.tabFaltas.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFaltas.Size = new System.Drawing.Size(1004, 345);
+            this.tabFaltas.Size = new System.Drawing.Size(1017, 424);
             this.tabFaltas.TabIndex = 1;
             this.tabFaltas.Text = "Faltas";
             this.tabFaltas.UseVisualStyleBackColor = true;
@@ -663,7 +664,7 @@
             this.dgvFaltas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvFaltas.Location = new System.Drawing.Point(3, 3);
             this.dgvFaltas.Name = "dgvFaltas";
-            this.dgvFaltas.Size = new System.Drawing.Size(998, 339);
+            this.dgvFaltas.Size = new System.Drawing.Size(1011, 418);
             this.dgvFaltas.TabIndex = 0;
             this.dgvFaltas.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFaltas_CellValueChanged);
             this.dgvFaltas.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvFaltas_KeyDown);

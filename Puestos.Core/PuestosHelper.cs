@@ -46,6 +46,16 @@ namespace Puestos.Core
             return lstPuestos;
         }
 
+        public object obtenerIdPuesto(string descripcion, int idEmpresa)
+        {
+            Command.CommandText = "select id from puestos where idempresa = @idempresa and descripcion = @descripcion";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idEmpresa);
+            Command.Parameters.AddWithValue("descripcion", descripcion);
+            object dato = Select(Command);
+            return dato;
+        }
+
         public int insertaPuesto(Puestos p)
         {
             Command.CommandText = "insert into puestos (descripcion, estatus, idempresa) values (@descripcion,@estatus,@idempresa)";

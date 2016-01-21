@@ -47,6 +47,16 @@ namespace Departamento.Core
             return lstDepto;
         }
 
+        public object obtenerIdDepartamento(string descripcion, int idEmpresa)
+        {
+            Command.CommandText = "select id from departamentos where idempresa = @idempresa and descripcion = @descripcion";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idEmpresa);
+            Command.Parameters.AddWithValue("descripcion", descripcion);
+            object dato = Select(Command);
+            return dato;
+        }
+
         public int insertaDepartamento(Depto d)
         {
             Command.CommandText = "insert into departamentos (descripcion, estatus, idempresa) values (@descripcion, @estatus, @idempresa)";

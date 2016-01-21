@@ -130,7 +130,7 @@ namespace Empresas.Core
         public int actualizaEmpresa(Empresas e)
         {
             Command.CommandText = "update empresas set nombre = @nombre, rfc = @rfc, registro = @registro, digitoverificador = @digitoverificador, representante = @representante, " +
-                "certificado = @certificado, llave = @llave, password = @password, regimen = @regimen, nocertificado = @certificado, vigenciacertificado = @vigencia where idempresa = @idempresa";
+                "certificado = @certificado, llave = @llave, password = @password, regimen = @regimen, nocertificado = @nocertificado, vigenciacertificado = @vigencia where idempresa = @idempresa";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", e.idempresa);
             Command.Parameters.AddWithValue("nombre", e.nombre);
@@ -142,7 +142,7 @@ namespace Empresas.Core
             Command.Parameters.AddWithValue("llave", e.llave);
             Command.Parameters.AddWithValue("password", e.password);
             Command.Parameters.AddWithValue("regimen", e.regimen);
-            Command.Parameters.AddWithValue("nocertificado", e.certificado);
+            Command.Parameters.AddWithValue("nocertificado", e.nocertificado);
             Command.Parameters.AddWithValue("vigencia", e.vigenciacertificado);
             return Command.ExecuteNonQuery();
         }

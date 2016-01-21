@@ -59,10 +59,11 @@ namespace Nominas
             concepto.idempresa = GLOBALES.IDEMPRESA;
             concepto.concepto = txtConcepto.Text;
             concepto.tipoconcepto = TipoConcepto;
+            concepto.noconcepto = int.Parse(txtNoConcepto.Text);
             concepto.formula = txtFormula.Text;
             concepto.formulaexento = txtExento.Text;
-            concepto.gravado = false;
-            concepto.exento = false;
+            concepto.gravado = chkGrava.Checked;
+            concepto.exento = chkExenta.Checked;
             concepto.visible = chkVisible.Checked;
             concepto.gruposat = txtGrupoSat.Text;
 
@@ -168,11 +169,14 @@ namespace Nominas
                     for (int i = 0; i < lstConcepto.Count; i++)
                     {
                         txtConcepto.Text = lstConcepto[i].concepto.ToString();
+                        txtNoConcepto.Text = lstConcepto[i].noconcepto.ToString();
                         cmbTipo.SelectedIndex = (lstConcepto[i].tipoconcepto == "P") ? 0 : 1;
                         txtFormula.Text = lstConcepto[i].formula;
                         txtExento.Text = lstConcepto[i].formulaexento;
                         chkVisible.Checked = lstConcepto[i].visible;
                         txtGrupoSat.Text = lstConcepto[i].gruposat;
+                        chkGrava.Checked = lstConcepto[i].gravado;
+                        chkExenta.Checked = lstConcepto[i].exento;
                     }
                 }
                 catch (Exception error)
@@ -227,6 +231,52 @@ namespace Nominas
         void gs_OnSeleccion(string grupo)
         {
             txtGrupoSat.Text = grupo;
+        }
+
+        private void txtNoConcepto_Leave(object sender, EventArgs e)
+        {
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            ch = new Conceptos.Core.ConceptosHelper();
+            ch.Command = cmd;
+
+            Conceptos.Core.Conceptos c = new Conceptos.Core.Conceptos();
+            c.idempresa = GLOBALES.IDEMPRESA;
+
+            int existe = 0;
+            try
+            {
+                int.Parse(txtNoConcepto.Text);
+                c.noconcepto = int.Parse(txtNoConcepto.Text);
+                cnx.Open();
+                existe = (int)ch.existeNoConcepto(c);
+                cnx.Close();
+                cnx.Dispose();
+            }
+            catch
+            {
+                MessageBox.Show("Solo se admiten números.", "Error");
+                txtNoConcepto.Text = "0";
+                toolGuardarCerrar.Enabled = false;
+                toolGuardarNuevo.Enabled = false;
+                return;
+            }
+
+            if (existe != 0)
+            {
+                MessageBox.Show("El número de concepto elegido ya se encuentra asignado.", "Error");
+                txtNoConcepto.Text = "0";
+                toolGuardarCerrar.Enabled = false;
+                toolGuardarNuevo.Enabled = false;
+                return;
+            }
+            else
+            {
+                toolGuardarCerrar.Enabled = true;
+                toolGuardarNuevo.Enabled = true;
+            }
         }
     }
 }

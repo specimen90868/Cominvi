@@ -38,15 +38,10 @@ namespace Nominas
             if (_empleadoAltaBaja == GLOBALES.INACTIVO)
             {
                 CargaPerfil(GLOBALES.INACTIVO, "Empleados en Baja");
-                toolNuevo.Enabled = false;
-                //toolEditar.Enabled = false;
-                toolBaja.Enabled = false;
-                //toolIncrementoSalario.Enabled = false;
             }
             else
             {
                 CargaPerfil(GLOBALES.ACTIVO, "Empleados de nómina");
-                toolReingreso.Visible = false;
             }
         }
 
@@ -62,9 +57,9 @@ namespace Nominas
             Bajas.Core.BajasHelper bh = new Bajas.Core.BajasHelper();
             bh.Command = cmd;
 
-            Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
-            empleado.idempresa = GLOBALES.IDEMPRESA;
-            empleado.estatus = _empleadoAltaBaja;
+            //Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
+            //empleado.idempresa = GLOBALES.IDEMPRESA;
+            //empleado.estatus = _empleadoAltaBaja;
 
             Bajas.Core.Bajas baja = new Bajas.Core.Bajas();
             baja.idempresa = GLOBALES.IDEMPRESA;
@@ -72,50 +67,72 @@ namespace Nominas
             try
             {
                 cnx.Open();
-                lstEmpleados = eh.obtenerEmpleados(empleado);
+                //lstEmpleados = eh.obtenerEmpleados(empleado);
+                lstEmpleados = eh.obtenerEmpleados(GLOBALES.IDEMPRESA);
                 lstBajas = bh.obtenerBajas(baja);
                 cnx.Close();
                 cnx.Dispose();
 
-                if (_empleadoAltaBaja == GLOBALES.ACTIVO)
-                {
-                    var em = from e in lstEmpleados
-                             join b in lstBajas on e.idtrabajador equals b.idtrabajador into EmpBaja
-                             from b in EmpBaja.DefaultIfEmpty()
-                             select new
-                             {
-                                 IdTrabajador = e.idtrabajador,
-                                 NoEmpleado = e.noempleado,
-                                 Nombre = e.nombrecompleto,
-                                 Ingreso = e.fechaingreso,
-                                 Antiguedad = e.antiguedad + " AÑOS",
-                                 SDI = e.sdi,
-                                 SD = e.sd,
-                                 Sueldo = e.sueldo,
-                                 Cuenta = e.cuenta,
-                                 Clabe = e.clabe,
-                                 FechaBaja = b != null ? b.fecha.ToShortDateString() : " "
-                             };
-                    dgvEmpleados.DataSource = em.ToList();
-                }
-                else
-                {
-                    var em = from e in lstEmpleados
-                             select new
-                             {
-                                 IdTrabajador = e.idtrabajador,
-                                 NoEmpleado = e.noempleado,
-                                 Nombre = e.nombrecompleto,
-                                 Ingreso = e.fechaingreso,
-                                 Antiguedad = e.antiguedad + " AÑOS",
-                                 SDI = e.sdi,
-                                 SD = e.sd,
-                                 Sueldo = e.sueldo,
-                                 Cuenta = e.cuenta,
-                                 Clabe = e.clabe
-                             };
-                    dgvEmpleados.DataSource = em.ToList();
-                }
+                #region COMENTADO
+                //if (_empleadoAltaBaja == GLOBALES.ACTIVO)
+                //{
+                //    var em = from e in lstEmpleados
+                //             join b in lstBajas on e.idtrabajador equals b.idtrabajador into EmpBaja
+                //             from b in EmpBaja.DefaultIfEmpty()
+                //             select new
+                //             {
+                //                 IdTrabajador = e.idtrabajador,
+                //                 NoEmpleado = e.noempleado,
+                //                 Nombre = e.nombrecompleto,
+                //                 Ingreso = e.fechaingreso,
+                //                 Antiguedad = e.antiguedad + " AÑOS",
+                //                 SDI = e.sdi,
+                //                 SD = e.sd,
+                //                 Sueldo = e.sueldo,
+                //                 Cuenta = e.cuenta,
+                //                 Clabe = e.clabe,
+                //                 FechaBaja = b != null ? b.fecha.ToShortDateString() : " "
+                //             };
+                //    dgvEmpleados.DataSource = em.ToList();
+                //}
+                //else
+                //{
+                //    var em = from e in lstEmpleados
+                //             select new
+                //             {
+                //                 IdTrabajador = e.idtrabajador,
+                //                 NoEmpleado = e.noempleado,
+                //                 Nombre = e.nombrecompleto,
+                //                 Ingreso = e.fechaingreso,
+                //                 Antiguedad = e.antiguedad + " AÑOS",
+                //                 SDI = e.sdi,
+                //                 SD = e.sd,
+                //                 Sueldo = e.sueldo,
+                //                 Cuenta = e.cuenta,
+                //                 Clabe = e.clabe
+                //             };
+                //    dgvEmpleados.DataSource = em.ToList();
+                //}
+                #endregion
+
+                var em = from e in lstEmpleados
+                         join b in lstBajas on e.idtrabajador equals b.idtrabajador into EmpBaja
+                         from b in EmpBaja.DefaultIfEmpty()
+                         select new
+                         {
+                             IdTrabajador = e.idtrabajador,
+                             NoEmpleado = e.noempleado,
+                             Nombre = e.nombrecompleto,
+                             Ingreso = e.fechaingreso,
+                             Antiguedad = e.antiguedad + " AÑOS",
+                             SDI = e.sdi,
+                             SD = e.sd,
+                             Sueldo = e.sueldo,
+                             Cuenta = e.cuenta,
+                             Clabe = e.clabe,
+                             FechaBaja = b != null ? b.fecha.ToShortDateString() : " "
+                         };
+                dgvEmpleados.DataSource = em.ToList();
 
                 for (int i = 0; i < dgvEmpleados.Columns.Count; i++)
                 {
@@ -144,8 +161,10 @@ namespace Nominas
             {
                 switch (lstEdiciones[i].permiso.ToString())
                 {
+                    case "Crear": toolNuevo.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
                     case "Consular": toolConsultar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
                     case "Editar": toolEditar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                    case "Baja": toolBaja.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
                     case "Historial": toolHistorial.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
                     case "Reingreso": toolReingreso.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
                     case "Eliminar": toolEliminar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
@@ -401,12 +420,45 @@ namespace Nominas
         private void toolBaja_Click(object sender, EventArgs e)
         {
             int fila = dgvEmpleados.CurrentCell.RowIndex;
-            frmBaja b = new frmBaja();
-            b.OnBajaEmpleado += b_OnBajaEmpleado;
-            b.MdiParent = this.MdiParent;
-            b._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
-            b._nombreEmpleado = dgvEmpleados.Rows[fila].Cells[2].Value.ToString();
-            b.Show();
+
+            string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+            Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
+            eh.Command = cmd;
+
+            Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
+            empleado.idtrabajador = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
+
+            int estatus = 0;
+            try
+            {
+                cnx.Open();
+                estatus = (int)eh.obtenerEstatus(empleado);
+                cnx.Close();
+                cnx.Dispose();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error: Al obtener el estatus de trabajador.", "Error");
+                cnx.Dispose();
+                return;
+            }
+
+            if (estatus == 1)
+            {
+                frmBaja b = new frmBaja();
+                b.OnBajaEmpleado += b_OnBajaEmpleado;
+                b.MdiParent = this.MdiParent;
+                b._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
+                b._nombreEmpleado = dgvEmpleados.Rows[fila].Cells[2].Value.ToString();
+                b.Show();
+            }
+            else
+            {
+                MessageBox.Show("El trabajador actualmente en baja.", "Información");
+            }
         }
 
         void b_OnBajaEmpleado(int baja)
@@ -418,11 +470,43 @@ namespace Nominas
         private void toolReingreso_Click(object sender, EventArgs e)
         {
             int fila = dgvEmpleados.CurrentCell.RowIndex;
-            frmReingresoEmpleado r = new frmReingresoEmpleado();
-            r.OnReingreso += r_OnReingreso;
-            r._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
-            r._nombreEmpleado = dgvEmpleados.Rows[fila].Cells[2].Value.ToString();
-            r.Show();
+            string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+            Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
+            eh.Command = cmd;
+
+            Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
+            empleado.idtrabajador = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
+
+            int estatus = 0;
+            try
+            {
+                cnx.Open();
+                estatus = (int)eh.obtenerEstatus(empleado);
+                cnx.Close();
+                cnx.Dispose();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error: Al obtener el estatus de trabajador.", "Error");
+                cnx.Dispose();
+                return;
+            }
+
+            if (estatus == 0)
+            {
+                frmReingresoEmpleado r = new frmReingresoEmpleado();
+                r.OnReingreso += r_OnReingreso;
+                r._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
+                r._nombreEmpleado = dgvEmpleados.Rows[fila].Cells[2].Value.ToString();
+                r.Show();
+            }
+            else
+            {
+                MessageBox.Show("El trabajador no puede ser reingresado. Estatus: Alta", "Información");
+            }
         }
 
         void r_OnReingreso(int edicion)

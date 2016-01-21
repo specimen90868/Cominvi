@@ -21,6 +21,7 @@ namespace Altas.Core
         public int contrato { get; set; }
         public int jornada { get; set; }
         public DateTime fechaingreso { get; set; }
+        public int diasproporcionales { get; set; }
         public double sdi { get; set; }
         public string cp { get; set; }
         public DateTime fechanacimiento { get; set; }
@@ -28,5 +29,7 @@ namespace Altas.Core
         public int noestado { get; set; }
         public string clinica { get; set; }
         public string sexo { get; set; }
+        public DateTime periodoInicio { get; set; }
+        public DateTime periodoFin { get; set; }
     }
 }

@@ -109,6 +109,7 @@ namespace Nominas
                 fila = dgvInfonavit.CurrentCell.RowIndex;
                 i._idEmpleado = int.Parse(dgvInfonavit.Rows[fila].Cells[0].Value.ToString());
                 i._nombreEmpleado = dgvInfonavit.Rows[fila].Cells[2].Value.ToString();
+                i._estatusInfonavit = dgvInfonavit.Rows[fila].Cells[6].Value.ToString() == "ACTIVO" ? true : false;
             }
 
             i.OnNuevoInfonavit += i_OnNuevoInfonavit;
@@ -164,6 +165,7 @@ namespace Nominas
             i.OnNuevoInfonavit += i_OnNuevoInfonavit;
             i._idEmpleado = int.Parse(dgvInfonavit.Rows[fila].Cells[0].Value.ToString());
             i._nombreEmpleado = dgvInfonavit.Rows[fila].Cells[2].Value.ToString();
+            i._estatusInfonavit = dgvInfonavit.Rows[fila].Cells[6].Value.ToString() == "ACTIVO" ? true : false;
             i._modificar = 1;
             i.MdiParent = this.MdiParent;
             i.Show();

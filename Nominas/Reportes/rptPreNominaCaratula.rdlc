@@ -16,12 +16,12 @@
               </TextRun>
             </TextRuns>
             <Style>
-              <TextAlign>Center</TextAlign>
+              <TextAlign>Left</TextAlign>
             </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>empresa</rd:DefaultName>
-        <Left>3.01308cm</Left>
+        <Left>5.49514cm</Left>
         <Height>0.6cm</Height>
         <Width>10.27875cm</Width>
         <Style>
@@ -41,7 +41,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>="Periodo del " + First(Fields!CaratulaFechaInicio.Value, "dsRptNominaCaratula") + " al " + First(Fields!CaratulaFechaFin.Value, "dsRptNominaCaratula")</Value>
+                <Value>=First(Fields!CaratulaPeriodo.Value, "dsRptNominaCaratula") + " NO. " + First(Fields!CaratulaNoPeriodo.Value, "dsRptNominaCaratula") + " DEL " + First(Fields!CaratulaFechaInicio.Value, "dsRptNominaCaratula") + " AL " + First(Fields!CaratulaFechaFin.Value, "dsRptNominaCaratula")</Value>
                 <Style>
                   <FontSize>9pt</FontSize>
                   <FontWeight>Bold</FontWeight>
@@ -49,13 +49,13 @@
               </TextRun>
             </TextRuns>
             <Style>
-              <TextAlign>Center</TextAlign>
+              <TextAlign>Left</TextAlign>
             </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>0.70583cm</Top>
-        <Left>2.74849cm</Left>
+        <Top>1.5175cm</Top>
+        <Left>5.49514cm</Left>
         <Height>0.6cm</Height>
         <Width>10.75501cm</Width>
         <ZIndex>1</ZIndex>
@@ -86,7 +86,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox5</rd:DefaultName>
-        <Top>1.72861cm</Top>
+        <Top>2.68111cm</Top>
         <Left>13.56494cm</Left>
         <Height>0.49417cm</Height>
         <Width>3.6859cm</Width>
@@ -118,7 +118,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox6</rd:DefaultName>
-        <Top>2.25806cm</Top>
+        <Top>3.21056cm</Top>
         <Left>13.56494cm</Left>
         <Height>0.48507cm</Height>
         <Width>1.04479cm</Width>
@@ -153,7 +153,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>hora</rd:DefaultName>
-        <Top>2.25806cm</Top>
+        <Top>3.21056cm</Top>
         <Left>14.75084cm</Left>
         <Height>0.48507cm</Height>
         <Width>2.5cm</Width>
@@ -413,7 +413,7 @@
             </FilterValues>
           </Filter>
         </Filters>
-        <Top>3.06733cm</Top>
+        <Top>4.01983cm</Top>
         <Left>0.24849cm</Left>
         <Height>1.2cm</Height>
         <Width>8.42604cm</Width>
@@ -669,7 +669,7 @@
             </FilterValues>
           </Filter>
         </Filters>
-        <Top>3.06733cm</Top>
+        <Top>4.01983cm</Top>
         <Left>8.85092cm</Left>
         <Height>1.2cm</Height>
         <Width>8.47047cm</Width>
@@ -681,7 +681,7 @@
         </Style>
       </Tablix>
       <Line Name="Line1">
-        <Top>2.89094cm</Top>
+        <Top>3.84344cm</Top>
         <Left>0.24849cm</Left>
         <Height>0cm</Height>
         <Width>17.00611cm</Width>
@@ -709,7 +709,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox15</rd:DefaultName>
-        <Top>2.25806cm</Top>
+        <Top>3.21056cm</Top>
         <Left>0.24849cm</Left>
         <Height>0.49177cm</Height>
         <Width>5.50271cm</Width>
@@ -741,7 +741,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox16</rd:DefaultName>
-        <Top>1.72861cm</Top>
+        <Top>2.68111cm</Top>
         <Left>0.24849cm</Left>
         <Height>0.49417cm</Height>
         <Width>5.50271cm</Width>
@@ -763,9 +763,10 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Sum(IIF(Fields!CaratulaTipoConcepto.Value="P",Fields!CaratulaImporte.Value,0)) - Sum(IIF(Fields!CaratulaTipoConcepto.Value="D",Fields!CaratulaImporte.Value,0))</Value>
+                <Value>=Sum(IIF(Fields!CaratulaTipoConcepto.Value="P",Fields!CaratulaImporte.Value,0), "dsRptNominaCaratula") - Sum(IIF(Fields!CaratulaTipoConcepto.Value="D",Fields!CaratulaImporte.Value,0), "dsRptNominaCaratula")</Value>
                 <Style>
                   <FontSize>9pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
                   <Format>#,0.00;(#,0.00)</Format>
                 </Style>
               </TextRun>
@@ -776,7 +777,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox18</rd:DefaultName>
-        <Top>4.37316cm</Top>
+        <Top>5.32566cm</Top>
         <Left>12.84584cm</Left>
         <Height>0.51181cm</Height>
         <Width>4.47555cm</Width>
@@ -808,7 +809,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox20</rd:DefaultName>
-        <Top>4.37316cm</Top>
+        <Top>5.32566cm</Top>
         <Left>9.71177cm</Left>
         <Height>0.51181cm</Height>
         <Width>1.84736cm</Width>
@@ -824,7 +825,7 @@
         </Style>
       </Textbox>
       <Line Name="Line2">
-        <Top>1.41421cm</Top>
+        <Top>2.36671cm</Top>
         <Left>0.24473cm</Left>
         <Height>0cm</Height>
         <Width>17.00611cm</Width>
@@ -854,7 +855,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>4.37316cm</Top>
+        <Top>5.32566cm</Top>
         <Left>1.08161cm</Left>
         <Height>0.51181cm</Height>
         <Width>7.59292cm</Width>
@@ -869,8 +870,58 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
+      <Textbox Name="Textbox2">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>RESUMEN GENERAL DE NOMINA</Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox2</rd:DefaultName>
+        <Top>0.74111cm</Top>
+        <Left>5.49514cm</Left>
+        <Height>0.6cm</Height>
+        <Width>6.96327cm</Width>
+        <ZIndex>14</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Image Name="Logo">
+        <Source>Database</Source>
+        <Value>=First(Fields!imagen.Value, "dsCaratulaImagen")</Value>
+        <MIMEType>image/jpeg</MIMEType>
+        <Sizing>FitProportional</Sizing>
+        <Top>0.3707cm</Top>
+        <Left>0.24849cm</Left>
+        <Height>1.7468cm</Height>
+        <Width>4.79375cm</Width>
+        <ZIndex>15</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Image>
     </ReportItems>
-    <Height>2.17247in</Height>
+    <Height>2.55789in</Height>
     <Style>
       <Border>
         <Style>None</Style>
@@ -957,11 +1008,39 @@
           <DataField>CaratulaTotalEmpleados</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="CaratulaNoPeriodo">
+          <DataField>CaratulaNoPeriodo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CaratulaPeriodo">
+          <DataField>CaratulaPeriodo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>dsReportes</rd:DataSetName>
         <rd:SchemaPath>C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\dsReportes.xsd</rd:SchemaPath>
         <rd:TableName>PreNominaCaratula</rd:TableName>
+        <rd:TableAdapterFillMethod />
+        <rd:TableAdapterGetDataMethod />
+        <rd:TableAdapterName />
+      </rd:DataSetInfo>
+    </DataSet>
+    <DataSet Name="dsCaratulaImagen">
+      <Query>
+        <DataSourceName>dsReportes</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="imagen">
+          <DataField>imagen</DataField>
+          <rd:TypeName>System.Byte[]</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>dsReportes</rd:DataSetName>
+        <rd:SchemaPath>C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\dsReportes.xsd</rd:SchemaPath>
+        <rd:TableName>PreNominaImagen</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
         <rd:TableAdapterName />

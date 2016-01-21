@@ -245,9 +245,20 @@ namespace CalculoNomina.Core
             return Command.ExecuteNonQuery();
         }
 
-        public int actualizaPreNomina(tmpPagoNomina pn)
+        public int guardaPreNomina(tmpPagoNomina pn)
         {
             Command.CommandText = "update tmpPagoNomina set guardada = @guardada where idempresa = @idempresa and fechainicio = @fechainicio and fechafin = @fechafin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("guardada", pn.guardada);
+            Command.Parameters.AddWithValue("idempresa", pn.idempresa);
+            Command.Parameters.AddWithValue("fechainicio", pn.fechainicio);
+            Command.Parameters.AddWithValue("fechafin", pn.fechafin);
+            return Command.ExecuteNonQuery();
+        }
+
+        public int cargaPreNomina(tmpPagoNomina pn)
+        {
+            Command.CommandText = "update tmpPagoNomina set guardada = 0 where idempresa = @idempresa and fechainicio = @fechainicio and fechafin = @fechafin";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("guardada", pn.guardada);
             Command.Parameters.AddWithValue("idempresa", pn.idempresa);
@@ -335,6 +346,19 @@ namespace CalculoNomina.Core
             return dato;
         }
 
+        public object obtenerImporteConcepto(tmpPagoNomina pn)
+        {
+            Command.CommandText = @"select cantidad from tmpPagoNomina where idempresa = @idempresa and fechainicio = @fechainicio and fechafin = @fechafin and
+            idtrabajador = @idtrabajador and noconcepto = @noconcepto";
+            Command.Parameters.AddWithValue("idempresa", pn.idempresa);
+            Command.Parameters.AddWithValue("fechainicio", pn.fechainicio);
+            Command.Parameters.AddWithValue("fechafin", pn.fechafin);
+            Command.Parameters.AddWithValue("idtrabajador", pn.idtrabajador);
+            Command.Parameters.AddWithValue("noconcepto", pn.noconcepto);
+            object dato = Select(Command);
+            return dato;
+        }
+
         public int stpAutorizaNomina(int idempresa, DateTime inicio, DateTime fin, int idusuario)
         {
             Command.CommandText = "exec stp_AutorizaNomina @idempresa, @fechainicio, @fechafin, @idusuario";
@@ -358,6 +382,28 @@ namespace CalculoNomina.Core
             Command.Parameters.AddWithValue("fechapago", fechapago);
             return Command.ExecuteNonQuery();
         }
+
+        public object obtenerNoPeriodo(int periodo, DateTime fecha)
+        {
+            Command.CommandText = "exec stp_NumeroPeriodo @periodo, @fecha";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("periodo", periodo);
+            Command.Parameters.AddWithValue("fecha", fecha);
+            object _periodo = Select(Command);
+            return _periodo;
+        }
+
+        public int actualizarNoPeriodo(int idEmpresa, DateTime inicio, DateTime fin, int noPeriodo)
+        {
+            Command.CommandText = "update tmpPagoNomina set noperiodo = @noperiodo where idempresa = @idempresa and fechainicio = @fechainicio and fechafin = @fechafin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idEmpresa);
+            Command.Parameters.AddWithValue("fechainicio", inicio);
+            Command.Parameters.AddWithValue("fechafin", fin);
+            Command.Parameters.AddWithValue("noperiodo", noPeriodo);
+            return Command.ExecuteNonQuery();
+        }
+
 
         #region DATOS NOMINA POR TRABAJADOR
         public List<Nomina> conceptosNominaTrabajador(int idEmpresa, string tipoConcepto, int idTrabajador, string noConceptos)

@@ -58,7 +58,6 @@ namespace Nominas
         private void frmProgramacionConcepto_Load(object sender, EventArgs e)
         {
             cargaCombo();
-
             if (_tipoOperacion == GLOBALES.CONSULTAR || _tipoOperacion == GLOBALES.MODIFICAR)
             {
                 lblEmpleado.Text = _nombreEmpleado;
@@ -124,13 +123,13 @@ namespace Nominas
 
             Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
             concepto.idempresa = GLOBALES.IDEMPRESA;
-            concepto.tipoconcepto = "D";
+            //concepto.tipoconcepto = "D";
             List<Conceptos.Core.Conceptos> lstConceptos = new List<Conceptos.Core.Conceptos>();
 
             try
             {
                 cnx.Open();
-                lstConceptos = ch.obtenerConceptosDeducciones(concepto);
+                lstConceptos = ch.obtenerConceptos(concepto);
                 cnx.Close();
                 cnx.Dispose();
             }

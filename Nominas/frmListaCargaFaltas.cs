@@ -203,6 +203,9 @@ namespace Nominas
                 int falta = int.Parse(fila.Cells["faltas"].Value.ToString());
                 DateTime fecha = DateTime.Parse(fila.Cells["fechainicio"].Value.ToString());
 
+                if (falta > 15)
+                    falta = 15;
+
                 for (int i = 0; i < falta; i++)
                 {
                     int existe = 0;

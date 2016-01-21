@@ -73,6 +73,7 @@ namespace Altas.Core
                 alta.contrato = int.Parse(dtAltas.Rows[i]["contrato"].ToString());
                 alta.jornada = int.Parse(dtAltas.Rows[i]["jornada"].ToString());
                 alta.fechaingreso = DateTime.Parse(dtAltas.Rows[i]["fechaingreso"].ToString());
+                alta.diasproporcionales = int.Parse(dtAltas.Rows[i]["diasproporcionales"].ToString());
                 alta.sdi = double.Parse(dtAltas.Rows[i]["sdi"].ToString());
                 alta.cp = dtAltas.Rows[i]["cp"].ToString();
                 alta.fechanacimiento = DateTime.Parse(dtAltas.Rows[i]["fechanacimiento"].ToString());
@@ -88,8 +89,8 @@ namespace Altas.Core
         
         public int insertaAlta(Altas a)
         {
-            Command.CommandText = "insert into suaAltas (idtrabajador,idempresa,registropatronal,nss,rfc,curp,paterno,materno,nombre,contrato,jornada,fechaingreso,sdi,fechanacimiento,estado,noestado,sexo) " +
-                "values (@idtrabajador,@idempresa,@registropatronal,@nss,@rfc,@curp,@paterno,@materno,@nombre,@contrato,@jornada,@fechaingreso,@sdi,@fechanacimiento,@estado,@noestado,@sexo)";
+            Command.CommandText = "insert into suaAltas (idtrabajador,idempresa,registropatronal,nss,rfc,curp,paterno,materno,nombre,contrato,jornada,fechaingreso,diasproporcionales,sdi,fechanacimiento,estado,noestado,sexo,periodoinicio,periodofin) " +
+                "values (@idtrabajador,@idempresa,@registropatronal,@nss,@rfc,@curp,@paterno,@materno,@nombre,@contrato,@jornada,@fechaingreso,@diasproporcionales,@sdi,@fechanacimiento,@estado,@noestado,@sexo,@periodoinicio,@periodofin)";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador",a.idtrabajador);
             Command.Parameters.AddWithValue("idempresa", a.idempresa);
@@ -103,18 +104,21 @@ namespace Altas.Core
             Command.Parameters.AddWithValue("contrato", a.contrato);
             Command.Parameters.AddWithValue("jornada", a.jornada);
             Command.Parameters.AddWithValue("fechaingreso", a.fechaingreso);
+            Command.Parameters.AddWithValue("diasproporcionales", a.diasproporcionales);
             Command.Parameters.AddWithValue("sdi", a.sdi);
             Command.Parameters.AddWithValue("fechanacimiento", a.fechanacimiento);
             Command.Parameters.AddWithValue("estado", a.estado);
             Command.Parameters.AddWithValue("noestado", a.noestado);
             Command.Parameters.AddWithValue("sexo", a.sexo);
+            Command.Parameters.AddWithValue("periodoinicio", a.periodoInicio);
+            Command.Parameters.AddWithValue("periodofin", a.periodoFin);
             return Command.ExecuteNonQuery();
         }
 
         public int actualizaAlta(Altas a)
         {
             Command.CommandText = "update suaAltas set nss = @nss, rfc = @rfc, curp = @curp, paterno = @paterno, materno = @materno, nombre = @nombre," +
-                "fechaingreso = @fechaingreso, sdi = @sdi, fechanacimiento = @fechanacimiento, estado = @estado, noestado = @noestado, sexo = @sexo " + 
+                "fechaingreso = @fechaingreso, diasproporcionales = @diasproporcionales, sdi = @sdi, fechanacimiento = @fechanacimiento, estado = @estado, noestado = @noestado, sexo = @sexo " + 
                 "where idtrabajador = @idtrabajador";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", a.idtrabajador);
@@ -127,6 +131,7 @@ namespace Altas.Core
             Command.Parameters.AddWithValue("fechaingreso", a.fechaingreso);
             Command.Parameters.AddWithValue("sdi", a.sdi);
             Command.Parameters.AddWithValue("fechanacimiento", a.fechanacimiento);
+            Command.Parameters.AddWithValue("diasproporcionales", a.diasproporcionales);
             Command.Parameters.AddWithValue("estado", a.estado);
             Command.Parameters.AddWithValue("noestado", a.noestado);
             Command.Parameters.AddWithValue("sexo", a.sexo);
@@ -143,6 +148,28 @@ namespace Altas.Core
             Command.Parameters.AddWithValue("cp", a.cp);
             Command.Parameters.AddWithValue("clinica", a.clinica);
             return Command.ExecuteNonQuery();
+        }
+
+        public object existeAlta(Altas a)
+        {
+            Command.CommandText = "select count(*) from suaAltas where idtrabajador = @idtrabajador and periodoinicio = @periodoinicio and periodofin = @periodofin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", a.idtrabajador);
+            Command.Parameters.AddWithValue("periodoinicio", a.periodoInicio);
+            Command.Parameters.AddWithValue("periodofin", a.periodoFin);
+            object dato = Select(Command);
+            return dato;
+        }
+
+        public object diasProporcionales(Altas a)
+        {
+            Command.CommandText = "select diasproporcionales from suaaltas where idtrabajador = @idtrabajador and periodoinicio = @periodoinicio and periodofin = @periodofin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", a.idtrabajador);
+            Command.Parameters.AddWithValue("periodoinicio", a.periodoInicio);
+            Command.Parameters.AddWithValue("periodofin", a.periodoFin);
+            object dato = Select(Command);
+            return dato;
         }
     }
 }

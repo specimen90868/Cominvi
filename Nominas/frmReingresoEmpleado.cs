@@ -96,7 +96,7 @@ namespace Nominas
             cmbDepartamento.ValueMember = "id";
 
             cmbPuesto.DataSource = lstPuesto.ToList();
-            cmbPuesto.DisplayMember = "descripcion";
+            cmbPuesto.DisplayMember = "nombre";
             cmbPuesto.ValueMember = "id";
 
             cmbPeriodo.DataSource = lstPeriodo.ToList();
@@ -108,6 +108,7 @@ namespace Nominas
             cmbEstados.ValueMember = "idestado";
 
             lblNombreEmpleado.Text = _nombreEmpleado;
+            rbtnHombre.Checked = true;
         }
 
         private int ObtieneEdad(DateTime fecha)
@@ -129,7 +130,10 @@ namespace Nominas
 
         private void btnCalcular_Click(object sender, EventArgs e)
         {
-            if (txtSueldo.Text.Length != 0)
+            if (txtAntiguedadMod.Text.Length == 0)
+                return;
+
+            if (txtSDI.Text.Length != 0)
             {
                 int DiasDePago = 0;
                 double FactorDePago = 0;
@@ -157,8 +161,11 @@ namespace Nominas
                     cnx.Close();
                     cnx.Dispose();
 
-                    txtSalarioDiario.Text = (double.Parse(txtSueldo.Text) / DiasDePago).ToString("F6");
-                    txtSDI.Text = (double.Parse(txtSalarioDiario.Text) * FactorDePago).ToString("F6");
+                    //txtSalarioDiario.Text = (double.Parse(txtSueldo.Text) / DiasDePago).ToString("F6");
+                    //txtSDI.Text = (double.Parse(txtSalarioDiario.Text) * FactorDePago).ToString("F6");
+                    txtSalarioDiario.Text = (double.Parse(txtSDI.Text) / FactorDePago).ToString("F6");
+                    txtSueldo.Text = (double.Parse(txtSalarioDiario.Text) * DiasDePago).ToString("F6");
+
                 }
                 catch (Exception error)
                 {
@@ -251,17 +258,58 @@ namespace Nominas
             reingreso.fechaingreso = dtpFechaReingreso.Value;
             reingreso.sdi = double.Parse(txtSDI.Text);
 
+            Periodos.Core.PeriodosHelper pdh = new Periodos.Core.PeriodosHelper();
+            pdh.Command = cmd;
+
+            Periodos.Core.Periodos p = new Periodos.Core.Periodos();
+            p.idperiodo = int.Parse(cmbPeriodo.SelectedValue.ToString());
+            int diasPago = 0;
+            try { cnx.Open(); diasPago = (int)pdh.DiasDePago(p); cnx.Close(); }
+            catch { MessageBox.Show("Error: Al obtener los dias de pago.", "Error"); }
+
+            DateTime dt = dtpFechaReingreso.Value.Date;
+            DateTime periodoInicio, periodoFin;
+            int diasProporcionales = 0;
+            if (diasPago == 7)
+            {
+                while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
+                periodoInicio = dt;
+                periodoFin = dt.AddDays(6);
+                diasProporcionales = (int)(periodoFin.Date - dtpFechaReingreso.Value.Date).TotalDays + 1;
+            }
+            else
+            {
+                if (dt.Day <= 15)
+                {
+                    periodoInicio = new DateTime(dt.Year, dt.Month, 1);
+                    periodoFin = new DateTime(dt.Year, dt.Month, 15);
+                    diasProporcionales = (int)(periodoFin.Date - dtpFechaReingreso.Value.Date).TotalDays + 1;
+                }
+                else
+                {
+                    int diasMes = DateTime.DaysInMonth(dt.Year, dt.Month);
+                    int diasNoLaborados = 0;
+                    periodoInicio = new DateTime(dt.Year, dt.Month, 16);
+                    periodoFin = new DateTime(dt.Year, dt.Month, DateTime.DaysInMonth(dt.Year, dt.Month));
+                    diasNoLaborados = (int)(dtpFechaReingreso.Value.Date - periodoInicio).TotalDays;
+                    diasProporcionales = 15 - diasNoLaborados;
+                }
+            }
+
             alta.idtrabajador = _idempleado;
             alta.idempresa = int.Parse(cmbRegistroPatronal.SelectedValue.ToString());
             alta.contrato = 4;
             alta.jornada = 12;
             alta.fechaingreso = dtpFechaReingreso.Value;
+            alta.diasproporcionales = diasProporcionales;
             alta.sdi = double.Parse(txtSDI.Text);
             alta.cp = "00000";
             alta.clinica = "000";
             alta.estado = cmbEstados.Text;
             alta.noestado = int.Parse(cmbEstados.SelectedValue.ToString());
             alta.sexo = ObtieneSexo();
+            alta.periodoInicio = periodoInicio;
+            alta.periodoFin = periodoFin;
             
             List<Empleados.Core.Empleados> lstEmpleado = new List<Empleados.Core.Empleados>();
 
@@ -291,6 +339,9 @@ namespace Nominas
                 if (idEmpresaEmpleado == int.Parse(cmbRegistroPatronal.SelectedValue.ToString()))
                 {
                     historia.tipomovimiento = GLOBALES.mREINGRESO;
+                    reingreso.diasproporcionales = diasProporcionales;
+                    reingreso.periodoinicio = periodoInicio;
+                    reingreso.periodofin = periodoFin;
                     rh.insertaReingreso(reingreso);
                 }
                 else
@@ -325,11 +376,6 @@ namespace Nominas
             {
                 sexo = "M";
             }
-            else
-            {
-                sexo = "X";
-            }
-
             return sexo.ToString();
         }
     }

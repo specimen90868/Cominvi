@@ -2989,7 +2989,7 @@
   <Width>7.05976in</Width>
   <Page>
     <PageHeader>
-      <Height>2.82334cm</Height>
+      <Height>3.61709cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -3007,7 +3007,7 @@
                 </TextRun>
               </TextRuns>
               <Style>
-                <TextAlign>Center</TextAlign>
+                <TextAlign>Left</TextAlign>
               </Style>
             </Paragraph>
           </Paragraphs>
@@ -3032,7 +3032,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>="Periodo del " + First(Fields!fechainicio.Value, "dsReporteNominaEmpleados") + " al " + First(Fields!fechafin.Value, "dsReporteNominaEmpleados")</Value>
+                  <Value>=First(Fields!periodo.Value, "dsReporteNominaEmpleados") + " NO. " + First(Fields!noperiodo.Value, "dsReporteNominaEmpleados") + " DEL " + First(Fields!fechainicio.Value, "dsReporteNominaEmpleados") + " AL " + First(Fields!fechafin.Value, "dsReporteNominaEmpleados")</Value>
                   <Style>
                     <FontSize>8pt</FontSize>
                     <FontWeight>Bold</FontWeight>
@@ -3040,13 +3040,13 @@
                 </TextRun>
               </TextRuns>
               <Style>
-                <TextAlign>Center</TextAlign>
+                <TextAlign>Left</TextAlign>
               </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>0.6cm</Top>
-          <Left>3.56935cm</Left>
+          <Top>1.55278cm</Top>
+          <Left>4.99809cm</Left>
           <Height>0.6cm</Height>
           <Width>12.3425cm</Width>
           <ZIndex>1</ZIndex>
@@ -3077,7 +3077,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox149</rd:DefaultName>
-          <Top>1.44695cm</Top>
+          <Top>2.39945cm</Top>
           <Left>0.00072cm</Left>
           <Height>0.52062cm</Height>
           <Width>7.23604cm</Width>
@@ -3109,7 +3109,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox150</rd:DefaultName>
-          <Top>2.00285cm</Top>
+          <Top>2.95535cm</Top>
           <Left>0.00072cm</Left>
           <Height>0.54708cm</Height>
           <Width>7.23604cm</Width>
@@ -3141,7 +3141,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox151</rd:DefaultName>
-          <Top>1.55279cm</Top>
+          <Top>2.18779cm</Top>
           <Left>13.91398cm</Left>
           <Height>0.6cm</Height>
           <Width>1.36229cm</Width>
@@ -3173,7 +3173,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox152</rd:DefaultName>
-          <Top>2.22334cm</Top>
+          <Top>2.85834cm</Top>
           <Left>13.91398cm</Left>
           <Height>0.6cm</Height>
           <Width>1.36229cm</Width>
@@ -3206,7 +3206,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>dia</rd:DefaultName>
-          <Top>1.55279cm</Top>
+          <Top>2.18779cm</Top>
           <Left>15.38211cm</Left>
           <Height>0.6cm</Height>
           <Width>2.5cm</Width>
@@ -3239,11 +3239,59 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>hora</rd:DefaultName>
-          <Top>2.18695cm</Top>
+          <Top>2.82195cm</Top>
           <Left>15.38211cm</Left>
           <Height>0.6cm</Height>
           <Width>2.5cm</Width>
           <ZIndex>7</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Image Name="Logo">
+          <Source>Database</Source>
+          <Value>=First(Fields!imagen.Value, "dsEmpleadoImagen")</Value>
+          <MIMEType>image/jpeg</MIMEType>
+          <Sizing>FitProportional</Sizing>
+          <Top>0.3175cm</Top>
+          <Left>0.19504cm</Left>
+          <Height>1.71167cm</Height>
+          <Width>4.51625cm</Width>
+          <ZIndex>8</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </Image>
+        <Textbox Name="Textbox6">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>RESUMEN GENERAL DE NOMINA (EMPLEADOS)</Value>
+                  <Style>
+                    <FontWeight>Bold</FontWeight>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox6</rd:DefaultName>
+          <Top>0.77639cm</Top>
+          <Left>4.99809cm</Left>
+          <Height>0.6cm</Height>
+          <Width>9.45854cm</Width>
+          <ZIndex>9</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -3434,6 +3482,14 @@
           <DataField>hora</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
+        <Field Name="noperiodo">
+          <DataField>noperiodo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="periodo">
+          <DataField>periodo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>dsReportes</rd:DataSetName>
@@ -3507,6 +3563,26 @@
         <rd:DataSetName>dsReportes</rd:DataSetName>
         <rd:SchemaPath>C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\dsReportes.xsd</rd:SchemaPath>
         <rd:TableName>PreNominaCaratula</rd:TableName>
+        <rd:TableAdapterFillMethod />
+        <rd:TableAdapterGetDataMethod />
+        <rd:TableAdapterName />
+      </rd:DataSetInfo>
+    </DataSet>
+    <DataSet Name="dsEmpleadoImagen">
+      <Query>
+        <DataSourceName>dsReportes</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="imagen">
+          <DataField>imagen</DataField>
+          <rd:TypeName>System.Byte[]</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>dsReportes</rd:DataSetName>
+        <rd:SchemaPath>C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\dsReportes.xsd</rd:SchemaPath>
+        <rd:TableName>PreNominaImagen</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
         <rd:TableAdapterName />

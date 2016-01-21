@@ -46,6 +46,7 @@
             this.mnuEmpleadosBaja = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolProcesoSalarial = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolImportarEmpleados = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuExpedientes = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuInfonavit = new System.Windows.Forms.ToolStripMenuItem();
@@ -95,8 +96,8 @@
             this.toolImss = new System.Windows.Forms.ToolStripMenuItem();
             this.stsPrincipal = new System.Windows.Forms.StatusStrip();
             this.toolEstatusPerfil = new System.Windows.Forms.ToolStripStatusLabel();
-            this.workAntiguedad = new System.ComponentModel.BackgroundWorker();
             this.toolPorcentaje = new System.Windows.Forms.ToolStripStatusLabel();
+            this.workAntiguedad = new System.ComponentModel.BackgroundWorker();
             this.mnuPrincipal.SuspendLayout();
             this.stsPrincipal.SuspendLayout();
             this.SuspendLayout();
@@ -197,9 +198,10 @@
             this.toolStripSeparator7,
             this.mnuEmpleadosBaja,
             this.toolStripSeparator5,
-            this.toolProcesoSalarial});
+            this.toolProcesoSalarial,
+            this.toolImportarEmpleados});
             this.mnuEmpleados.Name = "mnuEmpleados";
-            this.mnuEmpleados.Size = new System.Drawing.Size(149, 22);
+            this.mnuEmpleados.Size = new System.Drawing.Size(152, 22);
             this.mnuEmpleados.Text = "Empleados";
             // 
             // mnuEmpleadoNomina
@@ -226,6 +228,7 @@
             this.mnuEmpleadosBaja.Name = "mnuEmpleadosBaja";
             this.mnuEmpleadosBaja.Size = new System.Drawing.Size(192, 22);
             this.mnuEmpleadosBaja.Text = "Empleados en Baja";
+            this.mnuEmpleadosBaja.Visible = false;
             this.mnuEmpleadosBaja.Click += new System.EventHandler(this.mnuEmpleadosBaja_Click);
             // 
             // toolStripSeparator5
@@ -242,29 +245,36 @@
             this.toolProcesoSalarial.Visible = false;
             this.toolProcesoSalarial.Click += new System.EventHandler(this.toolProcesoSalarial_Click);
             // 
+            // toolImportarEmpleados
+            // 
+            this.toolImportarEmpleados.Name = "toolImportarEmpleados";
+            this.toolImportarEmpleados.Size = new System.Drawing.Size(192, 22);
+            this.toolImportarEmpleados.Text = "Importar empleados";
+            this.toolImportarEmpleados.Click += new System.EventHandler(this.toolImportarEmpleados_Click);
+            // 
             // mnuExpedientes
             // 
             this.mnuExpedientes.Name = "mnuExpedientes";
-            this.mnuExpedientes.Size = new System.Drawing.Size(149, 22);
+            this.mnuExpedientes.Size = new System.Drawing.Size(152, 22);
             this.mnuExpedientes.Text = "Expedientes";
             this.mnuExpedientes.Click += new System.EventHandler(this.mnuExpedientes_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(146, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
             // 
             // mnuInfonavit
             // 
             this.mnuInfonavit.Name = "mnuInfonavit";
-            this.mnuInfonavit.Size = new System.Drawing.Size(149, 22);
+            this.mnuInfonavit.Size = new System.Drawing.Size(152, 22);
             this.mnuInfonavit.Text = "Infonavit";
             this.mnuInfonavit.Click += new System.EventHandler(this.mnuInfonavit_Click);
             // 
             // toolIncapacidades
             // 
             this.toolIncapacidades.Name = "toolIncapacidades";
-            this.toolIncapacidades.Size = new System.Drawing.Size(149, 22);
+            this.toolIncapacidades.Size = new System.Drawing.Size(152, 22);
             this.toolIncapacidades.Text = "Incapacidades";
             this.toolIncapacidades.Click += new System.EventHandler(this.toolIncapacidades_Click);
             // 
@@ -424,12 +434,14 @@
             this.toolAutorizarNomina.Name = "toolAutorizarNomina";
             this.toolAutorizarNomina.Size = new System.Drawing.Size(174, 22);
             this.toolAutorizarNomina.Text = "Autorizar nómina";
+            this.toolAutorizarNomina.Visible = false;
             this.toolAutorizarNomina.Click += new System.EventHandler(this.toolAutorizarNomina_Click);
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
             this.toolStripSeparator8.Size = new System.Drawing.Size(171, 6);
+            this.toolStripSeparator8.Visible = false;
             // 
             // toolReportes
             // 
@@ -617,18 +629,18 @@
             this.toolEstatusPerfil.Size = new System.Drawing.Size(159, 17);
             this.toolEstatusPerfil.Text = "Actualizando antiguedades...";
             // 
+            // toolPorcentaje
+            // 
+            this.toolPorcentaje.Name = "toolPorcentaje";
+            this.toolPorcentaje.Size = new System.Drawing.Size(23, 17);
+            this.toolPorcentaje.Text = "0%";
+            // 
             // workAntiguedad
             // 
             this.workAntiguedad.WorkerReportsProgress = true;
             this.workAntiguedad.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workAntiguedad_DoWork);
             this.workAntiguedad.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.workAntiguedad_ProgressChanged);
             this.workAntiguedad.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workAntiguedad_RunWorkerCompleted);
-            // 
-            // toolPorcentaje
-            // 
-            this.toolPorcentaje.Name = "toolPorcentaje";
-            this.toolPorcentaje.Size = new System.Drawing.Size(23, 17);
-            this.toolPorcentaje.Text = "0%";
             // 
             // frmPrincipal
             // 
@@ -723,6 +735,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolExtraordinarioEspecial;
         private System.ComponentModel.BackgroundWorker workAntiguedad;
         private System.Windows.Forms.ToolStripStatusLabel toolPorcentaje;
+        private System.Windows.Forms.ToolStripMenuItem toolImportarEmpleados;
     }
 }
 

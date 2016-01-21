@@ -33,6 +33,7 @@
             this.toolCalcular = new System.Windows.Forms.ToolStripButton();
             this.toolHoraExtra = new System.Windows.Forms.ToolStripButton();
             this.toolAyudaDespensa = new System.Windows.Forms.ToolStripButton();
+            this.toolSubsidio = new System.Windows.Forms.ToolStripButton();
             this.toolEliminar = new System.Windows.Forms.ToolStripButton();
             this.TabPrincipal = new System.Windows.Forms.TabControl();
             this.tabPercepcionesDeducciones = new System.Windows.Forms.TabPage();
@@ -110,6 +111,8 @@
             this.tabVacaciones = new System.Windows.Forms.TabPage();
             this.ContenedorVacaciones = new System.Windows.Forms.SplitContainer();
             this.lstvVacaciones = new System.Windows.Forms.ListView();
+            this.label23 = new System.Windows.Forms.Label();
+            this.txtDiasPagoV = new System.Windows.Forms.TextBox();
             this.dtpFechaInicioVacaciones = new System.Windows.Forms.DateTimePicker();
             this.label22 = new System.Windows.Forms.Label();
             this.btnGuardarObservaciones = new System.Windows.Forms.Button();
@@ -151,8 +154,7 @@
             this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.txtDiasPagoV = new System.Windows.Forms.TextBox();
-            this.label23 = new System.Windows.Forms.Label();
+            this.toolIspt = new System.Windows.Forms.ToolStripButton();
             this.toolAcciones.SuspendLayout();
             this.TabPrincipal.SuspendLayout();
             this.tabPercepcionesDeducciones.SuspendLayout();
@@ -196,6 +198,8 @@
             this.toolCalcular,
             this.toolHoraExtra,
             this.toolAyudaDespensa,
+            this.toolSubsidio,
+            this.toolIspt,
             this.toolEliminar});
             this.toolAcciones.Location = new System.Drawing.Point(0, 0);
             this.toolAcciones.Name = "toolAcciones";
@@ -229,6 +233,15 @@
             this.toolAyudaDespensa.Size = new System.Drawing.Size(130, 22);
             this.toolAyudaDespensa.Text = "Ayuda de Despensa";
             this.toolAyudaDespensa.Click += new System.EventHandler(this.toolAyudaDespensa_Click);
+            // 
+            // toolSubsidio
+            // 
+            this.toolSubsidio.Image = ((System.Drawing.Image)(resources.GetObject("toolSubsidio.Image")));
+            this.toolSubsidio.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolSubsidio.Name = "toolSubsidio";
+            this.toolSubsidio.Size = new System.Drawing.Size(72, 22);
+            this.toolSubsidio.Text = "Subsidio";
+            this.toolSubsidio.Click += new System.EventHandler(this.toolSubsidio_Click);
             // 
             // toolEliminar
             // 
@@ -1058,6 +1071,26 @@
             this.lstvVacaciones.UseCompatibleStateImageBehavior = false;
             this.lstvVacaciones.Click += new System.EventHandler(this.lstvVacaciones_Click);
             // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label23.Location = new System.Drawing.Point(12, 71);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(99, 13);
+            this.label23.TabIndex = 14;
+            this.label23.Text = "Dias a pagar V.:";
+            // 
+            // txtDiasPagoV
+            // 
+            this.txtDiasPagoV.BackColor = System.Drawing.SystemColors.Control;
+            this.txtDiasPagoV.Location = new System.Drawing.Point(129, 68);
+            this.txtDiasPagoV.Name = "txtDiasPagoV";
+            this.txtDiasPagoV.Size = new System.Drawing.Size(54, 20);
+            this.txtDiasPagoV.TabIndex = 13;
+            this.txtDiasPagoV.Text = "1";
+            this.txtDiasPagoV.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
             // dtpFechaInicioVacaciones
             // 
             this.dtpFechaInicioVacaciones.CalendarMonthBackground = System.Drawing.SystemColors.Control;
@@ -1402,25 +1435,14 @@
             this.dataGridViewTextBoxColumn15.HeaderText = "Fin";
             this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
             // 
-            // txtDiasPagoV
+            // toolIspt
             // 
-            this.txtDiasPagoV.BackColor = System.Drawing.SystemColors.Control;
-            this.txtDiasPagoV.Location = new System.Drawing.Point(129, 68);
-            this.txtDiasPagoV.Name = "txtDiasPagoV";
-            this.txtDiasPagoV.Size = new System.Drawing.Size(54, 20);
-            this.txtDiasPagoV.TabIndex = 13;
-            this.txtDiasPagoV.Text = "1";
-            this.txtDiasPagoV.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label23.Location = new System.Drawing.Point(12, 71);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(99, 13);
-            this.label23.TabIndex = 14;
-            this.label23.Text = "Dias a pagar V.:";
+            this.toolIspt.Image = ((System.Drawing.Image)(resources.GetObject("toolIspt.Image")));
+            this.toolIspt.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolIspt.Name = "toolIspt";
+            this.toolIspt.Size = new System.Drawing.Size(46, 22);
+            this.toolIspt.Text = "Ispt";
+            this.toolIspt.Click += new System.EventHandler(this.toolIspt_Click);
             // 
             // frmSobreRecibo
             // 
@@ -1615,5 +1637,7 @@
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.TextBox txtDiasPagoV;
+        private System.Windows.Forms.ToolStripButton toolSubsidio;
+        private System.Windows.Forms.ToolStripButton toolIspt;
     }
 }

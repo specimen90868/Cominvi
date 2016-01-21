@@ -82,7 +82,7 @@
             // 
             this.Cancelar.Image = ((System.Drawing.Image)(resources.GetObject("Cancelar.Image")));
             this.Cancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Cancelar.Location = new System.Drawing.Point(250, 288);
+            this.Cancelar.Location = new System.Drawing.Point(247, 236);
             this.Cancelar.Name = "Cancelar";
             this.Cancelar.Size = new System.Drawing.Size(75, 32);
             this.Cancelar.TabIndex = 5;
@@ -95,7 +95,7 @@
             // 
             this.btnAceptar.Image = ((System.Drawing.Image)(resources.GetObject("btnAceptar.Image")));
             this.btnAceptar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAceptar.Location = new System.Drawing.Point(173, 288);
+            this.btnAceptar.Location = new System.Drawing.Point(170, 236);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(71, 32);
             this.btnAceptar.TabIndex = 3;
@@ -117,28 +117,31 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(70, 236);
+            this.label3.Location = new System.Drawing.Point(70, 279);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(46, 13);
             this.label3.TabIndex = 7;
             this.label3.Text = "Periodo:";
+            this.label3.Visible = false;
             // 
             // dtpPeriodoInicio
             // 
             this.dtpPeriodoInicio.Enabled = false;
-            this.dtpPeriodoInicio.Location = new System.Drawing.Point(122, 236);
+            this.dtpPeriodoInicio.Location = new System.Drawing.Point(122, 279);
             this.dtpPeriodoInicio.Name = "dtpPeriodoInicio";
             this.dtpPeriodoInicio.Size = new System.Drawing.Size(200, 20);
             this.dtpPeriodoInicio.TabIndex = 8;
+            this.dtpPeriodoInicio.Visible = false;
             this.dtpPeriodoInicio.ValueChanged += new System.EventHandler(this.dtpPeriodoInicio_ValueChanged);
             // 
             // dtpPeriodoFin
             // 
             this.dtpPeriodoFin.Enabled = false;
-            this.dtpPeriodoFin.Location = new System.Drawing.Point(122, 262);
+            this.dtpPeriodoFin.Location = new System.Drawing.Point(122, 305);
             this.dtpPeriodoFin.Name = "dtpPeriodoFin";
             this.dtpPeriodoFin.Size = new System.Drawing.Size(200, 20);
             this.dtpPeriodoFin.TabIndex = 9;
+            this.dtpPeriodoFin.Visible = false;
             // 
             // label4
             // 
@@ -161,7 +164,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(340, 335);
+            this.ClientSize = new System.Drawing.Size(340, 273);
             this.Controls.Add(this.txtObservaciones);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.dtpPeriodoFin);
@@ -176,6 +179,7 @@
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(356, 312);
             this.MinimizeBox = false;
             this.Name = "frmBaja";
             this.Text = "Baja del trabajador";

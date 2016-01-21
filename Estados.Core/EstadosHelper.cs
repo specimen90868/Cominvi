@@ -28,10 +28,11 @@ namespace Estados.Core
 
         public object obtenerIdEstado(Estados e)
         {
-            Command.CommandText = "seletc idestado from estados where estado like '%@estado%'";
+            Command.CommandText = "select idestado from estados where nombre = @estado";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("estado", e.nombre);
-            return Command.ExecuteNonQuery();
+            object dato = Select(Command);
+            return dato;
         }
     }
 }

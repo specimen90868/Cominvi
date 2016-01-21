@@ -128,7 +128,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(69, 165);
+            this.label1.Location = new System.Drawing.Point(69, 162);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(56, 13);
             this.label1.TabIndex = 254;
@@ -137,7 +137,7 @@
             // cmbConcepto
             // 
             this.cmbConcepto.FormattingEnabled = true;
-            this.cmbConcepto.Location = new System.Drawing.Point(131, 162);
+            this.cmbConcepto.Location = new System.Drawing.Point(131, 159);
             this.cmbConcepto.Name = "cmbConcepto";
             this.cmbConcepto.Size = new System.Drawing.Size(201, 21);
             this.cmbConcepto.TabIndex = 1;
@@ -156,7 +156,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.label3.Location = new System.Drawing.Point(73, 192);
+            this.label3.Location = new System.Drawing.Point(73, 189);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(52, 13);
             this.label3.TabIndex = 257;
@@ -164,7 +164,7 @@
             // 
             // txtCantidad
             // 
-            this.txtCantidad.Location = new System.Drawing.Point(131, 189);
+            this.txtCantidad.Location = new System.Drawing.Point(131, 186);
             this.txtCantidad.Name = "txtCantidad";
             this.txtCantidad.Size = new System.Drawing.Size(67, 20);
             this.txtCantidad.TabIndex = 3;
@@ -173,7 +173,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(33, 218);
+            this.label4.Location = new System.Drawing.Point(33, 215);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(92, 13);
             this.label4.TabIndex = 259;
@@ -182,7 +182,7 @@
             // dtpFecha
             // 
             this.dtpFecha.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFecha.Location = new System.Drawing.Point(131, 215);
+            this.dtpFecha.Location = new System.Drawing.Point(131, 212);
             this.dtpFecha.Name = "dtpFecha";
             this.dtpFecha.Size = new System.Drawing.Size(201, 20);
             this.dtpFecha.TabIndex = 4;

@@ -35,8 +35,6 @@
             this.toolGuardar = new System.Windows.Forms.ToolStripButton();
             this.toolBuscar = new System.Windows.Forms.ToolStripButton();
             this.toolCerrar = new System.Windows.Forms.ToolStripButton();
-            this.lblEmpleado = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
             this.dtpFechaInicio = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.dtpFinPeriodo = new System.Windows.Forms.DateTimePicker();
@@ -53,6 +51,12 @@
             this.label7 = new System.Windows.Forms.Label();
             this.cmbTipoCaso = new System.Windows.Forms.ComboBox();
             this.btnCambiar = new System.Windows.Forms.Button();
+            this.txtDepartamento = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.mtxtNoEmpleado = new System.Windows.Forms.MaskedTextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.lblEmpleado = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
             this.toolTitulo.SuspendLayout();
             this.toolAcciones.SuspendLayout();
             this.SuspendLayout();
@@ -64,7 +68,7 @@
             this.toolVentana});
             this.toolTitulo.Location = new System.Drawing.Point(0, 0);
             this.toolTitulo.Name = "toolTitulo";
-            this.toolTitulo.Size = new System.Drawing.Size(513, 27);
+            this.toolTitulo.Size = new System.Drawing.Size(509, 27);
             this.toolTitulo.TabIndex = 6;
             this.toolTitulo.Text = "toolAcciones";
             // 
@@ -83,7 +87,7 @@
             this.toolCerrar});
             this.toolAcciones.Location = new System.Drawing.Point(0, 27);
             this.toolAcciones.Name = "toolAcciones";
-            this.toolAcciones.Size = new System.Drawing.Size(513, 25);
+            this.toolAcciones.Size = new System.Drawing.Size(509, 25);
             this.toolAcciones.TabIndex = 7;
             this.toolAcciones.Text = "toolEmpresa";
             // 
@@ -115,26 +119,6 @@
             this.toolCerrar.Text = "Cerrar";
             this.toolCerrar.Click += new System.EventHandler(this.toolCerrar_Click);
             // 
-            // lblEmpleado
-            // 
-            this.lblEmpleado.AutoSize = true;
-            this.lblEmpleado.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEmpleado.Location = new System.Drawing.Point(112, 75);
-            this.lblEmpleado.Name = "lblEmpleado";
-            this.lblEmpleado.Size = new System.Drawing.Size(183, 20);
-            this.lblEmpleado.TabIndex = 257;
-            this.lblEmpleado.Text = "Nombre del empleado";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label23.Location = new System.Drawing.Point(12, 75);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(94, 20);
-            this.label23.TabIndex = 256;
-            this.label23.Text = "Empleado:";
-            // 
             // dtpFechaInicio
             // 
             this.dtpFechaInicio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
@@ -160,6 +144,7 @@
             this.dtpFinPeriodo.Name = "dtpFinPeriodo";
             this.dtpFinPeriodo.Size = new System.Drawing.Size(141, 20);
             this.dtpFinPeriodo.TabIndex = 4;
+            this.dtpFinPeriodo.Visible = false;
             // 
             // dtpInicioPeriodo
             // 
@@ -169,6 +154,7 @@
             this.dtpInicioPeriodo.Name = "dtpInicioPeriodo";
             this.dtpInicioPeriodo.Size = new System.Drawing.Size(141, 20);
             this.dtpInicioPeriodo.TabIndex = 3;
+            this.dtpInicioPeriodo.Visible = false;
             // 
             // label3
             // 
@@ -178,6 +164,7 @@
             this.label3.Size = new System.Drawing.Size(46, 13);
             this.label3.TabIndex = 260;
             this.label3.Text = "Periodo:";
+            this.label3.Visible = false;
             // 
             // label2
             // 
@@ -274,13 +261,77 @@
             this.btnCambiar.TabIndex = 272;
             this.btnCambiar.Text = "Cambiar";
             this.btnCambiar.UseVisualStyleBackColor = true;
+            this.btnCambiar.Visible = false;
             this.btnCambiar.Click += new System.EventHandler(this.btnCambiar_Click);
+            // 
+            // txtDepartamento
+            // 
+            this.txtDepartamento.BackColor = System.Drawing.SystemColors.Control;
+            this.txtDepartamento.Location = new System.Drawing.Point(222, 91);
+            this.txtDepartamento.Name = "txtDepartamento";
+            this.txtDepartamento.Size = new System.Drawing.Size(164, 20);
+            this.txtDepartamento.TabIndex = 277;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(126, 94);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(90, 13);
+            this.label8.TabIndex = 276;
+            this.label8.Text = "Departamento:";
+            // 
+            // mtxtNoEmpleado
+            // 
+            this.mtxtNoEmpleado.BackColor = System.Drawing.SystemColors.Control;
+            this.mtxtNoEmpleado.Location = new System.Drawing.Point(88, 91);
+            this.mtxtNoEmpleado.Mask = "9999";
+            this.mtxtNoEmpleado.Name = "mtxtNoEmpleado";
+            this.mtxtNoEmpleado.Size = new System.Drawing.Size(33, 20);
+            this.mtxtNoEmpleado.TabIndex = 274;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(16, 94);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(66, 13);
+            this.label9.TabIndex = 273;
+            this.label9.Text = "Empleado:";
+            // 
+            // lblEmpleado
+            // 
+            this.lblEmpleado.AutoSize = true;
+            this.lblEmpleado.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEmpleado.Location = new System.Drawing.Point(116, 59);
+            this.lblEmpleado.Name = "lblEmpleado";
+            this.lblEmpleado.Size = new System.Drawing.Size(183, 20);
+            this.lblEmpleado.TabIndex = 279;
+            this.lblEmpleado.Text = "Nombre del empleado";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label23.Location = new System.Drawing.Point(16, 59);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(94, 20);
+            this.label23.TabIndex = 278;
+            this.label23.Text = "Empleado:";
             // 
             // frmIncapacidad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(513, 440);
+            this.ClientSize = new System.Drawing.Size(509, 440);
+            this.Controls.Add(this.lblEmpleado);
+            this.Controls.Add(this.label23);
+            this.Controls.Add(this.txtDepartamento);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.mtxtNoEmpleado);
+            this.Controls.Add(this.label9);
             this.Controls.Add(this.btnCambiar);
             this.Controls.Add(this.cmbTipoCaso);
             this.Controls.Add(this.label7);
@@ -297,8 +348,6 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dtpFechaInicio);
-            this.Controls.Add(this.lblEmpleado);
-            this.Controls.Add(this.label23);
             this.Controls.Add(this.toolAcciones);
             this.Controls.Add(this.toolTitulo);
             this.Name = "frmIncapacidad";
@@ -321,8 +370,6 @@
         internal System.Windows.Forms.ToolStripButton toolGuardar;
         private System.Windows.Forms.ToolStripButton toolBuscar;
         private System.Windows.Forms.ToolStripButton toolCerrar;
-        private System.Windows.Forms.Label lblEmpleado;
-        private System.Windows.Forms.Label label23;
         private System.Windows.Forms.DateTimePicker dtpFechaInicio;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DateTimePicker dtpFinPeriodo;
@@ -339,5 +386,11 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cmbTipoCaso;
         private System.Windows.Forms.Button btnCambiar;
+        private System.Windows.Forms.TextBox txtDepartamento;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.MaskedTextBox mtxtNoEmpleado;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label lblEmpleado;
+        private System.Windows.Forms.Label label23;
     }
 }

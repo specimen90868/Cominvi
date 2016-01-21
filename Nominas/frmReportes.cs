@@ -175,7 +175,7 @@ namespace Nominas
                     cmbEmpleadoInicial.Enabled = false;
                     cmbEmpleadoFinal.Enabled = false;
                     cmbOrden.Enabled = true;
-                    cmbNetoCero.Enabled = false;
+                    cmbNetoCero.Enabled = true;
                     noReporte = 4;
                     break;
                 case "Total General":

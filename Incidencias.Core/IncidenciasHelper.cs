@@ -75,7 +75,6 @@ namespace Incidencias.Core
             return lstIncidencias;
         }
 
-
         public object existeIncidencia(Incidencias i)
         {
             Command.CommandText = "select coalesce(count(id),0) from incidencias where idtrabajador = @idtrabajador and fechainicio between @inicio and @fin";
@@ -100,7 +99,7 @@ namespace Incidencias.Core
 
         public object diasIncidencia(Incidencias i)
         {
-            Command.CommandText = "select dias from incidencias where idtrabajador = @idtrabajador and fechainicio between @inicio and @fin";
+            Command.CommandText = "select isnull(sum(dias),0) as dias from incidencias where idtrabajador = @idtrabajador and fechainicio between @inicio and @fin";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", i.idtrabajador);
             Command.Parameters.AddWithValue("inicio", i.periodoinicio);

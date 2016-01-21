@@ -198,7 +198,7 @@
             // 
             // btnCalcular
             // 
-            this.btnCalcular.Location = new System.Drawing.Point(285, 419);
+            this.btnCalcular.Location = new System.Drawing.Point(284, 471);
             this.btnCalcular.Name = "btnCalcular";
             this.btnCalcular.Size = new System.Drawing.Size(54, 20);
             this.btnCalcular.TabIndex = 23;
@@ -221,6 +221,7 @@
             this.txtCURP.Name = "txtCURP";
             this.txtCURP.Size = new System.Drawing.Size(151, 20);
             this.txtCURP.TabIndex = 12;
+            this.txtCURP.Leave += new System.EventHandler(this.txtCURP_Leave);
             // 
             // Label27
             // 
@@ -263,6 +264,7 @@
             this.txtSueldo.Enabled = false;
             this.txtSueldo.Location = new System.Drawing.Point(127, 419);
             this.txtSueldo.Name = "txtSueldo";
+            this.txtSueldo.ReadOnly = true;
             this.txtSueldo.Size = new System.Drawing.Size(152, 20);
             this.txtSueldo.TabIndex = 22;
             this.txtSueldo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -298,7 +300,6 @@
             // 
             this.txtSDI.Location = new System.Drawing.Point(126, 471);
             this.txtSDI.Name = "txtSDI";
-            this.txtSDI.ReadOnly = true;
             this.txtSDI.Size = new System.Drawing.Size(152, 20);
             this.txtSDI.TabIndex = 25;
             this.txtSDI.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;

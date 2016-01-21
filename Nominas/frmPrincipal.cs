@@ -384,7 +384,7 @@ namespace Nominas
         private void mnuEmpleadoNomina_Click(object sender, EventArgs e)
         {
             frmListaEmpleados le = new frmListaEmpleados();
-            le._empleadoAltaBaja = GLOBALES.ACTIVO;
+            //le._empleadoAltaBaja = GLOBALES.ACTIVO;
             le.MdiParent = this;
             le.Show();
         }
@@ -684,6 +684,13 @@ namespace Nominas
         private void workAntiguedad_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             toolPorcentaje.Text = "Terminado.";
+        }
+
+        private void toolImportarEmpleados_Click(object sender, EventArgs e)
+        {
+            frmListaCargaEmpleados lce = new frmListaCargaEmpleados();
+            lce.MdiParent = this;
+            lce.Show();
         }
       
     }

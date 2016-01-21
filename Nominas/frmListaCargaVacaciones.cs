@@ -178,6 +178,8 @@ namespace Nominas
             emph = new Empleados.Core.EmpleadosHelper();
             emph.Command = cmd;
 
+            //DateTime fechaVerificacionFalta;
+
             foreach (DataGridViewRow fila in dgvCargaVacaciones.Rows)
             {
                 try
@@ -192,6 +194,18 @@ namespace Nominas
                     cnx.Dispose();
                     this.Dispose();
                 }
+
+                //Faltas.Core.FaltasHelper fh = new Faltas.Core.FaltasHelper();
+                //fh.Command = cmd;
+
+                //fechaVerificacionFalta = DateTime.Parse(fila.Cells["fechaaplicacion"].Value.ToString());
+                //for (int i = 0; i < int.Parse(fila.Cells["diaspago"].Value.ToString()); i++)
+                //{
+                //    fechaVerificacionFalta.AddDays(i);
+                //    Faltas.Core.Faltas f = new Faltas.Core.Faltas();
+                //    f.idtrabajador = idEmpleado;
+                //    f.fecha = fechaVerificacionFalta.Date;
+                //}
 
                 Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
                 empleado.idtrabajador = idEmpleado;

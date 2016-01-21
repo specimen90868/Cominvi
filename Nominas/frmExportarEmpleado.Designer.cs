@@ -72,6 +72,7 @@
             this.toolEstado = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolPorcentaje = new System.Windows.Forms.ToolStripStatusLabel();
             this.workerExportar = new System.ComponentModel.BackgroundWorker();
+            this.chkNoEmpleado = new System.Windows.Forms.CheckBox();
             this.toolEmpleado.SuspendLayout();
             this.toolAcciones.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -495,11 +496,22 @@
             this.workerExportar.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.workerExportar_ProgressChanged);
             this.workerExportar.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workerExportar_RunWorkerCompleted);
             // 
+            // chkNoEmpleado
+            // 
+            this.chkNoEmpleado.AutoSize = true;
+            this.chkNoEmpleado.Location = new System.Drawing.Point(279, 236);
+            this.chkNoEmpleado.Name = "chkNoEmpleado";
+            this.chkNoEmpleado.Size = new System.Drawing.Size(107, 17);
+            this.chkNoEmpleado.TabIndex = 248;
+            this.chkNoEmpleado.Text = "No. de empleado";
+            this.chkNoEmpleado.UseVisualStyleBackColor = true;
+            // 
             // frmExportarEmpleado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(425, 431);
+            this.Controls.Add(this.chkNoEmpleado);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.chkValorDescuento);
             this.Controls.Add(this.chkDescuentoInfonavit);
@@ -602,5 +614,6 @@
         private System.Windows.Forms.ToolStripStatusLabel toolEstado;
         private System.Windows.Forms.ToolStripStatusLabel toolPorcentaje;
         private System.ComponentModel.BackgroundWorker workerExportar;
+        private System.Windows.Forms.CheckBox chkNoEmpleado;
     }
 }

@@ -127,6 +127,16 @@ namespace Conceptos.Core
             return dato;
         }
 
+        public object obtenerNoConcepto(Conceptos c)
+        {
+            Command.CommandText = "select noconcepto from Conceptos where formula = @formula and idempresa = @idempresa";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("formula", c.formula);
+            Command.Parameters.AddWithValue("idempresa", c.idempresa);
+            object dato = Select(Command);
+            return dato;
+        }
+
         public object obtenerFormula(Conceptos c)
         {
             Command.CommandText = "select formula from conceptos where noconcepto = @noconcepto and idempresa = @idempresa";
@@ -147,12 +157,23 @@ namespace Conceptos.Core
             return dato;
         }
 
+        public object existeNoConcepto(Conceptos c)
+        {
+            Command.CommandText = "select count(*) from conceptos where idempresa = @idempresa and noconcepto = @noconcepto";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", c.idempresa);
+            Command.Parameters.AddWithValue("noconcepto", c.noconcepto);
+            object dato = Select(Command);
+            return dato;
+        }
+
         public int insertaConcepto(Conceptos c)
         {
-            Command.CommandText = "insert into conceptos (idempresa, concepto, tipoconcepto, formula, formulaexento, gravado, exento, gruposat, visible) " +
-                "values (@idempresa, @concepto, @tipoconcepto, @formula, @formulaexento, @gravado, @exento, @gruposat, @visible)";
+            Command.CommandText = "insert into conceptos (idempresa, noconcepto, concepto, tipoconcepto, formula, formulaexento, gravado, exento, gruposat, visible) " +
+                "values (@idempresa, @noconcepto, @concepto, @tipoconcepto, @formula, @formulaexento, @gravado, @exento, @gruposat, @visible)";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa",c.idempresa);
+            Command.Parameters.AddWithValue("noconcepto", c.noconcepto);
             Command.Parameters.AddWithValue("concepto", c.concepto);
             Command.Parameters.AddWithValue("tipoconcepto", c.tipoconcepto);
             Command.Parameters.AddWithValue("formula",c.formula);
@@ -166,10 +187,11 @@ namespace Conceptos.Core
 
         public int actualizaConcepto(Conceptos c)
         {
-            Command.CommandText = "update conceptos set concepto = @concepto, tipoconcepto = @tipoconcepto, formula = @formula, formulaexento = @formulaexento, gravado = @gravado, " + 
+            Command.CommandText = "update conceptos set noconcepto = @noconcepto, concepto = @concepto, tipoconcepto = @tipoconcepto, formula = @formula, formulaexento = @formulaexento, gravado = @gravado, " + 
                 "exento = @exento, gruposat = @gruposat, visible = @visible where id = @id";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("id", c.id);
+            Command.Parameters.AddWithValue("noconcepto", c.noconcepto);
             Command.Parameters.AddWithValue("concepto", c.concepto);
             Command.Parameters.AddWithValue("tipoconcepto", c.tipoconcepto);
             Command.Parameters.AddWithValue("formula", c.formula);
@@ -187,6 +209,28 @@ namespace Conceptos.Core
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("id", c.id);
             return Command.ExecuteNonQuery();
+        }
+
+        public object gravaConcepto(Conceptos c)
+        {
+            Command.CommandText = "select gravado from conceptos where idempresa = @idempresa and noconcepto = @noconcepto and tipoconcepto = @tipoconcepto";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", c.idempresa);
+            Command.Parameters.AddWithValue("noconcepto", c.noconcepto);
+            Command.Parameters.AddWithValue("tipoconcepto", c.tipoconcepto);
+            object dato = Select(Command);
+            return dato;
+        }
+
+        public object exentaConcepto(Conceptos c)
+        {
+            Command.CommandText = "select exento from conceptos where idempresa = @idempresa and noconcepto = @noconcepto and tipoconcepto = @tipoconcepto";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", c.idempresa);
+            Command.Parameters.AddWithValue("noconcepto", c.noconcepto);
+            Command.Parameters.AddWithValue("tipoconcepto", c.tipoconcepto);
+            object dato = Select(Command);
+            return dato;
         }
 
         #region RELACION TRABAJADOR - CONCEPTO

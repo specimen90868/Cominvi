@@ -51,6 +51,7 @@ namespace Nominas
                                  Id = c.id,
                                  Concepto = c.concepto,
                                  Tipo = (c.tipoconcepto == "P") ? "PERCEPCION" : "DEDUCCION",
+                                 NoConcepto = c.noconcepto
                              };
                 dgvConceptos.DataSource = con.ToList();
 

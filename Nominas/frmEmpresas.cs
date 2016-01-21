@@ -42,15 +42,6 @@ namespace Nominas
         public int _iddireccion;
         #endregion
 
-        private void toolGuardarCerrar_Click(object sender, EventArgs e)
-        {
-            guardar(1);
-        }
-
-        private void toolGuardarNuevo_Click(object sender, EventArgs e)
-        {
-            guardar(0);   
-        }
 
         private void guardar(int tipoGuardar)
         {
@@ -274,15 +265,12 @@ namespace Nominas
                     GLOBALES.INHABILITAR(this, typeof(MaskedTextBox));
                     GLOBALES.INHABILITAR(this, typeof(CheckBox));
                     btnAsignar.Enabled = false;
+                    //toolGuardarCerrar.Enabled = false;
+                    //toolGuardarNuevo.Enabled = false;
                 }
                 else
                     toolTitulo.Text = "Edición Empresa";
             }
-        }
-
-        private void toolCerrar_Click(object sender, EventArgs e)
-        {
-            this.Dispose();
         }
 
         private void btnAsignar_Click(object sender, EventArgs e)
@@ -331,6 +319,21 @@ namespace Nominas
             {
                 txtLlave.Text = pfd.FileName;
             }
+        }
+
+        private void toolGuardarCerrar_Click(object sender, EventArgs e)
+        {
+            guardar(1);
+        }
+
+        private void toolGuardarNuevo_Click(object sender, EventArgs e)
+        {
+            guardar(0);
+        }
+
+        private void toolCerrar_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
         }
     }
 }

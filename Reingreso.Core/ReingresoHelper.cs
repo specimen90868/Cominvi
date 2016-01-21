@@ -34,16 +34,41 @@ namespace Reingreso.Core
 
         public int insertaReingreso(Reingresos r)
         {
-            Command.CommandText = "insert into suaReingresos (idtrabajador, idempresa, registropatronal, nss, fechaingreso, sdi) " +
-                "values (@idtrabajador, @idempresa, @registropatronal, @nss, @fechaingreso, @sdi)";
+            Command.CommandText = "insert into suaReingresos (idtrabajador, idempresa, registropatronal, nss, fechaingreso, diasproporcionales, sdi, periodoinicio, periodofin) " +
+                "values (@idtrabajador, @idempresa, @registropatronal, @nss, @fechaingreso, @diasproporcionales, @sdi, @periodoinicio, @periodofin)";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador",r.idtrabajador);
             Command.Parameters.AddWithValue("idempresa", r.idempresa);
             Command.Parameters.AddWithValue("registropatronal", r.registropatronal);
             Command.Parameters.AddWithValue("nss", r.nss);
             Command.Parameters.AddWithValue("fechaingreso", r.fechaingreso);
+            Command.Parameters.AddWithValue("diasproporcionales", r.diasproporcionales);
             Command.Parameters.AddWithValue("sdi", r.sdi);
+            Command.Parameters.AddWithValue("periodoinicio", r.periodoinicio);
+            Command.Parameters.AddWithValue("periodofin", r.periodofin);
             return Command.ExecuteNonQuery();
+        }
+
+        public object existeReingreso(Reingresos r)
+        {
+            Command.CommandText = "select count(*) from suaReingresos where idtrabajador = @idtrabajador and periodoinicio = @periodoinicio and periodofin = @periodofin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", r.idtrabajador);
+            Command.Parameters.AddWithValue("periodoinicio", r.periodoinicio);
+            Command.Parameters.AddWithValue("periodofin", r.periodofin);
+            object dato = Select(Command);
+            return dato;
+        }
+
+        public object diasProporcionales(Reingresos r)
+        {
+            Command.CommandText = "select diasproporcionales from suaReingresos where idtrabajador = @idtrabajador and periodoinicio = @periodoinicio and periodofin = @periodofin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", r.idtrabajador);
+            Command.Parameters.AddWithValue("periodoinicio", r.periodoinicio);
+            Command.Parameters.AddWithValue("periodofin", r.periodofin);
+            object dato = Select(Command);
+            return dato;
         }
     }
 }

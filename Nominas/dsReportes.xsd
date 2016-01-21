@@ -28,6 +28,8 @@
               <xs:element name="CaratulaDigitoVerificador" msprop:Generator_ColumnVarNameInTable="columnCaratulaDigitoVerificador" msprop:Generator_ColumnPropNameInRow="CaratulaDigitoVerificador" msprop:Generator_ColumnPropNameInTable="CaratulaDigitoVerificadorColumn" msprop:Generator_UserColumnName="CaratulaDigitoVerificador" type="xs:string" minOccurs="0" />
               <xs:element name="CaratulaRfc" msprop:Generator_ColumnVarNameInTable="columnCaratulaRfc" msprop:Generator_ColumnPropNameInRow="CaratulaRfc" msprop:Generator_ColumnPropNameInTable="CaratulaRfcColumn" msprop:Generator_UserColumnName="CaratulaRfc" type="xs:string" minOccurs="0" />
               <xs:element name="CaratulaTotalEmpleados" msprop:Generator_ColumnVarNameInTable="columnCaratulaTotalEmpleados" msprop:Generator_ColumnPropNameInRow="CaratulaTotalEmpleados" msprop:Generator_ColumnPropNameInTable="CaratulaTotalEmpleadosColumn" msprop:Generator_UserColumnName="CaratulaTotalEmpleados" type="xs:string" minOccurs="0" />
+              <xs:element name="CaratulaNoPeriodo" msprop:Generator_ColumnVarNameInTable="columnCaratulaNoPeriodo" msprop:Generator_ColumnPropNameInRow="CaratulaNoPeriodo" msprop:Generator_ColumnPropNameInTable="CaratulaNoPeriodoColumn" msprop:Generator_UserColumnName="CaratulaNoPeriodo" type="xs:string" minOccurs="0" />
+              <xs:element name="CaratulaPeriodo" msprop:Generator_ColumnVarNameInTable="columnCaratulaPeriodo" msprop:Generator_ColumnPropNameInRow="CaratulaPeriodo" msprop:Generator_ColumnPropNameInTable="CaratulaPeriodoColumn" msprop:Generator_UserColumnName="CaratulaPeriodo" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -53,6 +55,8 @@
               <xs:element name="fechafin" msprop:Generator_ColumnVarNameInTable="columnfechafin" msprop:Generator_ColumnPropNameInRow="fechafin" msprop:Generator_ColumnPropNameInTable="fechafinColumn" msprop:Generator_UserColumnName="fechafin" type="xs:dateTime" minOccurs="0" />
               <xs:element name="dia" msprop:Generator_ColumnVarNameInTable="columndia" msprop:Generator_ColumnPropNameInRow="dia" msprop:Generator_ColumnPropNameInTable="diaColumn" msprop:Generator_UserColumnName="dia" type="xs:dateTime" minOccurs="0" />
               <xs:element name="hora" msprop:Generator_ColumnVarNameInTable="columnhora" msprop:Generator_ColumnPropNameInRow="hora" msprop:Generator_ColumnPropNameInTable="horaColumn" msprop:Generator_UserColumnName="hora" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="noperiodo" msprop:Generator_ColumnVarNameInTable="columnnoperiodo" msprop:Generator_ColumnPropNameInRow="noperiodo" msprop:Generator_ColumnPropNameInTable="noperiodoColumn" msprop:Generator_UserColumnName="noperiodo" type="xs:string" minOccurs="0" />
+              <xs:element name="periodo" msprop:Generator_ColumnVarNameInTable="columnperiodo" msprop:Generator_ColumnPropNameInRow="periodo" msprop:Generator_ColumnPropNameInTable="periodoColumn" msprop:Generator_UserColumnName="periodo" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -73,6 +77,15 @@
               <xs:element name="DeptoDia" msprop:Generator_ColumnVarNameInTable="columnDeptoDia" msprop:Generator_ColumnPropNameInRow="DeptoDia" msprop:Generator_ColumnPropNameInTable="DeptoDiaColumn" msprop:Generator_UserColumnName="DeptoDia" type="xs:dateTime" minOccurs="0" />
               <xs:element name="DeptoHora" msprop:Generator_ColumnVarNameInTable="columnDeptoHora" msprop:Generator_ColumnPropNameInRow="DeptoHora" msprop:Generator_ColumnPropNameInTable="DeptoHoraColumn" msprop:Generator_UserColumnName="DeptoHora" type="xs:dateTime" minOccurs="0" />
               <xs:element name="DeptoTotalEmpleados" msprop:Generator_ColumnVarNameInTable="columnDeptoTotalEmpleados" msprop:Generator_ColumnPropNameInRow="DeptoTotalEmpleados" msprop:Generator_ColumnPropNameInTable="DeptoTotalEmpleadosColumn" msprop:Generator_UserColumnName="DeptoTotalEmpleados" type="xs:int" minOccurs="0" />
+              <xs:element name="DeptoNoPeriodo" msprop:Generator_ColumnVarNameInTable="columnDeptoNoPeriodo" msprop:Generator_ColumnPropNameInRow="DeptoNoPeriodo" msprop:Generator_ColumnPropNameInTable="DeptoNoPeriodoColumn" msprop:Generator_UserColumnName="DeptoNoPeriodo" type="xs:string" minOccurs="0" />
+              <xs:element name="DeptoPeriodo" msprop:Generator_ColumnVarNameInTable="columnDeptoPeriodo" msprop:Generator_ColumnPropNameInRow="DeptoPeriodo" msprop:Generator_ColumnPropNameInTable="DeptoPeriodoColumn" msprop:Generator_UserColumnName="DeptoPeriodo" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="PreNominaImagen" msprop:Generator_TableClassName="PreNominaImagenDataTable" msprop:Generator_TableVarName="tablePreNominaImagen" msprop:Generator_TablePropName="PreNominaImagen" msprop:Generator_RowDeletingName="PreNominaImagenRowDeleting" msprop:Generator_RowChangingName="PreNominaImagenRowChanging" msprop:Generator_RowEvHandlerName="PreNominaImagenRowChangeEventHandler" msprop:Generator_RowDeletedName="PreNominaImagenRowDeleted" msprop:Generator_UserTableName="PreNominaImagen" msprop:Generator_RowChangedName="PreNominaImagenRowChanged" msprop:Generator_RowEvArgName="PreNominaImagenRowChangeEvent" msprop:Generator_RowClassName="PreNominaImagenRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="imagen" msprop:Generator_ColumnVarNameInTable="columnimagen" msprop:Generator_ColumnPropNameInRow="imagen" msprop:Generator_ColumnPropNameInTable="imagenColumn" msprop:Generator_UserColumnName="imagen" type="xs:base64Binary" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

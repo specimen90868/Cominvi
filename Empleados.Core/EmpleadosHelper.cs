@@ -45,6 +45,40 @@ namespace Empleados.Core
             return lstEmpleados;
         }
 
+        public List<Empleados> obtenerEmpleados(int idEmpresa)
+        {
+            DataTable dtEmpleados = new DataTable();
+            List<Empleados> lstEmpleados = new List<Empleados>();
+            Command.CommandText = "select idtrabajador, noempleado, paterno, materno, nombres, nombrecompleto, curp, fechaingreso, antiguedad, sdi, sd, sueldo, cuenta, clabe, idbancario, estatus from trabajadores where idempresa = @idempresa";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idEmpresa);
+            dtEmpleados = SelectData(Command);
+
+            for (int i = 0; i < dtEmpleados.Rows.Count; i++)
+            {
+                Empleados empleado = new Empleados();
+                empleado.idtrabajador = int.Parse(dtEmpleados.Rows[i]["idtrabajador"].ToString());
+                empleado.noempleado = dtEmpleados.Rows[i]["noempleado"].ToString();
+                empleado.paterno = dtEmpleados.Rows[i]["paterno"].ToString();
+                empleado.materno = dtEmpleados.Rows[i]["materno"].ToString();
+                empleado.nombres = dtEmpleados.Rows[i]["nombres"].ToString();
+                empleado.nombrecompleto = dtEmpleados.Rows[i]["nombrecompleto"].ToString();
+                empleado.curp = dtEmpleados.Rows[i]["curp"].ToString();
+                empleado.fechaingreso = DateTime.Parse(dtEmpleados.Rows[i]["fechaingreso"].ToString());
+                empleado.antiguedad = int.Parse(dtEmpleados.Rows[i]["antiguedad"].ToString());
+                empleado.sdi = double.Parse(dtEmpleados.Rows[i]["sdi"].ToString());
+                empleado.sd = double.Parse(dtEmpleados.Rows[i]["sd"].ToString());
+                empleado.sueldo = double.Parse(dtEmpleados.Rows[i]["sueldo"].ToString());
+                empleado.cuenta = dtEmpleados.Rows[i]["cuenta"].ToString();
+                empleado.clabe = dtEmpleados.Rows[i]["clabe"].ToString();
+                empleado.idbancario = dtEmpleados.Rows[i]["idbancario"].ToString();
+                empleado.estatus = int.Parse(dtEmpleados.Rows[i]["estatus"].ToString());
+                lstEmpleados.Add(empleado);
+            }
+
+            return lstEmpleados;
+        }
+
         public List<Empleados> obtenerEmpleado(Empleados e)
         {
             DataTable dtEmpleados = new DataTable();
@@ -461,1117 +495,1022 @@ namespace Empleados.Core
             return Command.ExecuteNonQuery();
         }
 
+        public object existeEmpleado(Empleados e)
+        {
+            Command.CommandText = "select count(idtrabajador) from trabajadores where nss = @nss and digitoverificador = @digito";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("nss", e.nss);
+            Command.Parameters.AddWithValue("digito", e.digitoverificador);
+            object dato = Select(Command);
+            return dato;
+        }
+
     }
 
     public class RFC
     {
-
-        private ArrayList ExtraeApellidos(string nombre)
+        public string ObtieneRFC(string _paterno, string _materno, string _nombre)
         {
-            string[] strArray = new string[13] { "Y", "DEL", "EL", "LA", "LOS", "DE", "PARA", "DE", "LA", "MC", "VON", "MAC", "VAN" };
-            char[] chArray = nombre.ToCharArray();
-            int index = 0;
-            ArrayList apellido = new ArrayList();
-            string str = "";
-            for (; index != nombre.Length; ++index)
-            {
-                if (chArray[index].ToString().Equals(" "))
-                {
-                    apellido.Add((object)str);
-                    str = "";
-                }
-                else
-                    str += chArray[index].ToString();
-            }
-            for (int i = 0; i != apellido.Count; ++i)
-            {
-                if (Enumerable.Count<string>(Enumerable.Where<string>((IEnumerable<string>)strArray, (Func<string, bool>)(u => u == apellido[i].ToString()))) > 0)
-                {
-                    apellido.RemoveRange(i, 1);
-                    --i;
-                }
-            }
-            return apellido;
-        }
+            string rfc = "";
+            string paterno = PalabrasNoUtilizadas(_paterno.TrimStart().TrimEnd()).TrimEnd();
+            string materno = PalabrasNoUtilizadas(_materno.TrimStart().TrimEnd()).TrimEnd();
+            string nombre = PalabrasNoUtilizadas(_nombre.TrimStart().TrimEnd()).TrimEnd();
+            nombre = PalabrasComunes(nombre);
 
-        private string ExtraeLetrasApellidos(ArrayList apellidos)
-        {
-            char[] cadena = apellidos[0].ToString().ToCharArray();
-            int cont = 0;
-            bool flag = false;
-            string[] strArray = new string[5] { "A", "E", "I", "O", "U" };
-            string str;
-            if (cadena.Length > 1)
+            int cuentaPaterno = 0, cuentaMaterno = 0;
+            cuentaPaterno = paterno.Length;
+            cuentaMaterno = materno.Length;
+
+            if (cuentaPaterno == 0)
             {
-                if ((cadena[0].ToString() + cadena[1].ToString()).Equals("CH") || (cadena[0].ToString() + cadena[1].ToString()).Equals("LL"))
+                materno = materno.Substring(0, 2);
+                nombre = nombre.Substring(0, 2);
+                rfc = materno + nombre;
+            }
+            if (cuentaMaterno == 0)
+            {
+                paterno = paterno.Substring(0, 2);
+                nombre = nombre.Substring(0, 2);
+                rfc = paterno + nombre;
+            }
+
+            if (cuentaPaterno == 1 || cuentaPaterno == 2)
+            {
+                paterno = paterno.Substring(0, 1);
+                materno = materno.Substring(0, 1);
+                nombre = nombre.Substring(0, 2);
+                rfc = paterno + materno + nombre;
+            }
+
+            if (cuentaPaterno > 2 && cuentaMaterno > 2)
+            {
+                bool esVocal = false;
+                string primerLetraPaterno = paterno.Substring(0, 1);
+                string primerVocal = "";
+                string primerLetraMaterno = materno.Substring(0, 1);
+                string primerLetraNombre = nombre.Substring(0, 1);
+                char[] letras = paterno.ToCharArray();
+                for (int i = 1; i < letras.Length; i++)
                 {
-                    str = cadena[0].ToString();
-                    cont = 2;
-                }
-                else
-                {
-                    str = cadena[0].ToString();
-                    ++cont;
-                }
-                for (; !flag && cont <= cadena.Length - 1; ++cont)
-                {
-                    if (Enumerable.Count<string>(Enumerable.Where<string>((IEnumerable<string>)strArray, (Func<string, bool>)(u => u == cadena[cont].ToString()))) > 0)
+                    esVocal = EsVocal(letras[i]);
+                    if (esVocal)
                     {
-                        str += cadena[cont].ToString();
-                        flag = true;
+                        primerVocal = letras[i].ToString();
+                        break;
                     }
                 }
+                rfc = primerLetraPaterno + primerVocal + primerLetraMaterno + primerLetraNombre;
+                rfc = PalabrasInconvenientes(rfc);
             }
-            else
-                str = cadena.Length <= 0 ? "" : cadena[0].ToString();
-            return str;
-        }
 
-        private string ExtraeNombre(string nombr, string rfc)
-        {
-            ArrayList arrayList = this.ExtraeApellidos(nombr);
-            if (arrayList.Count == 3)
-            {
-                if (arrayList[0].Equals((object)"MARIA") || arrayList[0].Equals((object)"JOSE"))
-                    arrayList.RemoveAt(0);
-            }
-            
-            char[] chArray = arrayList[0].ToString().ToCharArray();
-            return !(chArray[0].ToString() + chArray[1].ToString()).Equals("CH") && !(chArray[0].ToString() + chArray[1].ToString()).Equals("LL") ? 
-                (rfc.Length <= 2 ? chArray[0].ToString() + chArray[1].ToString() : 
-                chArray[0].ToString()) : 
-                (rfc.Length <= 2 ? chArray[0].ToString() + chArray[2].ToString() : 
-                chArray[0].ToString());
-        }
-
-        private string QuitaPalabrasMalas(string rfc)
-        {
-            if (Enumerable.Count<string>(Enumerable.Where<string>((IEnumerable<string>)new string[45]
-              {
-                "BUEI",
-                "BUEY",
-                "CACA",
-                "CACO",
-                "CAGA",
-                "CAGO",
-                "CAKA",
-                "CAKO",
-                "COGE",
-                "COJA",
-                "COJE",
-                "COJI",
-                "COJO",
-                "CULO",
-                "FETO",
-                "GUEY",
-                "JOTO",
-                "KACA",
-                "KACO",
-                "KAGA",
-                "KAGO",
-                "KOGE",
-                "KOJO",
-                "KAKA",
-                "KULO",
-                "LOCA",
-                "LOCO",
-                "LOKA",
-                "LOKO",
-                "MAME",
-                "MAMO",
-                "MEAR",
-                "MEAS",
-                "MEON",
-                "MION",
-                "MOCO",
-                "MULA",
-                "PEDA",
-                "PEDO",
-                "PENE",
-                "PUTA",
-                "PUTO",
-                "QULO",
-                "RATA",
-                "RUIN"}, (Func<string, bool>)(u => u == rfc))) > 0)
-                return rfc.Substring(0, rfc.Length - 1) + "X";
             return rfc;
         }
 
-        private string RFC10DIGITOS(string appat, string apmat, string nombre, string fecha)
+        public string PalabrasNoUtilizadas(string valor)
         {
-            fecha = fecha.Replace("/", "");
-            string str = this.ExtraeLetrasApellidos(this.ExtraeApellidos(appat + " "));
-            string rfc = !this.ExtraeLetrasApellidos(this.ExtraeApellidos(apmat + " ")).Equals("") ? str + this.ExtraeLetrasApellidos(this.ExtraeApellidos(apmat + " ")).Substring(0, 1) : str + this.ExtraeLetrasApellidos(this.ExtraeApellidos(apmat + " "));
-            return this.QuitaPalabrasMalas(rfc + this.ExtraeNombre(nombre + " ", rfc)) + "-" + fecha.Trim();
+            string[] valores = valor.Split(' ');
+            string _valor = "";
+            for (int i = 0; i < valores.Length; i++)
+            {
+                switch (valores[i])
+                {
+                    case "DE": valores[i] = valores[i].Replace("DE", ""); break;
+                    case "LA": valores[i] = valores[i].Replace("LA", ""); break;
+                    case "LAS": valores[i] = valores[i].Replace("LAS", ""); break;
+                    case "MC": valores[i] = valores[i].Replace("MC", ""); break;
+                    case "VON": valores[i] = valores[i].Replace("VON", ""); break;
+                    case "DEL": valores[i] = valores[i].Replace("DEL", ""); break;
+                    case "LOS": valores[i] = valores[i].Replace("LOS", ""); break;
+                    case "Y": valores[i] = valores[i].Replace("Y", ""); break;
+                    case "MAC": valores[i] = valores[i].Replace("MAC", ""); break;
+                    case "VAN": valores[i] = valores[i].Replace("VAN", ""); break;
+                    case "MI": valores[i] = valores[i].Replace("MI", ""); break;
+                }
+            }
+
+            for (int i = 0; i < valores.Length; i++)
+            {
+                if (valores[i] != "")
+                    _valor += valores[i] + " ";
+            }
+            return _valor;
         }
 
-        public string ObtieneHomonimia(string appat, string apmat, string nombre)
+        public string PalabrasComunes(string valor)
         {
-            string[,] strArray1 = new string[38, 2]
-              {
-                {
-                  " ",
-                  "00"
-                },
-                {
-                  "0",
-                  "00"
-                },
-                {
-                  "1",
-                  "01"
-                },
-                {
-                  "2",
-                  "02"
-                },
-                {
-                  "3",
-                  "03"
-                },
-                {
-                  "4",
-                  "04"
-                },
-                {
-                  "5",
-                  "05"
-                },
-                {
-                  "6",
-                  "06"
-                },
-                {
-                  "7",
-                  "07"
-                },
-                {
-                  "8",
-                  "08"
-                },
-                {
-                  "9",
-                  "09"
-                },
-                {
-                  "&",
-                  "10"
-                },
-                {
-                  "A",
-                  "11"
-                },
-                {
-                  "B",
-                  "12"
-                },
-                {
-                  "C",
-                  "13"
-                },
-                {
-                  "D",
-                  "14"
-                },
-                {
-                  "E",
-                  "15"
-                },
-                {
-                  "F",
-                  "16"
-                },
-                {
-                  "G",
-                  "17"
-                },
-                {
-                  "H",
-                  "18"
-                },
-                {
-                  "I",
-                  "19"
-                },
-                {
-                  "J",
-                  "21"
-                },
-                {
-                  "K",
-                  "22"
-                },
-                {
-                  "L",
-                  "23"
-                },
-                {
-                  "M",
-                  "24"
-                },
-                {
-                  "N",
-                  "25"
-                },
-                {
-                  "O",
-                  "26"
-                },
-                {
-                  "P",
-                  "27"
-                },
-                {
-                  "Q",
-                  "28"
-                },
-                {
-                  "R",
-                  "29"
-                },
-                {
-                  "S",
-                  "32"
-                },
-                {
-                  "T",
-                  "33"
-                },
-                {
-                  "U",
-                  "34"
-                },
-                {
-                  "V",
-                  "35"
-                },
-                {
-                  "W",
-                  "36"
-                },
-                {
-                  "X",
-                  "37"
-                },
-                {
-                  "Y",
-                  "38"
-                },
-                {
-                  "Z",
-                  "39"
-                }
-              };
-            string[,] strArray2 = new string[35, 2]
-              {
-                {
-                  "0",
-                  "1"
-                },
-                {
-                  "1",
-                  "2"
-                },
-                {
-                  "2",
-                  "3"
-                },
-                {
-                  "3",
-                  "4"
-                },
-                {
-                  "4",
-                  "5"
-                },
-                {
-                  "5",
-                  "6"
-                },
-                {
-                  "6",
-                  "7"
-                },
-                {
-                  "7",
-                  "8"
-                },
-                {
-                  "8",
-                  "9"
-                },
-                {
-                  "9",
-                  "A"
-                },
-                {
-                  "10",
-                  "B"
-                },
-                {
-                  "11",
-                  "C"
-                },
-                {
-                  "12",
-                  "D"
-                },
-                {
-                  "13",
-                  "E"
-                },
-                {
-                  "14",
-                  "F"
-                },
-                {
-                  "15",
-                  "G"
-                },
-                {
-                  "16",
-                  "H"
-                },
-                {
-                  "17",
-                  "I"
-                },
-                {
-                  "18",
-                  "J"
-                },
-                {
-                  "19",
-                  "K"
-                },
-                {
-                  "20",
-                  "L"
-                },
-                {
-                  "21",
-                  "M"
-                },
-                {
-                  "22",
-                  "N"
-                },
-                {
-                  "0",
-                  "O"
-                },
-                {
-                  "23",
-                  "P"
-                },
-                {
-                  "24",
-                  "Q"
-                },
-                {
-                  "25",
-                  "R"
-                },
-                {
-                  "26",
-                  "S"
-                },
-                {
-                  "27",
-                  "T"
-                },
-                {
-                  "28",
-                  "U"
-                },
-                {
-                  "29",
-                  "V"
-                },
-                {
-                  "30",
-                  "W"
-                },
-                {
-                  "31",
-                  "X"
-                },
-                {
-                  "32",
-                  "Y"
-                },
-                {
-                  "33",
-                  "Z"
-                }
-              };
-            string str1;
-            if (apmat.Equals(""))
-                str1 = appat + " " + nombre;
-            else
-                str1 = appat + " " + apmat + " " + nombre;
-            string str2 = str1.Replace("Ñ", "&").Trim();
-            string str3 = (string)null;
-            char[] chArray = str2.ToCharArray();
-            int index1 = 0;
-            double num1 = 0.0;
-            string str4 = "0";
-            for (; index1 != chArray.Length; ++index1)
+            string[] valores = valor.Split(' ');
+            string _valor = "";
+
+            if (valores.Length == 1)
             {
-                int index2 = 0;
-                bool flag = false;
-                while (!flag)
-                {
-                    if (strArray1[index2, 0].Equals(chArray[index1].ToString()))
-                    {
-                        str4 += strArray1[index2, 1];
-                        flag = true;
-                    }
-                    ++index2;
-                }
+                _valor = valor;
             }
-            for (int startIndex = 0; startIndex < str4.Length - 1; ++startIndex)
+
+            if (valores.Length == 2)
             {
-                string str5 = str4.Substring(startIndex, 2) + "X" + str4.Substring(startIndex + 1, 1);
-                num1 += double.Parse(str4.Substring(startIndex, 2)) * double.Parse(str4.Substring(startIndex + 1, 1));
-            }
-            if (num1.ToString().Length > 3)
-                num1 = (double)int.Parse(num1.ToString().Substring(1, 3));
-            int result = 0;
-            Math.DivRem((int)num1, 34, out result);
-            int num2 = (int)num1 / 34;
-            bool flag1 = false;
-            int index3 = 0;
-            while (!flag1)
-            {
-                if (strArray2[index3, 0].Equals(num2.ToString()))
-                {
-                    str3 += strArray2[index3, 1];
+                bool flag1 = false, flag2 = false;
+                if (valores[0] == "MARIA" || valores[0] == "JOSE" || valores[0] == "MARÍA" || valores[0] == "JOSÉ")
                     flag1 = true;
-                }
-                ++index3;
-            }
-            bool flag2 = false;
-            int index4 = 0;
-            while (!flag2)
-            {
-                if (strArray2[index4, 0].Equals(result.ToString()))
-                {
-                    str3 += strArray2[index4, 1];
+                if (valores[1] == "MARIA" || valores[1] == "JOSE" || valores[1] == "MARÍA" || valores[1] == "JOSÉ")
                     flag2 = true;
-                }
-                ++index4;
-            }
-            return str3;
-        }
-
-        public string ObtieneDigitoVerificador(string rfc12pocisiones)
-        {
-            rfc12pocisiones = rfc12pocisiones.Replace("-", "");
-            if (rfc12pocisiones.Length < 12)
-                rfc12pocisiones = " " + rfc12pocisiones;
-            string[,] strArray = new string[38, 2]
-              {
+                if (flag1 && flag2)
+                    _valor = valores[1];
+                else
                 {
-                  "0",
-                  "00"
-                },
-                {
-                  "1",
-                  "01"
-                },
-                {
-                  "2",
-                  "02"
-                },
-                {
-                  "3",
-                  "03"
-                },
-                {
-                  "4",
-                  "04"
-                },
-                {
-                  "5",
-                  "05"
-                },
-                {
-                  "6",
-                  "06"
-                },
-                {
-                  "7",
-                  "07"
-                },
-                {
-                  "8",
-                  "08"
-                },
-                {
-                  "9",
-                  "09"
-                },
-                {
-                  "A",
-                  "10"
-                },
-                {
-                  "B",
-                  "11"
-                },
-                {
-                  "C",
-                  "12"
-                },
-                {
-                  "D",
-                  "13"
-                },
-                {
-                  "E",
-                  "14"
-                },
-                {
-                  "F",
-                  "15"
-                },
-                {
-                  "G",
-                  "16"
-                },
-                {
-                  "H",
-                  "17"
-                },
-                {
-                  "I",
-                  "18"
-                },
-                {
-                  "J",
-                  "19"
-                },
-                {
-                  "K",
-                  "20"
-                },
-                {
-                  "L",
-                  "21"
-                },
-                {
-                  "M",
-                  "22"
-                },
-                {
-                  "N",
-                  "23"
-                },
-                {
-                  "Ñ",
-                  "24"
-                },
-                {
-                  "O",
-                  "25"
-                },
-                {
-                  "P",
-                  "26"
-                },
-                {
-                  "Q",
-                  "27"
-                },
-                {
-                  "R",
-                  "28"
-                },
-                {
-                  "S",
-                  "29"
-                },
-                {
-                  "T",
-                  "30"
-                },
-                {
-                  "U",
-                  "31"
-                },
-                {
-                  "V",
-                  "32"
-                },
-                {
-                  "W",
-                  "33"
-                },
-                {
-                  "X",
-                  "34"
-                },
-                {
-                  "Y",
-                  "35"
-                },
-                {
-                  "Z",
-                  "36"
-                },
-                {
-                  " ",
-                  "37"
-                }
-              };
-            string str1 = (string)null;
-            int index1 = 0;
-            int result = 0;
-            for (; index1 != rfc12pocisiones.ToCharArray().Length; ++index1)
-            {
-                int index2 = 0;
-                bool flag = false;
-                while (!flag)
-                {
-                    if (strArray[index2, 0].Equals(rfc12pocisiones.ToCharArray()[index1].ToString()))
+                    for (int i = 0; i < valores.Length; i++)
                     {
-                        str1 += strArray[index2, 1];
-                        flag = true;
+                        switch (valores[i])
+                        {
+                            case "MARIA": valores[i] = valores[i].Replace("MARIA", ""); break;
+                            case "MARÍA": valores[i] = valores[i].Replace("MARÍA", ""); break;
+                            case "JOSE": valores[i] = valores[i].Replace("JOSE", ""); ; break;
+                            case "JOSÉ": valores[i] = valores[i].Replace("JOSÉ", ""); break;
+                            case "J": valores[i] = valores[i].Replace("J", ""); break;
+                            case "J.": valores[i] = valores[i].Replace("J.", ""); break;
+                            case "MA": valores[i] = valores[i].Replace("J.", ""); break;
+                            case "MA.": valores[i] = valores[i].Replace("J.", ""); break;
+                        }
                     }
-                    ++index2;
+                    for (int i = 0; i < valores.Length; i++)
+                    {
+                        if (valores[i] != "")
+                            _valor += valores[i] + " ";
+                    }
                 }
             }
-            int startIndex = 0;
-            int num = 0;
-            while (startIndex < str1.Length - 1)
+
+            if (valores.Length > 2)
             {
-                result += int.Parse(str1.Substring(startIndex, 2)) * (13 - num);
-                startIndex += 2;
-                ++num;
+                for (int i = 0; i < valores.Length; i++)
+                {
+                    switch (valores[i])
+                    {
+                        case "MARIA": valores[i] = valores[i].Replace("MARIA", ""); break;
+                        case "MARÍA": valores[i] = valores[i].Replace("MARÍA", ""); break;
+                        case "JOSE": valores[i] = valores[i].Replace("JOSE", ""); ; break;
+                        case "JOSÉ": valores[i] = valores[i].Replace("JOSÉ", ""); break;
+                        case "J": valores[i] = valores[i].Replace("J", ""); break;
+                        case "J.": valores[i] = valores[i].Replace("J.", ""); break;
+                        case "MA": valores[i] = valores[i].Replace("J.", ""); break;
+                        case "MA.": valores[i] = valores[i].Replace("J.", ""); break;
+                    }
+                }
+                for (int i = 0; i < valores.Length; i++)
+                {
+                    if (valores[i] != "")
+                        _valor += valores[i] + " ";
+                }
             }
-            Math.DivRem(result, 11, out result);
-            string str2 = "";
-            if (result > 0)
-            {
-                result = 11 - result;
-                str2 = result.ToString();
-            }
-            switch (result)
-            {
-                case 0:
-                    str2 = "0";
-                    break;
-                case 10:
-                    str2 = "A";
-                    break;
-            }
-            return str2;
+            return _valor;
         }
 
-        public string RFC13Pocisiones(string Appat, string Apmat, string Nombre, string FechaNac)
+        public bool EsVocal(char c)
         {
-            string str1 = this.RFC10DIGITOS(Appat + " ", Apmat + " ", Nombre + " ", FechaNac);
-            string str2 = this.ObtieneHomonimia(Appat, Apmat, Nombre);
-            return str1 + str2 + this.ObtieneDigitoVerificador(str1 + str2);
+            bool vocal = false;
+            switch (c)
+            {
+                case 'a': vocal = true; break;
+                case 'e': vocal = true; break;
+                case 'i': vocal = true; break;
+                case 'o': vocal = true; break;
+                case 'u': vocal = true; break;
+
+                case 'A': vocal = true; break;
+                case 'E': vocal = true; break;
+                case 'I': vocal = true; break;
+                case 'O': vocal = true; break;
+                case 'U': vocal = true; break;
+
+                case 'Á': vocal = true; break;
+                case 'É': vocal = true; break;
+                case 'Í': vocal = true; break;
+                case 'Ó': vocal = true; break;
+                case 'Ú': vocal = true; break;
+                default:
+                    vocal = false; break;
+            }
+            return vocal;
+        }
+
+        public string PalabrasInconvenientes(string rfc)
+        {
+            switch (rfc)
+            {
+                case "BUEI": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "BUEY": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "CACA": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "CACO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "CAGA": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "CAGO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "CAKA": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "CAKO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "COGE": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "COJA": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "COJE": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "COJI": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "COJO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "CULO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "FETO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "GUEY": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "JOTO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "KACA": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "KACO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "KAGA": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "KAGO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "KOGE": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "KOJO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "KAKA": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "KULO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "MAME": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "MAMO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "MEAR": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "MEAS": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "MEON": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "MION": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "MOCO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "MULA": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "PEDA": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "PEDO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "PENE": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "PUTA": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "PUTO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "PITO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "QULO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "RATA": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+                case "RUIN": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
+            }
+            return rfc;
+        }
+
+        public string ClaveHomonimia(string _paterno, string _materno, string _nombre)
+        {
+            string paterno = _paterno.TrimStart().TrimEnd();
+            string materno = _materno.TrimStart().TrimEnd();
+            string nombre = _nombre.TrimStart().TrimEnd();
+            string nombreCompleto = "";
+
+            int cuentaPaterno = 0, cuentaMaterno = 0;
+            cuentaPaterno = paterno.Length;
+            cuentaMaterno = materno.Length;
+
+            if (cuentaPaterno == 0)
+                nombreCompleto = materno + " " + nombre;
+
+            if (cuentaMaterno == 0)
+                nombreCompleto = paterno + " " + nombre;
+
+            if (cuentaPaterno != 0 && cuentaMaterno != 0)
+                nombreCompleto = paterno + " " + materno + " " + nombre;
+
+            char[] valoresLetras = nombreCompleto.ToCharArray();
+            string[] valores = new string[nombreCompleto.Length];
+            for (int i = 0; i < valoresLetras.Length; i++)
+            {
+                switch (valoresLetras[i])
+                {
+                    case ' ': valores[i] = "00"; break;
+                    case '0': valores[i] = "00"; break;
+                    case '1': valores[i] = "01"; break;
+                    case '2': valores[i] = "02"; break;
+                    case '3': valores[i] = "03"; break;
+                    case '4': valores[i] = "04"; break;
+                    case '5': valores[i] = "05"; break;
+                    case '6': valores[i] = "06"; break;
+                    case '7': valores[i] = "07"; break;
+                    case '8': valores[i] = "08"; break;
+                    case '9': valores[i] = "09"; break;
+                    case '&': valores[i] = "10"; break;
+                    case 'A': valores[i] = "11"; break;
+                    case 'B': valores[i] = "12"; break;
+                    case 'C': valores[i] = "13"; break;
+                    case 'D': valores[i] = "14"; break;
+                    case 'E': valores[i] = "15"; break;
+                    case 'F': valores[i] = "16"; break;
+                    case 'G': valores[i] = "17"; break;
+                    case 'H': valores[i] = "18"; break;
+                    case 'I': valores[i] = "19"; break;
+                    case 'J': valores[i] = "21"; break;
+                    case 'K': valores[i] = "22"; break;
+                    case 'L': valores[i] = "23"; break;
+                    case 'M': valores[i] = "24"; break;
+                    case 'N': valores[i] = "25"; break;
+                    case 'O': valores[i] = "26"; break;
+                    case 'P': valores[i] = "27"; break;
+                    case 'Q': valores[i] = "28"; break;
+                    case 'R': valores[i] = "29"; break;
+                    case 'S': valores[i] = "32"; break;
+                    case 'T': valores[i] = "33"; break;
+                    case 'U': valores[i] = "34"; break;
+                    case 'V': valores[i] = "35"; break;
+                    case 'W': valores[i] = "36"; break;
+                    case 'X': valores[i] = "37"; break;
+                    case 'Y': valores[i] = "38"; break;
+                    case 'Z': valores[i] = "39"; break;
+                    case 'Ñ': valores[i] = "40"; break;
+                }
+            }
+            string numeros = "0";
+            for (int i = 0; i < valores.Length; i++)
+            {
+                numeros += valores[i];
+            }
+
+            double suma = 0;
+            char[] numeros2 = numeros.ToCharArray();
+            for (int i = 0; i < numeros2.Length; i++)
+            {
+                if (i <= (numeros2.Length - 2))
+                    suma += double.Parse(numeros2[i].ToString() + "" + numeros2[i + 1].ToString()) * double.Parse(numeros2[i + 1].ToString());
+            }
+
+            suma = double.Parse(suma.ToString().Substring(suma.ToString().Length - 3, 3));
+            int cociente = (int)Math.Truncate(suma / 34);
+            int residuo = (int)(suma % 34);
+
+            string clave = TablaHomonimio(cociente) + TablaHomonimio(residuo);
+            return clave;
+        }
+
+        public string DigitoVerificador(string rfc12posiciones)
+        {
+            char[] valoresLetras = rfc12posiciones.ToCharArray();
+            string[] valores = new string[rfc12posiciones.Length];
+            for (int i = 0; i < valoresLetras.Length; i++)
+            {
+                switch (valoresLetras[i])
+                {
+                    case '0': valores[i] = "00"; break;
+                    case '1': valores[i] = "01"; break;
+                    case '2': valores[i] = "02"; break;
+                    case '3': valores[i] = "03"; break;
+                    case '4': valores[i] = "04"; break;
+                    case '5': valores[i] = "05"; break;
+                    case '6': valores[i] = "06"; break;
+                    case '7': valores[i] = "07"; break;
+                    case '8': valores[i] = "08"; break;
+                    case '9': valores[i] = "09"; break;
+                    case 'A': valores[i] = "10"; break;
+                    case 'B': valores[i] = "11"; break;
+                    case 'C': valores[i] = "12"; break;
+                    case 'D': valores[i] = "13"; break;
+                    case 'E': valores[i] = "14"; break;
+                    case 'F': valores[i] = "15"; break;
+                    case 'G': valores[i] = "16"; break;
+                    case 'H': valores[i] = "17"; break;
+                    case 'I': valores[i] = "18"; break;
+                    case 'J': valores[i] = "19"; break;
+                    case 'K': valores[i] = "20"; break;
+                    case 'L': valores[i] = "21"; break;
+                    case 'M': valores[i] = "22"; break;
+                    case 'N': valores[i] = "23"; break;
+                    case '&': valores[i] = "24"; break;
+                    case 'O': valores[i] = "25"; break;
+                    case 'P': valores[i] = "26"; break;
+                    case 'Q': valores[i] = "27"; break;
+                    case 'R': valores[i] = "28"; break;
+                    case 'S': valores[i] = "29"; break;
+                    case 'T': valores[i] = "30"; break;
+                    case 'U': valores[i] = "31"; break;
+                    case 'V': valores[i] = "32"; break;
+                    case 'W': valores[i] = "33"; break;
+                    case 'X': valores[i] = "34"; break;
+                    case 'Y': valores[i] = "35"; break;
+                    case 'Z': valores[i] = "36"; break;
+                    case ' ': valores[i] = "37"; break;
+                    case 'Ñ': valores[i] = "38"; break;
+                    default: valores[i] = "00"; break;
+                }
+            }
+            double suma = 0;
+            double posicion = 12;
+            for (int i = 0; i < valores.Length; i++)
+            {
+                suma += double.Parse(valores[i].ToString()) * (posicion + 1);
+                posicion--;
+            }
+
+            int residuo = (int)(suma % 11);
+                string dv = "";
+
+            if (residuo == 0)
+                dv = "0";
+
+            if (residuo > 10 || residuo < 10)
+            {
+                dv = (11 - residuo).ToString();
+                if (dv == "10")
+                    dv = "A";
+            }
+            
+
+            if (residuo == 10)
+                dv = "A";
+
+            return dv;
+        }
+
+        private string TablaHomonimio(int valor)
+        {
+            string homo = "";
+            switch (valor)
+            {
+                case 0: homo = "1"; break;
+                case 1: homo = "2"; break;
+                case 2: homo = "3"; break;
+                case 3: homo = "4"; break;
+                case 4: homo = "5"; break;
+                case 5: homo = "6"; break;
+                case 6: homo = "7"; break;
+                case 7: homo = "8"; break;
+                case 8: homo = "9"; break;
+                case 9: homo = "A"; break;
+                case 10: homo = "B"; break;
+                case 11: homo = "C"; break;
+                case 12: homo = "D"; break;
+                case 13: homo = "E"; break;
+                case 14: homo = "F"; break;
+                case 15: homo = "G"; break;
+                case 16: homo = "H"; break;
+                case 17: homo = "I"; break;
+                case 18: homo = "J"; break;
+                case 19: homo = "K"; break;
+                case 20: homo = "L"; break;
+                case 21: homo = "M"; break;
+                case 22: homo = "N"; break;
+                case 23: homo = "P"; break;
+                case 24: homo = "Q"; break;
+                case 25: homo = "R"; break;
+                case 26: homo = "S"; break;
+                case 27: homo = "T"; break;
+                case 28: homo = "U"; break;
+                case 29: homo = "V"; break;
+                case 30: homo = "W"; break;
+                case 31: homo = "X"; break;
+                case 32: homo = "Y"; break;
+                case 33: homo = "Z"; break;
+            }
+            return homo;
         }
 
     }
 
     public class CURP
     {
-        private string SegConsonantes = (string)null;
-
-        private ArrayList ExtraeApellidos(string nombre)
+        public string ObtieneRFC_CURP(string _paterno, string _materno, string _nombre)
         {
-            string[] strArray = new string[13]
-      {
-        "Y",
-        "DEL",
-        "EL",
-        "LA",
-        "LOS",
-        "DE",
-        "PARA",
-        "DE",
-        "LA",
-        "MC",
-        "VON",
-        "MAC",
-        "VAN"
-      };
-            char[] chArray = nombre.ToCharArray();
-            int index = 0;
-            ArrayList apellido = new ArrayList();
-            string str = "";
-            for (; index != nombre.Length; ++index)
-            {
-                if (chArray[index].ToString().Equals(" "))
-                {
-                    apellido.Add((object)str);
-                    str = "";
-                }
-                else
-                    str += chArray[index].ToString();
-            }
-            for (int i = 0; i != apellido.Count; ++i)
-            {
-                if (Enumerable.Count<string>(Enumerable.Where<string>((IEnumerable<string>)strArray, (Func<string, bool>)(u => u == apellido[i].ToString()))) > 0)
-                {
-                    apellido.RemoveRange(i, 1);
-                    --i;
-                }
-            }
-            return apellido;
-        }
+            string rfc = "";
+            string paterno = PalabrasNoUtilizadas(_paterno.TrimStart().TrimEnd()).TrimEnd();
+            string materno = PalabrasNoUtilizadas(_materno.TrimStart().TrimEnd()).TrimEnd();
+            string nombre = PalabrasNoUtilizadas(_nombre.TrimStart().TrimEnd()).TrimEnd();
+            paterno = dieresis(paterno);
+            materno = dieresis(materno);
+            nombre = PalabrasComunes(nombre);
 
-        private string ExtraeLetrasApellidos(ArrayList apellidos)
-        {
-            char[] cadena = apellidos[0].ToString().ToCharArray();
-            bool flag1 = false;
-            int cont = 0;
-            bool flag2 = false;
-            string[] strArray = new string[5]
-              {
-                "A",
-                "E",
-                "I",
-                "O",
-                "U"
-              };
-            string str;
-            if (cadena.Length > 1)
+            int cuentaPaterno = 0, cuentaMaterno = 0;
+            cuentaPaterno = paterno.Length;
+            cuentaMaterno = materno.Length;
+
+            if (cuentaPaterno == 0)
             {
-                if ((cadena[0].ToString() + cadena[1].ToString()).Equals("CH") || (cadena[0].ToString() + cadena[1].ToString()).Equals("LL"))
+                materno = materno.Substring(0, 2);
+                nombre = nombre.Substring(0, 1);
+                rfc = materno + "X" + nombre;
+            }
+            if (cuentaMaterno == 0)
+            {
+                paterno = paterno.Substring(0, 2);
+                nombre = nombre.Substring(0, 1);
+                rfc = paterno + "X" + nombre;
+            }
+
+            if (cuentaPaterno == 1 || cuentaPaterno == 2)
+            {
+                paterno = paterno.Substring(0, 1);
+                materno = materno.Substring(0, 1);
+                nombre = nombre.Substring(0, 2);
+                rfc = paterno + materno + nombre;
+            }
+
+            if (cuentaPaterno > 2 && cuentaMaterno > 2)
+            {
+                bool esVocal = false;
+                string primerLetraPaterno = paterno.Substring(0, 1);
+                string primerVocal = "";
+                string primerLetraMaterno = materno.Substring(0, 1);
+                string primerLetraNombre = nombre.Substring(0, 1);
+                char[] letras = paterno.ToCharArray();
+                for (int i = 1; i < letras.Length; i++)
                 {
-                    str = cadena[0].ToString();
-                    cont = 2;
-                }
-                else
-                {
-                    str = cadena[0].ToString();
-                    ++cont;
-                }
-                for (; !flag2 && cont <= (cadena.Length - 1) || !flag1; ++cont)
-                {
-                    if (Enumerable.Count<string>(Enumerable.Where<string>((IEnumerable<string>)strArray, (Func<string, bool>)(u => u == cadena[cont].ToString()))) > 0)
+                    esVocal = EsVocal(letras[i]);
+                    if (esVocal)
                     {
-                        str += cadena[cont].ToString();
-                        flag2 = true;
+                        primerVocal = letras[i].ToString();
+                        break;
                     }
-                    else if (!flag1)
+                    else
                     {
-                        this.SegConsonantes += cadena[cont].ToString();
-                        flag1 = true;
+                        primerVocal = "X";
+                        break;
                     }
                 }
-            }
-            else
-                str = cadena.Length <= 0 ? "" : cadena[0].ToString();
-            return str;
-        }
+                if (primerLetraPaterno == "Ñ")
+                    primerLetraPaterno = "X";
 
-        private string ExtraeNombre(string nombr, string DigInicialesApellidos)
-        {
-            ArrayList arrayList = this.ExtraeApellidos(nombr);
-            char[] chArray = new char[5]
-              {
-                'A',
-                'E',
-                'I',
-                'O',
-                'U'
-              };
-            if (arrayList.Count == 3)
-                if (arrayList[0].Equals((object)"MARIA") || arrayList[0].Equals((object)"JOSE"))
-                    arrayList.RemoveAt(0);
-            char[] nombrearray = arrayList[0].ToString().ToCharArray();
-            string str = !(nombrearray[0].ToString() + nombrearray[1].ToString()).Equals("CH") && !(nombrearray[0].ToString() + nombrearray[1].ToString()).Equals("LL") ? (DigInicialesApellidos.Length <= 2 ? nombrearray[0].ToString() + nombrearray[1].ToString() : nombrearray[0].ToString()) : (DigInicialesApellidos.Length <= 2 ? nombrearray[0].ToString() + nombrearray[2].ToString() : nombrearray[0].ToString());
-            bool flag = false;
-            int x = 1;
-            while (!flag)
-            {
-                if (Enumerable.Count<char>(Enumerable.Where<char>((IEnumerable<char>)chArray, (Func<char, bool>)(u => (int)u == (int)nombrearray[x]))) == 0)
-                {
-                    this.SegConsonantes += nombrearray[x].ToString();
-                    flag = true;
-                }
-                ++x;
+                rfc = primerLetraPaterno + primerVocal + primerLetraMaterno + primerLetraNombre;
+                rfc = PalabrasInconvenientes(rfc);
             }
-            return str;
-        }
 
-        private string QuitaPalabrasMalas(string rfc)
-        {
-            if (Enumerable.Count<string>(Enumerable.Where<string>((IEnumerable<string>)new string[45]
-          {
-            "BUEI",
-            "BUEY",
-            "CACA",
-            "CACO",
-            "CAGA",
-            "CAGO",
-            "CAKA",
-            "CAKO",
-            "COGE",
-            "COJA",
-            "COJE",
-            "COJI",
-            "COJO",
-            "CULO",
-            "FETO",
-            "GUEY",
-            "JOTO",
-            "KACA",
-            "KACO",
-            "KAGA",
-            "KAGO",
-            "KOGE",
-            "KOJO",
-            "KAKA",
-            "KULO",
-            "LOCA",
-            "LOCO",
-            "LOKA",
-            "LOKO",
-            "MAME",
-            "MAMO",
-            "MEAR",
-            "MEAS",
-            "MEON",
-            "MION",
-            "MOCO",
-            "MULA",
-            "PEDA",
-            "PEDO",
-            "PENE",
-            "PUTA",
-            "PUTO",
-            "QULO",
-            "RATA",
-            "RUIN"
-          }, (Func<string, bool>)(u => u == rfc))) > 0)
-                    return rfc.Substring(0, rfc.Length - 1) + "X";
             return rfc;
         }
 
-        private string CURP10DIGITOS(string appat, string apmat, string nombre, string fecha)
+        public string ConsonantesRFC(string _paterno, string _materno, string _nombre)
         {
-            fecha = fecha.Replace("/", "");
-            string DigInicialesApellidos = this.ExtraeLetrasApellidos(this.ExtraeApellidos(appat + " "));
-            if (!string.IsNullOrEmpty(apmat.Trim()))
-                DigInicialesApellidos += this.ExtraeLetrasApellidos(this.ExtraeApellidos(apmat + " ")).Substring(0, 1);
-            return this.QuitaPalabrasMalas(DigInicialesApellidos + this.ExtraeNombre(nombre + " ", DigInicialesApellidos)) + fecha.Trim();
-        }
+            string _valor = "";
+            string paterno = PalabrasNoUtilizadas(_paterno.TrimStart().TrimEnd()).TrimEnd();
+            string materno = PalabrasNoUtilizadas(_materno.TrimStart().TrimEnd()).TrimEnd();
+            string nombre = PalabrasNoUtilizadas(_nombre.TrimStart().TrimEnd()).TrimEnd();
+            paterno = dieresis(paterno);
+            materno = dieresis(materno);
+            nombre = PalabrasComunes(nombre);
 
-        private string ObtieneDigitoVerificador(string CURP17Pos)
-        {
-            CURP17Pos = CURP17Pos.Replace("-", "");
-            if (CURP17Pos.Length < 12)
-                CURP17Pos = " " + CURP17Pos;
-            string[,] strArray = new string[38, 2]
-              {
-                {
-                  "0",
-                  "00"
-                },
-                {
-                  "1",
-                  "01"
-                },
-                {
-                  "2",
-                  "02"
-                },
-                {
-                  "3",
-                  "03"
-                },
-                {
-                  "4",
-                  "04"
-                },
-                {
-                  "5",
-                  "05"
-                },
-                {
-                  "6",
-                  "06"
-                },
-                {
-                  "7",
-                  "07"
-                },
-                {
-                  "8",
-                  "08"
-                },
-                {
-                  "9",
-                  "09"
-                },
-                {
-                  "A",
-                  "10"
-                },
-                {
-                  "B",
-                  "11"
-                },
-                {
-                  "C",
-                  "12"
-                },
-                {
-                  "D",
-                  "13"
-                },
-                {
-                  "E",
-                  "14"
-                },
-                {
-                  "F",
-                  "15"
-                },
-                {
-                  "G",
-                  "16"
-                },
-                {
-                  "H",
-                  "17"
-                },
-                {
-                  "I",
-                  "18"
-                },
-                {
-                  "J",
-                  "19"
-                },
-                {
-                  "K",
-                  "20"
-                },
-                {
-                  "L",
-                  "21"
-                },
-                {
-                  "M",
-                  "22"
-                },
-                {
-                  "N",
-                  "23"
-                },
-                {
-                  "Ñ",
-                  "24"
-                },
-                {
-                  "O",
-                  "25"
-                },
-                {
-                  "P",
-                  "26"
-                },
-                {
-                  "Q",
-                  "27"
-                },
-                {
-                  "R",
-                  "28"
-                },
-                {
-                  "S",
-                  "29"
-                },
-                {
-                  "T",
-                  "30"
-                },
-                {
-                  "U",
-                  "31"
-                },
-                {
-                  "V",
-                  "32"
-                },
-                {
-                  "W",
-                  "33"
-                },
-                {
-                  "X",
-                  "34"
-                },
-                {
-                  "Y",
-                  "35"
-                },
-                {
-                  "Z",
-                  "36"
-                },
-                {
-                  " ",
-                  "37"
-                }
-              };
-            string str1 = (string)null;
-            int index1 = 0;
-            int result = 0;
-            for (; index1 != CURP17Pos.ToCharArray().Length; ++index1)
+            int cuentaPaterno = 0, cuentaMaterno = 0;
+            cuentaPaterno = paterno.Length;
+            cuentaMaterno = materno.Length;
+
+            if (cuentaPaterno == 0)
             {
-                int index2 = 0;
-                bool flag = false;
-                while (!flag)
+                bool consonante = true;
+                char[] cmaterno = materno.ToCharArray();
+                for (int i = 1; i < cmaterno.Length; i++)
                 {
-                    if (strArray[index2, 0].Equals(CURP17Pos.ToCharArray()[index1].ToString()))
+                    consonante = EsVocal(cmaterno[i]);
+                    if (!consonante)
                     {
-                        str1 += strArray[index2, 1];
-                        flag = true;
+                        if (cmaterno[i] == 'Ñ')
+                            _valor += "X";
+                        else
+                            _valor += cmaterno[i].ToString();
+                        break;
                     }
-                    ++index2;
+                }
+                _valor += "X";
+                consonante = true;
+                char[] cnombre = nombre.ToCharArray();
+                for (int i = 1; i < cnombre.Length; i++)
+                {
+                    consonante = EsVocal(cnombre[i]);
+                    if (!consonante)
+                    {
+                        if (cnombre[i] == 'Ñ')
+                            _valor += "X";
+                        else
+                            _valor += cnombre[i].ToString();
+                        break;
+                    }
                 }
             }
-            int startIndex = 0;
-            int num = 0;
-            while (startIndex < str1.Length - 1)
+
+            if (cuentaMaterno == 0)
             {
-                result += int.Parse(str1.Substring(startIndex, 2)) * (18 - num);
-                startIndex += 2;
-                ++num;
+                bool consonante = true;
+                char[] cpaterno = paterno.ToCharArray();
+                for (int i = 1; i < cpaterno.Length; i++)
+                {
+                    consonante = EsVocal(cpaterno[i]);
+                    if (!consonante)
+                    {
+                        if (cpaterno[i] == 'Ñ')
+                            _valor += "X";
+                        else
+                            _valor += cpaterno[i].ToString();
+                        break;
+                    }
+                }
+                _valor += "X";
+                consonante = true;
+                char[] cnombre = nombre.ToCharArray();
+                for (int i = 1; i < cnombre.Length; i++)
+                {
+                    consonante = EsVocal(cnombre[i]);
+                    if (!consonante)
+                    {
+                        if (cnombre[i] == 'Ñ')
+                            _valor += "X";
+                        else
+                            _valor += cnombre[i].ToString();
+                        break;
+                    }
+                }
             }
-            Math.DivRem(result, 10, out result);
-            string str2 = "";
-            if (result > 0)
+
+            if (cuentaPaterno >= 2 && cuentaMaterno >= 2)
             {
-                result = 10 - result;
-                str2 = result.ToString();
+                bool consonante = true;
+                string consonantePaterno = "";
+                string consonanteMaterno = "";
+                string consonanteNombre = "";
+
+                char[] cpaterno = paterno.ToCharArray();
+                for (int i = 1; i < cpaterno.Length; i++)
+                {
+                    consonante = EsVocal(cpaterno[i]);
+                    if (!consonante)
+                    {
+                        if (cpaterno[i] == 'Ñ')
+                            consonantePaterno += "X";
+                        else
+                            consonantePaterno += cpaterno[i].ToString();
+                        break;
+                    }
+                }
+
+                if (consonantePaterno == "")
+                    consonantePaterno = "X";
+
+                consonante = true;
+                char[] cmaterno = materno.ToCharArray();
+                for (int i = 1; i < cmaterno.Length; i++)
+                {
+                    consonante = EsVocal(cmaterno[i]);
+                    if (!consonante)
+                    {
+                        if (cmaterno[i] == 'Ñ')
+                            consonanteMaterno += "X";
+                        else
+                            consonanteMaterno += cmaterno[i].ToString();
+                        break;
+                    }
+                }
+
+                if (consonanteMaterno == "")
+                    consonanteMaterno = "X";
+
+                consonante = true;
+                char[] cnombre = nombre.ToCharArray();
+                for (int i = 1; i < _nombre.Length; i++)
+                {
+                    consonante = EsVocal(cnombre[i]);
+                    if (!consonante)
+                    {
+                        if (cnombre[i] == 'Ñ')
+                            consonanteNombre += "X";
+                        else
+                            consonanteNombre += cnombre[i].ToString();
+                        break;
+                    }
+                }
+
+                if (consonanteNombre == "")
+                    consonanteNombre = "X";
+
+                _valor = consonantePaterno + consonanteMaterno + consonanteNombre;
             }
-            switch (result)
-            {
-                case 0:
-                    str2 = "0";
-                    break;
-                case 10:
-                    str2 = "A";
-                    break;
-            }
-            return str2;
+            return _valor;
         }
 
-        public string CURPCompleta(string Appat, string Apmat, string Nombre, string FechaNac, string Sexo, string CodEsta)
+        public string dieresis(string valor)
         {
-            string str = this.CURP10DIGITOS(Appat + " ", Apmat + " ", Nombre + " ", FechaNac.Replace("/", ""));
-            return str + Sexo + CodEsta + this.SegConsonantes + "0" + this.ObtieneDigitoVerificador(str + Sexo + CodEsta + this.SegConsonantes + "0");
+            char[] valores = valor.ToCharArray();
+            for (int i = 0; i < valores.Length; i++)
+            {
+                switch (valores[i])
+                {
+                    case 'Ä': valores[i] = 'A'; break;
+                    case 'Ë': valores[i] = 'E'; break;
+                    case 'Ï': valores[i] = 'I'; break;
+                    case 'Ö': valores[i] = 'O'; break;
+                    case 'Ü': valores[i] = 'U'; break;
+                }
+            }
+            string _valor = "";
+            for (int i = 0; i < valores.Length; i++)
+            {
+                _valor += valores[i].ToString();
+            }
+            return _valor;
+        }
+
+        public string PalabrasNoUtilizadas(string valor)
+        {
+            string[] valores = valor.Split(' ');
+            string _valor = "";
+            for (int i = 0; i < valores.Length; i++)
+            {
+                switch (valores[i])
+                {
+                    case "DE": valores[i] = valores[i].Replace("DE", ""); break;
+                    case "LA": valores[i] = valores[i].Replace("LA", ""); break;
+                    case "LAS": valores[i] = valores[i].Replace("LAS", ""); break;
+                    case "MC": valores[i] = valores[i].Replace("MC", ""); break;
+                    case "VON": valores[i] = valores[i].Replace("VON", ""); break;
+                    case "DEL": valores[i] = valores[i].Replace("DEL", ""); break;
+                    case "LOS": valores[i] = valores[i].Replace("LOS", ""); break;
+                    case "Y": valores[i] = valores[i].Replace("Y", ""); break;
+                    case "MAC": valores[i] = valores[i].Replace("MAC", ""); break;
+                    case "VAN": valores[i] = valores[i].Replace("VAN", ""); break;
+                    case "MI": valores[i] = valores[i].Replace("MI", ""); break;
+                }
+            }
+
+            for (int i = 0; i < valores.Length; i++)
+            {
+                if (valores[i] != "")
+                    _valor += valores[i] + " ";
+            }
+            return _valor;
+        }
+
+        public string PalabrasComunes(string valor)
+        {
+            string[] valores = valor.Split(' ');
+            string _valor = "";
+
+            if (valores.Length == 1)
+            {
+                _valor = valor;
+            }
+
+            if (valores.Length == 2)
+            {
+                bool flag1 = false, flag2 = false;
+                if (valores[0] == "MARIA" || valores[0] == "JOSE" || valores[0] == "MARÍA" || valores[0] == "JOSÉ")
+                    flag1 = true;
+                if (valores[1] == "MARIA" || valores[1] == "JOSE" || valores[1] == "MARÍA" || valores[1] == "JOSÉ")
+                    flag2 = true;
+                if (flag1 && flag2)
+                    _valor = valores[1];
+                else
+                {
+                    for (int i = 0; i < valores.Length; i++)
+                    {
+                        switch (valores[i])
+                        {
+                            case "MARIA": valores[i] = valores[i].Replace("MARIA", ""); break;
+                            case "MARÍA": valores[i] = valores[i].Replace("MARÍA", ""); break;
+                            case "JOSE": valores[i] = valores[i].Replace("JOSE", ""); ; break;
+                            case "JOSÉ": valores[i] = valores[i].Replace("JOSÉ", ""); break;
+                            case "J": valores[i] = valores[i].Replace("J", ""); break;
+                            case "J.": valores[i] = valores[i].Replace("J.", ""); break;
+                            case "MA": valores[i] = valores[i].Replace("J.", ""); break;
+                            case "MA.": valores[i] = valores[i].Replace("J.", ""); break;
+                        }
+                    }
+                    for (int i = 0; i < valores.Length; i++)
+                    {
+                        if (valores[i] != "")
+                            _valor += valores[i] + " ";
+                    }
+                }
+            }
+
+            if (valores.Length > 2)
+            {
+                for (int i = 0; i < valores.Length; i++)
+                {
+                    switch (valores[i])
+                    {
+                        case "MARIA": valores[i] = valores[i].Replace("MARIA", ""); break;
+                        case "MARÍA": valores[i] = valores[i].Replace("MARÍA", ""); break;
+                        case "JOSE": valores[i] = valores[i].Replace("JOSE", ""); ; break;
+                        case "JOSÉ": valores[i] = valores[i].Replace("JOSÉ", ""); break;
+                        case "J": valores[i] = valores[i].Replace("J", ""); break;
+                        case "J.": valores[i] = valores[i].Replace("J.", ""); break;
+                        case "MA": valores[i] = valores[i].Replace("J.", ""); break;
+                        case "MA.": valores[i] = valores[i].Replace("J.", ""); break;
+                    }
+                }
+                for (int i = 0; i < valores.Length; i++)
+                {
+                    if (valores[i] != "")
+                        _valor += valores[i] + " ";
+                }
+            }
+            return _valor;
+        }
+
+        public bool EsVocal(char c)
+        {
+            bool vocal = false;
+            switch (c)
+            {
+                case 'a': vocal = true; break;
+                case 'e': vocal = true; break;
+                case 'i': vocal = true; break;
+                case 'o': vocal = true; break;
+                case 'u': vocal = true; break;
+
+                case 'A': vocal = true; break;
+                case 'E': vocal = true; break;
+                case 'I': vocal = true; break;
+                case 'O': vocal = true; break;
+                case 'U': vocal = true; break;
+
+                case 'Á': vocal = true; break;
+                case 'É': vocal = true; break;
+                case 'Í': vocal = true; break;
+                case 'Ó': vocal = true; break;
+                case 'Ú': vocal = true; break;
+                default:
+                    vocal = false; break;
+            }
+            return vocal;
+        }
+
+        public string PalabrasInconvenientes(string rfc)
+        {
+            switch (rfc)
+            {
+                case "BACA": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "BAKA": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "BUEI": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "BUEY": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "CACA": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "CACO": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "CAGA": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "CAGO": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "CAKA": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "CAKO": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "COGE": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "COGI": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "COJA": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "COJE": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "COJI": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "COJO": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "COLA": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "CULO": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "FALO": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "FETO": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "GETA": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "GUEI": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "GUEY": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "JETA": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "JOTO": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "KACA": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "KACO": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "KAGA": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "KAGO": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "KAKA": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "KAKO": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "KOGE": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "KOGI": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "KOJA": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "KOJI": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "KOJO": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "KULO": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "LILO": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "LOCA": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "LOCO": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "LOKA": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "LOKO": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "MAME": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "MAMO": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "MEAR": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "MEAS": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "MEON": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "MIAR": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "MION": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "MOCO": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "MOKO": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "MULA": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "MULO": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "NACA": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "NACO": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "PEDA": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "PEDO": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "PENE": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "PIPI": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "POPO": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "PUTA": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "PUTO": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "PITO": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "QULO": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "RATA": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "RUIN": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "ROBA": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "ROBE": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "ROBO": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "SENO": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "TETA": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "VACA": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "VAGA": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "VAGO": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "VAKA": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "VUEI": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "VUEY": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "WUEI": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+                case "WUEY": rfc = rfc.Replace(rfc.Substring(1, 1), "X"); break;
+            }
+            return rfc;
+        }
+
+        public string DigitoVerificador(string curp17posiciones)
+        {
+            curp17posiciones = curp17posiciones + "0";
+            char[] valoresLetras = curp17posiciones.ToCharArray();
+            string[] valores = new string[curp17posiciones.Length];
+            for (int i = 0; i < valoresLetras.Length; i++)
+            {
+                switch (valoresLetras[i])
+                {
+                    case '0': valores[i] = "00"; break;
+                    case '1': valores[i] = "01"; break;
+                    case '2': valores[i] = "02"; break;
+                    case '3': valores[i] = "03"; break;
+                    case '4': valores[i] = "04"; break;
+                    case '5': valores[i] = "05"; break;
+                    case '6': valores[i] = "06"; break;
+                    case '7': valores[i] = "07"; break;
+                    case '8': valores[i] = "08"; break;
+                    case '9': valores[i] = "09"; break;
+                    case 'A': valores[i] = "10"; break;
+                    case 'B': valores[i] = "11"; break;
+                    case 'C': valores[i] = "12"; break;
+                    case 'D': valores[i] = "13"; break;
+                    case 'E': valores[i] = "14"; break;
+                    case 'F': valores[i] = "15"; break;
+                    case 'G': valores[i] = "16"; break;
+                    case 'H': valores[i] = "17"; break;
+                    case 'I': valores[i] = "18"; break;
+                    case 'J': valores[i] = "19"; break;
+                    case 'K': valores[i] = "20"; break;
+                    case 'L': valores[i] = "21"; break;
+                    case 'M': valores[i] = "22"; break;
+                    case 'N': valores[i] = "23"; break;
+                    case 'Ñ': valores[i] = "24"; break;
+                    case 'O': valores[i] = "25"; break;
+                    case 'P': valores[i] = "26"; break;
+                    case 'Q': valores[i] = "27"; break;
+                    case 'R': valores[i] = "28"; break;
+                    case 'S': valores[i] = "29"; break;
+                    case 'T': valores[i] = "30"; break;
+                    case 'U': valores[i] = "31"; break;
+                    case 'V': valores[i] = "32"; break;
+                    case 'W': valores[i] = "33"; break;
+                    case 'X': valores[i] = "34"; break;
+                    case 'Y': valores[i] = "35"; break;
+                    case 'Z': valores[i] = "36"; break;
+                    case ' ': valores[i] = "37"; break;
+                }
+            }
+            double suma = 0;
+            double posicion = 18;
+            for (int i = 0; i < valores.Length; i++)
+            {
+                suma += double.Parse(valores[i].ToString()) * (posicion);
+                posicion--;
+            }
+
+            int residuo = (int)(suma % 10);
+            residuo = Math.Abs(residuo - 10);
+            string dv = "";
+
+            if (residuo == 10)
+                dv = "0";
+            else
+                dv = residuo.ToString();
+
+            return dv;
+        }
+
+        public string TablaEstados(string valor)
+        {
+            string estado = "";
+            switch (valor)
+            {
+                case "AGUASCALIENTES": estado = "AS"; break;
+                case "BAJA CALIFORNIA": estado = "BC"; break;
+                case "BAJA CALIFORNIA SUR": estado = "BS"; break;
+                case "CAMPECHE": estado = "CC"; break;
+                case "COAHUILA": estado = "CL"; break;
+                case "COLIMA": estado = "CM"; break;
+                case "CHIAPAS": estado = "CS"; break;
+                case "CHIHUAHA": estado = "CH"; break;
+                case "DISTRITO FEDERAL": estado = "DF"; break;
+                case "DURANGO": estado = "DG"; break;
+                case "GUANAJUATO": estado = "GT"; break;
+                case "GUERRERO": estado = "GR"; break;
+                case "HIDALGO": estado = "HG"; break;
+                case "JALISCO": estado = "JC"; break;
+                case "MEXICO": estado = "MC"; break;
+                case "MICHOACAN": estado = "MN"; break;
+                case "MORELOS": estado = "MS"; break;
+                case "NAYARIT": estado = "NT"; break;
+                case "NUEVO LEON": estado = "NL"; break;
+                case "OAXACA": estado = "OC"; break;
+                case "PUEBLA": estado = "PL"; break;
+                case "QUERETARO": estado = "QT"; break;
+                case "QUINTANA ROO": estado = "QR"; break;
+                case "SAN LUIS POTOSI": estado = "SP"; break;
+                case "SINALOA": estado = "SL"; break;
+                case "SONORA": estado = "SR"; break;
+                case "TABASCO": estado = "TC"; break;
+                case "TAMAULIPAS": estado = "TS"; break;
+                case "TLAXCALA": estado = "TL"; break;
+                case "VERACRUZ": estado = "VZ"; break;
+                case "YUCATAN": estado = "YN"; break;
+                case "ZACATECAS": estado = "ZS"; break;
+            }
+            return estado;
         }
     }
 }

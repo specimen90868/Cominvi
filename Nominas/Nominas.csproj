@@ -35,8 +35,8 @@
     <StartupObject>Nominas.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CURPLib">
-      <HintPath>..\Librerias\CURPLib.dll</HintPath>
+    <Reference Include="Gma.QrCodeNet.Encoding">
+      <HintPath>..\packages\QrCode.Net.0.4.0.0\lib\net45\Gma.QrCodeNet.Encoding.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
@@ -64,7 +64,7 @@
       <DependentUpon>dsReportes.xsd</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="dsReportes.Designer.cs">
+    <Compile Include="dsReportes1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>dsReportes.xsd</DependentUpon>
@@ -248,6 +248,12 @@
     </Compile>
     <Compile Include="frmListaCalculoNomina.Designer.cs">
       <DependentUpon>frmListaCalculoNomina.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmListaCargaEmpleados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaCargaEmpleados.Designer.cs">
+      <DependentUpon>frmListaCargaEmpleados.cs</DependentUpon>
     </Compile>
     <Compile Include="frmListaCargaFaltas.cs">
       <SubType>Form</SubType>
@@ -667,6 +673,9 @@
     <EmbeddedResource Include="frmListaCalculoNomina.resx">
       <DependentUpon>frmListaCalculoNomina.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmListaCargaEmpleados.resx">
+      <DependentUpon>frmListaCargaEmpleados.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmListaCargaFaltas.resx">
       <DependentUpon>frmListaCargaFaltas.cs</DependentUpon>
     </EmbeddedResource>
@@ -837,6 +846,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Reportes\rptPreNominaDepto.rdlc" />
     <EmbeddedResource Include="Reportes\rptPreNominaEmpleados.rdlc" />
@@ -852,6 +862,7 @@
     <None Include="dsReportes.xss">
       <DependentUpon>dsReportes.xsd</DependentUpon>
     </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -1047,6 +1058,10 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\baja.ico" />
+    <None Include="Resources\alta.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

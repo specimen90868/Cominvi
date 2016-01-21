@@ -123,7 +123,7 @@ namespace Nominas
             cmbDepartamento.ValueMember = "id";
 
             cmbPuesto.DataSource = lstPuesto.ToList();
-            cmbPuesto.DisplayMember = "descripcion";
+            cmbPuesto.DisplayMember = "nombre";
             cmbPuesto.ValueMember = "id";
 
             cmbEstado.DataSource = lstEstados.ToList();
@@ -246,21 +246,15 @@ namespace Nominas
 
         private void dtpFechaNacimiento_Leave(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtNombre.Text) || string.IsNullOrEmpty(txtApPaterno.Text) || string.IsNullOrEmpty(txtApMaterno.Text))
-                return;
-
-            Empleados.Core.RFC rfc = new Empleados.Core.RFC();
-            try
-            {
-                string registro = rfc.RFC13Pocisiones(txtApPaterno.Text, txtApMaterno.Text, txtNombre.Text, dtpFechaNacimiento.Value.ToString("yy/MM/dd"));
-                txtRFC.Text = registro.Substring(0, 4) + registro.Substring(5, 9);
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show("Error: \r\n \r\n " + error.Message);
-            }
-
             txtEdad.Text = ObtieneEdad(dtpFechaNacimiento.Value).ToString();
+            
+            Empleados.Core.RFC rfc = new Empleados.Core.RFC();
+            string _rfc = rfc.ObtieneRFC(txtApPaterno.Text, txtApMaterno.Text, txtNombre.Text);
+            string _homo = rfc.ClaveHomonimia(txtApPaterno.Text, txtApMaterno.Text, txtNombre.Text);
+            string _fecha = dtpFechaNacimiento.Value.ToString("yyMMdd");
+            string _dv = rfc.DigitoVerificador(_rfc + _fecha + _homo);
+            _rfc = _rfc + _fecha + _homo + _dv;
+            txtRFC.Text = _rfc;
         }
 
         private void cmbPeriodo_SelectedIndexChanged(object sender, EventArgs e)
@@ -271,7 +265,10 @@ namespace Nominas
 
         private void btnCalcular_Click(object sender, EventArgs e)
         {
-            if (txtSueldo.Text.Length != 0)
+            if (txtAntiguedadMod.Text.Length == 0)
+                return;
+
+            if (txtSDI.Text.Length != 0)
             {
                 int DiasDePago = 0;
                 double FactorDePago = 0;
@@ -299,8 +296,11 @@ namespace Nominas
                     cnx.Close();
                     cnx.Dispose();
 
-                    txtSD.Text = (double.Parse(txtSueldo.Text) / DiasDePago).ToString("F6");
-                    txtSDI.Text = (double.Parse(txtSD.Text) * FactorDePago).ToString("F6");
+                    //txtSD.Text = (double.Parse(txtSueldo.Text) / DiasDePago).ToString("F6");
+                    //txtSDI.Text = (double.Parse(txtSD.Text) * FactorDePago).ToString("F6");
+
+                    txtSD.Text = (double.Parse(txtSDI.Text) / FactorDePago).ToString("F6");
+                    txtSueldo.Text = (double.Parse(txtSD.Text) * DiasDePago).ToString("F6");
                 }
                 catch (Exception error)
                 {
@@ -352,6 +352,22 @@ namespace Nominas
             eh = new Empleados.Core.EmpleadosHelper();
             eh.Command = cmd;
 
+            Empleados.Core.Empleados existeEmpleado = new Empleados.Core.Empleados();
+            existeEmpleado.nss = txtNSS.Text;
+            existeEmpleado.digitoverificador = int.Parse(txtDigito.Text);
+            int existeNss;
+            try
+            {
+                cnx.Open();
+                existeNss = (int)eh.existeEmpleado(existeEmpleado);
+                cnx.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Error al validar existencia de empleado.", "Error");
+                return;
+            }
+
             Empleados.Core.Empleados em = new Empleados.Core.Empleados();
             em.nombres = txtNombre.Text;
             em.paterno = txtApPaterno.Text;
@@ -400,6 +416,43 @@ namespace Nominas
 
             Imagen.Core.Imagenes img = null;
 
+            pdh = new Periodos.Core.PeriodosHelper();
+            pdh.Command = cmd;
+
+            Periodos.Core.Periodos p = new Periodos.Core.Periodos();
+            p.idperiodo = int.Parse(cmbPeriodo.SelectedValue.ToString());
+            int diasPago = 0;
+            try { cnx.Open(); diasPago = (int)pdh.DiasDePago(p); cnx.Close(); } catch { MessageBox.Show("Error: Al obtener los dias de pago.", "Error"); }
+
+            DateTime dt = dtpFechaIngreso.Value.Date;
+            DateTime periodoInicio, periodoFin;
+            int diasProporcionales = 0;
+            if (diasPago == 7)
+            {
+                while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
+                periodoInicio = dt;
+                periodoFin = dt.AddDays(6);
+                diasProporcionales = (int)(periodoFin.Date - dtpFechaIngreso.Value.Date).TotalDays + 1;
+            }
+            else
+            {
+                if (dt.Day <= 15)
+                {
+                    periodoInicio = new DateTime(dt.Year, dt.Month, 1);
+                    periodoFin = new DateTime(dt.Year, dt.Month, 15);
+                    diasProporcionales = (int)(periodoFin.Date - dtpFechaIngreso.Value.Date).TotalDays + 1;
+                }
+                else
+                {
+                    int diasMes = DateTime.DaysInMonth(dt.Year, dt.Month);
+                    int diasNoLaborados = 0;
+                    periodoInicio = new DateTime(dt.Year, dt.Month, 16);
+                    periodoFin = new DateTime(dt.Year, dt.Month, DateTime.DaysInMonth(dt.Year, dt.Month));
+                    diasNoLaborados = (int)(dtpFechaIngreso.Value.Date - periodoInicio).TotalDays;
+                    diasProporcionales = 15 - diasNoLaborados;
+                }
+            }
+
             Altas.Core.AltasHelper ah = new Altas.Core.AltasHelper();
             ah.Command = cmd;
             Altas.Core.Altas a = new Altas.Core.Altas();
@@ -410,11 +463,14 @@ namespace Nominas
             a.materno = txtApMaterno.Text;
             a.nombre = txtNombre.Text;
             a.fechaingreso = dtpFechaIngreso.Value;
+            a.diasproporcionales = diasProporcionales;
             a.sdi = double.Parse(txtSDI.Text);
             a.fechanacimiento = dtpFechaNacimiento.Value;
             a.estado = cmbEstado.Text;
             a.noestado = int.Parse(cmbEstado.SelectedValue.ToString());
             a.sexo = ObtieneSexo();
+            a.periodoInicio = periodoInicio;
+            a.periodoFin = periodoFin;
 
             Empresas.Core.EmpresasHelper empresash = new Empresas.Core.EmpresasHelper();
             empresash.Command = cmd;
@@ -442,6 +498,12 @@ namespace Nominas
                     {
                         em.estatus = GLOBALES.ACTIVO;
                         em.idusuario = GLOBALES.IDUSUARIO;
+                        
+                        if (existeNss != 0)
+                        {
+                            MessageBox.Show("El empleado que desea ingresar ya existe actualmente. \r\n \r\n Es necesario realizar un reingreso.", "Error");
+                            return;
+                        }
 
                         cnx.Open();
                         eh.insertaEmpleado(em);
@@ -651,18 +713,14 @@ namespace Nominas
 
         private void btnObtenerCurp_Click(object sender, EventArgs e)
         {
-            estado = ObtieneEstado();
-            if (string.IsNullOrEmpty(txtNombre.Text) || string.IsNullOrEmpty(txtApPaterno.Text) || string.IsNullOrEmpty(txtApMaterno.Text) || ObtieneSexo().Equals("X"))
-                return;
-            Empleados.Core.CURP obtenerCurp = new Empleados.Core.CURP();
-            try
-            {
-                txtCURP.Text = obtenerCurp.CURPCompleta(txtApPaterno.Text, txtApMaterno.Text, txtNombre.Text, dtpFechaNacimiento.Value.ToString("yy/MM/dd"), sexo, estado);
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
-            }
+            Empleados.Core.CURP curp = new Empleados.Core.CURP();
+            string rfc = curp.ObtieneRFC_CURP(txtApPaterno.Text, txtApMaterno.Text, txtNombre.Text);
+            string fecha = dtpFechaNacimiento.Value.Date.ToString("yyMMdd");
+            string _sexo = ObtieneSexo();
+            string estado = curp.TablaEstados(cmbEstado.Text);
+            string consonantes = curp.ConsonantesRFC(txtApPaterno.Text, txtApMaterno.Text, txtNombre.Text);
+            string dv = curp.DigitoVerificador(rfc + fecha + _sexo + estado + consonantes);
+            txtCURP.Text = rfc + fecha + _sexo + estado + consonantes + "0" + dv;
         }
 
         private void btnAsignar_Click(object sender, EventArgs e)
@@ -719,6 +777,76 @@ namespace Nominas
                     lblFechaAplicacionHistorico.Visible = true;
                     dtpFechaAplicacionHistorico.Visible = true;
                 }
+        }
+
+        private void txtCURP_Leave(object sender, EventArgs e)
+        {
+            if (txtCURP.Text.Length == 0 || txtCURP.Text.Length < 18)
+                return;
+
+            int numero17 = 0;
+            string posicion17 = txtCURP.Text.Substring(16, 1);
+            string anio = txtCURP.Text.Substring(4, 2);
+            string mes = txtCURP.Text.Substring(6, 2);
+            string dia = txtCURP.Text.Substring(8, 2);
+            string estado = txtCURP.Text.Substring(11, 2);
+            string sexo = txtCURP.Text.Substring(10, 1);
+            DateTime fechaNacimiento;
+            try
+            {
+                numero17 = int.Parse(posicion17);
+                fechaNacimiento = new DateTime(int.Parse("19" + anio), int.Parse(mes), int.Parse(dia));
+                dtpFechaNacimiento.Value = fechaNacimiento;
+            }
+            catch
+            {
+                fechaNacimiento = new DateTime(int.Parse("20" + anio), int.Parse(mes), int.Parse(dia));
+                dtpFechaNacimiento.Value = fechaNacimiento;
+            }
+
+            switch (estado)
+            {
+                case "AS": estado = "AGUASCALIENTES"; break;
+                case "BC": estado = "BAJA CALIFORNIA"; break;
+                case "BS": estado = "BAJA CALIFORNIA SUR"; break;
+                case "CC": estado = "CAMPECHE"; break;
+                case "CL": estado = "COAHUILA"; break;
+                case "CM": estado = "COLIMA"; break;
+                case "CS": estado = "CHIAPAS"; break;
+                case "CH": estado = "CHIHUAHUA"; break;
+                case "DF": estado = "DISTRITO FEDERAL"; break;
+                case "DG": estado = "DURANGO"; break;
+                case "GT": estado = "GUANAJUATO"; break;
+                case "GR": estado = "GERRERO"; break;
+                case "HG": estado = "HIDALGO"; break;
+                case "JC": estado = "JALISCO"; break;
+                case "MC": estado = "MEXICO"; break;
+                case "MN": estado = "MICHOACAN"; break;
+                case "MS": estado = "MORELOS"; break;
+                case "NT": estado = "NAYARIT"; break;
+                case "NL": estado = "NUEVO LEON"; break;
+                case "OC": estado = "OAXACA"; break;
+                case "PL": estado = "PUEBLA"; break;
+                case "QT": estado = "QUERETARO"; break;
+                case "QR": estado = "QUINTANA ROO"; break;
+                case "SP": estado = "SAN LUIS POTOSI"; break;
+                case "SL": estado = "SINALOA"; break;
+                case "SR": estado = "SONORA"; break;
+                case "TC": estado = "TABASCO"; break;
+                case "TS": estado = "TAMAULIPAS"; break;
+                case "TL": estado = "TLAXCALA"; break;
+                case "VZ": estado = "VERACRUZ"; break;
+                case "YN": estado = "YUCATAN"; break;
+                case "ZS": estado = "ZACATECAS"; break;
+            }
+            cmbEstado.SelectedIndex = cmbEstado.FindString(estado);
+
+            if (sexo == "H")
+                rbtnHombre.Checked = true;
+            else
+                rbtnMujer.Checked = true;
+
+            dtpFechaNacimiento_Leave(sender, e);
         }
     }
 }

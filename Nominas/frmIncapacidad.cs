@@ -35,6 +35,7 @@ namespace Nominas
         Empleados.Core.EmpleadosHelper eh;
         Periodos.Core.PeriodosHelper ph;
         Incidencias.Core.IncidenciasHelper ih;
+        Departamento.Core.DeptoHelper dh;
         int periodo, idperiodo;
         DateTime periodoInicio, periodoFin;
         #endregion
@@ -56,6 +57,7 @@ namespace Nominas
         {
             _idEmpleado = id;
             _nombreEmpleado = nombre;
+
             lblEmpleado.Text = nombre;
 
             cnx = new SqlConnection();
@@ -82,8 +84,7 @@ namespace Nominas
                 lstEmpleado = eh.obtenerEmpleado(empleado);
                 lstPeriodos = ph.obtenerPeriodos(per);
                 cnx.Close();
-                cnx.Dispose();
-                
+               
             }
             catch (Exception error)
             {
@@ -95,15 +96,39 @@ namespace Nominas
                         select new
                         {
                             p.dias,
-                            e.idperiodo
+                            e.idperiodo,
+                            e.noempleado
                         };
             foreach (var d in datos)
             {
                 periodo = d.dias;
                 idperiodo = d.idperiodo;
+                mtxtNoEmpleado.Text = d.noempleado;
             }
 
-            obtenerPeriodoActual();
+            dh = new Departamento.Core.DeptoHelper();
+            dh.Command = cmd;
+
+            Departamento.Core.Depto depto = new Departamento.Core.Depto();
+            depto.id = lstEmpleado[0].iddepartamento;
+
+            List<Departamento.Core.Depto> lstDepto = new List<Departamento.Core.Depto>();
+
+            try
+            {
+                cnx.Open();
+                lstDepto = dh.obtenerDepartamento(depto);
+                cnx.Close();
+                cnx.Dispose();
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+
+            txtDepartamento.Text = lstDepto[0].descripcion;
+            //obtenerPeriodoActual();
             btnCambiar.Enabled = true;
         }
 
@@ -194,9 +219,12 @@ namespace Nominas
 
             if (existe == 0)
             {
+                PeriodoFechaAplicacion();
+
                 DateTime fechaInicioIncapacidad = dtpFechaInicio.Value.Date;
                 DateTime fechaFinIncapacidad = dtpFechaInicio.Value.AddDays(double.Parse(txtDiasIncapacidad.Text) - 1).Date;
-                DateTime fechaFinPeriodo = dtpFinPeriodo.Value.Date;
+                //DateTime fechaFinPeriodo = dtpFinPeriodo.Value.Date;
+                DateTime fechaFinPeriodo = periodoFin.Date;
                 int diasRestantes = int.Parse(txtDiasIncapacidad.Text);
                 int dias = 0;
                 bool FLAG = false;
@@ -214,8 +242,8 @@ namespace Nominas
                         incidencia2.certificado = txtCertificado.Text.Trim();
                         incidencia2.inicioincapacidad = dtpFechaInicio.Value;
                         incidencia2.finincapacidad = dtpFechaInicio.Value.AddDays(double.Parse(txtDiasIncapacidad.Text) - 1);
-                        incidencia2.periodoinicio = dtpInicioPeriodo.Value.Date;
-                        incidencia2.periodofin = dtpFinPeriodo.Value.Date;
+                        incidencia2.periodoinicio = periodoInicio.Date;
+                        incidencia2.periodofin = periodoFin.Date;
                         incidencia2.idcontrol = int.Parse(cmbTipoCaso.SelectedValue.ToString());
                         incidencia2.idincapacidad = int.Parse(cmbTipoIncapacidad.SelectedValue.ToString());
 
@@ -236,8 +264,8 @@ namespace Nominas
                         incidencia2.certificado = txtCertificado.Text.Trim();
                         incidencia2.inicioincapacidad = dtpFechaInicio.Value;
                         incidencia2.finincapacidad = dtpFechaInicio.Value.AddDays(double.Parse(txtDiasIncapacidad.Text) - 1);
-                        incidencia2.periodoinicio = dtpInicioPeriodo.Value.Date;
-                        incidencia2.periodofin = dtpFinPeriodo.Value.Date;
+                        incidencia2.periodoinicio = periodoInicio.Date;
+                        incidencia2.periodofin = periodoFin.Date;
                         incidencia2.idcontrol = int.Parse(cmbTipoCaso.SelectedValue.ToString());
                         incidencia2.idincapacidad = int.Parse(cmbTipoIncapacidad.SelectedValue.ToString());
 
@@ -436,7 +464,7 @@ namespace Nominas
             {
                 dtpInicioPeriodo.Visible = true;
                 dtpFinPeriodo.Visible = true;
-                Periodo();
+                //Periodo();
             }
         }
 
@@ -479,5 +507,29 @@ namespace Nominas
             dtpFinPeriodo.Value = fin;
         }
 
+        private void PeriodoFechaAplicacion()
+        {
+            if (periodo == 7)
+            {
+                DateTime dt = dtpFechaInicio.Value.Date;
+                while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
+                periodoInicio = dt;
+                periodoFin = dt.AddDays(6);
+            }
+            else
+            {
+                if (dtpFechaInicio.Value.Day <= 15)
+                {
+                    periodoInicio = new DateTime(dtpFechaInicio.Value.Year, dtpFechaInicio.Value.Month, 1);
+                    periodoFin = new DateTime(dtpFechaInicio.Value.Year, dtpFechaInicio.Value.Month, 15);
+                }
+                else
+                {
+                    periodoInicio = new DateTime(dtpFechaInicio.Value.Year, dtpFechaInicio.Value.Month, 16);
+                    periodoFin = new DateTime(dtpFechaInicio.Value.Year, dtpFechaInicio.Value.Month, DateTime.DaysInMonth(dtpFechaInicio.Value.Year, dtpFechaInicio.Value.Month));
+                }
+
+            }
+        } 
     }
 }

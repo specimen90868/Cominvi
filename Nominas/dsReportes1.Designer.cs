@@ -30,6 +30,8 @@ namespace Nominas {
         
         private PreNominaDeptoDataTable tablePreNominaDepto;
         
+        private PreNominaImagenDataTable tablePreNominaImagen;
+        
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -66,6 +68,9 @@ namespace Nominas {
                 }
                 if ((ds.Tables["PreNominaDepto"] != null)) {
                     base.Tables.Add(new PreNominaDeptoDataTable(ds.Tables["PreNominaDepto"]));
+                }
+                if ((ds.Tables["PreNominaImagen"] != null)) {
+                    base.Tables.Add(new PreNominaImagenDataTable(ds.Tables["PreNominaImagen"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -112,6 +117,16 @@ namespace Nominas {
         public PreNominaDeptoDataTable PreNominaDepto {
             get {
                 return this.tablePreNominaDepto;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public PreNominaImagenDataTable PreNominaImagen {
+            get {
+                return this.tablePreNominaImagen;
             }
         }
         
@@ -191,6 +206,9 @@ namespace Nominas {
                 if ((ds.Tables["PreNominaDepto"] != null)) {
                     base.Tables.Add(new PreNominaDeptoDataTable(ds.Tables["PreNominaDepto"]));
                 }
+                if ((ds.Tables["PreNominaImagen"] != null)) {
+                    base.Tables.Add(new PreNominaImagenDataTable(ds.Tables["PreNominaImagen"]));
+                }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
                 this.Namespace = ds.Namespace;
@@ -242,6 +260,12 @@ namespace Nominas {
                     this.tablePreNominaDepto.InitVars();
                 }
             }
+            this.tablePreNominaImagen = ((PreNominaImagenDataTable)(base.Tables["PreNominaImagen"]));
+            if ((initTable == true)) {
+                if ((this.tablePreNominaImagen != null)) {
+                    this.tablePreNominaImagen.InitVars();
+                }
+            }
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -258,6 +282,8 @@ namespace Nominas {
             base.Tables.Add(this.tablePreNominaEmpleados);
             this.tablePreNominaDepto = new PreNominaDeptoDataTable();
             base.Tables.Add(this.tablePreNominaDepto);
+            this.tablePreNominaImagen = new PreNominaImagenDataTable();
+            base.Tables.Add(this.tablePreNominaImagen);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -275,6 +301,12 @@ namespace Nominas {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private bool ShouldSerializePreNominaDepto() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private bool ShouldSerializePreNominaImagen() {
             return false;
         }
         
@@ -342,6 +374,9 @@ namespace Nominas {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public delegate void PreNominaDeptoRowChangeEventHandler(object sender, PreNominaDeptoRowChangeEvent e);
         
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public delegate void PreNominaImagenRowChangeEventHandler(object sender, PreNominaImagenRowChangeEvent e);
+        
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
@@ -367,8 +402,6 @@ namespace Nominas {
             
             private global::System.Data.DataColumn columnCaratulaHora;
             
-            private global::System.Data.DataColumn columnCaratulaSubConcepto;
-            
             private global::System.Data.DataColumn columnCaratulaRegistro;
             
             private global::System.Data.DataColumn columnCaratulaDigitoVerificador;
@@ -376,6 +409,10 @@ namespace Nominas {
             private global::System.Data.DataColumn columnCaratulaRfc;
             
             private global::System.Data.DataColumn columnCaratulaTotalEmpleados;
+            
+            private global::System.Data.DataColumn columnCaratulaNoPeriodo;
+            
+            private global::System.Data.DataColumn columnCaratulaPeriodo;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -484,14 +521,6 @@ namespace Nominas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn CaratulaSubConceptoColumn {
-                get {
-                    return this.columnCaratulaSubConcepto;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public global::System.Data.DataColumn CaratulaRegistroColumn {
                 get {
                     return this.columnCaratulaRegistro;
@@ -519,6 +548,22 @@ namespace Nominas {
             public global::System.Data.DataColumn CaratulaTotalEmpleadosColumn {
                 get {
                     return this.columnCaratulaTotalEmpleados;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CaratulaNoPeriodoColumn {
+                get {
+                    return this.columnCaratulaNoPeriodo;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CaratulaPeriodoColumn {
+                get {
+                    return this.columnCaratulaPeriodo;
                 }
             }
             
@@ -559,7 +604,7 @@ namespace Nominas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PreNominaCaratulaRow AddPreNominaCaratulaRow(string CaratulaEmpresa, int CaratulaNoConcepto, string CaratulaTipoConcepto, string CaratulaConcepto, double CaratulaImporte, System.DateTime CaratulaFechaInicio, System.DateTime CaratulaFechaFin, System.DateTime CaratulaDia, System.DateTime CaratulaHora, string CaratulaSubConcepto, string CaratulaRegistro, string CaratulaDigitoVerificador, string CaratulaRfc, string CaratulaTotalEmpleados) {
+            public PreNominaCaratulaRow AddPreNominaCaratulaRow(string CaratulaEmpresa, int CaratulaNoConcepto, string CaratulaTipoConcepto, string CaratulaConcepto, double CaratulaImporte, System.DateTime CaratulaFechaInicio, System.DateTime CaratulaFechaFin, System.DateTime CaratulaDia, System.DateTime CaratulaHora, string CaratulaRegistro, string CaratulaDigitoVerificador, string CaratulaRfc, string CaratulaTotalEmpleados, string CaratulaNoPeriodo, string CaratulaPeriodo) {
                 PreNominaCaratulaRow rowPreNominaCaratulaRow = ((PreNominaCaratulaRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         CaratulaEmpresa,
@@ -571,11 +616,12 @@ namespace Nominas {
                         CaratulaFechaFin,
                         CaratulaDia,
                         CaratulaHora,
-                        CaratulaSubConcepto,
                         CaratulaRegistro,
                         CaratulaDigitoVerificador,
                         CaratulaRfc,
-                        CaratulaTotalEmpleados};
+                        CaratulaTotalEmpleados,
+                        CaratulaNoPeriodo,
+                        CaratulaPeriodo};
                 rowPreNominaCaratulaRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowPreNominaCaratulaRow);
                 return rowPreNominaCaratulaRow;
@@ -607,11 +653,12 @@ namespace Nominas {
                 this.columnCaratulaFechaFin = base.Columns["CaratulaFechaFin"];
                 this.columnCaratulaDia = base.Columns["CaratulaDia"];
                 this.columnCaratulaHora = base.Columns["CaratulaHora"];
-                this.columnCaratulaSubConcepto = base.Columns["CaratulaSubConcepto"];
                 this.columnCaratulaRegistro = base.Columns["CaratulaRegistro"];
                 this.columnCaratulaDigitoVerificador = base.Columns["CaratulaDigitoVerificador"];
                 this.columnCaratulaRfc = base.Columns["CaratulaRfc"];
                 this.columnCaratulaTotalEmpleados = base.Columns["CaratulaTotalEmpleados"];
+                this.columnCaratulaNoPeriodo = base.Columns["CaratulaNoPeriodo"];
+                this.columnCaratulaPeriodo = base.Columns["CaratulaPeriodo"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -635,8 +682,6 @@ namespace Nominas {
                 base.Columns.Add(this.columnCaratulaDia);
                 this.columnCaratulaHora = new global::System.Data.DataColumn("CaratulaHora", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCaratulaHora);
-                this.columnCaratulaSubConcepto = new global::System.Data.DataColumn("CaratulaSubConcepto", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnCaratulaSubConcepto);
                 this.columnCaratulaRegistro = new global::System.Data.DataColumn("CaratulaRegistro", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCaratulaRegistro);
                 this.columnCaratulaDigitoVerificador = new global::System.Data.DataColumn("CaratulaDigitoVerificador", typeof(string), null, global::System.Data.MappingType.Element);
@@ -645,6 +690,10 @@ namespace Nominas {
                 base.Columns.Add(this.columnCaratulaRfc);
                 this.columnCaratulaTotalEmpleados = new global::System.Data.DataColumn("CaratulaTotalEmpleados", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCaratulaTotalEmpleados);
+                this.columnCaratulaNoPeriodo = new global::System.Data.DataColumn("CaratulaNoPeriodo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCaratulaNoPeriodo);
+                this.columnCaratulaPeriodo = new global::System.Data.DataColumn("CaratulaPeriodo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCaratulaPeriodo);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -806,7 +855,7 @@ namespace Nominas {
             
             private global::System.Data.DataColumn columnconcepto;
             
-            private global::System.Data.DataColumn columnimporte;
+            private global::System.Data.DataColumn columncantidad;
             
             private global::System.Data.DataColumn columnfechainicio;
             
@@ -816,7 +865,9 @@ namespace Nominas {
             
             private global::System.Data.DataColumn columnhora;
             
-            private global::System.Data.DataColumn columnsubconcepto;
+            private global::System.Data.DataColumn columnnoperiodo;
+            
+            private global::System.Data.DataColumn columnperiodo;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -965,9 +1016,9 @@ namespace Nominas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn importeColumn {
+            public global::System.Data.DataColumn cantidadColumn {
                 get {
-                    return this.columnimporte;
+                    return this.columncantidad;
                 }
             }
             
@@ -1005,9 +1056,17 @@ namespace Nominas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn subconceptoColumn {
+            public global::System.Data.DataColumn noperiodoColumn {
                 get {
-                    return this.columnsubconcepto;
+                    return this.columnnoperiodo;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn periodoColumn {
+                get {
+                    return this.columnperiodo;
                 }
             }
             
@@ -1063,12 +1122,13 @@ namespace Nominas {
                         string noconcepto, 
                         string tipoconcepto, 
                         string concepto, 
-                        double importe, 
+                        double cantidad, 
                         System.DateTime fechainicio, 
                         System.DateTime fechafin, 
                         System.DateTime dia, 
                         System.DateTime hora, 
-                        string subconcepto) {
+                        string noperiodo, 
+                        string periodo) {
                 PreNominaEmpleadosRow rowPreNominaEmpleadosRow = ((PreNominaEmpleadosRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         empresa,
@@ -1085,12 +1145,13 @@ namespace Nominas {
                         noconcepto,
                         tipoconcepto,
                         concepto,
-                        importe,
+                        cantidad,
                         fechainicio,
                         fechafin,
                         dia,
                         hora,
-                        subconcepto};
+                        noperiodo,
+                        periodo};
                 rowPreNominaEmpleadosRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowPreNominaEmpleadosRow);
                 return rowPreNominaEmpleadosRow;
@@ -1127,12 +1188,13 @@ namespace Nominas {
                 this.columnnoconcepto = base.Columns["noconcepto"];
                 this.columntipoconcepto = base.Columns["tipoconcepto"];
                 this.columnconcepto = base.Columns["concepto"];
-                this.columnimporte = base.Columns["importe"];
+                this.columncantidad = base.Columns["cantidad"];
                 this.columnfechainicio = base.Columns["fechainicio"];
                 this.columnfechafin = base.Columns["fechafin"];
                 this.columndia = base.Columns["dia"];
                 this.columnhora = base.Columns["hora"];
-                this.columnsubconcepto = base.Columns["subconcepto"];
+                this.columnnoperiodo = base.Columns["noperiodo"];
+                this.columnperiodo = base.Columns["periodo"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1166,8 +1228,8 @@ namespace Nominas {
                 base.Columns.Add(this.columntipoconcepto);
                 this.columnconcepto = new global::System.Data.DataColumn("concepto", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnconcepto);
-                this.columnimporte = new global::System.Data.DataColumn("importe", typeof(double), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnimporte);
+                this.columncantidad = new global::System.Data.DataColumn("cantidad", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncantidad);
                 this.columnfechainicio = new global::System.Data.DataColumn("fechainicio", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnfechainicio);
                 this.columnfechafin = new global::System.Data.DataColumn("fechafin", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
@@ -1176,8 +1238,10 @@ namespace Nominas {
                 base.Columns.Add(this.columndia);
                 this.columnhora = new global::System.Data.DataColumn("hora", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnhora);
-                this.columnsubconcepto = new global::System.Data.DataColumn("subconcepto", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnsubconcepto);
+                this.columnnoperiodo = new global::System.Data.DataColumn("noperiodo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnnoperiodo);
+                this.columnperiodo = new global::System.Data.DataColumn("periodo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnperiodo);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1337,7 +1401,11 @@ namespace Nominas {
             
             private global::System.Data.DataColumn columnDeptoHora;
             
-            private global::System.Data.DataColumn columnDeptoSubConcepto;
+            private global::System.Data.DataColumn columnDeptoTotalEmpleados;
+            
+            private global::System.Data.DataColumn columnDeptoNoPeriodo;
+            
+            private global::System.Data.DataColumn columnDeptoPeriodo;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -1478,9 +1546,25 @@ namespace Nominas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn DeptoSubConceptoColumn {
+            public global::System.Data.DataColumn DeptoTotalEmpleadosColumn {
                 get {
-                    return this.columnDeptoSubConcepto;
+                    return this.columnDeptoTotalEmpleados;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn DeptoNoPeriodoColumn {
+                get {
+                    return this.columnDeptoNoPeriodo;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn DeptoPeriodoColumn {
+                get {
+                    return this.columnDeptoPeriodo;
                 }
             }
             
@@ -1521,7 +1605,23 @@ namespace Nominas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PreNominaDeptoRow AddPreNominaDeptoRow(string DeptoEmpresa, string DeptoRegistro, string DeptoDigitoVerificador, string DeptoRfc, int DeptoNoConcepto, string DeptoTipoConcepto, string DeptoConcepto, string DeptoDepartamento, double DeptoImporte, System.DateTime DeptoFechaInicio, System.DateTime DeptoFechaFin, System.DateTime DeptoDia, System.DateTime DeptoHora, string DeptoSubConcepto) {
+            public PreNominaDeptoRow AddPreNominaDeptoRow(
+                        string DeptoEmpresa, 
+                        string DeptoRegistro, 
+                        string DeptoDigitoVerificador, 
+                        string DeptoRfc, 
+                        int DeptoNoConcepto, 
+                        string DeptoTipoConcepto, 
+                        string DeptoConcepto, 
+                        string DeptoDepartamento, 
+                        double DeptoImporte, 
+                        System.DateTime DeptoFechaInicio, 
+                        System.DateTime DeptoFechaFin, 
+                        System.DateTime DeptoDia, 
+                        System.DateTime DeptoHora, 
+                        int DeptoTotalEmpleados, 
+                        string DeptoNoPeriodo, 
+                        string DeptoPeriodo) {
                 PreNominaDeptoRow rowPreNominaDeptoRow = ((PreNominaDeptoRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         DeptoEmpresa,
@@ -1537,7 +1637,9 @@ namespace Nominas {
                         DeptoFechaFin,
                         DeptoDia,
                         DeptoHora,
-                        DeptoSubConcepto};
+                        DeptoTotalEmpleados,
+                        DeptoNoPeriodo,
+                        DeptoPeriodo};
                 rowPreNominaDeptoRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowPreNominaDeptoRow);
                 return rowPreNominaDeptoRow;
@@ -1573,7 +1675,9 @@ namespace Nominas {
                 this.columnDeptoFechaFin = base.Columns["DeptoFechaFin"];
                 this.columnDeptoDia = base.Columns["DeptoDia"];
                 this.columnDeptoHora = base.Columns["DeptoHora"];
-                this.columnDeptoSubConcepto = base.Columns["DeptoSubConcepto"];
+                this.columnDeptoTotalEmpleados = base.Columns["DeptoTotalEmpleados"];
+                this.columnDeptoNoPeriodo = base.Columns["DeptoNoPeriodo"];
+                this.columnDeptoPeriodo = base.Columns["DeptoPeriodo"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1605,8 +1709,12 @@ namespace Nominas {
                 base.Columns.Add(this.columnDeptoDia);
                 this.columnDeptoHora = new global::System.Data.DataColumn("DeptoHora", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDeptoHora);
-                this.columnDeptoSubConcepto = new global::System.Data.DataColumn("DeptoSubConcepto", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnDeptoSubConcepto);
+                this.columnDeptoTotalEmpleados = new global::System.Data.DataColumn("DeptoTotalEmpleados", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDeptoTotalEmpleados);
+                this.columnDeptoNoPeriodo = new global::System.Data.DataColumn("DeptoNoPeriodo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDeptoNoPeriodo);
+                this.columnDeptoPeriodo = new global::System.Data.DataColumn("DeptoPeriodo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDeptoPeriodo);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1693,6 +1801,253 @@ namespace Nominas {
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
                 attribute2.FixedValue = "PreNominaDeptoDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class PreNominaImagenDataTable : global::System.Data.TypedTableBase<PreNominaImagenRow> {
+            
+            private global::System.Data.DataColumn columnimagen;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public PreNominaImagenDataTable() {
+                this.TableName = "PreNominaImagen";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal PreNominaImagenDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected PreNominaImagenDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn imagenColumn {
+                get {
+                    return this.columnimagen;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public PreNominaImagenRow this[int index] {
+                get {
+                    return ((PreNominaImagenRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event PreNominaImagenRowChangeEventHandler PreNominaImagenRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event PreNominaImagenRowChangeEventHandler PreNominaImagenRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event PreNominaImagenRowChangeEventHandler PreNominaImagenRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event PreNominaImagenRowChangeEventHandler PreNominaImagenRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void AddPreNominaImagenRow(PreNominaImagenRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public PreNominaImagenRow AddPreNominaImagenRow(byte[] imagen) {
+                PreNominaImagenRow rowPreNominaImagenRow = ((PreNominaImagenRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        imagen};
+                rowPreNominaImagenRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowPreNominaImagenRow);
+                return rowPreNominaImagenRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                PreNominaImagenDataTable cln = ((PreNominaImagenDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new PreNominaImagenDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal void InitVars() {
+                this.columnimagen = base.Columns["imagen"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            private void InitClass() {
+                this.columnimagen = new global::System.Data.DataColumn("imagen", typeof(byte[]), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnimagen);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public PreNominaImagenRow NewPreNominaImagenRow() {
+                return ((PreNominaImagenRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new PreNominaImagenRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(PreNominaImagenRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.PreNominaImagenRowChanged != null)) {
+                    this.PreNominaImagenRowChanged(this, new PreNominaImagenRowChangeEvent(((PreNominaImagenRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.PreNominaImagenRowChanging != null)) {
+                    this.PreNominaImagenRowChanging(this, new PreNominaImagenRowChangeEvent(((PreNominaImagenRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.PreNominaImagenRowDeleted != null)) {
+                    this.PreNominaImagenRowDeleted(this, new PreNominaImagenRowChangeEvent(((PreNominaImagenRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.PreNominaImagenRowDeleting != null)) {
+                    this.PreNominaImagenRowDeleting(this, new PreNominaImagenRowChangeEvent(((PreNominaImagenRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void RemovePreNominaImagenRow(PreNominaImagenRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                dsReportes ds = new dsReportes();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "PreNominaImagenDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -1896,23 +2251,6 @@ namespace Nominas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string CaratulaSubConcepto {
-                get {
-                    try {
-                        return ((string)(this[this.tablePreNominaCaratula.CaratulaSubConceptoColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'CaratulaSubConcepto\' in table \'PreNominaCaratula\' is DBNull" +
-                                ".", e);
-                    }
-                }
-                set {
-                    this[this.tablePreNominaCaratula.CaratulaSubConceptoColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string CaratulaRegistro {
                 get {
                     try {
@@ -1974,6 +2312,38 @@ namespace Nominas {
                 }
                 set {
                     this[this.tablePreNominaCaratula.CaratulaTotalEmpleadosColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string CaratulaNoPeriodo {
+                get {
+                    try {
+                        return ((string)(this[this.tablePreNominaCaratula.CaratulaNoPeriodoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CaratulaNoPeriodo\' in table \'PreNominaCaratula\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePreNominaCaratula.CaratulaNoPeriodoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string CaratulaPeriodo {
+                get {
+                    try {
+                        return ((string)(this[this.tablePreNominaCaratula.CaratulaPeriodoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CaratulaPeriodo\' in table \'PreNominaCaratula\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePreNominaCaratula.CaratulaPeriodoColumn] = value;
                 }
             }
             
@@ -2087,18 +2457,6 @@ namespace Nominas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsCaratulaSubConceptoNull() {
-                return this.IsNull(this.tablePreNominaCaratula.CaratulaSubConceptoColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetCaratulaSubConceptoNull() {
-                this[this.tablePreNominaCaratula.CaratulaSubConceptoColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsCaratulaRegistroNull() {
                 return this.IsNull(this.tablePreNominaCaratula.CaratulaRegistroColumn);
             }
@@ -2143,6 +2501,30 @@ namespace Nominas {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetCaratulaTotalEmpleadosNull() {
                 this[this.tablePreNominaCaratula.CaratulaTotalEmpleadosColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsCaratulaNoPeriodoNull() {
+                return this.IsNull(this.tablePreNominaCaratula.CaratulaNoPeriodoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetCaratulaNoPeriodoNull() {
+                this[this.tablePreNominaCaratula.CaratulaNoPeriodoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsCaratulaPeriodoNull() {
+                return this.IsNull(this.tablePreNominaCaratula.CaratulaPeriodoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetCaratulaPeriodoNull() {
+                this[this.tablePreNominaCaratula.CaratulaPeriodoColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -2387,17 +2769,17 @@ namespace Nominas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public double importe {
+            public double cantidad {
                 get {
                     try {
-                        return ((double)(this[this.tablePreNominaEmpleados.importeColumn]));
+                        return ((double)(this[this.tablePreNominaEmpleados.cantidadColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'importe\' in table \'PreNominaEmpleados\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'cantidad\' in table \'PreNominaEmpleados\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablePreNominaEmpleados.importeColumn] = value;
+                    this[this.tablePreNominaEmpleados.cantidadColumn] = value;
                 }
             }
             
@@ -2467,17 +2849,33 @@ namespace Nominas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string subconcepto {
+            public string noperiodo {
                 get {
                     try {
-                        return ((string)(this[this.tablePreNominaEmpleados.subconceptoColumn]));
+                        return ((string)(this[this.tablePreNominaEmpleados.noperiodoColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'subconcepto\' in table \'PreNominaEmpleados\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'noperiodo\' in table \'PreNominaEmpleados\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablePreNominaEmpleados.subconceptoColumn] = value;
+                    this[this.tablePreNominaEmpleados.noperiodoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string periodo {
+                get {
+                    try {
+                        return ((string)(this[this.tablePreNominaEmpleados.periodoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'periodo\' in table \'PreNominaEmpleados\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePreNominaEmpleados.periodoColumn] = value;
                 }
             }
             
@@ -2651,14 +3049,14 @@ namespace Nominas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsimporteNull() {
-                return this.IsNull(this.tablePreNominaEmpleados.importeColumn);
+            public bool IscantidadNull() {
+                return this.IsNull(this.tablePreNominaEmpleados.cantidadColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetimporteNull() {
-                this[this.tablePreNominaEmpleados.importeColumn] = global::System.Convert.DBNull;
+            public void SetcantidadNull() {
+                this[this.tablePreNominaEmpleados.cantidadColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2711,14 +3109,26 @@ namespace Nominas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IssubconceptoNull() {
-                return this.IsNull(this.tablePreNominaEmpleados.subconceptoColumn);
+            public bool IsnoperiodoNull() {
+                return this.IsNull(this.tablePreNominaEmpleados.noperiodoColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetsubconceptoNull() {
-                this[this.tablePreNominaEmpleados.subconceptoColumn] = global::System.Convert.DBNull;
+            public void SetnoperiodoNull() {
+                this[this.tablePreNominaEmpleados.noperiodoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsperiodoNull() {
+                return this.IsNull(this.tablePreNominaEmpleados.periodoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetperiodoNull() {
+                this[this.tablePreNominaEmpleados.periodoColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -2947,17 +3357,49 @@ namespace Nominas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string DeptoSubConcepto {
+            public int DeptoTotalEmpleados {
                 get {
                     try {
-                        return ((string)(this[this.tablePreNominaDepto.DeptoSubConceptoColumn]));
+                        return ((int)(this[this.tablePreNominaDepto.DeptoTotalEmpleadosColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'DeptoSubConcepto\' in table \'PreNominaDepto\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'DeptoTotalEmpleados\' in table \'PreNominaDepto\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablePreNominaDepto.DeptoSubConceptoColumn] = value;
+                    this[this.tablePreNominaDepto.DeptoTotalEmpleadosColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string DeptoNoPeriodo {
+                get {
+                    try {
+                        return ((string)(this[this.tablePreNominaDepto.DeptoNoPeriodoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'DeptoNoPeriodo\' in table \'PreNominaDepto\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePreNominaDepto.DeptoNoPeriodoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string DeptoPeriodo {
+                get {
+                    try {
+                        return ((string)(this[this.tablePreNominaDepto.DeptoPeriodoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'DeptoPeriodo\' in table \'PreNominaDepto\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePreNominaDepto.DeptoPeriodoColumn] = value;
                 }
             }
             
@@ -3119,14 +3561,81 @@ namespace Nominas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsDeptoSubConceptoNull() {
-                return this.IsNull(this.tablePreNominaDepto.DeptoSubConceptoColumn);
+            public bool IsDeptoTotalEmpleadosNull() {
+                return this.IsNull(this.tablePreNominaDepto.DeptoTotalEmpleadosColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetDeptoSubConceptoNull() {
-                this[this.tablePreNominaDepto.DeptoSubConceptoColumn] = global::System.Convert.DBNull;
+            public void SetDeptoTotalEmpleadosNull() {
+                this[this.tablePreNominaDepto.DeptoTotalEmpleadosColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsDeptoNoPeriodoNull() {
+                return this.IsNull(this.tablePreNominaDepto.DeptoNoPeriodoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetDeptoNoPeriodoNull() {
+                this[this.tablePreNominaDepto.DeptoNoPeriodoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsDeptoPeriodoNull() {
+                return this.IsNull(this.tablePreNominaDepto.DeptoPeriodoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetDeptoPeriodoNull() {
+                this[this.tablePreNominaDepto.DeptoPeriodoColumn] = global::System.Convert.DBNull;
+            }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class PreNominaImagenRow : global::System.Data.DataRow {
+            
+            private PreNominaImagenDataTable tablePreNominaImagen;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal PreNominaImagenRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tablePreNominaImagen = ((PreNominaImagenDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public byte[] imagen {
+                get {
+                    try {
+                        return ((byte[])(this[this.tablePreNominaImagen.imagenColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'imagen\' in table \'PreNominaImagen\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePreNominaImagen.imagenColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsimagenNull() {
+                return this.IsNull(this.tablePreNominaImagen.imagenColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetimagenNull() {
+                this[this.tablePreNominaImagen.imagenColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -3218,6 +3727,40 @@ namespace Nominas {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public PreNominaDeptoRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public class PreNominaImagenRowChangeEvent : global::System.EventArgs {
+            
+            private PreNominaImagenRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public PreNominaImagenRowChangeEvent(PreNominaImagenRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public PreNominaImagenRow Row {
                 get {
                     return this.eventRow;
                 }

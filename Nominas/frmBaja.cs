@@ -98,7 +98,7 @@ namespace Nominas
             {
                 periodo = d.dias;
             }
-            obtenerPeriodoActual();
+            //obtenerPeriodoActual();
         }
 
         private void obtenerPeriodoActual()
@@ -270,6 +270,8 @@ namespace Nominas
                 cmd = new SqlCommand();
                 cmd.Connection = cnx;
 
+                PeriodoFechaAplicacion();
+
                 Incidencias.Core.IncidenciasHelper ih = new Incidencias.Core.IncidenciasHelper();
                 ih.Command = cmd;
 
@@ -315,7 +317,7 @@ namespace Nominas
 
                 if (existeIncapacidad != 0 || existeVacaciones != 0)
                 {
-                    MessageBox.Show("No se pued dar de baja. Existe una Incapacidad y/o Vacacion del trabajador.", "Error");
+                    MessageBox.Show("No se puede dar de baja. Existe una Incapacidad y/o Vacacion del trabajador.", "Error");
                     return;
                 }
 
@@ -360,9 +362,9 @@ namespace Nominas
                 baja.idempresa = GLOBALES.IDEMPRESA;
                 baja.motivo = int.Parse(cmbMotivoBaja.SelectedValue.ToString());
                 baja.fecha = dtpFechaBaja.Value.Date;
-                baja.diasproporcionales = (int)(dtpFechaBaja.Value.Date - dtpPeriodoInicio.Value.Date).TotalDays + 1;
-                baja.periodoinicio = dtpPeriodoInicio.Value.Date;
-                baja.periodofin = dtpPeriodoFin.Value.Date;
+                baja.diasproporcionales = (int)(dtpFechaBaja.Value.Date - periodoInicio.Date).TotalDays + 1;
+                baja.periodoinicio = periodoInicio.Date;
+                baja.periodofin = periodoFin.Date;
                 baja.observaciones = txtObservaciones.Text;
 
                 try
@@ -415,25 +417,50 @@ namespace Nominas
 
         private void dtpPeriodoInicio_ValueChanged(object sender, EventArgs e)
         {
+            //if (periodo == 7)
+            //{
+            //    DateTime dt = dtpPeriodoInicio.Value;
+            //    while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
+            //    dtpPeriodoInicio.Value = dt;
+            //    dtpPeriodoFin.Value = dt.AddDays(6);
+            //}
+            //else
+            //{
+            //    if (dtpPeriodoInicio.Value.Day <= 15)
+            //    {
+            //        dtpPeriodoInicio.Value = new DateTime(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month, 1);
+            //        dtpPeriodoFin.Value = new DateTime(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month, 15);
+            //    }
+            //    else
+            //    {
+            //        dtpPeriodoInicio.Value = new DateTime(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month, 16);
+            //        dtpPeriodoFin.Value = new DateTime(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month, DateTime.DaysInMonth(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month));
+            //    }
+            //}
+        }
+
+        private void PeriodoFechaAplicacion()
+        {
             if (periodo == 7)
             {
-                DateTime dt = dtpPeriodoInicio.Value;
+                DateTime dt = dtpFechaBaja.Value.Date;
                 while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
-                dtpPeriodoInicio.Value = dt;
-                dtpPeriodoFin.Value = dt.AddDays(6);
+                periodoInicio = dt;
+                periodoFin = dt.AddDays(6);
             }
             else
             {
-                if (dtpPeriodoInicio.Value.Day <= 15)
+                if (dtpFechaBaja.Value.Day <= 15)
                 {
-                    dtpPeriodoInicio.Value = new DateTime(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month, 1);
-                    dtpPeriodoFin.Value = new DateTime(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month, 15);
+                    periodoInicio = new DateTime(dtpFechaBaja.Value.Year, dtpFechaBaja.Value.Month, 1);
+                    periodoFin = new DateTime(dtpFechaBaja.Value.Year, dtpFechaBaja.Value.Month, 15);
                 }
                 else
                 {
-                    dtpPeriodoInicio.Value = new DateTime(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month, 16);
-                    dtpPeriodoFin.Value = new DateTime(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month, DateTime.DaysInMonth(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month));
+                    periodoInicio = new DateTime(dtpFechaBaja.Value.Year, dtpFechaBaja.Value.Month, 16);
+                    periodoFin = new DateTime(dtpFechaBaja.Value.Year, dtpFechaBaja.Value.Month, DateTime.DaysInMonth(dtpFechaBaja.Value.Year, dtpFechaBaja.Value.Month));
                 }
+
             }
         }
     }

@@ -22,8 +22,8 @@ namespace Nominas
 
         #region VARIABLES GLOBALES
         SqlConnection cnx;
-        SqlCommand cmd, cmd2;
-        ReportDataSource rd, rd2;
+        SqlCommand cmd, cmd2, cmd3;
+        ReportDataSource rd, rd2, rd3;
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
         #endregion
 
@@ -45,8 +45,11 @@ namespace Nominas
             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();
             cmd2 = new SqlCommand();
+            cmd3 = new SqlCommand();
+
             cmd.Connection = cnx;
             cmd2.Connection = cnx;
+            cmd3.Connection = cnx;
 
             switch (_noReporte)
             {
@@ -61,11 +64,28 @@ namespace Nominas
                     cmd.Parameters.AddWithValue("fechafin", _finPeriodo);
                     daPreNominaCaratula.SelectCommand = cmd;
                     daPreNominaCaratula.Fill(dtPreNominaCaratula);
+
+                    dsReportes.PreNominaImagenDataTable dtPreNominaImagen = new dsReportes.PreNominaImagenDataTable();
+                    SqlDataAdapter daPreNominaImagen = new SqlDataAdapter();
+                    cmd2.CommandText = "exec stp_rptImagen @idpersona, @tipopersona";
+                    cmd2.Parameters.Clear();
+                    cmd2.Parameters.AddWithValue("idpersona", GLOBALES.IDEMPRESA);
+                    cmd2.Parameters.AddWithValue("tipopersona", 0);
+                    daPreNominaImagen.SelectCommand = cmd2;
+                    daPreNominaImagen.Fill(dtPreNominaImagen);
+
                     rd = new ReportDataSource();
                     rd.Value = dtPreNominaCaratula;
                     rd.Name = "dsRptNominaCaratula";
+
+                    rd2 = new ReportDataSource();
+                    rd2.Value = dtPreNominaImagen;
+                    rd2.Name = "dsCaratulaImagen";
+
                     rpvVisor.LocalReport.DataSources.Clear();
                     rpvVisor.LocalReport.DataSources.Add(rd);
+                    rpvVisor.LocalReport.DataSources.Add(rd2);
+
                     rpvVisor.LocalReport.ReportEmbeddedResource = "rptPreNominaCaratula.rdlc";
                     rpvVisor.LocalReport.ReportPath = @"rptPreNominaCaratula.rdlc";
                     break;
@@ -95,6 +115,15 @@ namespace Nominas
                     daPreNominaCaratula2.SelectCommand = cmd2;
                     daPreNominaCaratula2.Fill(dtPreNominaCaratula2);
 
+                    dsReportes.PreNominaImagenDataTable dtPreNominaImagen2 = new dsReportes.PreNominaImagenDataTable();
+                    SqlDataAdapter daPreNominaImagen2 = new SqlDataAdapter();
+                    cmd3.CommandText = "exec stp_rptImagen @idpersona, @tipopersona";
+                    cmd3.Parameters.Clear();
+                    cmd3.Parameters.AddWithValue("idpersona", GLOBALES.IDEMPRESA);
+                    cmd3.Parameters.AddWithValue("tipopersona", 0);
+                    daPreNominaImagen2.SelectCommand = cmd3;
+                    daPreNominaImagen2.Fill(dtPreNominaImagen2);
+
                     rd = new ReportDataSource();
                     rd.Value = dtPreNominaEmpleados;
                     rd.Name = "dsReporteNominaEmpleados";
@@ -103,9 +132,14 @@ namespace Nominas
                     rd2.Value = dtPreNominaCaratula2;
                     rd2.Name = "dsReporteNominaGeneral";
 
+                    rd3 = new ReportDataSource();
+                    rd3.Value = dtPreNominaImagen2;
+                    rd3.Name = "dsEmpleadoImagen";
+
                     rpvVisor.LocalReport.DataSources.Clear();
                     rpvVisor.LocalReport.DataSources.Add(rd);
                     rpvVisor.LocalReport.DataSources.Add(rd2);
+                    rpvVisor.LocalReport.DataSources.Add(rd3);
 
                     rpvVisor.LocalReport.ReportEmbeddedResource = "rptPreNominaEmpleados.rdlc";
                     rpvVisor.LocalReport.ReportPath = @"rptPreNominaEmpleados.rdlc";
@@ -136,6 +170,15 @@ namespace Nominas
                     daPreNominaCaratula1.SelectCommand = cmd;
                     daPreNominaCaratula1.Fill(dtPreNominaCaratula1);
 
+                    dsReportes.PreNominaImagenDataTable dtPreNominaImagen3 = new dsReportes.PreNominaImagenDataTable();
+                    SqlDataAdapter daPreNominaImagen3 = new SqlDataAdapter();
+                    cmd3.CommandText = "exec stp_rptImagen @idpersona, @tipopersona";
+                    cmd3.Parameters.Clear();
+                    cmd3.Parameters.AddWithValue("idpersona", GLOBALES.IDEMPRESA);
+                    cmd3.Parameters.AddWithValue("tipopersona", 0);
+                    daPreNominaImagen3.SelectCommand = cmd3;
+                    daPreNominaImagen3.Fill(dtPreNominaImagen3);
+
                     rd = new ReportDataSource();
                     rd.Value = dtPreNominaDepto;
                     rd.Name = "dsReporteNominaDepto";
@@ -144,9 +187,14 @@ namespace Nominas
                     rd2.Value = dtPreNominaCaratula1;
                     rd2.Name = "dsReporteNominaGeneral";
 
+                    rd3 = new ReportDataSource();
+                    rd3.Value = dtPreNominaImagen3;
+                    rd3.Name = "dsDeptoImagen";
+
                     rpvVisor.LocalReport.DataSources.Clear();
                     rpvVisor.LocalReport.DataSources.Add(rd);
                     rpvVisor.LocalReport.DataSources.Add(rd2);
+                    rpvVisor.LocalReport.DataSources.Add(rd3);
 
                     rpvVisor.LocalReport.ReportEmbeddedResource = "rptPreNominaDepto.rdlc";
                     rpvVisor.LocalReport.ReportPath = @"rptPreNominaDepto.rdlc";
@@ -163,11 +211,29 @@ namespace Nominas
                     cmd.Parameters.AddWithValue("tiponomina", _tipoNomina);
                     daNominaCaratula.SelectCommand = cmd;
                     daNominaCaratula.Fill(dtNominaCaratula);
+
+                    dsReportes.PreNominaImagenDataTable dtNominaImagen = new dsReportes.PreNominaImagenDataTable();
+                    SqlDataAdapter daNominaImagen = new SqlDataAdapter();
+                    cmd2.CommandText = "exec stp_rptImagen @idpersona, @tipopersona";
+                    cmd2.Parameters.Clear();
+                    cmd2.Parameters.AddWithValue("idpersona", GLOBALES.IDEMPRESA);
+                    cmd2.Parameters.AddWithValue("tipopersona", 0);
+                    daNominaImagen.SelectCommand = cmd2;
+                    daNominaImagen.Fill(dtNominaImagen);
+
+
                     rd = new ReportDataSource();
                     rd.Value = dtNominaCaratula;
                     rd.Name = "dsRptNominaCaratula";
+
+                    rd2 = new ReportDataSource();
+                    rd2.Value = dtNominaImagen;
+                    rd2.Name = "dsCaratulaImagen";
+
                     rpvVisor.LocalReport.DataSources.Clear();
                     rpvVisor.LocalReport.DataSources.Add(rd);
+                    rpvVisor.LocalReport.DataSources.Add(rd2);
+
                     rpvVisor.LocalReport.ReportEmbeddedResource = "rptPreNominaCaratula.rdlc";
                     rpvVisor.LocalReport.ReportPath = @"rptPreNominaCaratula.rdlc";
                     break;
@@ -175,7 +241,7 @@ namespace Nominas
                 case 4: //DEPARTAMENTOS NOMINA
                     dsReportes.PreNominaDeptoDataTable dtNominaDepto = new dsReportes.PreNominaDeptoDataTable();
                     SqlDataAdapter daNominaDepto = new SqlDataAdapter();
-                    cmd.CommandText = "exec stp_rptNominaDepto @idempresa, @fechainicio, @fechafin, @deptoinicial, @deptofinal, @tiponomina";
+                    cmd.CommandText = "exec stp_rptNominaDepto @idempresa, @fechainicio, @fechafin, @deptoinicial, @deptofinal, @tiponomina, @neto, @order";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("idempresa", GLOBALES.IDEMPRESA);
                     cmd.Parameters.AddWithValue("fechainicio", _inicioPeriodo);
@@ -183,19 +249,30 @@ namespace Nominas
                     cmd.Parameters.AddWithValue("deptoinicial", _deptoInicio);
                     cmd.Parameters.AddWithValue("deptofinal", _deptoFin);
                     cmd.Parameters.AddWithValue("tiponomina", _tipoNomina);
+                    cmd.Parameters.AddWithValue("neto", _netoCero);
+                    cmd.Parameters.AddWithValue("order", _orden);
                     daNominaDepto.SelectCommand = cmd;
                     daNominaDepto.Fill(dtNominaDepto);
 
                     dsReportes.PreNominaCaratulaDataTable dtNominaCaratula1 = new dsReportes.PreNominaCaratulaDataTable();
                     SqlDataAdapter daNominaCaratula1 = new SqlDataAdapter();
-                    cmd.CommandText = "exec stp_rptNominaCaratula @idempresa, @fechainicio, @fechafin, @tiponomina";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("idempresa", GLOBALES.IDEMPRESA);
-                    cmd.Parameters.AddWithValue("fechainicio", _inicioPeriodo);
-                    cmd.Parameters.AddWithValue("fechafin", _finPeriodo);
-                    cmd.Parameters.AddWithValue("tiponomina", _tipoNomina);
-                    daNominaCaratula1.SelectCommand = cmd;
+                    cmd2.CommandText = "exec stp_rptNominaCaratula @idempresa, @fechainicio, @fechafin, @tiponomina";
+                    cmd2.Parameters.Clear();
+                    cmd2.Parameters.AddWithValue("idempresa", GLOBALES.IDEMPRESA);
+                    cmd2.Parameters.AddWithValue("fechainicio", _inicioPeriodo);
+                    cmd2.Parameters.AddWithValue("fechafin", _finPeriodo);
+                    cmd2.Parameters.AddWithValue("tiponomina", _tipoNomina);
+                    daNominaCaratula1.SelectCommand = cmd2;
                     daNominaCaratula1.Fill(dtNominaCaratula1);
+
+                    dsReportes.PreNominaImagenDataTable dtNominaImagen2 = new dsReportes.PreNominaImagenDataTable();
+                    SqlDataAdapter daNominaImagen2 = new SqlDataAdapter();
+                    cmd3.CommandText = "exec stp_rptImagen @idpersona, @tipopersona";
+                    cmd3.Parameters.Clear();
+                    cmd3.Parameters.AddWithValue("idpersona", GLOBALES.IDEMPRESA);
+                    cmd3.Parameters.AddWithValue("tipopersona", 0);
+                    daNominaImagen2.SelectCommand = cmd3;
+                    daNominaImagen2.Fill(dtNominaImagen2);
 
                     rd = new ReportDataSource();
                     rd.Value = dtNominaDepto;
@@ -205,9 +282,14 @@ namespace Nominas
                     rd2.Value = dtNominaCaratula1;
                     rd2.Name = "dsReporteNominaGeneral";
 
+                    rd3 = new ReportDataSource();
+                    rd3.Value = dtNominaImagen2;
+                    rd3.Name = "dsDeptoImagen";
+
                     rpvVisor.LocalReport.DataSources.Clear();
                     rpvVisor.LocalReport.DataSources.Add(rd);
                     rpvVisor.LocalReport.DataSources.Add(rd2);
+                    rpvVisor.LocalReport.DataSources.Add(rd3);
 
                     rpvVisor.LocalReport.ReportEmbeddedResource = "rptPreNominaDepto.rdlc";
                     rpvVisor.LocalReport.ReportPath = @"rptPreNominaDepto.rdlc";
@@ -238,9 +320,18 @@ namespace Nominas
                     cmd2.Parameters.AddWithValue("idempresa", GLOBALES.IDEMPRESA);
                     cmd2.Parameters.AddWithValue("fechainicio", _inicioPeriodo);
                     cmd2.Parameters.AddWithValue("fechafin", _finPeriodo);
-                    cmd.Parameters.AddWithValue("tiponomina", _tipoNomina);
+                    cmd2.Parameters.AddWithValue("tiponomina", _tipoNomina);
                     daNominaCaratula2.SelectCommand = cmd2;
                     daNominaCaratula2.Fill(dtNominaCaratula2);
+
+                    dsReportes.PreNominaImagenDataTable dtNominaImagen3 = new dsReportes.PreNominaImagenDataTable();
+                    SqlDataAdapter daNominaImagen3 = new SqlDataAdapter();
+                    cmd3.CommandText = "exec stp_rptImagen @idpersona, @tipopersona";
+                    cmd3.Parameters.Clear();
+                    cmd3.Parameters.AddWithValue("idpersona", GLOBALES.IDEMPRESA);
+                    cmd3.Parameters.AddWithValue("tipopersona", 0);
+                    daNominaImagen3.SelectCommand = cmd3;
+                    daNominaImagen3.Fill(dtNominaImagen3);
 
                     rd = new ReportDataSource();
                     rd.Value = dtNominaEmpleados;
@@ -250,9 +341,14 @@ namespace Nominas
                     rd2.Value = dtNominaCaratula2;
                     rd2.Name = "dsReporteNominaGeneral";
 
+                    rd3 = new ReportDataSource();
+                    rd3.Value = dtNominaImagen3;
+                    rd3.Name = "dsEmpleadoImagen";
+
                     rpvVisor.LocalReport.DataSources.Clear();
                     rpvVisor.LocalReport.DataSources.Add(rd);
                     rpvVisor.LocalReport.DataSources.Add(rd2);
+                    rpvVisor.LocalReport.DataSources.Add(rd3);
 
                     rpvVisor.LocalReport.ReportEmbeddedResource = "rptPreNominaEmpleados.rdlc";
                     rpvVisor.LocalReport.ReportPath = @"rptPreNominaEmpleados.rdlc";

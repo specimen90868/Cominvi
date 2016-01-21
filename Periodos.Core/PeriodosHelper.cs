@@ -48,6 +48,17 @@ namespace Periodos.Core
             return lstPeriodos;
         }
 
+        public object obtenerIdPeriodo(string pago, int idEmpresa)
+        {
+            Command.CommandText = "select idperiodo from periodos where idempresa = @idempresa and pago = @pago";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idEmpresa);
+            Command.Parameters.AddWithValue("pago", pago);
+            object dato = Select(Command);
+            return dato;
+        }
+
+
         public object DiasDePago(Periodos p)
         {
             Command.CommandText = "select dias from periodos where idperiodo = @idperiodo";

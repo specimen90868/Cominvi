@@ -48,13 +48,15 @@ namespace Nominas
 
             List<Imagen.Core.Imagenes> lstImagen = ih.obtenerImagen(img);
 
-            for (int i = 0; i < lstImagen.Count; i++)
+            if (lstImagen.Count != 0)
             {
-                imagen = lstImagen[i].imagen;
+                for (int i = 0; i < lstImagen.Count; i++)
+                {
+                    imagen = lstImagen[i].imagen;
+                }
+                pbImagen.SizeMode = PictureBoxSizeMode.StretchImage;
+                pbImagen.Image = GLOBALES.BYTES_IMAGEN(imagen);
             }
-
-            pbImagen.SizeMode = PictureBoxSizeMode.StretchImage;
-            pbImagen.Image = GLOBALES.BYTES_IMAGEN(imagen);
         }
     }
 }

@@ -55,6 +55,10 @@
             this.dtpInicioPeriodo = new System.Windows.Forms.DateTimePicker();
             this.dtpFinPeriodo = new System.Windows.Forms.DateTimePicker();
             this.btnCambiar = new System.Windows.Forms.Button();
+            this.txtDepartamento = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.mtxtNoEmpleado = new System.Windows.Forms.MaskedTextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.toolTitulo.SuspendLayout();
             this.toolAcciones.SuspendLayout();
             this.SuspendLayout();
@@ -66,7 +70,7 @@
             this.toolVentana});
             this.toolTitulo.Location = new System.Drawing.Point(0, 0);
             this.toolTitulo.Name = "toolTitulo";
-            this.toolTitulo.Size = new System.Drawing.Size(473, 27);
+            this.toolTitulo.Size = new System.Drawing.Size(515, 27);
             this.toolTitulo.TabIndex = 4;
             this.toolTitulo.Text = "toolAcciones";
             // 
@@ -85,7 +89,7 @@
             this.toolCerrar});
             this.toolAcciones.Location = new System.Drawing.Point(0, 27);
             this.toolAcciones.Name = "toolAcciones";
-            this.toolAcciones.Size = new System.Drawing.Size(473, 25);
+            this.toolAcciones.Size = new System.Drawing.Size(515, 25);
             this.toolAcciones.TabIndex = 5;
             this.toolAcciones.Text = "toolEmpresa";
             // 
@@ -119,7 +123,7 @@
             // Label16
             // 
             this.Label16.AutoSize = true;
-            this.Label16.BackColor = System.Drawing.Color.White;
+            this.Label16.BackColor = System.Drawing.SystemColors.Control;
             this.Label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
             this.Label16.Location = new System.Drawing.Point(13, 126);
             this.Label16.Name = "Label16";
@@ -131,7 +135,7 @@
             // 
             this.lblEmpleado.AutoSize = true;
             this.lblEmpleado.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEmpleado.Location = new System.Drawing.Point(112, 75);
+            this.lblEmpleado.Location = new System.Drawing.Point(112, 62);
             this.lblEmpleado.Name = "lblEmpleado";
             this.lblEmpleado.Size = new System.Drawing.Size(183, 20);
             this.lblEmpleado.TabIndex = 256;
@@ -141,7 +145,7 @@
             // 
             this.label23.AutoSize = true;
             this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label23.Location = new System.Drawing.Point(12, 75);
+            this.label23.Location = new System.Drawing.Point(12, 62);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(94, 20);
             this.label23.TabIndex = 255;
@@ -304,13 +308,55 @@
             this.btnCambiar.TabIndex = 274;
             this.btnCambiar.Text = "Cambiar";
             this.btnCambiar.UseVisualStyleBackColor = true;
+            this.btnCambiar.Visible = false;
             this.btnCambiar.Click += new System.EventHandler(this.btnCambiar_Click);
+            // 
+            // txtDepartamento
+            // 
+            this.txtDepartamento.BackColor = System.Drawing.SystemColors.Control;
+            this.txtDepartamento.Location = new System.Drawing.Point(249, 97);
+            this.txtDepartamento.Name = "txtDepartamento";
+            this.txtDepartamento.Size = new System.Drawing.Size(164, 20);
+            this.txtDepartamento.TabIndex = 278;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(153, 100);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(90, 13);
+            this.label1.TabIndex = 277;
+            this.label1.Text = "Departamento:";
+            // 
+            // mtxtNoEmpleado
+            // 
+            this.mtxtNoEmpleado.BackColor = System.Drawing.SystemColors.Control;
+            this.mtxtNoEmpleado.Location = new System.Drawing.Point(109, 97);
+            this.mtxtNoEmpleado.Mask = "9999";
+            this.mtxtNoEmpleado.Name = "mtxtNoEmpleado";
+            this.mtxtNoEmpleado.Size = new System.Drawing.Size(33, 20);
+            this.mtxtNoEmpleado.TabIndex = 276;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(13, 100);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(90, 13);
+            this.label4.TabIndex = 275;
+            this.label4.Text = "No. Empleado:";
             // 
             // frmInfonavit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(473, 381);
+            this.ClientSize = new System.Drawing.Size(515, 436);
+            this.Controls.Add(this.txtDepartamento);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.mtxtNoEmpleado);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.btnCambiar);
             this.Controls.Add(this.dtpFinPeriodo);
             this.Controls.Add(this.dtpInicioPeriodo);
@@ -373,5 +419,9 @@
         private System.Windows.Forms.DateTimePicker dtpInicioPeriodo;
         private System.Windows.Forms.DateTimePicker dtpFinPeriodo;
         private System.Windows.Forms.Button btnCambiar;
+        private System.Windows.Forms.TextBox txtDepartamento;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.MaskedTextBox mtxtNoEmpleado;
+        private System.Windows.Forms.Label label4;
     }
 }

@@ -33,12 +33,10 @@
             this.Label16 = new System.Windows.Forms.Label();
             this.Label15 = new System.Windows.Forms.Label();
             this.Label12 = new System.Windows.Forms.Label();
-            this.Panel2 = new System.Windows.Forms.Panel();
             this.toolEmpresa = new System.Windows.Forms.ToolStrip();
             this.toolGuardarCerrar = new System.Windows.Forms.ToolStripButton();
             this.toolGuardarNuevo = new System.Windows.Forms.ToolStripButton();
             this.toolCerrar = new System.Windows.Forms.ToolStripButton();
-            this.Panel1 = new System.Windows.Forms.Panel();
             this.toolAcciones = new System.Windows.Forms.ToolStrip();
             this.toolTitulo = new System.Windows.Forms.ToolStripLabel();
             this.txtRfc = new System.Windows.Forms.TextBox();
@@ -84,9 +82,7 @@
             this.txtNoCertificado = new System.Windows.Forms.TextBox();
             this.label24 = new System.Windows.Forms.Label();
             this.dtpVigencia = new System.Windows.Forms.DateTimePicker();
-            this.Panel2.SuspendLayout();
             this.toolEmpresa.SuspendLayout();
-            this.Panel1.SuspendLayout();
             this.toolAcciones.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -127,24 +123,15 @@
             this.Label12.TabIndex = 143;
             this.Label12.Text = "Nombre empresa";
             // 
-            // Panel2
-            // 
-            this.Panel2.Controls.Add(this.toolEmpresa);
-            this.Panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.Panel2.Location = new System.Drawing.Point(0, 28);
-            this.Panel2.Name = "Panel2";
-            this.Panel2.Size = new System.Drawing.Size(632, 28);
-            this.Panel2.TabIndex = 142;
-            // 
             // toolEmpresa
             // 
             this.toolEmpresa.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolGuardarCerrar,
             this.toolGuardarNuevo,
             this.toolCerrar});
-            this.toolEmpresa.Location = new System.Drawing.Point(0, 0);
+            this.toolEmpresa.Location = new System.Drawing.Point(0, 27);
             this.toolEmpresa.Name = "toolEmpresa";
-            this.toolEmpresa.Size = new System.Drawing.Size(632, 25);
+            this.toolEmpresa.Size = new System.Drawing.Size(888, 25);
             this.toolEmpresa.TabIndex = 0;
             this.toolEmpresa.Text = "toolEmpresa";
             // 
@@ -153,9 +140,8 @@
             this.toolGuardarCerrar.Image = ((System.Drawing.Image)(resources.GetObject("toolGuardarCerrar.Image")));
             this.toolGuardarCerrar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolGuardarCerrar.Name = "toolGuardarCerrar";
-            this.toolGuardarCerrar.Size = new System.Drawing.Size(113, 22);
-            this.toolGuardarCerrar.Text = "Guardar y Cerrar";
-            this.toolGuardarCerrar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolGuardarCerrar.Size = new System.Drawing.Size(111, 22);
+            this.toolGuardarCerrar.Text = "Guardar y cerrar";
             this.toolGuardarCerrar.Click += new System.EventHandler(this.toolGuardarCerrar_Click);
             // 
             // toolGuardarNuevo
@@ -163,8 +149,8 @@
             this.toolGuardarNuevo.Image = ((System.Drawing.Image)(resources.GetObject("toolGuardarNuevo.Image")));
             this.toolGuardarNuevo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolGuardarNuevo.Name = "toolGuardarNuevo";
-            this.toolGuardarNuevo.Size = new System.Drawing.Size(116, 22);
-            this.toolGuardarNuevo.Text = "Guardar y Nuevo";
+            this.toolGuardarNuevo.Size = new System.Drawing.Size(114, 22);
+            this.toolGuardarNuevo.Text = "Guardar y nuevo";
             this.toolGuardarNuevo.Click += new System.EventHandler(this.toolGuardarNuevo_Click);
             // 
             // toolCerrar
@@ -176,15 +162,6 @@
             this.toolCerrar.Text = "Cerrar";
             this.toolCerrar.Click += new System.EventHandler(this.toolCerrar_Click);
             // 
-            // Panel1
-            // 
-            this.Panel1.Controls.Add(this.toolAcciones);
-            this.Panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.Panel1.Location = new System.Drawing.Point(0, 0);
-            this.Panel1.Name = "Panel1";
-            this.Panel1.Size = new System.Drawing.Size(632, 28);
-            this.Panel1.TabIndex = 141;
-            // 
             // toolAcciones
             // 
             this.toolAcciones.BackColor = System.Drawing.Color.DarkGray;
@@ -192,16 +169,16 @@
             this.toolTitulo});
             this.toolAcciones.Location = new System.Drawing.Point(0, 0);
             this.toolAcciones.Name = "toolAcciones";
-            this.toolAcciones.Size = new System.Drawing.Size(632, 27);
+            this.toolAcciones.Size = new System.Drawing.Size(888, 27);
             this.toolAcciones.TabIndex = 0;
             this.toolAcciones.Text = "toolAcciones";
             // 
             // toolTitulo
             // 
-            this.toolTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toolTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold);
             this.toolTitulo.Name = "toolTitulo";
-            this.toolTitulo.Size = new System.Drawing.Size(157, 24);
-            this.toolTitulo.Text = "Nueva empresa";
+            this.toolTitulo.Size = new System.Drawing.Size(159, 24);
+            this.toolTitulo.Text = "Nueva Empresa";
             // 
             // txtRfc
             // 
@@ -209,7 +186,7 @@
             this.txtRfc.Location = new System.Drawing.Point(135, 454);
             this.txtRfc.Name = "txtRfc";
             this.txtRfc.Size = new System.Drawing.Size(97, 20);
-            this.txtRfc.TabIndex = 11;
+            this.txtRfc.TabIndex = 12;
             this.txtRfc.Leave += new System.EventHandler(this.txtRfc_Leave);
             // 
             // txtRegistroPatronal
@@ -218,14 +195,14 @@
             this.txtRegistroPatronal.Mask = "AAAAAAAAAA";
             this.txtRegistroPatronal.Name = "txtRegistroPatronal";
             this.txtRegistroPatronal.Size = new System.Drawing.Size(96, 20);
-            this.txtRegistroPatronal.TabIndex = 12;
+            this.txtRegistroPatronal.TabIndex = 13;
             // 
             // txtDigitoVerificador
             // 
             this.txtDigitoVerificador.Location = new System.Drawing.Point(374, 454);
             this.txtDigitoVerificador.Name = "txtDigitoVerificador";
             this.txtDigitoVerificador.Size = new System.Drawing.Size(21, 20);
-            this.txtDigitoVerificador.TabIndex = 13;
+            this.txtDigitoVerificador.TabIndex = 14;
             this.txtDigitoVerificador.Text = "0";
             // 
             // Label9
@@ -288,7 +265,7 @@
             this.txtMunicipio.Location = new System.Drawing.Point(136, 331);
             this.txtMunicipio.Name = "txtMunicipio";
             this.txtMunicipio.Size = new System.Drawing.Size(130, 20);
-            this.txtMunicipio.TabIndex = 7;
+            this.txtMunicipio.TabIndex = 8;
             // 
             // txtEstado
             // 
@@ -296,7 +273,7 @@
             this.txtEstado.Location = new System.Drawing.Point(136, 357);
             this.txtEstado.Name = "txtEstado";
             this.txtEstado.Size = new System.Drawing.Size(130, 20);
-            this.txtEstado.TabIndex = 8;
+            this.txtEstado.TabIndex = 9;
             // 
             // Label10
             // 
@@ -331,7 +308,7 @@
             this.txtCP.Mask = "00000";
             this.txtCP.Name = "txtCP";
             this.txtCP.Size = new System.Drawing.Size(49, 20);
-            this.txtCP.TabIndex = 10;
+            this.txtCP.TabIndex = 11;
             // 
             // Label3
             // 
@@ -375,7 +352,7 @@
             this.txtColonia.Location = new System.Drawing.Point(136, 305);
             this.txtColonia.Name = "txtColonia";
             this.txtColonia.Size = new System.Drawing.Size(426, 20);
-            this.txtColonia.TabIndex = 6;
+            this.txtColonia.TabIndex = 7;
             // 
             // txtInterior
             // 
@@ -383,7 +360,7 @@
             this.txtInterior.Location = new System.Drawing.Point(136, 280);
             this.txtInterior.Name = "txtInterior";
             this.txtInterior.Size = new System.Drawing.Size(67, 20);
-            this.txtInterior.TabIndex = 5;
+            this.txtInterior.TabIndex = 6;
             // 
             // txtCalle
             // 
@@ -391,7 +368,7 @@
             this.txtCalle.Location = new System.Drawing.Point(136, 230);
             this.txtCalle.Name = "txtCalle";
             this.txtCalle.Size = new System.Drawing.Size(426, 20);
-            this.txtCalle.TabIndex = 3;
+            this.txtCalle.TabIndex = 4;
             // 
             // txtExterior
             // 
@@ -399,7 +376,7 @@
             this.txtExterior.Location = new System.Drawing.Point(136, 255);
             this.txtExterior.Name = "txtExterior";
             this.txtExterior.Size = new System.Drawing.Size(67, 20);
-            this.txtExterior.TabIndex = 4;
+            this.txtExterior.TabIndex = 5;
             // 
             // txtPais
             // 
@@ -407,7 +384,7 @@
             this.txtPais.Location = new System.Drawing.Point(136, 383);
             this.txtPais.Name = "txtPais";
             this.txtPais.Size = new System.Drawing.Size(130, 20);
-            this.txtPais.TabIndex = 9;
+            this.txtPais.TabIndex = 10;
             // 
             // label13
             // 
@@ -434,7 +411,7 @@
             this.btnVer.Location = new System.Drawing.Point(136, 504);
             this.btnVer.Name = "btnVer";
             this.btnVer.Size = new System.Drawing.Size(67, 35);
-            this.btnVer.TabIndex = 14;
+            this.btnVer.TabIndex = 15;
             this.btnVer.Text = "Ver";
             this.btnVer.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnVer.UseVisualStyleBackColor = true;
@@ -447,7 +424,7 @@
             this.btnAsignar.Location = new System.Drawing.Point(209, 504);
             this.btnAsignar.Name = "btnAsignar";
             this.btnAsignar.Size = new System.Drawing.Size(67, 35);
-            this.btnAsignar.TabIndex = 15;
+            this.btnAsignar.TabIndex = 16;
             this.btnAsignar.Text = "Asignar";
             this.btnAsignar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnAsignar.UseVisualStyleBackColor = true;
@@ -457,7 +434,7 @@
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(11, 560);
+            this.label18.Location = new System.Drawing.Point(575, 72);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(79, 18);
             this.label18.TabIndex = 169;
@@ -466,7 +443,7 @@
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(69, 601);
+            this.label19.Location = new System.Drawing.Point(594, 116);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(60, 13);
             this.label19.TabIndex = 170;
@@ -475,7 +452,7 @@
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(354, 601);
+            this.label20.Location = new System.Drawing.Point(616, 207);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(36, 13);
             this.label20.TabIndex = 171;
@@ -484,7 +461,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(334, 696);
+            this.label21.Location = new System.Drawing.Point(598, 324);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(56, 13);
             this.label21.TabIndex = 172;
@@ -502,28 +479,28 @@
             // txtCertificado
             // 
             this.txtCertificado.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtCertificado.Location = new System.Drawing.Point(135, 598);
+            this.txtCertificado.Location = new System.Drawing.Point(660, 113);
             this.txtCertificado.Multiline = true;
             this.txtCertificado.Name = "txtCertificado";
             this.txtCertificado.Size = new System.Drawing.Size(213, 85);
-            this.txtCertificado.TabIndex = 16;
+            this.txtCertificado.TabIndex = 17;
             // 
             // txtLlave
             // 
             this.txtLlave.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtLlave.Location = new System.Drawing.Point(396, 598);
+            this.txtLlave.Location = new System.Drawing.Point(660, 204);
             this.txtLlave.Multiline = true;
             this.txtLlave.Name = "txtLlave";
             this.txtLlave.Size = new System.Drawing.Size(214, 85);
-            this.txtLlave.TabIndex = 17;
+            this.txtLlave.TabIndex = 18;
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(396, 693);
+            this.txtPassword.Location = new System.Drawing.Point(660, 321);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Size = new System.Drawing.Size(169, 20);
-            this.txtPassword.TabIndex = 19;
+            this.txtPassword.Size = new System.Drawing.Size(213, 20);
+            this.txtPassword.TabIndex = 20;
             // 
             // txtRegimen
             // 
@@ -531,11 +508,11 @@
             this.txtRegimen.Location = new System.Drawing.Point(135, 170);
             this.txtRegimen.Name = "txtRegimen";
             this.txtRegimen.Size = new System.Drawing.Size(425, 20);
-            this.txtRegimen.TabIndex = 177;
+            this.txtRegimen.TabIndex = 3;
             // 
             // btnExaminarCertificado
             // 
-            this.btnExaminarCertificado.Location = new System.Drawing.Point(267, 569);
+            this.btnExaminarCertificado.Location = new System.Drawing.Point(809, 84);
             this.btnExaminarCertificado.Name = "btnExaminarCertificado";
             this.btnExaminarCertificado.Size = new System.Drawing.Size(24, 23);
             this.btnExaminarCertificado.TabIndex = 178;
@@ -546,7 +523,7 @@
             // 
             // btnExaminarLlave
             // 
-            this.btnExaminarLlave.Location = new System.Drawing.Point(297, 569);
+            this.btnExaminarLlave.Location = new System.Drawing.Point(839, 84);
             this.btnExaminarLlave.Name = "btnExaminarLlave";
             this.btnExaminarLlave.Size = new System.Drawing.Size(24, 23);
             this.btnExaminarLlave.TabIndex = 179;
@@ -558,7 +535,7 @@
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(52, 692);
+            this.label23.Location = new System.Drawing.Point(575, 298);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(80, 13);
             this.label23.TabIndex = 180;
@@ -566,15 +543,15 @@
             // 
             // txtNoCertificado
             // 
-            this.txtNoCertificado.Location = new System.Drawing.Point(136, 689);
+            this.txtNoCertificado.Location = new System.Drawing.Point(661, 295);
             this.txtNoCertificado.Name = "txtNoCertificado";
-            this.txtNoCertificado.Size = new System.Drawing.Size(175, 20);
-            this.txtNoCertificado.TabIndex = 18;
+            this.txtNoCertificado.Size = new System.Drawing.Size(212, 20);
+            this.txtNoCertificado.TabIndex = 19;
             // 
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(77, 718);
+            this.label24.Location = new System.Drawing.Point(603, 353);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(51, 13);
             this.label24.TabIndex = 182;
@@ -582,16 +559,18 @@
             // 
             // dtpVigencia
             // 
-            this.dtpVigencia.Location = new System.Drawing.Point(135, 718);
+            this.dtpVigencia.Location = new System.Drawing.Point(660, 347);
             this.dtpVigencia.Name = "dtpVigencia";
             this.dtpVigencia.Size = new System.Drawing.Size(213, 20);
-            this.dtpVigencia.TabIndex = 20;
+            this.dtpVigencia.TabIndex = 21;
             // 
             // frmEmpresas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(632, 758);
+            this.ClientSize = new System.Drawing.Size(888, 733);
+            this.Controls.Add(this.toolEmpresa);
+            this.Controls.Add(this.toolAcciones);
             this.Controls.Add(this.dtpVigencia);
             this.Controls.Add(this.label24);
             this.Controls.Add(this.txtNoCertificado);
@@ -631,8 +610,6 @@
             this.Controls.Add(this.Label16);
             this.Controls.Add(this.Label15);
             this.Controls.Add(this.Label12);
-            this.Controls.Add(this.Panel2);
-            this.Controls.Add(this.Panel1);
             this.Controls.Add(this.txtRfc);
             this.Controls.Add(this.txtRegistroPatronal);
             this.Controls.Add(this.txtDigitoVerificador);
@@ -644,12 +621,8 @@
             this.Name = "frmEmpresas";
             this.Text = "Empresa";
             this.Load += new System.EventHandler(this.frmEmpresas_Load);
-            this.Panel2.ResumeLayout(false);
-            this.Panel2.PerformLayout();
             this.toolEmpresa.ResumeLayout(false);
             this.toolEmpresa.PerformLayout();
-            this.Panel1.ResumeLayout(false);
-            this.Panel1.PerformLayout();
             this.toolAcciones.ResumeLayout(false);
             this.toolAcciones.PerformLayout();
             this.ResumeLayout(false);
@@ -663,13 +636,8 @@
         internal System.Windows.Forms.Label Label16;
         internal System.Windows.Forms.Label Label15;
         internal System.Windows.Forms.Label Label12;
-        internal System.Windows.Forms.Panel Panel2;
         internal System.Windows.Forms.ToolStrip toolEmpresa;
-        internal System.Windows.Forms.ToolStripButton toolGuardarCerrar;
-        internal System.Windows.Forms.ToolStripButton toolGuardarNuevo;
-        internal System.Windows.Forms.Panel Panel1;
         internal System.Windows.Forms.ToolStrip toolAcciones;
-        internal System.Windows.Forms.ToolStripLabel toolTitulo;
         internal System.Windows.Forms.TextBox txtRfc;
         internal System.Windows.Forms.MaskedTextBox txtRegistroPatronal;
         internal System.Windows.Forms.TextBox txtDigitoVerificador;
@@ -678,7 +646,6 @@
         internal System.Windows.Forms.Label Label1;
         internal System.Windows.Forms.Label Label8;
         internal System.Windows.Forms.Label Label11;
-        private System.Windows.Forms.ToolStripButton toolCerrar;
         internal System.Windows.Forms.Label Label14;
         internal System.Windows.Forms.TextBox txtMunicipio;
         internal System.Windows.Forms.TextBox txtEstado;
@@ -714,5 +681,9 @@
         private System.Windows.Forms.TextBox txtNoCertificado;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.DateTimePicker dtpVigencia;
+        private System.Windows.Forms.ToolStripLabel toolTitulo;
+        private System.Windows.Forms.ToolStripButton toolGuardarCerrar;
+        private System.Windows.Forms.ToolStripButton toolGuardarNuevo;
+        private System.Windows.Forms.ToolStripButton toolCerrar;
     }
 }

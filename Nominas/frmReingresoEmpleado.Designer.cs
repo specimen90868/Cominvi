@@ -184,6 +184,7 @@
             // 
             // txtSueldo
             // 
+            this.txtSueldo.Enabled = false;
             this.txtSueldo.Location = new System.Drawing.Point(127, 201);
             this.txtSueldo.Name = "txtSueldo";
             this.txtSueldo.Size = new System.Drawing.Size(128, 20);
@@ -199,7 +200,6 @@
             // 
             // txtSDI
             // 
-            this.txtSDI.Enabled = false;
             this.txtSDI.Location = new System.Drawing.Point(127, 253);
             this.txtSDI.Name = "txtSDI";
             this.txtSDI.Size = new System.Drawing.Size(128, 20);
@@ -233,7 +233,7 @@
             // 
             // btnCalcular
             // 
-            this.btnCalcular.Location = new System.Drawing.Point(261, 201);
+            this.btnCalcular.Location = new System.Drawing.Point(261, 253);
             this.btnCalcular.Name = "btnCalcular";
             this.btnCalcular.Size = new System.Drawing.Size(62, 23);
             this.btnCalcular.TabIndex = 18;

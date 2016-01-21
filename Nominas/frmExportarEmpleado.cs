@@ -91,6 +91,7 @@ namespace Nominas
                     case "Credito": chkCreditoInfonavit.Checked = lstExportacion[i].activo; break;
                     case "Descuento": chkValorDescuento.Checked = lstExportacion[i].activo; break;
                     case "TipoDescuento": chkDescuentoInfonavit.Checked = lstExportacion[i].activo; break;
+                    case "NoEmpleado": chkNoEmpleado.Checked = lstExportacion[i].activo; break;
                 }
             }
         }
@@ -688,9 +689,26 @@ namespace Nominas
                     this.Dispose();
                 }
             
-               exp = new Exportacion.Core.Exportacion();
+                exp = new Exportacion.Core.Exportacion();
                 exp.activo = chkValorDescuento.Checked;
                 exp.campo = "Descuento";
+                exp.formulario = "frmListaEmpleados";
+
+                try
+                {
+                    cnx.Open();
+                    eh.actualizaExportacion(exp);
+                    cnx.Close();
+                }
+                catch
+                {
+                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
+                    this.Dispose();
+                }
+
+                exp = new Exportacion.Core.Exportacion();
+                exp.activo = chkValorDescuento.Checked;
+                exp.campo = "NoEmpleado";
                 exp.formulario = "frmListaEmpleados";
 
                 try
@@ -784,6 +802,8 @@ namespace Nominas
                 campos += "coalesce(i.descuento,0) as descuento,";
             if (chkValorDescuento.Checked)
                 campos += "coalesce(i.valordescuento,0) as valordescuento,";
+            if (chkNoEmpleado.Checked)
+                campos += "noempleado as [No. de Empleado],";
             #endregion
 
             c = campos.Substring(0, campos.Length - 1);

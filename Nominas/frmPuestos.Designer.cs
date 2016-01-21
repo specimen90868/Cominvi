@@ -112,7 +112,6 @@
             // 
             // txtDescripcion
             // 
-            this.txtDescripcion.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtDescripcion.Location = new System.Drawing.Point(82, 116);
             this.txtDescripcion.Name = "txtDescripcion";
             this.txtDescripcion.Size = new System.Drawing.Size(289, 20);
