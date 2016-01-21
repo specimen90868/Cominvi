@@ -58,7 +58,6 @@ namespace Periodos.Core
             return dato;
         }
 
-
         public object DiasDePago(Periodos p)
         {
             Command.CommandText = "select dias from periodos where idperiodo = @idperiodo";

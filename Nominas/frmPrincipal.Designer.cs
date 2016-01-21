@@ -94,6 +94,7 @@
             this.toolIsr = new System.Windows.Forms.ToolStripMenuItem();
             this.toolSubsidio = new System.Windows.Forms.ToolStripMenuItem();
             this.toolImss = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolCodeQr = new System.Windows.Forms.ToolStripMenuItem();
             this.stsPrincipal = new System.Windows.Forms.StatusStrip();
             this.toolEstatusPerfil = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolPorcentaje = new System.Windows.Forms.ToolStripStatusLabel();
@@ -201,7 +202,7 @@
             this.toolProcesoSalarial,
             this.toolImportarEmpleados});
             this.mnuEmpleados.Name = "mnuEmpleados";
-            this.mnuEmpleados.Size = new System.Drawing.Size(152, 22);
+            this.mnuEmpleados.Size = new System.Drawing.Size(149, 22);
             this.mnuEmpleados.Text = "Empleados";
             // 
             // mnuEmpleadoNomina
@@ -255,26 +256,26 @@
             // mnuExpedientes
             // 
             this.mnuExpedientes.Name = "mnuExpedientes";
-            this.mnuExpedientes.Size = new System.Drawing.Size(152, 22);
+            this.mnuExpedientes.Size = new System.Drawing.Size(149, 22);
             this.mnuExpedientes.Text = "Expedientes";
             this.mnuExpedientes.Click += new System.EventHandler(this.mnuExpedientes_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(146, 6);
             // 
             // mnuInfonavit
             // 
             this.mnuInfonavit.Name = "mnuInfonavit";
-            this.mnuInfonavit.Size = new System.Drawing.Size(152, 22);
+            this.mnuInfonavit.Size = new System.Drawing.Size(149, 22);
             this.mnuInfonavit.Text = "Infonavit";
             this.mnuInfonavit.Click += new System.EventHandler(this.mnuInfonavit_Click);
             // 
             // toolIncapacidades
             // 
             this.toolIncapacidades.Name = "toolIncapacidades";
-            this.toolIncapacidades.Size = new System.Drawing.Size(152, 22);
+            this.toolIncapacidades.Size = new System.Drawing.Size(149, 22);
             this.toolIncapacidades.Text = "Incapacidades";
             this.toolIncapacidades.Click += new System.EventHandler(this.toolIncapacidades_Click);
             // 
@@ -515,7 +516,8 @@
             this.toolStripSeparator2,
             this.mnuPreferencias,
             this.toolStripSeparator6,
-            this.mnuTablas});
+            this.mnuTablas,
+            this.toolCodeQr});
             this.mnuConfiguracion.Name = "mnuConfiguracion";
             this.mnuConfiguracion.Size = new System.Drawing.Size(95, 20);
             this.mnuConfiguracion.Text = "Configuración";
@@ -611,6 +613,13 @@
             this.toolImss.Size = new System.Drawing.Size(154, 22);
             this.toolImss.Text = "IMSS";
             this.toolImss.Click += new System.EventHandler(this.toolImss_Click);
+            // 
+            // toolCodeQr
+            // 
+            this.toolCodeQr.Name = "toolCodeQr";
+            this.toolCodeQr.Size = new System.Drawing.Size(180, 22);
+            this.toolCodeQr.Text = "Code QR";
+            this.toolCodeQr.Click += new System.EventHandler(this.toolCodeQr_Click);
             // 
             // stsPrincipal
             // 
@@ -736,6 +745,7 @@
         private System.ComponentModel.BackgroundWorker workAntiguedad;
         private System.Windows.Forms.ToolStripStatusLabel toolPorcentaje;
         private System.Windows.Forms.ToolStripMenuItem toolImportarEmpleados;
+        private System.Windows.Forms.ToolStripMenuItem toolCodeQr;
     }
 }
 

@@ -75,7 +75,8 @@
             "Empleados",
             "Departamentos",
             "Total General",
-            "Tabular"});
+            "Tabular",
+            "Recibos de Nomina"});
             this.cmbTipoReporte.Location = new System.Drawing.Point(16, 117);
             this.cmbTipoReporte.Name = "cmbTipoReporte";
             this.cmbTipoReporte.Size = new System.Drawing.Size(138, 21);
@@ -304,11 +305,6 @@
             // cmbOrden
             // 
             this.cmbOrden.FormattingEnabled = true;
-            this.cmbOrden.Items.AddRange(new object[] {
-            "No. de Empleado",
-            "Departamento",
-            "No. de Empleado, Departamento",
-            "Departamento, No. de Empleado"});
             this.cmbOrden.Location = new System.Drawing.Point(182, 281);
             this.cmbOrden.Name = "cmbOrden";
             this.cmbOrden.Size = new System.Drawing.Size(138, 21);

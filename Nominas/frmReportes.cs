@@ -101,6 +101,11 @@ namespace Nominas
             cmbPeriodo.DisplayMember = "pago";
             cmbPeriodo.ValueMember = "idperiodo";
 
+            cmbTipoReporte.SelectedIndex = 0;
+            cmbEmpleados.SelectedIndex = 0;
+            cmbNetoCero.SelectedIndex = 0;
+            cmbOrden.SelectedIndex = 3;
+
             if (_ReportePreNomina)
             {
                 dtpInicioPeriodo.Value = _inicio;
@@ -115,6 +120,7 @@ namespace Nominas
                 cmbEmpleadoInicial.Enabled = false;
                 cmbEmpleadoFinal.Enabled = false;
             }
+            
         } 
 
         private void btnAceptar_Click(object sender, EventArgs e)
@@ -167,6 +173,12 @@ namespace Nominas
                     cmbOrden.Enabled = true;
                     cmbNetoCero.Enabled = true;
                     noReporte = 5;
+                    cmbOrden.Items.Clear();
+                    cmbOrden.Items.Add("No. de Empleado");
+                    cmbOrden.Items.Add("Departamento");
+                    cmbOrden.Items.Add("No. de Empleado, Departamento");
+                    cmbOrden.Items.Add("Departamento, No. de Empleado");
+                    cmbOrden.SelectedIndex = 3;
                     break;
                 case "Departamentos":
                     cmbEmpleados.Enabled = true;
@@ -177,6 +189,9 @@ namespace Nominas
                     cmbOrden.Enabled = true;
                     cmbNetoCero.Enabled = true;
                     noReporte = 4;
+                    cmbOrden.Items.Clear();
+                    cmbOrden.Items.Add("Departamento");
+                    cmbOrden.SelectedIndex = 0;
                     break;
                 case "Total General":
                     cmbEmpleados.Enabled = true;
@@ -186,6 +201,11 @@ namespace Nominas
                     cmbEmpleadoFinal.Enabled = false;
                     cmbOrden.Enabled = false;
                     cmbNetoCero.Enabled = false;
+                    cmbOrden.Items.Clear();
+                    cmbOrden.Items.Add("No. de Empleado");
+                    cmbOrden.Items.Add("Departamento");
+                    cmbOrden.Items.Add("No. de Empleado, Departamento");
+                    cmbOrden.Items.Add("Departamento, No. de Empleado");
                     noReporte = 3;
                     break;
                 case "Tabular":
@@ -197,6 +217,27 @@ namespace Nominas
                     cmbOrden.Enabled = true;
                     cmbNetoCero.Enabled = true;
                     noReporte = 6;
+                    cmbOrden.Items.Clear();
+                    cmbOrden.Items.Add("No. de Empleado");
+                    cmbOrden.Items.Add("Departamento");
+                    cmbOrden.Items.Add("No. de Empleado, Departamento");
+                    cmbOrden.Items.Add("Departamento, No. de Empleado");
+                    break;
+                case "Recibos de Nomina":
+                    cmbEmpleados.Enabled = true;
+                    cmbDeptoInicial.Enabled = true;
+                    cmbDeptoFinal.Enabled = true;
+                    cmbEmpleadoInicial.Enabled = true;
+                    cmbEmpleadoFinal.Enabled = true;
+                    cmbOrden.Enabled = true;
+                    cmbNetoCero.Enabled = true;
+                    noReporte = 7;
+                    cmbOrden.Items.Clear();
+                    cmbOrden.Items.Add("No. de Empleado");
+                    cmbOrden.Items.Add("Departamento");
+                    cmbOrden.Items.Add("No. de Empleado, Departamento");
+                    cmbOrden.Items.Add("Departamento, No. de Empleado");
+                    cmbOrden.SelectedIndex = 0;
                     break;
             }
         }

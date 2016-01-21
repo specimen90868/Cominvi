@@ -6,10 +6,10 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>7.81813cm</Width>
+              <Width>7.26251cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>8.16618cm</Width>
+              <Width>7.82222cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -22,13 +22,13 @@
                       <TablixBody>
                         <TablixColumns>
                           <TablixColumn>
-                            <Width>0.85979cm</Width>
+                            <Width>0.67459cm</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>4.35229cm</Width>
+                            <Width>4.24646cm</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>2.60604cm</Width>
+                            <Width>2.34146cm</Width>
                           </TablixColumn>
                         </TablixColumns>
                         <TablixRows>
@@ -125,7 +125,7 @@
                                           <TextRun>
                                             <Value>=Fields!DeptoNoConcepto.Value</Value>
                                             <Style>
-                                              <FontSize>8pt</FontSize>
+                                              <FontSize>7pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -136,10 +136,7 @@
                                     </Paragraphs>
                                     <rd:DefaultName>noconcepto</rd:DefaultName>
                                     <Style>
-                                      <Border>
-                                        <Color>LightGrey</Color>
-                                        <Style>None</Style>
-                                      </Border>
+                                      <Border />
                                       <PaddingLeft>2pt</PaddingLeft>
                                       <PaddingRight>2pt</PaddingRight>
                                       <PaddingTop>2pt</PaddingTop>
@@ -159,7 +156,7 @@
                                           <TextRun>
                                             <Value>=Fields!DeptoConcepto.Value</Value>
                                             <Style>
-                                              <FontSize>8pt</FontSize>
+                                              <FontSize>7pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -168,10 +165,7 @@
                                     </Paragraphs>
                                     <rd:DefaultName>concepto</rd:DefaultName>
                                     <Style>
-                                      <Border>
-                                        <Color>LightGrey</Color>
-                                        <Style>None</Style>
-                                      </Border>
+                                      <Border />
                                       <PaddingLeft>2pt</PaddingLeft>
                                       <PaddingRight>2pt</PaddingRight>
                                       <PaddingTop>2pt</PaddingTop>
@@ -191,7 +185,7 @@
                                           <TextRun>
                                             <Value>=Fields!DeptoImporte.Value</Value>
                                             <Style>
-                                              <FontSize>8pt</FontSize>
+                                              <FontSize>7pt</FontSize>
                                               <Format>n2</Format>
                                             </Style>
                                           </TextRun>
@@ -203,10 +197,7 @@
                                     </Paragraphs>
                                     <rd:DefaultName>importe</rd:DefaultName>
                                     <Style>
-                                      <Border>
-                                        <Color>LightGrey</Color>
-                                        <Style>None</Style>
-                                      </Border>
+                                      <Border />
                                       <PaddingLeft>2pt</PaddingLeft>
                                       <PaddingRight>2pt</PaddingRight>
                                       <PaddingTop>2pt</PaddingTop>
@@ -372,7 +363,8 @@
                                           <TextRun>
                                             <Value>Total de percepciones</Value>
                                             <Style>
-                                              <FontSize>8pt</FontSize>
+                                              <FontSize>7pt</FontSize>
+                                              <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -381,10 +373,7 @@
                                     </Paragraphs>
                                     <rd:DefaultName>Textbox159</rd:DefaultName>
                                     <Style>
-                                      <Border>
-                                        <Color>LightGrey</Color>
-                                        <Style>None</Style>
-                                      </Border>
+                                      <Border />
                                       <PaddingLeft>2pt</PaddingLeft>
                                       <PaddingRight>2pt</PaddingRight>
                                       <PaddingTop>2pt</PaddingTop>
@@ -404,7 +393,8 @@
                                           <TextRun>
                                             <Value>=Sum(Fields!DeptoImporte.Value)</Value>
                                             <Style>
-                                              <FontSize>8pt</FontSize>
+                                              <FontSize>7pt</FontSize>
+                                              <FontWeight>Bold</FontWeight>
                                               <Format>n2</Format>
                                             </Style>
                                           </TextRun>
@@ -416,10 +406,7 @@
                                     </Paragraphs>
                                     <rd:DefaultName>Textbox160</rd:DefaultName>
                                     <Style>
-                                      <Border>
-                                        <Color>LightGrey</Color>
-                                        <Style>None</Style>
-                                      </Border>
+                                      <Border />
                                       <PaddingLeft>2pt</PaddingLeft>
                                       <PaddingRight>2pt</PaddingRight>
                                       <PaddingTop>2pt</PaddingTop>
@@ -480,13 +467,13 @@
                       <TablixBody>
                         <TablixColumns>
                           <TablixColumn>
-                            <Width>0.94935cm</Width>
+                            <Width>0.8347cm</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>5.12977cm</Width>
+                            <Width>4.37287cm</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>2.08706cm</Width>
+                            <Width>2.61466cm</Width>
                           </TablixColumn>
                         </TablixColumns>
                         <TablixRows>
@@ -583,7 +570,7 @@
                                           <TextRun>
                                             <Value>=Fields!DeptoNoConcepto.Value</Value>
                                             <Style>
-                                              <FontSize>8pt</FontSize>
+                                              <FontSize>7pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -594,10 +581,7 @@
                                     </Paragraphs>
                                     <rd:DefaultName>noconcepto1</rd:DefaultName>
                                     <Style>
-                                      <Border>
-                                        <Color>LightGrey</Color>
-                                        <Style>None</Style>
-                                      </Border>
+                                      <Border />
                                       <PaddingLeft>2pt</PaddingLeft>
                                       <PaddingRight>2pt</PaddingRight>
                                       <PaddingTop>2pt</PaddingTop>
@@ -617,7 +601,7 @@
                                           <TextRun>
                                             <Value>=Fields!DeptoConcepto.Value</Value>
                                             <Style>
-                                              <FontSize>8pt</FontSize>
+                                              <FontSize>7pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -626,10 +610,7 @@
                                     </Paragraphs>
                                     <rd:DefaultName>concepto1</rd:DefaultName>
                                     <Style>
-                                      <Border>
-                                        <Color>LightGrey</Color>
-                                        <Style>None</Style>
-                                      </Border>
+                                      <Border />
                                       <PaddingLeft>2pt</PaddingLeft>
                                       <PaddingRight>2pt</PaddingRight>
                                       <PaddingTop>2pt</PaddingTop>
@@ -649,7 +630,7 @@
                                           <TextRun>
                                             <Value>=Fields!DeptoImporte.Value</Value>
                                             <Style>
-                                              <FontSize>8pt</FontSize>
+                                              <FontSize>7pt</FontSize>
                                               <Format>n2</Format>
                                             </Style>
                                           </TextRun>
@@ -661,10 +642,7 @@
                                     </Paragraphs>
                                     <rd:DefaultName>importe1</rd:DefaultName>
                                     <Style>
-                                      <Border>
-                                        <Color>LightGrey</Color>
-                                        <Style>None</Style>
-                                      </Border>
+                                      <Border />
                                       <PaddingLeft>2pt</PaddingLeft>
                                       <PaddingRight>2pt</PaddingRight>
                                       <PaddingTop>2pt</PaddingTop>
@@ -832,7 +810,8 @@
                                           <TextRun>
                                             <Value>Total de deducciones</Value>
                                             <Style>
-                                              <FontSize>8pt</FontSize>
+                                              <FontSize>7pt</FontSize>
+                                              <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -841,10 +820,7 @@
                                     </Paragraphs>
                                     <rd:DefaultName>Textbox162</rd:DefaultName>
                                     <Style>
-                                      <Border>
-                                        <Color>LightGrey</Color>
-                                        <Style>None</Style>
-                                      </Border>
+                                      <Border />
                                       <PaddingLeft>2pt</PaddingLeft>
                                       <PaddingRight>2pt</PaddingRight>
                                       <PaddingTop>2pt</PaddingTop>
@@ -864,7 +840,8 @@
                                           <TextRun>
                                             <Value>=Sum(Fields!DeptoImporte.Value)</Value>
                                             <Style>
-                                              <FontSize>8pt</FontSize>
+                                              <FontSize>7pt</FontSize>
+                                              <FontWeight>Bold</FontWeight>
                                               <Format>n2</Format>
                                             </Style>
                                           </TextRun>
@@ -876,10 +853,7 @@
                                     </Paragraphs>
                                     <rd:DefaultName>Textbox157</rd:DefaultName>
                                     <Style>
-                                      <Border>
-                                        <Color>LightGrey</Color>
-                                        <Style>None</Style>
-                                      </Border>
+                                      <Border />
                                       <PaddingLeft>2pt</PaddingLeft>
                                       <PaddingRight>2pt</PaddingRight>
                                       <PaddingTop>2pt</PaddingTop>
@@ -945,13 +919,13 @@
                       <TablixBody>
                         <TablixColumns>
                           <TablixColumn>
-                            <Width>0.85979cm</Width>
+                            <Width>0.67459cm</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>4.35229cm</Width>
+                            <Width>4.24646cm</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>2.60604cm</Width>
+                            <Width>2.34146cm</Width>
                           </TablixColumn>
                         </TablixColumns>
                         <TablixRows>
@@ -1002,6 +976,7 @@
                                             <Value>Netgo a pagar</Value>
                                             <Style>
                                               <FontSize>8pt</FontSize>
+                                              <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -1207,7 +1182,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>2.81085cm</Size>
+                <Size>2.12293cm</Size>
                 <CellContents>
                   <Textbox Name="departamento">
                     <CanGrow>true</CanGrow>
@@ -1218,7 +1193,7 @@
                           <TextRun>
                             <Value>=Fields!DeptoDepartamento.Value</Value>
                             <Style>
-                              <FontSize>8pt</FontSize>
+                              <FontSize>7pt</FontSize>
                               <FontWeight>Bold</FontWeight>
                             </Style>
                           </TextRun>
@@ -1252,10 +1227,15 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
+        <RepeatColumnHeaders>true</RepeatColumnHeaders>
+        <RepeatRowHeaders>true</RepeatRowHeaders>
         <DataSetName>dsReporteNominaDepto</DataSetName>
+        <PageBreak>
+          <BreakLocation>End</BreakLocation>
+        </PageBreak>
         <Top>0.21573cm</Top>
         <Height>3.46688cm</Height>
-        <Width>18.79516cm</Width>
+        <Width>17.20766cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1269,10 +1249,10 @@
               <Width>0.85979cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>4.35229cm</Width>
+              <Width>4.06126cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.60605cm</Width>
+              <Width>2.34146cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -1420,7 +1400,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Total de percepciones</Value>
+                              <Value />
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -1451,7 +1431,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!CaratulaImporte.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>#,0.00;(#,0.00)</Format>
@@ -1464,6 +1444,107 @@
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox34</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.6cm</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox11">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox11</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox12">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Total de percepciones</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox12</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox13">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Sum(Fields!CaratulaImporte.Value)</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Format>#,0.00;(#,0.00)</Format>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox13</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>None</Style>
@@ -1495,6 +1576,9 @@
             <TablixMember>
               <KeepWithGroup>Before</KeepWithGroup>
             </TablixMember>
+            <TablixMember>
+              <KeepWithGroup>Before</KeepWithGroup>
+            </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>dsReporteNominaGeneral</DataSetName>
@@ -1507,10 +1591,10 @@
             </FilterValues>
           </Filter>
         </Filters>
-        <Top>5.164cm</Top>
-        <Left>2.81085cm</Left>
-        <Height>1.2cm</Height>
-        <Width>7.81813cm</Width>
+        <Top>5.199cm</Top>
+        <Left>2.12293cm</Left>
+        <Height>1.8cm</Height>
+        <Width>7.26251cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -1525,10 +1609,10 @@
               <Width>0.94935cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>5.12977cm</Width>
+              <Width>4.22294cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.08706cm</Width>
+              <Width>2.61466cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -1676,7 +1760,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Total de deducciones</Value>
+                              <Value />
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -1707,7 +1791,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!CaratulaImporte.Value)</Value>
+                              <Value />
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>#,0.00;(#,0.00)</Format>
@@ -1720,6 +1804,107 @@
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox37</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.6cm</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox14">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox14</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox15">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Total de deducciones</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox15</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox16">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Sum(Fields!CaratulaImporte.Value)</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Format>#,0.00;(#,0.00)</Format>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox16</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>None</Style>
@@ -1751,6 +1936,9 @@
             <TablixMember>
               <KeepWithGroup>Before</KeepWithGroup>
             </TablixMember>
+            <TablixMember>
+              <KeepWithGroup>Before</KeepWithGroup>
+            </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>dsReporteNominaGeneral</DataSetName>
@@ -1763,10 +1951,10 @@
             </FilterValues>
           </Filter>
         </Filters>
-        <Top>5.164cm</Top>
-        <Left>10.62898cm</Left>
-        <Height>1.2cm</Height>
-        <Width>8.16618cm</Width>
+        <Top>5.199cm</Top>
+        <Left>9.42072cm</Left>
+        <Height>1.8cm</Height>
+        <Width>7.78695cm</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -1784,6 +1972,7 @@
                 <Value>Neto general</Value>
                 <Style>
                   <FontSize>8pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -1791,10 +1980,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox20</rd:DefaultName>
-        <Top>6.54039cm</Top>
-        <Left>11.57833cm</Left>
+        <Top>7.17539cm</Top>
+        <Left>10.62583cm</Left>
         <Height>0.51181cm</Height>
-        <Width>1.84736cm</Width>
+        <Width>2.16486cm</Width>
         <ZIndex>3</ZIndex>
         <Style>
           <Border>
@@ -1827,10 +2016,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox18</rd:DefaultName>
-        <Top>6.54039cm</Top>
-        <Left>14.31961cm</Left>
+        <Top>7.17539cm</Top>
+        <Left>13.04961cm</Left>
         <Height>0.51181cm</Height>
-        <Width>4.47555cm</Width>
+        <Width>4.15805cm</Width>
         <ZIndex>4</ZIndex>
         <Style>
           <Border>
@@ -1878,7 +2067,7 @@
         <Top>4.94771cm</Top>
         <Left>0.26458cm</Left>
         <Height>0cm</Height>
-        <Width>18.53058cm</Width>
+        <Width>16.94309cm</Width>
         <ZIndex>6</ZIndex>
         <Style>
           <Border>
@@ -1903,7 +2092,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>6.50511cm</Top>
+        <Top>7.14011cm</Top>
         <Left>3.67064cm</Left>
         <Height>0.6cm</Height>
         <Width>4.35229cm</Width>
@@ -1919,10 +2108,10 @@
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>2.89584in</Height>
+    <Height>3.29167in</Height>
     <Style />
   </Body>
-  <Width>7.43453in</Width>
+  <Width>6.82676in</Width>
   <Page>
     <PageHeader>
       <Height>3.8512cm</Height>
@@ -1949,7 +2138,7 @@
           </Paragraphs>
           <rd:DefaultName>empresa</rd:DefaultName>
           <Top>0.03528cm</Top>
-          <Left>5.34141cm</Left>
+          <Left>5.02391cm</Left>
           <Height>0.6cm</Height>
           <Width>9.35271cm</Width>
           <Style>
@@ -1982,9 +2171,9 @@
           </Paragraphs>
           <rd:DefaultName>Textbox2</rd:DefaultName>
           <Top>1.58806cm</Top>
-          <Left>5.34141cm</Left>
+          <Left>5.02391cm</Left>
           <Height>0.6cm</Height>
-          <Width>12.89813cm</Width>
+          <Width>11.99854cm</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>
@@ -2076,7 +2265,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox5</rd:DefaultName>
           <Top>2.44835cm</Top>
-          <Left>15.28564cm</Left>
+          <Left>13.69814cm</Left>
           <Height>0.55109cm</Height>
           <Width>1.12417cm</Width>
           <ZIndex>4</ZIndex>
@@ -2108,7 +2297,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox6</rd:DefaultName>
           <Top>3.11891cm</Top>
-          <Left>15.28564cm</Left>
+          <Left>13.69814cm</Left>
           <Height>0.54307cm</Height>
           <Width>1.12417cm</Width>
           <ZIndex>5</ZIndex>
@@ -2143,7 +2332,7 @@
           </Paragraphs>
           <rd:DefaultName>dia</rd:DefaultName>
           <Top>2.44835cm</Top>
-          <Left>16.5862cm</Left>
+          <Left>14.9987cm</Left>
           <Height>0.55109cm</Height>
           <Width>2.20896cm</Width>
           <ZIndex>6</ZIndex>
@@ -2178,7 +2367,7 @@
           </Paragraphs>
           <rd:DefaultName>hora</rd:DefaultName>
           <Top>3.11891cm</Top>
-          <Left>16.5862cm</Left>
+          <Left>14.9987cm</Left>
           <Height>0.54307cm</Height>
           <Width>2.20896cm</Width>
           <ZIndex>7</ZIndex>
@@ -2212,9 +2401,9 @@
           </Paragraphs>
           <rd:DefaultName>Textbox7</rd:DefaultName>
           <Top>0.81167cm</Top>
-          <Left>5.34141cm</Left>
+          <Left>5.02391cm</Left>
           <Height>0.6cm</Height>
-          <Width>9.35271cm</Width>
+          <Width>11.99854cm</Width>
           <ZIndex>8</ZIndex>
           <Style>
             <Border>
@@ -2232,7 +2421,7 @@
           <MIMEType>image/jpeg</MIMEType>
           <Sizing>FitProportional</Sizing>
           <Top>0.3175cm</Top>
-          <Left>0.26458cm</Left>
+          <Left>0.19898cm</Left>
           <Height>1.82082cm</Height>
           <Width>4.64854cm</Width>
           <ZIndex>9</ZIndex>
@@ -2270,7 +2459,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox9</rd:DefaultName>
           <Top>0.17639cm</Top>
-          <Left>16.00412cm</Left>
+          <Left>14.41662cm</Left>
           <Height>0.6cm</Height>
           <Width>2.5cm</Width>
           <Style>
@@ -2299,7 +2488,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox10</rd:DefaultName>
           <Top>0.17639cm</Top>
-          <Left>14.57127cm</Left>
+          <Left>12.98377cm</Left>
           <Height>0.6cm</Height>
           <Width>1.36229cm</Width>
           <ZIndex>1</ZIndex>
@@ -2320,8 +2509,8 @@
         </Border>
       </Style>
     </PageFooter>
-    <PageHeight>29.7cm</PageHeight>
-    <PageWidth>21cm</PageWidth>
+    <PageHeight>27.94cm</PageHeight>
+    <PageWidth>21.59cm</PageWidth>
     <LeftMargin>2cm</LeftMargin>
     <RightMargin>2cm</RightMargin>
     <TopMargin>2cm</TopMargin>

@@ -46,7 +46,21 @@ namespace Nominas
             img.idpersona = _idpersona;
             img.tipopersona = _tipopersona;
 
-            List<Imagen.Core.Imagenes> lstImagen = ih.obtenerImagen(img);
+            List<Imagen.Core.Imagenes> lstImagen = new List<Imagen.Core.Imagenes>();
+
+            try
+            {
+                cnx.Open();
+                lstImagen = ih.obtenerImagen(img);
+                cnx.Close();
+                cnx.Dispose();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error: Al obtener la imagen.", "Error");
+                throw;
+            }
+            
 
             if (lstImagen.Count != 0)
             {

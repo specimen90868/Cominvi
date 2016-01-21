@@ -217,14 +217,17 @@ namespace Nominas
                 try
                 {
                     cnx.Open();
-                    idConcepto = (int)ch.obtenerIdConcepto(fila.Cells["concepto"].Value.ToString(), idEmpresa);
+                    idConcepto = (int)ch.obtenerIdConcepto(fila.Cells["concepto"].Value.ToString().TrimStart().TrimEnd(), idEmpresa);
                     idEmpleado = (int)emph.obtenerIdTrabajador(fila.Cells["noempleado"].Value.ToString(), idEmpresa);
                     cnx.Close();
 
                 }
                 catch (Exception error)
                 {
-                    MessageBox.Show("Error: Obtener ID del concepto. \r\n \r\n" + error.Message, "Error");
+                    MessageBox.Show("Error: Obtener ID del concepto. \r\n " + 
+                        fila.Cells["concepto"].Value.ToString() + "\r\n" +
+                        "No. Empleado: " + fila.Cells["noempleado"].Value.ToString() + "\r\n" +
+                        error.Message, "Error");
                     return;
                 }
 
@@ -464,6 +467,7 @@ namespace Nominas
                 dt.Columns.Add("cantidad", typeof(Double));
                 dt.Columns.Add("fechainicio", typeof(DateTime));
                 dt.Columns.Add("fechafin", typeof(DateTime));
+                dt.Columns.Add("noperiodo", typeof(Int32));
                 dt.Columns.Add("diaslaborados", typeof(Int32));
                 dt.Columns.Add("guardada", typeof(Boolean));
                 dt.Columns.Add("tiponomina", typeof(Int32));
@@ -485,6 +489,7 @@ namespace Nominas
                     dtFila["cantidad"] = lstMovimientos[i].cantidad;
                     dtFila["fechainicio"] = lstMovimientos[i].fechainicio;
                     dtFila["fechafin"] = lstMovimientos[i].fechafin;
+                    dtFila["noperiodo"] = 0;
                     dtFila["diaslaborados"] = 0;
                     dtFila["guardada"] = lstMovimientos[i].guardada;
                     dtFila["tiponomina"] = lstMovimientos[i].tiponomina;
@@ -520,7 +525,7 @@ namespace Nominas
                 dt.Columns.Add("cantidad", typeof(Decimal));
                 dt.Columns.Add("fechainicio", typeof(DateTime));
                 dt.Columns.Add("fechafin", typeof(DateTime));
-
+                
                 int index = 1;
                 for (int i = 0; i < lstOtrasDeducciones.Count; i++)
                 {

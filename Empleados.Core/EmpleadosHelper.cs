@@ -232,7 +232,7 @@ namespace Empleados.Core
             DataTable dtFechas = new DataTable();
             List<Empleados> lstFechas = new List<Empleados>();
 
-            Command.CommandText = "select idtrabajador, fechaingreso, fechaantiguedad from trabajadores where idempresa = @idempresa and estatus = 1";
+            Command.CommandText = "select idtrabajador, fechaingreso, fechaantiguedad, antiguedad, antiguedadmod, idperiodo from trabajadores where idempresa = @idempresa and estatus = 1";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", e.idempresa);
 
@@ -244,6 +244,9 @@ namespace Empleados.Core
                 empleado.idtrabajador = int.Parse(dtFechas.Rows[i]["idtrabajador"].ToString());
                 empleado.fechaingreso = DateTime.Parse(dtFechas.Rows[i]["fechaingreso"].ToString());
                 empleado.fechaantiguedad = DateTime.Parse(dtFechas.Rows[i]["fechaantiguedad"].ToString());
+                empleado.idperiodo = int.Parse(dtFechas.Rows[i]["idperiodo"].ToString());
+                empleado.antiguedad = int.Parse(dtFechas.Rows[i]["antiguedad"].ToString());
+                empleado.antiguedadmod = int.Parse(dtFechas.Rows[i]["antiguedadmod"].ToString());
                 lstFechas.Add(empleado);
             }
 
@@ -895,14 +898,16 @@ namespace Empleados.Core
             if (residuo == 0)
                 dv = "0";
 
-            if (residuo > 10 || residuo < 10)
+            if (residuo > 10)
+                dv = "0";
+            
+            if (residuo < 10)
             {
                 dv = (11 - residuo).ToString();
                 if (dv == "10")
                     dv = "A";
             }
-            
-
+               
             if (residuo == 10)
                 dv = "A";
 

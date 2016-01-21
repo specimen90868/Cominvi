@@ -75,6 +75,12 @@ namespace Nominas
                     }
                 }
 
+                if (!grava && exenta)
+                {
+                    vn.gravado = 0;
+                    vn.exento = vn.cantidad;
+                }
+
                 #region SWITCH GRAVADOS Y EXENTOS
                 //switch (lstConceptosPercepciones[i].noconcepto)
                 //{
@@ -809,6 +815,12 @@ namespace Nominas
                         {
                             vn.gravado = vn.cantidad - vn.exento;
                         }
+                    }
+
+                    if (!grava && exenta)
+                    {
+                        vn.gravado = 0;
+                        vn.exento = vn.cantidad;
                     }
 
                     #region SWITCH GRAVADOS Y EXENTOS

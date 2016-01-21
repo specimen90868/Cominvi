@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Configuration;
 using System.Data.SqlClient;
+using Gma.QrCodeNet.Encoding;
+using Gma.QrCodeNet.Encoding.Windows.Render;
+using System.IO;
+using System.Drawing.Imaging;
 
 namespace Nominas
 {
@@ -614,6 +618,7 @@ namespace Nominas
 
         private void workAntiguedad_DoWork(object sender, DoWorkEventArgs e)
         {
+            int diasPeriodo = 0;
             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();
             cmd.Connection = cnx;
@@ -622,6 +627,9 @@ namespace Nominas
 
             Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
             eh.Command = cmd;
+
+            Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
+            ph.Command = cmd;
 
             Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
             empleado.idempresa = GLOBALES.IDEMPRESA;
@@ -636,16 +644,59 @@ namespace Nominas
                 DateTime fechaAntiguedad, fechaAntiguedadMod;
                 int progreso = 0;
                 int total = lstFechas.Count;
+                DateTime inicioPeriodo = DateTime.Now.Date, finPeriodo = DateTime.Now.Date;
+                DateTime fechaCumpleAnio, fechaCumpleAnioMod;
                 for (int i = 0; i < lstFechas.Count; i++)
                 {
                     progreso = (i * 100) / total;
                     workAntiguedad.ReportProgress(progreso);
 
-                    fechaAntiguedad = lstFechas[i].fechaingreso;
-                    antiguedad = (DateTime.Now.Subtract(fechaAntiguedad).Days / 365);
+                    Periodos.Core.Periodos periodo = new Periodos.Core.Periodos();
+                    periodo.idperiodo = lstFechas[i].idperiodo;
 
-                    fechaAntiguedadMod = lstFechas[i].fechaantiguedad;
-                    antiguedadmod = (DateTime.Now.Subtract(fechaAntiguedadMod).Days / 365);
+                    cnx.Open();
+                    diasPeriodo = (int)ph.DiasDePago(periodo);
+                    cnx.Close();
+
+                    if (diasPeriodo == 7)
+                    {
+                        DateTime dt = DateTime.Now.Date;
+                        while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
+                        inicioPeriodo = dt.Date;
+                        finPeriodo = dt.AddDays(6);
+                    }
+                    else
+                    {
+                        if (DateTime.Now.Day <= 15)
+                        {
+                            inicioPeriodo = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                            finPeriodo = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 15);
+                        }
+                        else
+                        {
+                            inicioPeriodo = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 16);
+                            finPeriodo = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
+                        }
+                    }
+
+                    fechaCumpleAnio = lstFechas[i].fechaingreso.AddYears(lstFechas[i].antiguedad + 1);
+                    fechaCumpleAnioMod = lstFechas[i].fechaantiguedad.AddYears(lstFechas[i].antiguedadmod + 1);
+
+                    if (fechaCumpleAnio.Date >= inicioPeriodo.Date && fechaCumpleAnio.Date <= finPeriodo.Date)
+                    {
+                        antiguedad = lstFechas[i].antiguedadmod + 1;
+                    }
+
+                    if (fechaCumpleAnioMod.Date >= inicioPeriodo.Date && fechaCumpleAnioMod.Date <= finPeriodo.Date)
+                    {
+                        antiguedadmod = lstFechas[i].antiguedadmod + 1;
+                    }
+
+                    //fechaAntiguedad = lstFechas[i].fechaingreso;
+                    //antiguedad = (DateTime.Now.Subtract(fechaAntiguedad).Days / 365);
+
+                    //fechaAntiguedadMod = lstFechas[i].fechaantiguedad;
+                    //antiguedadmod = (DateTime.Now.Subtract(fechaAntiguedadMod).Days / 365);
 
                     empleado = new Empleados.Core.Empleados();
                     empleado.antiguedad = antiguedad;
@@ -691,6 +742,20 @@ namespace Nominas
             frmListaCargaEmpleados lce = new frmListaCargaEmpleados();
             lce.MdiParent = this;
             lce.Show();
+        }
+
+        private void toolCodeQr_Click(object sender, EventArgs e)
+        {
+            var qrEncoder = new QrEncoder(ErrorCorrectionLevel.H);
+            var qrCode = qrEncoder.Encode("?re=CSM140717CP7&rr=COCJ690422J33&tt=0000001039.550000&id=EE64CA34-FAEF-4165-90B9-E40CB30ACA5D");
+
+            var renderer = new GraphicsRenderer(new FixedModuleSize(2, QuietZoneModules.Two), Brushes.Black, Brushes.White);
+            
+            using (var stream = new FileStream("qrcode.png", FileMode.Create))
+                renderer.WriteToStream(qrCode.Matrix, ImageFormat.Png, stream);
+
+            //Bitmap bmp = new Bitmap("qrcode.png");
+            //qr.Image = bmp;
         }
       
     }

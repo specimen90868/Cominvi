@@ -851,6 +851,7 @@
     <EmbeddedResource Include="Reportes\rptPreNominaDepto.rdlc" />
     <EmbeddedResource Include="Reportes\rptPreNominaEmpleados.rdlc" />
     <EmbeddedResource Include="Reportes\rptPreNominaCaratula.rdlc" />
+    <EmbeddedResource Include="Reportes\rptPreNominaRecibo.rdlc" />
     <None Include="dsReportes.xsc">
       <DependentUpon>dsReportes.xsd</DependentUpon>
     </None>
