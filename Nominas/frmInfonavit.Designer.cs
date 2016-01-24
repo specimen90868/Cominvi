@@ -46,7 +46,7 @@
             this.txtNumeroCredito = new System.Windows.Forms.TextBox();
             this.Label50 = new System.Windows.Forms.Label();
             this.Label51 = new System.Windows.Forms.Label();
-            this.chkActivo = new System.Windows.Forms.CheckBox();
+            this.chkInactivo = new System.Windows.Forms.CheckBox();
             this.lblPeriodo = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -228,15 +228,15 @@
             this.Label51.TabIndex = 262;
             this.Label51.Text = "Descuento por:";
             // 
-            // chkActivo
+            // chkInactivo
             // 
-            this.chkActivo.AutoSize = true;
-            this.chkActivo.Location = new System.Drawing.Point(156, 129);
-            this.chkActivo.Name = "chkActivo";
-            this.chkActivo.Size = new System.Drawing.Size(56, 17);
-            this.chkActivo.TabIndex = 266;
-            this.chkActivo.Text = "Activo";
-            this.chkActivo.UseVisualStyleBackColor = true;
+            this.chkInactivo.AutoSize = true;
+            this.chkInactivo.Location = new System.Drawing.Point(156, 129);
+            this.chkInactivo.Name = "chkInactivo";
+            this.chkInactivo.Size = new System.Drawing.Size(80, 17);
+            this.chkInactivo.TabIndex = 266;
+            this.chkInactivo.Text = "No calcular";
+            this.chkInactivo.UseVisualStyleBackColor = true;
             // 
             // lblPeriodo
             // 
@@ -365,7 +365,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblPeriodo);
-            this.Controls.Add(this.chkActivo);
+            this.Controls.Add(this.chkInactivo);
             this.Controls.Add(this.rbtnPesos);
             this.Controls.Add(this.rbtnVsmdf);
             this.Controls.Add(this.Label52);
@@ -410,7 +410,7 @@
         internal System.Windows.Forms.TextBox txtNumeroCredito;
         internal System.Windows.Forms.Label Label50;
         internal System.Windows.Forms.Label Label51;
-        private System.Windows.Forms.CheckBox chkActivo;
+        private System.Windows.Forms.CheckBox chkInactivo;
         private System.Windows.Forms.Label lblPeriodo;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;

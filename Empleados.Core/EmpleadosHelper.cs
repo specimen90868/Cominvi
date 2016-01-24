@@ -488,13 +488,11 @@ namespace Empleados.Core
             return Command.ExecuteNonQuery();
         }
 
-        public int actualizaAntiguedad(Empleados e)
+        public int actualizaAntiguedad(int idEmpresa)
         {
-            Command.CommandText = "update trabajadores set antiguedad = @antiguedad, antiguedadmod = @antiguedadmod where idtrabajador = @idtrabajador";
+            Command.CommandText = "exec stp_ActualizaAntiguedad @idempresa";
             Command.Parameters.Clear();
-            Command.Parameters.AddWithValue("antiguedad", e.antiguedad);
-            Command.Parameters.AddWithValue("antiguedadmod", e.antiguedadmod);
-            Command.Parameters.AddWithValue("idtrabajador", e.idtrabajador);
+            Command.Parameters.AddWithValue("idempresa", idEmpresa);
             return Command.ExecuteNonQuery();
         }
 
@@ -901,7 +899,7 @@ namespace Empleados.Core
             if (residuo > 10)
                 dv = "0";
             
-            if (residuo < 10)
+            if (residuo < 10 && residuo > 0)
             {
                 dv = (11 - residuo).ToString();
                 if (dv == "10")

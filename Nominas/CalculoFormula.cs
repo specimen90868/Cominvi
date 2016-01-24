@@ -449,25 +449,30 @@ namespace Nominas
 
                         if (lstInfonavit.Count != 0)
                         {
-                            Conceptos.Core.ConceptosHelper ch = new Conceptos.Core.ConceptosHelper();
-                            ch.Command = cmd;
-                            Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
-                            concepto.idempresa = GLOBALES.IDEMPRESA;
+                            if (lstInfonavit[0].fecha <= finPeriodo)
+                            {
+                                Conceptos.Core.ConceptosHelper ch = new Conceptos.Core.ConceptosHelper();
+                                ch.Command = cmd;
+                                Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
+                                concepto.idempresa = GLOBALES.IDEMPRESA;
 
-                            if (lstInfonavit[0].descuento == GLOBALES.dPORCENTAJE)
-                                concepto.noconcepto = 10; //INFONAVIT PORCENTAJE
+                                if (lstInfonavit[0].descuento == GLOBALES.dPORCENTAJE)
+                                    concepto.noconcepto = 10; //INFONAVIT PORCENTAJE
 
-                            if (lstInfonavit[0].descuento == GLOBALES.dVSMDF)
-                                concepto.noconcepto = 11; //INFONAVIT VSMDF
+                                if (lstInfonavit[0].descuento == GLOBALES.dVSMDF)
+                                    concepto.noconcepto = 11; //INFONAVIT VSMDF
 
-                            if (lstInfonavit[0].descuento == GLOBALES.dPESOS)
-                                concepto.noconcepto = 12; //INFONAVIT FIJO
+                                if (lstInfonavit[0].descuento == GLOBALES.dPESOS)
+                                    concepto.noconcepto = 12; //INFONAVIT FIJO
 
-                            cnx.Open();
-                            formula = ch.obtenerFormula(concepto).ToString();
-                            cnx.Close();
-                            
-                            return calcularFormula();
+                                cnx.Open();
+                                formula = ch.obtenerFormula(concepto).ToString();
+                                cnx.Close();
+
+                                return calcularFormula();
+                            }
+                            else
+                                return 0;
                         }
                         else
                             return 0;

@@ -130,6 +130,7 @@ namespace Nominas
                              Sueldo = e.sueldo,
                              Cuenta = e.cuenta,
                              Clabe = e.clabe,
+                             Estado = e.estatus == 1 ? "ALTA" : "BAJA",
                              FechaBaja = b != null ? b.fecha.ToShortDateString() : " "
                          };
                 dgvEmpleados.DataSource = em.ToList();
@@ -518,7 +519,6 @@ namespace Nominas
         private void toolExportar_Click(object sender, EventArgs e)
         {
             frmExportarEmpleado ee = new frmExportarEmpleado();
-            ee._estatusEmpleados = _empleadoAltaBaja;
             ee.Show();
         }
     }

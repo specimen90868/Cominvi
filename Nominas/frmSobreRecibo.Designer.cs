@@ -34,6 +34,7 @@
             this.toolHoraExtra = new System.Windows.Forms.ToolStripButton();
             this.toolAyudaDespensa = new System.Windows.Forms.ToolStripButton();
             this.toolSubsidio = new System.Windows.Forms.ToolStripButton();
+            this.toolIspt = new System.Windows.Forms.ToolStripButton();
             this.toolEliminar = new System.Windows.Forms.ToolStripButton();
             this.TabPrincipal = new System.Windows.Forms.TabControl();
             this.tabPercepcionesDeducciones = new System.Windows.Forms.TabPage();
@@ -154,7 +155,8 @@
             this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.toolIspt = new System.Windows.Forms.ToolStripButton();
+            this.label24 = new System.Windows.Forms.Label();
+            this.txtFechaIngreso = new System.Windows.Forms.TextBox();
             this.toolAcciones.SuspendLayout();
             this.TabPrincipal.SuspendLayout();
             this.tabPercepcionesDeducciones.SuspendLayout();
@@ -242,6 +244,15 @@
             this.toolSubsidio.Size = new System.Drawing.Size(72, 22);
             this.toolSubsidio.Text = "Subsidio";
             this.toolSubsidio.Click += new System.EventHandler(this.toolSubsidio_Click);
+            // 
+            // toolIspt
+            // 
+            this.toolIspt.Image = ((System.Drawing.Image)(resources.GetObject("toolIspt.Image")));
+            this.toolIspt.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolIspt.Name = "toolIspt";
+            this.toolIspt.Size = new System.Drawing.Size(46, 22);
+            this.toolIspt.Text = "Ispt";
+            this.toolIspt.Click += new System.EventHandler(this.toolIspt_Click);
             // 
             // toolEliminar
             // 
@@ -1223,6 +1234,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.txtFechaIngreso);
+            this.panel1.Controls.Add(this.label24);
             this.panel1.Controls.Add(this.txtSueldo);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.txtPuesto);
@@ -1299,7 +1312,7 @@
             this.txtNombreCompleto.BackColor = System.Drawing.SystemColors.Control;
             this.txtNombreCompleto.Location = new System.Drawing.Point(147, 7);
             this.txtNombreCompleto.Name = "txtNombreCompleto";
-            this.txtNombreCompleto.Size = new System.Drawing.Size(555, 20);
+            this.txtNombreCompleto.Size = new System.Drawing.Size(367, 20);
             this.txtNombreCompleto.TabIndex = 24;
             // 
             // mtxtNoEmpleado
@@ -1435,14 +1448,24 @@
             this.dataGridViewTextBoxColumn15.HeaderText = "Fin";
             this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
             // 
-            // toolIspt
+            // label24
             // 
-            this.toolIspt.Image = ((System.Drawing.Image)(resources.GetObject("toolIspt.Image")));
-            this.toolIspt.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolIspt.Name = "toolIspt";
-            this.toolIspt.Size = new System.Drawing.Size(46, 22);
-            this.toolIspt.Text = "Ispt";
-            this.toolIspt.Click += new System.EventHandler(this.toolIspt_Click);
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label24.Location = new System.Drawing.Point(520, 7);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(53, 13);
+            this.label24.TabIndex = 31;
+            this.label24.Text = "Ingreso:";
+            // 
+            // txtFechaIngreso
+            // 
+            this.txtFechaIngreso.BackColor = System.Drawing.SystemColors.Control;
+            this.txtFechaIngreso.Location = new System.Drawing.Point(576, 6);
+            this.txtFechaIngreso.Name = "txtFechaIngreso";
+            this.txtFechaIngreso.Size = new System.Drawing.Size(126, 20);
+            this.txtFechaIngreso.TabIndex = 32;
+            this.txtFechaIngreso.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // frmSobreRecibo
             // 
@@ -1639,5 +1662,7 @@
         private System.Windows.Forms.TextBox txtDiasPagoV;
         private System.Windows.Forms.ToolStripButton toolSubsidio;
         private System.Windows.Forms.ToolStripButton toolIspt;
+        private System.Windows.Forms.TextBox txtFechaIngreso;
+        private System.Windows.Forms.Label label24;
     }
 }

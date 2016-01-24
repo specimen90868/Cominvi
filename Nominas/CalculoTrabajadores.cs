@@ -36,7 +36,7 @@ namespace Nominas
                 vn.tipoconcepto = lstConceptosPercepciones[i].tipoconcepto;
                 vn.fechainicio = inicio.Date;
                 vn.fechafin = fin.Date;
-                vn.guardada = true;
+                vn.guardada = false;
                 vn.tiponomina = tipoNomina;
                 vn.modificado = false;
 
@@ -186,7 +186,7 @@ namespace Nominas
                                         vnCero.tipoconcepto = lstConceptosPercepciones[j].tipoconcepto;
                                         vnCero.fechainicio = inicio.Date;
                                         vnCero.fechafin = fin.Date;
-                                        vnCero.guardada = true;
+                                        vnCero.guardada = false;
                                         vnCero.tiponomina = tipoNomina;
                                         vnCero.modificado = false;
                                         vnCero.cantidad = 0;
@@ -345,7 +345,7 @@ namespace Nominas
                             //}
                         }
 
-                        isrAntesSubsidio.guardada = true;
+                        isrAntesSubsidio.guardada = false;
                         isrAntesSubsidio.tiponomina = tipoNomina;
                         isrAntesSubsidio.modificado = false;
                         lstValoresNomina.Add(isrAntesSubsidio);
@@ -446,7 +446,7 @@ namespace Nominas
                             //}
                         }
 
-                        subsidioNomina.guardada = true;
+                        subsidioNomina.guardada = false;
                         subsidioNomina.tiponomina = tipoNomina;
                         subsidioNomina.modificado = false;
                         lstValoresNomina.Add(subsidioNomina);
@@ -525,7 +525,7 @@ namespace Nominas
                         }
                             
 
-                        subsidioDefinitivo.guardada = true;
+                        subsidioDefinitivo.guardada = false;
                         subsidioDefinitivo.tiponomina = tipoNomina;
                         subsidioDefinitivo.modificado = false;
                         lstValoresNomina.Add(subsidioDefinitivo);
@@ -621,7 +621,7 @@ namespace Nominas
                             //    isrDefinitivo.cantidad = 0;
                         }
 
-                        isrDefinitivo.guardada = true;
+                        isrDefinitivo.guardada = false;
                         isrDefinitivo.tiponomina = tipoNomina;
                         isrDefinitivo.modificado = false;
                         lstValoresNomina.Add(isrDefinitivo);
@@ -640,7 +640,7 @@ namespace Nominas
                         vn.tipoconcepto = lstConceptosDeducciones[i].tipoconcepto;
                         vn.fechainicio = inicio.Date;
                         vn.fechafin = fin.Date;
-                        vn.guardada = true;
+                        vn.guardada = false;
                         vn.tiponomina = tipoNomina;
                         vn.modificado = false;
 
@@ -778,7 +778,7 @@ namespace Nominas
                     vn.tipoconcepto = lstConceptosPercepciones[i].tipoconcepto;
                     vn.fechainicio = inicio.Date;
                     vn.fechafin = fin.Date;
-                    vn.guardada = true;
+                    vn.guardada = false;
                     vn.tiponomina = tipoNomina;
                     vn.modificado = false;
 
@@ -929,7 +929,7 @@ namespace Nominas
                                             vnCero.tipoconcepto = lstConceptosPercepciones[j].tipoconcepto;
                                             vnCero.fechainicio = inicio.Date;
                                             vnCero.fechafin = fin.Date;
-                                            vnCero.guardada = true;
+                                            vnCero.guardada = false;
                                             vnCero.tiponomina = tipoNomina;
                                             vnCero.modificado = false;
                                             vnCero.cantidad = 0;
@@ -1098,7 +1098,7 @@ namespace Nominas
                                 //}
                             }
 
-                            isrAntesSubsidio.guardada = true;
+                            isrAntesSubsidio.guardada = false;
                             isrAntesSubsidio.tiponomina = tipoNomina;
                             isrAntesSubsidio.modificado = false;
                             cnx.Open();
@@ -1203,7 +1203,7 @@ namespace Nominas
                                 //}
                             }
 
-                            subsidioNomina.guardada = true;
+                            subsidioNomina.guardada = false;
                             subsidioNomina.tiponomina = tipoNomina;
                             subsidioNomina.modificado = false;
                             cnx.Open();
@@ -1284,7 +1284,7 @@ namespace Nominas
                             }
 
 
-                            subsidioDefinitivo.guardada = true;
+                            subsidioDefinitivo.guardada = false;
                             subsidioDefinitivo.tiponomina = tipoNomina;
                             subsidioDefinitivo.modificado = false;
                             cnx.Open();
@@ -1383,7 +1383,7 @@ namespace Nominas
                             }
 
 
-                            isrDefinitivo.guardada = true;
+                            isrDefinitivo.guardada = false;
                             isrDefinitivo.tiponomina = tipoNomina;
                             isrDefinitivo.modificado = false;
                             cnx.Open();
@@ -1404,7 +1404,7 @@ namespace Nominas
                             vn.tipoconcepto = lstConceptosDeducciones[i].tipoconcepto;
                             vn.fechainicio = inicio.Date;
                             vn.fechafin = fin.Date;
-                            vn.guardada = true;
+                            vn.guardada = false;
                             vn.tiponomina = tipoNomina;
                             vn.modificado = false;
 

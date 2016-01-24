@@ -125,8 +125,8 @@ namespace Nominas
                         if (periodoInicio.Day <= 15)
                             periodoFin = lstUltimaNomina[0].fechafin.AddDays(15);
                         else
-                            periodoFin = lstUltimaNomina[0].fechafin.AddDays(
-                                DateTime.DaysInMonth(periodoInicio.Year, periodoInicio.Month) - 15);
+                            periodoFin = new DateTime(periodoInicio.Year, periodoInicio.Month, 
+                                DateTime.DaysInMonth(periodoInicio.Year, periodoInicio.Month));
                     }
 
                 }

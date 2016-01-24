@@ -70,5 +70,16 @@ namespace Reingreso.Core
             object dato = Select(Command);
             return dato;
         }
+
+        public object fechaReingreso(Reingresos r)
+        {
+            Command.CommandText = "select fechaingreso from suaReingresos where idtrabajador = @idtrabajador and periodoinicio = @inicio and periodofin = @fin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", r.idtrabajador);
+            Command.Parameters.AddWithValue("inicio", r.periodoinicio);
+            Command.Parameters.AddWithValue("fin", r.periodofin);
+            object dato = Select(Command);
+            return dato;
+        }
     }
 }

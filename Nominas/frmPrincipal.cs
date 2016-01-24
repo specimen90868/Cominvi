@@ -618,110 +618,23 @@ namespace Nominas
 
         private void workAntiguedad_DoWork(object sender, DoWorkEventArgs e)
         {
-            int diasPeriodo = 0;
             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();
             cmd.Connection = cnx;
 
-            List<Empleados.Core.Empleados> lstFechas = new List<Empleados.Core.Empleados>();
-
             Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
             eh.Command = cmd;
-
-            Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
-            ph.Command = cmd;
-
-            Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
-            empleado.idempresa = GLOBALES.IDEMPRESA;
 
             try
             {
                 cnx.Open();
-                lstFechas = eh.obtenerFechaAntiguedad(empleado);
+                eh.actualizaAntiguedad(GLOBALES.IDEMPRESA);
                 cnx.Close();
-
-                int antiguedad = 0, antiguedadmod = 0;
-                DateTime fechaAntiguedad, fechaAntiguedadMod;
-                int progreso = 0;
-                int total = lstFechas.Count;
-                DateTime inicioPeriodo = DateTime.Now.Date, finPeriodo = DateTime.Now.Date;
-                DateTime fechaCumpleAnio, fechaCumpleAnioMod;
-                for (int i = 0; i < lstFechas.Count; i++)
-                {
-                    progreso = (i * 100) / total;
-                    workAntiguedad.ReportProgress(progreso);
-
-                    Periodos.Core.Periodos periodo = new Periodos.Core.Periodos();
-                    periodo.idperiodo = lstFechas[i].idperiodo;
-
-                    cnx.Open();
-                    diasPeriodo = (int)ph.DiasDePago(periodo);
-                    cnx.Close();
-
-                    if (diasPeriodo == 7)
-                    {
-                        DateTime dt = DateTime.Now.Date;
-                        while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
-                        inicioPeriodo = dt.Date;
-                        finPeriodo = dt.AddDays(6);
-                    }
-                    else
-                    {
-                        if (DateTime.Now.Day <= 15)
-                        {
-                            inicioPeriodo = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-                            finPeriodo = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 15);
-                        }
-                        else
-                        {
-                            inicioPeriodo = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 16);
-                            finPeriodo = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month));
-                        }
-                    }
-
-                    fechaCumpleAnio = lstFechas[i].fechaingreso.AddYears(lstFechas[i].antiguedad + 1);
-                    fechaCumpleAnioMod = lstFechas[i].fechaantiguedad.AddYears(lstFechas[i].antiguedadmod + 1);
-
-                    if (fechaCumpleAnio.Date >= inicioPeriodo.Date && fechaCumpleAnio.Date <= finPeriodo.Date)
-                    {
-                        antiguedad = lstFechas[i].antiguedadmod + 1;
-                    }
-
-                    if (fechaCumpleAnioMod.Date >= inicioPeriodo.Date && fechaCumpleAnioMod.Date <= finPeriodo.Date)
-                    {
-                        antiguedadmod = lstFechas[i].antiguedadmod + 1;
-                    }
-
-                    //fechaAntiguedad = lstFechas[i].fechaingreso;
-                    //antiguedad = (DateTime.Now.Subtract(fechaAntiguedad).Days / 365);
-
-                    //fechaAntiguedadMod = lstFechas[i].fechaantiguedad;
-                    //antiguedadmod = (DateTime.Now.Subtract(fechaAntiguedadMod).Days / 365);
-
-                    empleado = new Empleados.Core.Empleados();
-                    empleado.antiguedad = antiguedad;
-                    empleado.antiguedadmod = antiguedadmod;
-                    empleado.idtrabajador = lstFechas[i].idtrabajador;
-
-                    try
-                    {
-                        cnx.Open();
-                        eh.actualizaAntiguedad(empleado);
-                        cnx.Close();
-                    }
-                    catch
-                    {
-                        MessageBox.Show("Error: Al actualizar la antiguedad del trabajador. ID: " + lstFechas[i].idtrabajador + "\r\n Se detendra la actualización.", "Error");
-                        cnx.Dispose();
-                        return;
-                    }
-                }
-                workAntiguedad.ReportProgress(100);
                 cnx.Dispose();
             }
-            catch
+            catch (Exception)
             {
-                MessageBox.Show("Error: Al obtener las fechas del trabajador. \r\n Incremento de Antiguedad.", "Error");
+                MessageBox.Show("Erro: Al ejecutar el SP Actualiza Antiguedad", "Error");
                 cnx.Dispose();
                 return;
             }

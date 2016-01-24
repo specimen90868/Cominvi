@@ -27,8 +27,6 @@ namespace Nominas
         string campos = "";
         #endregion
 
-        public int _estatusEmpleados;
-
         private void frmExportarEmpleado_Load(object sender, EventArgs e)
         {
             cnx = new SqlConnection(cdn);
@@ -707,7 +705,7 @@ namespace Nominas
                 }
 
                 exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkValorDescuento.Checked;
+                exp.activo = chkNoEmpleado.Checked;
                 exp.campo = "NoEmpleado";
                 exp.formulario = "frmListaEmpleados";
 
@@ -820,7 +818,7 @@ namespace Nominas
             try
             {
                 cnx.Open();
-                dt = eh.datosExportar(GLOBALES.IDEMPRESA, _estatusEmpleados, c);
+                dt = eh.datosExportar(GLOBALES.IDEMPRESA, c);
                 cnx.Close();
                 cnx.Dispose();
             }

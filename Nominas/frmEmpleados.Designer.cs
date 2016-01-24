@@ -69,7 +69,6 @@
             this.txtEdad = new System.Windows.Forms.TextBox();
             this.txtDigito = new System.Windows.Forms.MaskedTextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.txtNoEmpleado = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.cmbDepartamento = new System.Windows.Forms.ComboBox();
@@ -102,6 +101,7 @@
             this.cmbMetodoPago = new System.Windows.Forms.ComboBox();
             this.label21 = new System.Windows.Forms.Label();
             this.cmbTipoRegimen = new System.Windows.Forms.ComboBox();
+            this.mtxtNoEmpleado = new System.Windows.Forms.MaskedTextBox();
             this.toolAcciones.SuspendLayout();
             this.toolEmpleado.SuspendLayout();
             this.SuspendLayout();
@@ -469,13 +469,6 @@
             this.label6.TabIndex = 216;
             this.label6.Text = "No. de Empleado:";
             // 
-            // txtNoEmpleado
-            // 
-            this.txtNoEmpleado.Location = new System.Drawing.Point(127, 191);
-            this.txtNoEmpleado.Name = "txtNoEmpleado";
-            this.txtNoEmpleado.Size = new System.Drawing.Size(152, 20);
-            this.txtNoEmpleado.TabIndex = 4;
-            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -775,11 +768,21 @@
             this.cmbTipoRegimen.Size = new System.Drawing.Size(151, 21);
             this.cmbTipoRegimen.TabIndex = 250;
             // 
+            // mtxtNoEmpleado
+            // 
+            this.mtxtNoEmpleado.Location = new System.Drawing.Point(126, 191);
+            this.mtxtNoEmpleado.Mask = "9999";
+            this.mtxtNoEmpleado.Name = "mtxtNoEmpleado";
+            this.mtxtNoEmpleado.Size = new System.Drawing.Size(152, 20);
+            this.mtxtNoEmpleado.TabIndex = 4;
+            this.mtxtNoEmpleado.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
             // frmEmpleados
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(696, 670);
+            this.Controls.Add(this.mtxtNoEmpleado);
             this.Controls.Add(this.cmbTipoRegimen);
             this.Controls.Add(this.label21);
             this.Controls.Add(this.cmbMetodoPago);
@@ -812,7 +815,6 @@
             this.Controls.Add(this.cmbDepartamento);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.txtNoEmpleado);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.txtDigito);
             this.Controls.Add(this.txtEdad);
@@ -901,7 +903,6 @@
         private System.Windows.Forms.TextBox txtEdad;
         private System.Windows.Forms.MaskedTextBox txtDigito;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txtNoEmpleado;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ComboBox cmbDepartamento;
@@ -935,5 +936,6 @@
         private System.Windows.Forms.ComboBox cmbMetodoPago;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.ComboBox cmbTipoRegimen;
+        private System.Windows.Forms.MaskedTextBox mtxtNoEmpleado;
     }
 }

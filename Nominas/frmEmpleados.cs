@@ -177,7 +177,7 @@ namespace Nominas
                         txtNombre.Text = lstEmpleado[i].nombres;
                         txtApPaterno.Text = lstEmpleado[i].paterno;
                         txtApMaterno.Text = lstEmpleado[i].materno;
-                        txtNoEmpleado.Text = lstEmpleado[i].noempleado;
+                        mtxtNoEmpleado.Text = lstEmpleado[i].noempleado;
                         dtpFechaIngreso.Value = DateTime.Parse(lstEmpleado[i].fechaingreso.ToString());
                         dtpFechaAntiguedad.Value = DateTime.Parse(lstEmpleado[i].fechaantiguedad.ToString());
                         dtpFechaNacimiento.Value = DateTime.Parse(lstEmpleado[i].fechanacimiento.ToString());
@@ -372,7 +372,7 @@ namespace Nominas
             em.nombres = txtNombre.Text;
             em.paterno = txtApPaterno.Text;
             em.materno = txtApMaterno.Text;
-            em.noempleado = txtNoEmpleado.Text;
+            em.noempleado = mtxtNoEmpleado.Text;
             em.nombrecompleto = txtApPaterno.Text + (string.IsNullOrEmpty(txtApMaterno.Text) ? "" : " " + txtApMaterno.Text) + " " + txtNombre.Text;
             em.fechaingreso = dtpFechaIngreso.Value;
             em.antiguedad = int.Parse(txtAntiguedad.Text);

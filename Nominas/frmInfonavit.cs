@@ -115,7 +115,7 @@ namespace Nominas
                         IdInfonavit = int.Parse(lstInfonavit[j].idinfonavit.ToString());
                         txtNumeroCredito.Text = lstInfonavit[j].credito;
                         txtValor.Text = lstInfonavit[j].valordescuento.ToString();
-                        chkActivo.Checked = lstInfonavit[j].activo;
+                        chkInactivo.Checked = lstInfonavit[j].activo;
                         txtDescripcion.Text = lstInfonavit[j].descripcion;
                         dtpFechaAplicacion.Value = lstInfonavit[j].fecha;
                         //dtpInicioPeriodo.Value = lstInfonavit[j].inicio.AddDays(1);
@@ -188,6 +188,9 @@ namespace Nominas
                 return;
             }
 
+
+            bool alta_reingreso = ChecaFechaAltaReingreso();
+
             //if (dtpFechaAplicacion.Value.Date > dtpFinPeriodo.Value.Date)
             //{
             //    MessageBox.Show("La fecha de aplicacion es mayor al periodo.", "Error");
@@ -214,9 +217,9 @@ namespace Nominas
             i.idempresa = GLOBALES.IDEMPRESA;
             i.credito = txtNumeroCredito.Text;
             i.descuento = Descuento;
-            i.activo = chkActivo.Checked;
+            i.activo = chkInactivo.Checked == true ? false : true;
             i.descripcion = txtDescripcion.Text;
-            i.dias = (int)(dtpFinPeriodo.Value.Date - dtpFechaAplicacion.Value.Date).TotalDays + 1;
+            i.dias = (int)(periodoFin.Date - dtpFechaAplicacion.Value.Date).TotalDays + 1;
             i.fecha = dtpFechaAplicacion.Value.Date;
             i.inicio = periodoInicio.Date;
             i.fin = periodoFin.Date;
@@ -404,88 +407,6 @@ namespace Nominas
             //periodo();
         }
 
-        private void periodo()
-        {
-            if (Periodo == 7)
-            {
-                DateTime dt = dtpInicioPeriodo.Value.Date;
-                while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
-                dtpInicioPeriodo.Value = dt;
-                dtpFinPeriodo.Value = dt.AddDays(6);
-            }
-            else
-            {
-                if (dtpInicioPeriodo.Value.Day <= 15)
-                {
-                    dtpInicioPeriodo.Value = new DateTime(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month, 1);
-                    dtpFinPeriodo.Value = new DateTime(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month, 15);
-                }
-                else
-                {
-                    dtpInicioPeriodo.Value = new DateTime(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month, 16);
-                    dtpFinPeriodo.Value = new DateTime(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month, DateTime.DaysInMonth(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month));
-                }
-
-            }
-        }
-
-        private void obtenerPeriodoActual()
-        {
-            cnx = new SqlConnection(cdn);
-            cmd = new SqlCommand();
-            cmd.Connection = cnx;
-
-            CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
-            nh.Command = cmd;
-
-            List<CalculoNomina.Core.tmpPagoNomina> lstUltimaNomina = new List<CalculoNomina.Core.tmpPagoNomina>();
-
-            try
-            {
-                cnx.Open();
-                lstUltimaNomina = nh.obtenerUltimaNomina(GLOBALES.IDEMPRESA);
-                cnx.Close();
-                cnx.Dispose();
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-            }
-
-            if (lstUltimaNomina.Count != 0)
-            {
-                if (Periodo == 7)
-                {
-                    periodoInicio = lstUltimaNomina[0].fechafin.AddDays(1);
-                    periodoFin = lstUltimaNomina[0].fechafin.AddDays(7);
-                }
-                else
-                {
-                    periodoInicio = lstUltimaNomina[0].fechafin.AddDays(1);
-                    if (periodoInicio.Day <= 15)
-                        periodoFin = lstUltimaNomina[0].fechafin.AddDays(15);
-                    else
-                        periodoFin = lstUltimaNomina[0].fechafin.AddDays(
-                            DateTime.DaysInMonth(periodoInicio.Year, periodoInicio.Month) - 15);
-                }
-                lblPeriodo.Visible = true;
-                dtpInicioPeriodo.Visible = true;
-                dtpFinPeriodo.Visible = true;
-
-                dtpInicioPeriodo.Enabled = false;
-                dtpFinPeriodo.Enabled = false;
-                dtpInicioPeriodo.Value = periodoInicio;
-                dtpFinPeriodo.Value = periodoFin;
-            }
-            else
-            {
-                lblPeriodo.Visible = true;
-                dtpInicioPeriodo.Visible = true;
-                dtpFinPeriodo.Visible = true;
-                periodo();
-            }
-        }
-
         private void btnCambiar_Click(object sender, EventArgs e)
         {
             frmCambioPeriodo cp = new frmCambioPeriodo();
@@ -522,6 +443,120 @@ namespace Nominas
                     periodoFin = new DateTime(dtpFechaAplicacion.Value.Year, dtpFechaAplicacion.Value.Month, DateTime.DaysInMonth(dtpFechaAplicacion.Value.Year, dtpFechaAplicacion.Value.Month));
                 }
 
+            }
+        }
+
+        private void ChecaFechaAltaReingreso()
+        {
+
+            DateTime inicio = DateTime.Now.Date, fin = DateTime.Now.Date;
+
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            Altas.Core.AltasHelper ah = new Altas.Core.AltasHelper();
+            ah.Command = cmd;
+
+            Reingreso.Core.ReingresoHelper rh = new Reingreso.Core.ReingresoHelper();
+            rh.Command = cmd;
+
+            CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
+            nh.Command = cmd;
+
+            List<CalculoNomina.Core.tmpPagoNomina> lstUltimaNomina = new List<CalculoNomina.Core.tmpPagoNomina>();
+
+            try
+            {
+                cnx.Open();
+                lstUltimaNomina = nh.obtenerUltimaNomina(GLOBALES.IDEMPRESA);
+                cnx.Close();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+            }
+
+            if (lstUltimaNomina.Count != 0)
+            {
+                if (Periodo == 7)
+                {
+                    inicio = lstUltimaNomina[0].fechafin.AddDays(1);
+                    fin = lstUltimaNomina[0].fechafin.AddDays(7);
+                }
+                else
+                {
+                    inicio = lstUltimaNomina[0].fechafin.AddDays(1);
+                    if (inicio.Day <= 15)
+                        fin = lstUltimaNomina[0].fechafin.AddDays(15);
+                    else
+                        fin = new DateTime(inicio.Year, inicio.Month,
+                            DateTime.DaysInMonth(inicio.Year, inicio.Month));
+                }
+            }
+
+            Altas.Core.Altas a = new Altas.Core.Altas();
+            a.idtrabajador = _idEmpleado;
+            a.periodoInicio = inicio.Date;
+            a.periodoFin = fin.Date;
+
+            Reingreso.Core.Reingresos r = new Reingreso.Core.Reingresos();
+            r.idtrabajador = _idEmpleado;
+            r.periodoinicio = inicio.Date;
+            r.periodofin = fin.Date;
+
+            int existeAlta = 0;
+            int existeReingreso = 0;
+
+            try
+            {
+                cnx.Open();
+                existeAlta = (int)ah.existeAlta(a);
+                existeReingreso = (int)rh.existeReingreso(r);
+                cnx.Close();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error: Al obtener la existencia de la alta.", "Error");
+                cnx.Dispose();
+            }
+
+            DateTime fechaAlta = DateTime.Now.Date;
+            DateTime fechaReingreso = DateTime.Now.Date;
+            if (existeAlta != 0)
+            {
+                try
+                {
+                    cnx.Open();
+                    fechaAlta = DateTime.Parse(ah.fechaAlta(a).ToString());
+                    cnx.Close();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Error: Al obtener la fecha de alta.", "Error");
+                    cnx.Dispose();
+                }
+
+                if (dtpFechaAplicacion.Value.Date < fechaAlta)
+                    dtpFechaAplicacion.Value = fechaAlta;
+            }
+
+            if (existeReingreso != 0)
+            {
+                try
+                {
+                    cnx.Open();
+                    fechaReingreso = DateTime.Parse(rh.fechaReingreso(r).ToString());
+                    cnx.Close();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Error: Al obtener la fecha de alta.", "Error");
+                    cnx.Dispose();
+                }
+
+                if (dtpFechaAplicacion.Value.Date < fechaReingreso)
+                    dtpFechaAplicacion.Value = fechaReingreso;
             }
         }
     }

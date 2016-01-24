@@ -84,7 +84,8 @@ namespace Nominas
                            emp.nombrecompleto,
                            emp.sd,
                            d.descripcion,
-                           p.nombre
+                           p.nombre,
+                           emp.fechaingreso
                        };
             foreach (var i in dato)
             {
@@ -93,6 +94,7 @@ namespace Nominas
                 txtDepartamento.Text = i.descripcion;
                 txtPuesto.Text = i.nombre;
                 txtSueldo.Text = "$ " + i.sd.ToString("#,##0.00");
+                txtFechaIngreso.Text = i.fechaingreso.ToString("dd-MM-yyyy");
             }
 
             dgvPercepciones.DataSource = null;
@@ -132,13 +134,24 @@ namespace Nominas
                 #region CONCEPTOS Y FORMULAS DEL TRABAJADOR (PERCEPCIONES)
                 try
                 {
+                    /*************************************************************
+                     * Se obtienen los conceptos con el campo modificado en 1
+                     * de la tabla tmpPagoNomina con el SP stp_DatosNominaRecalculoTrabajador
+                     *************************************************************/
                     cnx.Open();
                     lstConceptosPercepcionesModificados = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "P", idTrabajador,
                         _tipoNormalEspecial, _inicioPeriodo.Date, _finPeriodo.Date);
                     lstConceptosDeduccionesModificados = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "D", idTrabajador,
                         _tipoNormalEspecial, _inicioPeriodo.Date, _finPeriodo.Date);
                     cnx.Close();
+                    /***************** TERMINA *****************************/
 
+
+                    /*********************************************************
+                     * Se verifica si las listas de los conceptos modificados
+                     * son diferentes de 0, si son diferentes, se acumulan en la varible
+                     * noConceptosPercepciones y noConceptosDeducciones
+                     *********************************************************/
                     if (lstConceptosPercepcionesModificados.Count != 0)
                     {
                         for (int i = 0; i < lstConceptosPercepcionesModificados.Count; i++)
@@ -158,11 +171,18 @@ namespace Nominas
                     }
                     else
                         noConceptosDeducciones = "";
+                    /************************TERMINA***************************/
 
+
+                    /*****************************************************************
+                     * Se llenan las listas con los conceptos que no estan modificados
+                     * con el SP stp_DatosNominaTrabajador para el calculo.
+                     *****************************************************************/
                     cnx.Open();
                     lstConceptosPercepciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "P", idTrabajador, noConceptosPercepciones);
                     lstConceptosDeducciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "D", idTrabajador, noConceptosDeducciones);
                     cnx.Close();
+                    /**************************TERMINA*********************************/
                 }
                 catch
                 {
@@ -173,7 +193,7 @@ namespace Nominas
 
                 #region CALCULO DE PERCEPCIONES
                 List<CalculoNomina.Core.tmpPagoNomina> lstPercepciones = new List<CalculoNomina.Core.tmpPagoNomina>();
-                lstPercepciones = CALCULOTRABAJADORES.PERCEPCIONES(lstConceptosPercepciones, _inicioPeriodo.Date, _finPeriodo.Date, _tipoNormalEspecial);
+                lstPercepciones = CALCULO.PERCEPCIONES(lstConceptosPercepciones, _inicioPeriodo.Date, _finPeriodo.Date, _tipoNormalEspecial);
                 #endregion
 
                 #region BULK DATOS PERCEPCIONES
@@ -182,7 +202,7 @@ namespace Nominas
 
                 #region CALCULO DE DEDUCCIONES
                 List<CalculoNomina.Core.tmpPagoNomina> lstDeducciones = new List<CalculoNomina.Core.tmpPagoNomina>();
-                lstDeducciones = CALCULOTRABAJADORES.DEDUCCIONES(lstConceptosDeducciones, lstPercepciones, _inicioPeriodo.Date, _finPeriodo.Date, _tipoNormalEspecial);
+                lstDeducciones = CALCULO.DEDUCCIONES(lstConceptosDeducciones, lstPercepciones, _inicioPeriodo.Date, _finPeriodo.Date, _tipoNormalEspecial);
                 #endregion
 
                 #region BULK DATOS DEDUCCIONES
@@ -630,6 +650,27 @@ namespace Nominas
                 #region MOSTRAR DATOS
                 muestraDatos();
                 #endregion
+
+                #region PERIODO
+                cmd = new SqlCommand();
+                cmd.Connection = cnx;
+                nh = new CalculoNomina.Core.NominaHelper();
+                nh.Command = cmd;
+                int noPeriodo = 0;
+                try
+                {
+                    cnx.Open();
+                    noPeriodo = int.Parse(nh.obtenerNoPeriodo(_periodo, _inicioPeriodo).ToString());
+                    nh.actualizarNoPeriodo(GLOBALES.IDEMPRESA, _inicioPeriodo.Date, _finPeriodo.Date, noPeriodo);
+                    cnx.Close();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Error: Al actualizar el No. de Periodo", "Error");
+                    cnx.Dispose();
+                    return;
+                }
+                #endregion
             }
             else
             {
@@ -649,7 +690,7 @@ namespace Nominas
                 #endregion
 
                 #region RECALCULO DE PERCEPCIONES
-                CALCULOTRABAJADORES.RECALCULO_PERCEPCIONES(lstConceptosPercepciones, _inicioPeriodo.Date, _finPeriodo.Date, _tipoNormalEspecial);
+                CALCULO.RECALCULO_PERCEPCIONES(lstConceptosPercepciones, _inicioPeriodo.Date, _finPeriodo.Date, _tipoNormalEspecial);
                 #endregion
 
                 #region RECALCULO DE DEDUCCIONES
@@ -672,7 +713,7 @@ namespace Nominas
                 {
                     MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
                 }
-                CALCULOTRABAJADORES.RECALCULO_DEDUCCIONES(lstConceptosDeducciones, lstRecalculoPercepciones, _inicioPeriodo.Date, _finPeriodo.Date, _tipoNormalEspecial);
+                CALCULO.RECALCULO_DEDUCCIONES(lstConceptosDeducciones, lstRecalculoPercepciones, _inicioPeriodo.Date, _finPeriodo.Date, _tipoNormalEspecial);
                 #endregion
 
                 #region PROGRAMACION DE MOVIMIENTOS
@@ -1243,7 +1284,10 @@ namespace Nominas
                     sumaDeducciones += double.Parse(fila.Cells[2].Value.ToString());
                 }
 
-                netoPagar = (sumaPercepciones + subsidio) - (sumaDeducciones - subsidio);
+                sumaPercepciones += subsidio;
+                sumaDeducciones = sumaDeducciones - subsidio;
+
+                netoPagar = sumaPercepciones - sumaDeducciones;
                 txtPercepciones.Text = "$ " + sumaPercepciones.ToString("#,##0.00");
                 txtDeducciones.Text = "$ " + sumaDeducciones.ToString("#,##0.00");
                 txtNeto.Text = "$ " + netoPagar.ToString("#,##0.00");
