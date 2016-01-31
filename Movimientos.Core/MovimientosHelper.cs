@@ -126,6 +126,18 @@ namespace Movimientos.Core
             return dato;
         }
 
+        public object existeMovimientoConcepto(Movimientos m)
+        {
+            Command.CommandText = "select count(*) from movimientos where idtrabajador = @idtrabajador and fechainicio = @fechainicio and fechafin = @fechafin and idconcepto = @idconcepto";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", m.idtrabajador);
+            Command.Parameters.AddWithValue("fechainicio", m.fechainicio);
+            Command.Parameters.AddWithValue("fechafin", m.fechafin);
+            Command.Parameters.AddWithValue("idconcepto", m.idconcepto);
+            object dato = Select(Command);
+            return dato;
+        }
+
         public void bulkMovimientos(DataTable dt, string tabla)
         {
             bulkCommand.DestinationTableName = tabla;

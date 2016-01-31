@@ -25,6 +25,9 @@ namespace Nominas
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
         Exportacion.Core.ExportacionHelper eh;
         string campos = "";
+        string tablaDireccion = "";
+        string tablaComplemento = "";
+        string tablaInfonavit = "";
         #endregion
 
         private void frmExportarEmpleado_Load(object sender, EventArgs e)
@@ -730,6 +733,8 @@ namespace Nominas
             string c = "";
 
             #region CAMPOS
+            if (chkNoEmpleado.Checked)
+                campos += "t.noempleado,";
             if (chkNombre.Checked)
                 campos += "t.nombres,";
             if (chkPaterno.Checked)
@@ -739,9 +744,9 @@ namespace Nominas
             if (chkNombreCompleto.Checked)
                 campos += "t.nombrecompleto,";
             if (chkDepartamento.Checked)
-                campos += "depto.descripcion as departamento,";
+                campos += "depto.descripcion,";
             if (chkPuesto.Checked)
-                campos += "p.descripcion as puesto,";
+                campos += "p.descripcion,";
             if (chkFechaIngreso.Checked)
                 campos += "t.fechaingreso,";
             if (chkFechaAntiguedad.Checked)
@@ -763,7 +768,7 @@ namespace Nominas
             if (chkSueldo.Checked)
                 campos += "t.sueldo,";
             if (chkEstatus.Checked)
-                campos += "t.estatus as estatus,";
+                campos += "t.estatus,";
             if (chkCuenta.Checked)
                 campos += "t.cuenta,";
             if (chkClabe.Checked)
@@ -795,13 +800,11 @@ namespace Nominas
             if (chkNacionalidad.Checked)
                 campos += "c.nacionalidad,";
             if (chkCreditoInfonavit.Checked)
-                campos += "isnull(i.credito,0) as credito,";
+                campos += "i.credito,";
             if (chkDescuentoInfonavit.Checked)
-                campos += "coalesce(i.descuento,0) as descuento,";
+                campos += "i.descuento,";
             if (chkValorDescuento.Checked)
-                campos += "coalesce(i.valordescuento,0) as valordescuento,";
-            if (chkNoEmpleado.Checked)
-                campos += "noempleado as [No. de Empleado],";
+                campos += "i.valordescuento,";
             #endregion
 
             c = campos.Substring(0, campos.Length - 1);
@@ -818,7 +821,7 @@ namespace Nominas
             try
             {
                 cnx.Open();
-                dt = eh.datosExportar(GLOBALES.IDEMPRESA, c);
+                dt = eh.datosExportar(GLOBALES.IDEMPRESA, c, tablaDireccion + tablaComplemento + tablaInfonavit);
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -886,6 +889,105 @@ namespace Nominas
         private void workerExportar_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             toolPorcentaje.Text = "Completado.";
+        }
+
+        private void chkCalle_CheckedChanged(object sender, EventArgs e)
+        {
+            tablaDireccion = direccion(chkCalle.Checked);
+        }
+
+        private void chkExterior_CheckedChanged(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void chkInterior_CheckedChanged(object sender, EventArgs e)
+        {
+            tablaDireccion = direccion(chkInterior.Checked);
+        }
+
+        private void chkColonia_CheckedChanged(object sender, EventArgs e)
+        {
+            tablaDireccion = direccion(chkColonia.Checked);
+        }
+
+        private string direccion(bool status)
+        {
+            string tabla = "";
+            if (status)
+                tabla = " left join dbo.Direcciones d on t.idtrabajador = d.idpersona ";
+            return tabla;
+        }
+
+        private void chkCp_CheckedChanged(object sender, EventArgs e)
+        {
+            tablaDireccion = direccion(chkCp.Checked);
+        }
+
+        private void chkCiudad_CheckedChanged(object sender, EventArgs e)
+        {
+            tablaDireccion = direccion(chkCiudad.Checked);
+        }
+
+        private void chkEstado_CheckedChanged(object sender, EventArgs e)
+        {
+            tablaDireccion = direccion(chkEstado.Checked);
+        }
+
+        private void chkPais_CheckedChanged(object sender, EventArgs e)
+        {
+            tablaDireccion = direccion(chkPais.Checked);
+        }
+
+        private void chkEstadoCivil_CheckedChanged(object sender, EventArgs e)
+        {
+            tablaComplemento = complemento(chkEstadoCivil.Checked);
+        }
+
+        private string complemento(bool status)
+        {
+            string tabla = "";
+            if (status)
+                tabla = " left join dbo.Complementos c on t.idtrabajador = c.idtrabajador ";
+            return tabla;
+        }
+
+        private void chkSexo_CheckedChanged(object sender, EventArgs e)
+        {
+            tablaComplemento = complemento(chkSexo.Checked);
+        }
+
+        private void chkEscolaridad_CheckedChanged(object sender, EventArgs e)
+        {
+            tablaComplemento = complemento(chkEscolaridad.Checked);
+        }
+
+        private void chkNacionalidad_CheckedChanged(object sender, EventArgs e)
+        {
+            tablaComplemento = complemento(chkNacionalidad.Checked);
+        }
+
+        private string infonavit(bool status)
+        {
+            string tabla = "";
+            if (status)
+                tabla = " left join dbo.Infonavit i on t.idtrabajador = i.idtrabajador ";
+            return tabla;
+        }
+
+        private void chkCreditoInfonavit_CheckedChanged(object sender, EventArgs e)
+        {
+            tablaInfonavit = infonavit(chkCreditoInfonavit.Checked);
+        }
+
+        private void chkDescuentoInfonavit_CheckedChanged(object sender, EventArgs e)
+        {
+            tablaInfonavit = infonavit(chkDescuentoInfonavit.Checked);
+        }
+
+        private void chkValorDescuento_CheckedChanged(object sender, EventArgs e)
+        {
+            tablaInfonavit = infonavit(chkValorDescuento.Checked);
         }
     }
 }

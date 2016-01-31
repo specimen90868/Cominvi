@@ -228,89 +228,49 @@ namespace Nominas
             {
                 if (string.IsNullOrEmpty(txtBuscar.Text) || string.IsNullOrWhiteSpace(txtBuscar.Text))
                 {
-                    if (_empleadoAltaBaja == GLOBALES.ACTIVO)
-                    {
-                        var empleado = from em in lstEmpleados
-                                       join b in lstBajas on em.idtrabajador equals b.idtrabajador into EmpBaja
-                                       from b in EmpBaja.DefaultIfEmpty()
-                                       select new
-                                       {
-                                           IdTrabajador = em.idtrabajador,
-                                           Nombre = em.nombrecompleto,
-                                           NoEmpleado = em.noempleado,
-                                           Ingreso = em.fechaingreso,
-                                           Antiguedad = em.antiguedad + " AÑOS",
-                                           SDI = em.sdi,
-                                           SD = em.sd,
-                                           Sueldo = em.sueldo,
-                                           Cuenta = em.cuenta,
-                                           Clabe = em.clabe,
-                                           FechaBaja = b != null ? b.fecha.ToShortDateString() : " "
-                                       };
-                        dgvEmpleados.DataSource = empleado.ToList();
-                    }
-                    else
-                    {
-                        var empleado = from em in lstEmpleados
-                                       select new
-                                       {
-                                           IdTrabajador = em.idtrabajador,
-                                           Nombre = em.nombrecompleto,
-                                           NoEmpleado = em.noempleado,
-                                           Ingreso = em.fechaingreso,
-                                           Antiguedad = em.antiguedad + " AÑOS",
-                                           SDI = em.sdi,
-                                           SD = em.sd,
-                                           Sueldo = em.sueldo,
-                                           Cuenta = em.cuenta,
-                                           Clabe = em.clabe
-                                       };
-                        dgvEmpleados.DataSource = empleado.ToList();
-                    }
+
+                    var empleado = from em in lstEmpleados
+                                   join b in lstBajas on em.idtrabajador equals b.idtrabajador into EmpBaja
+                                   from b in EmpBaja.DefaultIfEmpty()
+                                   select new
+                                   {
+                                       IdTrabajador = em.idtrabajador,
+                                       Nombre = em.nombrecompleto,
+                                       NoEmpleado = em.noempleado,
+                                       Ingreso = em.fechaingreso,
+                                       Antiguedad = em.antiguedad + " AÑOS",
+                                       SDI = em.sdi,
+                                       SD = em.sd,
+                                       Sueldo = em.sueldo,
+                                       Cuenta = em.cuenta,
+                                       Clabe = em.clabe,
+                                       Estado = em.estatus == 1 ? "ALTA" : "BAJA",
+                                       FechaBaja = b != null ? b.fecha.ToShortDateString() : " "
+                                   };
+                    dgvEmpleados.DataSource = empleado.ToList();
                 }
                 else
                 {
-                    if (_empleadoAltaBaja == GLOBALES.ACTIVO)
-                    {
-                        var busqueda = from b in lstEmpleados
-                                       join bj in lstBajas on b.idtrabajador equals bj.idtrabajador into EmpBaja
-                                       from bj in EmpBaja.DefaultIfEmpty()
-                                       where b.nombrecompleto.Contains(txtBuscar.Text.ToUpper()) || b.noempleado.Contains(txtBuscar.Text)
-                                       select new
-                                       {
-                                           IdTrabajador = b.idtrabajador,
-                                           NoEmpleado = b.noempleado,
-                                           Nombre = b.nombrecompleto,
-                                           Ingreso = b.fechaingreso,
-                                           Antiguedad = b.antiguedad + " AÑOS",
-                                           SDI = b.sdi,
-                                           SD = b.sd,
-                                           Sueldo = b.sueldo,
-                                           Cuenta = b.cuenta,
-                                           Clabe = b.clabe,
-                                           FechaBaja = bj != null ? bj.fecha.ToShortDateString() : " "
-                                       };
-                        dgvEmpleados.DataSource = busqueda.ToList();
-                    }
-                    else
-                    {
-                        var busqueda = from b in lstEmpleados
-                                       where b.nombrecompleto.Contains(txtBuscar.Text.ToUpper()) || b.noempleado.Contains(txtBuscar.Text)
-                                       select new
-                                       {
-                                           IdTrabajador = b.idtrabajador,
-                                           NoEmpleado = b.noempleado,
-                                           Nombre = b.nombrecompleto,
-                                           Ingreso = b.fechaingreso,
-                                           Antiguedad = b.antiguedad + " AÑOS",
-                                           SDI = b.sdi,
-                                           SD = b.sd,
-                                           Sueldo = b.sueldo,
-                                           Cuenta = b.cuenta,
-                                           Clabe = b.clabe
-                                       };
-                        dgvEmpleados.DataSource = busqueda.ToList();
-                    }
+                    var busqueda = from b in lstEmpleados
+                                   join bj in lstBajas on b.idtrabajador equals bj.idtrabajador into EmpBaja
+                                   from bj in EmpBaja.DefaultIfEmpty()
+                                   where b.nombrecompleto.Contains(txtBuscar.Text.ToUpper()) || b.noempleado.Contains(txtBuscar.Text)
+                                   select new
+                                   {
+                                       IdTrabajador = b.idtrabajador,
+                                       NoEmpleado = b.noempleado,
+                                       Nombre = b.nombrecompleto,
+                                       Ingreso = b.fechaingreso,
+                                       Antiguedad = b.antiguedad + " AÑOS",
+                                       SDI = b.sdi,
+                                       SD = b.sd,
+                                       Sueldo = b.sueldo,
+                                       Cuenta = b.cuenta,
+                                       Clabe = b.clabe,
+                                       Estado = b.estatus == 1 ? "ALTA" : "BAJA",
+                                       FechaBaja = bj != null ? bj.fecha.ToShortDateString() : " "
+                                   };
+                    dgvEmpleados.DataSource = busqueda.ToList();
                 }
                 dgvEmpleados.Columns["IdTrabajador"].Visible = false;
             }

@@ -24,6 +24,7 @@ namespace Nominas
         SqlCommand cmd;
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
         string sexo;
+        List<Empleados.Core.Empleados> lstEmpleado;
         #endregion
 
         #region DELEGADOS
@@ -42,43 +43,40 @@ namespace Nominas
             cmd = new SqlCommand();
             cmd.Connection = cnx;
 
-            Empresas.Core.EmpresasHelper eh = new Empresas.Core.EmpresasHelper();
             Departamento.Core.DeptoHelper dh = new Departamento.Core.DeptoHelper();
             Puestos.Core.PuestosHelper ph = new Puestos.Core.PuestosHelper();
             Periodos.Core.PeriodosHelper periodoh = new Periodos.Core.PeriodosHelper();
             Factores.Core.FactoresHelper fh = new Factores.Core.FactoresHelper();
-            Estados.Core.EstadosHelper edoh = new Estados.Core.EstadosHelper();
+            Empleados.Core.EmpleadosHelper emph = new Empleados.Core.EmpleadosHelper();
 
-            eh.Command = cmd;
+            emph.Command = cmd;
             dh.Command = cmd;
             ph.Command = cmd;
             periodoh.Command = cmd;
             fh.Command = cmd;
-            edoh.Command = cmd;
 
-            Empresas.Core.Empresas empresa = new Empresas.Core.Empresas();
             Departamento.Core.Depto depto = new Departamento.Core.Depto();
             Puestos.Core.Puestos puesto = new Puestos.Core.Puestos();
             Periodos.Core.Periodos periodo = new Periodos.Core.Periodos();
             Factores.Core.Factores factor = new Factores.Core.Factores();
+            Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
             
+            empleado.idtrabajador = _idempleado;
             depto.idempresa = GLOBALES.IDEMPRESA;
             puesto.idempresa = GLOBALES.IDEMPRESA;
             periodo.idempresa = GLOBALES.IDEMPRESA;
 
-            List<Empresas.Core.Empresas> lstEmpresa = new List<Empresas.Core.Empresas>();
             List<Departamento.Core.Depto> lstDepto = new List<Departamento.Core.Depto>();
             List<Puestos.Core.Puestos> lstPuesto = new List<Puestos.Core.Puestos>();
             List<Periodos.Core.Periodos> lstPeriodo = new List<Periodos.Core.Periodos>();
-            List<Estados.Core.Estados> lstEstados = new List<Estados.Core.Estados>();
+            lstEmpleado = new List<Empleados.Core.Empleados>();
 
             try {
                 cnx.Open();
-                lstEmpresa = eh.obtenerEmpresas();
                 lstDepto = dh.obtenerDepartamentos(depto);
                 lstPuesto = ph.obtenerPuestos(puesto);
                 lstPeriodo = periodoh.obtenerPeriodos(periodo);
-                lstEstados = edoh.obtenerEstados();
+                lstEmpleado = emph.obtenerEmpleado(empleado);
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -86,10 +84,6 @@ namespace Nominas
             {
                 MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
             }
-
-            cmbRegistroPatronal.DataSource = lstEmpresa.ToList();
-            cmbRegistroPatronal.DisplayMember = "nombre";
-            cmbRegistroPatronal.ValueMember = "idempresa";
 
             cmbDepartamento.DataSource = lstDepto.ToList();
             cmbDepartamento.DisplayMember = "descripcion";
@@ -103,12 +97,10 @@ namespace Nominas
             cmbPeriodo.DisplayMember = "pago";
             cmbPeriodo.ValueMember = "idperiodo";
 
-            cmbEstados.DataSource = lstEstados.ToList();
-            cmbEstados.DisplayMember = "nombre";
-            cmbEstados.ValueMember = "idestado";
-
-            lblNombreEmpleado.Text = _nombreEmpleado;
-            rbtnHombre.Checked = true;
+            txtNombreCompleto.Text = _nombreEmpleado;
+            mtxtNoEmpleado.Text = lstEmpleado[0].noempleado;
+            cmbMetodoPago.SelectedIndex = 2;
+            
         }
 
         private int ObtieneEdad(DateTime fecha)
@@ -205,27 +197,20 @@ namespace Nominas
             Empleados.Core.EmpleadosHelper empleadoh = new Empleados.Core.EmpleadosHelper();
             Historial.Core.HistorialHelper hh = new Historial.Core.HistorialHelper();
             Reingreso.Core.ReingresoHelper rh = new Reingreso.Core.ReingresoHelper();
-            Altas.Core.AltasHelper ah = new Altas.Core.AltasHelper();
             Empresas.Core.EmpresasHelper eh = new Empresas.Core.EmpresasHelper();
-            Direccion.Core.DireccionesHelper dh = new Direccion.Core.DireccionesHelper();
-            Complementos.Core.ComplementoHelper ch = new Complementos.Core.ComplementoHelper();
-
+            
             empleadoh.Command = cmd;
             hh.Command = cmd;
             rh.Command = cmd;
-            ah.Command = cmd;
             eh.Command = cmd;
-            dh.Command = cmd;
-            ch.Command = cmd;
 
             Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
             Historial.Core.Historial historia = new Historial.Core.Historial();
             Reingreso.Core.Reingresos reingreso = new Reingreso.Core.Reingresos();
-            Altas.Core.Altas alta = new Altas.Core.Altas();
             Empresas.Core.Empresas empresa = new Empresas.Core.Empresas();
 
             empleado.idtrabajador = _idempleado;
-            empleado.idempresa = int.Parse(cmbRegistroPatronal.SelectedValue.ToString());
+            empleado.idempresa = lstEmpleado[0].idempresa;
             empleado.fechaingreso = dtpFechaReingreso.Value;
             empleado.fechaantiguedad = dtpFechaAntiguedad.Value;
             empleado.antiguedad = int.Parse(txtAntiguedad.Text);
@@ -245,16 +230,17 @@ namespace Nominas
             
 
             historia.idtrabajador = _idempleado;
-            historia.idempresa = int.Parse(cmbRegistroPatronal.SelectedValue.ToString());
+            historia.idempresa = lstEmpleado[0].idempresa;
             historia.valor = double.Parse(txtSDI.Text);
             historia.fecha_imss = dtpFechaReingreso.Value;
             historia.fecha_sistema = DateTime.Now;
             historia.motivobaja = 0;
+            historia.tipomovimiento = GLOBALES.mREINGRESO;
 
-            empresa.idempresa = int.Parse(cmbRegistroPatronal.SelectedValue.ToString());
+            empresa.idempresa = lstEmpleado[0].idempresa;
 
             reingreso.idtrabajador = _idempleado;
-            reingreso.idempresa = int.Parse(cmbRegistroPatronal.SelectedValue.ToString());
+            reingreso.idempresa = lstEmpleado[0].idempresa;
             reingreso.fechaingreso = dtpFechaReingreso.Value;
             reingreso.sdi = double.Parse(txtSDI.Text);
 
@@ -296,60 +282,19 @@ namespace Nominas
                 }
             }
 
-            alta.idtrabajador = _idempleado;
-            alta.idempresa = int.Parse(cmbRegistroPatronal.SelectedValue.ToString());
-            alta.contrato = 4;
-            alta.jornada = 12;
-            alta.fechaingreso = dtpFechaReingreso.Value;
-            alta.diasproporcionales = diasProporcionales;
-            alta.sdi = double.Parse(txtSDI.Text);
-            alta.cp = "00000";
-            alta.clinica = "000";
-            alta.estado = cmbEstados.Text;
-            alta.noestado = int.Parse(cmbEstados.SelectedValue.ToString());
-            alta.sexo = ObtieneSexo();
-            alta.periodoInicio = periodoInicio;
-            alta.periodoFin = periodoFin;
-            
-            List<Empleados.Core.Empleados> lstEmpleado = new List<Empleados.Core.Empleados>();
-
             try {
                 cnx.Open();
                 empleadoh.reingreso(empleado);
 
                 rp = (string)eh.obtenerRegistroPatronal(empresa);
+
                 reingreso.registropatronal = rp;
-                alta.registropatronal = rp;
+                reingreso.nss = lstEmpleado[0].nss + lstEmpleado[0].digitoverificador;
+                reingreso.diasproporcionales = diasProporcionales;
+                reingreso.periodoinicio = periodoInicio;
+                reingreso.periodofin = periodoFin;
 
-                lstEmpleado = empleadoh.obtenerEmpleado(empleado);
-
-                for (int i = 0; i < lstEmpleado.Count; i++)
-                {
-                    reingreso.nss = lstEmpleado[i].nss + lstEmpleado[i].digitoverificador;
-                    alta.nss = lstEmpleado[i].nss + lstEmpleado[i].digitoverificador;
-                    alta.rfc = lstEmpleado[i].rfc;
-                    alta.curp = lstEmpleado[i].curp;
-                    alta.paterno = lstEmpleado[i].paterno;
-                    alta.materno = lstEmpleado[i].materno;
-                    alta.nombre = lstEmpleado[i].nombres;
-                    alta.fechanacimiento = lstEmpleado[i].fechanacimiento;
-                }
-
-                int idEmpresaEmpleado = (int)empleadoh.obtenerIdEmpresa(empleado);
-                if (idEmpresaEmpleado == int.Parse(cmbRegistroPatronal.SelectedValue.ToString()))
-                {
-                    historia.tipomovimiento = GLOBALES.mREINGRESO;
-                    reingreso.diasproporcionales = diasProporcionales;
-                    reingreso.periodoinicio = periodoInicio;
-                    reingreso.periodofin = periodoFin;
-                    rh.insertaReingreso(reingreso);
-                }
-                else
-                {
-                    historia.tipomovimiento = GLOBALES.mALTA;
-                    ah.insertaAlta(alta);
-                }
-
+                rh.insertaReingreso(reingreso);
                 hh.insertarHistorial(historia);
 
                 cnx.Close();
@@ -366,17 +311,5 @@ namespace Nominas
             this.Dispose();
         }
 
-        private string ObtieneSexo()
-        {
-            if (rbtnHombre.Checked)
-            {
-                sexo = "H";
-            }
-            else if (rbtnMujer.Checked)
-            {
-                sexo = "M";
-            }
-            return sexo.ToString();
-        }
     }
 }

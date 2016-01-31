@@ -143,16 +143,13 @@ namespace Nominas
             Catalogos.Core.CatalogosHelper ch = new Catalogos.Core.CatalogosHelper();
             ch.Command = cmd;
 
-            Catalogos.Core.Catalogo catalogo = new Catalogos.Core.Catalogo();
-            catalogo.grupodescripcion = "INCAPACIDAD";
-
             List<Catalogos.Core.Catalogo> lstControlIncapacidad = new List<Catalogos.Core.Catalogo>();
             List<Catalogos.Core.Catalogo> lstIncapacidad = new List<Catalogos.Core.Catalogo>();
 
             try
             {
                 cnx.Open();
-                lstIncapacidad = ch.obtenerGrupo(catalogo);
+                lstIncapacidad = ch.obtenerTipoIncapacidad();
                 lstControlIncapacidad = ch.obtenerControlIncapacidad();
                 cnx.Close();
                 cnx.Dispose();

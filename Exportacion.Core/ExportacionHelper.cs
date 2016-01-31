@@ -31,12 +31,13 @@ namespace Exportacion.Core
             return lstExportacion;
         }
 
-        public DataTable datosExportar(int idEmpresa, string campos)
+        public DataTable datosExportar(int idEmpresa, string campos, string tablas)
         {
-            Command.CommandText = "exec stp_DatosExportacionTrabajadores @idempresa, @campos";
+            Command.CommandText = "exec stp_DatosExportacionTrabajadores @idempresa, @campos, @tablas";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idEmpresa);
             Command.Parameters.AddWithValue("campos", campos);
+            Command.Parameters.AddWithValue("tablas", tablas);
             DataTable dtDatosExportar = new DataTable();
             dtDatosExportar = SelectData(Command);
             return dtDatosExportar;

@@ -65,7 +65,9 @@
             this.toolOrdenNombre = new System.Windows.Forms.ToolStripMenuItem();
             this.toolOrdenPaterno = new System.Windows.Forms.ToolStripMenuItem();
             this.toolOrdenMaterno = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.toolSobreRecibo = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.toolCalcular = new System.Windows.Forms.ToolStripButton();
             this.toolMostrarDatos = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
@@ -123,8 +125,6 @@
             this.dataGridViewTextBoxColumn19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.toolTitulo.SuspendLayout();
             this.toolBusqueda.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmpleados)).BeginInit();
@@ -171,15 +171,16 @@
             // 
             this.toolAbrir.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolAbrir.Name = "toolAbrir";
-            this.toolAbrir.Size = new System.Drawing.Size(126, 22);
+            this.toolAbrir.Size = new System.Drawing.Size(152, 22);
             this.toolAbrir.Text = "Abrir";
+            this.toolAbrir.Visible = false;
             this.toolAbrir.Click += new System.EventHandler(this.toolAbrir_Click);
             // 
             // toolGuardar
             // 
             this.toolGuardar.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolGuardar.Name = "toolGuardar";
-            this.toolGuardar.Size = new System.Drawing.Size(126, 22);
+            this.toolGuardar.Size = new System.Drawing.Size(152, 22);
             this.toolGuardar.Text = "Guardar";
             this.toolGuardar.Visible = false;
             this.toolGuardar.Click += new System.EventHandler(this.toolGuardar_Click);
@@ -187,20 +188,20 @@
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(123, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(149, 6);
             // 
             // toolAutorizar
             // 
             this.toolAutorizar.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.toolAutorizar.Name = "toolAutorizar";
-            this.toolAutorizar.Size = new System.Drawing.Size(126, 22);
+            this.toolAutorizar.Size = new System.Drawing.Size(152, 22);
             this.toolAutorizar.Text = "Autorizar";
             this.toolAutorizar.Click += new System.EventHandler(this.toolAutorizar_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(123, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
             // 
             // toolReportes
             // 
@@ -211,7 +212,7 @@
             this.toolTabular});
             this.toolReportes.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolReportes.Name = "toolReportes";
-            this.toolReportes.Size = new System.Drawing.Size(126, 22);
+            this.toolReportes.Size = new System.Drawing.Size(152, 22);
             this.toolReportes.Text = "Reportes";
             // 
             // toolCaratula
@@ -365,6 +366,11 @@
             this.toolOrdenMaterno.Text = "Ap. Materno";
             this.toolOrdenMaterno.Click += new System.EventHandler(this.toolOrdenMaterno_Click);
             // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
+            // 
             // toolSobreRecibo
             // 
             this.toolSobreRecibo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -374,6 +380,11 @@
             this.toolSobreRecibo.Size = new System.Drawing.Size(88, 22);
             this.toolSobreRecibo.Text = "Sobre - Recibo";
             this.toolSobreRecibo.Click += new System.EventHandler(this.toolStripButton2_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
             // 
             // toolCalcular
             // 
@@ -823,16 +834,6 @@
             // 
             this.dataGridViewTextBoxColumn21.HeaderText = "Incapacidad";
             this.dataGridViewTextBoxColumn21.Name = "dataGridViewTextBoxColumn21";
-            // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripSeparator7
-            // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
             // 
             // frmListaCalculoNomina
             // 

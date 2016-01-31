@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmReingresoEmpleado));
-            this.label1 = new System.Windows.Forms.Label();
-            this.cmbRegistroPatronal = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -50,14 +48,8 @@
             this.btnCalcular = new System.Windows.Forms.Button();
             this.txtAntiguedad = new System.Windows.Forms.TextBox();
             this.txtAntiguedadMod = new System.Windows.Forms.TextBox();
-            this.lblNombreEmpleado = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.cmbPeriodo = new System.Windows.Forms.ComboBox();
-            this.cmbEstados = new System.Windows.Forms.ComboBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.rbtnMujer = new System.Windows.Forms.RadioButton();
-            this.rbtnHombre = new System.Windows.Forms.RadioButton();
-            this.label12 = new System.Windows.Forms.Label();
             this.mtxtIdBancario = new System.Windows.Forms.MaskedTextBox();
             this.mtxtCuentaClabe = new System.Windows.Forms.MaskedTextBox();
             this.mtxtCuentaBancaria = new System.Windows.Forms.MaskedTextBox();
@@ -66,24 +58,11 @@
             this.label17 = new System.Windows.Forms.Label();
             this.cmbMetodoPago = new System.Windows.Forms.ComboBox();
             this.label20 = new System.Windows.Forms.Label();
+            this.txtNombreCompleto = new System.Windows.Forms.TextBox();
+            this.mtxtNoEmpleado = new System.Windows.Forms.MaskedTextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(31, 44);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(90, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Registro patronal:";
-            // 
-            // cmbRegistroPatronal
-            // 
-            this.cmbRegistroPatronal.FormattingEnabled = true;
-            this.cmbRegistroPatronal.Location = new System.Drawing.Point(127, 41);
-            this.cmbRegistroPatronal.Name = "cmbRegistroPatronal";
-            this.cmbRegistroPatronal.Size = new System.Drawing.Size(327, 21);
-            this.cmbRegistroPatronal.TabIndex = 1;
             // 
             // label2
             // 
@@ -209,7 +188,7 @@
             // 
             this.btnAceptar.Image = ((System.Drawing.Image)(resources.GetObject("btnAceptar.Image")));
             this.btnAceptar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAceptar.Location = new System.Drawing.Point(298, 416);
+            this.btnAceptar.Location = new System.Drawing.Point(298, 354);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(75, 28);
             this.btnAceptar.TabIndex = 16;
@@ -222,7 +201,7 @@
             // 
             this.btnCancelar.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelar.Image")));
             this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancelar.Location = new System.Drawing.Point(379, 416);
+            this.btnCancelar.Location = new System.Drawing.Point(379, 354);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 28);
             this.btnCancelar.TabIndex = 17;
@@ -257,16 +236,6 @@
             this.txtAntiguedadMod.Size = new System.Drawing.Size(27, 20);
             this.txtAntiguedadMod.TabIndex = 20;
             // 
-            // lblNombreEmpleado
-            // 
-            this.lblNombreEmpleado.AutoSize = true;
-            this.lblNombreEmpleado.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNombreEmpleado.Location = new System.Drawing.Point(12, 9);
-            this.lblNombreEmpleado.Name = "lblNombreEmpleado";
-            this.lblNombreEmpleado.Size = new System.Drawing.Size(191, 20);
-            this.lblNombreEmpleado.TabIndex = 21;
-            this.lblNombreEmpleado.Text = "Nombre del empleado";
-            // 
             // label9
             // 
             this.label9.AutoSize = true;
@@ -284,82 +253,37 @@
             this.cmbPeriodo.Size = new System.Drawing.Size(128, 21);
             this.cmbPeriodo.TabIndex = 23;
             // 
-            // cmbEstados
-            // 
-            this.cmbEstados.FormattingEnabled = true;
-            this.cmbEstados.Location = new System.Drawing.Point(127, 279);
-            this.cmbEstados.Name = "cmbEstados";
-            this.cmbEstados.Size = new System.Drawing.Size(128, 21);
-            this.cmbEstados.TabIndex = 24;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(78, 282);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(43, 13);
-            this.label10.TabIndex = 25;
-            this.label10.Text = "Estado:";
-            // 
-            // rbtnMujer
-            // 
-            this.rbtnMujer.AutoSize = true;
-            this.rbtnMujer.Location = new System.Drawing.Point(205, 311);
-            this.rbtnMujer.Name = "rbtnMujer";
-            this.rbtnMujer.Size = new System.Drawing.Size(51, 17);
-            this.rbtnMujer.TabIndex = 232;
-            this.rbtnMujer.TabStop = true;
-            this.rbtnMujer.Text = "Mujer";
-            this.rbtnMujer.UseVisualStyleBackColor = true;
-            // 
-            // rbtnHombre
-            // 
-            this.rbtnHombre.AutoSize = true;
-            this.rbtnHombre.Location = new System.Drawing.Point(127, 311);
-            this.rbtnHombre.Name = "rbtnHombre";
-            this.rbtnHombre.Size = new System.Drawing.Size(62, 17);
-            this.rbtnHombre.TabIndex = 231;
-            this.rbtnHombre.TabStop = true;
-            this.rbtnHombre.Text = "Hombre";
-            this.rbtnHombre.UseVisualStyleBackColor = true;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(85, 313);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(34, 13);
-            this.label12.TabIndex = 233;
-            this.label12.Text = "Sexo:";
-            // 
             // mtxtIdBancario
             // 
-            this.mtxtIdBancario.Location = new System.Drawing.Point(127, 388);
+            this.mtxtIdBancario.Location = new System.Drawing.Point(127, 333);
             this.mtxtIdBancario.Mask = "9999";
             this.mtxtIdBancario.Name = "mtxtIdBancario";
             this.mtxtIdBancario.Size = new System.Drawing.Size(129, 20);
             this.mtxtIdBancario.TabIndex = 250;
+            this.mtxtIdBancario.Text = "0000";
             // 
             // mtxtCuentaClabe
             // 
-            this.mtxtCuentaClabe.Location = new System.Drawing.Point(127, 362);
+            this.mtxtCuentaClabe.Location = new System.Drawing.Point(127, 307);
             this.mtxtCuentaClabe.Mask = "999 999 99999999999 9";
             this.mtxtCuentaClabe.Name = "mtxtCuentaClabe";
             this.mtxtCuentaClabe.Size = new System.Drawing.Size(129, 20);
             this.mtxtCuentaClabe.TabIndex = 249;
+            this.mtxtCuentaClabe.Text = "000000000000000000";
             // 
             // mtxtCuentaBancaria
             // 
-            this.mtxtCuentaBancaria.Location = new System.Drawing.Point(127, 336);
+            this.mtxtCuentaBancaria.Location = new System.Drawing.Point(127, 281);
             this.mtxtCuentaBancaria.Mask = "9999999999";
             this.mtxtCuentaBancaria.Name = "mtxtCuentaBancaria";
             this.mtxtCuentaBancaria.Size = new System.Drawing.Size(128, 20);
             this.mtxtCuentaBancaria.TabIndex = 248;
+            this.mtxtCuentaBancaria.Text = "0000000000";
             // 
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(56, 391);
+            this.label19.Location = new System.Drawing.Point(56, 336);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(65, 13);
             this.label19.TabIndex = 247;
@@ -368,7 +292,7 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(48, 365);
+            this.label18.Location = new System.Drawing.Point(48, 310);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(73, 13);
             this.label18.TabIndex = 246;
@@ -377,7 +301,7 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(33, 339);
+            this.label17.Location = new System.Drawing.Point(33, 284);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(88, 13);
             this.label17.TabIndex = 245;
@@ -390,7 +314,7 @@
             "Efectivo",
             "Cheque",
             "Transferencia"});
-            this.cmbMetodoPago.Location = new System.Drawing.Point(126, 414);
+            this.cmbMetodoPago.Location = new System.Drawing.Point(126, 359);
             this.cmbMetodoPago.Name = "cmbMetodoPago";
             this.cmbMetodoPago.Size = new System.Drawing.Size(129, 21);
             this.cmbMetodoPago.TabIndex = 252;
@@ -398,17 +322,58 @@
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(33, 417);
+            this.label20.Location = new System.Drawing.Point(33, 362);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(88, 13);
             this.label20.TabIndex = 251;
             this.label20.Text = "Metodo de pago:";
             // 
+            // txtNombreCompleto
+            // 
+            this.txtNombreCompleto.BackColor = System.Drawing.SystemColors.Control;
+            this.txtNombreCompleto.Location = new System.Drawing.Point(127, 42);
+            this.txtNombreCompleto.Name = "txtNombreCompleto";
+            this.txtNombreCompleto.Size = new System.Drawing.Size(196, 20);
+            this.txtNombreCompleto.TabIndex = 255;
+            // 
+            // mtxtNoEmpleado
+            // 
+            this.mtxtNoEmpleado.BackColor = System.Drawing.SystemColors.Control;
+            this.mtxtNoEmpleado.Location = new System.Drawing.Point(126, 16);
+            this.mtxtNoEmpleado.Mask = "9999";
+            this.mtxtNoEmpleado.Name = "mtxtNoEmpleado";
+            this.mtxtNoEmpleado.Size = new System.Drawing.Size(33, 20);
+            this.mtxtNoEmpleado.TabIndex = 254;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(53, 19);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(66, 13);
+            this.label11.TabIndex = 253;
+            this.label11.Text = "Empleado:";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(65, 45);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(54, 13);
+            this.label13.TabIndex = 256;
+            this.label13.Text = "Nombre:";
+            // 
             // frmReingresoEmpleado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(466, 453);
+            this.ClientSize = new System.Drawing.Size(462, 390);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.txtNombreCompleto);
+            this.Controls.Add(this.mtxtNoEmpleado);
+            this.Controls.Add(this.label11);
             this.Controls.Add(this.cmbMetodoPago);
             this.Controls.Add(this.label20);
             this.Controls.Add(this.mtxtIdBancario);
@@ -417,14 +382,8 @@
             this.Controls.Add(this.label19);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.label17);
-            this.Controls.Add(this.rbtnMujer);
-            this.Controls.Add(this.rbtnHombre);
-            this.Controls.Add(this.label12);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.cmbEstados);
             this.Controls.Add(this.cmbPeriodo);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.lblNombreEmpleado);
             this.Controls.Add(this.txtAntiguedadMod);
             this.Controls.Add(this.txtAntiguedad);
             this.Controls.Add(this.btnCalcular);
@@ -444,8 +403,6 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.cmbRegistroPatronal);
-            this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -459,8 +416,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox cmbRegistroPatronal;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
@@ -480,14 +435,8 @@
         private System.Windows.Forms.Button btnCalcular;
         private System.Windows.Forms.TextBox txtAntiguedad;
         private System.Windows.Forms.TextBox txtAntiguedadMod;
-        private System.Windows.Forms.Label lblNombreEmpleado;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ComboBox cmbPeriodo;
-        private System.Windows.Forms.ComboBox cmbEstados;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.RadioButton rbtnMujer;
-        private System.Windows.Forms.RadioButton rbtnHombre;
-        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.MaskedTextBox mtxtIdBancario;
         private System.Windows.Forms.MaskedTextBox mtxtCuentaClabe;
         private System.Windows.Forms.MaskedTextBox mtxtCuentaBancaria;
@@ -496,5 +445,9 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.ComboBox cmbMetodoPago;
         private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.TextBox txtNombreCompleto;
+        private System.Windows.Forms.MaskedTextBox mtxtNoEmpleado;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label13;
     }
 }

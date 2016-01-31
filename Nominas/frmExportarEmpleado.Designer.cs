@@ -118,7 +118,7 @@
             // chkNombre
             // 
             this.chkNombre.AutoSize = true;
-            this.chkNombre.Location = new System.Drawing.Point(30, 70);
+            this.chkNombre.Location = new System.Drawing.Point(30, 94);
             this.chkNombre.Name = "chkNombre";
             this.chkNombre.Size = new System.Drawing.Size(74, 17);
             this.chkNombre.TabIndex = 212;
@@ -128,7 +128,7 @@
             // chkPaterno
             // 
             this.chkPaterno.AutoSize = true;
-            this.chkPaterno.Location = new System.Drawing.Point(30, 94);
+            this.chkPaterno.Location = new System.Drawing.Point(30, 118);
             this.chkPaterno.Name = "chkPaterno";
             this.chkPaterno.Size = new System.Drawing.Size(82, 17);
             this.chkPaterno.TabIndex = 213;
@@ -138,7 +138,7 @@
             // chkMaterno
             // 
             this.chkMaterno.AutoSize = true;
-            this.chkMaterno.Location = new System.Drawing.Point(30, 118);
+            this.chkMaterno.Location = new System.Drawing.Point(30, 142);
             this.chkMaterno.Name = "chkMaterno";
             this.chkMaterno.Size = new System.Drawing.Size(84, 17);
             this.chkMaterno.TabIndex = 214;
@@ -148,7 +148,7 @@
             // chkNombreCompleto
             // 
             this.chkNombreCompleto.AutoSize = true;
-            this.chkNombreCompleto.Location = new System.Drawing.Point(30, 142);
+            this.chkNombreCompleto.Location = new System.Drawing.Point(30, 166);
             this.chkNombreCompleto.Name = "chkNombreCompleto";
             this.chkNombreCompleto.Size = new System.Drawing.Size(110, 17);
             this.chkNombreCompleto.TabIndex = 215;
@@ -158,7 +158,7 @@
             // chkDepartamento
             // 
             this.chkDepartamento.AutoSize = true;
-            this.chkDepartamento.Location = new System.Drawing.Point(30, 166);
+            this.chkDepartamento.Location = new System.Drawing.Point(30, 190);
             this.chkDepartamento.Name = "chkDepartamento";
             this.chkDepartamento.Size = new System.Drawing.Size(93, 17);
             this.chkDepartamento.TabIndex = 216;
@@ -168,7 +168,7 @@
             // chkPuesto
             // 
             this.chkPuesto.AutoSize = true;
-            this.chkPuesto.Location = new System.Drawing.Point(30, 190);
+            this.chkPuesto.Location = new System.Drawing.Point(30, 214);
             this.chkPuesto.Name = "chkPuesto";
             this.chkPuesto.Size = new System.Drawing.Size(59, 17);
             this.chkPuesto.TabIndex = 217;
@@ -178,7 +178,7 @@
             // chkFechaIngreso
             // 
             this.chkFechaIngreso.AutoSize = true;
-            this.chkFechaIngreso.Location = new System.Drawing.Point(30, 213);
+            this.chkFechaIngreso.Location = new System.Drawing.Point(30, 237);
             this.chkFechaIngreso.Name = "chkFechaIngreso";
             this.chkFechaIngreso.Size = new System.Drawing.Size(108, 17);
             this.chkFechaIngreso.TabIndex = 218;
@@ -188,7 +188,7 @@
             // chkFechaAntiguedad
             // 
             this.chkFechaAntiguedad.AutoSize = true;
-            this.chkFechaAntiguedad.Location = new System.Drawing.Point(30, 237);
+            this.chkFechaAntiguedad.Location = new System.Drawing.Point(30, 261);
             this.chkFechaAntiguedad.Name = "chkFechaAntiguedad";
             this.chkFechaAntiguedad.Size = new System.Drawing.Size(127, 17);
             this.chkFechaAntiguedad.TabIndex = 219;
@@ -198,7 +198,7 @@
             // chkFechaNacimiento
             // 
             this.chkFechaNacimiento.AutoSize = true;
-            this.chkFechaNacimiento.Location = new System.Drawing.Point(30, 261);
+            this.chkFechaNacimiento.Location = new System.Drawing.Point(30, 285);
             this.chkFechaNacimiento.Name = "chkFechaNacimiento";
             this.chkFechaNacimiento.Size = new System.Drawing.Size(125, 17);
             this.chkFechaNacimiento.TabIndex = 220;
@@ -208,7 +208,7 @@
             // chkEdad
             // 
             this.chkEdad.AutoSize = true;
-            this.chkEdad.Location = new System.Drawing.Point(30, 285);
+            this.chkEdad.Location = new System.Drawing.Point(30, 309);
             this.chkEdad.Name = "chkEdad";
             this.chkEdad.Size = new System.Drawing.Size(51, 17);
             this.chkEdad.TabIndex = 221;
@@ -218,7 +218,7 @@
             // chkRfc
             // 
             this.chkRfc.AutoSize = true;
-            this.chkRfc.Location = new System.Drawing.Point(30, 309);
+            this.chkRfc.Location = new System.Drawing.Point(30, 333);
             this.chkRfc.Name = "chkRfc";
             this.chkRfc.Size = new System.Drawing.Size(56, 17);
             this.chkRfc.TabIndex = 222;
@@ -228,7 +228,7 @@
             // chkCurp
             // 
             this.chkCurp.AutoSize = true;
-            this.chkCurp.Location = new System.Drawing.Point(30, 333);
+            this.chkCurp.Location = new System.Drawing.Point(30, 357);
             this.chkCurp.Name = "chkCurp";
             this.chkCurp.Size = new System.Drawing.Size(56, 17);
             this.chkCurp.TabIndex = 223;
@@ -238,7 +238,7 @@
             // chkNss
             // 
             this.chkNss.AutoSize = true;
-            this.chkNss.Location = new System.Drawing.Point(30, 357);
+            this.chkNss.Location = new System.Drawing.Point(30, 381);
             this.chkNss.Name = "chkNss";
             this.chkNss.Size = new System.Drawing.Size(57, 17);
             this.chkNss.TabIndex = 224;
@@ -248,7 +248,7 @@
             // chkSdi
             // 
             this.chkSdi.AutoSize = true;
-            this.chkSdi.Location = new System.Drawing.Point(30, 381);
+            this.chkSdi.Location = new System.Drawing.Point(170, 70);
             this.chkSdi.Name = "chkSdi";
             this.chkSdi.Size = new System.Drawing.Size(53, 17);
             this.chkSdi.TabIndex = 225;
@@ -258,7 +258,7 @@
             // chkSd
             // 
             this.chkSd.AutoSize = true;
-            this.chkSd.Location = new System.Drawing.Point(171, 70);
+            this.chkSd.Location = new System.Drawing.Point(170, 94);
             this.chkSd.Name = "chkSd";
             this.chkSd.Size = new System.Drawing.Size(47, 17);
             this.chkSd.TabIndex = 226;
@@ -268,7 +268,7 @@
             // chkSueldo
             // 
             this.chkSueldo.AutoSize = true;
-            this.chkSueldo.Location = new System.Drawing.Point(171, 94);
+            this.chkSueldo.Location = new System.Drawing.Point(170, 118);
             this.chkSueldo.Name = "chkSueldo";
             this.chkSueldo.Size = new System.Drawing.Size(59, 17);
             this.chkSueldo.TabIndex = 227;
@@ -278,7 +278,7 @@
             // chkEstatus
             // 
             this.chkEstatus.AutoSize = true;
-            this.chkEstatus.Location = new System.Drawing.Point(171, 118);
+            this.chkEstatus.Location = new System.Drawing.Point(170, 142);
             this.chkEstatus.Name = "chkEstatus";
             this.chkEstatus.Size = new System.Drawing.Size(61, 17);
             this.chkEstatus.TabIndex = 228;
@@ -288,7 +288,7 @@
             // chkCuenta
             // 
             this.chkCuenta.AutoSize = true;
-            this.chkCuenta.Location = new System.Drawing.Point(171, 142);
+            this.chkCuenta.Location = new System.Drawing.Point(170, 166);
             this.chkCuenta.Name = "chkCuenta";
             this.chkCuenta.Size = new System.Drawing.Size(60, 17);
             this.chkCuenta.TabIndex = 229;
@@ -298,7 +298,7 @@
             // chkClabe
             // 
             this.chkClabe.AutoSize = true;
-            this.chkClabe.Location = new System.Drawing.Point(171, 166);
+            this.chkClabe.Location = new System.Drawing.Point(170, 190);
             this.chkClabe.Name = "chkClabe";
             this.chkClabe.Size = new System.Drawing.Size(53, 17);
             this.chkClabe.TabIndex = 230;
@@ -308,7 +308,7 @@
             // chkIdBancario
             // 
             this.chkIdBancario.AutoSize = true;
-            this.chkIdBancario.Location = new System.Drawing.Point(171, 190);
+            this.chkIdBancario.Location = new System.Drawing.Point(170, 214);
             this.chkIdBancario.Name = "chkIdBancario";
             this.chkIdBancario.Size = new System.Drawing.Size(82, 17);
             this.chkIdBancario.TabIndex = 231;
@@ -318,152 +318,167 @@
             // chkCalle
             // 
             this.chkCalle.AutoSize = true;
-            this.chkCalle.Location = new System.Drawing.Point(171, 213);
+            this.chkCalle.Location = new System.Drawing.Point(170, 237);
             this.chkCalle.Name = "chkCalle";
             this.chkCalle.Size = new System.Drawing.Size(49, 17);
             this.chkCalle.TabIndex = 232;
             this.chkCalle.Text = "Calle";
             this.chkCalle.UseVisualStyleBackColor = true;
+            this.chkCalle.CheckedChanged += new System.EventHandler(this.chkCalle_CheckedChanged);
             // 
             // chkExterior
             // 
             this.chkExterior.AutoSize = true;
-            this.chkExterior.Location = new System.Drawing.Point(171, 237);
+            this.chkExterior.Location = new System.Drawing.Point(170, 261);
             this.chkExterior.Name = "chkExterior";
             this.chkExterior.Size = new System.Drawing.Size(61, 17);
             this.chkExterior.TabIndex = 233;
             this.chkExterior.Text = "Exterior";
             this.chkExterior.UseVisualStyleBackColor = true;
+            this.chkExterior.CheckedChanged += new System.EventHandler(this.chkExterior_CheckedChanged);
             // 
             // chkInterior
             // 
             this.chkInterior.AutoSize = true;
-            this.chkInterior.Location = new System.Drawing.Point(171, 261);
+            this.chkInterior.Location = new System.Drawing.Point(170, 285);
             this.chkInterior.Name = "chkInterior";
             this.chkInterior.Size = new System.Drawing.Size(58, 17);
             this.chkInterior.TabIndex = 234;
             this.chkInterior.Text = "Interior";
             this.chkInterior.UseVisualStyleBackColor = true;
+            this.chkInterior.CheckedChanged += new System.EventHandler(this.chkInterior_CheckedChanged);
             // 
             // chkColonia
             // 
             this.chkColonia.AutoSize = true;
-            this.chkColonia.Location = new System.Drawing.Point(171, 285);
+            this.chkColonia.Location = new System.Drawing.Point(170, 309);
             this.chkColonia.Name = "chkColonia";
             this.chkColonia.Size = new System.Drawing.Size(61, 17);
             this.chkColonia.TabIndex = 235;
             this.chkColonia.Text = "Colonia";
             this.chkColonia.UseVisualStyleBackColor = true;
+            this.chkColonia.CheckedChanged += new System.EventHandler(this.chkColonia_CheckedChanged);
             // 
             // chkCp
             // 
             this.chkCp.AutoSize = true;
-            this.chkCp.Location = new System.Drawing.Point(171, 309);
+            this.chkCp.Location = new System.Drawing.Point(170, 333);
             this.chkCp.Name = "chkCp";
             this.chkCp.Size = new System.Drawing.Size(46, 17);
             this.chkCp.TabIndex = 236;
             this.chkCp.Text = "C.P.";
             this.chkCp.UseVisualStyleBackColor = true;
+            this.chkCp.CheckedChanged += new System.EventHandler(this.chkCp_CheckedChanged);
             // 
             // chkCiudad
             // 
             this.chkCiudad.AutoSize = true;
-            this.chkCiudad.Location = new System.Drawing.Point(171, 333);
+            this.chkCiudad.Location = new System.Drawing.Point(170, 357);
             this.chkCiudad.Name = "chkCiudad";
             this.chkCiudad.Size = new System.Drawing.Size(59, 17);
             this.chkCiudad.TabIndex = 237;
             this.chkCiudad.Text = "Ciudad";
             this.chkCiudad.UseVisualStyleBackColor = true;
+            this.chkCiudad.CheckedChanged += new System.EventHandler(this.chkCiudad_CheckedChanged);
             // 
             // chkEstado
             // 
             this.chkEstado.AutoSize = true;
-            this.chkEstado.Location = new System.Drawing.Point(171, 357);
+            this.chkEstado.Location = new System.Drawing.Point(170, 381);
             this.chkEstado.Name = "chkEstado";
             this.chkEstado.Size = new System.Drawing.Size(59, 17);
             this.chkEstado.TabIndex = 238;
             this.chkEstado.Text = "Estado";
             this.chkEstado.UseVisualStyleBackColor = true;
+            this.chkEstado.CheckedChanged += new System.EventHandler(this.chkEstado_CheckedChanged);
             // 
             // chkPais
             // 
             this.chkPais.AutoSize = true;
-            this.chkPais.Location = new System.Drawing.Point(171, 381);
+            this.chkPais.Location = new System.Drawing.Point(278, 70);
             this.chkPais.Name = "chkPais";
             this.chkPais.Size = new System.Drawing.Size(46, 17);
             this.chkPais.TabIndex = 239;
             this.chkPais.Text = "Pais";
             this.chkPais.UseVisualStyleBackColor = true;
+            this.chkPais.CheckedChanged += new System.EventHandler(this.chkPais_CheckedChanged);
             // 
             // chkEstadoCivil
             // 
             this.chkEstadoCivil.AutoSize = true;
-            this.chkEstadoCivil.Location = new System.Drawing.Point(279, 70);
+            this.chkEstadoCivil.Location = new System.Drawing.Point(278, 94);
             this.chkEstadoCivil.Name = "chkEstadoCivil";
             this.chkEstadoCivil.Size = new System.Drawing.Size(80, 17);
             this.chkEstadoCivil.TabIndex = 240;
             this.chkEstadoCivil.Text = "Estado civil";
             this.chkEstadoCivil.UseVisualStyleBackColor = true;
+            this.chkEstadoCivil.CheckedChanged += new System.EventHandler(this.chkEstadoCivil_CheckedChanged);
             // 
             // chkSexo
             // 
             this.chkSexo.AutoSize = true;
-            this.chkSexo.Location = new System.Drawing.Point(279, 94);
+            this.chkSexo.Location = new System.Drawing.Point(278, 118);
             this.chkSexo.Name = "chkSexo";
             this.chkSexo.Size = new System.Drawing.Size(50, 17);
             this.chkSexo.TabIndex = 241;
             this.chkSexo.Text = "Sexo";
             this.chkSexo.UseVisualStyleBackColor = true;
+            this.chkSexo.CheckedChanged += new System.EventHandler(this.chkSexo_CheckedChanged);
             // 
             // chkEscolaridad
             // 
             this.chkEscolaridad.AutoSize = true;
-            this.chkEscolaridad.Location = new System.Drawing.Point(279, 118);
+            this.chkEscolaridad.Location = new System.Drawing.Point(278, 142);
             this.chkEscolaridad.Name = "chkEscolaridad";
             this.chkEscolaridad.Size = new System.Drawing.Size(81, 17);
             this.chkEscolaridad.TabIndex = 242;
             this.chkEscolaridad.Text = "Escolaridad";
             this.chkEscolaridad.UseVisualStyleBackColor = true;
+            this.chkEscolaridad.CheckedChanged += new System.EventHandler(this.chkEscolaridad_CheckedChanged);
             // 
             // chkNacionalidad
             // 
             this.chkNacionalidad.AutoSize = true;
-            this.chkNacionalidad.Location = new System.Drawing.Point(279, 142);
+            this.chkNacionalidad.Location = new System.Drawing.Point(278, 166);
             this.chkNacionalidad.Name = "chkNacionalidad";
             this.chkNacionalidad.Size = new System.Drawing.Size(88, 17);
             this.chkNacionalidad.TabIndex = 243;
             this.chkNacionalidad.Text = "Nacionalidad";
             this.chkNacionalidad.UseVisualStyleBackColor = true;
+            this.chkNacionalidad.CheckedChanged += new System.EventHandler(this.chkNacionalidad_CheckedChanged);
             // 
             // chkCreditoInfonavit
             // 
             this.chkCreditoInfonavit.AutoSize = true;
-            this.chkCreditoInfonavit.Location = new System.Drawing.Point(279, 166);
+            this.chkCreditoInfonavit.Location = new System.Drawing.Point(278, 190);
             this.chkCreditoInfonavit.Name = "chkCreditoInfonavit";
             this.chkCreditoInfonavit.Size = new System.Drawing.Size(103, 17);
             this.chkCreditoInfonavit.TabIndex = 244;
             this.chkCreditoInfonavit.Text = "Credito Infonavit";
             this.chkCreditoInfonavit.UseVisualStyleBackColor = true;
+            this.chkCreditoInfonavit.CheckedChanged += new System.EventHandler(this.chkCreditoInfonavit_CheckedChanged);
             // 
             // chkDescuentoInfonavit
             // 
             this.chkDescuentoInfonavit.AutoSize = true;
-            this.chkDescuentoInfonavit.Location = new System.Drawing.Point(279, 190);
+            this.chkDescuentoInfonavit.Location = new System.Drawing.Point(278, 214);
             this.chkDescuentoInfonavit.Name = "chkDescuentoInfonavit";
             this.chkDescuentoInfonavit.Size = new System.Drawing.Size(122, 17);
             this.chkDescuentoInfonavit.TabIndex = 245;
             this.chkDescuentoInfonavit.Text = "Descuento Infonavit";
             this.chkDescuentoInfonavit.UseVisualStyleBackColor = true;
+            this.chkDescuentoInfonavit.CheckedChanged += new System.EventHandler(this.chkDescuentoInfonavit_CheckedChanged);
             // 
             // chkValorDescuento
             // 
             this.chkValorDescuento.AutoSize = true;
-            this.chkValorDescuento.Location = new System.Drawing.Point(279, 213);
+            this.chkValorDescuento.Location = new System.Drawing.Point(278, 237);
             this.chkValorDescuento.Name = "chkValorDescuento";
             this.chkValorDescuento.Size = new System.Drawing.Size(120, 17);
             this.chkValorDescuento.TabIndex = 246;
             this.chkValorDescuento.Text = "Valor del descuento";
             this.chkValorDescuento.UseVisualStyleBackColor = true;
+            this.chkValorDescuento.CheckedChanged += new System.EventHandler(this.chkValorDescuento_CheckedChanged);
             // 
             // statusStrip1
             // 
@@ -499,7 +514,7 @@
             // chkNoEmpleado
             // 
             this.chkNoEmpleado.AutoSize = true;
-            this.chkNoEmpleado.Location = new System.Drawing.Point(279, 236);
+            this.chkNoEmpleado.Location = new System.Drawing.Point(30, 70);
             this.chkNoEmpleado.Name = "chkNoEmpleado";
             this.chkNoEmpleado.Size = new System.Drawing.Size(107, 17);
             this.chkNoEmpleado.TabIndex = 248;

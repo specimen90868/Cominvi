@@ -186,9 +186,8 @@ namespace Nominas
                         txtAntiguedadMod.Text = lstEmpleado[i].antiguedadmod.ToString();
                         txtRFC.Text = lstEmpleado[i].rfc;
                         txtCURP.Text = lstEmpleado[i].curp;
-                        txtNSS.Text = lstEmpleado[i].nss;
-                        txtDigito.Text = lstEmpleado[i].digitoverificador.ToString();
-
+                        txtNSS.Text = lstEmpleado[i].nss + lstEmpleado[i].digitoverificador.ToString();
+                        
                         cmbDepartamento.SelectedValue = int.Parse(lstEmpleado[i].iddepartamento.ToString());
                         cmbPuesto.SelectedValue = int.Parse(lstEmpleado[i].idpuesto.ToString());
                         cmbPeriodo.SelectedValue = int.Parse(lstEmpleado[i].idperiodo.ToString());
@@ -354,7 +353,7 @@ namespace Nominas
 
             Empleados.Core.Empleados existeEmpleado = new Empleados.Core.Empleados();
             existeEmpleado.nss = txtNSS.Text;
-            existeEmpleado.digitoverificador = int.Parse(txtDigito.Text);
+            existeEmpleado.digitoverificador = int.Parse(txtNSS.Text.Substring(10,1));
             int existeNss;
             try
             {
@@ -383,8 +382,8 @@ namespace Nominas
             em.idempresa = GLOBALES.IDEMPRESA;
             em.rfc = txtRFC.Text;
             em.curp = txtCURP.Text;
-            em.nss = txtNSS.Text;
-            em.digitoverificador = int.Parse(txtDigito.Text);
+            em.nss = txtNSS.Text.Substring(0,10);
+            em.digitoverificador = int.Parse(txtNSS.Text.Substring(10,1));
 
             em.iddepartamento = int.Parse(cmbDepartamento.SelectedValue.ToString());
             em.idpuesto = int.Parse(cmbPuesto.SelectedValue.ToString());
@@ -456,7 +455,7 @@ namespace Nominas
             Altas.Core.AltasHelper ah = new Altas.Core.AltasHelper();
             ah.Command = cmd;
             Altas.Core.Altas a = new Altas.Core.Altas();
-            a.nss = txtNSS.Text + txtDigito.Text;
+            a.nss = txtNSS.Text;
             a.rfc = txtRFC.Text;
             a.curp = txtCURP.Text;
             a.paterno = txtApPaterno.Text;

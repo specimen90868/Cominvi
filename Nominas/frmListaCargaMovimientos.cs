@@ -441,7 +441,25 @@ namespace Nominas
                             mov.cantidad = double.Parse(fila.Cells["cantidad"].Value.ToString());
                             mov.fechainicio = DateTime.Parse(fila.Cells["inicio"].Value.ToString());
                             mov.fechafin = DateTime.Parse(fila.Cells["fin"].Value.ToString());
-                            lstOtrasDeducciones.Add(mov);
+
+                            try
+                            {
+                                cnx.Open();
+                                existeConcepto = (int)mh.existeMovimientoConcepto(mov);
+                                cnx.Close();
+                            }
+                            catch
+                            {
+                                MessageBox.Show("Error al obtener la existencia del concepto.\r\n \r\n Esta ventana se cerrará.", "Error");
+                                cnx.Dispose();
+                                workMovimientos.CancelAsync();
+                                this.Dispose();
+                            }
+
+                            if (existeConcepto == 0)
+                            {
+                                lstOtrasDeducciones.Add(mov);
+                            }
                         }
                         break;
                     #endregion

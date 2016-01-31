@@ -29,6 +29,8 @@ namespace Nominas
         string NetoCero, Orden;
         bool FLAGCARGA = false;
         bool FLAGPRIMERCALCULO = true;
+        bool EXISTEPRENOMINA = false;
+
         Empresas.Core.EmpresasHelper eh;
         Empleados.Core.EmpleadosHelper emph;
         CalculoNomina.Core.NominaHelper nh;
@@ -50,11 +52,99 @@ namespace Nominas
 
         private void toolCargar_Click(object sender, EventArgs e)
         {
+            int estatusEmpleados =  0;
+            string idtrabajadores = "";
             frmListaCargaMovimientos lcm = new frmListaCargaMovimientos();
             lcm._tipoNomina = _tipoNomina;
             lcm._inicioPeriodo = periodoInicio.Date;
             lcm._finPeriodo = periodoFin.Date;
-            lcm.Show();
+            lcm.ShowDialog();
+
+            if (_tipoNomina == GLOBALES.EXTRAORDINARIO_NORMAL || _tipoNomina == GLOBALES.EXTRAORDINARIO_ESPECIAL)
+            {
+                cnx = new SqlConnection(cdn);
+                cmd = new SqlCommand();
+                cmd.Connection = cnx;
+
+                nh = new CalculoNomina.Core.NominaHelper();
+                nh.Command = cmd;
+
+                CalculoNomina.Core.tmpPagoNomina pn = new CalculoNomina.Core.tmpPagoNomina();
+                pn.idempresa = GLOBALES.IDEMPRESA;
+                pn.fechainicio = periodoInicio;
+                pn.fechafin = periodoFin;
+
+                if (_tipoNomina == GLOBALES.EXTRAORDINARIO_NORMAL)
+                    estatusEmpleados = GLOBALES.ACTIVO;
+                if (_tipoNomina == GLOBALES.EXTRAORDINARIO_ESPECIAL)
+                    estatusEmpleados = GLOBALES.INACTIVO;
+
+                List<CalculoNomina.Core.tmpPagoNomina> lstPreNominaEspecial = new List<CalculoNomina.Core.tmpPagoNomina>();
+                List<CalculoNomina.Core.DatosEmpleado> lstEmp = new List<CalculoNomina.Core.DatosEmpleado>();
+
+                try
+                {
+                    cnx.Open();
+                    lstPreNominaEspecial = nh.obtenerPreNomina(pn);
+                    var dato = lstPreNominaEspecial.GroupBy(id => id.idtrabajador).Select(grp => grp.First()).ToList();
+                    foreach (var a in dato)
+                    {
+                        idtrabajadores += a.idtrabajador.ToString() + ",";
+                    }
+                    idtrabajadores = idtrabajadores.Substring(0, idtrabajadores.Length - 1);
+                    lstEmp = nh.obtenerDatosEmpleado(GLOBALES.IDEMPRESA, idtrabajadores);
+                    cnx.Close();
+                    cnx.Dispose();
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                }
+
+                dgvEmpleados.Columns["seleccion"].DataPropertyName = "chk";
+                dgvEmpleados.Columns["idtrabajador"].DataPropertyName = "idtrabajador";
+                dgvEmpleados.Columns["iddepartamento"].DataPropertyName = "iddepartamento";
+                dgvEmpleados.Columns["idpuesto"].DataPropertyName = "idpuesto";
+                dgvEmpleados.Columns["noempleado"].DataPropertyName = "noempleado";
+                dgvEmpleados.Columns["nombres"].DataPropertyName = "nombres";
+                dgvEmpleados.Columns["paterno"].DataPropertyName = "paterno";
+                dgvEmpleados.Columns["materno"].DataPropertyName = "materno";
+                dgvEmpleados.Columns["sueldo"].DataPropertyName = "sueldo";
+                dgvEmpleados.Columns["despensa"].DataPropertyName = "despensa";
+                dgvEmpleados.Columns["asistencia"].DataPropertyName = "asistencia";
+                dgvEmpleados.Columns["puntualidad"].DataPropertyName = "puntualidad";
+                dgvEmpleados.Columns["horas"].DataPropertyName = "horas";
+                dgvEmpleados.DataSource = lstEmp;
+
+                foreach (DataGridViewRow fila in dgvEmpleados.Rows)
+                {
+                    for (int i = 0; i < lstPreNominaEspecial.Count; i++)
+                    {
+                        if ((int)fila.Cells["idtrabajador"].Value == lstPreNominaEspecial[i].idtrabajador)
+                        {
+                            switch (lstPreNominaEspecial[i].noconcepto)
+                            {
+                                case 1:
+                                    fila.Cells["sueldo"].Value = lstPreNominaEspecial[i].cantidad;
+                                    break;
+                                case 2:
+                                    fila.Cells["horas"].Value = lstPreNominaEspecial[i].cantidad;
+                                    break;
+                                case 3:
+                                    fila.Cells["asistencia"].Value = lstPreNominaEspecial[i].cantidad;
+                                    break;
+                                case 5:
+                                    fila.Cells["puntualidad"].Value = lstPreNominaEspecial[i].cantidad;
+                                    break;
+                                case 6:
+                                    fila.Cells["despensa"].Value = lstPreNominaEspecial[i].cantidad;
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+
         }
 
         private void frmListaCalculoNomina_Load(object sender, EventArgs e)
@@ -84,7 +174,13 @@ namespace Nominas
             #endregion
             disenoGridFaltas();
             //cargaEmpleados();
-            spn_OnPreNomina(periodoInicio, periodoFin);
+
+            if (_tipoNomina != GLOBALES.EXTRAORDINARIO_NORMAL && _tipoNomina != GLOBALES.EXTRAORDINARIO_ESPECIAL)
+            {
+                spn_OnPreNomina(periodoInicio, periodoFin);
+                if (!EXISTEPRENOMINA)
+                    toolCalcular_Click(sender, e);
+            }
         }
 
         private void obtenerPeriodoCalculo()
@@ -565,7 +661,7 @@ namespace Nominas
                 {
                     progreso = (indice * 100) / total;
                     indice++;
-                    workerCalculo.ReportProgress(progreso, "CALCULO DE NOMINA");
+                    workerCalculo.ReportProgress(progreso, "CARGANDO DATOS DE LOS TRABAJADORES. ESPERE A QUE TERMINE EL PROCESO.");
 
                     CalculoNomina.Core.tmpPagoNomina tmp = new CalculoNomina.Core.tmpPagoNomina();
                     tmp.idtrabajador = int.Parse(fila.Cells["idtrabajador"].Value.ToString());
@@ -612,7 +708,7 @@ namespace Nominas
                         cnx.Open();
                         lstConceptosPercepciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "P", int.Parse(fila.Cells["idtrabajador"].Value.ToString()), noConceptosPercepciones);
                         lstConceptosDeducciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "D", int.Parse(fila.Cells["idtrabajador"].Value.ToString()), noConceptosDeducciones);
-                        lstConceptosGuardados = nh.obtenerConceptosGuardados(tmp);
+                        //lstConceptosGuardados = nh.obtenerConceptosGuardados(tmp);
                         cnx.Close();
                     }
                     catch (Exception error)
@@ -757,6 +853,12 @@ namespace Nominas
                                             {
                                                 vn.gravado = vn.cantidad - vn.exento;
                                             }
+                                        }
+
+                                        if (!lstNoConcepto[0].gravado && lstNoConcepto[0].exento)
+                                        {
+                                            vn.gravado = 0;
+                                            vn.exento = lstProgramacion[i].cantidad;
                                         }
 
                                         if (existeConcepto == 0)
@@ -986,6 +1088,34 @@ namespace Nominas
                                     vn.guardada = false;
                                     vn.tiponomina = _tipoNomina;
                                     vn.modificado = false;
+
+                                    if (lstNoConcepto[0].gravado && !lstNoConcepto[0].exento)
+                                    {
+                                        vn.gravado = lstMovimiento[i].cantidad;
+                                        vn.exento = 0;
+                                    }
+
+                                    if (lstNoConcepto[0].gravado && lstNoConcepto[0].exento)
+                                    {
+                                        CalculoFormula formulaExcento = new CalculoFormula(int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicio.Date, periodoFin.Date, lstNoConcepto[0].formulaexento);
+                                        vn.exento = double.Parse(formulaExcento.calcularFormula().ToString());
+                                        if (vn.cantidad <= vn.exento)
+                                        {
+                                            vn.exento = vn.cantidad;
+                                            vn.gravado = 0;
+                                        }
+                                        else
+                                        {
+                                            vn.gravado = vn.cantidad - vn.exento;
+                                        }
+                                    }
+
+                                    if (!lstNoConcepto[0].gravado && lstNoConcepto[0].exento)
+                                    {
+                                        vn.gravado = 0;
+                                        vn.exento = lstMovimiento[i].cantidad;
+                                    }
+
                                     lstOtrasDeducciones.Add(vn);
                                 }
                             }
@@ -1102,7 +1232,7 @@ namespace Nominas
                 {
                     progreso = (indice * 100) / total;
                     indice++;
-                    workerCalculo.ReportProgress(progreso, "RECALCULO DE NOMINA");
+                    workerCalculo.ReportProgress(progreso, "CALCULO DE NOMINA.");
 
                     CalculoNomina.Core.tmpPagoNomina tmp = new CalculoNomina.Core.tmpPagoNomina();
                     tmp.idtrabajador = int.Parse(fila.Cells["idtrabajador"].Value.ToString());
@@ -1123,12 +1253,12 @@ namespace Nominas
                             periodoInicio.Date, periodoFin.Date);
 
                         lstConceptosGuardados = new List<CalculoNomina.Core.tmpPagoNomina>();
-                        lstConceptosGuardados = nh.obtenerConceptosGuardados(tmp);
+                        //lstConceptosGuardados = nh.obtenerConceptosGuardados(tmp);
                         cnx.Close();
                     }
                     catch
                     {
-                        MessageBox.Show("Error: Al obtener los conceptos del trabajador.\r\n \r\n La ventan se cerrara.", "Error");
+                        MessageBox.Show("Error: Al obtener los conceptos del trabajador.\r\n \r\n La ventana se cerrara.", "Error");
                         this.Dispose();
                     }
                     #endregion
@@ -1257,6 +1387,12 @@ namespace Nominas
                                             {
                                                 vn.gravado = vn.cantidad - vn.exento;
                                             }
+                                        }
+
+                                        if (lstNoConcepto[0].gravado && !lstNoConcepto[0].exento)
+                                        {
+                                            vn.gravado = 0;
+                                            vn.exento = lstProgramacion[i].cantidad;
                                         }
 
                                         cnx.Open();
@@ -1523,6 +1659,20 @@ namespace Nominas
                 }
             }
 
+            toolFiltro.Enabled = true;
+            toolOrdenar.Enabled = true;
+            toolSobreRecibo.Enabled = true;
+            toolCalcular.Enabled = true;
+            toolMostrarDatos.Enabled = true;
+            toolStripButton1.Enabled = true;
+            toolCargar.Enabled = true;
+            toolCargaFaltas.Enabled = true;
+            toolCargaVacaciones.Enabled = true;
+            toolAutorizar.Enabled = true;
+            toolGuardar.Enabled = true;
+            toolReportes.Enabled = true;
+            toolCerrar.Enabled = true;
+
             #region NETOS NEGATIVOS
             nh = new CalculoNomina.Core.NominaHelper();
             nh.Command = cmd;
@@ -1605,6 +1755,7 @@ namespace Nominas
         private void workerCalculo_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             toolPorcentaje.Text = "Completado.";
+            toolEtapa.Text = " ";
         }
 
         #endregion
@@ -1624,6 +1775,21 @@ namespace Nominas
         void spn_OnPreNomina(DateTime inicio, DateTime fin)
         {
             cargaEmpleados();
+
+            toolFiltro.Enabled = false;
+            toolOrdenar.Enabled = false;
+            toolSobreRecibo.Enabled = false;
+            toolCalcular.Enabled = false;
+            toolMostrarDatos.Enabled = false;
+            toolStripButton1.Enabled = false;
+            toolCargar.Enabled = false;
+            toolCargaFaltas.Enabled = false;
+            toolCargaVacaciones.Enabled = false;
+            toolAutorizar.Enabled = false;
+            toolGuardar.Enabled = false;
+            toolReportes.Enabled = false;
+            toolCerrar.Enabled = false;
+
             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();
             cmd.Connection = cnx;
@@ -1660,7 +1826,24 @@ namespace Nominas
             if (lstPreNomina.Count == 0)
                 FLAGPRIMERCALCULO = true;
             else
+            {
                 FLAGPRIMERCALCULO = false;
+                EXISTEPRENOMINA = true;
+
+                toolFiltro.Enabled = true;
+                toolOrdenar.Enabled = true;
+                toolSobreRecibo.Enabled = true;
+                toolCalcular.Enabled = true;
+                toolMostrarDatos.Enabled = true;
+                toolStripButton1.Enabled = true;
+                toolCargar.Enabled = true;
+                toolCargaFaltas.Enabled = true;
+                toolCargaVacaciones.Enabled = true;
+                toolAutorizar.Enabled = true;
+                toolGuardar.Enabled = true;
+                toolReportes.Enabled = true;
+                toolCerrar.Enabled = true;
+            }
 
             foreach (DataGridViewRow fila in dgvEmpleados.Rows)
             {
@@ -1690,19 +1873,6 @@ namespace Nominas
                 }
             }
 
-            toolFiltro.Enabled = true;
-            toolOrdenar.Enabled = true;
-            toolSobreRecibo.Enabled = true;
-            toolCalcular.Enabled = true;
-            toolMostrarDatos.Enabled = true;
-            toolStripButton1.Enabled = true;
-            toolCargar.Enabled = true;
-            toolCargaFaltas.Enabled = true;
-            toolCargaVacaciones.Enabled = true;
-            toolAutorizar.Enabled = true;
-            toolGuardar.Enabled = true;
-            toolReportes.Enabled = true;
-           
         }
 
         private void toolCerrar_Click(object sender, EventArgs e)
@@ -1818,7 +1988,7 @@ namespace Nominas
                 try
                 {
                     cnx.Open();
-                    nh.stpAutorizaNomina(GLOBALES.IDEMPRESA, periodoInicio.Date, periodoFin.Date, GLOBALES.IDUSUARIO);
+                    nh.stpAutorizaNomina(GLOBALES.IDEMPRESA, periodoInicio.Date, periodoFin.Date, GLOBALES.IDUSUARIO, _tipoNomina);
                     cnx.Close();
                     cnx.Dispose();
                     MessageBox.Show("Nomina autorizada.", "Confirmación");

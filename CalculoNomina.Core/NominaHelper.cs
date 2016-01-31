@@ -40,6 +40,46 @@ namespace CalculoNomina.Core
             return lstDatosEmpleados;
         }
 
+        public List<DatosEmpleado> obtenerDatosEmpleado(int idEmpresa, string idtrabajadores)
+        {
+            string[] noEmp = idtrabajadores.Split(',');
+            string commandText = "select cast(0 as bit) as chk, idtrabajador, iddepartamento, idpuesto, noempleado, nombres, paterno, materno, 0 as sueldo, 0 as despensa, " +
+                    "0 as asistencia, 0 as puntualidad, 0 as horas from Trabajadores where idempresa = @idempresa and idtrabajador in ({0}) order by noempleado asc";
+            string[] paramNombre = noEmp.Select((s, i) => "@idtrabajador" + i.ToString()).ToArray();
+            string inClausula = string.Join(",", paramNombre);
+
+            List<DatosEmpleado> lstDatosEmpleados = new List<DatosEmpleado>();
+            DataTable dtDatosEmpleados = new DataTable();
+            Command.CommandText = string.Format(commandText, inClausula);
+            Command.Parameters.Clear();
+            for (int i = 0; i < paramNombre.Length; i++)
+            {
+                Command.Parameters.AddWithValue(paramNombre[i], noEmp[i]);
+            }
+            Command.Parameters.AddWithValue("idEmpresa", idEmpresa);
+
+            dtDatosEmpleados = SelectData(Command);
+            for (int i = 0; i < dtDatosEmpleados.Rows.Count; i++)
+            {
+                DatosEmpleado de = new DatosEmpleado();
+                de.chk = bool.Parse(dtDatosEmpleados.Rows[i]["chk"].ToString());
+                de.idtrabajador = int.Parse(dtDatosEmpleados.Rows[i]["idtrabajador"].ToString());
+                de.iddepartamento = int.Parse(dtDatosEmpleados.Rows[i]["iddepartamento"].ToString());
+                de.idpuesto = int.Parse(dtDatosEmpleados.Rows[i]["idpuesto"].ToString());
+                de.noempleado = dtDatosEmpleados.Rows[i]["noempleado"].ToString();
+                de.nombres = dtDatosEmpleados.Rows[i]["nombres"].ToString();
+                de.paterno = dtDatosEmpleados.Rows[i]["paterno"].ToString();
+                de.materno = dtDatosEmpleados.Rows[i]["materno"].ToString();
+                de.sueldo = double.Parse(dtDatosEmpleados.Rows[i]["sueldo"].ToString());
+                de.despensa = double.Parse(dtDatosEmpleados.Rows[i]["despensa"].ToString());
+                de.asistencia = double.Parse(dtDatosEmpleados.Rows[i]["asistencia"].ToString());
+                de.puntualidad = double.Parse(dtDatosEmpleados.Rows[i]["puntualidad"].ToString());
+                de.horas = double.Parse(dtDatosEmpleados.Rows[i]["horas"].ToString());
+                lstDatosEmpleados.Add(de);
+            }
+            return lstDatosEmpleados;
+        }
+
         public List<DatosFaltaIncapacidad> obtenerDatosFaltaInc(int idEmpresa, int estatus)
         {
             List<DatosFaltaIncapacidad> lstDatosEmpleados = new List<DatosFaltaIncapacidad>();
@@ -359,14 +399,15 @@ namespace CalculoNomina.Core
             return dato;
         }
 
-        public int stpAutorizaNomina(int idempresa, DateTime inicio, DateTime fin, int idusuario)
+        public int stpAutorizaNomina(int idempresa, DateTime inicio, DateTime fin, int idusuario, int tiponomina)
         {
-            Command.CommandText = "exec stp_AutorizaNomina @idempresa, @fechainicio, @fechafin, @idusuario";
+            Command.CommandText = "exec stp_AutorizaNomina @idempresa, @fechainicio, @fechafin, @idusuario, @tiponomina";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idempresa);
             Command.Parameters.AddWithValue("fechainicio", inicio);
             Command.Parameters.AddWithValue("fechafin", fin);
             Command.Parameters.AddWithValue("idusuario", idusuario);
+            Command.Parameters.AddWithValue("tiponomina", tiponomina);
             return Command.ExecuteNonQuery();
         }
 

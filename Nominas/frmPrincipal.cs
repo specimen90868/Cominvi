@@ -48,6 +48,7 @@ namespace Nominas
             frmSeleccionarEmpresa frmEmpresa = new frmSeleccionarEmpresa();
             frmEmpresa.OnAbrirEmpresa += frmEmpresa_OnAbrirEmpresa;
             frmEmpresa.MdiParent = this;
+            frmEmpresa.StartPosition = FormStartPosition.CenterScreen;
             frmEmpresa.Show();
         }
 
@@ -389,6 +390,7 @@ namespace Nominas
         {
             frmListaEmpleados le = new frmListaEmpleados();
             //le._empleadoAltaBaja = GLOBALES.ACTIVO;
+            le.WindowState = FormWindowState.Maximized;
             le.MdiParent = this;
             le.Show();
         }

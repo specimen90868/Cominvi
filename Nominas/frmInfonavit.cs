@@ -189,7 +189,7 @@ namespace Nominas
             }
 
 
-            bool alta_reingreso = ChecaFechaAltaReingreso();
+            //bool alta_reingreso = ChecaFechaAltaReingreso();
 
             //if (dtpFechaAplicacion.Value.Date > dtpFinPeriodo.Value.Date)
             //{

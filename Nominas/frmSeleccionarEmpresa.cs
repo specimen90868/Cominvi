@@ -63,8 +63,11 @@ namespace Nominas
                             Registro = em.registro + em.digitoverificador
                         };
                 dgvEmpresas.DataSource = e.ToList();
-                dgvEmpresas.Columns[1].Width = 200;
+                dgvEmpresas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                //dgvEmpresas.Columns[1].Width = 200;
                 dgvEmpresas.RowHeadersVisible = false;
+
+                dgvEmpresas.Columns[0].Visible = false;
             }
             catch (Exception error) 
             {

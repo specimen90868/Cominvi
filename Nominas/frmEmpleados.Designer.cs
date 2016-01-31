@@ -63,11 +63,9 @@
             this.Label7 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txtRFC = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.dtpFechaNacimiento = new System.Windows.Forms.DateTimePicker();
             this.txtEdad = new System.Windows.Forms.TextBox();
-            this.txtDigito = new System.Windows.Forms.MaskedTextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -209,7 +207,7 @@
             // txtNSS
             // 
             this.txtNSS.Location = new System.Drawing.Point(415, 165);
-            this.txtNSS.Mask = "9999999999";
+            this.txtNSS.Mask = "99999999999";
             this.txtNSS.Name = "txtNSS";
             this.txtNSS.Size = new System.Drawing.Size(151, 20);
             this.txtNSS.TabIndex = 14;
@@ -335,7 +333,7 @@
             // cmbPeriodo
             // 
             this.cmbPeriodo.FormattingEnabled = true;
-            this.cmbPeriodo.Location = new System.Drawing.Point(415, 273);
+            this.cmbPeriodo.Location = new System.Drawing.Point(415, 245);
             this.cmbPeriodo.Name = "cmbPeriodo";
             this.cmbPeriodo.Size = new System.Drawing.Size(151, 21);
             this.cmbPeriodo.TabIndex = 18;
@@ -344,7 +342,7 @@
             // lblPeriodo
             // 
             this.lblPeriodo.AutoSize = true;
-            this.lblPeriodo.Location = new System.Drawing.Point(363, 276);
+            this.lblPeriodo.Location = new System.Drawing.Point(363, 248);
             this.lblPeriodo.Name = "lblPeriodo";
             this.lblPeriodo.Size = new System.Drawing.Size(46, 13);
             this.lblPeriodo.TabIndex = 183;
@@ -417,15 +415,6 @@
             this.txtRFC.Size = new System.Drawing.Size(151, 20);
             this.txtRFC.TabIndex = 11;
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(320, 194);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(89, 13);
-            this.label4.TabIndex = 213;
-            this.label4.Text = "Digito verificador:";
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -452,14 +441,6 @@
             this.txtEdad.Size = new System.Drawing.Size(30, 20);
             this.txtEdad.TabIndex = 19;
             // 
-            // txtDigito
-            // 
-            this.txtDigito.Location = new System.Drawing.Point(415, 191);
-            this.txtDigito.Mask = "9";
-            this.txtDigito.Name = "txtDigito";
-            this.txtDigito.Size = new System.Drawing.Size(23, 20);
-            this.txtDigito.TabIndex = 15;
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -472,7 +453,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(332, 222);
+            this.label8.Location = new System.Drawing.Point(332, 194);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(77, 13);
             this.label8.TabIndex = 218;
@@ -481,7 +462,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(366, 249);
+            this.label9.Location = new System.Drawing.Point(366, 221);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(43, 13);
             this.label9.TabIndex = 219;
@@ -490,7 +471,7 @@
             // cmbDepartamento
             // 
             this.cmbDepartamento.FormattingEnabled = true;
-            this.cmbDepartamento.Location = new System.Drawing.Point(415, 219);
+            this.cmbDepartamento.Location = new System.Drawing.Point(415, 191);
             this.cmbDepartamento.Name = "cmbDepartamento";
             this.cmbDepartamento.Size = new System.Drawing.Size(151, 21);
             this.cmbDepartamento.TabIndex = 16;
@@ -499,7 +480,7 @@
             // cmbPuesto
             // 
             this.cmbPuesto.FormattingEnabled = true;
-            this.cmbPuesto.Location = new System.Drawing.Point(415, 246);
+            this.cmbPuesto.Location = new System.Drawing.Point(415, 218);
             this.cmbPuesto.Name = "cmbPuesto";
             this.cmbPuesto.Size = new System.Drawing.Size(151, 21);
             this.cmbPuesto.TabIndex = 17;
@@ -595,7 +576,7 @@
             // 
             this.btnVer.Image = ((System.Drawing.Image)(resources.GetObject("btnVer.Image")));
             this.btnVer.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnVer.Location = new System.Drawing.Point(415, 356);
+            this.btnVer.Location = new System.Drawing.Point(415, 328);
             this.btnVer.Name = "btnVer";
             this.btnVer.Size = new System.Drawing.Size(67, 35);
             this.btnVer.TabIndex = 19;
@@ -608,7 +589,7 @@
             // 
             this.btnAsignar.Image = ((System.Drawing.Image)(resources.GetObject("btnAsignar.Image")));
             this.btnAsignar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAsignar.Location = new System.Drawing.Point(499, 356);
+            this.btnAsignar.Location = new System.Drawing.Point(499, 328);
             this.btnAsignar.Name = "btnAsignar";
             this.btnAsignar.Size = new System.Drawing.Size(67, 35);
             this.btnAsignar.TabIndex = 20;
@@ -620,7 +601,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(378, 367);
+            this.label13.Location = new System.Drawing.Point(378, 339);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(31, 13);
             this.label13.TabIndex = 234;
@@ -637,7 +618,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(374, 303);
+            this.label14.Location = new System.Drawing.Point(374, 275);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(35, 13);
             this.label14.TabIndex = 236;
@@ -646,7 +627,7 @@
             // cmbZona
             // 
             this.cmbZona.FormattingEnabled = true;
-            this.cmbZona.Location = new System.Drawing.Point(415, 300);
+            this.cmbZona.Location = new System.Drawing.Point(415, 272);
             this.cmbZona.Name = "cmbZona";
             this.cmbZona.Size = new System.Drawing.Size(151, 21);
             this.cmbZona.TabIndex = 237;
@@ -716,7 +697,7 @@
             // dtpFechaAplicacionHistorico
             // 
             this.dtpFechaAplicacionHistorico.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFechaAplicacionHistorico.Location = new System.Drawing.Point(572, 220);
+            this.dtpFechaAplicacionHistorico.Location = new System.Drawing.Point(572, 192);
             this.dtpFechaAplicacionHistorico.Name = "dtpFechaAplicacionHistorico";
             this.dtpFechaAplicacionHistorico.Size = new System.Drawing.Size(84, 20);
             this.dtpFechaAplicacionHistorico.TabIndex = 245;
@@ -724,7 +705,7 @@
             // lblFechaAplicacionHistorico
             // 
             this.lblFechaAplicacionHistorico.AutoSize = true;
-            this.lblFechaAplicacionHistorico.Location = new System.Drawing.Point(569, 204);
+            this.lblFechaAplicacionHistorico.Location = new System.Drawing.Point(569, 176);
             this.lblFechaAplicacionHistorico.Name = "lblFechaAplicacionHistorico";
             this.lblFechaAplicacionHistorico.Size = new System.Drawing.Size(106, 13);
             this.lblFechaAplicacionHistorico.TabIndex = 246;
@@ -754,7 +735,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(323, 330);
+            this.label21.Location = new System.Drawing.Point(323, 302);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(86, 13);
             this.label21.TabIndex = 249;
@@ -763,7 +744,7 @@
             // cmbTipoRegimen
             // 
             this.cmbTipoRegimen.FormattingEnabled = true;
-            this.cmbTipoRegimen.Location = new System.Drawing.Point(415, 327);
+            this.cmbTipoRegimen.Location = new System.Drawing.Point(415, 299);
             this.cmbTipoRegimen.Name = "cmbTipoRegimen";
             this.cmbTipoRegimen.Size = new System.Drawing.Size(151, 21);
             this.cmbTipoRegimen.TabIndex = 250;
@@ -816,11 +797,9 @@
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.txtDigito);
             this.Controls.Add(this.txtEdad);
             this.Controls.Add(this.dtpFechaNacimiento);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.txtRFC);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblSalario);
@@ -897,11 +876,9 @@
         internal System.Windows.Forms.Label Label7;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtRFC;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DateTimePicker dtpFechaNacimiento;
         private System.Windows.Forms.TextBox txtEdad;
-        private System.Windows.Forms.MaskedTextBox txtDigito;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
