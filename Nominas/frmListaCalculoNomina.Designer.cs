@@ -189,6 +189,7 @@
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator5.Visible = false;
             // 
             // toolAutorizar
             // 

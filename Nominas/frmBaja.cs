@@ -315,10 +315,42 @@ namespace Nominas
                     return;
                 }
 
-                if (existeIncapacidad != 0 || existeVacaciones != 0)
+                if (existeIncapacidad != 0)
                 {
-                    MessageBox.Show("No se puede dar de baja. Existe una Incapacidad y/o Vacacion del trabajador.", "Error");
-                    return;
+                    cnx.Open();
+                    DateTime fechaInicioIncidencia = DateTime.Parse(ih.fechaInicio(incidencia).ToString());
+                    DateTime fechaFinIncidencia = DateTime.Parse(ih.fechaFin(incidencia).ToString());
+                    cnx.Close();
+
+                    if (dtpFechaBaja.Value.Date >= fechaInicioIncidencia.Date && dtpFechaBaja.Value.Date <= fechaFinIncidencia.Date)
+                    {
+                        MessageBox.Show("No se puede dar de baja. La fecha de baja esta entre una incapadidad.", "Error");
+                        return;
+                    }
+                    if (dtpFechaBaja.Value.Date <= fechaInicioIncidencia.Date)
+                    {
+                        MessageBox.Show("No se puede dar de baja. La fecha de baja es menor a la fecha de inicio de incapacidad.", "Error");
+                        return;
+                    }
+                }
+
+                if (existeVacaciones != 0)
+                {
+                    cnx.Open();
+                    DateTime fechaInicioVac = DateTime.Parse(vh.fechaInicio(vp).ToString());
+                    DateTime fechaFinVac = DateTime.Parse(vh.fechaFin(vp).ToString());
+                    cnx.Close();
+
+                    if (dtpFechaBaja.Value.Date >= fechaInicioVac.Date && dtpFechaBaja.Value.Date <= fechaFinVac.Date)
+                    {
+                        MessageBox.Show("No se puede dar de baja. La fecha de baja esta entre una incapadidad.", "Error");
+                        return;
+                    }
+                    if (dtpFechaBaja.Value.Date <= fechaInicioVac.Date)
+                    {
+                        MessageBox.Show("No se puede dar de baja. La fecha de baja es menor a la fecha de inicio de incapacidad.", "Error");
+                        return;
+                    }
                 }
 
                 Empresas.Core.EmpresasHelper ep = new Empresas.Core.EmpresasHelper();

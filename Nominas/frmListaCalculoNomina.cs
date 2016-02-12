@@ -52,40 +52,42 @@ namespace Nominas
 
         private void toolCargar_Click(object sender, EventArgs e)
         {
-            int estatusEmpleados =  0;
-            string idtrabajadores = "";
             frmListaCargaMovimientos lcm = new frmListaCargaMovimientos();
             lcm._tipoNomina = _tipoNomina;
             lcm._inicioPeriodo = periodoInicio.Date;
             lcm._finPeriodo = periodoFin.Date;
             lcm.ShowDialog();
-
             if (_tipoNomina == GLOBALES.EXTRAORDINARIO_NORMAL || _tipoNomina == GLOBALES.EXTRAORDINARIO_ESPECIAL)
+                movimientosEspeciales();
+        }
+
+        private void movimientosEspeciales()
+        {
+            string idtrabajadores = "";
+
+            dgvEmpleados.Rows.Clear();
+            
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            nh = new CalculoNomina.Core.NominaHelper();
+            nh.Command = cmd;
+
+            CalculoNomina.Core.tmpPagoNomina pn = new CalculoNomina.Core.tmpPagoNomina();
+            pn.idempresa = GLOBALES.IDEMPRESA;
+            pn.fechainicio = periodoInicio;
+            pn.fechafin = periodoFin;
+
+            List<CalculoNomina.Core.tmpPagoNomina> lstPreNominaEspecial = new List<CalculoNomina.Core.tmpPagoNomina>();
+            List<CalculoNomina.Core.DatosEmpleado> lstEmp = new List<CalculoNomina.Core.DatosEmpleado>();
+
+            try
             {
-                cnx = new SqlConnection(cdn);
-                cmd = new SqlCommand();
-                cmd.Connection = cnx;
-
-                nh = new CalculoNomina.Core.NominaHelper();
-                nh.Command = cmd;
-
-                CalculoNomina.Core.tmpPagoNomina pn = new CalculoNomina.Core.tmpPagoNomina();
-                pn.idempresa = GLOBALES.IDEMPRESA;
-                pn.fechainicio = periodoInicio;
-                pn.fechafin = periodoFin;
-
-                if (_tipoNomina == GLOBALES.EXTRAORDINARIO_NORMAL)
-                    estatusEmpleados = GLOBALES.ACTIVO;
-                if (_tipoNomina == GLOBALES.EXTRAORDINARIO_ESPECIAL)
-                    estatusEmpleados = GLOBALES.INACTIVO;
-
-                List<CalculoNomina.Core.tmpPagoNomina> lstPreNominaEspecial = new List<CalculoNomina.Core.tmpPagoNomina>();
-                List<CalculoNomina.Core.DatosEmpleado> lstEmp = new List<CalculoNomina.Core.DatosEmpleado>();
-
-                try
+                cnx.Open();
+                lstPreNominaEspecial = nh.obtenerPreNomina(pn);
+                if (lstPreNominaEspecial.Count != 0)
                 {
-                    cnx.Open();
-                    lstPreNominaEspecial = nh.obtenerPreNomina(pn);
                     var dato = lstPreNominaEspecial.GroupBy(id => id.idtrabajador).Select(grp => grp.First()).ToList();
                     foreach (var a in dato)
                     {
@@ -93,14 +95,17 @@ namespace Nominas
                     }
                     idtrabajadores = idtrabajadores.Substring(0, idtrabajadores.Length - 1);
                     lstEmp = nh.obtenerDatosEmpleado(GLOBALES.IDEMPRESA, idtrabajadores);
-                    cnx.Close();
-                    cnx.Dispose();
                 }
-                catch (Exception error)
-                {
-                    MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-                }
+                cnx.Close();
+                cnx.Dispose();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error: Nomina especial. \r\n \r\n" + error.Message, "Error");
+            }
 
+            if (lstPreNominaEspecial.Count != 0)
+            {
                 dgvEmpleados.Columns["seleccion"].DataPropertyName = "chk";
                 dgvEmpleados.Columns["idtrabajador"].DataPropertyName = "idtrabajador";
                 dgvEmpleados.Columns["iddepartamento"].DataPropertyName = "iddepartamento";
@@ -143,8 +148,8 @@ namespace Nominas
                         }
                     }
                 }
+                calculoNoPeriodo();
             }
-
         }
 
         private void frmListaCalculoNomina_Load(object sender, EventArgs e)
@@ -181,6 +186,8 @@ namespace Nominas
                 if (!EXISTEPRENOMINA)
                     toolCalcular_Click(sender, e);
             }
+            else
+                movimientosEspeciales();
         }
 
         private void obtenerPeriodoCalculo()
@@ -1201,24 +1208,7 @@ namespace Nominas
                 }
 
                 #region PERIODO
-                cmd = new SqlCommand();
-                cmd.Connection = cnx;
-                nh = new CalculoNomina.Core.NominaHelper();
-                nh.Command = cmd;
-                int noPeriodo = 0;
-                try
-                {
-                    cnx.Open();
-                    noPeriodo = int.Parse(nh.obtenerNoPeriodo(_periodo, periodoInicio).ToString());
-                    nh.actualizarNoPeriodo(GLOBALES.IDEMPRESA, periodoInicio.Date, periodoFin.Date, noPeriodo);
-                    cnx.Close();
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Error: Al actualizar el No. de Periodo", "Error");
-                    cnx.Dispose();
-                    return;
-                }
+                calculoNoPeriodo();
                 #endregion
 
                 FLAGPRIMERCALCULO = false;
@@ -1758,6 +1748,29 @@ namespace Nominas
             toolEtapa.Text = " ";
         }
 
+        private void calculoNoPeriodo()
+        {
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+            nh = new CalculoNomina.Core.NominaHelper();
+            nh.Command = cmd;
+            int noPeriodo = 0;
+            try
+            {
+                cnx.Open();
+                noPeriodo = int.Parse(nh.obtenerNoPeriodo(_periodo, periodoInicio).ToString());
+                nh.actualizarNoPeriodo(GLOBALES.IDEMPRESA, periodoInicio.Date, periodoFin.Date, noPeriodo);
+                cnx.Close();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error: Al actualizar el No. de Periodo", "Error");
+                cnx.Dispose();
+                return;
+            }
+        }
+
         #endregion
 
         private void toolGuardar_Click(object sender, EventArgs e)
@@ -1824,7 +1837,23 @@ namespace Nominas
             }
 
             if (lstPreNomina.Count == 0)
+            {
                 FLAGPRIMERCALCULO = true;
+
+                toolFiltro.Enabled = true;
+                toolOrdenar.Enabled = true;
+                toolSobreRecibo.Enabled = true;
+                toolCalcular.Enabled = true;
+                toolMostrarDatos.Enabled = true;
+                toolStripButton1.Enabled = true;
+                toolCargar.Enabled = true;
+                toolCargaFaltas.Enabled = true;
+                toolCargaVacaciones.Enabled = true;
+                toolAutorizar.Enabled = true;
+                toolGuardar.Enabled = true;
+                toolReportes.Enabled = true;
+                toolCerrar.Enabled = true;
+            }
             else
             {
                 FLAGPRIMERCALCULO = false;
@@ -2970,6 +2999,7 @@ namespace Nominas
             {
                 this.Text = String.Format("Pago extraordinario: Del {0}.", periodoInicio.ToShortDateString());
                 toolPeriodo.Text = String.Format("Pago extraordinario: Del {0}.", periodoInicio.ToShortDateString());
+                movimientosEspeciales();
             }
 
             toolFiltro.Enabled = true;

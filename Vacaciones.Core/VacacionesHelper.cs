@@ -201,6 +201,32 @@ namespace Vacaciones.Core
             return dato;
         }
 
+        public object fechaInicio(VacacionesPrima vp)
+        {
+            Command.CommandText = @"select fechainicio from VacacionesPrima where idtrabajador = @idtrabajador
+                                    and periodoinicio = @inicio and periodofin = @fin and vacacionesprima = @vacacionesprima";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", vp.idtrabajador);
+            Command.Parameters.AddWithValue("inicio", vp.periodoinicio);
+            Command.Parameters.AddWithValue("fin", vp.periodofin);
+            Command.Parameters.AddWithValue("vacacionesprima", vp.vacacionesprima);
+            object dato = Select(Command);
+            return dato;
+        }
+
+        public object fechaFin(VacacionesPrima vp)
+        {
+            Command.CommandText = @"select fechafin from VacacionesPrima where idtrabajador = @idtrabajador
+                                    and periodoinicio = @inicio and periodofin = @fin and vacacionesprima = @vacacionesprima";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", vp.idtrabajador);
+            Command.Parameters.AddWithValue("inicio", vp.periodoinicio);
+            Command.Parameters.AddWithValue("fin", vp.periodofin);
+            Command.Parameters.AddWithValue("vacacionesprima", vp.vacacionesprima);
+            object dato = Select(Command);
+            return dato;
+        }
+
         public object existeVacacionEnFalta(int id, DateTime fecha)
         {
             Command.CommandText = @"select count(*) from VacacionesPrima where idtrabajador = @idtrabajador and fechafin >= @fecha and 

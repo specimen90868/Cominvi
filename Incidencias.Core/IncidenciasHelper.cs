@@ -97,6 +97,28 @@ namespace Incidencias.Core
             return dato;
         }
 
+        public object fechaInicio(Incidencias i)
+        {
+            Command.CommandText = "select fechainicio from incidencias where idtrabajador = @idtrabajador and fechainicio between @inicio and @fin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", i.idtrabajador);
+            Command.Parameters.AddWithValue("inicio", i.fechainicio);
+            Command.Parameters.AddWithValue("fin", i.fechafin);
+            object dato = Select(Command);
+            return dato;
+        }
+
+        public object fechaFin(Incidencias i)
+        {
+            Command.CommandText = "select fechafin from incidencias where idtrabajador = @idtrabajador and fechainicio between @inicio and @fin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", i.idtrabajador);
+            Command.Parameters.AddWithValue("inicio", i.fechainicio);
+            Command.Parameters.AddWithValue("fin", i.fechafin);
+            object dato = Select(Command);
+            return dato;
+        }
+
         public object diasIncidencia(Incidencias i)
         {
             Command.CommandText = "select isnull(sum(dias),0) as dias from incidencias where idtrabajador = @idtrabajador and fechainicio between @inicio and @fin";
