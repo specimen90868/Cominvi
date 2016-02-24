@@ -80,5 +80,15 @@ namespace Bajas.Core
             Command.Parameters.AddWithValue("idtrabajador", b.idtrabajador);
             return Command.ExecuteNonQuery();
         }
+
+        public int eliminaBaja(Bajas b)
+        {
+            Command.CommandText = "delete from suaBajas where idtrabajador = @idtrabajador and idempresa = @idempresa and fecha = @fecha";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", b.idtrabajador);
+            Command.Parameters.AddWithValue("idempresa", b.idempresa);
+            Command.Parameters.AddWithValue("fecha", b.fecha);
+            return Command.ExecuteNonQuery();
+        }
     }
 }

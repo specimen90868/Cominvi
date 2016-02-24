@@ -757,6 +757,7 @@
             this.mtxtNoEmpleado.Size = new System.Drawing.Size(152, 20);
             this.mtxtNoEmpleado.TabIndex = 4;
             this.mtxtNoEmpleado.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.mtxtNoEmpleado.Leave += new System.EventHandler(this.mtxtNoEmpleado_Leave);
             // 
             // frmEmpleados
             // 

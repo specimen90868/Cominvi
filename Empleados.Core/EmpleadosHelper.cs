@@ -506,6 +506,16 @@ namespace Empleados.Core
             return dato;
         }
 
+        public object existeEmpleado(int idempresa, string noempleado)
+        {
+            Command.CommandText = "select count(idtrabajador) from trabajadores where idempresa = @idempresa and noempleado = @noempleado";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idempresa);
+            Command.Parameters.AddWithValue("noempleado", noempleado);
+            object dato = Select(Command);
+            return dato;
+        }
+
     }
 
     public class RFC

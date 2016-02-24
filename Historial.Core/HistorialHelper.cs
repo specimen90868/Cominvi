@@ -48,6 +48,16 @@ namespace Historial.Core
             return Command.ExecuteNonQuery();
         }
 
+        public int eliminaHistorial(Historial h)
+        {
+            Command.CommandText = "delete from MovimientoTrabajador where idtrabajador = @idtrabajador and idempresa = @idempresa and tipomovimiento = 4 and fecha_imss = @fecha";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", h.idtrabajador);
+            Command.Parameters.AddWithValue("idempresa", h.idempresa);
+            Command.Parameters.AddWithValue("fecha", h.fecha_imss);
+            return Command.ExecuteNonQuery();
+        }
+
         public void bulkMovimientos(DataTable dt, string tabla)
         {
             bulkCommand.DestinationTableName = tabla;

@@ -67,6 +67,8 @@ namespace Nominas
                           join t in lstEmpleados on b.idtrabajador equals t.idtrabajador
                           select new
                           {
+                              Id = b.idtrabajador,
+                              NoEmpleado = t.noempleado,
                               RegistroPatronal = b.registropatronal,
                               Nss = b.nss,
                               Nombre = t.nombrecompleto,
@@ -74,12 +76,15 @@ namespace Nominas
                               MValor = c.valor,
                               Baja = b.fecha
                           };
+
                 dgvBajasSua.DataSource = baj.ToList();
 
                 for (int i = 0; i < dgvBajasSua.Columns.Count; i++)
                 {
                     dgvBajasSua.AutoResizeColumn(i);
                 }
+
+                dgvBajasSua.Columns["Id"].Visible = false;
                 dgvBajasSua.Columns["MValor"].Visible = false;
             }
             catch (Exception error)
@@ -207,6 +212,63 @@ namespace Nominas
         private void workBajas_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             MessageBox.Show("Archivo generado con exito", "Confirmación");
+        }
+
+        private void toolEliminar_Click(object sender, EventArgs e)
+        {
+            DialogResult respuesta = MessageBox.Show("¿Quiere eliminar la baja?. \r\n \r\n CUIDADO. Esta acción eliminará permanentemente el registro.", "Confirmación", MessageBoxButtons.YesNo);
+            if (respuesta == DialogResult.Yes)
+            {
+                int fila = dgvBajasSua.CurrentCell.RowIndex;
+                string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
+                cnx = new SqlConnection(cdn);
+                cmd = new SqlCommand();
+                cmd.Connection = cnx;
+
+                Bajas.Core.BajasHelper bh = new Bajas.Core.BajasHelper();
+                bh.Command = cmd;
+
+                Historial.Core.HistorialHelper hh = new Historial.Core.HistorialHelper();
+                hh.Command = cmd;
+
+                Bajas.Core.Bajas baja = new Bajas.Core.Bajas();
+                baja.idtrabajador = int.Parse(dgvBajasSua.Rows[fila].Cells[0].Value.ToString());
+                baja.idempresa = GLOBALES.IDEMPRESA;
+                baja.fecha = DateTime.Parse(dgvBajasSua.Rows[fila].Cells[7].Value.ToString());
+
+                Historial.Core.Historial historial = new Historial.Core.Historial();
+                historial.idtrabajador = int.Parse(dgvBajasSua.Rows[fila].Cells[0].Value.ToString());
+                historial.idempresa = GLOBALES.IDEMPRESA;
+                historial.fecha_imss = DateTime.Parse(dgvBajasSua.Rows[fila].Cells[7].Value.ToString());
+
+                try
+                {
+                    cnx.Open();
+                    bh.eliminaBaja(baja);
+                    cnx.Close();
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show("Error: Al eliminar la baja. \r\n" + error.Message, "Error");
+                    cnx.Dispose();
+                    return;
+                }
+
+                try
+                {
+                    cnx.Open();
+                    hh.eliminaHistorial(historial);
+                    cnx.Close();
+                    cnx.Dispose();
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show("Error: Al eliminar el movimiento del historial.\r\n" + error.Message, "Error");
+                    cnx.Dispose();
+                    return;
+                }
+            }
+
         }
     }
 }

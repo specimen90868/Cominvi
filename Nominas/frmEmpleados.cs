@@ -39,6 +39,7 @@ namespace Nominas
         bool ImagenAsignada = false, historicoDepto = false, historicoPuesto = false;
         bool FLAGHISTORICO = false;
         string departamento = "", puesto = "";
+        int existeNoEmpleado = 0;
         #endregion
 
         #region DELEGADOS
@@ -846,6 +847,36 @@ namespace Nominas
                 rbtnMujer.Checked = true;
 
             dtpFechaNacimiento_Leave(sender, e);
+        }
+
+        private void mtxtNoEmpleado_Leave(object sender, EventArgs e)
+        {
+            int existeNoEmpleado = 0;
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            eh = new Empleados.Core.EmpleadosHelper();
+            eh.Command = cmd;
+
+            try
+            {
+                cnx.Open();
+                existeNoEmpleado = (int)eh.existeEmpleado(GLOBALES.IDEMPRESA, mtxtNoEmpleado.Text);
+                cnx.Close();
+                cnx.Dispose();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error: Al obtener la existencia del No. de Empleado." + error.Message, "Error");
+                cnx.Dispose();
+                return;
+            }
+
+            if (existeNoEmpleado != 0)
+            {
+                MessageBox.Show("El No. de Empleado ya existe. Verifique.");
+            }
         }
     }
 }

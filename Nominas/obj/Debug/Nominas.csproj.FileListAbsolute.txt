@@ -139,9 +139,9 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Nominas\obj\Debug\Nomin
 C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Nominas\obj\Debug\Nominas.frmLogo.resources
 C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Nominas\obj\Debug\Nominas.frmModificaSalarioImss.resources
 C:\Users\fabricio.vilchis\Documents\GitHub\Nomina\Nomina\Nominas\obj\Debug\Nominas.frmModificaSueldoEmpleado.resources
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Nominas.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Nominas.exe.config
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Nominas.exe
-C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Nominas.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Altas.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Ausentismo.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\bin\Debug\Autorizaciones.Core.dll

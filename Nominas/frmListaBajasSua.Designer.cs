@@ -36,6 +36,7 @@
             this.toolExportar = new System.Windows.Forms.ToolStripButton();
             this.dgvBajasSua = new System.Windows.Forms.DataGridView();
             this.workBajas = new System.ComponentModel.BackgroundWorker();
+            this.toolEliminar = new System.Windows.Forms.ToolStripButton();
             this.toolVentana.SuspendLayout();
             this.toolBusqueda.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBajasSua)).BeginInit();
@@ -63,7 +64,8 @@
             // 
             this.toolBusqueda.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolFiltrar,
-            this.toolExportar});
+            this.toolExportar,
+            this.toolEliminar});
             this.toolBusqueda.Location = new System.Drawing.Point(0, 27);
             this.toolBusqueda.Name = "toolBusqueda";
             this.toolBusqueda.Size = new System.Drawing.Size(680, 25);
@@ -106,6 +108,15 @@
             this.workBajas.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workBajas_DoWork);
             this.workBajas.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workBajas_RunWorkerCompleted);
             // 
+            // toolEliminar
+            // 
+            this.toolEliminar.Image = ((System.Drawing.Image)(resources.GetObject("toolEliminar.Image")));
+            this.toolEliminar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolEliminar.Name = "toolEliminar";
+            this.toolEliminar.Size = new System.Drawing.Size(70, 22);
+            this.toolEliminar.Text = "Eliminar";
+            this.toolEliminar.Click += new System.EventHandler(this.toolEliminar_Click);
+            // 
             // frmListaBajasSua
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -136,5 +147,6 @@
         private System.Windows.Forms.ToolStripButton toolExportar;
         private System.Windows.Forms.DataGridView dgvBajasSua;
         private System.ComponentModel.BackgroundWorker workBajas;
+        private System.Windows.Forms.ToolStripButton toolEliminar;
     }
 }

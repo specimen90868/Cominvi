@@ -672,6 +672,13 @@ namespace Nominas
             //Bitmap bmp = new Bitmap("qrcode.png");
             //qr.Image = bmp;
         }
+
+        private void toolRegistroBajas_Click(object sender, EventArgs e)
+        {
+            frmListaBajasSua lbs = new frmListaBajasSua();
+            lbs.MdiParent = this;
+            lbs.Show();
+        }
       
     }
 }
