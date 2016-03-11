@@ -16,6 +16,5 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Direccion.Core\bin\Debug\Dire
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Direccion.Core\bin\Debug\Direccion.Core.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Direccion.Core\bin\Debug\Data.Obj.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Direccion.Core\bin\Debug\Data.Obj.pdb
-C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Direccion.Core\obj\Debug\Direccion.Core.csprojResolveAssemblyReference.cache
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Direccion.Core\obj\Debug\Direccion.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Direccion.Core\obj\Debug\Direccion.Core.pdb

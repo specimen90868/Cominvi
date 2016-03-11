@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -16,7 +17,6 @@ namespace Nominas
 
             #region VARIABLES GLOBALES
             string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-            string noconceptos = "";
             SqlConnection cnx = new SqlConnection(cdn);
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = cnx;
@@ -861,6 +861,7 @@ namespace Nominas
 
             #region CALCULO
             double isrAntes = 0, subsidioAntes = 0;
+            List<CalculoNomina.Core.tmpPagoNomina> lstValoresNomina = new List<CalculoNomina.Core.tmpPagoNomina>();
             for (int i = 0; i < lstConceptosDeducciones.Count; i++)
             {
                 if (!lstConceptosDeducciones[i].modificado)
@@ -1266,7 +1267,7 @@ namespace Nominas
                         #region OTRAS DEDUCCIONES
                         default:
                             //double sueldoDeducciones = lstPercepciones.Where(e => e.idtrabajador == lstConceptosDeducciones[i].idtrabajador && e.noconcepto == 1).Sum(e => e.cantidad);
-
+                            
                             CalculoNomina.Core.tmpPagoNomina vn = new CalculoNomina.Core.tmpPagoNomina();
                             vn.idtrabajador = lstConceptosDeducciones[i].idtrabajador;
                             vn.idempresa = GLOBALES.IDEMPRESA;
@@ -1320,9 +1321,21 @@ namespace Nominas
                                     }
                                 }
 
+                                int existe = 0;
                                 cnx.Open();
-                                nh.actualizaConcepto(vn);
+                                existe = (int)nh.existeConcepto(vn);
                                 cnx.Close();
+
+                                if (existe == 0)
+                                {
+                                    lstValoresNomina.Add(vn);
+                                }
+                                else 
+                                {
+                                    cnx.Open();
+                                    nh.actualizaConcepto(vn);
+                                    cnx.Close();
+                                }
                             }
                             else
                             {
@@ -1330,9 +1343,21 @@ namespace Nominas
                                 vn.exento = 0;
                                 vn.gravado = 0;
 
+                                int existe = 0;
                                 cnx.Open();
-                                nh.actualizaConcepto(vn);
+                                existe = (int)nh.existeConcepto(vn);
                                 cnx.Close();
+
+                                if (existe == 0)
+                                {
+                                    lstValoresNomina.Add(vn);
+                                }
+                                else
+                                {
+                                    cnx.Open();
+                                    nh.actualizaConcepto(vn);
+                                    cnx.Close();
+                                }
 
                                 //double vacacionDeducciones = lstPercepciones.Where(e => e.idtrabajador == lstConceptosDeducciones[i].idtrabajador && e.noconcepto == 7).Sum(e => e.cantidad);
                                 //if (vacacionDeducciones != 0)
@@ -1393,6 +1418,65 @@ namespace Nominas
                     }
                 }
             }
+            if (lstValoresNomina.Count != 0 && lstValoresNomina != null)
+                BulkData(lstValoresNomina);
+            #endregion
+        }
+
+        private static void BulkData(List<CalculoNomina.Core.tmpPagoNomina> lstValores)
+        {
+            #region BULK DATA
+            SqlBulkCopy bulk;
+            SqlConnection cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString);
+            CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
+            DataTable dt = new DataTable();
+            DataRow dtFila;
+            dt.Columns.Add("id", typeof(Int32));
+            dt.Columns.Add("idtrabajador", typeof(Int32));
+            dt.Columns.Add("idempresa", typeof(Int32));
+            dt.Columns.Add("idconcepto", typeof(Int32));
+            dt.Columns.Add("noconcepto", typeof(Int32));
+            dt.Columns.Add("tipoconcepto", typeof(String));
+            dt.Columns.Add("exento", typeof(Double));
+            dt.Columns.Add("gravado", typeof(Double));
+            dt.Columns.Add("cantidad", typeof(Double));
+            dt.Columns.Add("fechainicio", typeof(DateTime));
+            dt.Columns.Add("fechafin", typeof(DateTime));
+            dt.Columns.Add("noperiodo", typeof(Int32));
+            dt.Columns.Add("diaslaborados", typeof(Int32));
+            dt.Columns.Add("guardada", typeof(Boolean));
+            dt.Columns.Add("tiponomina", typeof(Int32));
+            dt.Columns.Add("modificado", typeof(Boolean));
+            dt.Columns.Add("fechapago", typeof(DateTime));
+
+
+            for (int i = 0; i < lstValores.Count; i++)
+            {
+                dtFila = dt.NewRow();
+                dtFila["id"] = i + 1;
+                dtFila["idtrabajador"] = lstValores[i].idtrabajador;
+                dtFila["idempresa"] = lstValores[i].idempresa;
+                dtFila["idconcepto"] = lstValores[i].idconcepto;
+                dtFila["noconcepto"] = lstValores[i].noconcepto;
+                dtFila["tipoconcepto"] = lstValores[i].tipoconcepto;
+                dtFila["exento"] = lstValores[i].exento;
+                dtFila["gravado"] = lstValores[i].gravado;
+                dtFila["cantidad"] = lstValores[i].cantidad;
+                dtFila["fechainicio"] = lstValores[i].fechainicio;
+                dtFila["fechafin"] = lstValores[i].fechafin;
+                dtFila["noperiodo"] = 0;
+                dtFila["diaslaborados"] = 0;
+                dtFila["guardada"] = lstValores[i].guardada;
+                dtFila["tiponomina"] = lstValores[i].tiponomina;
+                dtFila["modificado"] = lstValores[i].modificado;
+                dtFila["fechapago"] = new DateTime(1900, 1, 1);
+                dt.Rows.Add(dtFila);
+            }
+            bulk = new SqlBulkCopy(cnx);
+            nh.bulkCommand = bulk;
+            cnx.Open();
+            nh.bulkNomina(dt, "tmpPagoNomina");
+            cnx.Close();
             #endregion
         }
     }

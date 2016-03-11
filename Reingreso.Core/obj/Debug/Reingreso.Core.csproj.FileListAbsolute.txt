@@ -2,6 +2,5 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Reingreso.Core\bin\Debug\Rein
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Reingreso.Core\bin\Debug\Reingreso.Core.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Reingreso.Core\bin\Debug\Data.Obj.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Reingreso.Core\bin\Debug\Data.Obj.pdb
-C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Reingreso.Core\obj\Debug\Reingreso.Core.csprojResolveAssemblyReference.cache
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Reingreso.Core\obj\Debug\Reingreso.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Reingreso.Core\obj\Debug\Reingreso.Core.pdb

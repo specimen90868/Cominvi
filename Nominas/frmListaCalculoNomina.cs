@@ -670,11 +670,11 @@ namespace Nominas
                     indice++;
                     workerCalculo.ReportProgress(progreso, "CARGANDO DATOS DE LOS TRABAJADORES. ESPERE A QUE TERMINE EL PROCESO.");
 
-                    CalculoNomina.Core.tmpPagoNomina tmp = new CalculoNomina.Core.tmpPagoNomina();
-                    tmp.idtrabajador = int.Parse(fila.Cells["idtrabajador"].Value.ToString());
-                    tmp.idempresa = GLOBALES.IDEMPRESA;
-                    tmp.fechainicio = periodoInicio.Date;
-                    tmp.fechafin = periodoFin.Date;
+                    //CalculoNomina.Core.tmpPagoNomina tmp = new CalculoNomina.Core.tmpPagoNomina();
+                    //tmp.idtrabajador = int.Parse(fila.Cells["idtrabajador"].Value.ToString());
+                    //tmp.idempresa = GLOBALES.IDEMPRESA;
+                    //tmp.fechainicio = periodoInicio.Date;
+                    //tmp.fechafin = periodoFin.Date;
 
                     #region CONCEPTOS Y FORMULAS DEL TRABAJADOR (PERCEPCIONES)
                     try
@@ -1492,6 +1492,7 @@ namespace Nominas
                         #endregion
 
                         #region MOVIMIENTOS
+                        List<CalculoNomina.Core.tmpPagoNomina> lstOtrasDeducciones = new List<CalculoNomina.Core.tmpPagoNomina>();
                         Movimientos.Core.MovimientosHelper mh = new Movimientos.Core.MovimientosHelper();
                         mh.Command = cmd;
 
@@ -1563,9 +1564,21 @@ namespace Nominas
                                     vn.guardada = false;
                                     vn.tiponomina = _tipoNomina;
                                     vn.modificado = false;
+                                    
                                     cnx.Open();
-                                    nh.actualizaConcepto(vn);
+                                    existe = (int)nh.existeConcepto(vn);
                                     cnx.Close();
+
+                                    if (existe == 0)
+                                    {
+                                        lstOtrasDeducciones.Add(vn);
+                                    }
+                                    else
+                                    {
+                                        cnx.Open();
+                                        nh.actualizaConcepto(vn);
+                                        cnx.Close();
+                                    }
                                 }
                             }
                         }
@@ -1643,6 +1656,11 @@ namespace Nominas
                             //    }
                             //}
                         }
+                        #endregion
+
+                        #region BULK DATOS PROGRAMACION DE MOVIMIENTOS
+                        if (lstOtrasDeducciones.Count != 0)
+                            BulkData(lstOtrasDeducciones);
                         #endregion
                     }
                     

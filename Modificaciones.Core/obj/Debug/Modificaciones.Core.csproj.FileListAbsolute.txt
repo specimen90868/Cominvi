@@ -2,6 +2,5 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Modificaciones.Core\bin\Debug
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Modificaciones.Core\bin\Debug\Modificaciones.Core.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Modificaciones.Core\bin\Debug\Data.Obj.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Modificaciones.Core\bin\Debug\Data.Obj.pdb
-C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Modificaciones.Core\obj\Debug\Modificaciones.Core.csprojResolveAssemblyReference.cache
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Modificaciones.Core\obj\Debug\Modificaciones.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Modificaciones.Core\obj\Debug\Modificaciones.Core.pdb
