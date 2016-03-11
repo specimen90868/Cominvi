@@ -278,7 +278,21 @@ namespace Nominas
                     periodoInicio = new DateTime(dt.Year, dt.Month, 16);
                     periodoFin = new DateTime(dt.Year, dt.Month, DateTime.DaysInMonth(dt.Year, dt.Month));
                     diasNoLaborados = (int)(dtpFechaReingreso.Value.Date - periodoInicio).TotalDays;
-                    diasProporcionales = (diasMes - 15) - diasNoLaborados;
+                    switch (diasMes)
+                    {
+                        case 28:
+                            diasProporcionales = 15 - diasNoLaborados;
+                            break;
+                        case 29:
+                            diasProporcionales = 15 - diasNoLaborados;
+                            break;
+                        case 30:
+                            diasProporcionales = (diasMes - 15) - diasNoLaborados;
+                            break;
+                        case 31:
+                            diasProporcionales = (diasMes - 16) - diasNoLaborados;
+                            break;
+                    }
                 }
             }
 

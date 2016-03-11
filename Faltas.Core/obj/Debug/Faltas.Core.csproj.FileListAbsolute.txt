@@ -2,6 +2,5 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Faltas.Core\bin\Debug\Faltas.
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Faltas.Core\bin\Debug\Faltas.Core.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Faltas.Core\bin\Debug\Data.Obj.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Faltas.Core\bin\Debug\Data.Obj.pdb
-C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Faltas.Core\obj\Debug\Faltas.Core.csprojResolveAssemblyReference.cache
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Faltas.Core\obj\Debug\Faltas.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Faltas.Core\obj\Debug\Faltas.Core.pdb

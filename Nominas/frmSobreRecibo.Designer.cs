@@ -128,6 +128,8 @@
             this.txtDiasPagoPV = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.txtFechaIngreso = new System.Windows.Forms.TextBox();
+            this.label24 = new System.Windows.Forms.Label();
             this.txtSueldo = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txtPuesto = new System.Windows.Forms.TextBox();
@@ -155,8 +157,7 @@
             this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label24 = new System.Windows.Forms.Label();
-            this.txtFechaIngreso = new System.Windows.Forms.TextBox();
+            this.toolInfonavit = new System.Windows.Forms.ToolStripButton();
             this.toolAcciones.SuspendLayout();
             this.TabPrincipal.SuspendLayout();
             this.tabPercepcionesDeducciones.SuspendLayout();
@@ -202,6 +203,7 @@
             this.toolAyudaDespensa,
             this.toolSubsidio,
             this.toolIspt,
+            this.toolInfonavit,
             this.toolEliminar});
             this.toolAcciones.Location = new System.Drawing.Point(0, 0);
             this.toolAcciones.Name = "toolAcciones";
@@ -1252,6 +1254,25 @@
             this.panel1.Size = new System.Drawing.Size(712, 58);
             this.panel1.TabIndex = 14;
             // 
+            // txtFechaIngreso
+            // 
+            this.txtFechaIngreso.BackColor = System.Drawing.SystemColors.Control;
+            this.txtFechaIngreso.Location = new System.Drawing.Point(576, 6);
+            this.txtFechaIngreso.Name = "txtFechaIngreso";
+            this.txtFechaIngreso.Size = new System.Drawing.Size(126, 20);
+            this.txtFechaIngreso.TabIndex = 32;
+            this.txtFechaIngreso.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label24.Location = new System.Drawing.Point(520, 7);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(53, 13);
+            this.label24.TabIndex = 31;
+            this.label24.Text = "Ingreso:";
+            // 
             // txtSueldo
             // 
             this.txtSueldo.BackColor = System.Drawing.SystemColors.Control;
@@ -1448,24 +1469,14 @@
             this.dataGridViewTextBoxColumn15.HeaderText = "Fin";
             this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
             // 
-            // label24
+            // toolInfonavit
             // 
-            this.label24.AutoSize = true;
-            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label24.Location = new System.Drawing.Point(520, 7);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(53, 13);
-            this.label24.TabIndex = 31;
-            this.label24.Text = "Ingreso:";
-            // 
-            // txtFechaIngreso
-            // 
-            this.txtFechaIngreso.BackColor = System.Drawing.SystemColors.Control;
-            this.txtFechaIngreso.Location = new System.Drawing.Point(576, 6);
-            this.txtFechaIngreso.Name = "txtFechaIngreso";
-            this.txtFechaIngreso.Size = new System.Drawing.Size(126, 20);
-            this.txtFechaIngreso.TabIndex = 32;
-            this.txtFechaIngreso.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.toolInfonavit.Image = ((System.Drawing.Image)(resources.GetObject("toolInfonavit.Image")));
+            this.toolInfonavit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolInfonavit.Name = "toolInfonavit";
+            this.toolInfonavit.Size = new System.Drawing.Size(74, 22);
+            this.toolInfonavit.Text = "Infonavit";
+            this.toolInfonavit.Click += new System.EventHandler(this.toolInfonavit_Click);
             // 
             // frmSobreRecibo
             // 
@@ -1664,5 +1675,6 @@
         private System.Windows.Forms.ToolStripButton toolIspt;
         private System.Windows.Forms.TextBox txtFechaIngreso;
         private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.ToolStripButton toolInfonavit;
     }
 }

@@ -250,6 +250,7 @@ namespace Nominas
         private void btnAceptar_Click(object sender, EventArgs e)
         {
             int existeVacaciones = 0, existeIncapacidad = 0;
+            int diasProporcionales = 0;
             DialogResult respuesta = MessageBox.Show("¿Desea dar de baja al empleado?","Confirmación",MessageBoxButtons.YesNo);
             if (respuesta == DialogResult.Yes)
             {
@@ -324,7 +325,7 @@ namespace Nominas
 
                     if (dtpFechaBaja.Value.Date >= fechaInicioIncidencia.Date && dtpFechaBaja.Value.Date <= fechaFinIncidencia.Date)
                     {
-                        MessageBox.Show("No se puede dar de baja. La fecha de baja esta entre una incapadidad.", "Error");
+                        MessageBox.Show("No se puede dar de baja. La fecha de baja esta entre una incapacidad.", "Error");
                         return;
                     }
                     if (dtpFechaBaja.Value.Date <= fechaInicioIncidencia.Date)
@@ -343,12 +344,12 @@ namespace Nominas
 
                     if (dtpFechaBaja.Value.Date >= fechaInicioVac.Date && dtpFechaBaja.Value.Date <= fechaFinVac.Date)
                     {
-                        MessageBox.Show("No se puede dar de baja. La fecha de baja esta entre una incapadidad.", "Error");
+                        MessageBox.Show("No se puede dar de baja. La fecha de baja coninciden con vacaciones.", "Error");
                         return;
                     }
                     if (dtpFechaBaja.Value.Date <= fechaInicioVac.Date)
                     {
-                        MessageBox.Show("No se puede dar de baja. La fecha de baja es menor a la fecha de inicio de incapacidad.", "Error");
+                        MessageBox.Show("No se puede dar de baja. La fecha de baja es menor a la fecha de inicio de vacaciones.", "Error");
                         return;
                     }
                 }
@@ -394,10 +395,16 @@ namespace Nominas
                 baja.idempresa = GLOBALES.IDEMPRESA;
                 baja.motivo = int.Parse(cmbMotivoBaja.SelectedValue.ToString());
                 baja.fecha = dtpFechaBaja.Value.Date;
-                baja.diasproporcionales = (int)(dtpFechaBaja.Value.Date - periodoInicio.Date).TotalDays + 1;
+                //baja.diasproporcionales = (int)(dtpFechaBaja.Value.Date - periodoInicio.Date).TotalDays + 1;
                 baja.periodoinicio = periodoInicio.Date;
                 baja.periodofin = periodoFin.Date;
                 baja.observaciones = txtObservaciones.Text;
+
+                diasProporcionales = (int)(dtpFechaBaja.Value.Date - periodoInicio.Date).TotalDays + 1;
+                if (diasProporcionales == 16)
+                    baja.diasproporcionales = diasProporcionales - 1;
+                else
+                    baja.diasproporcionales = (int)(dtpFechaBaja.Value.Date - periodoInicio.Date).TotalDays + 1;
 
                 try
                 {

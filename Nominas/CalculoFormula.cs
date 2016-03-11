@@ -91,10 +91,18 @@ namespace Nominas
                         vp.periodofin = finPeriodo;
                         vp.periodoinicio = inicioPeriodo;
                         vp.vacacionesprima = "V";
-
+                        
                         cnx.Open();
-                        formula = formula.Replace("[" + variables[i] + "]", vh.pagoVacacionesPrima(vp).ToString());
+                        int v = (int)vh.pagoVacacionesPrima(vp);
                         cnx.Close();
+
+                        if (v == 16)
+                        {
+                            v = v - 1;
+                            formula = formula.Replace("[" + variables[i] + "]", v.ToString());
+                        }
+                        else
+                            formula = formula.Replace("[" + variables[i] + "]", v.ToString());
 
                         break;
 
@@ -128,8 +136,16 @@ namespace Nominas
                         falta.fechafin = finPeriodo;
 
                         cnx.Open();
-                        formula = formula.Replace("[" + variables[i] + "]", fh.existeFalta(falta).ToString());
+                        int f = (int)fh.existeFalta(falta);
                         cnx.Close();
+                        
+                        if (f == 16)
+                        {
+                            f = f - 1;
+                            formula = formula.Replace("[" + variables[i] + "]", f.ToString());
+                        }
+                        else
+                            formula = formula.Replace("[" + variables[i] + "]", f.ToString());
 
                         break;
 
@@ -201,16 +217,6 @@ namespace Nominas
                             diasBaja = (int)bh.diasProporcionales(baja);
                             cnx.Close();
 
-                            if (diasPago == 15)
-                            {
-                                if (inicioPeriodo.Day > 15)
-                                {
-                                    diasMesLaborados = DateTime.DaysInMonth(inicioPeriodo.Year, inicioPeriodo.Month);
-                                    diasMesLaborados = diasMesLaborados - 15;
-                                    diasPago = diasMesLaborados;
-                                }
-                            }
-
                             totalDias = diasPago - ((diasPago - diasAlta) + (diasPago - diasBaja));
 
                             Faltas.Core.FaltasHelper faltaHelper = new Faltas.Core.FaltasHelper();
@@ -250,9 +256,17 @@ namespace Nominas
                             cnx.Close();
 
                             if (diasFaltas >= diasAlta)
-                                formula = formula.Replace("[" + variables[i] + "]", diasFaltas.ToString());
+                            {
+                                if (diasFaltas == 16)
+                                {
+                                    diasFaltas = diasFaltas - 1;
+                                    formula = formula.Replace("[" + variables[i] + "]", diasFaltas.ToString());
+                                }
+                                else
+                                    formula = formula.Replace("[" + variables[i] + "]", diasFaltas.ToString());
+                            }
                             else
-                                formula = formula.Replace("[" + variables[i] + "]", diasAlta.ToString());
+                               formula = formula.Replace("[" + variables[i] + "]", diasAlta.ToString());
                         }
                         #endregion
 
@@ -275,9 +289,15 @@ namespace Nominas
                             cnx.Close();
 
                             if (diasFaltas >= diasBaja)
-                                formula = formula.Replace("[" + variables[i] + "]", diasFaltas.ToString());
+                                if (diasFaltas == 16)
+                                {
+                                    diasFaltas = diasFaltas - 1;
+                                    formula = formula.Replace("[" + variables[i] + "]", diasFaltas.ToString());
+                                }
+                                else
+                                    formula = formula.Replace("[" + variables[i] + "]", diasFaltas.ToString());
                             else
-                                formula = formula.Replace("[" + variables[i] + "]", diasBaja.ToString());
+                               formula = formula.Replace("[" + variables[i] + "]", diasBaja.ToString());
                         }
                         #endregion
 
@@ -306,16 +326,6 @@ namespace Nominas
                             cnx.Open();
                             diasBaja = (int)bh.diasProporcionales(baja);
                             cnx.Close();
-
-                            if (diasPago == 15)
-                            {
-                                if (inicioPeriodo.Day > 15)
-                                {
-                                    diasMesLaborados = DateTime.DaysInMonth(inicioPeriodo.Year, inicioPeriodo.Month);
-                                    diasMesLaborados = diasMesLaborados - 15;
-                                    diasPago = diasMesLaborados;
-                                }
-                            }
 
                             totalDias = diasPago - ((diasPago - diasReingreso) + (diasPago - diasBaja));
 
@@ -356,9 +366,15 @@ namespace Nominas
                             cnx.Close();
 
                             if (diasFaltas >= diasReingreso)
-                                formula = formula.Replace("[" + variables[i] + "]", diasFaltas.ToString());
+                                if (diasFaltas == 16)
+                                {
+                                    diasFaltas = diasFaltas - 1;
+                                    formula = formula.Replace("[" + variables[i] + "]", diasFaltas.ToString());
+                                }
+                                else
+                                    formula = formula.Replace("[" + variables[i] + "]", diasFaltas.ToString());
                             else
-                                formula = formula.Replace("[" + variables[i] + "]", diasReingreso.ToString());
+                               formula = formula.Replace("[" + variables[i] + "]", diasReingreso.ToString());
                         }
                         #endregion
 
@@ -381,7 +397,13 @@ namespace Nominas
                             cnx.Close();
 
                             if (diasFaltas >= diasBaja)
-                                formula = formula.Replace("[" + variables[i] + "]", diasFaltas.ToString());
+                                if (diasFaltas == 16)
+                                {
+                                    diasFaltas = diasFaltas - 1;
+                                    formula = formula.Replace("[" + variables[i] + "]", diasFaltas.ToString());
+                                }
+                                else
+                                    formula = formula.Replace("[" + variables[i] + "]", diasFaltas.ToString());
                             else
                                 formula = formula.Replace("[" + variables[i] + "]", diasBaja.ToString());
                         }
@@ -390,31 +412,31 @@ namespace Nominas
                         #region NO EXISTE REINGRESO, BAJAS NI ALTAS
                         if (existeAlta == 0 && existe == 0 && existeReingreso == 0)
                         {
-                            int existeIncidenciaPago = 0, existeFaltaPago = 0;
+                            //int existeIncidenciaPago = 0, existeFaltaPago = 0;
                             //Se obtiene existencia de faltas
-                            Faltas.Core.FaltasHelper fPago = new Faltas.Core.FaltasHelper();
-                            fPago.Command = cmd;
-                            Faltas.Core.Faltas faltaPago = new Faltas.Core.Faltas();
-                            faltaPago.idtrabajador = idTrabajador;
-                            faltaPago.fechainicio = inicioPeriodo;
-                            faltaPago.fechafin = finPeriodo;
+                            //Faltas.Core.FaltasHelper fPago = new Faltas.Core.FaltasHelper();
+                            //fPago.Command = cmd;
+                            //Faltas.Core.Faltas faltaPago = new Faltas.Core.Faltas();
+                            //faltaPago.idtrabajador = idTrabajador;
+                            //faltaPago.fechainicio = inicioPeriodo;
+                            //faltaPago.fechafin = finPeriodo;
 
-                            cnx.Open();
-                            existeFaltaPago = (int)fPago.existeFalta(faltaPago);
-                            cnx.Close();
+                            //cnx.Open();
+                            //existeFaltaPago = (int)fPago.existeFalta(faltaPago);
+                            //cnx.Close();
 
                             //Se obtiene existencia de incapacidades
-                            Incidencias.Core.IncidenciasHelper iPago = new Incidencias.Core.IncidenciasHelper();
-                            iPago.Command = cmd;
+                            //Incidencias.Core.IncidenciasHelper iPago = new Incidencias.Core.IncidenciasHelper();
+                            //iPago.Command = cmd;
 
-                            Incidencias.Core.Incidencias incPago = new Incidencias.Core.Incidencias();
-                            incPago.idtrabajador = idTrabajador;
-                            incPago.periodoinicio = inicioPeriodo;
-                            incPago.periodofin = finPeriodo;
+                            //Incidencias.Core.Incidencias incPago = new Incidencias.Core.Incidencias();
+                            //incPago.idtrabajador = idTrabajador;
+                            //incPago.periodoinicio = inicioPeriodo;
+                            //incPago.periodofin = finPeriodo;
 
-                            cnx.Open();
-                            existeIncidenciaPago = (int)iPago.existeIncidencia(incPago);
-                            cnx.Close();
+                            //cnx.Open();
+                            //existeIncidenciaPago = (int)iPago.existeIncidencia(incPago);
+                            //cnx.Close();
 
                             //Se obtiene los dias de pago.
                             cnx.Open();
@@ -431,18 +453,18 @@ namespace Nominas
                             diasPago = (int)ph.DiasDePago(p);
                             cnx.Close();
 
-                            if (existeFaltaPago != 0 || existeFaltaPago != 0)
-                            {
-                                if (diasPago == 15)
-                                {
-                                    if (inicioPeriodo.Day > 15)
-                                    {
-                                        diasMesLaborados = DateTime.DaysInMonth(inicioPeriodo.Year, inicioPeriodo.Month);
-                                        diasMesLaborados = diasMesLaborados - 15;
-                                        diasPago = diasMesLaborados;
-                                    }
-                                }
-                            }
+                            //if (existeFaltaPago != 0 || existeIncidenciaPago != 0)
+                            //{
+                            //    if (diasPago == 15)
+                            //    {
+                            //        if (inicioPeriodo.Day > 15)
+                            //        {
+                            //            diasMesLaborados = DateTime.DaysInMonth(inicioPeriodo.Year, inicioPeriodo.Month);
+                            //            diasMesLaborados = diasMesLaborados - 15;
+                            //            diasPago = diasMesLaborados;
+                            //        }
+                            //    }
+                            //}
 
                             formula = formula.Replace("[" + variables[i] + "]", diasPago.ToString());
                         }
@@ -451,7 +473,8 @@ namespace Nominas
                         break;
 
                     case "DiasIncapacidad":
-                        object existeIncidencia = null, diasIncapacidad = 0;
+                        object existeIncidencia = null;
+                        int diasIncapacidad = 0;
                         Incidencias.Core.IncidenciasHelper ih = new Incidencias.Core.IncidenciasHelper();
                         ih.Command = cmd;
 
@@ -469,7 +492,13 @@ namespace Nominas
                             cnx.Open();
                             diasIncapacidad = (int)ih.diasIncidencia(inc);
                             cnx.Close();
-                            formula = formula.Replace("[" + variables[i] + "]", diasIncapacidad.ToString());
+                            if (diasIncapacidad == 16)
+                            {
+                                diasIncapacidad = diasIncapacidad - 1;
+                                formula = formula.Replace("[" + variables[i] + "]", diasIncapacidad.ToString());
+                            }
+                            else
+                                formula = formula.Replace("[" + variables[i] + "]", diasIncapacidad.ToString());
                         }
                         else
                         {

@@ -848,6 +848,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Reportes\rptNominaRecibos.rdlc" />
     <EmbeddedResource Include="Reportes\rptPreNominaDepto.rdlc" />
     <EmbeddedResource Include="Reportes\rptPreNominaEmpleados.rdlc" />
     <EmbeddedResource Include="Reportes\rptPreNominaCaratula.rdlc" />
@@ -858,7 +859,7 @@
     <None Include="dsReportes.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>dsReportes1.Designer.cs</LastGenOutput>
+      <LastGenOutput>dsReportes.Designer.cs</LastGenOutput>
     </None>
     <None Include="dsReportes.xss">
       <DependentUpon>dsReportes.xsd</DependentUpon>

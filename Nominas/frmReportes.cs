@@ -239,6 +239,23 @@ namespace Nominas
                     cmbOrden.Items.Add("Departamento, No. de Empleado");
                     cmbOrden.SelectedIndex = 0;
                     break;
+
+                case "Recibos Timbrados": 
+                    cmbEmpleados.Enabled = true;
+                    cmbDeptoInicial.Enabled = true;
+                    cmbDeptoFinal.Enabled = true;
+                    cmbEmpleadoInicial.Enabled = true;
+                    cmbEmpleadoFinal.Enabled = true;
+                    cmbOrden.Enabled = true;
+                    cmbNetoCero.Enabled = true;
+                    noReporte = 8;
+                    cmbOrden.Items.Clear();
+                    cmbOrden.Items.Add("No. de Empleado");
+                    cmbOrden.Items.Add("Departamento");
+                    cmbOrden.Items.Add("No. de Empleado, Departamento");
+                    cmbOrden.Items.Add("Departamento, No. de Empleado");
+                    cmbOrden.SelectedIndex = 0;
+                    break;
             }
         }
 

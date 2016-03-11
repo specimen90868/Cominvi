@@ -2532,5 +2532,50 @@ namespace Nominas
             }
         }
 
+        private void toolInfonavit_Click(object sender, EventArgs e)
+        {
+            frmDiasAusentismo da = new frmDiasAusentismo();
+            da.Text = "Infonavit";
+            da.lblTexto.Text = "Ingrese la cantidad para el infonavit.";
+            da.lblCantidad.Text = "Cantidad:";
+            da.OnInfonavit += da_OnInfonavit;
+            da.ShowDialog();
+        }
+
+        void da_OnInfonavit(double cantidad)
+        {
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
+            nh.Command = cmd;
+
+            CalculoNomina.Core.tmpPagoNomina infonavit = new CalculoNomina.Core.tmpPagoNomina();
+            infonavit.idempresa = GLOBALES.IDEMPRESA;
+            infonavit.idtrabajador = idTrabajador;
+            infonavit.noconcepto = 9; //CONCEPTO SUBSIDIO
+            infonavit.fechainicio = _inicioPeriodo.Date;
+            infonavit.fechafin = _finPeriodo.Date;
+            infonavit.cantidad = cantidad;
+            infonavit.exento = 0;
+            infonavit.gravado = 0;
+            infonavit.modificado = true;
+
+            try
+            {
+                cnx.Open();
+                nh.actualizaHorasExtrasDespensa(infonavit);
+                cnx.Close();
+                cnx.Dispose();
+
+                muestraDatos();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+            }
+        }
+
     }
 }

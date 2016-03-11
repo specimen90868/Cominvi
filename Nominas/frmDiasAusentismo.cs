@@ -32,6 +32,10 @@ namespace Nominas
 
         public delegate void delOnIsr(double cantidad);
         public event delOnIsr OnIsr;
+
+        public delegate void delOnInfonavit(double cantidad);
+        public event delOnInfonavit OnInfonavit;
+
         #endregion
 
         private void frmDiasAusentismo_Load(object sender, EventArgs e)
@@ -49,8 +53,10 @@ namespace Nominas
                 OnDespensa(0);
             if (OnSubsidio != null)
                 OnSubsidio(0);
-            if (OnIsr != null) 
+            if (OnIsr != null)
                 OnIsr(0);
+            if (OnInfonavit != null)
+                OnInfonavit(0);
             this.Dispose();
         }
 
@@ -66,6 +72,8 @@ namespace Nominas
                 OnSubsidio(double.Parse(txtDias.Text));
             if (OnIsr != null)
                 OnIsr(double.Parse(txtDias.Text));
+            if (OnInfonavit != null)
+                OnInfonavit(double.Parse(txtDias.Text));
             this.Dispose();
         }
     }
