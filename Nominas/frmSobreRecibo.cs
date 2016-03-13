@@ -129,92 +129,249 @@ namespace Nominas
             CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
             nh.Command = cmd;
 
-            if (!FLAGCALCULO)
+           
+            #region CONCEPTOS Y FORMULAS DEL TRABAJADOR
+            try
             {
-                #region CONCEPTOS Y FORMULAS DEL TRABAJADOR (PERCEPCIONES)
+                /*************************************************************
+                    * Se obtienen los conceptos con el campo modificado en 1
+                    * de la tabla tmpPagoNomina con el SP stp_DatosNominaRecalculoTrabajador
+                    *************************************************************/
+                cnx.Open();
+                lstConceptosPercepcionesModificados = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "P", idTrabajador,
+                    _tipoNormalEspecial, _inicioPeriodo.Date, _finPeriodo.Date);
+                lstConceptosDeduccionesModificados = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "D", idTrabajador,
+                    _tipoNormalEspecial, _inicioPeriodo.Date, _finPeriodo.Date);
+                cnx.Close();
+                /***************** TERMINA *****************************/
+
+
+                /*********************************************************
+                    * Se verifica si las listas de los conceptos modificados
+                    * son diferentes de 0, si son diferentes, se acumulan en la varible
+                    * noConceptosPercepciones y noConceptosDeducciones
+                    *********************************************************/
+                if (lstConceptosPercepcionesModificados.Count != 0)
+                {
+                    for (int i = 0; i < lstConceptosPercepcionesModificados.Count; i++)
+                        if (lstConceptosPercepcionesModificados[i].modificado)
+                            noConceptosPercepciones += lstConceptosPercepcionesModificados[i].noconcepto + ",";
+                    if (noConceptosPercepciones != "")
+                        noConceptosPercepciones = noConceptosPercepciones.Substring(0, noConceptosPercepciones.Length - 1);
+                }
+                else
+                    noConceptosPercepciones = "";
+
+                if (lstConceptosDeduccionesModificados.Count != 0)
+                {
+                    for (int i = 0; i < lstConceptosDeduccionesModificados.Count; i++)
+                        if (lstConceptosDeduccionesModificados[i].modificado)
+                            noConceptosDeducciones += lstConceptosDeduccionesModificados[i].noconcepto + ",";
+                    if (noConceptosDeducciones != "")
+                        noConceptosDeducciones = noConceptosDeducciones.Substring(0, noConceptosDeducciones.Length - 1);
+                }
+                else
+                    noConceptosDeducciones = "";
+                /************************TERMINA***************************/
+
+
+                /*****************************************************************
+                    * Se llenan las listas con los conceptos que no estan modificados
+                    * con el SP stp_DatosNominaTrabajador para el calculo.
+                    *****************************************************************/
+                cnx.Open();
+                lstConceptosPercepciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "P", idTrabajador, noConceptosPercepciones);
+                lstConceptosDeducciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "D", idTrabajador, noConceptosDeducciones);
+                cnx.Close();
+                /**************************TERMINA*********************************/
+            }
+            catch
+            {
+                MessageBox.Show("Error: Al Obtener los conceptos del trabajador.\r\n \r\n La ventan se cerrara.", "Error");
+                this.Dispose();
+            }
+            #endregion
+
+            #region CALCULO DE PERCEPCIONES
+            List<CalculoNomina.Core.tmpPagoNomina> lstPercepciones = new List<CalculoNomina.Core.tmpPagoNomina>();
+            lstPercepciones = CALCULO.PERCEPCIONES(lstConceptosPercepciones, _inicioPeriodo.Date, _finPeriodo.Date, _tipoNormalEspecial);
+            #endregion
+
+            #region BULK DATOS PERCEPCIONES
+            BulkData(lstPercepciones);
+            #endregion
+
+            #region OBTENCION DE PERCEPCIONES
+            lstPercepciones = new List<CalculoNomina.Core.tmpPagoNomina>();
+            CalculoNomina.Core.tmpPagoNomina per = new CalculoNomina.Core.tmpPagoNomina();
+            per.idempresa = GLOBALES.IDEMPRESA;
+            per.idtrabajador = idTrabajador;
+            per.fechainicio = _inicioPeriodo.Date;
+            per.fechafin = _finPeriodo.Date;
+            per.tipoconcepto = "P";
+            per.tiponomina = _tipoNormalEspecial;
+            cnx = new SqlConnection(cdn);
+            cnx.Open();
+            lstPercepciones = nh.obtenerPercepcionesTrabajador(per);
+            cnx.Close();
+            #endregion
+
+            #region CALCULO DE DEDUCCIONES
+            List<CalculoNomina.Core.tmpPagoNomina> lstDeducciones = new List<CalculoNomina.Core.tmpPagoNomina>();
+            lstDeducciones = CALCULO.DEDUCCIONES(lstConceptosDeducciones, lstPercepciones, _inicioPeriodo.Date, _finPeriodo.Date, _tipoNormalEspecial);
+            #endregion
+
+            #region BULK DATOS DEDUCCIONES
+            BulkData(lstDeducciones);
+            #endregion
+
+            #region PROGRAMACION DE MOVIMIENTOS
+            List<CalculoNomina.Core.tmpPagoNomina> lstOtrasDeducciones = new List<CalculoNomina.Core.tmpPagoNomina>();
+
+            double percepciones = lstPercepciones.Where(f => f.tipoconcepto == "P").Sum(f => f.cantidad);
+
+            if (percepciones != 0)
+            {
+                cnx = new SqlConnection(cdn);
+                cmd = new SqlCommand();
+                cmd.Connection = cnx;
+
+                int existe = 0;
+                ProgramacionConcepto.Core.ProgramacionHelper pch = new ProgramacionConcepto.Core.ProgramacionHelper();
+                pch.Command = cmd;
+
+                ProgramacionConcepto.Core.ProgramacionConcepto programacion = new ProgramacionConcepto.Core.ProgramacionConcepto();
+                programacion.idtrabajador = idTrabajador;
+
+                List<ProgramacionConcepto.Core.ProgramacionConcepto> lstProgramacion = new List<ProgramacionConcepto.Core.ProgramacionConcepto>();
+
                 try
                 {
-                    /*************************************************************
-                     * Se obtienen los conceptos con el campo modificado en 1
-                     * de la tabla tmpPagoNomina con el SP stp_DatosNominaRecalculoTrabajador
-                     *************************************************************/
                     cnx.Open();
-                    lstConceptosPercepcionesModificados = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "P", idTrabajador,
-                        _tipoNormalEspecial, _inicioPeriodo.Date, _finPeriodo.Date);
-                    lstConceptosDeduccionesModificados = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "D", idTrabajador,
-                        _tipoNormalEspecial, _inicioPeriodo.Date, _finPeriodo.Date);
+                    existe = (int)pch.existeProgramacion(programacion);
                     cnx.Close();
-                    /***************** TERMINA *****************************/
-
-
-                    /*********************************************************
-                     * Se verifica si las listas de los conceptos modificados
-                     * son diferentes de 0, si son diferentes, se acumulan en la varible
-                     * noConceptosPercepciones y noConceptosDeducciones
-                     *********************************************************/
-                    if (lstConceptosPercepcionesModificados.Count != 0)
-                    {
-                        for (int i = 0; i < lstConceptosPercepcionesModificados.Count; i++)
-                            if (lstConceptosPercepcionesModificados[i].modificado)
-                                noConceptosPercepciones += lstConceptosPercepcionesModificados[i].noconcepto + ",";
-                        noConceptosPercepciones = noConceptosPercepciones.Substring(0, noConceptosPercepciones.Length - 1);
-                    }
-                    else
-                        noConceptosPercepciones = "";
-
-                    if (lstConceptosDeduccionesModificados.Count != 0)
-                    {
-                        for (int i = 0; i < lstConceptosDeduccionesModificados.Count; i++)
-                            if (lstConceptosDeduccionesModificados[i].modificado)
-                                noConceptosDeducciones += lstConceptosDeduccionesModificados[i].noconcepto + ",";
-                        noConceptosDeducciones = noConceptosDeducciones.Substring(0, noConceptosDeducciones.Length - 1);
-                    }
-                    else
-                        noConceptosDeducciones = "";
-                    /************************TERMINA***************************/
-
-
-                    /*****************************************************************
-                     * Se llenan las listas con los conceptos que no estan modificados
-                     * con el SP stp_DatosNominaTrabajador para el calculo.
-                     *****************************************************************/
-                    cnx.Open();
-                    lstConceptosPercepciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "P", idTrabajador, noConceptosPercepciones);
-                    lstConceptosDeducciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "D", idTrabajador, noConceptosDeducciones);
-                    cnx.Close();
-                    /**************************TERMINA*********************************/
                 }
-                catch
+                catch (Exception error)
                 {
-                    MessageBox.Show("Error: Al Obtener los conceptos del trabajador.\r\n \r\n La ventan se cerrara.", "Error");
-                    this.Dispose();
+                    MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                    cnx.Dispose();
                 }
-                #endregion
 
-                #region CALCULO DE PERCEPCIONES
-                List<CalculoNomina.Core.tmpPagoNomina> lstPercepciones = new List<CalculoNomina.Core.tmpPagoNomina>();
-                lstPercepciones = CALCULO.PERCEPCIONES(lstConceptosPercepciones, _inicioPeriodo.Date, _finPeriodo.Date, _tipoNormalEspecial);
-                #endregion
+                if (existe != 0)
+                {
+                    try
+                    {
+                        cnx.Open();
+                        lstProgramacion = pch.obtenerProgramacion(programacion);
+                        cnx.Close();
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                        cnx.Dispose();
+                    }
 
-                #region BULK DATOS PERCEPCIONES
-                BulkData(lstPercepciones);
-                #endregion
+                    for (int i = 0; i < lstProgramacion.Count; i++)
+                    {
+                        if (_finPeriodo.Date <= lstProgramacion[i].fechafin)
+                        {
+                            Conceptos.Core.ConceptosHelper ch = new Conceptos.Core.ConceptosHelper();
+                            ch.Command = cmd;
+                            Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
+                            concepto.id = lstProgramacion[i].idconcepto;
+                            List<Conceptos.Core.Conceptos> lstNoConcepto = new List<Conceptos.Core.Conceptos>();
+                            try
+                            {
+                                cnx.Open();
+                                lstNoConcepto = ch.obtenerConcepto(concepto);
+                                cnx.Close();
+                            }
+                            catch (Exception error) { MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error"); }
 
-                #region CALCULO DE DEDUCCIONES
-                List<CalculoNomina.Core.tmpPagoNomina> lstDeducciones = new List<CalculoNomina.Core.tmpPagoNomina>();
-                lstDeducciones = CALCULO.DEDUCCIONES(lstConceptosDeducciones, lstPercepciones, _inicioPeriodo.Date, _finPeriodo.Date, _tipoNormalEspecial);
-                #endregion
 
-                #region BULK DATOS DEDUCCIONES
-                BulkData(lstDeducciones);
-                #endregion
+                            CalculoNomina.Core.tmpPagoNomina pne = new CalculoNomina.Core.tmpPagoNomina();
+                            pne.idempresa = GLOBALES.IDEMPRESA;
+                            pne.idtrabajador = idTrabajador;
+                            pne.fechainicio = _inicioPeriodo.Date;
+                            pne.fechafin = _finPeriodo.Date;
+                            pne.noconcepto = lstNoConcepto[0].noconcepto;
 
-                #region PROGRAMACION DE MOVIMIENTOS
-                List<CalculoNomina.Core.tmpPagoNomina> lstOtrasDeducciones = new List<CalculoNomina.Core.tmpPagoNomina>();
+                            nh = new CalculoNomina.Core.NominaHelper();
+                            nh.Command = cmd;
+                            try
+                            {
+                                cnx.Open();
+                                existeConcepto = (int)nh.existeConcepto(pne);
+                                cnx.Close();
+                            }
+                            catch (Exception error)
+                            {
+                                MessageBox.Show("Error al obtener la existencia del concepto." + error.Message + "\r\n" + error.Source, "Error");
+                                cnx.Dispose();
+                            }
 
-                double percepciones = lstPercepciones.Where(f => f.tipoconcepto == "P").Sum(f => f.cantidad);
+                            CalculoNomina.Core.tmpPagoNomina vn = new CalculoNomina.Core.tmpPagoNomina();
+                            vn.idtrabajador = idTrabajador;
+                            vn.idempresa = GLOBALES.IDEMPRESA;
+                            vn.idconcepto = lstProgramacion[i].idconcepto;
+                            vn.noconcepto = lstNoConcepto[0].noconcepto;
+                            vn.tipoconcepto = lstNoConcepto[0].tipoconcepto;
+                            vn.fechainicio = _inicioPeriodo.Date;
+                            vn.fechafin = _finPeriodo.Date;
+                            vn.exento = 0;
+                            vn.gravado = 0;
+                            vn.cantidad = lstProgramacion[i].cantidad;
+                            vn.guardada = true;
+                            vn.tiponomina = _tipoNormalEspecial;
+                            vn.modificado = false;
 
-                if (percepciones != 0)
+                            if (lstNoConcepto[0].gravado && !lstNoConcepto[0].exento)
+                            {
+                                vn.gravado = lstProgramacion[i].cantidad;
+                                vn.exento = 0;
+                            }
+
+                            if (lstNoConcepto[0].gravado && lstNoConcepto[0].exento)
+                            {
+                                CalculoFormula formulaExcento = new CalculoFormula(idTrabajador, _inicioPeriodo.Date, _finPeriodo.Date, lstNoConcepto[0].formulaexento);
+                                vn.exento = double.Parse(formulaExcento.calcularFormula().ToString());
+                                if (vn.cantidad <= vn.exento)
+                                {
+                                    vn.exento = vn.cantidad;
+                                    vn.gravado = 0;
+                                }
+                                else
+                                {
+                                    vn.gravado = vn.cantidad - vn.exento;
+                                }
+                            }
+
+                            if (existeConcepto == 0)
+                            {
+                                lstOtrasDeducciones.Add(vn);
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    cnx.Open();
+                                    nh.actualizaConceptoModificado(vn);
+                                    cnx.Close();
+                                }
+                                catch
+                                {
+                                    MessageBox.Show("Error al actualizar el concepto.", "Error");
+                                    cnx.Dispose();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                double vacacion = lstPercepciones.Where(f => f.noconcepto == 7).Sum(f => f.cantidad);
+                if (vacacion != 0)
                 {
                     cnx = new SqlConnection(cdn);
                     cmd = new SqlCommand();
@@ -272,7 +429,6 @@ namespace Nominas
                                 }
                                 catch (Exception error) { MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error"); }
 
-
                                 CalculoNomina.Core.tmpPagoNomina pne = new CalculoNomina.Core.tmpPagoNomina();
                                 pne.idempresa = GLOBALES.IDEMPRESA;
                                 pne.idtrabajador = idTrabajador;
@@ -280,17 +436,15 @@ namespace Nominas
                                 pne.fechafin = _finPeriodo.Date;
                                 pne.noconcepto = lstNoConcepto[0].noconcepto;
 
-                                nh = new CalculoNomina.Core.NominaHelper();
-                                nh.Command = cmd;
                                 try
                                 {
                                     cnx.Open();
                                     existeConcepto = (int)nh.existeConcepto(pne);
                                     cnx.Close();
                                 }
-                                catch (Exception error)
+                                catch
                                 {
-                                    MessageBox.Show("Error al obtener la existencia del concepto." + error.Message + "\r\n" + error.Source, "Error");
+                                    MessageBox.Show("Error al obtener la existencia del concepto.", "Error");
                                     cnx.Dispose();
                                 }
 
@@ -352,391 +506,43 @@ namespace Nominas
                         }
                     }
                 }
-                else
-                {
-                    double vacacion = lstPercepciones.Where(f => f.noconcepto == 7).Sum(f => f.cantidad);
-                    if (vacacion != 0)
-                    {
-                        cnx = new SqlConnection(cdn);
-                        cmd = new SqlCommand();
-                        cmd.Connection = cnx;
-
-                        int existe = 0;
-                        ProgramacionConcepto.Core.ProgramacionHelper pch = new ProgramacionConcepto.Core.ProgramacionHelper();
-                        pch.Command = cmd;
-
-                        ProgramacionConcepto.Core.ProgramacionConcepto programacion = new ProgramacionConcepto.Core.ProgramacionConcepto();
-                        programacion.idtrabajador = idTrabajador;
-
-                        List<ProgramacionConcepto.Core.ProgramacionConcepto> lstProgramacion = new List<ProgramacionConcepto.Core.ProgramacionConcepto>();
-
-                        try
-                        {
-                            cnx.Open();
-                            existe = (int)pch.existeProgramacion(programacion);
-                            cnx.Close();
-                        }
-                        catch (Exception error)
-                        {
-                            MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-                            cnx.Dispose();
-                        }
-
-                        if (existe != 0)
-                        {
-                            try
-                            {
-                                cnx.Open();
-                                lstProgramacion = pch.obtenerProgramacion(programacion);
-                                cnx.Close();
-                            }
-                            catch (Exception error)
-                            {
-                                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-                                cnx.Dispose();
-                            }
-
-                            for (int i = 0; i < lstProgramacion.Count; i++)
-                            {
-                                if (_finPeriodo.Date <= lstProgramacion[i].fechafin)
-                                {
-                                    Conceptos.Core.ConceptosHelper ch = new Conceptos.Core.ConceptosHelper();
-                                    ch.Command = cmd;
-                                    Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
-                                    concepto.id = lstProgramacion[i].idconcepto;
-                                    List<Conceptos.Core.Conceptos> lstNoConcepto = new List<Conceptos.Core.Conceptos>();
-                                    try
-                                    {
-                                        cnx.Open();
-                                        lstNoConcepto = ch.obtenerConcepto(concepto);
-                                        cnx.Close();
-                                    }
-                                    catch (Exception error) { MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error"); }
-
-                                    CalculoNomina.Core.tmpPagoNomina pne = new CalculoNomina.Core.tmpPagoNomina();
-                                    pne.idempresa = GLOBALES.IDEMPRESA;
-                                    pne.idtrabajador = idTrabajador;
-                                    pne.fechainicio = _inicioPeriodo.Date;
-                                    pne.fechafin = _finPeriodo.Date;
-                                    pne.noconcepto = lstNoConcepto[0].noconcepto;
-
-                                    try
-                                    {
-                                        cnx.Open();
-                                        existeConcepto = (int)nh.existeConcepto(pne);
-                                        cnx.Close();
-                                    }
-                                    catch
-                                    {
-                                        MessageBox.Show("Error al obtener la existencia del concepto.", "Error");
-                                        cnx.Dispose();
-                                    }
-
-                                    CalculoNomina.Core.tmpPagoNomina vn = new CalculoNomina.Core.tmpPagoNomina();
-                                    vn.idtrabajador = idTrabajador;
-                                    vn.idempresa = GLOBALES.IDEMPRESA;
-                                    vn.idconcepto = lstProgramacion[i].idconcepto;
-                                    vn.noconcepto = lstNoConcepto[0].noconcepto;
-                                    vn.tipoconcepto = lstNoConcepto[0].tipoconcepto;
-                                    vn.fechainicio = _inicioPeriodo.Date;
-                                    vn.fechafin = _finPeriodo.Date;
-                                    vn.exento = 0;
-                                    vn.gravado = 0;
-                                    vn.cantidad = lstProgramacion[i].cantidad;
-                                    vn.guardada = true;
-                                    vn.tiponomina = _tipoNormalEspecial;
-                                    vn.modificado = false;
-
-                                    if (lstNoConcepto[0].gravado && !lstNoConcepto[0].exento)
-                                    {
-                                        vn.gravado = lstProgramacion[i].cantidad;
-                                        vn.exento = 0;
-                                    }
-
-                                    if (lstNoConcepto[0].gravado && lstNoConcepto[0].exento)
-                                    {
-                                        CalculoFormula formulaExcento = new CalculoFormula(idTrabajador, _inicioPeriodo.Date, _finPeriodo.Date, lstNoConcepto[0].formulaexento);
-                                        vn.exento = double.Parse(formulaExcento.calcularFormula().ToString());
-                                        if (vn.cantidad <= vn.exento)
-                                        {
-                                            vn.exento = vn.cantidad;
-                                            vn.gravado = 0;
-                                        }
-                                        else
-                                        {
-                                            vn.gravado = vn.cantidad - vn.exento;
-                                        }
-                                    }
-
-                                    if (existeConcepto == 0)
-                                    {
-                                        lstOtrasDeducciones.Add(vn);
-                                    }
-                                    else
-                                    {
-                                        try
-                                        {
-                                            cnx.Open();
-                                            nh.actualizaConceptoModificado(vn);
-                                            cnx.Close();
-                                        }
-                                        catch
-                                        {
-                                            MessageBox.Show("Error al actualizar el concepto.", "Error");
-                                            cnx.Dispose();
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                #endregion
-
-                #region MOVIMIENTOS
-                Movimientos.Core.MovimientosHelper mh = new Movimientos.Core.MovimientosHelper();
-                mh.Command = cmd;
-
-                percepciones = lstPercepciones.Where(f => f.tipoconcepto == "P").Sum(f => f.cantidad);
-
-                if (percepciones != 0)
-                {
-                    int existe = 0;
-                    Movimientos.Core.Movimientos mov = new Movimientos.Core.Movimientos();
-                    mov.idtrabajador = idTrabajador;
-                    mov.fechainicio = _inicioPeriodo.Date;
-                    mov.fechafin = _finPeriodo.Date;
-
-                    List<Movimientos.Core.Movimientos> lstMovimiento = new List<Movimientos.Core.Movimientos>();
-
-                    try
-                    {
-                        cnx.Open();
-                        existe = (int)mh.existeMovimiento(mov);
-                        cnx.Close();
-                    }
-                    catch (Exception error)
-                    {
-                        MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-                        cnx.Dispose();
-                    }
-
-                    if (existe != 0)
-                    {
-                        try
-                        {
-                            cnx.Open();
-                            lstMovimiento = mh.obtenerMovimiento(mov);
-                            cnx.Close();
-                        }
-                        catch (Exception error)
-                        {
-                            MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-                            cnx.Dispose();
-                        }
-
-                        for (int i = 0; i < lstMovimiento.Count; i++)
-                        {
-                            Conceptos.Core.ConceptosHelper ch = new Conceptos.Core.ConceptosHelper();
-                            ch.Command = cmd;
-                            Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
-                            concepto.id = lstMovimiento[i].idconcepto;
-                            List<Conceptos.Core.Conceptos> lstNoConcepto = new List<Conceptos.Core.Conceptos>();
-                            try
-                            {
-                                cnx.Open();
-                                lstNoConcepto = ch.obtenerConcepto(concepto);
-                                cnx.Close();
-                            }
-                            catch (Exception error) { MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error"); }
-
-                            CalculoNomina.Core.tmpPagoNomina vn = new CalculoNomina.Core.tmpPagoNomina();
-                            vn.idtrabajador = idTrabajador;
-                            vn.idempresa = GLOBALES.IDEMPRESA;
-                            vn.idconcepto = lstMovimiento[i].idconcepto;
-                            vn.noconcepto = lstNoConcepto[0].noconcepto;
-                            vn.tipoconcepto = lstNoConcepto[0].tipoconcepto;
-                            vn.fechainicio = _inicioPeriodo.Date;
-                            vn.fechafin = _finPeriodo.Date;
-                            vn.exento = 0;
-                            vn.gravado = 0;
-                            vn.cantidad = lstMovimiento[i].cantidad;
-                            vn.guardada = true;
-                            vn.tiponomina = _tipoNormalEspecial;
-                            vn.modificado = false;
-                            lstOtrasDeducciones.Add(vn);
-                        }
-                    }
-                }
-                else
-                {
-                    //double vacacion = lstPercepciones.Where(f => f.noconcepto == 7).Sum(f => f.cantidad);
-                    //if (vacacion != 0)
-                    //{
-                    //    int existe = 0;
-                    //    Movimientos.Core.Movimientos mov = new Movimientos.Core.Movimientos();
-                    //    mov.idtrabajador = idTrabajador;
-                    //    mov.fechainicio = _inicioPeriodo.Date;
-                    //    mov.fechafin = _finPeriodo.Date;
-
-                    //    List<Movimientos.Core.Movimientos> lstMovimiento = new List<Movimientos.Core.Movimientos>();
-
-                    //    try
-                    //    {
-                    //        cnx.Open();
-                    //        existe = (int)mh.existeMovimiento(mov);
-                    //        cnx.Close();
-                    //    }
-                    //    catch (Exception error)
-                    //    {
-                    //        MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-                    //        cnx.Dispose();
-                    //    }
-
-                    //    if (existe != 0)
-                    //    {
-                    //        try
-                    //        {
-                    //            cnx.Open();
-                    //            lstMovimiento = mh.obtenerMovimiento(mov);
-                    //            cnx.Close();
-                    //        }
-                    //        catch (Exception error)
-                    //        {
-                    //            MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-                    //            cnx.Dispose();
-                    //        }
-
-                    //        for (int i = 0; i < lstMovimiento.Count; i++)
-                    //        {
-                    //            Conceptos.Core.ConceptosHelper ch = new Conceptos.Core.ConceptosHelper();
-                    //            ch.Command = cmd;
-                    //            Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
-                    //            concepto.id = lstMovimiento[i].idconcepto;
-                    //            List<Conceptos.Core.Conceptos> lstNoConcepto = new List<Conceptos.Core.Conceptos>();
-                    //            try
-                    //            {
-                    //                cnx.Open();
-                    //                lstNoConcepto = ch.obtenerConcepto(concepto);
-                    //                cnx.Close();
-                    //            }
-                    //            catch (Exception error) { MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error"); }
-
-                    //            CalculoNomina.Core.tmpPagoNomina vn = new CalculoNomina.Core.tmpPagoNomina();
-                    //            vn.idtrabajador = idTrabajador;
-                    //            vn.idempresa = GLOBALES.IDEMPRESA;
-                    //            vn.idconcepto = lstMovimiento[i].idconcepto;
-                    //            vn.noconcepto = lstNoConcepto[0].noconcepto;
-                    //            vn.tipoconcepto = lstNoConcepto[0].tipoconcepto;
-                    //            vn.fechainicio = _inicioPeriodo.Date;
-                    //            vn.fechafin = _finPeriodo.Date;
-                    //            vn.exento = 0;
-                    //            vn.gravado = 0;
-                    //            vn.cantidad = lstMovimiento[i].cantidad;
-                    //            vn.guardada = true;
-                    //            vn.tiponomina = _tipoNormalEspecial;
-                    //            vn.modificado = false;
-                    //            lstOtrasDeducciones.Add(vn);
-                    //        }
-                    //    }
-                    //}
-                }
-                #endregion
-
-                #region BULK DATOS PROGRAMACION DE MOVIMIENTOS
-                BulkData(lstOtrasDeducciones);
-                #endregion
-
-                #region MOSTRAR DATOS
-                muestraDatos();
-                #endregion
-
-                #region PERIODO
-                cnx = new SqlConnection(cdn);
-                cmd = new SqlCommand();
-                cmd.Connection = cnx;
-                nh = new CalculoNomina.Core.NominaHelper();
-                nh.Command = cmd;
-                int noPeriodo = 0;
-                try
-                {
-                    cnx.Open();
-                    noPeriodo = int.Parse(nh.obtenerNoPeriodo(_periodo, _inicioPeriodo).ToString());
-                    nh.actualizarNoPeriodo(GLOBALES.IDEMPRESA, _inicioPeriodo.Date, _finPeriodo.Date, noPeriodo);
-                    cnx.Close();
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Error: Al actualizar el No. de Periodo", "Error");
-                    cnx.Dispose();
-                    return;
-                }
-                #endregion
             }
-            else
+            #endregion
+
+            #region MOVIMIENTOS
+            Movimientos.Core.MovimientosHelper mh = new Movimientos.Core.MovimientosHelper();
+            mh.Command = cmd;
+
+            percepciones = lstPercepciones.Where(f => f.tipoconcepto == "P").Sum(f => f.cantidad);
+
+            if (percepciones != 0)
             {
-                #region CONCEPTOS Y FORMULAS DEL TRABAJADOR (PERCEPCIONES)
-                try
-                {
-                    cnx.Open();
-                    lstConceptosPercepciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "P", idTrabajador, _tipoNormalEspecial, _inicioPeriodo, _finPeriodo);
-                    lstConceptosDeducciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "D", idTrabajador, _tipoNormalEspecial, _inicioPeriodo, _finPeriodo);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al obtener los conceptos del trabajador.\r\n \r\n La ventan se cerrara.", "Error");
-                    this.Dispose();
-                }
-                #endregion
+                int existe = 0;
+                Movimientos.Core.Movimientos mov = new Movimientos.Core.Movimientos();
+                mov.idtrabajador = idTrabajador;
+                mov.fechainicio = _inicioPeriodo.Date;
+                mov.fechafin = _finPeriodo.Date;
 
-                #region RECALCULO DE PERCEPCIONES
-                CALCULO.RECALCULO_PERCEPCIONES(lstConceptosPercepciones, _inicioPeriodo.Date, _finPeriodo.Date, _tipoNormalEspecial);
-                #endregion
-
-                #region RECALCULO DE DEDUCCIONES
-                List<CalculoNomina.Core.tmpPagoNomina> lstRecalculoPercepciones = new List<CalculoNomina.Core.tmpPagoNomina>();
-                CalculoNomina.Core.tmpPagoNomina recalculopercepciones = new CalculoNomina.Core.tmpPagoNomina();
-                recalculopercepciones.idempresa = GLOBALES.IDEMPRESA;
-                recalculopercepciones.fechainicio = _inicioPeriodo.Date;
-                recalculopercepciones.fechafin = _finPeriodo.Date;
-                recalculopercepciones.tiponomina = _tipoNormalEspecial;
-                recalculopercepciones.tipoconcepto = "P";
-                recalculopercepciones.idtrabajador = idTrabajador;
+                List<Movimientos.Core.Movimientos> lstMovimiento = new List<Movimientos.Core.Movimientos>();
 
                 try
                 {
                     cnx.Open();
-                    lstRecalculoPercepciones = nh.obtenerPercepcionesTrabajador(recalculopercepciones);
+                    existe = (int)mh.existeMovimiento(mov);
                     cnx.Close();
                 }
                 catch (Exception error)
                 {
                     MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                    cnx.Dispose();
                 }
-                CALCULO.RECALCULO_DEDUCCIONES(lstConceptosDeducciones, lstRecalculoPercepciones, _inicioPeriodo.Date, _finPeriodo.Date, _tipoNormalEspecial);
-                #endregion
 
-                #region PROGRAMACION DE MOVIMIENTOS
-                List<CalculoNomina.Core.tmpPagoNomina> lstMovimientos = new List<CalculoNomina.Core.tmpPagoNomina>();
-                ProgramacionConcepto.Core.ProgramacionHelper pch = new ProgramacionConcepto.Core.ProgramacionHelper();
-                pch.Command = cmd;
-
-                double percepciones = lstRecalculoPercepciones.Where(f => f.tipoconcepto == "P").Sum(f => f.cantidad);
-                //double vacacion = lstRecalculoPercepciones.Where(f => f.noconcepto == 7).Sum(f => f.cantidad);
-
-                if (percepciones != 0)
+                if (existe != 0)
                 {
-                    int existe = 0;
-                    ProgramacionConcepto.Core.ProgramacionConcepto programacion = new ProgramacionConcepto.Core.ProgramacionConcepto();
-                    programacion.idtrabajador = idTrabajador;
-
-                    List<ProgramacionConcepto.Core.ProgramacionConcepto> lstProgramacion = new List<ProgramacionConcepto.Core.ProgramacionConcepto>();
-
                     try
                     {
                         cnx.Open();
-                        existe = (int)pch.existeProgramacion(programacion);
+                        lstMovimiento = mh.obtenerMovimiento(mov);
                         cnx.Close();
                     }
                     catch (Exception error)
@@ -745,191 +551,112 @@ namespace Nominas
                         cnx.Dispose();
                     }
 
-                    if (existe != 0)
+                    for (int i = 0; i < lstMovimiento.Count; i++)
                     {
+                        Conceptos.Core.ConceptosHelper ch = new Conceptos.Core.ConceptosHelper();
+                        ch.Command = cmd;
+                        Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
+                        concepto.id = lstMovimiento[i].idconcepto;
+                        List<Conceptos.Core.Conceptos> lstNoConcepto = new List<Conceptos.Core.Conceptos>();
                         try
                         {
                             cnx.Open();
-                            lstProgramacion = pch.obtenerProgramacion(programacion);
+                            lstNoConcepto = ch.obtenerConcepto(concepto);
                             cnx.Close();
                         }
-                        catch (Exception error)
+                        catch (Exception error) { MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error"); }
+
+                        CalculoNomina.Core.tmpPagoNomina vn = new CalculoNomina.Core.tmpPagoNomina();
+                        vn.idtrabajador = idTrabajador;
+                        vn.idempresa = GLOBALES.IDEMPRESA;
+                        vn.idconcepto = lstMovimiento[i].idconcepto;
+                        vn.noconcepto = lstNoConcepto[0].noconcepto;
+                        vn.tipoconcepto = lstNoConcepto[0].tipoconcepto;
+                        vn.fechainicio = _inicioPeriodo.Date;
+                        vn.fechafin = _finPeriodo.Date;
+                        vn.exento = 0;
+                        vn.gravado = 0;
+                        vn.cantidad = lstMovimiento[i].cantidad;
+                        vn.guardada = true;
+                        vn.tiponomina = _tipoNormalEspecial;
+                        vn.modificado = false;
+
+                        if (lstNoConcepto[0].gravado && !lstNoConcepto[0].exento)
                         {
-                            MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-                            cnx.Dispose();
-                        }
-
-                        for (int i = 0; i < lstProgramacion.Count; i++)
-                        {
-                            if (_finPeriodo.Date <= lstProgramacion[i].fechafin)
-                            {
-                                Conceptos.Core.ConceptosHelper ch = new Conceptos.Core.ConceptosHelper();
-                                ch.Command = cmd;
-                                Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
-                                concepto.id = lstProgramacion[i].idconcepto;
-                                List<Conceptos.Core.Conceptos> lstNoConcepto = new List<Conceptos.Core.Conceptos>();
-                                try
-                                {
-                                    cnx.Open();
-                                    lstNoConcepto = ch.obtenerConcepto(concepto);
-                                    cnx.Close();
-                                }
-                                catch (Exception error) { MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error"); }
-
-                                CalculoNomina.Core.tmpPagoNomina vn = new CalculoNomina.Core.tmpPagoNomina();
-                                vn.idtrabajador = idTrabajador;
-                                vn.idempresa = GLOBALES.IDEMPRESA;
-                                vn.idconcepto = lstProgramacion[i].idconcepto;
-                                vn.noconcepto = lstNoConcepto[0].noconcepto;
-                                vn.tipoconcepto = lstNoConcepto[0].tipoconcepto;
-                                vn.fechainicio = _inicioPeriodo.Date;
-                                vn.fechafin = _finPeriodo.Date;
-                                vn.exento = 0;
-                                vn.gravado = 0;
-                                vn.cantidad = lstProgramacion[i].cantidad;
-                                vn.guardada = false;
-                                vn.tiponomina = _tipoNormalEspecial;
-                                vn.modificado = false;
-
-                                if (lstNoConcepto[0].gravado && !lstNoConcepto[0].exento)
-                                {
-                                    vn.gravado = lstProgramacion[i].cantidad;
-                                    vn.exento = 0;
-                                }
-
-                                if (lstNoConcepto[0].gravado && lstNoConcepto[0].exento)
-                                {
-                                    CalculoFormula formulaExcento = new CalculoFormula(idTrabajador, _inicioPeriodo.Date, _finPeriodo.Date, lstNoConcepto[0].formulaexento);
-                                    vn.exento = double.Parse(formulaExcento.calcularFormula().ToString());
-                                    if (vn.cantidad <= vn.exento)
-                                    {
-                                        vn.exento = vn.cantidad;
-                                        vn.gravado = 0;
-                                    }
-                                    else
-                                    {
-                                        vn.gravado = vn.cantidad - vn.exento;
-                                    }
-                                }
-
-                                cnx.Open();
-                                existeConcepto = (int)nh.existeConcepto(vn);
-                                cnx.Close();
-
-                                if (existeConcepto == 0)
-                                    lstMovimientos.Add(vn);
-                                else {
-                                    cnx.Open();
-                                    nh.actualizaConcepto(vn);
-                                    cnx.Close();
-                                }
-                            }
-                        }
-                    }
-                }
-                #endregion
-
-                existeConcepto = 0;
-
-                #region MOVIMIENTOS
-                
-                Movimientos.Core.MovimientosHelper mh = new Movimientos.Core.MovimientosHelper();
-                mh.Command = cmd;
-
-                percepciones = lstRecalculoPercepciones.Where(f => f.tipoconcepto == "P").Sum(f => f.cantidad);
-                //vacacion = lstRecalculoPercepciones.Where(f => f.noconcepto == 7).Sum(f => f.cantidad);
-                
-                if (percepciones != 0)
-                {
-                    int existe = 0;
-                    Movimientos.Core.Movimientos mov = new Movimientos.Core.Movimientos();
-                    mov.idtrabajador = idTrabajador;
-                    mov.fechainicio = _inicioPeriodo.Date;
-                    mov.fechafin = _finPeriodo.Date;
-
-                    List<Movimientos.Core.Movimientos> lstMovimiento = new List<Movimientos.Core.Movimientos>();
-
-                    try
-                    {
-                        cnx.Open();
-                        existe = (int)mh.existeMovimiento(mov);
-                        cnx.Close();
-                    }
-                    catch (Exception error)
-                    {
-                        MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-                        cnx.Dispose();
-                    }
-
-                    if (existe != 0)
-                    {
-                        try
-                        {
-                            cnx.Open();
-                            lstMovimiento = mh.obtenerMovimiento(mov);
-                            cnx.Close();
-                        }
-                        catch (Exception error)
-                        {
-                            MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-                            cnx.Dispose();
-                        }
-
-                        for (int i = 0; i < lstMovimiento.Count; i++)
-                        {
-                            Conceptos.Core.ConceptosHelper ch = new Conceptos.Core.ConceptosHelper();
-                            ch.Command = cmd;
-                            Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
-                            concepto.id = lstMovimiento[i].idconcepto;
-                            List<Conceptos.Core.Conceptos> lstNoConcepto = new List<Conceptos.Core.Conceptos>();
-                            try
-                            {
-                                cnx.Open();
-                                lstNoConcepto = ch.obtenerConcepto(concepto);
-                                cnx.Close();
-                            }
-                            catch (Exception error) { MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error"); }
-
-                            CalculoNomina.Core.tmpPagoNomina vn = new CalculoNomina.Core.tmpPagoNomina();
-                            vn.idtrabajador = idTrabajador;
-                            vn.idempresa = GLOBALES.IDEMPRESA;
-                            vn.idconcepto = lstMovimiento[i].idconcepto;
-                            vn.noconcepto = lstNoConcepto[0].noconcepto;
-                            vn.tipoconcepto = lstNoConcepto[0].tipoconcepto;
-                            vn.fechainicio = _inicioPeriodo.Date;
-                            vn.fechafin = _finPeriodo.Date;
+                            vn.gravado = lstMovimiento[i].cantidad;
                             vn.exento = 0;
-                            vn.gravado = 0;
-                            vn.cantidad = lstMovimiento[i].cantidad;
-                            vn.guardada = false;
-                            vn.tiponomina = _tipoNormalEspecial;
-                            vn.modificado = false;
+                        }
 
-                            cnx.Open();
-                            existeConcepto = (int)nh.existeConcepto(vn);
-                            cnx.Close();
-
-                            if (existeConcepto == 0)
-                                lstMovimientos.Add(vn);
-                            else {
-                                cnx.Open();
-                                nh.actualizaConcepto(vn);
-                                cnx.Close();
+                        if (lstNoConcepto[0].gravado && lstNoConcepto[0].exento)
+                        {
+                            CalculoFormula formulaExcento = new CalculoFormula(idTrabajador, _inicioPeriodo.Date, _finPeriodo.Date, lstNoConcepto[0].formulaexento);
+                            vn.exento = double.Parse(formulaExcento.calcularFormula().ToString());
+                            if (vn.cantidad <= vn.exento)
+                            {
+                                vn.exento = vn.cantidad;
+                                vn.gravado = 0;
                             }
+                            else
+                            {
+                                vn.gravado = vn.cantidad - vn.exento;
+                            }
+                        }
+
+                        if (!lstNoConcepto[0].gravado && lstNoConcepto[0].exento)
+                        {
+                            vn.gravado = 0;
+                            vn.exento = lstMovimiento[i].cantidad;
+                        }
+
+                        cnx.Open();
+                        existe = (int)nh.existeConcepto(vn);
+                        cnx.Close();
+
+                        if (existe == 0)
+                        {
+                            lstOtrasDeducciones.Add(vn);
+                        }
+                        else
+                        {
+                            cnx.Open();
+                            nh.actualizaConcepto(vn);
+                            cnx.Close();
                         }
                     }
                 }
-                #endregion
-
-                if (lstMovimientos.Count != 0)
-                {
-                    BulkData(lstMovimientos);
-                }
-
-                #region MOSTRAR DATOS
-                muestraDatos();
-                #endregion
             }
+            #endregion
+
+            #region BULK DATOS PROGRAMACION DE MOVIMIENTOS
+            BulkData(lstOtrasDeducciones);
+            #endregion
+
+            #region MOSTRAR DATOS
+            muestraDatos();
+            #endregion
+
+            #region PERIODO
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+            nh = new CalculoNomina.Core.NominaHelper();
+            nh.Command = cmd;
+            int noPeriodo = 0;
+            try
+            {
+                cnx.Open();
+                noPeriodo = int.Parse(nh.obtenerNoPeriodo(_periodo, _inicioPeriodo).ToString());
+                nh.actualizarNoPeriodo(GLOBALES.IDEMPRESA, _inicioPeriodo.Date, _finPeriodo.Date, noPeriodo);
+                cnx.Close();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error: Al actualizar el No. de Periodo", "Error");
+                cnx.Dispose();
+                return;
+            }
+            #endregion
+            
         }
 
         private void BulkData(List<CalculoNomina.Core.tmpPagoNomina> lstValores)
@@ -1085,7 +812,7 @@ namespace Nominas
                 }
                 catch (Exception error)
                 {
-                    MessageBox.Show("Eror: Al obtener lista de conceptos. (Función Muestra Datos.)\r\n \r\n" + error.Message, "Error");
+                    MessageBox.Show("Error: Al obtener lista de conceptos. (Función Muestra Datos.)\r\n \r\n" + error.Message, "Error");
                 }
 
                 var percepcion = from r in lstReciboPercepciones

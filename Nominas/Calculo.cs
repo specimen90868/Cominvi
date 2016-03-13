@@ -24,6 +24,7 @@ namespace Nominas
 
             #region LISTA PARA DATOS DEL TRABAJADOR
             List<CalculoNomina.Core.tmpPagoNomina> lstValoresNomina;
+            List<CalculoNomina.Core.tmpPagoNomina> lstValoresDefinitivos;
             #endregion
 
             #region CALCULO
@@ -150,7 +151,46 @@ namespace Nominas
             }
             #endregion
 
-            return lstValoresNomina;
+            #region EXISTENCIA DEL CONCEPTO EN TABLA
+            int existe = 0;
+            CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
+            nh.Command = cmd;
+            lstValoresDefinitivos = new List<CalculoNomina.Core.tmpPagoNomina>();
+            for (int i = 0; i < lstValoresNomina.Count; i++)
+            {
+                CalculoNomina.Core.tmpPagoNomina vn = new CalculoNomina.Core.tmpPagoNomina();
+                vn.idtrabajador = lstValoresNomina[i].idtrabajador;
+                vn.idempresa = GLOBALES.IDEMPRESA;
+                vn.idconcepto = lstValoresNomina[i].idconcepto;
+                vn.noconcepto = lstValoresNomina[i].noconcepto;
+                vn.tipoconcepto = lstValoresNomina[i].tipoconcepto;
+                vn.fechainicio = lstValoresNomina[i].fechainicio;
+                vn.fechafin = lstValoresNomina[i].fechafin;
+                vn.guardada = lstValoresNomina[i].guardada;
+                vn.tiponomina = lstValoresNomina[i].tiponomina;
+                vn.modificado = lstValoresNomina[i].modificado;
+                vn.exento = lstValoresNomina[i].exento;
+                vn.gravado = lstValoresNomina[i].gravado;
+                vn.cantidad = lstValoresNomina[i].cantidad;
+
+                cnx.Open();
+                existe = (int)nh.existeConcepto(vn);
+                cnx.Close();
+
+                if (existe == 0)
+                {
+                    lstValoresDefinitivos.Add(vn);
+                }
+                else
+                {
+                    cnx.Open();
+                    nh.actualizaConcepto(vn);
+                    cnx.Close();
+                }
+            }
+            #endregion
+
+            return lstValoresDefinitivos;
         }
 
         public static List<CalculoNomina.Core.tmpPagoNomina> DEDUCCIONES(List<CalculoNomina.Core.Nomina> lstConceptosDeducciones,
@@ -169,6 +209,7 @@ namespace Nominas
 
             #region LISTA PARA DATOS DEL TRABAJADOR
             List<CalculoNomina.Core.tmpPagoNomina> lstValoresNomina;
+            List<CalculoNomina.Core.tmpPagoNomina> lstValoresDefinitivos;
             #endregion
 
             #region CALCULO
@@ -592,7 +633,7 @@ namespace Nominas
                             inf.idtrabajador = lstConceptosDeducciones[i].idtrabajador;
                             inf.idempresa = GLOBALES.IDEMPRESA;
 
-                            if (lstConceptosDeducciones[i].noconcepto == 9)
+                            if (lstConceptosDeducciones[i].noconcepto == 9 || lstConceptosDeducciones[i].noconcepto == 21)
                             {
                                 cnx.Open();
                                 activoInfonavit = (bool)infh.activoInfonavit(inf);
@@ -682,7 +723,46 @@ namespace Nominas
             }
             #endregion
 
-            return lstValoresNomina;
+            #region EXISTENCIA DEL CONCEPTO EN TABLA
+            int existe = 0;
+            CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
+            nh.Command = cmd;
+            lstValoresDefinitivos = new List<CalculoNomina.Core.tmpPagoNomina>();
+            for (int i = 0; i < lstValoresNomina.Count; i++)
+            {
+                CalculoNomina.Core.tmpPagoNomina vn = new CalculoNomina.Core.tmpPagoNomina();
+                vn.idtrabajador = lstValoresNomina[i].idtrabajador;
+                vn.idempresa = GLOBALES.IDEMPRESA;
+                vn.idconcepto = lstValoresNomina[i].idconcepto;
+                vn.noconcepto = lstValoresNomina[i].noconcepto;
+                vn.tipoconcepto = lstValoresNomina[i].tipoconcepto;
+                vn.fechainicio = lstValoresNomina[i].fechainicio;
+                vn.fechafin = lstValoresNomina[i].fechafin;
+                vn.guardada = lstValoresNomina[i].guardada;
+                vn.tiponomina = lstValoresNomina[i].tiponomina;
+                vn.modificado = lstValoresNomina[i].modificado;
+                vn.exento = lstValoresNomina[i].exento;
+                vn.gravado = lstValoresNomina[i].gravado;
+                vn.cantidad = lstValoresNomina[i].cantidad;
+
+                cnx.Open();
+                existe = (int)nh.existeConcepto(vn);
+                cnx.Close();
+
+                if (existe == 0)
+                {
+                    lstValoresDefinitivos.Add(vn);
+                }
+                else
+                {
+                    cnx.Open();
+                    nh.actualizaConcepto(vn);
+                    cnx.Close();
+                }
+            }
+            #endregion
+
+            return lstValoresDefinitivos;
         }
 
         public static void RECALCULO_PERCEPCIONES(List<CalculoNomina.Core.Nomina> lstConceptosPercepciones,

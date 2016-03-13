@@ -13,7 +13,7 @@ namespace CalculoNomina.Core
         {
             List<DatosEmpleado> lstDatosEmpleados = new List<DatosEmpleado>();
             DataTable dtDatosEmpleados = new DataTable();
-            Command.CommandText = "select cast(0 as bit) as chk, idtrabajador, iddepartamento, idpuesto, noempleado, nombres, paterno, materno, 0 as sueldo, 0 as despensa," +
+            Command.CommandText = "select idtrabajador, iddepartamento, idpuesto, noempleado, nombres, paterno, materno, 0 as sueldo, 0 as despensa," +
                 "0 as asistencia, 0 as puntualidad, 0 as horas from Trabajadores where idempresa = @idempresa and estatus = @estatus order by noempleado asc";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idEmpresa);
@@ -22,7 +22,6 @@ namespace CalculoNomina.Core
             for (int i = 0; i < dtDatosEmpleados.Rows.Count; i++)
             {
                 DatosEmpleado de = new DatosEmpleado();
-                de.chk = bool.Parse(dtDatosEmpleados.Rows[i]["chk"].ToString());
                 de.idtrabajador = int.Parse(dtDatosEmpleados.Rows[i]["idtrabajador"].ToString());
                 de.iddepartamento = int.Parse(dtDatosEmpleados.Rows[i]["iddepartamento"].ToString());
                 de.idpuesto = int.Parse(dtDatosEmpleados.Rows[i]["idpuesto"].ToString());
@@ -43,7 +42,7 @@ namespace CalculoNomina.Core
         public List<DatosEmpleado> obtenerDatosEmpleado(int idEmpresa, string idtrabajadores)
         {
             string[] noEmp = idtrabajadores.Split(',');
-            string commandText = "select cast(0 as bit) as chk, idtrabajador, iddepartamento, idpuesto, noempleado, nombres, paterno, materno, 0 as sueldo, 0 as despensa, " +
+            string commandText = "select idtrabajador, iddepartamento, idpuesto, noempleado, nombres, paterno, materno, 0 as sueldo, 0 as despensa, " +
                     "0 as asistencia, 0 as puntualidad, 0 as horas from Trabajadores where idempresa = @idempresa and idtrabajador in ({0}) order by noempleado asc";
             string[] paramNombre = noEmp.Select((s, i) => "@idtrabajador" + i.ToString()).ToArray();
             string inClausula = string.Join(",", paramNombre);
@@ -62,7 +61,6 @@ namespace CalculoNomina.Core
             for (int i = 0; i < dtDatosEmpleados.Rows.Count; i++)
             {
                 DatosEmpleado de = new DatosEmpleado();
-                de.chk = bool.Parse(dtDatosEmpleados.Rows[i]["chk"].ToString());
                 de.idtrabajador = int.Parse(dtDatosEmpleados.Rows[i]["idtrabajador"].ToString());
                 de.iddepartamento = int.Parse(dtDatosEmpleados.Rows[i]["iddepartamento"].ToString());
                 de.idpuesto = int.Parse(dtDatosEmpleados.Rows[i]["idpuesto"].ToString());
@@ -369,6 +367,17 @@ namespace CalculoNomina.Core
             Command.Parameters.AddWithValue("fechainicio", pn.fechainicio);
             Command.Parameters.AddWithValue("fechafin", pn.fechafin);
             Command.Parameters.AddWithValue("guardada", pn.guardada);
+            return Command.ExecuteNonQuery();
+        }
+
+        public int eliminaPreNomina(int idEmpresa, DateTime inicio, DateTime fin, bool modificado)
+        {
+            Command.CommandText = "delete from tmpPagoNomina where idempresa = @idempresa and fechainicio = @fechainicio and fechafin = @fechafin and modificado = @modificado";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idEmpresa);
+            Command.Parameters.AddWithValue("fechainicio", inicio);
+            Command.Parameters.AddWithValue("fechafin", fin);
+            Command.Parameters.AddWithValue("modificado", modificado);
             return Command.ExecuteNonQuery();
         }
 

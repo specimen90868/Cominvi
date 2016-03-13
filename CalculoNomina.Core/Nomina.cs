@@ -42,7 +42,6 @@ namespace CalculoNomina.Core
 
     public class DatosEmpleado
     {
-        public bool chk { get; set; }
         public int idtrabajador { get; set; }
         public int iddepartamento { get; set; }
         public int idpuesto { get; set; }
