@@ -453,7 +453,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Sum(Fields!cantidad.Value)</Value>
+                                            <Value>=Sum(Fields!cantidad.Value) + Sum(IIF(Fields!noconcepto.Value = 16,Fields!cantidad.Value,0))</Value>
                                             <Style>
                                               <FontSize>6pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
@@ -815,7 +815,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Sum(Fields!cantidad.Value)</Value>
+                                            <Value>=Sum(Fields!cantidad.Value) - Sum(IIF(Fields!noconcepto.Value = 16,Fields!cantidad.Value,0))</Value>
                                             <Style>
                                               <FontSize>6pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
@@ -977,7 +977,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Sum(IIF(Fields!tipoconcepto.Value="P",Fields!cantidad.Value,0)) - (sum(iif(Fields!tipoconcepto.Value="D",Fields!cantidad.Value,0)) - (Sum(IIF(Fields!noconcepto.Value=15,Fields!cantidad.Value,0)) + Sum(IIF(Fields!noconcepto.Value=8,Fields!cantidad.Value,0))))</Value>
+                                            <Value>=Sum(IIF(Fields!tipoconcepto.Value="P",Fields!cantidad.Value,0)) + Sum(IIF(Fields!noconcepto.Value=16,Fields!cantidad.Value,0)) - (sum(iif(Fields!tipoconcepto.Value="D",Fields!cantidad.Value,0)) - sum(iif(Fields!noconcepto.Value=16,Fields!cantidad.Value,0)) - (Sum(IIF(Fields!noconcepto.Value=15,Fields!cantidad.Value,0)) + Sum(IIF(Fields!noconcepto.Value=8,Fields!cantidad.Value,0))))</Value>
                                             <Style>
                                               <FontSize>6pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
@@ -1671,7 +1671,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Sum(Fields!cantidad.Value)</Value>
+                                            <Value>=Sum(Fields!cantidad.Value) - Sum(Iif(Fields!noconcepto.Value=16,Fields!cantidad.Value,0))</Value>
                                             <Style>
                                               <FontSize>6pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
@@ -2044,7 +2044,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Sum(IIF(Fields!tipoconcepto.Value="P",Fields!cantidad.Value,0)) - Sum(iif(Fields!tipoconcepto.Value="D",Fields!cantidad.Value,0))</Value>
+                                            <Value>=Sum(IIF(Fields!tipoconcepto.Value="P",Fields!cantidad.Value,0)) + Sum(Iif(Fields!noconcepto.Value=16,Fields!cantidad.Value,0)) - (Sum(iif(Fields!tipoconcepto.Value="D",Fields!cantidad.Value,0)) - Sum(Iif(Fields!noconcepto.Value=16,Fields!cantidad.Value,0)))</Value>
                                             <Style>
                                               <FontSize>6pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
@@ -2068,6 +2068,7 @@
                                       <PaddingBottom>2pt</PaddingBottom>
                                     </Style>
                                   </Textbox>
+                                  <rd:Selected>true</rd:Selected>
                                 </CellContents>
                               </TablixCell>
                             </TablixCells>
@@ -2190,7 +2191,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -3125,7 +3125,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!CaratulaImporte.Value)</Value>
+                              <Value>=Sum(Fields!CaratulaImporte.Value) - sum(Iif(Fields!CaratulaNoConcepto.Value = 16, Fields!CaratulaImporte.Value,0))</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -3236,7 +3236,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Sum(IIF(Fields!CaratulaTipoConcepto.Value="P", Fields!CaratulaImporte.Value, 0), "dsReporteNominaGeneral")-Sum(IIF(Fields!CaratulaTipoConcepto.Value="D", Fields!CaratulaImporte.Value, 0), "dsReporteNominaGeneral")</Value>
+                <Value>=Sum(IIF(Fields!CaratulaTipoConcepto.Value="P", Fields!CaratulaImporte.Value, 0), "dsReporteNominaGeneral") + Sum(IIF(Fields!CaratulaNoConcepto.Value=16, Fields!CaratulaImporte.Value, 0), "dsReporteNominaGeneral") - (Sum(IIF(Fields!CaratulaTipoConcepto.Value="D", Fields!CaratulaImporte.Value, 0), "dsReporteNominaGeneral") - Sum(IIF(Fields!CaratulaNoConcepto.Value=16, Fields!CaratulaImporte.Value, 0), "dsReporteNominaGeneral"))</Value>
                 <Style>
                   <FontSize>9pt</FontSize>
                   <FontWeight>Bold</FontWeight>

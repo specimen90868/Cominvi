@@ -657,7 +657,7 @@ namespace Nominas
                                 break;
                         }
 
-                        formula = formula.Replace("[" + variables[i] + "]", diasMes.ToString());
+                        formula = formula.Replace("[" + variables[i] + "]", (30.4).ToString());
                         break;
 
                     case "PeriodoInfonavit":

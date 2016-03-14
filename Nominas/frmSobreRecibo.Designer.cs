@@ -35,6 +35,7 @@
             this.toolAyudaDespensa = new System.Windows.Forms.ToolStripButton();
             this.toolSubsidio = new System.Windows.Forms.ToolStripButton();
             this.toolIspt = new System.Windows.Forms.ToolStripButton();
+            this.toolInfonavit = new System.Windows.Forms.ToolStripButton();
             this.toolEliminar = new System.Windows.Forms.ToolStripButton();
             this.TabPrincipal = new System.Windows.Forms.TabControl();
             this.tabPercepcionesDeducciones = new System.Windows.Forms.TabPage();
@@ -157,7 +158,6 @@
             this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.toolInfonavit = new System.Windows.Forms.ToolStripButton();
             this.toolAcciones.SuspendLayout();
             this.TabPrincipal.SuspendLayout();
             this.tabPercepcionesDeducciones.SuspendLayout();
@@ -255,6 +255,15 @@
             this.toolIspt.Size = new System.Drawing.Size(46, 22);
             this.toolIspt.Text = "Ispt";
             this.toolIspt.Click += new System.EventHandler(this.toolIspt_Click);
+            // 
+            // toolInfonavit
+            // 
+            this.toolInfonavit.Image = ((System.Drawing.Image)(resources.GetObject("toolInfonavit.Image")));
+            this.toolInfonavit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolInfonavit.Name = "toolInfonavit";
+            this.toolInfonavit.Size = new System.Drawing.Size(74, 22);
+            this.toolInfonavit.Text = "Infonavit";
+            this.toolInfonavit.Click += new System.EventHandler(this.toolInfonavit_Click);
             // 
             // toolEliminar
             // 
@@ -1468,15 +1477,6 @@
             // 
             this.dataGridViewTextBoxColumn15.HeaderText = "Fin";
             this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
-            // 
-            // toolInfonavit
-            // 
-            this.toolInfonavit.Image = ((System.Drawing.Image)(resources.GetObject("toolInfonavit.Image")));
-            this.toolInfonavit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolInfonavit.Name = "toolInfonavit";
-            this.toolInfonavit.Size = new System.Drawing.Size(74, 22);
-            this.toolInfonavit.Text = "Infonavit";
-            this.toolInfonavit.Click += new System.EventHandler(this.toolInfonavit_Click);
             // 
             // frmSobreRecibo
             // 

@@ -93,7 +93,7 @@ namespace Nominas
                 case 1: //EMPLEADOS PRENOMINA
                     dsReportes.PreNominaEmpleadosDataTable dtPreNominaEmpleados = new dsReportes.PreNominaEmpleadosDataTable();
                     SqlDataAdapter daPreNominaEmpleados = new SqlDataAdapter();
-                    cmd.CommandText = "exec stp_rptPreNominaEmpleados @idempresa, @tiponomina, @fechainicio, @fechafin, @neto, @order";
+                    cmd.CommandText = "exec stp_rptPreNominaEmpleados @idempresa, @tiponomina, @fechainicio, @fechafin, @neto, @order, @empleadoinicial, @empleadofinal";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("idempresa", GLOBALES.IDEMPRESA);
                     cmd.Parameters.AddWithValue("tiponomina", _tipoNomina);
@@ -101,6 +101,8 @@ namespace Nominas
                     cmd.Parameters.AddWithValue("fechafin", _finPeriodo);
                     cmd.Parameters.AddWithValue("neto", _netoCero);
                     cmd.Parameters.AddWithValue("order", _orden);
+                    cmd.Parameters.AddWithValue("empleadoinicial", _empleadoInicio);
+                    cmd.Parameters.AddWithValue("empleadofinal", _empleadoFin);
                     daPreNominaEmpleados.SelectCommand = cmd;
                     daPreNominaEmpleados.Fill(dtPreNominaEmpleados);
 
@@ -440,6 +442,49 @@ namespace Nominas
 
                     rpvVisor.LocalReport.ReportEmbeddedResource = "rptNominaRecibos.rdlc";
                     rpvVisor.LocalReport.ReportPath = @"rptNominaRecibos.rdlc";
+
+                    break;
+                case 9: 
+
+                    dsReportes.PreNominaEmpleadosDataTable dtReciboPreEmpleados = new dsReportes.PreNominaEmpleadosDataTable();
+                    SqlDataAdapter daReciboPreEmpleados = new SqlDataAdapter();
+                    cmd.CommandText = "exec stp_rptPreNominaEmpleados @idempresa, @tiponomina, @fechainicio, @fechafin, @neto, @order, @empleadoinicial, @empleadofinal";
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("idempresa", GLOBALES.IDEMPRESA);
+                    cmd.Parameters.AddWithValue("fechainicio", _inicioPeriodo);
+                    cmd.Parameters.AddWithValue("fechafin", _finPeriodo);
+                    cmd.Parameters.AddWithValue("tiponomina", _tipoNomina);
+                    cmd.Parameters.AddWithValue("neto", _netoCero);
+                    cmd.Parameters.AddWithValue("order", _orden);
+                    cmd.Parameters.AddWithValue("empleadoinicial", _empleadoInicio);
+                    cmd.Parameters.AddWithValue("empleadofinal", _empleadoFin);
+
+                    daReciboPreEmpleados.SelectCommand = cmd;
+                    daReciboPreEmpleados.Fill(dtReciboPreEmpleados);
+
+                    dsReportes.PreNominaImagenDataTable dtReciboPreImagen = new dsReportes.PreNominaImagenDataTable();
+                    SqlDataAdapter daReciboPreImagen = new SqlDataAdapter();
+                    cmd3.CommandText = "exec stp_rptImagen @idpersona, @tipopersona";
+                    cmd3.Parameters.Clear();
+                    cmd3.Parameters.AddWithValue("idpersona", GLOBALES.IDEMPRESA);
+                    cmd3.Parameters.AddWithValue("tipopersona", 0);
+                    daReciboPreImagen.SelectCommand = cmd3;
+                    daReciboPreImagen.Fill(dtReciboPreImagen);
+
+                    rd = new ReportDataSource();
+                    rd.Value = dtReciboPreEmpleados;
+                    rd.Name = "dsRptRecibo";
+
+                    rd2 = new ReportDataSource();
+                    rd2.Value = dtReciboPreImagen;
+                    rd2.Name = "dsReciboImagen";
+
+                    rpvVisor.LocalReport.DataSources.Clear();
+                    rpvVisor.LocalReport.DataSources.Add(rd);
+                    rpvVisor.LocalReport.DataSources.Add(rd2);
+
+                    rpvVisor.LocalReport.ReportEmbeddedResource = "rptPreNominaRecibo.rdlc";
+                    rpvVisor.LocalReport.ReportPath = @"rptPreNominaRecibo.rdlc";
 
                     break;
             }

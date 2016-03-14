@@ -817,7 +817,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!CaratulaImporte.Value)</Value>
+                              <Value>=Sum(Fields!CaratulaImporte.Value) - Sum(IIF(Fields!CaratulaNoConcepto.Value = 16, Fields!CaratulaImporte.Value, 0))</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -971,7 +971,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Sum(IIF(Fields!CaratulaTipoConcepto.Value="P",Fields!CaratulaImporte.Value,0), "dsRptNominaCaratula") - Sum(IIF(Fields!CaratulaTipoConcepto.Value="D",Fields!CaratulaImporte.Value,0), "dsRptNominaCaratula")</Value>
+                <Value>=Sum(IIF(Fields!CaratulaTipoConcepto.Value="P",Fields!CaratulaImporte.Value,0), "dsRptNominaCaratula") + Sum(IIF(Fields!CaratulaNoConcepto.Value = 16, Fields!CaratulaImporte.Value, 0), "dsRptNominaCaratula") - (Sum(IIF(Fields!CaratulaTipoConcepto.Value="D",Fields!CaratulaImporte.Value,0), "dsRptNominaCaratula") - Sum(IIF(Fields!CaratulaNoConcepto.Value = 16, Fields!CaratulaImporte.Value, 0), "dsRptNominaCaratula"))</Value>
                 <Style>
                   <FontSize>9pt</FontSize>
                   <FontWeight>Bold</FontWeight>

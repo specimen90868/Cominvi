@@ -821,13 +821,13 @@
                       <TablixBody>
                         <TablixColumns>
                           <TablixColumn>
-                            <Width>0.78712cm</Width>
+                            <Width>0.69696cm</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>5.27471cm</Width>
+                            <Width>5.3455cm</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>1.87632cm</Width>
+                            <Width>1.89569cm</Width>
                           </TablixColumn>
                         </TablixColumns>
                         <TablixRows>
@@ -904,7 +904,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Sum(Microsoft.VisualBasic.Interaction.IIF(Fields!tipoconcepto.Value = "D", Fields!cantidad.Value, 0))</Value>
+                                            <Value>=Sum(Microsoft.VisualBasic.Interaction.IIF(Fields!tipoconcepto.Value = "D", Fields!cantidad.Value, 0)) - SUM(IIF(Fields!noconcepto.Value = 16, Fields!cantidad.Value, 0))</Value>
                                             <Style>
                                               <FontSize>6pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
@@ -1048,7 +1048,7 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Sum(IIF(Fields!tipoconcepto.Value="P",Fields!cantidad.Value,0)) - sum(iif(Fields!tipoconcepto.Value="D",Fields!cantidad.Value,0))</Value>
+                                            <Value>=Sum(IIF(Fields!tipoconcepto.Value="P",Fields!cantidad.Value,0)) + Sum(IIF(Fields!noconcepto.Value = 16, Fields!cantidad.Value, 0)) - (sum(iif(Fields!tipoconcepto.Value="D",Fields!cantidad.Value,0)) - SUM(IIF(Fields!noconcepto.Value = 16, Fields!cantidad.Value, 0)))</Value>
                                             <Style>
                                               <FontSize>6pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
@@ -1072,6 +1072,7 @@
                                       <PaddingBottom>2pt</PaddingBottom>
                                     </Style>
                                   </Textbox>
+                                  <rd:Selected>true</rd:Selected>
                                 </CellContents>
                               </TablixCell>
                             </TablixCells>

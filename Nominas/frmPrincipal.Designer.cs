@@ -42,6 +42,7 @@
             this.mnuEmpleados = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuEmpleadoNomina = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuComplementos = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolRegistroBajas = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuEmpleadosBaja = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
@@ -99,7 +100,6 @@
             this.toolEstatusPerfil = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolPorcentaje = new System.Windows.Forms.ToolStripStatusLabel();
             this.workAntiguedad = new System.ComponentModel.BackgroundWorker();
-            this.toolRegistroBajas = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPrincipal.SuspendLayout();
             this.stsPrincipal.SuspendLayout();
             this.SuspendLayout();
@@ -204,7 +204,7 @@
             this.toolProcesoSalarial,
             this.toolImportarEmpleados});
             this.mnuEmpleados.Name = "mnuEmpleados";
-            this.mnuEmpleados.Size = new System.Drawing.Size(152, 22);
+            this.mnuEmpleados.Size = new System.Drawing.Size(149, 22);
             this.mnuEmpleados.Text = "Empleados";
             // 
             // mnuEmpleadoNomina
@@ -220,6 +220,13 @@
             this.mnuComplementos.Size = new System.Drawing.Size(192, 22);
             this.mnuComplementos.Text = "Complementos";
             this.mnuComplementos.Click += new System.EventHandler(this.mnuComplementos_Click);
+            // 
+            // toolRegistroBajas
+            // 
+            this.toolRegistroBajas.Name = "toolRegistroBajas";
+            this.toolRegistroBajas.Size = new System.Drawing.Size(192, 22);
+            this.toolRegistroBajas.Text = "Registro de Bajas";
+            this.toolRegistroBajas.Click += new System.EventHandler(this.toolRegistroBajas_Click);
             // 
             // toolStripSeparator7
             // 
@@ -258,26 +265,26 @@
             // mnuExpedientes
             // 
             this.mnuExpedientes.Name = "mnuExpedientes";
-            this.mnuExpedientes.Size = new System.Drawing.Size(152, 22);
+            this.mnuExpedientes.Size = new System.Drawing.Size(149, 22);
             this.mnuExpedientes.Text = "Expedientes";
             this.mnuExpedientes.Click += new System.EventHandler(this.mnuExpedientes_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(146, 6);
             // 
             // mnuInfonavit
             // 
             this.mnuInfonavit.Name = "mnuInfonavit";
-            this.mnuInfonavit.Size = new System.Drawing.Size(152, 22);
+            this.mnuInfonavit.Size = new System.Drawing.Size(149, 22);
             this.mnuInfonavit.Text = "Infonavit";
             this.mnuInfonavit.Click += new System.EventHandler(this.mnuInfonavit_Click);
             // 
             // toolIncapacidades
             // 
             this.toolIncapacidades.Name = "toolIncapacidades";
-            this.toolIncapacidades.Size = new System.Drawing.Size(152, 22);
+            this.toolIncapacidades.Size = new System.Drawing.Size(149, 22);
             this.toolIncapacidades.Text = "Incapacidades";
             this.toolIncapacidades.Click += new System.EventHandler(this.toolIncapacidades_Click);
             // 
@@ -621,6 +628,7 @@
             this.toolCodeQr.Name = "toolCodeQr";
             this.toolCodeQr.Size = new System.Drawing.Size(180, 22);
             this.toolCodeQr.Text = "Code QR";
+            this.toolCodeQr.Visible = false;
             this.toolCodeQr.Click += new System.EventHandler(this.toolCodeQr_Click);
             // 
             // stsPrincipal
@@ -652,13 +660,6 @@
             this.workAntiguedad.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workAntiguedad_DoWork);
             this.workAntiguedad.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.workAntiguedad_ProgressChanged);
             this.workAntiguedad.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workAntiguedad_RunWorkerCompleted);
-            // 
-            // toolRegistroBajas
-            // 
-            this.toolRegistroBajas.Name = "toolRegistroBajas";
-            this.toolRegistroBajas.Size = new System.Drawing.Size(192, 22);
-            this.toolRegistroBajas.Text = "Registro de Bajas";
-            this.toolRegistroBajas.Click += new System.EventHandler(this.toolRegistroBajas_Click);
             // 
             // frmPrincipal
             // 

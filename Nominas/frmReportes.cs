@@ -32,7 +32,7 @@ namespace Nominas
         #endregion
 
         #region DELEGADOS
-        public delegate void delOnReporte(string netocero, string orden, int noreporte);
+        public delegate void delOnReporte(string netocero, string orden, int noreporte, int empleadoinicial, int empleadofinal);
         public event delOnReporte OnReporte;
         #endregion
 
@@ -119,6 +119,11 @@ namespace Nominas
                 cmbDeptoFinal.Enabled = false;
                 cmbEmpleadoInicial.Enabled = false;
                 cmbEmpleadoFinal.Enabled = false;
+                if (_noReporte == 9 || _noReporte == 1)
+                {
+                    cmbEmpleadoInicial.Enabled = true;
+                    cmbEmpleadoFinal.Enabled = true;
+                }
             }
             
         } 
@@ -151,8 +156,17 @@ namespace Nominas
                 }
             }
             else
+            {
+                int empleadoInicial = 0, empleadoFinal = 0;
+                if (_noReporte == 9 || _noReporte == 1)
+                {
+                    empleadoInicial = int.Parse(cmbEmpleadoInicial.SelectedValue.ToString());
+                    empleadoFinal = int.Parse(cmbEmpleadoFinal.SelectedValue.ToString());
+                }
                 if (OnReporte != null)
-                    OnReporte(netocero, orden, _noReporte);
+                    OnReporte(netocero, orden, _noReporte, empleadoInicial, empleadoFinal);
+            }
+            
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)

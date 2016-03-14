@@ -673,7 +673,7 @@ namespace Nominas
                 try
                 {
                     cnx.Open();
-                    lstConceptosPercepcionesModificados = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "P", int.Parse(fila.Cells["idtrabajador"].Value.ToString()),
+                        lstConceptosPercepcionesModificados = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "P", int.Parse(fila.Cells["idtrabajador"].Value.ToString()),
                         _tipoNomina, periodoInicio.Date, periodoFin.Date);
                     lstConceptosDeduccionesModificados = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "D", int.Parse(fila.Cells["idtrabajador"].Value.ToString()),
                         _tipoNomina, periodoInicio.Date, periodoFin.Date);
@@ -1814,7 +1814,7 @@ namespace Nominas
             r.Show();
         }
 
-        void r_OnReporte(string netocero, string orden, int noreporte)
+        void r_OnReporte(string netocero, string orden, int noreporte, int empleadoinicial, int empleadofinal)
         {
             NetoCero = netocero;
             Orden = orden;
@@ -1829,6 +1829,8 @@ namespace Nominas
                 vr._netoCero = netocero;
                 vr._noReporte = noreporte;
                 vr._tipoNomina = _tipoNomina;
+                vr._empleadoInicio = empleadoinicial;
+                vr._empleadoFin = empleadofinal;
                 vr.Show();
             }
             else
@@ -2446,6 +2448,18 @@ namespace Nominas
             disenoGridFaltas();
             spn_OnPreNomina(periodoInicio.Date, periodoFin.Date);
             toolCalcular_Click(sender, e);
+        }
+
+        private void toolReciboNomina_Click(object sender, EventArgs e)
+        {
+            frmReportes r = new frmReportes();
+            r.OnReporte += r_OnReporte;
+            r._inicio = periodoInicio.Date;
+            r._fin = periodoFin.Date;
+            r._ReportePreNomina = true;
+            r._noReporte = 9;
+            r._tipoNomina = _tipoNomina;
+            r.Show();
         }
     }
 }

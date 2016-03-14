@@ -510,8 +510,15 @@ namespace Nominas
             #endregion
 
             #region MOVIMIENTOS
+
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
             Movimientos.Core.MovimientosHelper mh = new Movimientos.Core.MovimientosHelper();
             mh.Command = cmd;
+            nh = new CalculoNomina.Core.NominaHelper();
+            nh.Command = cmd;
 
             percepciones = lstPercepciones.Where(f => f.tipoconcepto == "P").Sum(f => f.cantidad);
 
@@ -608,9 +615,17 @@ namespace Nominas
                             vn.exento = lstMovimiento[i].cantidad;
                         }
 
-                        cnx.Open();
-                        existe = (int)nh.existeConcepto(vn);
-                        cnx.Close();
+                        try
+                        {
+                            cnx.Open();
+                            existe = (int)nh.existeConcepto(vn);
+                            cnx.Close();
+                        }
+                        catch (Exception error)
+                        {
+                            MessageBox.Show("Error: Al verificar existencia de los movimientos. \r\n" + error.Message, "Error");
+                        }
+                        
 
                         if (existe == 0)
                         {
@@ -618,9 +633,17 @@ namespace Nominas
                         }
                         else
                         {
-                            cnx.Open();
-                            nh.actualizaConcepto(vn);
-                            cnx.Close();
+                            try
+                            {
+                                cnx.Open();
+                                nh.actualizaConcepto(vn);
+                                cnx.Close();
+                            }
+                            catch (Exception error)
+                            {
+                                MessageBox.Show("Error: Al actualizar los movimientos. " +  error.Message, "Error");
+                            }
+                            
                         }
                     }
                 }
@@ -1937,7 +1960,7 @@ namespace Nominas
                 }
                 catch
                 {
-                    MessageBox.Show("Error: Al obtener la existencia de vacaciones del empleado.", "Error");
+                    MessageBox.Show("Error: Al obtener la existencia de prima vacacional del empleado.", "Error");
                     cnx.Dispose();
                     return;
                 }
@@ -1970,6 +1993,40 @@ namespace Nominas
                 }
                 else
                 {
+                    Faltas.Core.FaltasHelper fh = new Faltas.Core.FaltasHelper();
+                    fh.Command = cmd;
+
+                    Faltas.Core.Faltas falta = new Faltas.Core.Faltas();
+                    falta.idempresa = GLOBALES.IDEMPRESA;
+                    falta.idtrabajador = idTrabajador;
+                    falta.fechainicio = _inicioPeriodo.Date;
+                    falta.fechafin = _finPeriodo.Date;
+
+                    int existeFaltas = 0;
+                    try
+                    {
+                        cnx.Open();
+                        existeFaltas = (int)fh.existeFalta(falta);
+                        cnx.Close();
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error: Al obtener las faltas del trabajador. \r\n" + error.Message, "Error");
+                        cnx.Dispose();
+                        return;
+                    }
+
+                    int diasPagoReales = int.Parse(txtDiasPagoV.Text) + existeFaltas;
+                    if (diasPagoReales >= _periodo)
+                    {
+                        diasPagoReales = _periodo - existeFaltas;
+                        MessageBox.Show("Existen faltas del trabajador, se ajustarán las vacaciones.", "Información");
+                    }
+                    else
+                    {
+                        diasPagoReales = int.Parse(txtDiasPagoV.Text);
+                    }
+
                     vp = new Vacaciones.Core.VacacionesPrima();
                     vp.idtrabajador = idTrabajador;
                     vp.idempresa = GLOBALES.IDEMPRESA;
@@ -2002,11 +2059,11 @@ namespace Nominas
                     vp.periodoinicio = _inicioPeriodo;
                     vp.periodofin = _finPeriodo;
                     vp.diasderecho = dias;
-                    vp.diaspago = int.Parse(txtDiasPagoV.Text);
+                    vp.diaspago = diasPagoReales;
                     vp.diaspendientes = dias - int.Parse(txtDiasPagoV.Text);
                     vp.fechapago = DateTime.Now.Date;
                     vp.fechainicio = dtpFechaInicioVacaciones.Value.Date;
-                    vp.fechafin = dtpFechaInicioVacaciones.Value.AddDays(double.Parse(txtDiasPagoPV.Text) - 1);
+                    vp.fechafin = dtpFechaInicioVacaciones.Value.AddDays(diasPagoReales - 1);
                     vp.vacacionesprima = "V";
 
                     try
