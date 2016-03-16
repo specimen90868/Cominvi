@@ -74,6 +74,10 @@ namespace Nominas
             lcn._tipoNomina = _TipoNomina;
             lcn._periodo = periodoSeleccionado;
             lcn.WindowState = FormWindowState.Maximized;
+            if (chkObraCivil.Checked)
+                lcn._obracivil = true;
+            else
+                lcn._obracivil = false;
             lcn.Show();
             this.Dispose();
         }

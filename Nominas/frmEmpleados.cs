@@ -213,6 +213,11 @@ namespace Nominas
 
                         departamento = cmbDepartamento.Text;
                         puesto = cmbPeriodo.Text;
+
+                        if (lstEmpleado[i].obracivil)
+                            chkObraCivil.Checked = true;
+                        else
+                            chkObraCivil.Checked = false;
                     }
                 }
                 catch (Exception error)
@@ -401,6 +406,11 @@ namespace Nominas
             em.clabe = mtxtCuentaClabe.Text;
             em.idbancario = mtxtIdBancario.Text;
             em.metodopago = cmbMetodoPago.Text;
+
+            if (chkObraCivil.Checked)
+                em.obracivil = true;
+            else
+                em.obracivil = false;
 
             hh = new Historial.Core.HistorialHelper();
             hh.Command = cmd;

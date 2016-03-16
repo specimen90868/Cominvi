@@ -227,6 +227,11 @@ namespace Nominas
             empleado.clabe = mtxtCuentaClabe.Text;
             empleado.idbancario = mtxtIdBancario.Text;
             empleado.metodopago = cmbMetodoPago.Text;
+
+            if (chkObraCivil.Checked)
+                empleado.obracivil = true;
+            else
+                empleado.obracivil = false;
             
 
             historia.idtrabajador = _idempleado;

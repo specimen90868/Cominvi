@@ -137,12 +137,12 @@ namespace Nominas
                     * Se obtienen los conceptos con el campo modificado en 1
                     * de la tabla tmpPagoNomina con el SP stp_DatosNominaRecalculoTrabajador
                     *************************************************************/
-                cnx.Open();
-                lstConceptosPercepcionesModificados = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "P", idTrabajador,
-                    _tipoNormalEspecial, _inicioPeriodo.Date, _finPeriodo.Date);
-                lstConceptosDeduccionesModificados = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "D", idTrabajador,
-                    _tipoNormalEspecial, _inicioPeriodo.Date, _finPeriodo.Date);
-                cnx.Close();
+                //cnx.Open();
+                //lstConceptosPercepcionesModificados = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "P", idTrabajador,
+                //    _tipoNormalEspecial, _inicioPeriodo.Date, _finPeriodo.Date);
+                //lstConceptosDeduccionesModificados = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "D", idTrabajador,
+                //    _tipoNormalEspecial, _inicioPeriodo.Date, _finPeriodo.Date);
+                //cnx.Close();
                 /***************** TERMINA *****************************/
 
 
@@ -151,27 +151,27 @@ namespace Nominas
                     * son diferentes de 0, si son diferentes, se acumulan en la varible
                     * noConceptosPercepciones y noConceptosDeducciones
                     *********************************************************/
-                if (lstConceptosPercepcionesModificados.Count != 0)
-                {
-                    for (int i = 0; i < lstConceptosPercepcionesModificados.Count; i++)
-                        if (lstConceptosPercepcionesModificados[i].modificado)
-                            noConceptosPercepciones += lstConceptosPercepcionesModificados[i].noconcepto + ",";
-                    if (noConceptosPercepciones != "")
-                        noConceptosPercepciones = noConceptosPercepciones.Substring(0, noConceptosPercepciones.Length - 1);
-                }
-                else
-                    noConceptosPercepciones = "";
+                //if (lstConceptosPercepcionesModificados.Count != 0)
+                //{
+                //    for (int i = 0; i < lstConceptosPercepcionesModificados.Count; i++)
+                //        if (lstConceptosPercepcionesModificados[i].modificado)
+                //            noConceptosPercepciones += lstConceptosPercepcionesModificados[i].noconcepto + ",";
+                //    if (noConceptosPercepciones != "")
+                //        noConceptosPercepciones = noConceptosPercepciones.Substring(0, noConceptosPercepciones.Length - 1);
+                //}
+                //else
+                //    noConceptosPercepciones = "";
 
-                if (lstConceptosDeduccionesModificados.Count != 0)
-                {
-                    for (int i = 0; i < lstConceptosDeduccionesModificados.Count; i++)
-                        if (lstConceptosDeduccionesModificados[i].modificado)
-                            noConceptosDeducciones += lstConceptosDeduccionesModificados[i].noconcepto + ",";
-                    if (noConceptosDeducciones != "")
-                        noConceptosDeducciones = noConceptosDeducciones.Substring(0, noConceptosDeducciones.Length - 1);
-                }
-                else
-                    noConceptosDeducciones = "";
+                //if (lstConceptosDeduccionesModificados.Count != 0)
+                //{
+                //    for (int i = 0; i < lstConceptosDeduccionesModificados.Count; i++)
+                //        if (lstConceptosDeduccionesModificados[i].modificado)
+                //            noConceptosDeducciones += lstConceptosDeduccionesModificados[i].noconcepto + ",";
+                //    if (noConceptosDeducciones != "")
+                //        noConceptosDeducciones = noConceptosDeducciones.Substring(0, noConceptosDeducciones.Length - 1);
+                //}
+                //else
+                //    noConceptosDeducciones = "";
                 /************************TERMINA***************************/
 
 
@@ -180,8 +180,8 @@ namespace Nominas
                     * con el SP stp_DatosNominaTrabajador para el calculo.
                     *****************************************************************/
                 cnx.Open();
-                lstConceptosPercepciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "P", idTrabajador, noConceptosPercepciones);
-                lstConceptosDeducciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "D", idTrabajador, noConceptosDeducciones);
+                lstConceptosPercepciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "P", idTrabajador, _inicioPeriodo, _finPeriodo);
+                lstConceptosDeducciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "D", idTrabajador, _inicioPeriodo, _finPeriodo);
                 cnx.Close();
                 /**************************TERMINA*********************************/
             }
