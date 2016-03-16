@@ -27,6 +27,8 @@ namespace Nominas
         Historial.Core.HistorialHelper hh;
         Modificaciones.Core.ModificacionesHelper mh;
         Empresas.Core.EmpresasHelper ph;
+        Departamento.Core.DeptoHelper dh;
+        Puestos.Core.PuestosHelper puestoh;
         int idperiodo, antiguedad;
         string nss, rp;
         #endregion
@@ -51,19 +53,37 @@ namespace Nominas
 
             eh = new Empleados.Core.EmpleadosHelper();
             eh.Command = cmd;
+
+            dh = new Departamento.Core.DeptoHelper();
+            dh.Command = cmd;
+
+            puestoh = new Puestos.Core.PuestosHelper();
+            puestoh.Command = cmd;
+
             Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
             empleado.idtrabajador = _idempleado;
-            List<Empleados.Core.Empleados> lstEmpleado;
+            List<Empleados.Core.Empleados> lstEmpleado = new List<Empleados.Core.Empleados>();
+
+            List<Departamento.Core.Depto> lstDepartamento = new List<Departamento.Core.Depto>();
+            List<Puestos.Core.Puestos> lstPuesto = new List<Puestos.Core.Puestos>();
 
             ph = new Empresas.Core.EmpresasHelper();
             ph.Command = cmd;
             Empresas.Core.Empresas p = new Empresas.Core.Empresas();
             p.idempresa = GLOBALES.IDEMPRESA;
 
+            Puestos.Core.Puestos puesto = new Puestos.Core.Puestos();
+            puesto.idempresa = GLOBALES.IDEMPRESA;
+
+            Departamento.Core.Depto d = new Departamento.Core.Depto();
+            d.idempresa = GLOBALES.IDEMPRESA;
+
             try {
                 cnx.Open();
                 lstEmpleado = eh.obtenerEmpleado(empleado);
                 rp = (string)ph.obtenerRegistroPatronal(p);
+                lstDepartamento = dh.obtenerDepartamentos(d);
+                lstPuesto = puestoh.obtenerPuestos(puesto);
                 cnx.Close();
                 cnx.Dispose();
 
@@ -76,6 +96,23 @@ namespace Nominas
             }
             catch (Exception error) {
                 MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+            }
+
+            var dato = from emp in lstEmpleado
+                       join depto in lstDepartamento on emp.iddepartamento equals depto.id
+                       join pto in lstPuesto on emp.idpuesto equals pto.id
+                       select new
+                       {
+                           emp.noempleado,
+                           emp.nombrecompleto,
+                           depto.descripcion,
+                           pto.nombre
+                       };
+            foreach (var inf in dato)
+            {
+                mtxtNoEmpleado.Text = inf.noempleado;
+                txtDepartamento.Text = inf.descripcion;
+                txtPuesto.Text = inf.nombre;
             }
         }
 
