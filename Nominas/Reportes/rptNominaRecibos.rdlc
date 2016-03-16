@@ -47,10 +47,10 @@
               <Width>2.43822cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.51017cm</Width>
+              <Width>3.27204cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.32248cm</Width>
+              <Width>1.56061cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -68,7 +68,7 @@
                             <TextRun>
                               <Value>=Fields!cfdiNombreCompleto.Value</Value>
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -101,7 +101,7 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -131,9 +131,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>="No. Periodo:	" + First(Fields!cfdiNoPeriodo.Value).ToString() + "Periodo:	" + Fields!cfdiPeriodo.Value</Value>
+                              <Value>="No. Periodo:	" + First(Fields!cfdiNoPeriodo.Value).ToString() + " - " + Fields!cfdiPeriodo.Value</Value>
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -166,7 +166,7 @@
                             <TextRun>
                               <Value>=Fields!cfdiFechaInicio.Value</Value>
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>dd/MMM/yyyy</Format>
                               </Style>
@@ -207,7 +207,7 @@
                             <TextRun>
                               <Value>="RFC:	" + Fields!cfdiRfc.Value</Value>
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -238,7 +238,7 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -269,7 +269,7 @@
                             <TextRun>
                               <Value>="Dias laborados:	" + First(Fields!cfdiDiasLaborados.Value).ToString()</Value>
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -300,7 +300,7 @@
                             <TextRun>
                               <Value>=Fields!cfdiFechaFin.Value</Value>
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>dd/MMM/yyyy</Format>
                               </Style>
@@ -340,7 +340,7 @@
                             <TextRun>
                               <Value>="Curp:	" + Fields!cfdiCurp.Value</Value>
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -372,7 +372,7 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -403,7 +403,7 @@
                             <TextRun>
                               <Value>="Fecha de pago:	" + Fields!cfdiFechaTimbrado.Value</Value>
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -435,7 +435,7 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -469,9 +469,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>="Inicio Lab:" + Fields!cfdiFechaAntigueda.Value</Value>
+                              <Value>="Inicio Lab:" + Fields!cfdiFechaAntiguedad.Value</Value>
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -502,7 +502,7 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -533,7 +533,7 @@
                             <TextRun>
                               <Value>="Puesto:	" + Fields!cfdiPuesto.Value</Value>
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -564,7 +564,7 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -600,7 +600,7 @@
                             <TextRun>
                               <Value>="Nss:" + Fields!cfdiNss.Value</Value>
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -631,7 +631,7 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -662,7 +662,7 @@
                             <TextRun>
                               <Value>="Depto:	" + Fields!cfdiDepartamento.Value</Value>
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -693,7 +693,7 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -729,7 +729,7 @@
                             <TextRun>
                               <Value>="Sdi:	" + Fields!cfdiSalario.Value</Value>
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -760,7 +760,7 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -791,7 +791,8 @@
                             <TextRun>
                               <Value>="Sdi:	$ " + First(Fields!cfdiSdi.Value).ToString()</Value>
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
+                                <Format>'$'#,0.00;('$'#,0.00)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -807,6 +808,7 @@
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
+                        <rd:FormatSymbolCulture>es-MX</rd:FormatSymbolCulture>
                       </Style>
                     </Textbox>
                   </CellContents>
@@ -822,7 +824,7 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -845,7 +847,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>1.59219cm</Height>
+              <Height>1.58794cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -853,10 +855,10 @@
                       <TablixBody>
                         <TablixColumns>
                           <TablixColumn>
-                            <Width>0.83555cm</Width>
+                            <Width>0.68562cm</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>0.35834cm</Width>
+                            <Width>0.50827cm</Width>
                           </TablixColumn>
                           <TablixColumn>
                             <Width>2.27661cm</Width>
@@ -887,7 +889,7 @@
                                             <Value>Percepciones</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -926,7 +928,7 @@
                             </TablixCells>
                           </TablixRow>
                           <TablixRow>
-                            <Height>0.41128cm</Height>
+                            <Height>0.40915cm</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -937,10 +939,10 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>Agrupador</Value>
+                                            <Value>SAT</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -972,7 +974,7 @@
                                             <Value>No.</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -1004,7 +1006,7 @@
                                             <Value>Concepto</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -1036,7 +1038,7 @@
                                             <Value>Gravado</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -1068,7 +1070,7 @@
                                             <Value>Exento</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -1100,7 +1102,7 @@
                                             <Value>Total</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -1125,7 +1127,7 @@
                             </TablixCells>
                           </TablixRow>
                           <TablixRow>
-                            <Height>0.41128cm</Height>
+                            <Height>0.40701cm</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -1139,7 +1141,7 @@
                                             <Value>=Fields!cfdiGrupoSat.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -1171,7 +1173,7 @@
                                             <Value>=Fields!cfdiNoConcepto.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -1203,7 +1205,7 @@
                                             <Value>=Fields!cfdiConcepto.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -1237,7 +1239,7 @@
                                             <Value>=Fields!cfdiGravado.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <Format>#,0.00;(#,0.00)</Format>
                                             </Style>
                                           </TextRun>
@@ -1270,7 +1272,7 @@
                                             <Value>=Fields!cfdiExento.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <Format>#,0.00;(#,0.00)</Format>
                                             </Style>
                                           </TextRun>
@@ -1303,7 +1305,7 @@
                                             <Value>=Fields!cfdiCantidad.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <Format>#,0.00;(#,0.00)</Format>
                                             </Style>
                                           </TextRun>
@@ -1327,7 +1329,7 @@
                             </TablixCells>
                           </TablixRow>
                           <TablixRow>
-                            <Height>0.41128cm</Height>
+                            <Height>0.41342cm</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -1341,7 +1343,7 @@
                                             <Value>Suma de percepciones </Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -1377,7 +1379,7 @@
                                             <Value>=Sum(Fields!cfdiGravado.Value)</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <Format>#,0.00;(#,0.00)</Format>
                                             </Style>
                                           </TextRun>
@@ -1410,7 +1412,7 @@
                                             <Value>=Sum(Fields!cfdiExento.Value)</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <Format>#,0.00;(#,0.00)</Format>
                                             </Style>
                                           </TextRun>
@@ -1440,10 +1442,10 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Sum(Fields!cfdiCantidad.Value)</Value>
+                                            <Value>=Sum(Fields!cfdiCantidad.Value) + Sum(Iif(Fields!cfdiNoConcepto.Value="16",Fields!cfdiCantidad.Value,0))</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                               <Format>#,0.00;(#,0.00)</Format>
                                             </Style>
@@ -1525,10 +1527,10 @@
                       <TablixBody>
                         <TablixColumns>
                           <TablixColumn>
-                            <Width>0.78495cm</Width>
+                            <Width>0.7188cm</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>0.44461cm</Width>
+                            <Width>0.51076cm</Width>
                           </TablixColumn>
                           <TablixColumn>
                             <Width>2.14876cm</Width>
@@ -1553,7 +1555,7 @@
                                             <Value>Deducciones</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -1590,7 +1592,7 @@
                             </TablixCells>
                           </TablixRow>
                           <TablixRow>
-                            <Height>0.41128cm</Height>
+                            <Height>0.40915cm</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -1601,10 +1603,10 @@
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>Agrupador</Value>
+                                            <Value>SAT</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -1636,7 +1638,7 @@
                                             <Value>No.</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -1668,7 +1670,7 @@
                                             <Value>Concepto</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -1700,7 +1702,7 @@
                                             <Value>Total</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -1739,7 +1741,7 @@
                                             <Value>=Fields!cfdiGrupoSat.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -1769,7 +1771,7 @@
                                             <Value>=Fields!cfdiNoConcepto.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -1799,7 +1801,7 @@
                                             <Value>=Fields!cfdiConcepto.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -1829,7 +1831,7 @@
                                             <Value>=Fields!cfdiCantidad.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <Format>#,0.00;(#,0.00)</Format>
                                             </Style>
                                           </TextRun>
@@ -1853,7 +1855,7 @@
                             </TablixCells>
                           </TablixRow>
                           <TablixRow>
-                            <Height>0.41128cm</Height>
+                            <Height>0.40915cm</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -1867,7 +1869,7 @@
                                             <Value>Suma de deducciones</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -1901,7 +1903,7 @@
                                             <Value>=Sum(Fields!cfdiCantidad.Value) - Sum(Iif(Fields!cfdiNoConcepto.Value = "16", Fields!cfdiCantidad.Value,0))</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <Format>#,0.00;(#,0.00)</Format>
                                             </Style>
                                           </TextRun>
@@ -1976,7 +1978,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.60001cm</Height>
+              <Height>0.86459cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -2054,7 +2056,7 @@
                         </TablixColumns>
                         <TablixRows>
                           <TablixRow>
-                            <Height>0.3cm</Height>
+                            <Height>0.4323cm</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -2068,7 +2070,7 @@
                                             <Value>Total $</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -2110,7 +2112,7 @@
                                             <Value>=Fields!cfdiTotal.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                               <Format>#,0.00;(#,0.00)</Format>
                                             </Style>
@@ -2144,7 +2146,7 @@
                             </TablixCells>
                           </TablixRow>
                           <TablixRow>
-                            <Height>0.3cm</Height>
+                            <Height>0.4323cm</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -2158,7 +2160,7 @@
                                             <Value>Neto del recibo$</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                               <Color>CornflowerBlue</Color>
                                             </Style>
@@ -2201,7 +2203,7 @@
                                             <Value>=Fields!cfdiTotal.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                               <Color>CornflowerBlue</Color>
                                             </Style>
@@ -2263,7 +2265,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.13698cm</Height>
+              <Height>0.4192cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -2305,13 +2307,16 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>Firma del empleado</Value>
                               <Style>
                                 <FontSize>5pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox66</rd:DefaultName>
@@ -2319,6 +2324,11 @@
                         <Border>
                           <Style>None</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>Black</Color>
+                          <Style>Solid</Style>
+                          <Width>1.5pt</Width>
+                        </TopBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -2363,7 +2373,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.69261cm</Height>
+              <Height>1.00585cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -2379,7 +2389,7 @@ arriba mencionada la cantidad neta a que este documento se refiere estando
 conforme con las percepciones y deducciones que en él aparecen especificados.</Value>
                               <Style>
                                 <FontFamily>Calibri</FontFamily>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                                 <Color>Gray</Color>
                               </Style>
                             </TextRun>
@@ -2414,7 +2424,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                         </TablixColumns>
                         <TablixRows>
                           <TablixRow>
-                            <Height>0.3463cm</Height>
+                            <Height>0.50292cm</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -2428,7 +2438,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>Importe con letra</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -2454,7 +2464,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             </TablixCells>
                           </TablixRow>
                           <TablixRow>
-                            <Height>0.3463cm</Height>
+                            <Height>0.50292cm</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -2468,7 +2478,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>=Fields!cfdiTotalLetra.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -2699,7 +2709,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>Este documento es una representacion impresa de un CFDi</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -2743,7 +2753,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>Pago en una sola exhibición</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -2785,7 +2795,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>Certificado Emisor:</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -2820,7 +2830,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>=Fields!cfdiNoCertificado.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -2858,7 +2868,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>UUID:</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -2893,7 +2903,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>=Fields!cfdiUUID.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -2931,7 +2941,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>Certificado SAT:</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -2966,7 +2976,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>=Fields!cfdiNoCertificadoSAT.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -3004,7 +3014,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>Fecha certificación:</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -3039,7 +3049,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>=Fields!cfdiFechaTimbrado.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <Format>yyy-MM-ddThh:mm:ss</Format>
                                             </Style>
                                           </TextRun>
@@ -3255,7 +3265,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>Sello digital del CFDi</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -3295,7 +3305,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>=Fields!cfdiSelloCFD.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -3345,7 +3355,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.83812cm</Height>
+              <Height>1.30797cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -3358,7 +3368,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                         </TablixColumns>
                         <TablixRows>
                           <TablixRow>
-                            <Height>0.31323cm</Height>
+                            <Height>0.54815cm</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -3372,7 +3382,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>Sello del SAT</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -3398,7 +3408,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             </TablixCells>
                           </TablixRow>
                           <TablixRow>
-                            <Height>0.5249cm</Height>
+                            <Height>0.75982cm</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -3412,7 +3422,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>=Fields!cfdiSelloSAT.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -3462,7 +3472,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.81167cm</Height>
+              <Height>1.10271cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -3475,7 +3485,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                         </TablixColumns>
                         <TablixRows>
                           <TablixRow>
-                            <Height>0.32646cm</Height>
+                            <Height>0.47198cm</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -3489,7 +3499,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>Cadena original del complemento del certificado digital del SAT</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -3515,7 +3525,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             </TablixCells>
                           </TablixRow>
                           <TablixRow>
-                            <Height>0.48521cm</Height>
+                            <Height>0.63073cm</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -3529,7 +3539,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>=Fields!CadenaOriginal.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -3658,7 +3668,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             <Value>=Fields!cfdiNoEmpleado.Value</Value>
                             <Style>
                               <FontFamily>Calibri</FontFamily>
-                              <FontSize>4pt</FontSize>
+                              <FontSize>5pt</FontSize>
                               <FontWeight>Bold</FontWeight>
                             </Style>
                           </TextRun>
@@ -3701,7 +3711,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
         <DataSetName>dsNominaRecibo</DataSetName>
         <Top>0.00426cm</Top>
         <Left>0.00881cm</Left>
-        <Height>10.70302cm</Height>
+        <Height>12.3197cm</Height>
         <Width>12.20386cm</Width>
         <Style>
           <Border>
@@ -3754,10 +3764,10 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
               <Width>2.43822cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.51017cm</Width>
+              <Width>3.19267cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.32248cm</Width>
+              <Width>1.63997cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -3775,7 +3785,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             <TextRun>
                               <Value>=Fields!cfdiNombreCompleto.Value</Value>
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -3808,7 +3818,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -3838,9 +3848,9 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>="No. Periodo:	" + First(Fields!cfdiNoPeriodo.Value).ToString() + "Periodo:	" + Fields!cfdiPeriodo.Value</Value>
+                              <Value>="No. Periodo:	" + First(Fields!cfdiNoPeriodo.Value).ToString() + " - " + Fields!cfdiPeriodo.Value</Value>
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -3873,7 +3883,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             <TextRun>
                               <Value>=Fields!cfdiFechaInicio.Value</Value>
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>dd/MMM/yyyy</Format>
                               </Style>
@@ -3914,7 +3924,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             <TextRun>
                               <Value>="RFC:	" + Fields!cfdiRfc.Value</Value>
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -3945,7 +3955,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -3976,7 +3986,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             <TextRun>
                               <Value>="Dias laborados:	" + First(Fields!cfdiDiasLaborados.Value).ToString()</Value>
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -4007,7 +4017,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             <TextRun>
                               <Value>=Fields!cfdiFechaFin.Value</Value>
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>dd/MMM/yyyy</Format>
                               </Style>
@@ -4047,7 +4057,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             <TextRun>
                               <Value>="Curp:	" + Fields!cfdiCurp.Value</Value>
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -4079,7 +4089,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -4110,7 +4120,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             <TextRun>
                               <Value>="Fecha de pago:	" + Fields!cfdiFechaTimbrado.Value</Value>
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -4142,7 +4152,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -4176,9 +4186,9 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>="Inicio Lab:" + Fields!cfdiFechaAntigueda.Value</Value>
+                              <Value>="Inicio Lab:" + Fields!cfdiFechaAntiguedad.Value</Value>
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -4209,7 +4219,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -4240,7 +4250,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             <TextRun>
                               <Value>="Puesto:	" + Fields!cfdiPuesto.Value</Value>
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -4271,7 +4281,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -4307,7 +4317,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             <TextRun>
                               <Value>="Nss:" + Fields!cfdiNss.Value</Value>
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -4338,7 +4348,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -4369,7 +4379,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             <TextRun>
                               <Value>="Depto:	" + Fields!cfdiDepartamento.Value</Value>
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -4400,7 +4410,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -4436,7 +4446,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             <TextRun>
                               <Value>="Sdi:	" + Fields!cfdiSalario.Value</Value>
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -4467,7 +4477,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -4498,7 +4508,8 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             <TextRun>
                               <Value>="Sdi:	$ " + First(Fields!cfdiSdi.Value).ToString()</Value>
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
+                                <Format>'$'#,0.00;('$'#,0.00)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -4514,6 +4525,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
+                        <rd:FormatSymbolCulture>es-MX</rd:FormatSymbolCulture>
                       </Style>
                     </Textbox>
                   </CellContents>
@@ -4529,7 +4541,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -4560,10 +4572,10 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                       <TablixBody>
                         <TablixColumns>
                           <TablixColumn>
-                            <Width>0.83555cm</Width>
+                            <Width>0.65803cm</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>0.35834cm</Width>
+                            <Width>0.53586cm</Width>
                           </TablixColumn>
                           <TablixColumn>
                             <Width>2.27661cm</Width>
@@ -4594,7 +4606,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>Percepciones</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -4644,10 +4656,10 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>Agrupador</Value>
+                                            <Value>SAT</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -4679,7 +4691,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>No.</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -4711,7 +4723,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>Concepto</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -4743,7 +4755,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>Gravado</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -4775,7 +4787,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>Exento</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -4807,7 +4819,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>Total</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -4846,7 +4858,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>=Fields!cfdiGrupoSat.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -4878,7 +4890,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>=Fields!cfdiNoConcepto.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -4910,7 +4922,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>=Fields!cfdiConcepto.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -4944,7 +4956,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>=Fields!cfdiGravado.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <Format>#,0.00;(#,0.00)</Format>
                                             </Style>
                                           </TextRun>
@@ -4977,7 +4989,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>=Fields!cfdiExento.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <Format>#,0.00;(#,0.00)</Format>
                                             </Style>
                                           </TextRun>
@@ -5010,7 +5022,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>=Fields!cfdiCantidad.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <Format>#,0.00;(#,0.00)</Format>
                                             </Style>
                                           </TextRun>
@@ -5048,7 +5060,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>Suma de percepciones </Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -5084,7 +5096,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>=Sum(Fields!cfdiGravado.Value)</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <Format>#,0.00;(#,0.00)</Format>
                                             </Style>
                                           </TextRun>
@@ -5117,7 +5129,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>=Sum(Fields!cfdiExento.Value)</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <Format>#,0.00;(#,0.00)</Format>
                                             </Style>
                                           </TextRun>
@@ -5147,10 +5159,10 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>=Sum(Fields!cfdiCantidad.Value)</Value>
+                                            <Value>=Sum(Fields!cfdiCantidad.Value) + Sum(Iif(Fields!cfdiNoConcepto.Value="16",Fields!cfdiCantidad.Value,0))</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                               <Format>#,0.00;(#,0.00)</Format>
                                             </Style>
@@ -5170,7 +5182,6 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                       <PaddingBottom>2pt</PaddingBottom>
                                     </Style>
                                   </Textbox>
-                                  <rd:Selected>true</rd:Selected>
                                 </CellContents>
                               </TablixCell>
                             </TablixCells>
@@ -5233,10 +5244,10 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                       <TablixBody>
                         <TablixColumns>
                           <TablixColumn>
-                            <Width>0.78495cm</Width>
+                            <Width>0.62544cm</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>0.44461cm</Width>
+                            <Width>0.60412cm</Width>
                           </TablixColumn>
                           <TablixColumn>
                             <Width>2.14876cm</Width>
@@ -5261,7 +5272,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>Deducciones</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -5309,10 +5320,10 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>Agrupador</Value>
+                                            <Value>SAT</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -5344,7 +5355,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>No.</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -5376,7 +5387,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>Concepto</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -5408,7 +5419,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>Total</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -5447,7 +5458,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>=Fields!cfdiGrupoSat.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -5477,7 +5488,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>=Fields!cfdiNoConcepto.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -5507,7 +5518,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>=Fields!cfdiConcepto.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -5537,7 +5548,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>=Fields!cfdiCantidad.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <Format>#,0.00;(#,0.00)</Format>
                                             </Style>
                                           </TextRun>
@@ -5575,7 +5586,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>Suma de deducciones</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -5609,7 +5620,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>=Sum(Fields!cfdiCantidad.Value) - Sum(Iif(Fields!cfdiNoConcepto.Value = "16", Fields!cfdiCantidad.Value,0))</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <Format>#,0.00;(#,0.00)</Format>
                                             </Style>
                                           </TextRun>
@@ -5684,7 +5695,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.60001cm</Height>
+              <Height>0.86033cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -5754,15 +5765,15 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                       <TablixBody>
                         <TablixColumns>
                           <TablixColumn>
-                            <Width>3.37832cm</Width>
+                            <Width>3.37831cm</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>1.45434cm</Width>
+                            <Width>1.45433cm</Width>
                           </TablixColumn>
                         </TablixColumns>
                         <TablixRows>
                           <TablixRow>
-                            <Height>0.3cm</Height>
+                            <Height>0.43017cm</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -5776,7 +5787,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>Total $</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -5818,7 +5829,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>=Fields!cfdiTotal.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                               <Format>#,0.00;(#,0.00)</Format>
                                             </Style>
@@ -5852,7 +5863,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             </TablixCells>
                           </TablixRow>
                           <TablixRow>
-                            <Height>0.3cm</Height>
+                            <Height>0.43017cm</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -5866,7 +5877,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>Neto del recibo$</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                               <Color>CornflowerBlue</Color>
                                             </Style>
@@ -5909,7 +5920,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>=Fields!cfdiTotal.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                               <Color>CornflowerBlue</Color>
                                             </Style>
@@ -5971,7 +5982,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.13698cm</Height>
+              <Height>0.41495cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -6013,13 +6024,16 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>Firma del empleado</Value>
                               <Style>
                                 <FontSize>5pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox66</rd:DefaultName>
@@ -6027,6 +6041,11 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                         <Border>
                           <Style>None</Style>
                         </Border>
+                        <TopBorder>
+                          <Color>Black</Color>
+                          <Style>Solid</Style>
+                          <Width>1.5pt</Width>
+                        </TopBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -6071,7 +6090,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.69261cm</Height>
+              <Height>1.01011cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -6087,7 +6106,7 @@ arriba mencionada la cantidad neta a que este documento se refiere estando
 conforme con las percepciones y deducciones que en él aparecen especificados.</Value>
                               <Style>
                                 <FontFamily>Calibri</FontFamily>
-                                <FontSize>4pt</FontSize>
+                                <FontSize>5pt</FontSize>
                                 <Color>Gray</Color>
                               </Style>
                             </TextRun>
@@ -6117,12 +6136,12 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                       <TablixBody>
                         <TablixColumns>
                           <TablixColumn>
-                            <Width>4.83265cm</Width>
+                            <Width>4.83264cm</Width>
                           </TablixColumn>
                         </TablixColumns>
                         <TablixRows>
                           <TablixRow>
-                            <Height>0.3463cm</Height>
+                            <Height>0.50505cm</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -6136,7 +6155,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>Importe con letra</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -6162,7 +6181,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             </TablixCells>
                           </TablixRow>
                           <TablixRow>
-                            <Height>0.3463cm</Height>
+                            <Height>0.50505cm</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -6176,7 +6195,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>=Fields!cfdiTotalLetra.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -6385,10 +6404,10 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                       <TablixBody>
                         <TablixColumns>
                           <TablixColumn>
-                            <Width>3.06367cm</Width>
+                            <Width>3.06366cm</Width>
                           </TablixColumn>
                           <TablixColumn>
-                            <Width>4.20721cm</Width>
+                            <Width>4.2072cm</Width>
                           </TablixColumn>
                         </TablixColumns>
                         <TablixRows>
@@ -6407,7 +6426,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>Este documento es una representacion impresa de un CFDi</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -6451,7 +6470,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>Pago en una sola exhibición</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -6493,7 +6512,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>Certificado Emisor:</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -6528,7 +6547,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>=Fields!cfdiNoCertificado.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -6566,7 +6585,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>UUID:</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -6601,7 +6620,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>=Fields!cfdiUUID.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -6639,7 +6658,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>Certificado SAT:</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -6674,7 +6693,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>=Fields!cfdiNoCertificadoSAT.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -6712,7 +6731,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>Fecha certificación:</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -6747,7 +6766,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>=Fields!cfdiFechaTimbrado.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <Format>yyy-MM-ddThh:mm:ss</Format>
                                             </Style>
                                           </TextRun>
@@ -6944,7 +6963,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                       <TablixBody>
                         <TablixColumns>
                           <TablixColumn>
-                            <Width>11.54834cm</Width>
+                            <Width>11.54833cm</Width>
                           </TablixColumn>
                         </TablixColumns>
                         <TablixRows>
@@ -6963,7 +6982,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>Sello digital del CFDi</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -7003,7 +7022,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>=Fields!cfdiSelloCFD.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -7053,7 +7072,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.83812cm</Height>
+              <Height>1.30797cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -7061,12 +7080,12 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                       <TablixBody>
                         <TablixColumns>
                           <TablixColumn>
-                            <Width>11.54834cm</Width>
+                            <Width>11.54833cm</Width>
                           </TablixColumn>
                         </TablixColumns>
                         <TablixRows>
                           <TablixRow>
-                            <Height>0.31323cm</Height>
+                            <Height>0.54815cm</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -7080,7 +7099,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>Sello del SAT</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -7106,7 +7125,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             </TablixCells>
                           </TablixRow>
                           <TablixRow>
-                            <Height>0.5249cm</Height>
+                            <Height>0.75982cm</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -7120,7 +7139,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>=Fields!cfdiSelloSAT.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -7170,7 +7189,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.81167cm</Height>
+              <Height>1.10697cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -7178,12 +7197,12 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                       <TablixBody>
                         <TablixColumns>
                           <TablixColumn>
-                            <Width>11.54834cm</Width>
+                            <Width>11.54833cm</Width>
                           </TablixColumn>
                         </TablixColumns>
                         <TablixRows>
                           <TablixRow>
-                            <Height>0.32646cm</Height>
+                            <Height>0.47411cm</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -7197,7 +7216,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>Cadena original del complemento del certificado digital del SAT</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
@@ -7223,7 +7242,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             </TablixCells>
                           </TablixRow>
                           <TablixRow>
-                            <Height>0.48521cm</Height>
+                            <Height>0.63286cm</Height>
                             <TablixCells>
                               <TablixCell>
                                 <CellContents>
@@ -7237,7 +7256,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                                             <Value>=Fields!CadenaOriginal.Value</Value>
                                             <Style>
                                               <FontFamily>Calibri</FontFamily>
-                                              <FontSize>4pt</FontSize>
+                                              <FontSize>5pt</FontSize>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -7366,7 +7385,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             <Value>=Fields!cfdiNoEmpleado.Value</Value>
                             <Style>
                               <FontFamily>Calibri</FontFamily>
-                              <FontSize>4pt</FontSize>
+                              <FontSize>5pt</FontSize>
                               <FontWeight>Bold</FontWeight>
                             </Style>
                           </TextRun>
@@ -7408,8 +7427,8 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
         </TablixRowHierarchy>
         <DataSetName>dsNominaRecibo</DataSetName>
         <Left>12.77586cm</Left>
-        <Height>10.70302cm</Height>
-        <Width>12.20386cm</Width>
+        <Height>12.32396cm</Height>
+        <Width>12.20385cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -7418,7 +7437,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>4.84579in</Height>
+    <Height>4.85195in</Height>
     <Style />
   </Body>
   <Width>9.87515in</Width>
@@ -7470,7 +7489,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                       <Value>=First(Fields!cfdiEmpresa.Value, "dsNominaRecibo")</Value>
                       <Style>
                         <FontFamily>Calibri</FontFamily>
-                        <FontSize>6pt</FontSize>
+                        <FontSize>7pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
@@ -7500,7 +7519,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                       <Value>="RFC: " + First(Fields!cfdiEmpresaRfc.Value, "dsNominaRecibo")</Value>
                       <Style>
                         <FontFamily>Calibri</FontFamily>
-                        <FontSize>5pt</FontSize>
+                        <FontSize>6pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
@@ -7532,7 +7551,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                       <Value>="Reg. Fiscal: " + First(Fields!cfdiRegimen.Value, "dsNominaRecibo")</Value>
                       <Style>
                         <FontFamily>Calibri</FontFamily>
-                        <FontSize>5pt</FontSize>
+                        <FontSize>6pt</FontSize>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -7563,7 +7582,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                       <Value>="Reg. Patronal: " + First(Fields!cfdiRegistro.Value, "dsNominaRecibo")</Value>
                       <Style>
                         <FontFamily>Calibri</FontFamily>
-                        <FontSize>5pt</FontSize>
+                        <FontSize>6pt</FontSize>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -7592,10 +7611,10 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>="Fecha:	" + First(Fields!cfdiFecha.Value, "dsNominaRecibo")</Value>
+                      <Value>="Fecha:	" + First(Fields!cfdiFechaTimbrado.Value, "dsNominaRecibo")</Value>
                       <Style>
                         <FontFamily>Calibri</FontFamily>
-                        <FontSize>5pt</FontSize>
+                        <FontSize>6pt</FontSize>
                         <Format>dd/MMM/yyyy</Format>
                       </Style>
                     </TextRun>
@@ -7629,7 +7648,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                       <Value>="Lugar de expedición: GUANAJUATO"</Value>
                       <Style>
                         <FontFamily>Calibri</FontFamily>
-                        <FontSize>5pt</FontSize>
+                        <FontSize>6pt</FontSize>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -7706,7 +7725,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                       <Value>=First(Fields!cfdiEmpresa.Value, "dsNominaRecibo")</Value>
                       <Style>
                         <FontFamily>Calibri</FontFamily>
-                        <FontSize>6pt</FontSize>
+                        <FontSize>7pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
@@ -7736,7 +7755,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                       <Value>="RFC: " + First(Fields!cfdiEmpresaRfc.Value, "dsNominaRecibo")</Value>
                       <Style>
                         <FontFamily>Calibri</FontFamily>
-                        <FontSize>5pt</FontSize>
+                        <FontSize>6pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
@@ -7768,7 +7787,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                       <Value>="Reg. Fiscal: " + First(Fields!cfdiRegimen.Value, "dsNominaRecibo")</Value>
                       <Style>
                         <FontFamily>Calibri</FontFamily>
-                        <FontSize>5pt</FontSize>
+                        <FontSize>6pt</FontSize>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -7799,7 +7818,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                       <Value>="Reg. Patronal: " + First(Fields!cfdiRegistro.Value, "dsNominaRecibo")</Value>
                       <Style>
                         <FontFamily>Calibri</FontFamily>
-                        <FontSize>5pt</FontSize>
+                        <FontSize>6pt</FontSize>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -7828,10 +7847,10 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>="Fecha:	" + First(Fields!cfdiFecha.Value, "dsNominaRecibo")</Value>
+                      <Value>="Fecha:	" + First(Fields!cfdiFechaTimbrado.Value, "dsNominaRecibo")</Value>
                       <Style>
                         <FontFamily>Calibri</FontFamily>
-                        <FontSize>5pt</FontSize>
+                        <FontSize>6pt</FontSize>
                         <Format>dd/MMM/yyyy</Format>
                       </Style>
                     </TextRun>
@@ -7865,7 +7884,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                       <Value>="Lugar de expedición: GUANAJUATO"</Value>
                       <Style>
                         <FontFamily>Calibri</FontFamily>
-                        <FontSize>5pt</FontSize>
+                        <FontSize>6pt</FontSize>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -7956,20 +7975,12 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
           <DataField>cfdiRegistro</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="cfdiEmpresaDV">
-          <DataField>cfdiEmpresaDV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="cfdiEmpresaRfc">
           <DataField>cfdiEmpresaRfc</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="cfdiRegimen">
           <DataField>cfdiRegimen</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="cfdiIdTrabajador">
-          <DataField>cfdiIdTrabajador</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="cfdiNoEmpleado">
@@ -7988,8 +7999,8 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
           <DataField>cfdiCurp</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="cfdiFechaAntigueda">
-          <DataField>cfdiFechaAntigueda</DataField>
+        <Field Name="cfdiFechaAntiguedad">
+          <DataField>cfdiFechaAntiguedad</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
         <Field Name="cfdiNss">
@@ -8055,18 +8066,6 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
         <Field Name="cfdiNoPeriodo">
           <DataField>cfdiNoPeriodo</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="cfdiDia">
-          <DataField>cfdiDia</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="cfdiHora">
-          <DataField>cfdiHora</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="cfdiFecha">
-          <DataField>cfdiFecha</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
         <Field Name="cfdiNoCertificado">
           <DataField>cfdiNoCertificado</DataField>

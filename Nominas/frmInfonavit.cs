@@ -115,7 +115,10 @@ namespace Nominas
                         IdInfonavit = int.Parse(lstInfonavit[j].idinfonavit.ToString());
                         txtNumeroCredito.Text = lstInfonavit[j].credito;
                         txtValor.Text = lstInfonavit[j].valordescuento.ToString();
-                        chkInactivo.Checked = lstInfonavit[j].activo;
+                        if (lstInfonavit[j].activo)
+                            chkInactivo.Checked = false;
+                        else
+                            chkInactivo.Checked = true;
                         txtDescripcion.Text = lstInfonavit[j].descripcion;
                         dtpFechaAplicacion.Value = lstInfonavit[j].fecha;
                         //dtpInicioPeriodo.Value = lstInfonavit[j].inicio.AddDays(1);

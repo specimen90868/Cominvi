@@ -2136,13 +2136,9 @@ namespace Nominas {
             
             private global::System.Data.DataColumn columncfdiRegistro;
             
-            private global::System.Data.DataColumn columncfdiEmpresaDV;
-            
             private global::System.Data.DataColumn columncfdiEmpresaRfc;
             
             private global::System.Data.DataColumn columncfdiRegimen;
-            
-            private global::System.Data.DataColumn columncfdiIdTrabajador;
             
             private global::System.Data.DataColumn columncfdiNoEmpleado;
             
@@ -2152,7 +2148,7 @@ namespace Nominas {
             
             private global::System.Data.DataColumn columncfdiCurp;
             
-            private global::System.Data.DataColumn columncfdiFechaAntigueda;
+            private global::System.Data.DataColumn columncfdiFechaAntiguedad;
             
             private global::System.Data.DataColumn columncfdiNss;
             
@@ -2186,12 +2182,6 @@ namespace Nominas {
             
             private global::System.Data.DataColumn columncfdiNoPeriodo;
             
-            private global::System.Data.DataColumn columncfdiDia;
-            
-            private global::System.Data.DataColumn columncfdiHora;
-            
-            private global::System.Data.DataColumn columncfdiFecha;
-            
             private global::System.Data.DataColumn columncfdiNoCertificado;
             
             private global::System.Data.DataColumn columncfdiUUID;
@@ -2211,6 +2201,10 @@ namespace Nominas {
             private global::System.Data.DataColumn columncfdiGrupoSat;
             
             private global::System.Data.DataColumn columncfdiTotal;
+            
+            private global::System.Data.DataColumn columncfdiMetodoDePago;
+            
+            private global::System.Data.DataColumn columnCadenaOriginal;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -2271,14 +2265,6 @@ namespace Nominas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn cfdiEmpresaDVColumn {
-                get {
-                    return this.columncfdiEmpresaDV;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public global::System.Data.DataColumn cfdiEmpresaRfcColumn {
                 get {
                     return this.columncfdiEmpresaRfc;
@@ -2290,14 +2276,6 @@ namespace Nominas {
             public global::System.Data.DataColumn cfdiRegimenColumn {
                 get {
                     return this.columncfdiRegimen;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn cfdiIdTrabajadorColumn {
-                get {
-                    return this.columncfdiIdTrabajador;
                 }
             }
             
@@ -2335,9 +2313,9 @@ namespace Nominas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn cfdiFechaAntiguedaColumn {
+            public global::System.Data.DataColumn cfdiFechaAntiguedadColumn {
                 get {
-                    return this.columncfdiFechaAntigueda;
+                    return this.columncfdiFechaAntiguedad;
                 }
             }
             
@@ -2471,30 +2449,6 @@ namespace Nominas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn cfdiDiaColumn {
-                get {
-                    return this.columncfdiDia;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn cfdiHoraColumn {
-                get {
-                    return this.columncfdiHora;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn cfdiFechaColumn {
-                get {
-                    return this.columncfdiFecha;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public global::System.Data.DataColumn cfdiNoCertificadoColumn {
                 get {
                     return this.columncfdiNoCertificado;
@@ -2575,6 +2529,22 @@ namespace Nominas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn cfdiMetodoDePagoColumn {
+                get {
+                    return this.columncfdiMetodoDePago;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CadenaOriginalColumn {
+                get {
+                    return this.columnCadenaOriginal;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -2614,15 +2584,13 @@ namespace Nominas {
                         string cfdiPeriodo, 
                         string cfdiEmpresa, 
                         string cfdiRegistro, 
-                        string cfdiEmpresaDV, 
                         string cfdiEmpresaRfc, 
                         string cfdiRegimen, 
-                        string cfdiIdTrabajador, 
                         string cfdiNoEmpleado, 
                         string cfdiNombreCompleto, 
                         string cfdiRfc, 
                         string cfdiCurp, 
-                        System.DateTime cfdiFechaAntigueda, 
+                        System.DateTime cfdiFechaAntiguedad, 
                         string cfdiNss, 
                         string cfdiSalario, 
                         decimal cfdiSd, 
@@ -2639,9 +2607,6 @@ namespace Nominas {
                         System.DateTime cfdiFechaInicio, 
                         System.DateTime cfdiFechaFin, 
                         int cfdiNoPeriodo, 
-                        System.DateTime cfdiDia, 
-                        System.DateTime cfdiHora, 
-                        System.DateTime cfdiFecha, 
                         string cfdiNoCertificado, 
                         string cfdiUUID, 
                         string cfdiNoCertificadoSAT, 
@@ -2651,21 +2616,21 @@ namespace Nominas {
                         string cfdiTotalLetra, 
                         string cfdiVersionTimbreFiscal, 
                         string cfdiGrupoSat, 
-                        string cfdiTotal) {
+                        string cfdiTotal, 
+                        string cfdiMetodoDePago, 
+                        string CadenaOriginal) {
                 NominaRecibosRow rowNominaRecibosRow = ((NominaRecibosRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         cfdiPeriodo,
                         cfdiEmpresa,
                         cfdiRegistro,
-                        cfdiEmpresaDV,
                         cfdiEmpresaRfc,
                         cfdiRegimen,
-                        cfdiIdTrabajador,
                         cfdiNoEmpleado,
                         cfdiNombreCompleto,
                         cfdiRfc,
                         cfdiCurp,
-                        cfdiFechaAntigueda,
+                        cfdiFechaAntiguedad,
                         cfdiNss,
                         cfdiSalario,
                         cfdiSd,
@@ -2682,9 +2647,6 @@ namespace Nominas {
                         cfdiFechaInicio,
                         cfdiFechaFin,
                         cfdiNoPeriodo,
-                        cfdiDia,
-                        cfdiHora,
-                        cfdiFecha,
                         cfdiNoCertificado,
                         cfdiUUID,
                         cfdiNoCertificadoSAT,
@@ -2694,7 +2656,9 @@ namespace Nominas {
                         cfdiTotalLetra,
                         cfdiVersionTimbreFiscal,
                         cfdiGrupoSat,
-                        cfdiTotal};
+                        cfdiTotal,
+                        cfdiMetodoDePago,
+                        CadenaOriginal};
                 rowNominaRecibosRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowNominaRecibosRow);
                 return rowNominaRecibosRow;
@@ -2720,15 +2684,13 @@ namespace Nominas {
                 this.columncfdiPeriodo = base.Columns["cfdiPeriodo"];
                 this.columncfdiEmpresa = base.Columns["cfdiEmpresa"];
                 this.columncfdiRegistro = base.Columns["cfdiRegistro"];
-                this.columncfdiEmpresaDV = base.Columns["cfdiEmpresaDV"];
                 this.columncfdiEmpresaRfc = base.Columns["cfdiEmpresaRfc"];
                 this.columncfdiRegimen = base.Columns["cfdiRegimen"];
-                this.columncfdiIdTrabajador = base.Columns["cfdiIdTrabajador"];
                 this.columncfdiNoEmpleado = base.Columns["cfdiNoEmpleado"];
                 this.columncfdiNombreCompleto = base.Columns["cfdiNombreCompleto"];
                 this.columncfdiRfc = base.Columns["cfdiRfc"];
                 this.columncfdiCurp = base.Columns["cfdiCurp"];
-                this.columncfdiFechaAntigueda = base.Columns["cfdiFechaAntigueda"];
+                this.columncfdiFechaAntiguedad = base.Columns["cfdiFechaAntiguedad"];
                 this.columncfdiNss = base.Columns["cfdiNss"];
                 this.columncfdiSalario = base.Columns["cfdiSalario"];
                 this.columncfdiSd = base.Columns["cfdiSd"];
@@ -2745,9 +2707,6 @@ namespace Nominas {
                 this.columncfdiFechaInicio = base.Columns["cfdiFechaInicio"];
                 this.columncfdiFechaFin = base.Columns["cfdiFechaFin"];
                 this.columncfdiNoPeriodo = base.Columns["cfdiNoPeriodo"];
-                this.columncfdiDia = base.Columns["cfdiDia"];
-                this.columncfdiHora = base.Columns["cfdiHora"];
-                this.columncfdiFecha = base.Columns["cfdiFecha"];
                 this.columncfdiNoCertificado = base.Columns["cfdiNoCertificado"];
                 this.columncfdiUUID = base.Columns["cfdiUUID"];
                 this.columncfdiNoCertificadoSAT = base.Columns["cfdiNoCertificadoSAT"];
@@ -2758,6 +2717,8 @@ namespace Nominas {
                 this.columncfdiVersionTimbreFiscal = base.Columns["cfdiVersionTimbreFiscal"];
                 this.columncfdiGrupoSat = base.Columns["cfdiGrupoSat"];
                 this.columncfdiTotal = base.Columns["cfdiTotal"];
+                this.columncfdiMetodoDePago = base.Columns["cfdiMetodoDePago"];
+                this.columnCadenaOriginal = base.Columns["CadenaOriginal"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2769,14 +2730,10 @@ namespace Nominas {
                 base.Columns.Add(this.columncfdiEmpresa);
                 this.columncfdiRegistro = new global::System.Data.DataColumn("cfdiRegistro", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columncfdiRegistro);
-                this.columncfdiEmpresaDV = new global::System.Data.DataColumn("cfdiEmpresaDV", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columncfdiEmpresaDV);
                 this.columncfdiEmpresaRfc = new global::System.Data.DataColumn("cfdiEmpresaRfc", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columncfdiEmpresaRfc);
                 this.columncfdiRegimen = new global::System.Data.DataColumn("cfdiRegimen", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columncfdiRegimen);
-                this.columncfdiIdTrabajador = new global::System.Data.DataColumn("cfdiIdTrabajador", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columncfdiIdTrabajador);
                 this.columncfdiNoEmpleado = new global::System.Data.DataColumn("cfdiNoEmpleado", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columncfdiNoEmpleado);
                 this.columncfdiNombreCompleto = new global::System.Data.DataColumn("cfdiNombreCompleto", typeof(string), null, global::System.Data.MappingType.Element);
@@ -2785,8 +2742,8 @@ namespace Nominas {
                 base.Columns.Add(this.columncfdiRfc);
                 this.columncfdiCurp = new global::System.Data.DataColumn("cfdiCurp", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columncfdiCurp);
-                this.columncfdiFechaAntigueda = new global::System.Data.DataColumn("cfdiFechaAntigueda", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columncfdiFechaAntigueda);
+                this.columncfdiFechaAntiguedad = new global::System.Data.DataColumn("cfdiFechaAntiguedad", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncfdiFechaAntiguedad);
                 this.columncfdiNss = new global::System.Data.DataColumn("cfdiNss", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columncfdiNss);
                 this.columncfdiSalario = new global::System.Data.DataColumn("cfdiSalario", typeof(string), null, global::System.Data.MappingType.Element);
@@ -2819,12 +2776,6 @@ namespace Nominas {
                 base.Columns.Add(this.columncfdiFechaFin);
                 this.columncfdiNoPeriodo = new global::System.Data.DataColumn("cfdiNoPeriodo", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columncfdiNoPeriodo);
-                this.columncfdiDia = new global::System.Data.DataColumn("cfdiDia", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columncfdiDia);
-                this.columncfdiHora = new global::System.Data.DataColumn("cfdiHora", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columncfdiHora);
-                this.columncfdiFecha = new global::System.Data.DataColumn("cfdiFecha", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columncfdiFecha);
                 this.columncfdiNoCertificado = new global::System.Data.DataColumn("cfdiNoCertificado", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columncfdiNoCertificado);
                 this.columncfdiUUID = new global::System.Data.DataColumn("cfdiUUID", typeof(string), null, global::System.Data.MappingType.Element);
@@ -2845,6 +2796,10 @@ namespace Nominas {
                 base.Columns.Add(this.columncfdiGrupoSat);
                 this.columncfdiTotal = new global::System.Data.DataColumn("cfdiTotal", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columncfdiTotal);
+                this.columncfdiMetodoDePago = new global::System.Data.DataColumn("cfdiMetodoDePago", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncfdiMetodoDePago);
+                this.columnCadenaOriginal = new global::System.Data.DataColumn("CadenaOriginal", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCadenaOriginal);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4586,22 +4541,6 @@ namespace Nominas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string cfdiEmpresaDV {
-                get {
-                    try {
-                        return ((string)(this[this.tableNominaRecibos.cfdiEmpresaDVColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'cfdiEmpresaDV\' in table \'NominaRecibos\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableNominaRecibos.cfdiEmpresaDVColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string cfdiEmpresaRfc {
                 get {
                     try {
@@ -4629,22 +4568,6 @@ namespace Nominas {
                 }
                 set {
                     this[this.tableNominaRecibos.cfdiRegimenColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string cfdiIdTrabajador {
-                get {
-                    try {
-                        return ((string)(this[this.tableNominaRecibos.cfdiIdTrabajadorColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'cfdiIdTrabajador\' in table \'NominaRecibos\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableNominaRecibos.cfdiIdTrabajadorColumn] = value;
                 }
             }
             
@@ -4714,17 +4637,17 @@ namespace Nominas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public System.DateTime cfdiFechaAntigueda {
+            public System.DateTime cfdiFechaAntiguedad {
                 get {
                     try {
-                        return ((global::System.DateTime)(this[this.tableNominaRecibos.cfdiFechaAntiguedaColumn]));
+                        return ((global::System.DateTime)(this[this.tableNominaRecibos.cfdiFechaAntiguedadColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'cfdiFechaAntigueda\' in table \'NominaRecibos\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'cfdiFechaAntiguedad\' in table \'NominaRecibos\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableNominaRecibos.cfdiFechaAntiguedaColumn] = value;
+                    this[this.tableNominaRecibos.cfdiFechaAntiguedadColumn] = value;
                 }
             }
             
@@ -4986,54 +4909,6 @@ namespace Nominas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public System.DateTime cfdiDia {
-                get {
-                    try {
-                        return ((global::System.DateTime)(this[this.tableNominaRecibos.cfdiDiaColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'cfdiDia\' in table \'NominaRecibos\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableNominaRecibos.cfdiDiaColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public System.DateTime cfdiHora {
-                get {
-                    try {
-                        return ((global::System.DateTime)(this[this.tableNominaRecibos.cfdiHoraColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'cfdiHora\' in table \'NominaRecibos\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableNominaRecibos.cfdiHoraColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public System.DateTime cfdiFecha {
-                get {
-                    try {
-                        return ((global::System.DateTime)(this[this.tableNominaRecibos.cfdiFechaColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'cfdiFecha\' in table \'NominaRecibos\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableNominaRecibos.cfdiFechaColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string cfdiNoCertificado {
                 get {
                     try {
@@ -5195,6 +5070,38 @@ namespace Nominas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string cfdiMetodoDePago {
+                get {
+                    try {
+                        return ((string)(this[this.tableNominaRecibos.cfdiMetodoDePagoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'cfdiMetodoDePago\' in table \'NominaRecibos\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableNominaRecibos.cfdiMetodoDePagoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string CadenaOriginal {
+                get {
+                    try {
+                        return ((string)(this[this.tableNominaRecibos.CadenaOriginalColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CadenaOriginal\' in table \'NominaRecibos\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableNominaRecibos.CadenaOriginalColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IscfdiPeriodoNull() {
                 return this.IsNull(this.tableNominaRecibos.cfdiPeriodoColumn);
             }
@@ -5231,18 +5138,6 @@ namespace Nominas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IscfdiEmpresaDVNull() {
-                return this.IsNull(this.tableNominaRecibos.cfdiEmpresaDVColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetcfdiEmpresaDVNull() {
-                this[this.tableNominaRecibos.cfdiEmpresaDVColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IscfdiEmpresaRfcNull() {
                 return this.IsNull(this.tableNominaRecibos.cfdiEmpresaRfcColumn);
             }
@@ -5263,18 +5158,6 @@ namespace Nominas {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetcfdiRegimenNull() {
                 this[this.tableNominaRecibos.cfdiRegimenColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IscfdiIdTrabajadorNull() {
-                return this.IsNull(this.tableNominaRecibos.cfdiIdTrabajadorColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetcfdiIdTrabajadorNull() {
-                this[this.tableNominaRecibos.cfdiIdTrabajadorColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5327,14 +5210,14 @@ namespace Nominas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IscfdiFechaAntiguedaNull() {
-                return this.IsNull(this.tableNominaRecibos.cfdiFechaAntiguedaColumn);
+            public bool IscfdiFechaAntiguedadNull() {
+                return this.IsNull(this.tableNominaRecibos.cfdiFechaAntiguedadColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetcfdiFechaAntiguedaNull() {
-                this[this.tableNominaRecibos.cfdiFechaAntiguedaColumn] = global::System.Convert.DBNull;
+            public void SetcfdiFechaAntiguedadNull() {
+                this[this.tableNominaRecibos.cfdiFechaAntiguedadColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5531,42 +5414,6 @@ namespace Nominas {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IscfdiDiaNull() {
-                return this.IsNull(this.tableNominaRecibos.cfdiDiaColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetcfdiDiaNull() {
-                this[this.tableNominaRecibos.cfdiDiaColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IscfdiHoraNull() {
-                return this.IsNull(this.tableNominaRecibos.cfdiHoraColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetcfdiHoraNull() {
-                this[this.tableNominaRecibos.cfdiHoraColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IscfdiFechaNull() {
-                return this.IsNull(this.tableNominaRecibos.cfdiFechaColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetcfdiFechaNull() {
-                this[this.tableNominaRecibos.cfdiFechaColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IscfdiNoCertificadoNull() {
                 return this.IsNull(this.tableNominaRecibos.cfdiNoCertificadoColumn);
             }
@@ -5683,6 +5530,30 @@ namespace Nominas {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetcfdiTotalNull() {
                 this[this.tableNominaRecibos.cfdiTotalColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IscfdiMetodoDePagoNull() {
+                return this.IsNull(this.tableNominaRecibos.cfdiMetodoDePagoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetcfdiMetodoDePagoNull() {
+                this[this.tableNominaRecibos.cfdiMetodoDePagoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsCadenaOriginalNull() {
+                return this.IsNull(this.tableNominaRecibos.CadenaOriginalColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetCadenaOriginalNull() {
+                this[this.tableNominaRecibos.CadenaOriginalColumn] = global::System.Convert.DBNull;
             }
         }
         

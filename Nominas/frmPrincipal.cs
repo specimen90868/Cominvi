@@ -13,6 +13,7 @@ using Gma.QrCodeNet.Encoding;
 using Gma.QrCodeNet.Encoding.Windows.Render;
 using System.IO;
 using System.Drawing.Imaging;
+using System.Diagnostics;
 
 namespace Nominas
 {
@@ -573,6 +574,7 @@ namespace Nominas
         {
             frmReportes r = new frmReportes();
             r.MdiParent = this;
+            r._ReportePreNomina = false;
             r.Show();
         }
 
@@ -679,7 +681,6 @@ namespace Nominas
             lbs.MdiParent = this;
             lbs.Show();
         }
-      
     }
 }
 

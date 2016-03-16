@@ -129,11 +129,17 @@ namespace Nominas
         } 
 
         private void btnAceptar_Click(object sender, EventArgs e)
+
         {
             if (!_ReportePreNomina)
             {
                 if (noReporte != 6)
                 {
+                    if (noReporte == 8)
+                    {
+ 
+                    }
+
                     frmVisorReportes vr = new frmVisorReportes();
                     vr._inicioPeriodo = dtpInicioPeriodo.Value;
                     vr._finPeriodo = dtpFinPeriodo.Value;
@@ -368,7 +374,7 @@ namespace Nominas
             decimal totalPercepciones = 0, totalDeducciones = 0;
             decimal totalSueldo = 0, totalHoras = 0, totalAsistencia = 0, totalPuntualidad = 0, totalDespensa = 0,
                totalPrimaVacacional = 0, totalVacaciones = 0, totalAguinaldo = 0, totalIsr = 0, totalInfonavitPorcentaje = 0, totalInfonavitVSM = 0, totalInfonavitFijo = 0,
-               totalResponsabilidades = 0, totalPrestamoEmpresa = 0, totalIsrRetenido = 0, totalPension = 0, totalDescTrab = 0;
+               totalResponsabilidades = 0, totalPrestamoEmpresa = 0, totalIsrRetenido = 0, totalPension = 0, totalDescTrab = 0, totalNeto = 0; 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 progreso = (contador * 100) / contadorDt;
@@ -396,6 +402,7 @@ namespace Nominas
                     totalPension += decimal.Parse(dt.Rows[i][24].ToString());
                     totalDescTrab += decimal.Parse(dt.Rows[i][25].ToString());
                     totalDeducciones += decimal.Parse(dt.Rows[i][26].ToString());
+                    totalNeto += decimal.Parse(dt.Rows[i][27].ToString());
 
                     for (int j = 6; j < dt.Columns.Count; j++)
                     {
@@ -425,6 +432,7 @@ namespace Nominas
                     totalPension += decimal.Parse(dt.Rows[i][24].ToString());
                     totalDescTrab += decimal.Parse(dt.Rows[i][25].ToString());
                     totalDeducciones += decimal.Parse(dt.Rows[i][26].ToString());
+                    totalNeto += decimal.Parse(dt.Rows[i][27].ToString());
 
                     for (int j = 6; j < dt.Columns.Count; j++)
                     {
@@ -437,6 +445,7 @@ namespace Nominas
 
             }
             iFil++;
+
             rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 3];
             rng.NumberFormat = "#,##0.00";
             rng.Font.Bold = true;
@@ -532,14 +541,19 @@ namespace Nominas
             rng.Font.Bold = true;
             excel.Cells[iFil, 21] = totalDeducciones.ToString();
 
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 22];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            excel.Cells[iFil, 22] = totalNeto.ToString();
+
             excel.Range["A1", "G3"].Font.Bold = true;
-            excel.Range["A5", "U5"].Font.Bold = true;
-            excel.Range["A5", "U5"].Interior.ColorIndex = 36;
-            excel.Range["A5", "J5"].Font.ColorIndex = 1;
-            excel.Range["L5", "T5"].Font.ColorIndex = 1;
-            excel.Range["K5"].Font.ColorIndex = 32;
-            excel.Range["U5"].Font.ColorIndex = 32;
-            excel.Range["B6", "U2000"].NumberFormat = "#,##0.00";
+            excel.Range["A5", "V5"].Font.Bold = true;
+            excel.Range["A5", "V5"].Interior.ColorIndex = 36;
+            excel.Range["A5", "K5"].Font.ColorIndex = 1;
+            excel.Range["M5", "U5"].Font.ColorIndex = 1;
+            excel.Range["L5"].Font.ColorIndex = 32;
+            excel.Range["V5"].Font.ColorIndex = 32;
+            excel.Range["B6", "V2000"].NumberFormat = "#,##0.00";
 
 
             workSheet.SaveAs("Reporte_Tabular.xlsx");

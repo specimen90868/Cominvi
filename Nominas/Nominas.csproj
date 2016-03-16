@@ -64,7 +64,7 @@
       <DependentUpon>dsReportes.xsd</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="dsReportes1.Designer.cs">
+    <Compile Include="dsReportes.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>dsReportes.xsd</DependentUpon>

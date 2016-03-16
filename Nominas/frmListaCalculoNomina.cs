@@ -1405,7 +1405,7 @@ namespace Nominas
                     //toolAutorizar.Enabled = false;
                     //toolGuardar.Enabled = false;
                     //toolReportes.Enabled = false;
-                    frmListaCalculoNomina_Load(sender, e);
+                    //frmListaCalculoNomina_Load(sender, e);
                     cp_OnNuevoPeriodo(periodoInicio, periodoFin);
                     
                 }
