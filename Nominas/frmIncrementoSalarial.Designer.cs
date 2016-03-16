@@ -45,6 +45,10 @@
             this.Label10 = new System.Windows.Forms.Label();
             this.Label8 = new System.Windows.Forms.Label();
             this.Label16 = new System.Windows.Forms.Label();
+            this.txtDepartamento = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.mtxtNoEmpleado = new System.Windows.Forms.MaskedTextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.toolTitulo.SuspendLayout();
             this.toolAcciones.SuspendLayout();
             this.SuspendLayout();
@@ -119,7 +123,7 @@
             // Label2
             // 
             this.Label2.AutoSize = true;
-            this.Label2.Location = new System.Drawing.Point(93, 245);
+            this.Label2.Location = new System.Drawing.Point(93, 271);
             this.Label2.Name = "Label2";
             this.Label2.Size = new System.Drawing.Size(37, 13);
             this.Label2.TabIndex = 261;
@@ -128,7 +132,7 @@
             // dtpFecha
             // 
             this.dtpFecha.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFecha.Location = new System.Drawing.Point(136, 241);
+            this.dtpFecha.Location = new System.Drawing.Point(136, 267);
             this.dtpFecha.Name = "dtpFecha";
             this.dtpFecha.Size = new System.Drawing.Size(92, 20);
             this.dtpFecha.TabIndex = 260;
@@ -136,7 +140,7 @@
             // Label9
             // 
             this.Label9.AutoSize = true;
-            this.Label9.Location = new System.Drawing.Point(35, 212);
+            this.Label9.Location = new System.Drawing.Point(35, 238);
             this.Label9.Name = "Label9";
             this.Label9.Size = new System.Drawing.Size(95, 13);
             this.Label9.TabIndex = 259;
@@ -144,7 +148,7 @@
             // 
             // txtSueldo
             // 
-            this.txtSueldo.Location = new System.Drawing.Point(136, 209);
+            this.txtSueldo.Location = new System.Drawing.Point(136, 235);
             this.txtSueldo.Name = "txtSueldo";
             this.txtSueldo.Size = new System.Drawing.Size(92, 20);
             this.txtSueldo.TabIndex = 258;
@@ -153,7 +157,7 @@
             // 
             // txtSDI
             // 
-            this.txtSDI.Location = new System.Drawing.Point(136, 153);
+            this.txtSDI.Location = new System.Drawing.Point(136, 179);
             this.txtSDI.Name = "txtSDI";
             this.txtSDI.Size = new System.Drawing.Size(92, 20);
             this.txtSDI.TabIndex = 255;
@@ -162,7 +166,7 @@
             // 
             // txtSD
             // 
-            this.txtSD.Location = new System.Drawing.Point(136, 181);
+            this.txtSD.Location = new System.Drawing.Point(136, 207);
             this.txtSD.Name = "txtSD";
             this.txtSD.ReadOnly = true;
             this.txtSD.Size = new System.Drawing.Size(92, 20);
@@ -172,7 +176,7 @@
             // Label10
             // 
             this.Label10.AutoSize = true;
-            this.Label10.Location = new System.Drawing.Point(16, 156);
+            this.Label10.Location = new System.Drawing.Point(16, 182);
             this.Label10.Name = "Label10";
             this.Label10.Size = new System.Drawing.Size(114, 13);
             this.Label10.TabIndex = 254;
@@ -181,7 +185,7 @@
             // Label8
             // 
             this.Label8.AutoSize = true;
-            this.Label8.Location = new System.Drawing.Point(63, 184);
+            this.Label8.Location = new System.Drawing.Point(63, 210);
             this.Label8.Name = "Label8";
             this.Label8.Size = new System.Drawing.Size(67, 13);
             this.Label8.TabIndex = 257;
@@ -192,17 +196,58 @@
             this.Label16.AutoSize = true;
             this.Label16.BackColor = System.Drawing.SystemColors.Control;
             this.Label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.Label16.Location = new System.Drawing.Point(13, 108);
+            this.Label16.Location = new System.Drawing.Point(13, 134);
             this.Label16.Name = "Label16";
             this.Label16.Size = new System.Drawing.Size(112, 18);
             this.Label16.TabIndex = 262;
             this.Label16.Text = "Nuevo salario";
+            // 
+            // txtDepartamento
+            // 
+            this.txtDepartamento.BackColor = System.Drawing.SystemColors.Control;
+            this.txtDepartamento.Location = new System.Drawing.Point(243, 100);
+            this.txtDepartamento.Name = "txtDepartamento";
+            this.txtDepartamento.Size = new System.Drawing.Size(164, 20);
+            this.txtDepartamento.TabIndex = 282;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(147, 103);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(90, 13);
+            this.label1.TabIndex = 281;
+            this.label1.Text = "Departamento:";
+            // 
+            // mtxtNoEmpleado
+            // 
+            this.mtxtNoEmpleado.BackColor = System.Drawing.SystemColors.Control;
+            this.mtxtNoEmpleado.Location = new System.Drawing.Point(108, 100);
+            this.mtxtNoEmpleado.Mask = "9999";
+            this.mtxtNoEmpleado.Name = "mtxtNoEmpleado";
+            this.mtxtNoEmpleado.Size = new System.Drawing.Size(33, 20);
+            this.mtxtNoEmpleado.TabIndex = 280;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(12, 104);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(90, 13);
+            this.label4.TabIndex = 279;
+            this.label4.Text = "No. Empleado:";
             // 
             // frmIncrementoSalarial
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(429, 364);
+            this.Controls.Add(this.txtDepartamento);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.mtxtNoEmpleado);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.Label16);
             this.Controls.Add(this.Label2);
             this.Controls.Add(this.dtpFecha);
@@ -246,5 +291,9 @@
         internal System.Windows.Forms.Label Label10;
         internal System.Windows.Forms.Label Label8;
         internal System.Windows.Forms.Label Label16;
+        private System.Windows.Forms.TextBox txtDepartamento;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.MaskedTextBox mtxtNoEmpleado;
+        private System.Windows.Forms.Label label4;
     }
 }

@@ -1360,7 +1360,7 @@ namespace Nominas
                 nh = new CalculoNomina.Core.NominaHelper();
                 nh.Command = cmd;
 
-                string formulaDiasAPagar = "[DiasLaborados]-[Faltas]-[DiasIncapacidad]-[DiasVacaciones]";
+                string formulaDiasAPagar = "[DiasLaborados]-[Faltas]-[DiasIncapacidad]";
                 foreach (DataGridViewRow fila in dgvEmpleados.Rows)
                 {
                     CalculoFormula cf = new CalculoFormula(int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicio, periodoFin, formulaDiasAPagar);

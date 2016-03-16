@@ -2,6 +2,5 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Altas.Core\bin\Debug\Altas.Co
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Altas.Core\bin\Debug\Altas.Core.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Altas.Core\bin\Debug\Data.Obj.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Altas.Core\bin\Debug\Data.Obj.pdb
-C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Altas.Core\obj\Debug\Altas.Core.csprojResolveAssemblyReference.cache
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Altas.Core\obj\Debug\Altas.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Altas.Core\obj\Debug\Altas.Core.pdb

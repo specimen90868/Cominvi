@@ -115,7 +115,7 @@ namespace Nominas
         private void toolCalcular_Click(object sender, EventArgs e)
         {
             int existeConcepto = 0;
-            string noConceptosPercepciones = "", noConceptosDeducciones = "";
+            //string noConceptosPercepciones = "", noConceptosDeducciones = "";
             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();
             cmd.Connection = cnx;
@@ -812,7 +812,7 @@ namespace Nominas
 
             if (lstReciboPercepciones.Count != 0)
             {
-                string formulaDiasAPagar = "[DiasLaborados]-[Faltas]-[DiasIncapacidad]-[DiasVacaciones]";
+                string formulaDiasAPagar = "[DiasLaborados]-[Faltas]-[DiasIncapacidad]";
                 FLAGCALCULO = true;
 
                 Conceptos.Core.ConceptosHelper conceptoh = new Conceptos.Core.ConceptosHelper();
