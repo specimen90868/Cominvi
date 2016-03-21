@@ -812,7 +812,7 @@ namespace Nominas
 
             if (lstReciboPercepciones.Count != 0)
             {
-                string formulaDiasAPagar = "[DiasLaborados]-[Faltas]-[DiasIncapacidad]-[DiasVacaciones]";
+                string formulaDiasAPagar = "[DiasLaborados]-[Faltas]-[DiasIncapacidad]";
                 FLAGCALCULO = true;
 
                 Conceptos.Core.ConceptosHelper conceptoh = new Conceptos.Core.ConceptosHelper();
@@ -2017,10 +2017,10 @@ namespace Nominas
                     }
 
                     int diasPagoReales = int.Parse(txtDiasPagoV.Text) + existeFaltas;
-                    if (diasPagoReales >= _periodo)
+                    if (diasPagoReales > _periodo)
                     {
                         diasPagoReales = _periodo - existeFaltas;
-                        MessageBox.Show("Existen faltas del trabajador, se ajustarán las vacaciones.", "Información");
+                        MessageBox.Show("Existen faltas del trabajador, se ajustaron las vacaciones a: " + diasPagoReales.ToString() + " dia(s).", "Información");
                     }
                     else
                     {

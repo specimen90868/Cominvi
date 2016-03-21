@@ -1509,6 +1509,13 @@
                             <FilterValue>P</FilterValue>
                           </FilterValues>
                         </Filter>
+                        <Filter>
+                          <FilterExpression>=Fields!cfdiCantidad.Value</FilterExpression>
+                          <Operator>NotEqual</Operator>
+                          <FilterValues>
+                            <FilterValue DataType="Float">0</FilterValue>
+                          </FilterValues>
+                        </Filter>
                       </Filters>
                       <ZIndex>3</ZIndex>
                       <Style>
@@ -1962,6 +1969,13 @@
                           <Operator>Equal</Operator>
                           <FilterValues>
                             <FilterValue>D</FilterValue>
+                          </FilterValues>
+                        </Filter>
+                        <Filter>
+                          <FilterExpression>=Fields!cfdiCantidad.Value</FilterExpression>
+                          <Operator>NotEqual</Operator>
+                          <FilterValues>
+                            <FilterValue DataType="Float">0</FilterValue>
                           </FilterValues>
                         </Filter>
                       </Filters>
@@ -5226,6 +5240,13 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             <FilterValue>P</FilterValue>
                           </FilterValues>
                         </Filter>
+                        <Filter>
+                          <FilterExpression>=Fields!cfdiCantidad.Value</FilterExpression>
+                          <Operator>NotEqual</Operator>
+                          <FilterValues>
+                            <FilterValue DataType="Float">0</FilterValue>
+                          </FilterValues>
+                        </Filter>
                       </Filters>
                       <ZIndex>3</ZIndex>
                       <Style>
@@ -5681,6 +5702,13 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                             <FilterValue>D</FilterValue>
                           </FilterValues>
                         </Filter>
+                        <Filter>
+                          <FilterExpression>=Fields!cfdiCantidad.Value</FilterExpression>
+                          <Operator>NotEqual</Operator>
+                          <FilterValues>
+                            <FilterValue DataType="Float">0</FilterValue>
+                          </FilterValues>
+                        </Filter>
                       </Filters>
                       <Style>
                         <Border>
@@ -5689,6 +5717,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                       </Style>
                     </Tablix>
                     <ColSpan>2</ColSpan>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell />

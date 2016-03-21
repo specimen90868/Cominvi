@@ -194,6 +194,51 @@ namespace Nominas
             bulk = new SqlBulkCopy(cnx);
             cmd.Connection = cnx;
 
+            Faltas.Core.FaltasHelper fh = new Faltas.Core.FaltasHelper();
+            fh.Command = cmd;
+
+            DateTime finIncapacidad = dtpFechaInicio.Value.AddDays(double.Parse(txtDiasIncapacidad.Text) - 1);
+            int a = 0;
+            int existeFalta = 0;
+            bool FLAGFALTAS = false;
+
+            while (dtpFechaInicio.Value.AddDays(a).Date <= finIncapacidad.Date)
+            {
+                try
+                {
+                    cnx.Open();
+                    existeFalta = (int)fh.existeFalta(_idEmpleado, dtpFechaInicio.Value.AddDays(a).Date);
+                    cnx.Close();
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show("Error: Al obtener la existencia de faltas.", "Error");
+                    cnx.Dispose();
+                    return;
+                }
+
+                if (existeFalta != 0)
+                {
+                    try
+                    {
+                        cnx.Open();
+                        fh.eliminaFalta(_idEmpleado, dtpFechaInicio.Value.AddDays(a).Date);
+                        FLAGFALTAS = true;
+                        cnx.Close();
+                    }
+                    catch (Exception error) 
+                    {
+                        MessageBox.Show("Error: Al eliminar la falta existente.", "Error");
+                        cnx.Dispose();
+                        return;
+                    }
+                }
+                a++;
+            }
+
+            if (FLAGFALTAS)
+                MessageBox.Show("Se encontraron faltas al momento de ingresar la incapacidad. \r\n \r\n Estas se quitaron.", "Confirmación");
+
             ih = new Incidencias.Core.IncidenciasHelper();
             ih.Command = cmd;
             ih.bulkCommand = bulk;
