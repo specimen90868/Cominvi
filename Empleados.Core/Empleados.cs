@@ -40,6 +40,7 @@ namespace Empleados.Core
         public string idbancario { get; set; }
         public string metodopago { get; set; }
         public int tiporegimen { get; set; }
+        public bool obracivil { get; set; }
     }
 
     public class IncrementoSalarial

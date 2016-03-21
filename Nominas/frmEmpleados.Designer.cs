@@ -100,6 +100,7 @@
             this.label21 = new System.Windows.Forms.Label();
             this.cmbTipoRegimen = new System.Windows.Forms.ComboBox();
             this.mtxtNoEmpleado = new System.Windows.Forms.MaskedTextBox();
+            this.chkObraCivil = new System.Windows.Forms.CheckBox();
             this.toolAcciones.SuspendLayout();
             this.toolEmpleado.SuspendLayout();
             this.SuspendLayout();
@@ -188,7 +189,7 @@
             this.Label16.AutoSize = true;
             this.Label16.BackColor = System.Drawing.SystemColors.Control;
             this.Label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.Label16.Location = new System.Drawing.Point(14, 73);
+            this.Label16.Location = new System.Drawing.Point(14, 66);
             this.Label16.Name = "Label16";
             this.Label16.Size = new System.Drawing.Size(139, 18);
             this.Label16.TabIndex = 208;
@@ -677,6 +678,7 @@
             this.mtxtCuentaBancaria.Name = "mtxtCuentaBancaria";
             this.mtxtCuentaBancaria.Size = new System.Drawing.Size(152, 20);
             this.mtxtCuentaBancaria.TabIndex = 242;
+            this.mtxtCuentaBancaria.Text = "0000000000";
             // 
             // mtxtCuentaClabe
             // 
@@ -685,6 +687,7 @@
             this.mtxtCuentaClabe.Name = "mtxtCuentaClabe";
             this.mtxtCuentaClabe.Size = new System.Drawing.Size(152, 20);
             this.mtxtCuentaClabe.TabIndex = 243;
+            this.mtxtCuentaClabe.Text = "000000000000000000";
             // 
             // mtxtIdBancario
             // 
@@ -693,6 +696,7 @@
             this.mtxtIdBancario.Name = "mtxtIdBancario";
             this.mtxtIdBancario.Size = new System.Drawing.Size(152, 20);
             this.mtxtIdBancario.TabIndex = 244;
+            this.mtxtIdBancario.Text = "0000";
             // 
             // dtpFechaAplicacionHistorico
             // 
@@ -759,11 +763,22 @@
             this.mtxtNoEmpleado.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.mtxtNoEmpleado.Leave += new System.EventHandler(this.mtxtNoEmpleado_Leave);
             // 
+            // chkObraCivil
+            // 
+            this.chkObraCivil.AutoSize = true;
+            this.chkObraCivil.Location = new System.Drawing.Point(126, 90);
+            this.chkObraCivil.Name = "chkObraCivil";
+            this.chkObraCivil.Size = new System.Drawing.Size(86, 17);
+            this.chkObraCivil.TabIndex = 251;
+            this.chkObraCivil.Text = "Es Obra Civil";
+            this.chkObraCivil.UseVisualStyleBackColor = true;
+            // 
             // frmEmpleados
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(696, 670);
+            this.Controls.Add(this.chkObraCivil);
             this.Controls.Add(this.mtxtNoEmpleado);
             this.Controls.Add(this.cmbTipoRegimen);
             this.Controls.Add(this.label21);
@@ -915,5 +930,6 @@
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.ComboBox cmbTipoRegimen;
         private System.Windows.Forms.MaskedTextBox mtxtNoEmpleado;
+        private System.Windows.Forms.CheckBox chkObraCivil;
     }
 }

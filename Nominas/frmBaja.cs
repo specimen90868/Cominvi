@@ -115,7 +115,7 @@ namespace Nominas
             try
             {
                 cnx.Open();
-                lstUltimaNomina = nh.obtenerUltimaNomina(GLOBALES.IDEMPRESA);
+                lstUltimaNomina = nh.obtenerUltimaNomina(GLOBALES.IDEMPRESA, true);
                 cnx.Close();
                 cnx.Dispose();
             }

@@ -123,6 +123,7 @@ namespace Empleados.Core
                 empleado.idbancario = dtEmpleados.Rows[i]["idbancario"].ToString();
                 empleado.metodopago = dtEmpleados.Rows[i]["metodopago"].ToString();
                 empleado.tiporegimen = int.Parse(dtEmpleados.Rows[i]["tiporegimen"].ToString());
+                empleado.obracivil = bool.Parse(dtEmpleados.Rows[i]["obracivil"].ToString());
 
                 lstEmpleados.Add(empleado);
             }
@@ -356,9 +357,9 @@ namespace Empleados.Core
         public int insertaEmpleado(Empleados e)
         {
             Command.CommandText = "insert into trabajadores (noempleado,nombres,paterno,materno,nombrecompleto,idempresa,idperiodo,idsalario,iddepartamento,idpuesto,fechaingreso,antiguedad," + 
-                "fechaantiguedad,antiguedadmod,fechanacimiento,edad,rfc,curp,nss,digitoverificador,tiposalario,sdi,sd,sueldo,estatus,idusuario,cuenta,clabe,idbancario,metodopago, tiporegimen) " +
+                "fechaantiguedad,antiguedadmod,fechanacimiento,edad,rfc,curp,nss,digitoverificador,tiposalario,sdi,sd,sueldo,estatus,idusuario,cuenta,clabe,idbancario,metodopago, tiporegimen, obracivil) " +
                 "values (@noempleado,@nombres,@paterno,@materno,@nombrecompleto,@idempresa,@idperiodo,@idsalario,@iddepartamento,@idpuesto,@fechaingreso,@antiguedad,@fechaantiguedad,@antiguedadmod," +
-                "@fechanacimiento,@edad,@rfc,@curp,@nss,@digitoverificador,@tiposalario,@sdi,@sd,@sueldo,@estatus,@idusuario,@cuenta,@clabe,@idbancario, @metodopago, @tiporegimen)";
+                "@fechanacimiento,@edad,@rfc,@curp,@nss,@digitoverificador,@tiposalario,@sdi,@sd,@sueldo,@estatus,@idusuario,@cuenta,@clabe,@idbancario, @metodopago, @tiporegimen, @obracivil)";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("noempleado", e.noempleado);
             Command.Parameters.AddWithValue("nombres",e.nombres);
@@ -391,6 +392,7 @@ namespace Empleados.Core
             Command.Parameters.AddWithValue("idbancario", e.idbancario);
             Command.Parameters.AddWithValue("metodopago", e.metodopago);
             Command.Parameters.AddWithValue("tiporegimen", e.tiporegimen);
+            Command.Parameters.AddWithValue("obracivil", e.obracivil);
             return Command.ExecuteNonQuery();
         }
 
@@ -399,7 +401,7 @@ namespace Empleados.Core
             Command.CommandText = "update trabajadores set noempleado = @noempleado, nombres = @nombres, paterno = @paterno, materno = @materno, nombrecompleto = @nombrecompleto," +
                 "idperiodo = @idperiodo, idsalario = @idsalario, iddepartamento = @iddepartamento, idpuesto = @idpuesto, fechaingreso = @fechaingreso, antiguedad = @antiguedad, fechaantiguedad = @fechaantiguedad," + 
                 "antiguedadmod = @antiguedadmod, fechanacimiento = @fechanacimiento, edad= @edad, rfc = @rfc, curp = @curp, nss = @nss, digitoverificador = @digitoverificador, " + 
-                "tiposalario = @tiposalario, sdi = @sdi, sd = @sd, sueldo = @sueldo, cuenta = @cuenta, clabe = @clabe, idbancario = @idbancario, metodopago = @metodopago, tiporegimen = @tiporegimen where idtrabajador = @idtrabajador";
+                "tiposalario = @tiposalario, sdi = @sdi, sd = @sd, sueldo = @sueldo, cuenta = @cuenta, clabe = @clabe, idbancario = @idbancario, metodopago = @metodopago, tiporegimen = @tiporegimen, obracivil = @obracivil where idtrabajador = @idtrabajador";
                 
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", e.idtrabajador);
@@ -431,6 +433,7 @@ namespace Empleados.Core
             Command.Parameters.AddWithValue("idbancario", e.idbancario);
             Command.Parameters.AddWithValue("metodopago", e.metodopago);
             Command.Parameters.AddWithValue("tiporegimen", e.tiporegimen);
+            Command.Parameters.AddWithValue("obracivil", e.obracivil);
             return Command.ExecuteNonQuery();
         }
 

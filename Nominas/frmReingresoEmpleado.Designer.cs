@@ -62,6 +62,7 @@
             this.mtxtNoEmpleado = new System.Windows.Forms.MaskedTextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
+            this.chkObraCivil = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label2
@@ -365,11 +366,22 @@
             this.label13.TabIndex = 256;
             this.label13.Text = "Nombre:";
             // 
+            // chkObraCivil
+            // 
+            this.chkObraCivil.AutoSize = true;
+            this.chkObraCivil.Location = new System.Drawing.Point(170, 19);
+            this.chkObraCivil.Name = "chkObraCivil";
+            this.chkObraCivil.Size = new System.Drawing.Size(86, 17);
+            this.chkObraCivil.TabIndex = 257;
+            this.chkObraCivil.Text = "Es Obra Civil";
+            this.chkObraCivil.UseVisualStyleBackColor = true;
+            // 
             // frmReingresoEmpleado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(462, 390);
+            this.Controls.Add(this.chkObraCivil);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.txtNombreCompleto);
             this.Controls.Add(this.mtxtNoEmpleado);
@@ -449,5 +461,6 @@
         private System.Windows.Forms.MaskedTextBox mtxtNoEmpleado;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.CheckBox chkObraCivil;
     }
 }

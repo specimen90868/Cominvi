@@ -33,6 +33,7 @@
             this.cmbPeriodo = new System.Windows.Forms.ComboBox();
             this.btnAceptar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
+            this.chkObraCivil = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -57,7 +58,7 @@
             // 
             this.btnAceptar.Image = ((System.Drawing.Image)(resources.GetObject("btnAceptar.Image")));
             this.btnAceptar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAceptar.Location = new System.Drawing.Point(35, 39);
+            this.btnAceptar.Location = new System.Drawing.Point(35, 60);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(75, 34);
             this.btnAceptar.TabIndex = 2;
@@ -70,7 +71,7 @@
             // 
             this.btnCancelar.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelar.Image")));
             this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancelar.Location = new System.Drawing.Point(116, 39);
+            this.btnCancelar.Location = new System.Drawing.Point(116, 60);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 34);
             this.btnCancelar.TabIndex = 3;
@@ -79,11 +80,22 @@
             this.btnCancelar.UseVisualStyleBackColor = true;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
+            // chkObraCivil
+            // 
+            this.chkObraCivil.AutoSize = true;
+            this.chkObraCivil.Location = new System.Drawing.Point(70, 39);
+            this.chkObraCivil.Name = "chkObraCivil";
+            this.chkObraCivil.Size = new System.Drawing.Size(99, 17);
+            this.chkObraCivil.TabIndex = 4;
+            this.chkObraCivil.Text = "Pago Obra Civil";
+            this.chkObraCivil.UseVisualStyleBackColor = true;
+            // 
             // frmSeleccionPeriodo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(219, 85);
+            this.ClientSize = new System.Drawing.Size(219, 106);
+            this.Controls.Add(this.chkObraCivil);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.cmbPeriodo);
@@ -104,5 +116,6 @@
         private System.Windows.Forms.ComboBox cmbPeriodo;
         private System.Windows.Forms.Button btnAceptar;
         private System.Windows.Forms.Button btnCancelar;
+        private System.Windows.Forms.CheckBox chkObraCivil;
     }
 }

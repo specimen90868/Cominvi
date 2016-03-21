@@ -47,6 +47,7 @@ namespace Nominas
         #region VARIABLES PUBLICAS
         public int _periodo;
         public int _tipoNomina;
+        public bool _obracivil;
         #endregion
 
         private void toolCargar_Click(object sender, EventArgs e)
@@ -206,7 +207,7 @@ namespace Nominas
                 try
                 {
                     cnx.Open();
-                    lstUltimaNomina = nh.obtenerUltimaNomina(GLOBALES.IDEMPRESA);
+                    lstUltimaNomina = nh.obtenerUltimaNomina(GLOBALES.IDEMPRESA, _obracivil);
                     cnx.Close();
                     cnx.Dispose();
                 }
@@ -377,14 +378,14 @@ namespace Nominas
                 cnx.Open();
                 if (_tipoNomina == GLOBALES.NORMAL || _tipoNomina == GLOBALES.EXTRAORDINARIO_NORMAL)
                 {
-                    lstEmpleadosNomina = nh.obtenerDatosEmpleado(GLOBALES.IDEMPRESA, GLOBALES.ACTIVO);
-                    lstEmpleadosFaltaIncapacidad = nh.obtenerDatosFaltaInc(GLOBALES.IDEMPRESA, GLOBALES.ACTIVO);
+                    lstEmpleadosNomina = nh.obtenerDatosEmpleado(GLOBALES.IDEMPRESA, GLOBALES.ACTIVO, _obracivil);
+                    lstEmpleadosFaltaIncapacidad = nh.obtenerDatosFaltaInc(GLOBALES.IDEMPRESA, GLOBALES.ACTIVO, _obracivil);
                 }
 
                 if (_tipoNomina == GLOBALES.ESPECIAL || _tipoNomina == GLOBALES.EXTRAORDINARIO_ESPECIAL)
                 {
-                    lstEmpleadosNomina = nh.obtenerDatosEmpleado(GLOBALES.IDEMPRESA, GLOBALES.INACTIVO);
-                    lstEmpleadosFaltaIncapacidad = nh.obtenerDatosFaltaInc(GLOBALES.IDEMPRESA, GLOBALES.INACTIVO);
+                    lstEmpleadosNomina = nh.obtenerDatosEmpleado(GLOBALES.IDEMPRESA, GLOBALES.INACTIVO, _obracivil);
+                    lstEmpleadosFaltaIncapacidad = nh.obtenerDatosFaltaInc(GLOBALES.IDEMPRESA, GLOBALES.INACTIVO, _obracivil);
                 }
 
                 cnx.Close();
@@ -423,10 +424,10 @@ namespace Nominas
             {
                 cnx.Open();
                 if (_tipoNomina == GLOBALES.NORMAL || _tipoNomina == GLOBALES.EXTRAORDINARIO_NORMAL)
-                    lstEmpleadosFaltaIncapacidad = nh.obtenerDatosFaltaInc(GLOBALES.IDEMPRESA, GLOBALES.ACTIVO);
+                    lstEmpleadosFaltaIncapacidad = nh.obtenerDatosFaltaInc(GLOBALES.IDEMPRESA, GLOBALES.ACTIVO, _obracivil);
 
                 if (_tipoNomina == GLOBALES.ESPECIAL || _tipoNomina == GLOBALES.EXTRAORDINARIO_ESPECIAL)
-                    lstEmpleadosFaltaIncapacidad = nh.obtenerDatosFaltaInc(GLOBALES.IDEMPRESA, GLOBALES.INACTIVO);
+                    lstEmpleadosFaltaIncapacidad = nh.obtenerDatosFaltaInc(GLOBALES.IDEMPRESA, GLOBALES.INACTIVO, _obracivil);
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -672,42 +673,42 @@ namespace Nominas
                 #region CONCEPTOS Y FORMULAS DEL TRABAJADOR
                 try
                 {
+                    //cnx.Open();
+                    //    lstConceptosPercepcionesModificados = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "P", int.Parse(fila.Cells["idtrabajador"].Value.ToString()),
+                    //    _tipoNomina, periodoInicio.Date, periodoFin.Date);
+                    //lstConceptosDeduccionesModificados = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "D", int.Parse(fila.Cells["idtrabajador"].Value.ToString()),
+                    //    _tipoNomina, periodoInicio.Date, periodoFin.Date);
+                    //cnx.Close();
+
+                    //if (lstConceptosPercepcionesModificados.Count != 0)
+                    //{
+                    //    for (int i = 0; i < lstConceptosPercepcionesModificados.Count; i++)
+                    //        if (lstConceptosPercepcionesModificados[i].modificado)
+                    //            noConceptosPercepciones += lstConceptosPercepcionesModificados[i].noconcepto + ",";
+                    //    if (noConceptosPercepciones != "")
+                    //        noConceptosPercepciones = noConceptosPercepciones.Substring(0, noConceptosPercepciones.Length - 1);
+                    //    else
+                    //        noConceptosPercepciones = "";
+                    //}
+                    //else
+                    //    noConceptosPercepciones = "";
+
+                    //if (lstConceptosDeduccionesModificados.Count != 0)
+                    //{
+                    //    for (int i = 0; i < lstConceptosDeduccionesModificados.Count; i++)
+                    //        if (lstConceptosDeduccionesModificados[i].modificado)
+                    //            noConceptosDeducciones += lstConceptosDeduccionesModificados[i].noconcepto + ",";
+                    //    if (noConceptosDeducciones != "")
+                    //        noConceptosDeducciones = noConceptosDeducciones.Substring(0, noConceptosDeducciones.Length - 1);
+                    //    else
+                    //        noConceptosDeducciones = "";
+                    //}
+                    //else
+                    //    noConceptosDeducciones = "";
+
                     cnx.Open();
-                        lstConceptosPercepcionesModificados = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "P", int.Parse(fila.Cells["idtrabajador"].Value.ToString()),
-                        _tipoNomina, periodoInicio.Date, periodoFin.Date);
-                    lstConceptosDeduccionesModificados = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "D", int.Parse(fila.Cells["idtrabajador"].Value.ToString()),
-                        _tipoNomina, periodoInicio.Date, periodoFin.Date);
-                    cnx.Close();
-
-                    if (lstConceptosPercepcionesModificados.Count != 0)
-                    {
-                        for (int i = 0; i < lstConceptosPercepcionesModificados.Count; i++)
-                            if (lstConceptosPercepcionesModificados[i].modificado)
-                                noConceptosPercepciones += lstConceptosPercepcionesModificados[i].noconcepto + ",";
-                        if (noConceptosPercepciones != "")
-                            noConceptosPercepciones = noConceptosPercepciones.Substring(0, noConceptosPercepciones.Length - 1);
-                        else
-                            noConceptosPercepciones = "";
-                    }
-                    else
-                        noConceptosPercepciones = "";
-
-                    if (lstConceptosDeduccionesModificados.Count != 0)
-                    {
-                        for (int i = 0; i < lstConceptosDeduccionesModificados.Count; i++)
-                            if (lstConceptosDeduccionesModificados[i].modificado)
-                                noConceptosDeducciones += lstConceptosDeduccionesModificados[i].noconcepto + ",";
-                        if (noConceptosDeducciones != "")
-                            noConceptosDeducciones = noConceptosDeducciones.Substring(0, noConceptosDeducciones.Length - 1);
-                        else
-                            noConceptosDeducciones = "";
-                    }
-                    else
-                        noConceptosDeducciones = "";
-
-                    cnx.Open();
-                    lstConceptosPercepciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "P", int.Parse(fila.Cells["idtrabajador"].Value.ToString()), noConceptosPercepciones);
-                    lstConceptosDeducciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "D", int.Parse(fila.Cells["idtrabajador"].Value.ToString()), noConceptosDeducciones);
+                    lstConceptosPercepciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "P", int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicio.Date, periodoFin.Date);
+                    lstConceptosDeducciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "D", int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicio.Date, periodoFin.Date);
                     cnx.Close();
                 }
                 catch (Exception error)
@@ -1388,23 +1389,12 @@ namespace Nominas
                 try
                 {
                     cnx.Open();
-                    nh.stpAutorizaNomina(GLOBALES.IDEMPRESA, periodoInicio.Date, periodoFin.Date, GLOBALES.IDUSUARIO, _tipoNomina);
+                    nh.stpAutorizaNomina(GLOBALES.IDEMPRESA, periodoInicio.Date, periodoFin.Date, GLOBALES.IDUSUARIO, _tipoNomina, _obracivil);
                     cnx.Close();
                     cnx.Dispose();
                     MessageBox.Show("Nomina autorizada.", "Confirmación");
-
-                    //toolFiltro.Enabled = false;
-                    //toolOrdenar.Enabled = false;
-                    //toolSobreRecibo.Enabled = false;
-                    //toolCalcular.Enabled = false;
-                    //toolMostrarDatos.Enabled = false;
-                    //toolStripButton1.Enabled = false;
-                    //toolCargar.Enabled = false;
-                    //toolCargaFaltas.Enabled = false;
-                    //toolCargaVacaciones.Enabled = false;
-                    //toolAutorizar.Enabled = false;
-                    //toolGuardar.Enabled = false;
-                    //toolReportes.Enabled = false;
+                    obtenerPeriodoCalculo();
+                    spn_OnPreNomina(periodoInicio, periodoFin);
                     //frmListaCalculoNomina_Load(sender, e);
                     cp_OnNuevoPeriodo(periodoInicio, periodoFin);
                     

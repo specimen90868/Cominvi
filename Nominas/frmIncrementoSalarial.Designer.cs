@@ -49,8 +49,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.mtxtNoEmpleado = new System.Windows.Forms.MaskedTextBox();
             this.label4 = new System.Windows.Forms.Label();
+<<<<<<< HEAD
             this.label3 = new System.Windows.Forms.Label();
             this.txtPuesto = new System.Windows.Forms.TextBox();
+=======
+>>>>>>> refs/remotes/origin/iss2
             this.toolTitulo.SuspendLayout();
             this.toolAcciones.SuspendLayout();
             this.SuspendLayout();
@@ -125,7 +128,11 @@
             // Label2
             // 
             this.Label2.AutoSize = true;
+<<<<<<< HEAD
             this.Label2.Location = new System.Drawing.Point(92, 296);
+=======
+            this.Label2.Location = new System.Drawing.Point(93, 271);
+>>>>>>> refs/remotes/origin/iss2
             this.Label2.Name = "Label2";
             this.Label2.Size = new System.Drawing.Size(37, 13);
             this.Label2.TabIndex = 261;
@@ -134,7 +141,11 @@
             // dtpFecha
             // 
             this.dtpFecha.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+<<<<<<< HEAD
             this.dtpFecha.Location = new System.Drawing.Point(135, 292);
+=======
+            this.dtpFecha.Location = new System.Drawing.Point(136, 267);
+>>>>>>> refs/remotes/origin/iss2
             this.dtpFecha.Name = "dtpFecha";
             this.dtpFecha.Size = new System.Drawing.Size(92, 20);
             this.dtpFecha.TabIndex = 260;
@@ -142,7 +153,11 @@
             // Label9
             // 
             this.Label9.AutoSize = true;
+<<<<<<< HEAD
             this.Label9.Location = new System.Drawing.Point(34, 263);
+=======
+            this.Label9.Location = new System.Drawing.Point(35, 238);
+>>>>>>> refs/remotes/origin/iss2
             this.Label9.Name = "Label9";
             this.Label9.Size = new System.Drawing.Size(95, 13);
             this.Label9.TabIndex = 259;
@@ -150,7 +165,11 @@
             // 
             // txtSueldo
             // 
+<<<<<<< HEAD
             this.txtSueldo.Location = new System.Drawing.Point(135, 260);
+=======
+            this.txtSueldo.Location = new System.Drawing.Point(136, 235);
+>>>>>>> refs/remotes/origin/iss2
             this.txtSueldo.Name = "txtSueldo";
             this.txtSueldo.Size = new System.Drawing.Size(92, 20);
             this.txtSueldo.TabIndex = 258;
@@ -159,7 +178,11 @@
             // 
             // txtSDI
             // 
+<<<<<<< HEAD
             this.txtSDI.Location = new System.Drawing.Point(135, 204);
+=======
+            this.txtSDI.Location = new System.Drawing.Point(136, 179);
+>>>>>>> refs/remotes/origin/iss2
             this.txtSDI.Name = "txtSDI";
             this.txtSDI.Size = new System.Drawing.Size(92, 20);
             this.txtSDI.TabIndex = 255;
@@ -168,7 +191,11 @@
             // 
             // txtSD
             // 
+<<<<<<< HEAD
             this.txtSD.Location = new System.Drawing.Point(135, 232);
+=======
+            this.txtSD.Location = new System.Drawing.Point(136, 207);
+>>>>>>> refs/remotes/origin/iss2
             this.txtSD.Name = "txtSD";
             this.txtSD.ReadOnly = true;
             this.txtSD.Size = new System.Drawing.Size(92, 20);
@@ -178,7 +205,11 @@
             // Label10
             // 
             this.Label10.AutoSize = true;
+<<<<<<< HEAD
             this.Label10.Location = new System.Drawing.Point(15, 207);
+=======
+            this.Label10.Location = new System.Drawing.Point(16, 182);
+>>>>>>> refs/remotes/origin/iss2
             this.Label10.Name = "Label10";
             this.Label10.Size = new System.Drawing.Size(114, 13);
             this.Label10.TabIndex = 254;
@@ -187,7 +218,11 @@
             // Label8
             // 
             this.Label8.AutoSize = true;
+<<<<<<< HEAD
             this.Label8.Location = new System.Drawing.Point(62, 235);
+=======
+            this.Label8.Location = new System.Drawing.Point(63, 210);
+>>>>>>> refs/remotes/origin/iss2
             this.Label8.Name = "Label8";
             this.Label8.Size = new System.Drawing.Size(67, 13);
             this.Label8.TabIndex = 257;
@@ -198,7 +233,11 @@
             this.Label16.AutoSize = true;
             this.Label16.BackColor = System.Drawing.SystemColors.Control;
             this.Label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
+<<<<<<< HEAD
             this.Label16.Location = new System.Drawing.Point(12, 165);
+=======
+            this.Label16.Location = new System.Drawing.Point(13, 134);
+>>>>>>> refs/remotes/origin/iss2
             this.Label16.Name = "Label16";
             this.Label16.Size = new System.Drawing.Size(112, 18);
             this.Label16.TabIndex = 262;
@@ -207,7 +246,11 @@
             // txtDepartamento
             // 
             this.txtDepartamento.BackColor = System.Drawing.SystemColors.Control;
+<<<<<<< HEAD
             this.txtDepartamento.Location = new System.Drawing.Point(247, 103);
+=======
+            this.txtDepartamento.Location = new System.Drawing.Point(243, 100);
+>>>>>>> refs/remotes/origin/iss2
             this.txtDepartamento.Name = "txtDepartamento";
             this.txtDepartamento.Size = new System.Drawing.Size(164, 20);
             this.txtDepartamento.TabIndex = 282;
@@ -216,7 +259,11 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+<<<<<<< HEAD
             this.label1.Location = new System.Drawing.Point(151, 106);
+=======
+            this.label1.Location = new System.Drawing.Point(147, 103);
+>>>>>>> refs/remotes/origin/iss2
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(90, 13);
             this.label1.TabIndex = 281;
@@ -225,7 +272,11 @@
             // mtxtNoEmpleado
             // 
             this.mtxtNoEmpleado.BackColor = System.Drawing.SystemColors.Control;
+<<<<<<< HEAD
             this.mtxtNoEmpleado.Location = new System.Drawing.Point(112, 103);
+=======
+            this.mtxtNoEmpleado.Location = new System.Drawing.Point(108, 100);
+>>>>>>> refs/remotes/origin/iss2
             this.mtxtNoEmpleado.Mask = "9999";
             this.mtxtNoEmpleado.Name = "mtxtNoEmpleado";
             this.mtxtNoEmpleado.Size = new System.Drawing.Size(33, 20);
@@ -235,12 +286,17 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+<<<<<<< HEAD
             this.label4.Location = new System.Drawing.Point(16, 106);
+=======
+            this.label4.Location = new System.Drawing.Point(12, 104);
+>>>>>>> refs/remotes/origin/iss2
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(90, 13);
             this.label4.TabIndex = 279;
             this.label4.Text = "No. Empleado:";
             // 
+<<<<<<< HEAD
             // label3
             // 
             this.label3.AutoSize = true;
@@ -259,13 +315,19 @@
             this.txtPuesto.Size = new System.Drawing.Size(164, 20);
             this.txtPuesto.TabIndex = 284;
             // 
+=======
+>>>>>>> refs/remotes/origin/iss2
             // frmIncrementoSalarial
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+<<<<<<< HEAD
             this.ClientSize = new System.Drawing.Size(421, 364);
             this.Controls.Add(this.txtPuesto);
             this.Controls.Add(this.label3);
+=======
+            this.ClientSize = new System.Drawing.Size(429, 364);
+>>>>>>> refs/remotes/origin/iss2
             this.Controls.Add(this.txtDepartamento);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.mtxtNoEmpleado);
@@ -317,7 +379,10 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.MaskedTextBox mtxtNoEmpleado;
         private System.Windows.Forms.Label label4;
+<<<<<<< HEAD
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtPuesto;
+=======
+>>>>>>> refs/remotes/origin/iss2
     }
 }

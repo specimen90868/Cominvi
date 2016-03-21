@@ -35,6 +35,7 @@ namespace Nominas
         #region VARIABLES PUBLICAS
         public int _catalogo;
         public int _tipoNomina;
+        public bool _obracivil;
         #endregion
 
         private void frmBuscar_Load(object sender, EventArgs e)
