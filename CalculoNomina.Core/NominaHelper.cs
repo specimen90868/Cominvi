@@ -257,6 +257,18 @@ namespace CalculoNomina.Core
             return dtPagoNomina;
         }
 
+        public DataTable obtenerGravadosExentos(tmpPagoNomina pn)
+        {
+            DataTable dtPagoNomina = new DataTable();
+            Command.CommandText = "exec stp_rptGravadosExentos @idempresa, @fechainicio, @fechafin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", pn.idempresa);
+            Command.Parameters.AddWithValue("fechainicio", pn.fechainicio);
+            Command.Parameters.AddWithValue("fechafin", pn.fechafin);
+            dtPagoNomina = SelectData(Command);
+            return dtPagoNomina;
+        }
+
         public object existeNomina(int idempresa, DateTime inicio, DateTime fin)
         {
             Command.CommandText = "select count(*) from PagoNomina where idempresa = @idempresa and fechainicio = @fechainicio and fechafin = @fechafin";

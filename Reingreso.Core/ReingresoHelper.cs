@@ -32,6 +32,27 @@ namespace Reingreso.Core
             return lstReingresos;
         }
 
+        public List<Reingresos> obtenerReingreso(Reingresos r)
+        {
+            List<Reingresos> lstReingresos = new List<Reingresos>();
+            DataTable dtReingresos = new DataTable();
+            Command.CommandText = @"select fechaingreso from suaReingresos where idempresa = @idempresa and idtrabajador = @idtrabajador
+                    and periodoinicio = @periodoinicio and periodofin = @periodofin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", r.idempresa);
+            Command.Parameters.AddWithValue("idtrabajador", r.idtrabajador);
+            Command.Parameters.AddWithValue("periodoinicio", r.periodoinicio);
+            Command.Parameters.AddWithValue("periodofin", r.periodofin);
+            dtReingresos = SelectData(Command);
+            for (int i = 0; i < dtReingresos.Rows.Count; i++)
+            {
+                Reingresos reingreso = new Reingresos();
+                reingreso.fechaingreso = DateTime.Parse(dtReingresos.Rows[i]["fechaingreso"].ToString());
+                lstReingresos.Add(reingreso);
+            }
+            return lstReingresos;
+        }
+
         public int insertaReingreso(Reingresos r)
         {
             Command.CommandText = "insert into suaReingresos (idtrabajador, idempresa, registropatronal, nss, fechaingreso, diasproporcionales, sdi, periodoinicio, periodofin) " +

@@ -77,7 +77,8 @@
             "Total General",
             "Tabular",
             "Recibos de Nomina",
-            "Recibos Timbrados"});
+            "Recibos Timbrados",
+            "Gravados y Exentos"});
             this.cmbTipoReporte.Location = new System.Drawing.Point(16, 117);
             this.cmbTipoReporte.Name = "cmbTipoReporte";
             this.cmbTipoReporte.Size = new System.Drawing.Size(138, 21);

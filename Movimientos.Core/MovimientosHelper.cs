@@ -96,14 +96,16 @@ namespace Movimientos.Core
 
         public int actualizaMovimiento(Movimientos m)
         {
-            Command.CommandText = "update movimientos set idconcepto = @idconcepto, cantidad = @cantidad, fechainicio = @fechainicio, fechafin = @fechafin " +
-                "where id = @id";
+            Command.CommandText = @"update movimientos set cantidad = @cantidad 
+                where idtrabajador = @idtrabajador and idempresa = @idempresa and fechainicio = @fechainicio 
+                and fechafin = @fechafin and idconcepto = @idconcepto";
             Command.Parameters.Clear();
-            Command.Parameters.AddWithValue("id", m.idtrabajador);
+            Command.Parameters.AddWithValue("idtrabajador", m.idtrabajador);
             Command.Parameters.AddWithValue("idconcepto", m.idconcepto);
             Command.Parameters.AddWithValue("cantidad", m.cantidad);
             Command.Parameters.AddWithValue("fechainicio", m.fechainicio);
             Command.Parameters.AddWithValue("fechafin", m.fechafin);
+            Command.Parameters.AddWithValue("idempresa", m.idempresa);
             return Command.ExecuteNonQuery();
         }
 

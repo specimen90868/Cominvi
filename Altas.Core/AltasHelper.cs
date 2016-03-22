@@ -51,36 +51,19 @@ namespace Altas.Core
         {
             DataTable dtAltas = new DataTable();
             List<Altas> lstAltas = new List<Altas>();
-            Command.CommandText = "select * from suaAltas where idempresa = @idempresa and id = @id";
+            Command.CommandText = @"select fechaingreso from suaAltas where idempresa = @idempresa and idtrabajador = @idtrabajador
+                        and periodoinicio = @periodoinicio and periodofin = @periodofin";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", e.idempresa);
-            Command.Parameters.AddWithValue("id", e.id);
+            Command.Parameters.AddWithValue("idtrabajador", e.idtrabajador);
+            Command.Parameters.AddWithValue("periodoinicio", e.periodoInicio);
+            Command.Parameters.AddWithValue("periodofin", e.periodoFin);
             dtAltas = SelectData(Command);
 
             for (int i = 0; i < dtAltas.Rows.Count; i++)
             {
                 Altas alta = new Altas();
-                alta.id = int.Parse(dtAltas.Rows[i]["id"].ToString());
-                alta.idtrabajador = int.Parse(dtAltas.Rows[i]["idtrabajador"].ToString());
-                alta.idempresa = int.Parse(dtAltas.Rows[i]["idempresa"].ToString());
-                alta.registropatronal = dtAltas.Rows[i]["registropatronal"].ToString();
-                alta.nss = dtAltas.Rows[i]["nss"].ToString();
-                alta.rfc = dtAltas.Rows[i]["rfc"].ToString();
-                alta.curp = dtAltas.Rows[i]["curp"].ToString();
-                alta.paterno = dtAltas.Rows[i]["paterno"].ToString();
-                alta.materno = dtAltas.Rows[i]["materno"].ToString();
-                alta.nombre = dtAltas.Rows[i]["nombre"].ToString();
-                alta.contrato = int.Parse(dtAltas.Rows[i]["contrato"].ToString());
-                alta.jornada = int.Parse(dtAltas.Rows[i]["jornada"].ToString());
                 alta.fechaingreso = DateTime.Parse(dtAltas.Rows[i]["fechaingreso"].ToString());
-                alta.diasproporcionales = int.Parse(dtAltas.Rows[i]["diasproporcionales"].ToString());
-                alta.sdi = double.Parse(dtAltas.Rows[i]["sdi"].ToString());
-                alta.cp = dtAltas.Rows[i]["cp"].ToString();
-                alta.fechanacimiento = DateTime.Parse(dtAltas.Rows[i]["fechanacimiento"].ToString());
-                alta.estado = dtAltas.Rows[i]["estado"].ToString();
-                alta.noestado = int.Parse(dtAltas.Rows[i]["noestado"].ToString());
-                alta.clinica = dtAltas.Rows[i]["clinica"].ToString();
-                alta.sexo = dtAltas.Rows[i]["sexo"].ToString();
                 lstAltas.Add(alta);
             }
 

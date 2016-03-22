@@ -41,9 +41,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolTitulo = new System.Windows.Forms.ToolStrip();
             this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
-            this.toolAbrir = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolGuardar = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolAutorizar = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolReportes = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,6 +48,7 @@
             this.empleadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolReporteDepto = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTabular = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolReciboNomina = new System.Windows.Forms.ToolStripMenuItem();
             this.toolPeriodo = new System.Windows.Forms.ToolStripLabel();
             this.toolCambiaPeriodo = new System.Windows.Forms.ToolStripButton();
             this.toolBusqueda = new System.Windows.Forms.ToolStrip();
@@ -124,7 +122,6 @@
             this.dataGridViewTextBoxColumn19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.toolReciboNomina = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTitulo.SuspendLayout();
             this.toolBusqueda.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmpleados)).BeginInit();
@@ -154,9 +151,6 @@
             // 
             this.toolStripSplitButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripSplitButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolAbrir,
-            this.toolGuardar,
-            this.toolStripSeparator5,
             this.toolAutorizar,
             this.toolStripSeparator2,
             this.toolReportes});
@@ -166,30 +160,6 @@
             this.toolStripSplitButton1.Name = "toolStripSplitButton1";
             this.toolStripSplitButton1.Size = new System.Drawing.Size(99, 29);
             this.toolStripSplitButton1.Text = "Nómina";
-            // 
-            // toolAbrir
-            // 
-            this.toolAbrir.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.toolAbrir.Name = "toolAbrir";
-            this.toolAbrir.Size = new System.Drawing.Size(152, 22);
-            this.toolAbrir.Text = "Abrir";
-            this.toolAbrir.Visible = false;
-            this.toolAbrir.Click += new System.EventHandler(this.toolAbrir_Click);
-            // 
-            // toolGuardar
-            // 
-            this.toolGuardar.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.toolGuardar.Name = "toolGuardar";
-            this.toolGuardar.Size = new System.Drawing.Size(152, 22);
-            this.toolGuardar.Text = "Guardar";
-            this.toolGuardar.Visible = false;
-            this.toolGuardar.Click += new System.EventHandler(this.toolGuardar_Click);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(149, 6);
-            this.toolStripSeparator5.Visible = false;
             // 
             // toolAutorizar
             // 
@@ -244,6 +214,13 @@
             this.toolTabular.Size = new System.Drawing.Size(170, 22);
             this.toolTabular.Text = "Tabular";
             this.toolTabular.Click += new System.EventHandler(this.toolTabular_Click);
+            // 
+            // toolReciboNomina
+            // 
+            this.toolReciboNomina.Name = "toolReciboNomina";
+            this.toolReciboNomina.Size = new System.Drawing.Size(170, 22);
+            this.toolReciboNomina.Text = "Recibo de nomina";
+            this.toolReciboNomina.Click += new System.EventHandler(this.toolReciboNomina_Click);
             // 
             // toolPeriodo
             // 
@@ -837,13 +814,6 @@
             this.dataGridViewTextBoxColumn21.HeaderText = "Incapacidad";
             this.dataGridViewTextBoxColumn21.Name = "dataGridViewTextBoxColumn21";
             // 
-            // toolReciboNomina
-            // 
-            this.toolReciboNomina.Name = "toolReciboNomina";
-            this.toolReciboNomina.Size = new System.Drawing.Size(170, 22);
-            this.toolReciboNomina.Text = "Recibo de nomina";
-            this.toolReciboNomina.Click += new System.EventHandler(this.toolReciboNomina_Click);
-            // 
             // frmListaCalculoNomina
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -908,14 +878,11 @@
         private System.Windows.Forms.ToolStripStatusLabel toolPorcentaje;
         private System.Windows.Forms.ToolStripStatusLabel toolEtapa;
         private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton1;
-        private System.Windows.Forms.ToolStripMenuItem toolAbrir;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem toolGuardar;
         private System.Windows.Forms.ToolStripButton toolCerrar;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem toolAutorizar;
         private System.Windows.Forms.ToolStripMenuItem toolNoEmpleado;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem toolReportes;
         private System.Windows.Forms.ToolStripMenuItem toolCaratula;
         private System.Windows.Forms.ToolStripMenuItem empleadosToolStripMenuItem;

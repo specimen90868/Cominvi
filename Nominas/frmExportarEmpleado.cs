@@ -28,6 +28,7 @@ namespace Nominas
         string tablaDireccion = "";
         string tablaComplemento = "";
         string tablaInfonavit = "";
+        string nombreArchivo = "";
         #endregion
 
         private void frmExportarEmpleado_Load(object sender, EventArgs e)
@@ -99,7 +100,14 @@ namespace Nominas
 
         private void toolExportar_Click(object sender, EventArgs e)
         {
-            workerExportar.RunWorkerAsync();
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Title = "Guardar como";
+            sfd.Filter = "Archivo de Excel (*.xlsx)|*.xlsx";
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                nombreArchivo = sfd.FileName;
+                workerExportar.RunWorkerAsync();
+            }
         }
 
         private void frmExportarEmpleado_FormClosing(object sender, FormClosingEventArgs e)
@@ -877,7 +885,7 @@ namespace Nominas
             excel.Range["A1", "AI1"].Font.Bold = true;
             excel.Range["A1", "AI1"].Interior.ColorIndex = 36;
 
-            workSheet.SaveAs("Reporte_Trabajadores" + DateTime.Now.Second.ToString() + ".xlsx");
+            workSheet.SaveAs(nombreArchivo);
             excel.Visible = true;
         }
 

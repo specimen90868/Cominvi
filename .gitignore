@@ -44,4 +44,6 @@ Temporary Items
 *.dll
 *.pdb
 *.txt
-Altas.Core/obj/Debug/Altas.Core.csprojResolveAssemblyReference.cache
+*.exe
+*.cache
+*.dll

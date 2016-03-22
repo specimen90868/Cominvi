@@ -1249,7 +1249,7 @@ namespace Nominas
             ch.Command = cmd;
 
             Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
-            concepto.noconcepto = 2;
+            concepto.noconcepto = 2; //HORAS EXTRAS DOBLES
             concepto.idempresa = GLOBALES.IDEMPRESA;
 
             cnx.Open();
@@ -1318,7 +1318,7 @@ namespace Nominas
             CalculoNomina.Core.tmpPagoNomina despensa = new CalculoNomina.Core.tmpPagoNomina();
             despensa.idempresa = GLOBALES.IDEMPRESA;
             despensa.idtrabajador = idTrabajador;
-            despensa.noconcepto = 6; //CONCEPTO HORAS EXTRAS DOBLES
+            despensa.noconcepto = 6; //CONCEPTO DESPENSA
             despensa.fechainicio = _inicioPeriodo.Date;
             despensa.fechafin = _finPeriodo.Date;
             despensa.cantidad = cantidad;
@@ -1408,6 +1408,7 @@ namespace Nominas
         private void btnGuardar_Click(object sender, EventArgs e)
         {
             DateTime periodoInicio, periodoFin;
+            bool EsAlta = false, EsReingreso = false, EsBaja = false;
 
             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();
@@ -1416,11 +1417,46 @@ namespace Nominas
             Empleados.Core.EmpleadosHelper emph = new Empleados.Core.EmpleadosHelper();
             emph.Command = cmd;
 
+            Altas.Core.AltasHelper ah = new Altas.Core.AltasHelper();
+            ah.Command = cmd;
+
+            Reingreso.Core.ReingresoHelper rh = new Reingreso.Core.ReingresoHelper();
+            rh.Command = cmd;
+
+            Bajas.Core.BajasHelper bh = new Bajas.Core.BajasHelper();
+            bh.Command = cmd;
+
+            List<Altas.Core.Altas> lstAlta = new List<Altas.Core.Altas>();
+            List<Reingreso.Core.Reingresos> lstReingreso = new List<Reingreso.Core.Reingresos>();
+            List<Bajas.Core.Bajas> lstBaja = new List<Bajas.Core.Bajas>();
+
+            Altas.Core.Altas alta = new Altas.Core.Altas();
+            alta.idempresa = GLOBALES.IDEMPRESA;
+            alta.idtrabajador = idTrabajador;
+            alta.periodoInicio = _inicioPeriodo.Date;
+            alta.periodoFin = _finPeriodo.Date;
+
+            Reingreso.Core.Reingresos reingreso = new Reingreso.Core.Reingresos();
+            reingreso.idempresa = GLOBALES.IDEMPRESA;
+            reingreso.idtrabajador = idTrabajador;
+            reingreso.periodoinicio = _inicioPeriodo.Date;
+            reingreso.periodofin = _finPeriodo.Date;
+
+            Bajas.Core.Bajas baja = new Bajas.Core.Bajas();
+            baja.idempresa = GLOBALES.IDEMPRESA;
+            baja.idtrabajador = idTrabajador;
+            baja.periodoinicio = _inicioPeriodo.Date;
+            baja.periodofin = _finPeriodo.Date;
+
             int idperiodo = 0;
             try
             {
                 cnx.Open();
                 idperiodo = (int)emph.obtenerIdPeriodo(idTrabajador);
+
+                lstAlta = ah.obtenerAlta(alta);
+                lstReingreso = rh.obtenerReingreso(reingreso);
+                lstBaja = bh.obtenerBaja(baja);
                 cnx.Close();
             }
             catch
@@ -1471,6 +1507,12 @@ namespace Nominas
                 }
             }
 
+            if (lstAlta.Count != 0)
+                EsAlta = true;
+            if (lstBaja.Count != 0)
+                EsBaja = true;
+            if (lstReingreso.Count != 0)
+                EsReingreso = true;
 
             Faltas.Core.FaltasHelper fh = new Faltas.Core.FaltasHelper();
             fh.Command = cmd;
@@ -1511,28 +1553,59 @@ namespace Nominas
                     Vacaciones.Core.VacacionesHelper vh = new Vacaciones.Core.VacacionesHelper();
                     vh.Command = cmd;
 
-                    try
+                    bool FLAG_FALTAS = false;
+
+                    if (EsAlta)
                     {
-                        cnx.Open();
-                        existe = (int)ih.existeIncidenciaEnFalta(idTrabajador, dtpFecha.Value.AddDays(i).Date);
-                        existeVacacion = (int)vh.existeVacacionEnFalta(idTrabajador, dtpFecha.Value.AddDays(i).Date);
-                        cnx.Close();
-                    }
-                    catch
-                    {
-                        MessageBox.Show("Error: Al guardar la falta.", "Error");
-                        cnx.Dispose();
-                        return;
+                        if (dtpFecha.Value.AddDays(i).Date < lstAlta[0].fechaingreso.Date)
+                        {
+                            MessageBox.Show("Error: Alta del empleado, Fecha de Ingreso = " + lstAlta[0].fechaingreso.Date.ToShortDateString() + "\r\n Fecha de la falta es menor.", "Error");
+                            FLAG_FALTAS = true;
+                        }
+                        else
+                            FLAG_FALTAS = false;
                     }
 
-                    if (existe == 0 && existeVacacion == 0)
+                    if (EsReingreso)
+                    {
+                        if (dtpFecha.Value.AddDays(i).Date < lstReingreso[0].fechaingreso.Date)
+                        {
+                            MessageBox.Show("Error: Alta del empleado, Fecha de Reingreso = " + lstReingreso[0].fechaingreso.Date.ToShortDateString() + "\r\n Fecha de la falta es menor.", "Error");
+                            FLAG_FALTAS = true;
+                        }
+                        else
+                            FLAG_FALTAS = false;
+                    }
+
+                    if (EsBaja)
+                    {
+                        if (dtpFecha.Value.AddDays(i).Date > lstBaja[0].fecha.Date)
+                        {
+                            MessageBox.Show("Error: Alta del empleado, Fecha de Reingreso = " + lstBaja[0].fecha.Date.ToShortDateString() + "\r\n Fecha de la falta es mayor.", "Error");
+                            FLAG_FALTAS = true;
+                        }
+                        else
+                            FLAG_FALTAS = false;
+                    }
+
+                    if (!FLAG_FALTAS)
+                    {
                         try
                         {
-                            //cnx.Open();
-                            //fh.insertaFalta(falta);
-                            //cnx.Close();
-                            //cnx.Dispose();
-                            //muestraFaltas();
+                            cnx.Open();
+                            existe = (int)ih.existeIncidenciaEnFalta(idTrabajador, dtpFecha.Value.AddDays(i).Date);
+                            existeVacacion = (int)vh.existeVacacionEnFalta(idTrabajador, dtpFecha.Value.AddDays(i).Date);
+                            cnx.Close();
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Error: Al guardar la falta.", "Error");
+                            cnx.Dispose();
+                            return;
+                        }
+
+                        if (existe == 0 && existeVacacion == 0)
+                        {
                             Faltas.Core.Faltas falta = new Faltas.Core.Faltas();
                             falta.idtrabajador = idTrabajador;
                             falta.idempresa = GLOBALES.IDEMPRESA;
@@ -1543,57 +1616,59 @@ namespace Nominas
                             falta.periodo = periodo;
                             lstFaltas.Add(falta);
                         }
-                        catch
-                        {
-                            MessageBox.Show("Error: Al guardar la falta.", "Error");
-                            cnx.Dispose();
-                        }
-                    else
-                        MessageBox.Show("La falta ingresada, se empalma con una incapacidad y/o dia de vacación del trabajador.", "Error");
+                        else
+                            MessageBox.Show("La falta ingresada, se empalma con una incapacidad y/o dia de vacación del trabajador.",
+                                "Error");
+                    }
+                    
                 }
             }
 
-            SqlBulkCopy bulk = new SqlBulkCopy(cnx);
-            fh.bulkCommand = bulk;
-
-            DataTable dtFalta = new DataTable();
-            DataRow dtFilaFalta;
-            dtFalta.Columns.Add("id", typeof(Int32));
-            dtFalta.Columns.Add("idtrabajador", typeof(Int32));
-            dtFalta.Columns.Add("idempresa", typeof(Int32));
-            dtFalta.Columns.Add("periodo", typeof(Int32));
-            dtFalta.Columns.Add("faltas", typeof(Int32));
-            dtFalta.Columns.Add("fechainicio", typeof(DateTime));
-            dtFalta.Columns.Add("fechafin", typeof(DateTime));
-            dtFalta.Columns.Add("fecha", typeof(DateTime));
-
-            for (int i = 0; i < lstFaltas.Count; i++)
+            if (lstFaltas.Count != 0)
             {
-                dtFilaFalta = dtFalta.NewRow();
-                dtFilaFalta["id"] = i + 1;
-                dtFilaFalta["idtrabajador"] = lstFaltas[i].idtrabajador;
-                dtFilaFalta["idempresa"] = lstFaltas[i].idempresa;
-                dtFilaFalta["periodo"] = lstFaltas[i].periodo;
-                dtFilaFalta["faltas"] = lstFaltas[i].faltas;
-                dtFilaFalta["fechainicio"] = lstFaltas[i].fechainicio;
-                dtFilaFalta["fechafin"] = lstFaltas[i].fechafin;
-                dtFilaFalta["fecha"] = lstFaltas[i].fecha;
-                dtFalta.Rows.Add(dtFilaFalta);
-            }
+                SqlBulkCopy bulk = new SqlBulkCopy(cnx);
+                fh.bulkCommand = bulk;
 
-            try
-            {
-                cnx.Open();
-                fh.bulkFaltas(dtFalta, "tmpFaltas");
-                fh.stpFaltas();
-                cnx.Close();
-                cnx.Dispose();
-                muestraFaltas();
+                DataTable dtFalta = new DataTable();
+                DataRow dtFilaFalta;
+                dtFalta.Columns.Add("id", typeof(Int32));
+                dtFalta.Columns.Add("idtrabajador", typeof(Int32));
+                dtFalta.Columns.Add("idempresa", typeof(Int32));
+                dtFalta.Columns.Add("periodo", typeof(Int32));
+                dtFalta.Columns.Add("faltas", typeof(Int32));
+                dtFalta.Columns.Add("fechainicio", typeof(DateTime));
+                dtFalta.Columns.Add("fechafin", typeof(DateTime));
+                dtFalta.Columns.Add("fecha", typeof(DateTime));
+
+                for (int i = 0; i < lstFaltas.Count; i++)
+                {
+                    dtFilaFalta = dtFalta.NewRow();
+                    dtFilaFalta["id"] = i + 1;
+                    dtFilaFalta["idtrabajador"] = lstFaltas[i].idtrabajador;
+                    dtFilaFalta["idempresa"] = lstFaltas[i].idempresa;
+                    dtFilaFalta["periodo"] = lstFaltas[i].periodo;
+                    dtFilaFalta["faltas"] = lstFaltas[i].faltas;
+                    dtFilaFalta["fechainicio"] = lstFaltas[i].fechainicio;
+                    dtFilaFalta["fechafin"] = lstFaltas[i].fechafin;
+                    dtFilaFalta["fecha"] = lstFaltas[i].fecha;
+                    dtFalta.Rows.Add(dtFilaFalta);
+                }
+
+                try
+                {
+                    cnx.Open();
+                    fh.bulkFaltas(dtFalta, "tmpFaltas");
+                    fh.stpFaltas();
+                    cnx.Close();
+                    cnx.Dispose();
+                    muestraFaltas();
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show("Error: \r\n \r\n" + error.Message + "\r\n \r\n Error Bulk Faltas.", "Error");
+                }
             }
-            catch (Exception error)
-            {
-                MessageBox.Show("Error: \r\n \r\n" + error.Message + "\r\n \r\n Error Bulk Faltas.", "Error");
-            }
+            
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)

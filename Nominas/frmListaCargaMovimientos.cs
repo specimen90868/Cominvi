@@ -260,6 +260,8 @@ namespace Nominas
                 pn.guardada = false;
                 pn.tiponomina = _tipoNomina;
 
+                CalculoNomina.Core.tmpPagoNomina pne;
+
                 switch (lstConcepto[0].tipoconcepto)
                 {
                     #region PERCEPCIONES
@@ -313,7 +315,7 @@ namespace Nominas
                             pn.gravado = gravado;
                         }
 
-                        CalculoNomina.Core.tmpPagoNomina pne = new CalculoNomina.Core.tmpPagoNomina();
+                        pne = new CalculoNomina.Core.tmpPagoNomina();
                         pne.idempresa = GLOBALES.IDEMPRESA;
                         pne.idtrabajador = idEmpleado;
                         pne.fechainicio = DateTime.Parse(dgvMovimientos.Rows[0].Cells["inicio"].Value.ToString());
@@ -459,6 +461,22 @@ namespace Nominas
                             if (existeConcepto == 0)
                             {
                                 lstOtrasDeducciones.Add(mov);
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    cnx.Open();
+                                    mh.actualizaMovimiento(mov);
+                                    cnx.Close();
+                                }
+                                catch
+                                {
+                                    MessageBox.Show("Error al obtener la existencia del concepto.\r\n \r\n Esta ventana se cerrará.", "Error");
+                                    cnx.Dispose();
+                                    workMovimientos.CancelAsync();
+                                    this.Dispose();
+                                }
                             }
                         }
                         break;

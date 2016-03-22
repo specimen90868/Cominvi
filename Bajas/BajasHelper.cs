@@ -33,6 +33,27 @@ namespace Bajas.Core
             return lstBaja;
         }
 
+        public List<Bajas> obtenerBaja(Bajas a)
+        {
+            List<Bajas> lstBaja = new List<Bajas>();
+            DataTable dtBajas = new DataTable();
+            Command.CommandText = @"select fecha from suaBajas where idempresa = @idempresa and idtrabajador = @idtrabajador
+                and periodoinicio = @periodoinicio and periodofin = @periodofin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", a.idempresa);
+            Command.Parameters.AddWithValue("idtrabajador", a.idtrabajador);
+            Command.Parameters.AddWithValue("periodoinicio", a.periodoinicio);
+            Command.Parameters.AddWithValue("periodofin", a.periodofin);
+            dtBajas = SelectData(Command);
+            for (int i = 0; i < dtBajas.Rows.Count; i++)
+            {
+                Bajas baja = new Bajas();
+                baja.fecha = DateTime.Parse(dtBajas.Rows[i]["fecha"].ToString());
+                lstBaja.Add(baja);
+            }
+            return lstBaja;
+        }
+
         public object existeBaja(Bajas b)
         {
             Command.CommandText = "select count(*) from suaBajas where idtrabajador = @idtrabajador and periodoinicio = @periodoinicio and periodofin = @periodofin";
