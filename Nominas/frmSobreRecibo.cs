@@ -1029,8 +1029,9 @@ namespace Nominas
                        join co in lstConceptos on p.idconcepto equals co.id
                        join em in lstEmpleado on p.idtrabajador equals em.idtrabajador
                        select new {
-                           p.id,
+                           p.idprogramacion,
                            p.idtrabajador,
+                           co.id,
                            em.noempleado,
                            em.nombrecompleto,
                            co.concepto,
@@ -1038,8 +1039,9 @@ namespace Nominas
                            p.fechafin
                        };
 
-            dgvProgramacion.Columns["idpc"].DataPropertyName = "id";
+            dgvProgramacion.Columns["idpc"].DataPropertyName = "idprogramacion";
             dgvProgramacion.Columns["idtrabajadorpc"].DataPropertyName = "idtrabajador";
+            dgvProgramacion.Columns["idconceptopc"].DataPropertyName = "id";
             dgvProgramacion.Columns["noempleadopc"].DataPropertyName = "noempleado";
             dgvProgramacion.Columns["nombrepc"].DataPropertyName = "nombrecompleto";
             dgvProgramacion.Columns["conceptopc"].DataPropertyName = "concepto";
@@ -1766,7 +1768,7 @@ namespace Nominas
 
             int fila = dgvProgramacion.CurrentCell.RowIndex;
             ProgramacionConcepto.Core.ProgramacionConcepto pc = new ProgramacionConcepto.Core.ProgramacionConcepto();
-            pc.id = int.Parse(dgvProgramacion.Rows[fila].Cells[0].Value.ToString());
+            pc.idprogramacion = int.Parse(dgvProgramacion.Rows[fila].Cells[0].Value.ToString());
 
             try{
                 cnx.Open();
@@ -1789,6 +1791,7 @@ namespace Nominas
             m._ventana = "Movimiento";
             m.OnMovimientoNuevo += m_OnMovimientoNuevo;
             m._idEmpleado = idTrabajador;
+            m._periodo = _periodo;
             m._nombreEmpleado = txtNombreCompleto.Text;
             m.Show();
         }
@@ -2434,6 +2437,16 @@ namespace Nominas
             {
                 MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
             }
+        }
+
+        private void toolEditar_Click(object sender, EventArgs e)
+        {
+            frmProgramacionConcepto pc = new frmProgramacionConcepto();
+            pc.OnProgramacion += pc_OnProgramacion;
+            pc._idEmpleado = idTrabajador;
+            pc._nombreEmpleado = txtNombreCompleto.Text;
+            pc._tipoOperacion = GLOBALES.MODIFICAR;
+            pc.Show();
         }
 
     }

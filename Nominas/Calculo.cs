@@ -639,16 +639,17 @@ namespace Nominas
                                 activoInfonavit = (bool)infh.activoInfonavit(inf);
                                 cnx.Close();
 
-                                if (!activoInfonavit)
+                                if (activoInfonavit)
                                 {
-                                    vn.cantidad = 0;
+                                    CalculoFormula cf = new CalculoFormula(lstConceptosDeducciones[i].idtrabajador, inicio.Date, fin.Date, lstConceptosDeducciones[i].formula);
+                                    vn.cantidad = double.Parse(cf.calcularFormula().ToString());
                                     vn.exento = 0;
                                     vn.gravado = 0;
                                 }
                                 else
                                 {
-                                    CalculoFormula cf = new CalculoFormula(lstConceptosDeducciones[i].idtrabajador, inicio.Date, fin.Date, lstConceptosDeducciones[i].formula);
-                                    vn.cantidad = double.Parse(cf.calcularFormula().ToString());
+                                    
+                                    vn.cantidad = 0;
                                     vn.exento = 0;
                                     vn.gravado = 0;
                                 }
@@ -660,7 +661,7 @@ namespace Nominas
                                 vn.exento = 0;
                                 vn.gravado = 0;
                             }
-                            lstValoresNomina.Add(vn);
+                                lstValoresNomina.Add(vn);
                         }
                         else
                         {
@@ -668,53 +669,6 @@ namespace Nominas
                             vn.exento = 0;
                             vn.gravado = 0;
                             lstValoresNomina.Add(vn);
-                            //double vacacionDeducciones = lstPercepciones.Where(e => e.idtrabajador == lstConceptosDeducciones[i].idtrabajador && e.noconcepto == 7).Sum(e => e.cantidad);
-                            //if (vacacionDeducciones != 0)
-                            //{
-                            //    Infonavit.Core.InfonavitHelper infh = new Infonavit.Core.InfonavitHelper();
-                            //    infh.Command = cmd;
-
-                            //    Infonavit.Core.Infonavit inf = new Infonavit.Core.Infonavit();
-                            //    inf.idtrabajador = lstConceptosDeducciones[i].idtrabajador;
-                            //    inf.idempresa = GLOBALES.IDEMPRESA;
-
-                            //    if (lstConceptosDeducciones[i].noconcepto == 9)
-                            //    {
-                            //        cnx.Open();
-                            //        activoInfonavit = (bool)infh.activoInfonavit(inf);
-                            //        cnx.Close();
-
-                            //        if (!activoInfonavit)
-                            //        {
-                            //            vn.cantidad = 0;
-                            //            vn.exento = 0;
-                            //            vn.gravado = 0;
-                            //        }
-                            //        else
-                            //        {
-                            //            CalculoFormula cf = new CalculoFormula(lstConceptosDeducciones[i].idtrabajador, inicio.Date, fin.Date, lstConceptosDeducciones[i].formula);
-                            //            vn.cantidad = double.Parse(cf.calcularFormula().ToString());
-                            //            vn.exento = 0;
-                            //            vn.gravado = 0;
-                            //        }
-                            //    }
-                            //    else
-                            //    {
-                            //        CalculoFormula cf = new CalculoFormula(lstConceptosDeducciones[i].idtrabajador, inicio.Date, fin.Date, lstConceptosDeducciones[i].formula);
-                            //        vn.cantidad = double.Parse(cf.calcularFormula().ToString());
-                            //        vn.exento = 0;
-                            //        vn.gravado = 0;
-                            //    }
-
-                            //    lstValoresNomina.Add(vn);
-                            //}
-                            //else
-                            //{
-                            //    vn.cantidad = 0;
-                            //    vn.exento = 0;
-                            //    vn.gravado = 0;
-                            //    lstValoresNomina.Add(vn);
-                            //}
                         }
                         break;
                         #endregion

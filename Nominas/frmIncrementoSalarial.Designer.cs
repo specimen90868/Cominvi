@@ -51,6 +51,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.txtPuesto = new System.Windows.Forms.TextBox();
+            this.lblFechaAplicacionHistorico = new System.Windows.Forms.Label();
+            this.dtpFechaAplicacionHistorico = new System.Windows.Forms.DateTimePicker();
             this.toolTitulo.SuspendLayout();
             this.toolAcciones.SuspendLayout();
             this.SuspendLayout();
@@ -62,7 +64,7 @@
             this.toolVentana});
             this.toolTitulo.Location = new System.Drawing.Point(0, 0);
             this.toolTitulo.Name = "toolTitulo";
-            this.toolTitulo.Size = new System.Drawing.Size(421, 27);
+            this.toolTitulo.Size = new System.Drawing.Size(429, 27);
             this.toolTitulo.TabIndex = 3;
             this.toolTitulo.Text = "toolAcciones";
             // 
@@ -80,7 +82,7 @@
             this.toolCerrar});
             this.toolAcciones.Location = new System.Drawing.Point(0, 27);
             this.toolAcciones.Name = "toolAcciones";
-            this.toolAcciones.Size = new System.Drawing.Size(421, 25);
+            this.toolAcciones.Size = new System.Drawing.Size(429, 25);
             this.toolAcciones.TabIndex = 4;
             this.toolAcciones.Text = "toolEmpresa";
             // 
@@ -254,19 +256,37 @@
             // txtPuesto
             // 
             this.txtPuesto.BackColor = System.Drawing.SystemColors.Control;
-            this.txtPuesto.Location = new System.Drawing.Point(247, 134);
+            this.txtPuesto.Location = new System.Drawing.Point(243, 134);
             this.txtPuesto.Name = "txtPuesto";
             this.txtPuesto.Size = new System.Drawing.Size(164, 20);
             this.txtPuesto.TabIndex = 284;
+            // 
+            // lblFechaAplicacionHistorico
+            // 
+            this.lblFechaAplicacionHistorico.AutoSize = true;
+            this.lblFechaAplicacionHistorico.Location = new System.Drawing.Point(240, 182);
+            this.lblFechaAplicacionHistorico.Name = "lblFechaAplicacionHistorico";
+            this.lblFechaAplicacionHistorico.Size = new System.Drawing.Size(106, 13);
+            this.lblFechaAplicacionHistorico.TabIndex = 286;
+            this.lblFechaAplicacionHistorico.Text = "Fecha de aplicación:";
+            // 
+            // dtpFechaAplicacionHistorico
+            // 
+            this.dtpFechaAplicacionHistorico.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpFechaAplicacionHistorico.Location = new System.Drawing.Point(243, 198);
+            this.dtpFechaAplicacionHistorico.Name = "dtpFechaAplicacionHistorico";
+            this.dtpFechaAplicacionHistorico.Size = new System.Drawing.Size(84, 20);
+            this.dtpFechaAplicacionHistorico.TabIndex = 285;
             // 
             // frmIncrementoSalarial
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(421, 364);
+            this.ClientSize = new System.Drawing.Size(429, 364);
+            this.Controls.Add(this.lblFechaAplicacionHistorico);
+            this.Controls.Add(this.dtpFechaAplicacionHistorico);
             this.Controls.Add(this.txtPuesto);
             this.Controls.Add(this.label3);
-            this.ClientSize = new System.Drawing.Size(429, 364);
             this.Controls.Add(this.txtDepartamento);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.mtxtNoEmpleado);
@@ -321,6 +341,8 @@
 
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtPuesto;
+        private System.Windows.Forms.Label lblFechaAplicacionHistorico;
+        private System.Windows.Forms.DateTimePicker dtpFechaAplicacionHistorico;
 
     }
 }

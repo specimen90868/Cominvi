@@ -8,7 +8,7 @@ namespace ProgramacionConcepto.Core
 {
     public class ProgramacionConcepto
     {
-        public int id { get; set; }
+        public int idprogramacion { get; set; }
         public int idtrabajador { get; set; }
         public int idempresa { get; set; }
         public int idconcepto { get; set; }

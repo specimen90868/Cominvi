@@ -23,7 +23,6 @@ namespace Nominas
         #region VARIABLES GLOBALES
         SqlConnection cnx;
         SqlCommand cmd;
-        SqlBulkCopy bulk;
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
         string ruta, nombreEmpresa;
         string ExcelConString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties='Excel 12.0;'";
@@ -142,7 +141,6 @@ namespace Nominas
 
             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();
-            bulk = new SqlBulkCopy(cnx);
             cmd.Connection = cnx;
             
             fh = new Faltas.Core.FaltasHelper();
@@ -163,7 +161,6 @@ namespace Nominas
             Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
             ph.Command = cmd;
 
-            List<Faltas.Core.Faltas> lstMovimientos = new List<Faltas.Core.Faltas>();
 
             List<Altas.Core.Altas> lstAlta;
             List<Reingreso.Core.Reingresos> lstReingreso;
@@ -257,11 +254,12 @@ namespace Nominas
                 for (int i = 0; i < falta; i++)
                 {
                     int existe = 0;
+                    int existeFalta = 0;
                     int existeVacacion = 0;
                     try
                     {
                         cnx.Open();
-                        existe = (int)fh.existeFalta(idEmpleado, fecha.AddDays(i).Date);
+                        existeFalta = (int)fh.existeFalta(idEmpleado, fecha.AddDays(i).Date);
                         cnx.Close();
                     }
                     catch
@@ -271,7 +269,7 @@ namespace Nominas
                         return;
                     }
 
-                    if (existe == 0)
+                    if (existeFalta == 0)
                     {
                         Incidencias.Core.IncidenciasHelper ih = new Incidencias.Core.IncidenciasHelper();
                         ih.Command = cmd;
@@ -285,7 +283,7 @@ namespace Nominas
                         {
                             if (fecha.AddDays(i).Date < lstAlta[0].fechaingreso.Date)
                             {
-                                MessageBox.Show("Error: Alta del empleado, Fecha de Ingreso = " + lstAlta[0].fechaingreso.Date.ToShortDateString() + "\r\n Fecha de la falta es menor.", "Error");
+                                MessageBox.Show("Error: Alta del empleado: " + fila.Cells["noempleado"].Value.ToString() + ", Fecha de Ingreso = " + lstAlta[0].fechaingreso.Date.ToShortDateString() + "\r\n Fecha de la falta es menor.", "Error");
                                 FLAG_FALTAS = true;
                             }
                             else
@@ -296,7 +294,7 @@ namespace Nominas
                         {
                             if (fecha.AddDays(i).Date < lstReingreso[0].fechaingreso.Date)
                             {
-                                MessageBox.Show("Error: Alta del empleado, Fecha de Reingreso = " + lstReingreso[0].fechaingreso.Date.ToShortDateString() + "\r\n Fecha de la falta es menor.", "Error");
+                                MessageBox.Show("Error: Alta del empleado: " + fila.Cells["noempleado"].Value.ToString() + ", Fecha de Reingreso = " + lstReingreso[0].fechaingreso.Date.ToShortDateString() + "\r\n Fecha de la falta es menor.", "Error");
                                 FLAG_FALTAS = true;
                             }
                             else
@@ -343,7 +341,10 @@ namespace Nominas
                                     f.fechainicio = DateTime.Parse(dgvCargaFaltas.Rows[0].Cells["fechainicio"].Value.ToString());
                                     f.fechafin = DateTime.Parse(dgvCargaFaltas.Rows[0].Cells["fechafin"].Value.ToString());
                                     f.fecha = fecha.AddDays(i).Date;
-                                    lstMovimientos.Add(f);
+
+                                    cnx.Open();
+                                    fh.insertaFalta(f);
+                                    cnx.Close();
                                 }
                                 catch
                                 {
@@ -357,54 +358,10 @@ namespace Nominas
                 }
                 EsAlta = false; EsReingreso = false; EsBaja = false;
             }
+            MessageBox.Show("Faltas importadas", "Confirmación");
+            cnx.Dispose();
+            dgvCargaFaltas.Rows.Clear();
 
-            if (lstMovimientos.Count != 0)
-            {
-                fh.bulkCommand = bulk;
-                DataTable dt = new DataTable();
-                DataRow dtFila;
-                dt.Columns.Add("id", typeof(Int32));
-                dt.Columns.Add("idtrabajador", typeof(Int32));
-                dt.Columns.Add("idempresa", typeof(Int32));
-                dt.Columns.Add("periodo", typeof(Int32));
-                dt.Columns.Add("faltas", typeof(Int32));
-                dt.Columns.Add("fechainicio", typeof(DateTime));
-                dt.Columns.Add("fechafin", typeof(DateTime));
-                dt.Columns.Add("fecha", typeof(DateTime));
-
-
-                int index = 1;
-                for (int i = 0; i < lstMovimientos.Count; i++)
-                {
-                    dtFila = dt.NewRow();
-                    dtFila["id"] = index;
-                    dtFila["idtrabajador"] = lstMovimientos[i].idtrabajador;
-                    dtFila["periodo"] = lstMovimientos[i].periodo;
-                    dtFila["idempresa"] = lstMovimientos[i].idempresa;
-                    dtFila["faltas"] = lstMovimientos[i].faltas;
-                    dtFila["fechainicio"] = lstMovimientos[i].fechainicio;
-                    dtFila["fechafin"] = lstMovimientos[i].fechafin;
-                    dtFila["fecha"] = lstMovimientos[i].fecha;
-                    dt.Rows.Add(dtFila);
-                    index++;
-                }
-
-                try
-                {
-                    cnx.Open();
-                    fh.bulkFaltas(dt, "tmpFaltas");
-                    fh.stpFaltas();
-                    cnx.Close();
-                    cnx.Dispose();
-
-                    MessageBox.Show("Faltas aplicadas correctamente.", "Confirmación");
-                    dgvCargaFaltas.Rows.Clear();
-                }
-                catch (Exception error)
-                {
-                    MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-                }
-            }
         }
 
         private void toolLimpiar_Click(object sender, EventArgs e)

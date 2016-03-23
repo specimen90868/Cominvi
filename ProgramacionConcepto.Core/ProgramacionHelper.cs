@@ -20,7 +20,7 @@ namespace ProgramacionConcepto.Core
             for (int i = 0; i < dtProgramacion.Rows.Count; i++)
             {
                 ProgramacionConcepto programacion = new ProgramacionConcepto();
-                programacion.id = int.Parse(dtProgramacion.Rows[i]["id"].ToString());
+                programacion.idprogramacion = int.Parse(dtProgramacion.Rows[i]["id"].ToString());
                 programacion.idtrabajador = int.Parse(dtProgramacion.Rows[i]["idtrabajador"].ToString());
                 programacion.idempresa = int.Parse(dtProgramacion.Rows[i]["idempresa"].ToString());
                 programacion.idconcepto = int.Parse(dtProgramacion.Rows[i]["idconcepto"].ToString());
@@ -42,7 +42,7 @@ namespace ProgramacionConcepto.Core
             for (int i = 0; i < dtProgramacion.Rows.Count; i++)
             {
                 ProgramacionConcepto programacion = new ProgramacionConcepto();
-                programacion.id = int.Parse(dtProgramacion.Rows[i]["id"].ToString());
+                programacion.idprogramacion = int.Parse(dtProgramacion.Rows[i]["id"].ToString());
                 programacion.idtrabajador = int.Parse(dtProgramacion.Rows[i]["idtrabajador"].ToString());
                 programacion.idempresa = int.Parse(dtProgramacion.Rows[i]["idempresa"].ToString());
                 programacion.idconcepto = int.Parse(dtProgramacion.Rows[i]["idconcepto"].ToString());
@@ -91,7 +91,7 @@ namespace ProgramacionConcepto.Core
         {
             Command.CommandText = "delete from ProgramacionConcepto where id = @id";
             Command.Parameters.Clear();
-            Command.Parameters.AddWithValue("id", pc.id);
+            Command.Parameters.AddWithValue("id", pc.idprogramacion);
             return Command.ExecuteNonQuery();
         }
     }

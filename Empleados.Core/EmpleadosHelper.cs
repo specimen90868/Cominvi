@@ -49,7 +49,9 @@ namespace Empleados.Core
         {
             DataTable dtEmpleados = new DataTable();
             List<Empleados> lstEmpleados = new List<Empleados>();
-            Command.CommandText = "select idtrabajador, noempleado, paterno, materno, nombres, nombrecompleto, curp, fechaingreso, antiguedad, sdi, sd, sueldo, cuenta, clabe, idbancario, estatus from trabajadores where idempresa = @idempresa";
+            Command.CommandText = @"select idtrabajador, noempleado, paterno, materno, nombres, nombrecompleto, curp, fechaingreso, 
+                    antiguedad, sdi, sd, sueldo, cuenta, clabe, idbancario, estatus, iddepartamento, idpuesto from trabajadores 
+                    where idempresa = @idempresa";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idEmpresa);
             dtEmpleados = SelectData(Command);
@@ -73,6 +75,8 @@ namespace Empleados.Core
                 empleado.clabe = dtEmpleados.Rows[i]["clabe"].ToString();
                 empleado.idbancario = dtEmpleados.Rows[i]["idbancario"].ToString();
                 empleado.estatus = int.Parse(dtEmpleados.Rows[i]["estatus"].ToString());
+                empleado.iddepartamento = int.Parse(dtEmpleados.Rows[i]["iddepartamento"].ToString());
+                empleado.idpuesto = int.Parse(dtEmpleados.Rows[i]["idpuesto"].ToString());
                 lstEmpleados.Add(empleado);
             }
 

@@ -135,6 +135,17 @@ namespace Nominas
             {
                 if (noReporte != 6 && noReporte != 9)
                 {
+                    if (noReporte == 8)
+                    {
+                        cnx = new SqlConnection(cdn);
+                        cmd = new SqlCommand();
+                        cmd.Connection = cnx;
+                        nh = new CalculoNomina.Core.NominaHelper();
+                        nh.Command = cmd;
+
+
+                    }
+
                     frmVisorReportes vr = new frmVisorReportes();
                     vr._inicioPeriodo = dtpInicioPeriodo.Value;
                     vr._finPeriodo = dtpFinPeriodo.Value;

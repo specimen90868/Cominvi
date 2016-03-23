@@ -153,6 +153,8 @@ namespace Nominas
 
         private void frmListaCalculoNomina_Load(object sender, EventArgs e)
         {
+            FLAGPRIMERCALCULO = false;
+
             if (_tipoNomina == GLOBALES.NORMAL)
                 CargaPerfil("Normal");
             if (_tipoNomina == GLOBALES.ESPECIAL)
@@ -221,6 +223,12 @@ namespace Nominas
                     {
                         periodoInicio = lstUltimaNomina[0].fechafin.AddDays(1);
                         periodoFin = lstUltimaNomina[0].fechafin.AddDays(7);
+
+                        //if (_obracivil)
+                        //{
+                        //    periodoInicio = periodoFin.AddDays(1);
+                        //    periodoFin = periodoFin.AddDays(7);
+                        //}
                     }
                     else
                     {
@@ -997,73 +1005,57 @@ namespace Nominas
             #region NETOS NEGATIVOS
             nh = new CalculoNomina.Core.NominaHelper();
             nh.Command = cmd;
-            List<CalculoNomina.Core.NetosNegativos> lstNetos = new List<CalculoNomina.Core.NetosNegativos>();
-            try
-            {
-                cnx.Open();
-                lstNetos = nh.obtenerNetosNegativos(GLOBALES.IDEMPRESA, periodoInicio.Date, periodoFin.Date);
-                cnx.Close();
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show("Error: Lista de Netos. \r\n \r\n" + error.Message, "Error");
-            }
-            List<CalculoNomina.Core.NetosNegativos> lstPercepcionNetos = new List<CalculoNomina.Core.NetosNegativos>();
-            List<CalculoNomina.Core.NetosNegativos> lstDeduccionNetos = new List<CalculoNomina.Core.NetosNegativos>();
-            lstPercepcionNetos = lstNetos.Where(n => n.tipoconcepto == "P").ToList();
-            lstDeduccionNetos = lstNetos.Where(n => n.tipoconcepto == "D").ToList();
-            decimal percepcion = 0, deducciones = 0;
-            decimal _total = 0;
+            List<CalculoNomina.Core.NetosNegativos> lstNetos;
+            int contadorNetosNegativos = 0;
+            StreamWriter sw = new StreamWriter(@"C:\Temp\NetosNegativos" + periodoInicio.Year.ToString() + "_" + periodoInicio.Month.ToString() + "_" +
+                        periodoInicio.Day.ToString() + ".txt", true);
 
-            try
+            foreach (DataGridViewRow fila in dgvEmpleados.Rows)
             {
-                int contadorNetosNegativos = 0;
-                string linea1 = "";
-                string noEmpleado = "", nombreCompleto = "";
-                using (StreamWriter sw = new StreamWriter(@"C:\Temp\NetosNegativos.txt"))
+                lstNetos = new List<CalculoNomina.Core.NetosNegativos>();
+                try
                 {
-                    linea1 = "Periodo: " + periodoInicio.ToShortDateString() + " al " + periodoFin.ToShortDateString();
-                    sw.WriteLine(linea1);
-                    foreach (DataGridViewRow fila in dgvEmpleados.Rows)
+                    cnx.Open();
+                    lstNetos = nh.obtenerNetosNegativos(GLOBALES.IDEMPRESA, periodoInicio.Date, periodoFin.Date, 
+                        int.Parse(fila.Cells["idtrabajador"].Value.ToString()));
+                    cnx.Close();
+
+                    decimal sumaPercepciones =  lstNetos.Where(n => n.tipoconcepto == "P").Sum(n => n.cantidad);
+                    decimal sumaDeducciones = lstNetos.Where(n => n.tipoconcepto == "D").Sum(n => n.cantidad);
+                    decimal subsidio = lstNetos.Where(d => d.noconcepto == 16).Sum(d => d.cantidad);
+                    decimal netoPagar = 0;
+                    sumaPercepciones = sumaPercepciones + subsidio;
+                    sumaDeducciones = sumaDeducciones - subsidio;
+                    netoPagar = sumaPercepciones - sumaDeducciones;
+
+                    string linea1 = "";
+                    string noEmpleado = "", nombreCompleto = "";
+                    noEmpleado = fila.Cells["noempleado"].Value.ToString();
+                    nombreCompleto = fila.Cells["nombres"].Value.ToString() + " " + fila.Cells["paterno"].Value.ToString() + " " + fila.Cells["materno"].Value.ToString();
+                    if (netoPagar < 0)
                     {
-                        for (int i = 0; i < lstPercepcionNetos.Count; i++)
-                        {
-                            if (int.Parse(fila.Cells["idtrabajador"].Value.ToString()) == lstPercepcionNetos[i].idtrabajador)
-                            {
-                                noEmpleado = lstPercepcionNetos[i].noempleado;
-                                nombreCompleto = lstPercepcionNetos[i].nombrecompleto;
-                                percepcion += lstPercepcionNetos[i].cantidad;
-                            }
-
-                        }
-                        for (int i = 0; i < lstDeduccionNetos.Count; i++)
-                        {
-                            if (int.Parse(fila.Cells["idtrabajador"].Value.ToString()) == lstDeduccionNetos[i].idtrabajador)
-                            {
-                                deducciones += lstDeduccionNetos[i].cantidad;
-                            }
-
-                        }
-                        _total = percepcion - deducciones;
-                        if (_total < 0)
-                        {
-                            contadorNetosNegativos++;
-                            linea1 = noEmpleado + ", " + nombreCompleto + ", Cantidad Neta Negativa: " + _total.ToString();
-                            sw.WriteLine(linea1);
-                            _total = 0;
-                            percepcion = 0;
-                            deducciones = 0;
-                        }
+                        contadorNetosNegativos++;
+                        linea1 = noEmpleado + ", " + nombreCompleto + ", Cantidad Neta Negativa: " + netoPagar.ToString();
+                        sw.WriteLine(linea1);
                     }
-                    sw.WriteLine("TOTAL CANTIDADES NEGATIVAS: " + contadorNetosNegativos.ToString());
                 }
-                if (contadorNetosNegativos != 0)
-                    MessageBox.Show("CANTIDADES NEGATIVAS. VERIFIQUE ARCHIVO EN C:\\Temp\\NetosNegativos.txt", "Información");
+                catch (Exception error)
+                {
+                    MessageBox.Show("Error: Lista de Netos. \r\n \r\n" + error.Message, "Error");
+                    cnx.Dispose();
+                }
             }
-            catch (Exception error)
+
+            sw.WriteLine("TOTAL CANTIDADES NEGATIVAS: " + contadorNetosNegativos.ToString());
+            sw.Close();
+            if (contadorNetosNegativos != 0)
             {
-                MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
+                MessageBox.Show("CANTIDADES NEGATIVAS. VERIFIQUE ARCHIVO EN C:\\Temp\\NetosNegativos" +
+                   periodoInicio.Year.ToString() + "_" +
+                   periodoInicio.Month.ToString() + "_" +
+                   periodoInicio.Day.ToString() + ".txt", "Información");
             }
+
             #endregion
         }
 
@@ -1183,6 +1175,7 @@ namespace Nominas
         {
             //eliminarPreNomina();
             guardaPreNomina();
+         
         }
 
         private void frmListaCalculoNomina_FormClosing(object sender, FormClosingEventArgs e)

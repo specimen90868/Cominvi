@@ -35,7 +35,7 @@ namespace Nominas
         Conceptos.Core.ConceptosHelper ch;
         Periodos.Core.PeriodosHelper ph;
         Movimientos.Core.MovimientosHelper mh;
-        int periodo, idperiodo, idempleado = 0;
+        int idperiodo = 0;
         List<Empleados.Core.Empleados> lstEmpleado;
         #endregion
 
@@ -44,6 +44,7 @@ namespace Nominas
         public string _ventana;
         public int _idEmpleado = 0;
         public string _nombreEmpleado = "";
+        public int _periodo = 0;
         #endregion
 
         private void toolBuscar_Click(object sender, EventArgs e)
@@ -58,7 +59,7 @@ namespace Nominas
 
         void b_OnBuscar(int id, string nombre)
         {
-            idempleado = id;
+            _idEmpleado = id;
             lblEmpleado.Text = nombre;
 
             cnx = new SqlConnection();
@@ -71,7 +72,7 @@ namespace Nominas
             ph.Command = cmd;
 
             Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
-            empleado.idtrabajador = idempleado;
+            empleado.idtrabajador = _idEmpleado;
 
             Periodos.Core.Periodos per = new Periodos.Core.Periodos();
             per.idempresa = GLOBALES.IDEMPRESA;
@@ -101,11 +102,11 @@ namespace Nominas
                         };
             foreach (var d in datos)
             {
-                periodo = d.dias;
+                _periodo = d.dias;
                 idperiodo = d.idperiodo;
             }
 
-            if (periodo == 7)
+            if (_periodo == 7)
             {
                 DateTime dt = dtpFechaInicio.Value.Date;
                 while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
@@ -132,10 +133,10 @@ namespace Nominas
         {
             if (_ventana == "Carga")
             {
-                if (idempleado != 0)
+                if (_idEmpleado != 0)
                 {
                     if (OnMovimiento != null)
-                        OnMovimiento(idempleado, cmbConcepto.Text, double.Parse(txtCantidad.Text), dtpFechaInicio.Value.Date, dtpFechaFin.Value.Date);
+                        OnMovimiento(_idEmpleado, cmbConcepto.Text, double.Parse(txtCantidad.Text), dtpFechaInicio.Value.Date, dtpFechaFin.Value.Date);
                 }
             }
             else
@@ -148,7 +149,7 @@ namespace Nominas
                 mh.Command = cmd;
 
                 Movimientos.Core.Movimientos mov = new Movimientos.Core.Movimientos();
-                mov.idtrabajador = idempleado;
+                mov.idtrabajador = _idEmpleado;
                 mov.idempresa = GLOBALES.IDEMPRESA;
                 mov.idconcepto = int.Parse(cmbConcepto.SelectedValue.ToString());
                 mov.cantidad = double.Parse(txtCantidad.Text.Trim());
@@ -220,7 +221,7 @@ namespace Nominas
 
         private void dtpFechaInicio_ValueChanged(object sender, EventArgs e)
         {
-            if (periodo == 7)
+            if (_periodo == 7)
             {
                 DateTime dt = dtpFechaInicio.Value.Date;
                 while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);

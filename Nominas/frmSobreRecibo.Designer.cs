@@ -72,26 +72,11 @@
             this.dgvIncapacidades = new System.Windows.Forms.DataGridView();
             this.tabConceptoProgramado = new System.Windows.Forms.TabPage();
             this.dgvProgramacion = new System.Windows.Forms.DataGridView();
-            this.idpc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idtrabajadorpc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.noempleadopc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombrepc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.conceptopc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cantidadpc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fechafinpc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolAgregarProgramacion = new System.Windows.Forms.ToolStripButton();
             this.toolEliminarProgramacion = new System.Windows.Forms.ToolStripButton();
             this.tabOtrasDeducciones = new System.Windows.Forms.TabPage();
             this.dgvMovimientos = new System.Windows.Forms.DataGridView();
-            this.idm = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idtrabajadorm = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.noempleadom = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombrem = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.conceptom = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cantidadm = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.periodoiniciom = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.periodofinm = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.toolAgregarMovimiento = new System.Windows.Forms.ToolStripButton();
             this.toolEliminarMovimiento = new System.Windows.Forms.ToolStripButton();
@@ -158,6 +143,24 @@
             this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idpc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idtrabajadorpc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idconceptopc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.noempleadopc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombrepc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.conceptopc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cantidadpc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fechafinpc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idm = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idtrabajadorm = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.noempleadom = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombrem = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.conceptom = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cantidadm = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.periodoiniciom = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.periodofinm = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolEditar = new System.Windows.Forms.ToolStripButton();
             this.toolAcciones.SuspendLayout();
             this.TabPrincipal.SuspendLayout();
             this.tabPercepcionesDeducciones.SuspendLayout();
@@ -677,6 +680,7 @@
             this.dgvProgramacion.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idpc,
             this.idtrabajadorpc,
+            this.idconceptopc,
             this.noempleadopc,
             this.nombrepc,
             this.conceptopc,
@@ -689,54 +693,11 @@
             this.dgvProgramacion.Size = new System.Drawing.Size(704, 317);
             this.dgvProgramacion.TabIndex = 1;
             // 
-            // idpc
-            // 
-            this.idpc.HeaderText = "Id";
-            this.idpc.Name = "idpc";
-            this.idpc.ReadOnly = true;
-            this.idpc.Visible = false;
-            // 
-            // idtrabajadorpc
-            // 
-            this.idtrabajadorpc.HeaderText = "Id Trabajador";
-            this.idtrabajadorpc.Name = "idtrabajadorpc";
-            this.idtrabajadorpc.ReadOnly = true;
-            this.idtrabajadorpc.Visible = false;
-            // 
-            // noempleadopc
-            // 
-            this.noempleadopc.HeaderText = "No. Empleado";
-            this.noempleadopc.Name = "noempleadopc";
-            this.noempleadopc.ReadOnly = true;
-            // 
-            // nombrepc
-            // 
-            this.nombrepc.HeaderText = "Nombre";
-            this.nombrepc.Name = "nombrepc";
-            this.nombrepc.ReadOnly = true;
-            // 
-            // conceptopc
-            // 
-            this.conceptopc.HeaderText = "Concepto";
-            this.conceptopc.Name = "conceptopc";
-            this.conceptopc.ReadOnly = true;
-            // 
-            // cantidadpc
-            // 
-            this.cantidadpc.HeaderText = "Importe";
-            this.cantidadpc.Name = "cantidadpc";
-            this.cantidadpc.ReadOnly = true;
-            // 
-            // fechafinpc
-            // 
-            this.fechafinpc.HeaderText = "Finalizacion";
-            this.fechafinpc.Name = "fechafinpc";
-            this.fechafinpc.ReadOnly = true;
-            // 
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolAgregarProgramacion,
+            this.toolEditar,
             this.toolEliminarProgramacion});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
@@ -793,56 +754,6 @@
             this.dgvMovimientos.ReadOnly = true;
             this.dgvMovimientos.Size = new System.Drawing.Size(704, 317);
             this.dgvMovimientos.TabIndex = 1;
-            // 
-            // idm
-            // 
-            this.idm.HeaderText = "Id";
-            this.idm.Name = "idm";
-            this.idm.ReadOnly = true;
-            this.idm.Visible = false;
-            // 
-            // idtrabajadorm
-            // 
-            this.idtrabajadorm.HeaderText = "Id Trabajador";
-            this.idtrabajadorm.Name = "idtrabajadorm";
-            this.idtrabajadorm.ReadOnly = true;
-            this.idtrabajadorm.Visible = false;
-            // 
-            // noempleadom
-            // 
-            this.noempleadom.HeaderText = "No. Empleado";
-            this.noempleadom.Name = "noempleadom";
-            this.noempleadom.ReadOnly = true;
-            // 
-            // nombrem
-            // 
-            this.nombrem.HeaderText = "Nombre";
-            this.nombrem.Name = "nombrem";
-            this.nombrem.ReadOnly = true;
-            // 
-            // conceptom
-            // 
-            this.conceptom.HeaderText = "Concepto";
-            this.conceptom.Name = "conceptom";
-            this.conceptom.ReadOnly = true;
-            // 
-            // cantidadm
-            // 
-            this.cantidadm.HeaderText = "Importe";
-            this.cantidadm.Name = "cantidadm";
-            this.cantidadm.ReadOnly = true;
-            // 
-            // periodoiniciom
-            // 
-            this.periodoiniciom.HeaderText = "Inicio";
-            this.periodoiniciom.Name = "periodoiniciom";
-            this.periodoiniciom.ReadOnly = true;
-            // 
-            // periodofinm
-            // 
-            this.periodofinm.HeaderText = "Fin";
-            this.periodofinm.Name = "periodofinm";
-            this.periodofinm.ReadOnly = true;
             // 
             // toolStrip2
             // 
@@ -1411,6 +1322,7 @@
             this.dataGridViewTextBoxColumn3.HeaderText = "Nombre";
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            this.dataGridViewTextBoxColumn3.Visible = false;
             // 
             // dataGridViewTextBoxColumn4
             // 
@@ -1452,6 +1364,7 @@
             // 
             this.dataGridViewTextBoxColumn10.HeaderText = "No. Empleado";
             this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
+            this.dataGridViewTextBoxColumn10.Visible = false;
             // 
             // dataGridViewTextBoxColumn11
             // 
@@ -1477,6 +1390,121 @@
             // 
             this.dataGridViewTextBoxColumn15.HeaderText = "Fin";
             this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
+            // 
+            // dataGridViewTextBoxColumn16
+            // 
+            this.dataGridViewTextBoxColumn16.HeaderText = "Fin";
+            this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
+            // 
+            // idpc
+            // 
+            this.idpc.HeaderText = "Id";
+            this.idpc.Name = "idpc";
+            this.idpc.ReadOnly = true;
+            this.idpc.Visible = false;
+            // 
+            // idtrabajadorpc
+            // 
+            this.idtrabajadorpc.HeaderText = "Id Trabajador";
+            this.idtrabajadorpc.Name = "idtrabajadorpc";
+            this.idtrabajadorpc.ReadOnly = true;
+            this.idtrabajadorpc.Visible = false;
+            // 
+            // idconceptopc
+            // 
+            this.idconceptopc.HeaderText = "idconcepto";
+            this.idconceptopc.Name = "idconceptopc";
+            this.idconceptopc.ReadOnly = true;
+            this.idconceptopc.Visible = false;
+            // 
+            // noempleadopc
+            // 
+            this.noempleadopc.HeaderText = "No. Empleado";
+            this.noempleadopc.Name = "noempleadopc";
+            this.noempleadopc.ReadOnly = true;
+            // 
+            // nombrepc
+            // 
+            this.nombrepc.HeaderText = "Nombre";
+            this.nombrepc.Name = "nombrepc";
+            this.nombrepc.ReadOnly = true;
+            // 
+            // conceptopc
+            // 
+            this.conceptopc.HeaderText = "Concepto";
+            this.conceptopc.Name = "conceptopc";
+            this.conceptopc.ReadOnly = true;
+            // 
+            // cantidadpc
+            // 
+            this.cantidadpc.HeaderText = "Importe";
+            this.cantidadpc.Name = "cantidadpc";
+            this.cantidadpc.ReadOnly = true;
+            // 
+            // fechafinpc
+            // 
+            this.fechafinpc.HeaderText = "Finalizacion";
+            this.fechafinpc.Name = "fechafinpc";
+            this.fechafinpc.ReadOnly = true;
+            // 
+            // idm
+            // 
+            this.idm.HeaderText = "Id";
+            this.idm.Name = "idm";
+            this.idm.ReadOnly = true;
+            this.idm.Visible = false;
+            // 
+            // idtrabajadorm
+            // 
+            this.idtrabajadorm.HeaderText = "Id Trabajador";
+            this.idtrabajadorm.Name = "idtrabajadorm";
+            this.idtrabajadorm.ReadOnly = true;
+            this.idtrabajadorm.Visible = false;
+            // 
+            // noempleadom
+            // 
+            this.noempleadom.HeaderText = "No. Empleado";
+            this.noempleadom.Name = "noempleadom";
+            this.noempleadom.ReadOnly = true;
+            // 
+            // nombrem
+            // 
+            this.nombrem.HeaderText = "Nombre";
+            this.nombrem.Name = "nombrem";
+            this.nombrem.ReadOnly = true;
+            // 
+            // conceptom
+            // 
+            this.conceptom.HeaderText = "Concepto";
+            this.conceptom.Name = "conceptom";
+            this.conceptom.ReadOnly = true;
+            // 
+            // cantidadm
+            // 
+            this.cantidadm.HeaderText = "Importe";
+            this.cantidadm.Name = "cantidadm";
+            this.cantidadm.ReadOnly = true;
+            // 
+            // periodoiniciom
+            // 
+            this.periodoiniciom.HeaderText = "Inicio";
+            this.periodoiniciom.Name = "periodoiniciom";
+            this.periodoiniciom.ReadOnly = true;
+            // 
+            // periodofinm
+            // 
+            this.periodofinm.HeaderText = "Fin";
+            this.periodofinm.Name = "periodofinm";
+            this.periodofinm.ReadOnly = true;
+            // 
+            // toolEditar
+            // 
+            this.toolEditar.Image = ((System.Drawing.Image)(resources.GetObject("toolEditar.Image")));
+            this.toolEditar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolEditar.Name = "toolEditar";
+            this.toolEditar.Size = new System.Drawing.Size(78, 22);
+            this.toolEditar.Text = "Modificar";
+            this.toolEditar.Click += new System.EventHandler(this.toolEditar_Click);
             // 
             // frmSobreRecibo
             // 
@@ -1611,13 +1639,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idpc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idtrabajadorpc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn noempleadopc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombrepc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn conceptopc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cantidadpc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fechafinpc;
         private System.Windows.Forms.DataGridView dgvMovimientos;
         private System.Windows.Forms.ToolStrip toolStrip2;
         private System.Windows.Forms.ToolStripButton toolAgregarMovimiento;
@@ -1676,5 +1697,15 @@
         private System.Windows.Forms.TextBox txtFechaIngreso;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.ToolStripButton toolInfonavit;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idpc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idtrabajadorpc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idconceptopc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn noempleadopc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nombrepc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn conceptopc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cantidadpc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fechafinpc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn16;
+        private System.Windows.Forms.ToolStripButton toolEditar;
     }
 }

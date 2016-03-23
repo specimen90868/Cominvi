@@ -198,11 +198,13 @@ namespace Nominas
             Historial.Core.HistorialHelper hh = new Historial.Core.HistorialHelper();
             Reingreso.Core.ReingresoHelper rh = new Reingreso.Core.ReingresoHelper();
             Empresas.Core.EmpresasHelper eh = new Empresas.Core.EmpresasHelper();
+            Infonavit.Core.InfonavitHelper ih = new Infonavit.Core.InfonavitHelper();
             
             empleadoh.Command = cmd;
             hh.Command = cmd;
             rh.Command = cmd;
             eh.Command = cmd;
+            ih.Command = cmd;
 
             Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
             Historial.Core.Historial historia = new Historial.Core.Historial();
@@ -317,8 +319,6 @@ namespace Nominas
                 hh.insertarHistorial(historia);
 
                 cnx.Close();
-                cnx.Dispose();
-
                 MessageBox.Show("Empleado reingresado con éxito.", "Información");
 
                 if (OnReingreso != null)
@@ -327,6 +327,48 @@ namespace Nominas
             catch (Exception error) {
                 MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
             }
+
+            int existeInfonavit = 0;
+            try
+            {
+                cnx.Open();
+                existeInfonavit = (int)ih.existeInfonavit(_idempleado);
+                cnx.Close();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error: Al obtener la existencia del Infonavit.\r\n AVISO: INGRESAR O MODIFICAR MANUALMENTE EL CREDITO DE INFONAVIT", "Error");
+                cnx.Dispose();
+            }
+
+            List<Infonavit.Core.Infonavit> lstInfonavit = new List<Infonavit.Core.Infonavit>();
+            if (existeInfonavit != 0)
+            {
+                try
+                {
+                    cnx.Open();
+                    lstInfonavit = ih.obtenerInfonavitTrabajador(_idempleado);
+                    cnx.Close();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Error: Al obtener la información de infonavit.\r\n AVISO: INGRESAR O MODIFICAR MANUALMENTE EL CREDITO DE INFONAVIT", "Error");
+                    cnx.Dispose();
+                }
+
+                try
+                {
+                    cnx.Open();
+                    ih.actualizaEstatusInfonavit(lstInfonavit[0].idinfonavit, _idempleado);
+                    cnx.Close();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Error: Al obtener al activar el crédito de infonavit.\r\n AVISO: INGRESAR O MODIFICAR MANUALMENTE EL CREDITO DE INFONAVIT", "Error");
+                    cnx.Dispose();
+                }
+            }
+
             this.Dispose();
         }
 

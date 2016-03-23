@@ -96,4 +96,13 @@ namespace CalculoNomina.Core
         public string concepto { get; set; }
         public decimal cantidad { get; set; }
     }
+
+    public class CodigoBidimensional
+    {
+        public string re { get; set; }
+        public int idtrabajador { get; set; }
+        public string rr { get; set; }
+        public decimal tt { get; set; }
+        public string uuid { get; set; }
+    }
 }

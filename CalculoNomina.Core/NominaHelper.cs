@@ -178,15 +178,16 @@ namespace CalculoNomina.Core
             return lstPreNomina;
         }
 
-        public List<NetosNegativos> obtenerNetosNegativos(int idempresa, DateTime inicio, DateTime fin)
+        public List<NetosNegativos> obtenerNetosNegativos(int idempresa, DateTime inicio, DateTime fin, int idtrabajador)
         {
             List<NetosNegativos> lstNetos = new List<NetosNegativos>();
             DataTable dtNetos = new DataTable();
-            Command.CommandText = "exec stp_NetosNegativos @idempresa, @inicio, @fin";
+            Command.CommandText = "exec stp_NetosNegativos @idempresa, @inicio, @fin, @idtrabajador";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idempresa);
             Command.Parameters.AddWithValue("inicio", inicio);
             Command.Parameters.AddWithValue("fin", fin);
+            Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
             dtNetos = SelectData(Command);
             for (int i = 0; i < dtNetos.Rows.Count; i++)
             {
@@ -605,6 +606,38 @@ namespace CalculoNomina.Core
             Command.Parameters.AddWithValue("guardada", pn.guardada);
             object dato = Select(Command);
             return dato;
+        }
+        #endregion
+
+        #region DATOS PARA QRCODE
+        public List<CodigoBidimensional> obtenerListaQr(int idempresa, DateTime inicio, DateTime fin)
+        {
+            DataTable dt = new DataTable();
+            List<CodigoBidimensional> lstDatos = new List<CodigoBidimensional>();
+            Command.CommandText = @"select e.rfc as Empresa, t.idtrabajador, t.rfc as Trabajador, xml.total, xml.uuid from 
+                                    xmlCabecera xml
+                                    inner join trabajadores t
+                                    on xml.idtrabajador = t.idtrabajador 
+                                    inner join Empresas e
+                                    on t.idempresa = e.idempresa
+                                    where xml.idempresa = @idempresa and 
+                                    xml.periodoinicio = @fechainicio and xml.periodofin = @fechafin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idempresa);
+            Command.Parameters.AddWithValue("fechainicio", inicio);
+            Command.Parameters.AddWithValue("fechafin", fin);
+            dt = SelectData(Command);
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                CodigoBidimensional qr = new CodigoBidimensional();
+                qr.re = dt.Rows[i]["Empresa"].ToString();
+                qr.idtrabajador = int.Parse(dt.Rows[i]["idtrabajador"].ToString());
+                qr.rr = dt.Rows[i]["Trabajador"].ToString();
+                qr.tt = decimal.Parse(dt.Rows[i]["total"].ToString());
+                qr.uuid = dt.Rows[i]["uuid"].ToString();
+                lstDatos.Add(qr);
+            }
+            return lstDatos;
         }
         #endregion
     }
