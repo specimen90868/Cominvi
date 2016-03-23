@@ -23,23 +23,6 @@ namespace CalculoNomina.Core
         public bool modificado { get; set; }
     }
 
-    public class NominaRecalculo
-    {
-        public int id { get; set; }
-        public int idtrabajador { get; set; }
-        public int dias { get; set; }
-        public double salariominimo { get; set; }
-        public int antiguedadmod { get; set; }
-        public double sdi { get; set; }
-        public double sd { get; set; }
-        public int idconcepto { get; set; }
-        public int noconcepto { get; set; }
-        public string tipoconcepto { get; set; }
-        public string formula { get; set; }
-        public string formulaexento { get; set; }
-        public bool modificado { get; set; }
-    }
-
     public class DatosEmpleado
     {
         public int idtrabajador { get; set; }
