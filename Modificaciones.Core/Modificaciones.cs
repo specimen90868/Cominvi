@@ -14,6 +14,6 @@ namespace Modificaciones.Core
         public string registropatronal { get; set; }
         public string nss { get; set; }
         public DateTime fecha { get; set; }
-        public double sdi { get; set; }
+        public decimal sdi { get; set; }
     }
 }

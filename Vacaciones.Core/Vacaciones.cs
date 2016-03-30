@@ -14,17 +14,17 @@ namespace Vacaciones.Core
         public DateTime fechaingreso { get; set; }
         public DateTime inicio { get; set; }
         public DateTime fin { get; set; }
-        public double sd { get; set; }
+        public decimal sd { get; set; }
         public int diasderecho { get; set; }
         public int diasapagar { get; set; }
         public int diaspendientes { get; set; }
-        public double pv { get; set; }
-        public double pexenta { get; set; }
-        public double pgravada { get; set; }
-        public double isrgravada { get; set; }
-        public double pagovacaciones { get; set; }
-        public double totalprima { get; set; }
-        public double total { get; set; }
+        public decimal pv { get; set; }
+        public decimal pexenta { get; set; }
+        public decimal pgravada { get; set; }
+        public decimal isrgravada { get; set; }
+        public decimal pagovacaciones { get; set; }
+        public decimal totalprima { get; set; }
+        public decimal total { get; set; }
         public DateTime fechapago { get; set; }
         public bool pagada { get; set; }
         public bool pvpagada { get; set; }

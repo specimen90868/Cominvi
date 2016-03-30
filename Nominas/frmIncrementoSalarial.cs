@@ -195,15 +195,15 @@ namespace Nominas
 
             Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
             empleado.idtrabajador = _idempleado;
-            empleado.sdi = double.Parse(txtSDI.Text);
-            empleado.sd = double.Parse(txtSD.Text);
-            empleado.sueldo = double.Parse(txtSueldo.Text);
+            empleado.sdi = decimal.Parse(txtSDI.Text);
+            empleado.sd = decimal.Parse(txtSD.Text);
+            empleado.sueldo = decimal.Parse(txtSueldo.Text);
 
             Historial.Core.Historial historia = new Historial.Core.Historial();
             historia.idtrabajador = _idempleado;
             historia.idempresa = GLOBALES.IDEMPRESA;
             historia.tipomovimiento = GLOBALES.mMODIFICACIONSALARIO;
-            historia.valor = double.Parse(txtSDI.Text);
+            historia.valor = decimal.Parse(txtSDI.Text);
             historia.fecha_imss = dtpFecha.Value;
             historia.fecha_sistema = DateTime.Now;
             historia.motivobaja = 0;
@@ -214,7 +214,7 @@ namespace Nominas
             mod.registropatronal = rp;
             mod.nss = nss;
             mod.fecha = dtpFecha.Value;
-            mod.sdi = double.Parse(txtSDI.Text);
+            mod.sdi = decimal.Parse(txtSDI.Text);
 
             try {
                 cnx.Open();

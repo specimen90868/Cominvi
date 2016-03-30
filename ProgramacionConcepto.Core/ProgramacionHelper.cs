@@ -24,7 +24,7 @@ namespace ProgramacionConcepto.Core
                 programacion.idtrabajador = int.Parse(dtProgramacion.Rows[i]["idtrabajador"].ToString());
                 programacion.idempresa = int.Parse(dtProgramacion.Rows[i]["idempresa"].ToString());
                 programacion.idconcepto = int.Parse(dtProgramacion.Rows[i]["idconcepto"].ToString());
-                programacion.cantidad = double.Parse(dtProgramacion.Rows[i]["cantidad"].ToString());
+                programacion.cantidad = decimal.Parse(dtProgramacion.Rows[i]["cantidad"].ToString());
                 programacion.fechafin = DateTime.Parse(dtProgramacion.Rows[i]["fechafin"].ToString());
                 lstProgramacion.Add(programacion);
             }
@@ -46,7 +46,7 @@ namespace ProgramacionConcepto.Core
                 programacion.idtrabajador = int.Parse(dtProgramacion.Rows[i]["idtrabajador"].ToString());
                 programacion.idempresa = int.Parse(dtProgramacion.Rows[i]["idempresa"].ToString());
                 programacion.idconcepto = int.Parse(dtProgramacion.Rows[i]["idconcepto"].ToString());
-                programacion.cantidad = double.Parse(dtProgramacion.Rows[i]["cantidad"].ToString());
+                programacion.cantidad = decimal.Parse(dtProgramacion.Rows[i]["cantidad"].ToString());
                 programacion.fechafin = DateTime.Parse(dtProgramacion.Rows[i]["fechafin"].ToString());
                 lstProgramacion.Add(programacion);
             }

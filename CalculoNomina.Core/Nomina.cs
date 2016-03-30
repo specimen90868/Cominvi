@@ -10,10 +10,10 @@ namespace CalculoNomina.Core
     {
         public int idtrabajador { get; set; }
         public int dias { get; set; }
-        public double salariominimo { get; set; }
+        public decimal salariominimo { get; set; }
         public int antiguedadmod { get; set; }
-        public double sdi { get; set; }
-        public double sd { get; set; }
+        public decimal sdi { get; set; }
+        public decimal sd { get; set; }
         public int id { get; set; }
         public int noconcepto { get; set; }
         public string concepto { get; set; }
@@ -32,11 +32,11 @@ namespace CalculoNomina.Core
         public string nombres { get; set; }
         public string paterno { get; set; }
         public string materno { get; set; }
-        public double sueldo { get; set; }
-        public double despensa { get; set; }
-        public double asistencia { get; set; }
-        public double puntualidad { get; set; }
-        public double horas { get; set; }
+        public decimal sueldo { get; set; }
+        public decimal despensa { get; set; }
+        public decimal asistencia { get; set; }
+        public decimal puntualidad { get; set; }
+        public decimal horas { get; set; }
     }
 
     public class tmpPagoNomina
@@ -47,15 +47,16 @@ namespace CalculoNomina.Core
         public int idconcepto { get; set; }
         public int noconcepto { get; set; }
         public string tipoconcepto { get; set; }
-        public double exento { get; set; }
-        public double gravado { get; set; }
-        public double cantidad { get; set; }
+        public decimal exento { get; set; }
+        public decimal gravado { get; set; }
+        public decimal cantidad { get; set; }
         public DateTime fechainicio { get; set; }
         public DateTime fechafin { get; set; }
         public int diaslaborados { get; set; }
         public bool guardada { get; set; }
         public int tiponomina { get; set; }
         public bool modificado { get; set; }
+        public bool obracivil { get; set; }
     }
 
     public class DatosFaltaIncapacidad

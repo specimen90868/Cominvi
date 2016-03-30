@@ -133,7 +133,7 @@ namespace Nominas
                             case 2:
                                 rbtnPesos.Checked = true;
                                 if (Periodo == 7)
-                                    txtValor.Text = ((lstInfonavit[j].valordescuento * 30.4) / Periodo).ToString();
+                                    txtValor.Text = ((lstInfonavit[j].valordescuento * decimal.Parse((30.4).ToString())) / Periodo).ToString();
                                 else
                                     txtValor.Text = (lstInfonavit[j].valordescuento * 2).ToString();
                                 break;
@@ -229,13 +229,13 @@ namespace Nominas
 
             if (rbtnPesos.Checked)
                 if (Periodo == 7)
-                    i.valordescuento = (double.Parse(txtValor.Text) / 30.4) * Periodo;
+                    i.valordescuento = (decimal.Parse(txtValor.Text) / decimal.Parse((30.4).ToString())) * Periodo;
                 else
-                    i.valordescuento = double.Parse(txtValor.Text) / 2;
+                    i.valordescuento = decimal.Parse(txtValor.Text) / 2;
             if (rbtnVsmdf.Checked)
-                i.valordescuento = double.Parse(txtValor.Text);
+                i.valordescuento = decimal.Parse(txtValor.Text);
             if (rbtnPorcentaje.Checked)
-                i.valordescuento = double.Parse(txtValor.Text);
+                i.valordescuento = decimal.Parse(txtValor.Text);
 
             Conceptos.Core.ConceptosHelper ch = new Conceptos.Core.ConceptosHelper();
             ch.Command = cmd;

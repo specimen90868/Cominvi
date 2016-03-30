@@ -711,7 +711,7 @@ namespace Nominas
                             else
                             {
                                 CalculoFormula cf = new CalculoFormula(idTrabajador, inicioPeriodo, finPeriodo, "[DiasLaborados]-[Faltas]-[DiasIncapacidad]");
-                                diasPI = (int)cf.calcularFormula();
+                                diasPI = int.Parse(cf.calcularFormula().ToString());
                                 formula = formula.Replace("[" + variables[i] + "]", diasPI.ToString());
                             }
                             
@@ -757,16 +757,16 @@ namespace Nominas
                         break;
 
                     case "ISR ASE":
-                        double excedente = 0, ImpMarginal = 0, isr = 0;
+                        decimal excedente = 0, ImpMarginal = 0, isr = 0;
                         int idperiodoISR = 0, diasISR = 0;
                         List<TablaIsr.Core.TablaIsr> lstIsr = new List<TablaIsr.Core.TablaIsr>();
                         TablaIsr.Core.IsrHelper isrh = new TablaIsr.Core.IsrHelper();
                         isrh.Command = cmd;
 
-                        double percepciones = lstPercepciones.Where(e => e.idtrabajador == idTrabajador && e.tipoconcepto == "P").Sum(e => e.cantidad);
+                        decimal percepciones = lstPercepciones.Where(e => e.idtrabajador == idTrabajador && e.tipoconcepto == "P").Sum(e => e.cantidad);
                         if (percepciones != 0)
                         {
-                            double baseGravableIsr = lstPercepciones.Where(e => e.idtrabajador == idTrabajador).Sum(e => e.gravado);
+                            decimal baseGravableIsr = lstPercepciones.Where(e => e.idtrabajador == idTrabajador).Sum(e => e.gravado);
 
                             Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
                             eh.Command = cmd;
@@ -786,17 +786,17 @@ namespace Nominas
                             cnx.Close();
 
                             TablaIsr.Core.TablaIsr _isr = new TablaIsr.Core.TablaIsr();
-                            _isr.inferior = (baseGravableIsr / diasISR) * 30.4;
+                            _isr.inferior = (baseGravableIsr / diasISR) * decimal.Parse((30.4).ToString());
 
                             cnx.Open();
                             lstIsr = isrh.isrCorrespondiente(_isr);
                             cnx.Close();
 
-                            excedente = ((baseGravableIsr / diasISR) * 30.4) - lstIsr[0].inferior;
+                            excedente = ((baseGravableIsr / diasISR) * decimal.Parse((30.4).ToString())) - lstIsr[0].inferior;
                             ImpMarginal = excedente * (lstIsr[0].porcentaje / 100);
                             isr = ImpMarginal + lstIsr[0].cuota;
 
-                            return (isr/  30.4) * diasISR;
+                            return (isr / decimal.Parse((30.4).ToString())) * diasISR;
                         }
                         else
                         {
@@ -804,12 +804,12 @@ namespace Nominas
                         }
 
                     case "Subsidio Acreditado":
-                        double percepcionSubsidio = lstPercepciones.Where(e => e.idtrabajador == idTrabajador && e.tipoconcepto == "P").Sum(e => e.cantidad);
+                        decimal percepcionSubsidio = lstPercepciones.Where(e => e.idtrabajador == idTrabajador && e.tipoconcepto == "P").Sum(e => e.cantidad);
                         int idperiodoSubsidio = 0, diasSubsidio = 0;
 
                         if (percepcionSubsidio != 0)
                         {
-                            double baseGravableSubsidio = lstPercepciones.Where(e => e.idtrabajador == idTrabajador).Sum(e => e.gravado);
+                            decimal baseGravableSubsidio = lstPercepciones.Where(e => e.idtrabajador == idTrabajador).Sum(e => e.gravado);
 
                             Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
                             eh.Command = cmd;
@@ -831,14 +831,14 @@ namespace Nominas
                             TablaSubsidio.Core.SubsidioHelper ts = new TablaSubsidio.Core.SubsidioHelper();
                             ts.Command = cmd;
                             TablaSubsidio.Core.TablaSubsidio subsidio = new TablaSubsidio.Core.TablaSubsidio();
-                            subsidio.desde = (baseGravableSubsidio / diasSubsidio) * 30.4;
+                            subsidio.desde = (baseGravableSubsidio / diasSubsidio) * decimal.Parse((30.4).ToString());
 
-                            double cantidad = 0;
+                            decimal cantidad = 0;
                             cnx.Open();
-                            cantidad = double.Parse(ts.obtenerCantidadSubsidio(subsidio).ToString());
+                            cantidad = decimal.Parse(ts.obtenerCantidadSubsidio(subsidio).ToString());
                             cnx.Close();
 
-                            return (cantidad / 30.4) * diasSubsidio;
+                            return (cantidad / decimal.Parse((30.4).ToString())) * diasSubsidio;
                         }
                         else
                         {
@@ -847,7 +847,7 @@ namespace Nominas
 
                     case "Concepto ISR":
                         int noConceptoISR = 0, noConceptoSubsidio = 0, existeConceptoISR = 0, existeConceptoSubisdio = 0;
-                        double percepcionISR = lstPercepciones.Where(e => e.idtrabajador == idTrabajador && e.tipoconcepto == "P").Sum(e => e.cantidad);
+                        decimal percepcionISR = lstPercepciones.Where(e => e.idtrabajador == idTrabajador && e.tipoconcepto == "P").Sum(e => e.cantidad);
 
                         if (percepcionISR != 0)
                         {
@@ -901,8 +901,8 @@ namespace Nominas
                             if (existeConceptoISR != 0 && existeConceptoSubisdio != 0)
                             {
                                 cnx.Open();
-                                double cantidadIsr = double.Parse(cnh.obtenerImporteConcepto(cpnIsr).ToString());
-                                double cantidadSubsidio = double.Parse(cnh.obtenerImporteConcepto(cpnSubsidio).ToString());
+                                decimal cantidadIsr = decimal.Parse(cnh.obtenerImporteConcepto(cpnIsr).ToString());
+                                decimal cantidadSubsidio = decimal.Parse(cnh.obtenerImporteConcepto(cpnSubsidio).ToString());
                                 cnx.Close();
 
                                 Empleados.Core.EmpleadosHelper eih = new Empleados.Core.EmpleadosHelper();
@@ -939,7 +939,7 @@ namespace Nominas
                         break;
 
                     case "Concepto Subsidio":
-                        double percepcionSubs = lstPercepciones.Where(e => e.idtrabajador == idTrabajador && e.tipoconcepto == "P").Sum(e => e.cantidad);
+                        decimal percepcionSubs = lstPercepciones.Where(e => e.idtrabajador == idTrabajador && e.tipoconcepto == "P").Sum(e => e.cantidad);
                         int noConceptoSub = 0, noConceptoISRSAE = 0, existeConceptoSub = 0, existeConceptoISRSAE = 0;
 
                         if (percepcionSubs != 0)

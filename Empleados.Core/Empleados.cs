@@ -30,9 +30,9 @@ namespace Empleados.Core
         public string nss { get; set; }
         public int digitoverificador { get; set; }
         public int tiposalario { get; set; }
-        public double sdi { get; set; }
-        public double sd { get; set; }
-        public double sueldo { get; set; }
+        public decimal sdi { get; set; }
+        public decimal sd { get; set; }
+        public decimal sueldo { get; set; }
         public int estatus { get; set; }
         public int idusuario { get; set; }
         public string cuenta { get; set; }
@@ -49,8 +49,8 @@ namespace Empleados.Core
         public int idtrabajador { get; set; }
         public int noempleado { get; set; }
         public string nombre { get; set; }
-        public double sdivigente { get; set; }
-        public double sdinuevo { get; set; }
+        public decimal sdivigente { get; set; }
+        public decimal sdinuevo { get; set; }
         public int antiguedad { get; set; }
         public int antiguedadmod { get; set; }
         public DateTime fechaimss { get; set; }

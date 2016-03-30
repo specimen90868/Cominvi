@@ -152,7 +152,7 @@ namespace Nominas
                 mov.idtrabajador = _idEmpleado;
                 mov.idempresa = GLOBALES.IDEMPRESA;
                 mov.idconcepto = int.Parse(cmbConcepto.SelectedValue.ToString());
-                mov.cantidad = double.Parse(txtCantidad.Text.Trim());
+                mov.cantidad = decimal.Parse(txtCantidad.Text.Trim());
                 mov.fechainicio = dtpFechaInicio.Value.Date;
                 mov.fechafin = dtpFechaFin.Value.Date;
 

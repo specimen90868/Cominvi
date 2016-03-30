@@ -195,7 +195,7 @@ namespace Nominas
                         toolNominaEspecial.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "Autorizar nómina":
-                        toolAutorizarNomina.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        //toolAutorizarNomina.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "Reportes":
                         toolReportes.Enabled = Convert.ToBoolean(lstMenu[i].accion);
@@ -585,11 +585,6 @@ namespace Nominas
             i.Show();
         }
 
-        private void toolAutorizarNomina_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void toolConceptoEmpleado_Click_1(object sender, EventArgs e)
         {
             frmListaConceptoEmpleado lce = new frmListaConceptoEmpleado();
@@ -661,25 +656,17 @@ namespace Nominas
             lce.Show();
         }
 
-        private void toolCodeQr_Click(object sender, EventArgs e)
-        {
-            var qrEncoder = new QrEncoder(ErrorCorrectionLevel.H);
-            var qrCode = qrEncoder.Encode("?re=CSM140717CP7&rr=COCJ690422J33&tt=0000001039.550000&id=EE64CA34-FAEF-4165-90B9-E40CB30ACA5D");
-
-            var renderer = new GraphicsRenderer(new FixedModuleSize(2, QuietZoneModules.Two), Brushes.Black, Brushes.White);
-            
-            using (var stream = new FileStream("qrcode.png", FileMode.Create))
-                renderer.WriteToStream(qrCode.Matrix, ImageFormat.Png, stream);
-
-            //Bitmap bmp = new Bitmap("qrcode.png");
-            //qr.Image = bmp;
-        }
-
         private void toolRegistroBajas_Click(object sender, EventArgs e)
         {
             frmListaBajasSua lbs = new frmListaBajasSua();
             lbs.MdiParent = this;
             lbs.Show();
+        }
+
+        private void toolImpresionRecibos_Click(object sender, EventArgs e)
+        {
+            frmImpresionRecibos ir = new frmImpresionRecibos();
+            ir.Show();
         }
     }
 }

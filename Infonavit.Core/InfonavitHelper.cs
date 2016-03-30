@@ -25,7 +25,7 @@ namespace Infonavit.Core
                 inf.idempresa = int.Parse(dtInfonavit.Rows[i]["idempresa"].ToString());
                 inf.credito = dtInfonavit.Rows[i]["credito"].ToString();
                 inf.descuento = int.Parse(dtInfonavit.Rows[i]["descuento"].ToString());
-                inf.valordescuento = double.Parse(dtInfonavit.Rows[i]["valordescuento"].ToString());
+                inf.valordescuento = decimal.Parse(dtInfonavit.Rows[i]["valordescuento"].ToString());
                 inf.activo = bool.Parse(dtInfonavit.Rows[i]["activo"].ToString());
                 lstInfonavit.Add(inf);
             }
@@ -49,7 +49,7 @@ namespace Infonavit.Core
                 inf.idempresa = int.Parse(dtInfonavit.Rows[i]["idempresa"].ToString());
                 inf.credito = dtInfonavit.Rows[i]["credito"].ToString();
                 inf.descuento = int.Parse(dtInfonavit.Rows[i]["descuento"].ToString());
-                inf.valordescuento = double.Parse(dtInfonavit.Rows[i]["valordescuento"].ToString());
+                inf.valordescuento = decimal.Parse(dtInfonavit.Rows[i]["valordescuento"].ToString());
                 inf.activo = bool.Parse(dtInfonavit.Rows[i]["activo"].ToString());
                 inf.descripcion = dtInfonavit.Rows[i]["descripcion"].ToString();
                 inf.fecha = DateTime.Parse(dtInfonavit.Rows[i]["fecha"].ToString());
@@ -76,7 +76,7 @@ namespace Infonavit.Core
                 inf.idempresa = int.Parse(dtInfonavit.Rows[i]["idempresa"].ToString());
                 inf.credito = dtInfonavit.Rows[i]["credito"].ToString();
                 inf.descuento = int.Parse(dtInfonavit.Rows[i]["descuento"].ToString());
-                inf.valordescuento = double.Parse(dtInfonavit.Rows[i]["valordescuento"].ToString());
+                inf.valordescuento = decimal.Parse(dtInfonavit.Rows[i]["valordescuento"].ToString());
                 inf.activo = bool.Parse(dtInfonavit.Rows[i]["activo"].ToString());
                 inf.descripcion = dtInfonavit.Rows[i]["descripcion"].ToString();
                 inf.fecha = DateTime.Parse(dtInfonavit.Rows[i]["fecha"].ToString());
@@ -103,7 +103,7 @@ namespace Infonavit.Core
                 inf.idempresa = int.Parse(dtInfonavit.Rows[i]["idempresa"].ToString());
                 inf.credito = dtInfonavit.Rows[i]["credito"].ToString();
                 inf.descuento = int.Parse(dtInfonavit.Rows[i]["descuento"].ToString());
-                inf.valordescuento = double.Parse(dtInfonavit.Rows[i]["valordescuento"].ToString());
+                inf.valordescuento = decimal.Parse(dtInfonavit.Rows[i]["valordescuento"].ToString());
                 inf.activo = bool.Parse(dtInfonavit.Rows[i]["activo"].ToString());
                 inf.descripcion = dtInfonavit.Rows[i]["descripcion"].ToString();
                 inf.fecha = DateTime.Parse(dtInfonavit.Rows[i]["fecha"].ToString());
@@ -131,7 +131,7 @@ namespace Infonavit.Core
                 inf.idempresa = int.Parse(dtInfonavit.Rows[i]["idempresa"].ToString());
                 inf.credito = dtInfonavit.Rows[i]["credito"].ToString();
                 inf.descuento = int.Parse(dtInfonavit.Rows[i]["descuento"].ToString());
-                inf.valordescuento = double.Parse(dtInfonavit.Rows[i]["valordescuento"].ToString());
+                inf.valordescuento = decimal.Parse(dtInfonavit.Rows[i]["valordescuento"].ToString());
                 inf.activo = bool.Parse(dtInfonavit.Rows[i]["activo"].ToString());
                 inf.descripcion = dtInfonavit.Rows[i]["descripcion"].ToString();
                 inf.fecha = DateTime.Parse(dtInfonavit.Rows[i]["fecha"].ToString());
@@ -281,7 +281,7 @@ namespace Infonavit.Core
                 inf.modificacion = int.Parse(dtInfonavit.Rows[i]["modificacion"].ToString());
                 inf.fecha = DateTime.Parse(dtInfonavit.Rows[i]["fecha"].ToString());
                 inf.descuento = int.Parse(dtInfonavit.Rows[i]["descuento"].ToString());
-                inf.valor = double.Parse(dtInfonavit.Rows[i]["valor"].ToString());
+                inf.valor = decimal.Parse(dtInfonavit.Rows[i]["valor"].ToString());
                 lstInfonavit.Add(inf);
             }
             return lstInfonavit;

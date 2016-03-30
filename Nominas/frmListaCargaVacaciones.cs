@@ -150,12 +150,12 @@ namespace Nominas
 
         private void toolNuevo_Click(object sender, EventArgs e)
         {
-            frmVacaciones v = new frmVacaciones();
-            v.OnVacacion += v_OnVacacion;
-            v._tipoNomina = _tipoNomina;
-            v._ventana = "Carga";
-            v.MdiParent = this.MdiParent;
-            v.Show();
+            //frmVacaciones v = new frmVacaciones();
+            //v.OnVacacion += v_OnVacacion;
+            //v._tipoNomina = _tipoNomina;
+            //v._ventana = "Carga";
+            //v.MdiParent = this.MdiParent;
+            //v.Show();
         }
 
         void v_OnVacacion(string noempleado, string nombre, string paterno, string materno, bool prima, bool pago, int diaspagopv, bool vacacion, int diaspago, DateTime fechainicio, DateTime fechafin)

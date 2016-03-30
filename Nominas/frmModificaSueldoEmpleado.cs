@@ -47,9 +47,9 @@ namespace Nominas
 
             Empleados.Core.Empleados em = new Empleados.Core.Empleados();
             em.idtrabajador = idempleado;
-            em.sueldo = double.Parse(txtSueldo.Text);
-            em.sd = double.Parse(txtSD.Text);
-            em.sdi = double.Parse(txtSDI.Text);
+            em.sueldo = decimal.Parse(txtSueldo.Text);
+            em.sd = decimal.Parse(txtSD.Text);
+            em.sdi = decimal.Parse(txtSDI.Text);
 
             try
             {

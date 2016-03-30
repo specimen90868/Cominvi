@@ -116,8 +116,8 @@ namespace Nominas
             sh.Command = cmd;
 
             TablaSubsidio.Core.TablaSubsidio subsidio = new TablaSubsidio.Core.TablaSubsidio();
-            subsidio.desde = double.Parse(txtDesde.Text.Trim());
-            subsidio.cantidad = double.Parse(txtCantidad.Text.Trim());
+            subsidio.desde = decimal.Parse(txtDesde.Text.Trim());
+            subsidio.cantidad = decimal.Parse(txtCantidad.Text.Trim());
             subsidio.periodo = int.Parse(txtDias.Text.Trim());
             subsidio.anio = int.Parse(txtAnio.Text.Trim());
 

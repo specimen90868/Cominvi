@@ -30,11 +30,11 @@ namespace CalculoNomina.Core
                 de.nombres = dtDatosEmpleados.Rows[i]["nombres"].ToString();
                 de.paterno = dtDatosEmpleados.Rows[i]["paterno"].ToString();
                 de.materno = dtDatosEmpleados.Rows[i]["materno"].ToString();
-                de.sueldo = double.Parse(dtDatosEmpleados.Rows[i]["sueldo"].ToString());
-                de.despensa = double.Parse(dtDatosEmpleados.Rows[i]["despensa"].ToString());
-                de.asistencia = double.Parse(dtDatosEmpleados.Rows[i]["asistencia"].ToString());
-                de.puntualidad = double.Parse(dtDatosEmpleados.Rows[i]["puntualidad"].ToString());
-                de.horas = double.Parse(dtDatosEmpleados.Rows[i]["horas"].ToString());
+                de.sueldo = decimal.Parse(dtDatosEmpleados.Rows[i]["sueldo"].ToString());
+                de.despensa = decimal.Parse(dtDatosEmpleados.Rows[i]["despensa"].ToString());
+                de.asistencia = decimal.Parse(dtDatosEmpleados.Rows[i]["asistencia"].ToString());
+                de.puntualidad = decimal.Parse(dtDatosEmpleados.Rows[i]["puntualidad"].ToString());
+                de.horas = decimal.Parse(dtDatosEmpleados.Rows[i]["horas"].ToString());
                 lstDatosEmpleados.Add(de);
             }
             return lstDatosEmpleados;
@@ -69,11 +69,11 @@ namespace CalculoNomina.Core
                 de.nombres = dtDatosEmpleados.Rows[i]["nombres"].ToString();
                 de.paterno = dtDatosEmpleados.Rows[i]["paterno"].ToString();
                 de.materno = dtDatosEmpleados.Rows[i]["materno"].ToString();
-                de.sueldo = double.Parse(dtDatosEmpleados.Rows[i]["sueldo"].ToString());
-                de.despensa = double.Parse(dtDatosEmpleados.Rows[i]["despensa"].ToString());
-                de.asistencia = double.Parse(dtDatosEmpleados.Rows[i]["asistencia"].ToString());
-                de.puntualidad = double.Parse(dtDatosEmpleados.Rows[i]["puntualidad"].ToString());
-                de.horas = double.Parse(dtDatosEmpleados.Rows[i]["horas"].ToString());
+                de.sueldo = decimal.Parse(dtDatosEmpleados.Rows[i]["sueldo"].ToString());
+                de.despensa = decimal.Parse(dtDatosEmpleados.Rows[i]["despensa"].ToString());
+                de.asistencia = decimal.Parse(dtDatosEmpleados.Rows[i]["asistencia"].ToString());
+                de.puntualidad = decimal.Parse(dtDatosEmpleados.Rows[i]["puntualidad"].ToString());
+                de.horas = decimal.Parse(dtDatosEmpleados.Rows[i]["horas"].ToString());
                 lstDatosEmpleados.Add(de);
             }
             return lstDatosEmpleados;
@@ -125,7 +125,7 @@ namespace CalculoNomina.Core
                 pago.idtrabajador = int.Parse(dtRecibo.Rows[i]["idtrabajador"].ToString());
                 pago.idconcepto = int.Parse(dtRecibo.Rows[i]["idconcepto"].ToString());
                 pago.noconcepto = int.Parse(dtRecibo.Rows[i]["noconcepto"].ToString());
-                pago.cantidad = double.Parse(dtRecibo.Rows[i]["cantidad"].ToString());
+                pago.cantidad = decimal.Parse(dtRecibo.Rows[i]["cantidad"].ToString());
                 lstRecibo.Add(pago);
             }
             return lstRecibo;
@@ -135,11 +135,12 @@ namespace CalculoNomina.Core
         {
             List<tmpPagoNomina> lstPreNomina = new List<tmpPagoNomina>();
             DataTable dtRecibo = new DataTable();
-            Command.CommandText = "select * from tmpPagoNomina where idempresa = @idempresa and fechainicio = @fechainicio and fechafin = @fechafin";
+            Command.CommandText = "select * from tmpPagoNomina where idempresa = @idempresa and fechainicio = @fechainicio and fechafin = @fechafin and obracivil = @obracivil";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", pn.idempresa);
             Command.Parameters.AddWithValue("fechainicio", pn.fechainicio);
             Command.Parameters.AddWithValue("fechafin", pn.fechafin);
+            Command.Parameters.AddWithValue("obracivil", pn.obracivil);
             dtRecibo = SelectData(Command);
             for (int i = 0; i < dtRecibo.Rows.Count; i++)
             {
@@ -150,9 +151,9 @@ namespace CalculoNomina.Core
                 pago.idconcepto = int.Parse(dtRecibo.Rows[i]["idconcepto"].ToString());
                 pago.noconcepto = int.Parse(dtRecibo.Rows[i]["noconcepto"].ToString());
                 pago.tipoconcepto = dtRecibo.Rows[i]["tipoconcepto"].ToString();
-                pago.exento = double.Parse(dtRecibo.Rows[i]["exento"].ToString());
-                pago.gravado = double.Parse(dtRecibo.Rows[i]["gravado"].ToString());
-                pago.cantidad = double.Parse(dtRecibo.Rows[i]["cantidad"].ToString());
+                pago.exento = decimal.Parse(dtRecibo.Rows[i]["exento"].ToString());
+                pago.gravado = decimal.Parse(dtRecibo.Rows[i]["gravado"].ToString());
+                pago.cantidad = decimal.Parse(dtRecibo.Rows[i]["cantidad"].ToString());
                 pago.fechainicio = DateTime.Parse(dtRecibo.Rows[i]["fechainicio"].ToString());
                 pago.fechafin = DateTime.Parse(dtRecibo.Rows[i]["fechafin"].ToString());
                 lstPreNomina.Add(pago);
@@ -204,12 +205,31 @@ namespace CalculoNomina.Core
             return lstNetos;
         }
 
+        public List<tmpPagoNomina> obtenerUltimaNomina(int idEmpresa)
+        {
+            List<tmpPagoNomina> lstPagoNomina = new List<tmpPagoNomina>();
+            DataTable dtPagoNomina = new DataTable();
+            Command.CommandText = @"select distinct top 1 fechainicio, fechafin from PagoNomina where idempresa = @idempresa 
+                                    order by fechainicio desc";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idEmpresa);
+            dtPagoNomina = SelectData(Command);
+            for (int i = 0; i < dtPagoNomina.Rows.Count; i++)
+            {
+                tmpPagoNomina pn = new tmpPagoNomina();
+                pn.fechainicio = DateTime.Parse(dtPagoNomina.Rows[i]["fechainicio"].ToString());
+                pn.fechafin = DateTime.Parse(dtPagoNomina.Rows[i]["fechafin"].ToString());
+                lstPagoNomina.Add(pn);
+            }
+            return lstPagoNomina;
+        }
+
         public List<tmpPagoNomina> obtenerUltimaNomina(int idEmpresa, bool obraCivil)
         {
             List<tmpPagoNomina> lstPagoNomina = new List<tmpPagoNomina>();
             DataTable dtPagoNomina = new DataTable();
-            Command.CommandText = @"select distinct top 1 fechainicio, fechafin from PagoNomina where idempresa = @idempresa and obracivil = @obracivil 
-                                    order by fechainicio desc";
+            Command.CommandText = @"select distinct top 1 fechainicio, fechafin, guardada from tmpPagoNomina where idempresa = @idempresa 
+                                    and obracivil = @obracivil order by fechainicio desc";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idEmpresa);
             Command.Parameters.AddWithValue("obracivil", obraCivil);
@@ -219,6 +239,7 @@ namespace CalculoNomina.Core
                 tmpPagoNomina pn = new tmpPagoNomina();
                 pn.fechainicio = DateTime.Parse(dtPagoNomina.Rows[i]["fechainicio"].ToString());
                 pn.fechafin = DateTime.Parse(dtPagoNomina.Rows[i]["fechafin"].ToString());
+                pn.guardada = bool.Parse(dtPagoNomina.Rows[i]["guardada"].ToString());
                 lstPagoNomina.Add(pn);
             }
             return lstPagoNomina;
@@ -301,12 +322,13 @@ namespace CalculoNomina.Core
 
         public int guardaPreNomina(tmpPagoNomina pn)
         {
-            Command.CommandText = "update tmpPagoNomina set guardada = @guardada where idempresa = @idempresa and fechainicio = @fechainicio and fechafin = @fechafin";
+            Command.CommandText = "update tmpPagoNomina set guardada = @guardada where idempresa = @idempresa and fechainicio = @fechainicio and fechafin = @fechafin and obracivil = @obracivil";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("guardada", pn.guardada);
             Command.Parameters.AddWithValue("idempresa", pn.idempresa);
             Command.Parameters.AddWithValue("fechainicio", pn.fechainicio);
             Command.Parameters.AddWithValue("fechafin", pn.fechafin);
+            Command.Parameters.AddWithValue("obracivil", pn.obracivil);
             return Command.ExecuteNonQuery();
         }
 
@@ -424,16 +446,15 @@ namespace CalculoNomina.Core
             return dato;
         }
 
-        public int stpAutorizaNomina(int idempresa, DateTime inicio, DateTime fin, int idusuario, int tiponomina, bool obracivil)
+        public int stpAutorizaNomina(int idempresa, DateTime inicio, DateTime fin, int idusuario, int tiponomina)
         {
-            Command.CommandText = "exec stp_AutorizaNomina @idempresa, @fechainicio, @fechafin, @idusuario, @tiponomina, @obracivil";
+            Command.CommandText = "exec stp_AutorizaNomina @idempresa, @fechainicio, @fechafin, @idusuario, @tiponomina";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idempresa);
             Command.Parameters.AddWithValue("fechainicio", inicio);
             Command.Parameters.AddWithValue("fechafin", fin);
             Command.Parameters.AddWithValue("idusuario", idusuario);
             Command.Parameters.AddWithValue("tiponomina", tiponomina);
-            Command.Parameters.AddWithValue("obracivil", obracivil);
             return Command.ExecuteNonQuery();
         }
 
@@ -469,6 +490,25 @@ namespace CalculoNomina.Core
             Command.Parameters.AddWithValue("fechafin", fin);
             Command.Parameters.AddWithValue("noperiodo", noPeriodo);
             return Command.ExecuteNonQuery();
+        }
+
+        public List<tmpPagoNomina> obtenerPeriodosNomina(int idEmpresa)
+        {
+            DataTable dtPeriodos = new DataTable();
+            List<tmpPagoNomina> lstPeriodos = new List<tmpPagoNomina>();
+            Command.CommandText = @"select distinct fechainicio, fechafin from PagoNomina where idempresa = @idempresa
+                order by fechainicio";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idEmpresa);
+            dtPeriodos = SelectData(Command);
+            for (int i = 0; i < dtPeriodos.Rows.Count; i++)
+            {
+                tmpPagoNomina pn = new tmpPagoNomina();
+                pn.fechainicio = DateTime.Parse(dtPeriodos.Rows[i]["fechainicio"].ToString());
+                pn.fechafin = DateTime.Parse(dtPeriodos.Rows[i]["fechafin"].ToString());
+                lstPeriodos.Add(pn);
+            }
+            return lstPeriodos;
         }
 
 
@@ -552,9 +592,9 @@ namespace CalculoNomina.Core
                 pago.idconcepto = int.Parse(dtRecibo.Rows[i]["idconcepto"].ToString());
                 pago.noconcepto = int.Parse(dtRecibo.Rows[i]["noconcepto"].ToString());
                 pago.tipoconcepto = dtRecibo.Rows[i]["tipoconcepto"].ToString();
-                pago.exento = double.Parse(dtRecibo.Rows[i]["exento"].ToString());
-                pago.gravado = double.Parse(dtRecibo.Rows[i]["gravado"].ToString());
-                pago.cantidad = double.Parse(dtRecibo.Rows[i]["cantidad"].ToString());
+                pago.exento = decimal.Parse(dtRecibo.Rows[i]["exento"].ToString());
+                pago.gravado = decimal.Parse(dtRecibo.Rows[i]["gravado"].ToString());
+                pago.cantidad = decimal.Parse(dtRecibo.Rows[i]["cantidad"].ToString());
                 pago.fechainicio = DateTime.Parse(dtRecibo.Rows[i]["fechainicio"].ToString());
                 pago.fechafin = DateTime.Parse(dtRecibo.Rows[i]["fechafin"].ToString());
                 lstPreNomina.Add(pago);
@@ -583,9 +623,9 @@ namespace CalculoNomina.Core
                 pago.idconcepto = int.Parse(dtRecibo.Rows[i]["idconcepto"].ToString());
                 pago.noconcepto = int.Parse(dtRecibo.Rows[i]["noconcepto"].ToString());
                 pago.tipoconcepto = dtRecibo.Rows[i]["tipoconcepto"].ToString();
-                pago.exento = double.Parse(dtRecibo.Rows[i]["exento"].ToString());
-                pago.gravado = double.Parse(dtRecibo.Rows[i]["gravado"].ToString());
-                pago.cantidad = double.Parse(dtRecibo.Rows[i]["cantidad"].ToString());
+                pago.exento = decimal.Parse(dtRecibo.Rows[i]["exento"].ToString());
+                pago.gravado = decimal.Parse(dtRecibo.Rows[i]["gravado"].ToString());
+                pago.cantidad = decimal.Parse(dtRecibo.Rows[i]["cantidad"].ToString());
                 pago.fechainicio = DateTime.Parse(dtRecibo.Rows[i]["fechainicio"].ToString());
                 pago.fechafin = DateTime.Parse(dtRecibo.Rows[i]["fechafin"].ToString());
                 pago.guardada = bool.Parse(dtRecibo.Rows[i]["guardada"].ToString());
@@ -638,6 +678,19 @@ namespace CalculoNomina.Core
                 lstDatos.Add(qr);
             }
             return lstDatos;
+        }
+
+        public int actualizaXml(int idempresa, DateTime inicio, DateTime fin, int idtrabajador, Byte[] qr)
+        {
+            Command.CommandText = @"update xmlCabecera set codeqr = @codeqr where idempresa = @idempresa
+                and idtrabajador = @idtrabajador and periodoinicio = @inicio and periodofin = @fin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("codeqr", qr);
+            Command.Parameters.AddWithValue("idempresa", idempresa);
+            Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
+            Command.Parameters.AddWithValue("inicio", inicio);
+            Command.Parameters.AddWithValue("fin", fin);
+            return Command.ExecuteNonQuery();
         }
         #endregion
     }

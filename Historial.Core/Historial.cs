@@ -11,7 +11,7 @@ namespace Historial.Core
         public int id { get; set; }
         public int idtrabajador { get; set; }
         public int tipomovimiento { get; set; }
-        public double valor { get; set; }
+        public decimal valor { get; set; }
         public DateTime fecha_imss { get; set; }
         public DateTime fecha_sistema { get; set; }
         public int idempresa { get; set; }

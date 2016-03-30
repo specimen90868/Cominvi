@@ -34,7 +34,7 @@ namespace Altas.Core
                 alta.contrato = int.Parse(dtAltas.Rows[i]["contrato"].ToString());
                 alta.jornada = int.Parse(dtAltas.Rows[i]["jornada"].ToString());
                 alta.fechaingreso = DateTime.Parse(dtAltas.Rows[i]["fechaingreso"].ToString());
-                alta.sdi = double.Parse(dtAltas.Rows[i]["sdi"].ToString());
+                alta.sdi = decimal.Parse(dtAltas.Rows[i]["sdi"].ToString());
                 alta.cp = dtAltas.Rows[i]["cp"].ToString();
                 alta.fechanacimiento = DateTime.Parse(dtAltas.Rows[i]["fechanacimiento"].ToString());
                 alta.estado = dtAltas.Rows[i]["estado"].ToString();

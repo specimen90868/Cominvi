@@ -71,8 +71,6 @@
             this.toolExtraordinario = new System.Windows.Forms.ToolStripMenuItem();
             this.toolExtraordinarioEspecial = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolAutorizarNomina = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.toolReportes = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuCatalogos = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuDepartamentos = new System.Windows.Forms.ToolStripMenuItem();
@@ -95,11 +93,11 @@
             this.toolIsr = new System.Windows.Forms.ToolStripMenuItem();
             this.toolSubsidio = new System.Windows.Forms.ToolStripMenuItem();
             this.toolImss = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolCodeQr = new System.Windows.Forms.ToolStripMenuItem();
             this.stsPrincipal = new System.Windows.Forms.StatusStrip();
             this.toolEstatusPerfil = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolPorcentaje = new System.Windows.Forms.ToolStripStatusLabel();
             this.workAntiguedad = new System.ComponentModel.BackgroundWorker();
+            this.toolImpresionRecibos = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPrincipal.SuspendLayout();
             this.stsPrincipal.SuspendLayout();
             this.SuspendLayout();
@@ -388,8 +386,7 @@
             this.mnuNominas.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolCalculoNomina,
             this.toolStripSeparator9,
-            this.toolAutorizarNomina,
-            this.toolStripSeparator8,
+            this.toolImpresionRecibos,
             this.toolReportes});
             this.mnuNominas.Name = "mnuNominas";
             this.mnuNominas.Size = new System.Drawing.Size(67, 20);
@@ -403,7 +400,7 @@
             this.toolExtraordinario,
             this.toolExtraordinarioEspecial});
             this.toolCalculoNomina.Name = "toolCalculoNomina";
-            this.toolCalculoNomina.Size = new System.Drawing.Size(174, 22);
+            this.toolCalculoNomina.Size = new System.Drawing.Size(184, 22);
             this.toolCalculoNomina.Text = "Cálculo de nómina";
             // 
             // toolNominaNormal
@@ -437,26 +434,12 @@
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(171, 6);
-            // 
-            // toolAutorizarNomina
-            // 
-            this.toolAutorizarNomina.Name = "toolAutorizarNomina";
-            this.toolAutorizarNomina.Size = new System.Drawing.Size(174, 22);
-            this.toolAutorizarNomina.Text = "Autorizar nómina";
-            this.toolAutorizarNomina.Visible = false;
-            this.toolAutorizarNomina.Click += new System.EventHandler(this.toolAutorizarNomina_Click);
-            // 
-            // toolStripSeparator8
-            // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(171, 6);
-            this.toolStripSeparator8.Visible = false;
+            this.toolStripSeparator9.Size = new System.Drawing.Size(181, 6);
             // 
             // toolReportes
             // 
             this.toolReportes.Name = "toolReportes";
-            this.toolReportes.Size = new System.Drawing.Size(174, 22);
+            this.toolReportes.Size = new System.Drawing.Size(184, 22);
             this.toolReportes.Text = "Reportes";
             this.toolReportes.Click += new System.EventHandler(this.toolReportes_Click);
             // 
@@ -525,8 +508,7 @@
             this.toolStripSeparator2,
             this.mnuPreferencias,
             this.toolStripSeparator6,
-            this.mnuTablas,
-            this.toolCodeQr});
+            this.mnuTablas});
             this.mnuConfiguracion.Name = "mnuConfiguracion";
             this.mnuConfiguracion.Size = new System.Drawing.Size(95, 20);
             this.mnuConfiguracion.Text = "Configuración";
@@ -623,14 +605,6 @@
             this.toolImss.Text = "IMSS";
             this.toolImss.Click += new System.EventHandler(this.toolImss_Click);
             // 
-            // toolCodeQr
-            // 
-            this.toolCodeQr.Name = "toolCodeQr";
-            this.toolCodeQr.Size = new System.Drawing.Size(180, 22);
-            this.toolCodeQr.Text = "Code QR";
-            this.toolCodeQr.Visible = false;
-            this.toolCodeQr.Click += new System.EventHandler(this.toolCodeQr_Click);
-            // 
             // stsPrincipal
             // 
             this.stsPrincipal.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -660,6 +634,13 @@
             this.workAntiguedad.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workAntiguedad_DoWork);
             this.workAntiguedad.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.workAntiguedad_ProgressChanged);
             this.workAntiguedad.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workAntiguedad_RunWorkerCompleted);
+            // 
+            // toolImpresionRecibos
+            // 
+            this.toolImpresionRecibos.Name = "toolImpresionRecibos";
+            this.toolImpresionRecibos.Size = new System.Drawing.Size(184, 22);
+            this.toolImpresionRecibos.Text = "Impresión de recibos";
+            this.toolImpresionRecibos.Click += new System.EventHandler(this.toolImpresionRecibos_Click);
             // 
             // frmPrincipal
             // 
@@ -741,11 +722,9 @@
         private System.Windows.Forms.ToolStripMenuItem toolIsr;
         private System.Windows.Forms.ToolStripMenuItem toolSubsidio;
         private System.Windows.Forms.ToolStripMenuItem toolImss;
-        private System.Windows.Forms.ToolStripMenuItem toolAutorizarNomina;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripMenuItem toolNominaNormal;
         private System.Windows.Forms.ToolStripMenuItem toolNominaEspecial;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem toolReportes;
         private System.Windows.Forms.ToolStripMenuItem toolIncapacidades;
         private System.Windows.Forms.ToolStripMenuItem toolConceptoEmpleado;
@@ -755,8 +734,8 @@
         private System.ComponentModel.BackgroundWorker workAntiguedad;
         private System.Windows.Forms.ToolStripStatusLabel toolPorcentaje;
         private System.Windows.Forms.ToolStripMenuItem toolImportarEmpleados;
-        private System.Windows.Forms.ToolStripMenuItem toolCodeQr;
         private System.Windows.Forms.ToolStripMenuItem toolRegistroBajas;
+        private System.Windows.Forms.ToolStripMenuItem toolImpresionRecibos;
     }
 }
 

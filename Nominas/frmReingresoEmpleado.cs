@@ -220,9 +220,9 @@ namespace Nominas
             empleado.iddepartamento = int.Parse(cmbDepartamento.SelectedValue.ToString());
             empleado.idpuesto = int.Parse(cmbPuesto.SelectedValue.ToString());
             empleado.idperiodo = int.Parse(cmbPeriodo.SelectedValue.ToString());
-            empleado.sueldo = double.Parse(txtSueldo.Text);
-            empleado.sd = double.Parse(txtSalarioDiario.Text);
-            empleado.sdi = double.Parse(txtSDI.Text);
+            empleado.sueldo = decimal.Parse(txtSueldo.Text);
+            empleado.sd = decimal.Parse(txtSalarioDiario.Text);
+            empleado.sdi = decimal.Parse(txtSDI.Text);
             empleado.idusuario = GLOBALES.IDUSUARIO;
             empleado.estatus = GLOBALES.ACTIVO;
             empleado.cuenta = mtxtCuentaBancaria.Text;
@@ -238,7 +238,7 @@ namespace Nominas
 
             historia.idtrabajador = _idempleado;
             historia.idempresa = lstEmpleado[0].idempresa;
-            historia.valor = double.Parse(txtSDI.Text);
+            historia.valor = decimal.Parse(txtSDI.Text);
             historia.fecha_imss = dtpFechaReingreso.Value;
             historia.fecha_sistema = DateTime.Now;
             historia.motivobaja = 0;
@@ -249,7 +249,7 @@ namespace Nominas
             reingreso.idtrabajador = _idempleado;
             reingreso.idempresa = lstEmpleado[0].idempresa;
             reingreso.fechaingreso = dtpFechaReingreso.Value;
-            reingreso.sdi = double.Parse(txtSDI.Text);
+            reingreso.sdi = decimal.Parse(txtSDI.Text);
 
             Periodos.Core.PeriodosHelper pdh = new Periodos.Core.PeriodosHelper();
             pdh.Command = cmd;

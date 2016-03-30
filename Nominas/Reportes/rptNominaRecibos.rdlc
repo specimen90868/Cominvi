@@ -2683,7 +2683,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                   <CellContents>
                     <Image Name="LogoEmpresa">
                       <Source>Database</Source>
-                      <Value>=First(Fields!imagen.Value, "dsImagenReciboNomina")</Value>
+                      <Value>=Fields!cfdiCodigoQr.Value</Value>
                       <MIMEType>image/jpeg</MIMEType>
                       <Sizing>FitProportional</Sizing>
                       <ZIndex>3</ZIndex>
@@ -5717,7 +5717,6 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                       </Style>
                     </Tablix>
                     <ColSpan>2</ColSpan>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell />
@@ -6415,7 +6414,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                   <CellContents>
                     <Image Name="LogoEmpresa2">
                       <Source>Database</Source>
-                      <Value>=First(Fields!imagen.Value, "dsImagenReciboNomina")</Value>
+                      <Value>=Fields!cfdiCodigoQr.Value</Value>
                       <MIMEType>image/jpeg</MIMEType>
                       <Sizing>FitProportional</Sizing>
                       <ZIndex>3</ZIndex>
@@ -8042,11 +8041,11 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
         </Field>
         <Field Name="cfdiSd">
           <DataField>cfdiSd</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
+          <rd:TypeName>System.Double</rd:TypeName>
         </Field>
         <Field Name="cfdiSdi">
           <DataField>cfdiSdi</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
+          <rd:TypeName>System.Double</rd:TypeName>
         </Field>
         <Field Name="cfdiDepartamento">
           <DataField>cfdiDepartamento</DataField>
@@ -8078,7 +8077,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
         </Field>
         <Field Name="cfdiCantidad">
           <DataField>cfdiCantidad</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
+          <rd:TypeName>System.Double</rd:TypeName>
         </Field>
         <Field Name="cfdiDiasLaborados">
           <DataField>cfdiDiasLaborados</DataField>
@@ -8134,7 +8133,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
         </Field>
         <Field Name="cfdiTotal">
           <DataField>cfdiTotal</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
+          <rd:TypeName>System.Double</rd:TypeName>
         </Field>
         <Field Name="cfdiMetodoDePago">
           <DataField>cfdiMetodoDePago</DataField>
@@ -8144,31 +8143,15 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
           <DataField>CadenaOriginal</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-      </Fields>
-      <rd:DataSetInfo>
-        <rd:DataSetName>dsReportes</rd:DataSetName>
-        <rd:SchemaPath>C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\dsReportes.xsd</rd:SchemaPath>
-        <rd:TableName>NominaRecibos</rd:TableName>
-        <rd:TableAdapterFillMethod />
-        <rd:TableAdapterGetDataMethod />
-        <rd:TableAdapterName />
-      </rd:DataSetInfo>
-    </DataSet>
-    <DataSet Name="dsImagenReciboNomina">
-      <Query>
-        <DataSourceName>dsReportes</DataSourceName>
-        <CommandText>/* Local Query */</CommandText>
-      </Query>
-      <Fields>
-        <Field Name="imagen">
-          <DataField>imagen</DataField>
+        <Field Name="cfdiCodigoQr">
+          <DataField>cfdiCodigoQr</DataField>
           <rd:TypeName>System.Byte[]</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>dsReportes</rd:DataSetName>
         <rd:SchemaPath>C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Nominas\dsReportes.xsd</rd:SchemaPath>
-        <rd:TableName>PreNominaImagen</rd:TableName>
+        <rd:TableName>NominaRecibos</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
         <rd:TableAdapterName />

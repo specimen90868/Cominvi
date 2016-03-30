@@ -853,6 +853,9 @@ namespace Nominas
                 excel.Cells[1, iCol] = dt.Columns[i].ColumnName;
                 iCol++;
             }
+
+            
+
             iCol = 1;
             int progreso = 0;
             int totalRegistro = dt.Rows.Count;
@@ -882,8 +885,10 @@ namespace Nominas
 
             workerExportar.ReportProgress(100);
 
-            excel.Range["A1", "AI1"].Font.Bold = true;
-            excel.Range["A1", "AI1"].Interior.ColorIndex = 36;
+            excel.Range["A:AI"].EntireColumn.AutoFit();
+            excel.Range["A1:AI1"].Font.Bold = true;
+            excel.Range["A2"].Select();
+            excel.ActiveWindow.FreezePanes = true;
 
             workSheet.SaveAs(nombreArchivo);
             excel.Visible = true;

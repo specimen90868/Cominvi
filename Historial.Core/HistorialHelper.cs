@@ -24,7 +24,7 @@ namespace Historial.Core
                 historial.id = int.Parse(dtHistorial.Rows[i]["id"].ToString());
                 historial.idtrabajador = int.Parse(dtHistorial.Rows[i]["idtrabajador"].ToString());
                 historial.tipomovimiento = int.Parse(dtHistorial.Rows[i]["tipomovimiento"].ToString());
-                historial.valor = double.Parse(dtHistorial.Rows[i]["valor"].ToString());
+                historial.valor = decimal.Parse(dtHistorial.Rows[i]["valor"].ToString());
                 historial.fecha_imss = DateTime.Parse(dtHistorial.Rows[i]["fecha_imss"].ToString());
                 historial.fecha_sistema = DateTime.Parse(dtHistorial.Rows[i]["fecha_sistema"].ToString());
                 historial.motivobaja = int.Parse(dtHistorial.Rows[i]["motivobaja"].ToString());

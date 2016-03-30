@@ -33,9 +33,9 @@ namespace Empleados.Core
                 empleado.curp = dtEmpleados.Rows[i]["curp"].ToString();
                 empleado.fechaingreso = DateTime.Parse(dtEmpleados.Rows[i]["fechaingreso"].ToString());
                 empleado.antiguedad = int.Parse(dtEmpleados.Rows[i]["antiguedad"].ToString());
-                empleado.sdi = double.Parse(dtEmpleados.Rows[i]["sdi"].ToString());
-                empleado.sd = double.Parse(dtEmpleados.Rows[i]["sd"].ToString());
-                empleado.sueldo = double.Parse(dtEmpleados.Rows[i]["sueldo"].ToString());
+                empleado.sdi = decimal.Parse(dtEmpleados.Rows[i]["sdi"].ToString());
+                empleado.sd = decimal.Parse(dtEmpleados.Rows[i]["sd"].ToString());
+                empleado.sueldo = decimal.Parse(dtEmpleados.Rows[i]["sueldo"].ToString());
                 empleado.cuenta = dtEmpleados.Rows[i]["cuenta"].ToString();
                 empleado.clabe = dtEmpleados.Rows[i]["clabe"].ToString();
                 empleado.idbancario = dtEmpleados.Rows[i]["idbancario"].ToString();
@@ -68,9 +68,9 @@ namespace Empleados.Core
                 empleado.curp = dtEmpleados.Rows[i]["curp"].ToString();
                 empleado.fechaingreso = DateTime.Parse(dtEmpleados.Rows[i]["fechaingreso"].ToString());
                 empleado.antiguedad = int.Parse(dtEmpleados.Rows[i]["antiguedad"].ToString());
-                empleado.sdi = double.Parse(dtEmpleados.Rows[i]["sdi"].ToString());
-                empleado.sd = double.Parse(dtEmpleados.Rows[i]["sd"].ToString());
-                empleado.sueldo = double.Parse(dtEmpleados.Rows[i]["sueldo"].ToString());
+                empleado.sdi = decimal.Parse(dtEmpleados.Rows[i]["sdi"].ToString());
+                empleado.sd = decimal.Parse(dtEmpleados.Rows[i]["sd"].ToString());
+                empleado.sueldo = decimal.Parse(dtEmpleados.Rows[i]["sueldo"].ToString());
                 empleado.cuenta = dtEmpleados.Rows[i]["cuenta"].ToString();
                 empleado.clabe = dtEmpleados.Rows[i]["clabe"].ToString();
                 empleado.idbancario = dtEmpleados.Rows[i]["idbancario"].ToString();
@@ -119,9 +119,9 @@ namespace Empleados.Core
                 empleado.nss = dtEmpleados.Rows[i]["nss"].ToString();
                 empleado.digitoverificador = int.Parse(dtEmpleados.Rows[i]["digitoverificador"].ToString());
                 empleado.tiposalario = int.Parse(dtEmpleados.Rows[i]["tiposalario"].ToString());
-                empleado.sdi = double.Parse(dtEmpleados.Rows[i]["sdi"].ToString());
-                empleado.sd = double.Parse(dtEmpleados.Rows[i]["sd"].ToString());
-                empleado.sueldo = double.Parse(dtEmpleados.Rows[i]["sueldo"].ToString());
+                empleado.sdi = decimal.Parse(dtEmpleados.Rows[i]["sdi"].ToString());
+                empleado.sd = decimal.Parse(dtEmpleados.Rows[i]["sd"].ToString());
+                empleado.sueldo = decimal.Parse(dtEmpleados.Rows[i]["sueldo"].ToString());
                 empleado.cuenta = dtEmpleados.Rows[i]["cuenta"].ToString();
                 empleado.clabe = dtEmpleados.Rows[i]["clabe"].ToString();
                 empleado.idbancario = dtEmpleados.Rows[i]["idbancario"].ToString();
@@ -154,8 +154,8 @@ namespace Empleados.Core
                 incremento.idtrabajador = int.Parse(dtIncremento.Rows[i]["idtrabajador"].ToString());
                 incremento.noempleado = int.Parse(dtIncremento.Rows[i]["noempleado"].ToString());
                 incremento.nombre = dtIncremento.Rows[i]["nombre"].ToString();
-                incremento.sdivigente = double.Parse(dtIncremento.Rows[i]["sdivigente"].ToString());
-                incremento.sdinuevo = double.Parse(dtIncremento.Rows[i]["sdinuevo"].ToString());
+                incremento.sdivigente = decimal.Parse(dtIncremento.Rows[i]["sdivigente"].ToString());
+                incremento.sdinuevo = decimal.Parse(dtIncremento.Rows[i]["sdinuevo"].ToString());
                 incremento.antiguedad = int.Parse(dtIncremento.Rows[i]["antiguedad"].ToString());
                 incremento.antiguedadmod = int.Parse(dtIncremento.Rows[i]["antiguedadmod"].ToString());
                 incremento.fechaimss = DateTime.Parse(dtIncremento.Rows[i]["fechaimss"].ToString());
@@ -192,9 +192,9 @@ namespace Empleados.Core
                 empleado.idsalario = int.Parse(dtEmpleados.Rows[i]["idsalario"].ToString());
                 empleado.idperiodo = int.Parse(dtEmpleados.Rows[i]["idperiodo"].ToString());
                 empleado.antiguedadmod = int.Parse(dtEmpleados.Rows[i]["antiguedadmod"].ToString());
-                empleado.sdi = double.Parse(dtEmpleados.Rows[i]["sdi"].ToString());
-                empleado.sd = double.Parse(dtEmpleados.Rows[i]["sd"].ToString());
-                empleado.sueldo = double.Parse(dtEmpleados.Rows[i]["sueldo"].ToString());
+                empleado.sdi = decimal.Parse(dtEmpleados.Rows[i]["sdi"].ToString());
+                empleado.sd = decimal.Parse(dtEmpleados.Rows[i]["sd"].ToString());
+                empleado.sueldo = decimal.Parse(dtEmpleados.Rows[i]["sueldo"].ToString());
                 empleado.fechaantiguedad = DateTime.Parse(dtEmpleados.Rows[i]["fechaantiguedad"].ToString());
                 lstEmpleados.Add(empleado);
             }
@@ -225,7 +225,7 @@ namespace Empleados.Core
             {
                 Empleados empleado = new Empleados();
                 empleado.idtrabajador = int.Parse(dtEmpleados.Rows[i]["idtrabajador"].ToString());
-                empleado.sd = double.Parse(dtEmpleados.Rows[i]["sd"].ToString());
+                empleado.sd = decimal.Parse(dtEmpleados.Rows[i]["sd"].ToString());
                 lstEmpleados.Add(empleado);
             }
 
@@ -521,6 +521,26 @@ namespace Empleados.Core
             Command.Parameters.AddWithValue("noempleado", noempleado);
             object dato = Select(Command);
             return dato;
+        }
+
+        public List<Empleados> obtenerEmpleadoPorDepto(string idDepartamentos)
+        {
+            DataTable dtEmpleados = new DataTable();
+            List<Empleados> lstEmpleados = new List<Empleados>();
+            Command.CommandText = @"select idtrabajador, noempleado, nombrecompleto from trabajadores where
+                    iddepartamento in (select * from fnListaCadenaATabla(@deptos))";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("deptos", idDepartamentos);
+            dtEmpleados = SelectData(Command);
+            for (int i = 0; i < dtEmpleados.Rows.Count; i++)
+            {
+                Empleados emp = new Empleados();
+                emp.idtrabajador = int.Parse(dtEmpleados.Rows[i]["idtrabajador"].ToString());
+                emp.noempleado = dtEmpleados.Rows[i]["noempleado"].ToString();
+                emp.nombrecompleto = dtEmpleados.Rows[i]["nombrecompleto"].ToString();
+                lstEmpleados.Add(emp);
+            }
+            return lstEmpleados;
         }
 
     }

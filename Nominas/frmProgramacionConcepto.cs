@@ -175,7 +175,7 @@ namespace Nominas
             ProgramacionConcepto.Core.ProgramacionConcepto programacion = new ProgramacionConcepto.Core.ProgramacionConcepto();
             programacion.idtrabajador = _idEmpleado;
             programacion.idconcepto = int.Parse(cmbConcepto.SelectedValue.ToString());
-            programacion.cantidad = double.Parse(txtCantidad.Text);
+            programacion.cantidad = decimal.Parse(txtCantidad.Text);
             programacion.fechafin = dtpFecha.Value;
 
             switch (_tipoOperacion)

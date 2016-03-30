@@ -9,9 +9,9 @@ namespace TablaIsr.Core
     public class TablaIsr
     {
         public int id { get; set; }
-        public double inferior { get; set; }
-        public double cuota { get; set; }
-        public double porcentaje { get; set; }
+        public decimal inferior { get; set; }
+        public decimal cuota { get; set; }
+        public decimal porcentaje { get; set; }
         public int periodo { get; set; }
         public int anio { get; set; }
     }

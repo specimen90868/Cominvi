@@ -398,9 +398,9 @@ namespace Nominas
             em.tiposalario = int.Parse(cmbTipoSalario.SelectedValue.ToString());
             em.tiporegimen = int.Parse(cmbTipoRegimen.SelectedValue.ToString());
 
-            em.sdi = double.Parse(txtSDI.Text);
-            em.sd = double.Parse(txtSD.Text);
-            em.sueldo = double.Parse(txtSueldo.Text);
+            em.sdi = decimal.Parse(txtSDI.Text);
+            em.sd = decimal.Parse(txtSD.Text);
+            em.sueldo = decimal.Parse(txtSueldo.Text);
 
             em.cuenta = mtxtCuentaBancaria.Text;
             em.clabe = mtxtCuentaClabe.Text;
@@ -416,7 +416,7 @@ namespace Nominas
             hh.Command = cmd;
             Historial.Core.Historial h = new Historial.Core.Historial();
             h.tipomovimiento = GLOBALES.mALTA;
-            h.valor = double.Parse(txtSDI.Text);
+            h.valor = decimal.Parse(txtSDI.Text);
             h.fecha_imss = dtpFechaIngreso.Value;
             h.fecha_sistema = DateTime.Now;
             h.motivobaja = 0;
@@ -489,7 +489,7 @@ namespace Nominas
             a.nombre = txtNombre.Text;
             a.fechaingreso = dtpFechaIngreso.Value;
             a.diasproporcionales = diasProporcionales;
-            a.sdi = double.Parse(txtSDI.Text);
+            a.sdi = decimal.Parse(txtSDI.Text);
             a.fechanacimiento = dtpFechaNacimiento.Value;
             a.estado = cmbEstado.Text;
             a.noestado = int.Parse(cmbEstado.SelectedValue.ToString());
@@ -568,7 +568,7 @@ namespace Nominas
                             hDepto = new Historial.Core.Historial();
                             hDepto.idtrabajador = _idempleado;
                             hDepto.idempresa = GLOBALES.IDEMPRESA;
-                            hDepto.valor = double.Parse(txtSDI.Text);
+                            hDepto.valor = decimal.Parse(txtSDI.Text);
                             hDepto.fecha_sistema = DateTime.Now;
                             hDepto.motivobaja = 0;
                             hDepto.tipomovimiento = GLOBALES.mCAMBIODEPARTAMENTO;
@@ -580,7 +580,7 @@ namespace Nominas
                             hPuesto = new Historial.Core.Historial();
                             hPuesto.idtrabajador = _idempleado;
                             hPuesto.idempresa = GLOBALES.IDEMPRESA;
-                            hPuesto.valor = double.Parse(txtSDI.Text);
+                            hPuesto.valor = decimal.Parse(txtSDI.Text);
                             hPuesto.fecha_sistema = DateTime.Now;
                             hPuesto.motivobaja = 0;
                             hPuesto.tipomovimiento = GLOBALES.mCAMBIOPUESTO;

@@ -119,7 +119,7 @@ namespace Nominas
             infonavit.idtrabajador = _idEmpleado;
             infonavit.credito = txtCredito.Text;
             infonavit.descuento = descuento;
-            infonavit.valordescuento = double.Parse(txtValorDescuento.Text);
+            infonavit.valordescuento = decimal.Parse(txtValorDescuento.Text);
 
             Infonavit.Core.suaInfonavit sua = new Infonavit.Core.suaInfonavit();
             sua.idtrabajador = _idEmpleado;
@@ -128,7 +128,7 @@ namespace Nominas
             sua.modificacion = movimiento;
             sua.fecha = dtpFecha.Value;
             sua.descuento = descuento;
-            sua.valor = double.Parse(txtValorDescuento.Text);
+            sua.valor = decimal.Parse(txtValorDescuento.Text);
 
             Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
             empleado.idtrabajador = _idEmpleado;

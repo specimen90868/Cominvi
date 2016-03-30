@@ -102,9 +102,9 @@ namespace Nominas
             ih.Command = cmd;
 
             TablaIsr.Core.TablaIsr isr = new TablaIsr.Core.TablaIsr();
-            isr.inferior = double.Parse(txtInferior.Text.Trim());
-            isr.cuota = double.Parse(txtCuota.Text.Trim());
-            isr.porcentaje = double.Parse(txtPorcentaje.Text.Trim());
+            isr.inferior = decimal.Parse(txtInferior.Text.Trim());
+            isr.cuota = decimal.Parse(txtCuota.Text.Trim());
+            isr.porcentaje = decimal.Parse(txtPorcentaje.Text.Trim());
             isr.periodo = int.Parse(txtDias.Text.Trim());
             isr.anio = int.Parse(txtAnio.Text.Trim());
 

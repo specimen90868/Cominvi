@@ -13,7 +13,7 @@ namespace Infonavit.Core
         public int idempresa { get; set; }
         public string credito { get; set; }
         public int descuento { get; set; }
-        public double valordescuento { get; set; }
+        public decimal valordescuento { get; set; }
         public bool activo { get; set; }
         public string descripcion { get; set; }
         public int dias { get; set; }
@@ -33,6 +33,6 @@ namespace Infonavit.Core
         public int modificacion { get; set; }
         public DateTime fecha { get; set; }
         public int descuento { get; set; }
-        public double valor { get; set; }
+        public decimal valor { get; set; }
     }
 }

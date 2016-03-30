@@ -56,7 +56,6 @@
   <ItemGroup>
     <Compile Include="Calculo.cs" />
     <Compile Include="CalculoFormula.cs" />
-    <Compile Include="CalculoTrabajadores.cs" />
     <Compile Include="Calendario.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -194,6 +193,12 @@
     </Compile>
     <Compile Include="frmImagen.Designer.cs">
       <DependentUpon>frmImagen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmImpresionRecibos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmImpresionRecibos.Designer.cs">
+      <DependentUpon>frmImpresionRecibos.cs</DependentUpon>
     </Compile>
     <Compile Include="frmImss.cs">
       <SubType>Form</SubType>
@@ -567,12 +572,6 @@
     <Compile Include="frmUsuarios.Designer.cs">
       <DependentUpon>frmUsuarios.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmVacaciones.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmVacaciones.Designer.cs">
-      <DependentUpon>frmVacaciones.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmVisorReportes.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -645,6 +644,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmImagen.resx">
       <DependentUpon>frmImagen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmImpresionRecibos.resx">
+      <DependentUpon>frmImpresionRecibos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmImss.resx">
       <DependentUpon>frmImss.cs</DependentUpon>
@@ -831,9 +833,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmUsuarios.resx">
       <DependentUpon>frmUsuarios.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmVacaciones.resx">
-      <DependentUpon>frmVacaciones.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmVisorReportes.resx">
       <DependentUpon>frmVisorReportes.cs</DependentUpon>

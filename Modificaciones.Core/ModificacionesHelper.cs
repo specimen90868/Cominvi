@@ -26,7 +26,7 @@ namespace Modificaciones.Core
                 mod.registropatronal = dtMod.Rows[i]["registropatronal"].ToString();
                 mod.nss = dtMod.Rows[i]["nss"].ToString();
                 mod.fecha = DateTime.Parse(dtMod.Rows[i]["fecha"].ToString());
-                mod.sdi = double.Parse(dtMod.Rows[i]["sdi"].ToString());
+                mod.sdi = decimal.Parse(dtMod.Rows[i]["sdi"].ToString());
                 lstModificaciones.Add(mod);
             }
             return lstModificaciones;

@@ -21,19 +21,19 @@ namespace Nominas
         public delegate void delOnDiasAusentismo(int dias);
         public event delOnDiasAusentismo OnDiasAusentismo;
 
-        public delegate void delOnCantidad(double cantidad);
+        public delegate void delOnCantidad(decimal cantidad);
         public event delOnCantidad OnCantidad;
 
-        public delegate void delOnDespensa(double cantidad);
+        public delegate void delOnDespensa(decimal cantidad);
         public event delOnDespensa OnDespensa;
 
-        public delegate void delOnSubsidio(double cantidad);
+        public delegate void delOnSubsidio(decimal cantidad);
         public event delOnSubsidio OnSubsidio;
 
-        public delegate void delOnIsr(double cantidad);
+        public delegate void delOnIsr(decimal cantidad);
         public event delOnIsr OnIsr;
 
-        public delegate void delOnInfonavit(double cantidad);
+        public delegate void delOnInfonavit(decimal cantidad);
         public event delOnInfonavit OnInfonavit;
 
         #endregion
@@ -65,15 +65,15 @@ namespace Nominas
             if (OnDiasAusentismo != null)
                 OnDiasAusentismo(int.Parse(txtDias.Text));
             if (OnCantidad != null)
-                OnCantidad(double.Parse(txtDias.Text));
+                OnCantidad(decimal.Parse(txtDias.Text));
             if (OnDespensa != null)
-                OnDespensa(double.Parse(txtDias.Text));
+                OnDespensa(decimal.Parse(txtDias.Text));
             if (OnSubsidio != null)
-                OnSubsidio(double.Parse(txtDias.Text));
+                OnSubsidio(decimal.Parse(txtDias.Text));
             if (OnIsr != null)
-                OnIsr(double.Parse(txtDias.Text));
+                OnIsr(decimal.Parse(txtDias.Text));
             if (OnInfonavit != null)
-                OnInfonavit(double.Parse(txtDias.Text));
+                OnInfonavit(decimal.Parse(txtDias.Text));
             this.Dispose();
         }
     }

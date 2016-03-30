@@ -102,11 +102,11 @@ namespace Nominas
 
         private void toolNuevo_Click(object sender, EventArgs e)
         {
-            frmVacaciones v = new frmVacaciones();
-            v.OnVacacionNueva += v_OnVacacionNueva;
-            v._tipoNomina = _tipoNomina;
-            v._ventana = "Vacacion";
-            v.Show();
+            //frmVacaciones v = new frmVacaciones();
+            //v.OnVacacionNueva += v_OnVacacionNueva;
+            //v._tipoNomina = _tipoNomina;
+            //v._ventana = "Vacacion";
+            //v.Show();
         }
 
         void v_OnVacacionNueva()

@@ -167,11 +167,11 @@ namespace Nominas
             return edad;
         }
 
-        private double ObtieneSD(double sdi)
+        private decimal ObtieneSD(decimal sdi)
         {
             int DiasDePago = 0;
-            double FactorDePago = 0;
-            double sd = 0;
+            decimal FactorDePago = 0;
+            decimal sd = 0;
             cnx = new SqlConnection();
             cnx.ConnectionString = cdn;
             cmd = new SqlCommand();
@@ -193,7 +193,7 @@ namespace Nominas
             {
                 cnx.Open();
                 DiasDePago = (int)ph.DiasDePago(p);
-                FactorDePago = double.Parse(fh.FactorDePago(f).ToString());
+                FactorDePago = decimal.Parse(fh.FactorDePago(f).ToString());
                 cnx.Close();
 
                 sd = (sdi / FactorDePago);
@@ -206,10 +206,10 @@ namespace Nominas
             return sd;
         }
 
-        private double ObtieneSueldo(double sd)
+        private decimal ObtieneSueldo(decimal sd)
         {
             int DiasDePago = 0;
-            double sueldo = 0;
+            decimal sueldo = 0;
             cnx = new SqlConnection();
             cnx.ConnectionString = cdn;
             cmd = new SqlCommand();
@@ -431,8 +431,8 @@ namespace Nominas
                 empleado.nss = fila.Cells["nss"].Value.ToString();
                 empleado.digitoverificador = int.Parse(fila.Cells["dv"].Value.ToString());
                 empleado.tiposalario = 19;
-                empleado.sdi = double.Parse(fila.Cells["sdi"].Value.ToString());
-                empleado.sd = ObtieneSD(double.Parse(fila.Cells["sdi"].Value.ToString()));
+                empleado.sdi = decimal.Parse(fila.Cells["sdi"].Value.ToString());
+                empleado.sd = ObtieneSD(decimal.Parse(fila.Cells["sdi"].Value.ToString()));
                 empleado.sueldo = ObtieneSueldo(empleado.sd);
                 empleado.estatus = 1;
                 empleado.idusuario = GLOBALES.IDUSUARIO;

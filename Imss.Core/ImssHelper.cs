@@ -20,7 +20,7 @@ namespace Imss.Core
                 Imss imss = new Imss();
                 imss.id = int.Parse(dtImss.Rows[i]["id"].ToString());
                 imss.prestacion = dtImss.Rows[i]["prestacion"].ToString();
-                imss.porcentaje = double.Parse(dtImss.Rows[i]["porcentaje"].ToString());
+                imss.porcentaje = decimal.Parse(dtImss.Rows[i]["porcentaje"].ToString());
                 lstImss.Add(imss);
             }
             return lstImss;
@@ -39,7 +39,7 @@ namespace Imss.Core
                 Imss imss = new Imss();
                 imss.id = int.Parse(dtImss.Rows[j]["id"].ToString());
                 imss.prestacion = dtImss.Rows[j]["prestacion"].ToString();
-                imss.porcentaje = double.Parse(dtImss.Rows[j]["porcentaje"].ToString());
+                imss.porcentaje = decimal.Parse(dtImss.Rows[j]["porcentaje"].ToString());
                 lstImss.Add(imss);
             }
             return lstImss;

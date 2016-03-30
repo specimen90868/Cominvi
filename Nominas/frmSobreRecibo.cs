@@ -5,6 +5,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -228,7 +229,7 @@ namespace Nominas
             #region PROGRAMACION DE MOVIMIENTOS
             List<CalculoNomina.Core.tmpPagoNomina> lstOtrasDeducciones = new List<CalculoNomina.Core.tmpPagoNomina>();
 
-            double percepciones = lstPercepciones.Where(f => f.tipoconcepto == "P").Sum(f => f.cantidad);
+            decimal percepciones = lstPercepciones.Where(f => f.tipoconcepto == "P").Sum(f => f.cantidad);
 
             if (percepciones != 0)
             {
@@ -334,7 +335,7 @@ namespace Nominas
                             if (lstNoConcepto[0].gravado && lstNoConcepto[0].exento)
                             {
                                 CalculoFormula formulaExcento = new CalculoFormula(idTrabajador, _inicioPeriodo.Date, _finPeriodo.Date, lstNoConcepto[0].formulaexento);
-                                vn.exento = double.Parse(formulaExcento.calcularFormula().ToString());
+                                vn.exento = decimal.Parse(formulaExcento.calcularFormula().ToString());
                                 if (vn.cantidad <= vn.exento)
                                 {
                                     vn.exento = vn.cantidad;
@@ -370,7 +371,7 @@ namespace Nominas
             }
             else
             {
-                double vacacion = lstPercepciones.Where(f => f.noconcepto == 7).Sum(f => f.cantidad);
+                decimal vacacion = lstPercepciones.Where(f => f.noconcepto == 7).Sum(f => f.cantidad);
                 if (vacacion != 0)
                 {
                     cnx = new SqlConnection(cdn);
@@ -472,7 +473,7 @@ namespace Nominas
                                 if (lstNoConcepto[0].gravado && lstNoConcepto[0].exento)
                                 {
                                     CalculoFormula formulaExcento = new CalculoFormula(idTrabajador, _inicioPeriodo.Date, _finPeriodo.Date, lstNoConcepto[0].formulaexento);
-                                    vn.exento = double.Parse(formulaExcento.calcularFormula().ToString());
+                                    vn.exento = decimal.Parse(formulaExcento.calcularFormula().ToString());
                                     if (vn.cantidad <= vn.exento)
                                     {
                                         vn.exento = vn.cantidad;
@@ -597,7 +598,7 @@ namespace Nominas
                         if (lstNoConcepto[0].gravado && lstNoConcepto[0].exento)
                         {
                             CalculoFormula formulaExcento = new CalculoFormula(idTrabajador, _inicioPeriodo.Date, _finPeriodo.Date, lstNoConcepto[0].formulaexento);
-                            vn.exento = double.Parse(formulaExcento.calcularFormula().ToString());
+                            vn.exento = decimal.Parse(formulaExcento.calcularFormula().ToString());
                             if (vn.cantidad <= vn.exento)
                             {
                                 vn.exento = vn.cantidad;
@@ -693,9 +694,9 @@ namespace Nominas
             dt.Columns.Add("idconcepto", typeof(Int32));
             dt.Columns.Add("noconcepto", typeof(Int32));
             dt.Columns.Add("tipoconcepto", typeof(String));
-            dt.Columns.Add("exento", typeof(Double));
-            dt.Columns.Add("gravado", typeof(Double));
-            dt.Columns.Add("cantidad", typeof(Double));
+            dt.Columns.Add("exento", typeof(Decimal));
+            dt.Columns.Add("gravado", typeof(Decimal));
+            dt.Columns.Add("cantidad", typeof(Decimal));
             dt.Columns.Add("fechainicio", typeof(DateTime));
             dt.Columns.Add("fechafin", typeof(DateTime));
             dt.Columns.Add("noperiodo", typeof(Int32));
@@ -876,16 +877,16 @@ namespace Nominas
                 dgvDeducciones.Columns[2].Width = 90;
                 dgvDeducciones.Columns[2].DefaultCellStyle = estilo;
 
-                double sumaPercepciones = 0, sumaDeducciones = 0, netoPagar = 0;
-                double subsidio = lstReciboDeducciones.Where(d => d.noconcepto == 16).Sum(d => d.cantidad);
+                decimal sumaPercepciones = 0, sumaDeducciones = 0, netoPagar = 0;
+                decimal subsidio = lstReciboDeducciones.Where(d => d.noconcepto == 16).Sum(d => d.cantidad);
                 foreach (DataGridViewRow fila in dgvPercepciones.Rows)
                 {
-                    sumaPercepciones += double.Parse(fila.Cells[2].Value.ToString());
+                    sumaPercepciones += decimal.Parse(fila.Cells[2].Value.ToString());
                 }
 
                 foreach (DataGridViewRow fila in dgvDeducciones.Rows)
                 {
-                    sumaDeducciones += double.Parse(fila.Cells[2].Value.ToString());
+                    sumaDeducciones += decimal.Parse(fila.Cells[2].Value.ToString());
                 }
 
                 sumaPercepciones += subsidio;
@@ -899,6 +900,8 @@ namespace Nominas
                 dgvPercepciones.Columns.Add("dias", "dias");
                 if (diasAPagar != 0)
                     dgvPercepciones.Rows[0].Cells[3].Value = diasAPagar.ToString() + " dias";
+                if (netoPagar < 0)
+                    MessageBox.Show("El neto a pagar es negativo: " + netoPagar.ToString("#,##0.00"), "Información");
             }
             else
                 FLAGCALCULO = false;
@@ -1237,7 +1240,7 @@ namespace Nominas
             da.ShowDialog();
         }
 
-        void da_OnCantidad(double cantidad)
+        void da_OnCantidad(decimal cantidad)
         {
  
             cnx = new SqlConnection(cdn);
@@ -1259,9 +1262,9 @@ namespace Nominas
             cnx.Close();
 
             CalculoFormula cf = new CalculoFormula(idTrabajador, _inicioPeriodo, _finPeriodo, formulaexento);
-            double exento = double.Parse(cf.calcularFormula().ToString());
+            decimal exento = decimal.Parse(cf.calcularFormula().ToString());
 
-            double gravado = 0;
+            decimal gravado = 0;
             if (cantidad <= exento)
             {
                 exento = cantidad;
@@ -1307,7 +1310,7 @@ namespace Nominas
             da.ShowDialog();
         }
 
-        void da_OnDespensa(double cantidad)
+        void da_OnDespensa(decimal cantidad)
         {
 
             cnx = new SqlConnection(cdn);
@@ -2315,7 +2318,7 @@ namespace Nominas
             da.ShowDialog();
         }
 
-        void da_OnSubsidio(double cantidad)
+        void da_OnSubsidio(decimal cantidad)
         {
 
             cnx = new SqlConnection(cdn);
@@ -2360,7 +2363,7 @@ namespace Nominas
             da.ShowDialog();
         }
 
-        private void da_OnIsr(double cantidad) 
+        private void da_OnIsr(decimal cantidad) 
         {
             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();
@@ -2404,7 +2407,7 @@ namespace Nominas
             da.ShowDialog();
         }
 
-        void da_OnInfonavit(double cantidad)
+        void da_OnInfonavit(decimal cantidad)
         {
             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();

@@ -26,17 +26,17 @@ namespace Vacaciones.Core
                 vacacion.fechaingreso = DateTime.Parse(dtVacaciones.Rows[i]["fechaingreso"].ToString());
                 vacacion.inicio = DateTime.Parse(dtVacaciones.Rows[i]["inicio"].ToString());
                 vacacion.fin = DateTime.Parse(dtVacaciones.Rows[i]["fin"].ToString());
-                vacacion.sd = double.Parse(dtVacaciones.Rows[i]["sd"].ToString());
+                vacacion.sd = decimal.Parse(dtVacaciones.Rows[i]["sd"].ToString());
                 vacacion.diasderecho = int.Parse(dtVacaciones.Rows[i]["diasderecho"].ToString());
                 vacacion.diasapagar = int.Parse(dtVacaciones.Rows[i]["diasapagar"].ToString());
                 vacacion.diaspendientes = int.Parse(dtVacaciones.Rows[i]["diaspendientes"].ToString());
-                vacacion.pv = double.Parse(dtVacaciones.Rows[i]["pv"].ToString());
-                vacacion.pexenta = double.Parse(dtVacaciones.Rows[i]["pexenta"].ToString());
-                vacacion.pgravada = double.Parse(dtVacaciones.Rows[i]["pgravada"].ToString());
-                vacacion.isrgravada = double.Parse(dtVacaciones.Rows[i]["isrgravada"].ToString());
-                vacacion.pagovacaciones = double.Parse(dtVacaciones.Rows[i]["pagovacaciones"].ToString());
-                vacacion.totalprima = double.Parse(dtVacaciones.Rows[i]["totalprima"].ToString());
-                vacacion.total = double.Parse(dtVacaciones.Rows[i]["total"].ToString());
+                vacacion.pv = decimal.Parse(dtVacaciones.Rows[i]["pv"].ToString());
+                vacacion.pexenta = decimal.Parse(dtVacaciones.Rows[i]["pexenta"].ToString());
+                vacacion.pgravada = decimal.Parse(dtVacaciones.Rows[i]["pgravada"].ToString());
+                vacacion.isrgravada = decimal.Parse(dtVacaciones.Rows[i]["isrgravada"].ToString());
+                vacacion.pagovacaciones = decimal.Parse(dtVacaciones.Rows[i]["pagovacaciones"].ToString());
+                vacacion.totalprima = decimal.Parse(dtVacaciones.Rows[i]["totalprima"].ToString());
+                vacacion.total = decimal.Parse(dtVacaciones.Rows[i]["total"].ToString());
                 vacacion.fechapago = DateTime.Parse(dtVacaciones.Rows[i]["fechapago"].ToString());
                 vacacion.pagada = bool.Parse(dtVacaciones.Rows[i]["pagada"].ToString());
                 vacacion.pvpagada = bool.Parse(dtVacaciones.Rows[i]["pvpagada"].ToString());
@@ -63,17 +63,17 @@ namespace Vacaciones.Core
                 vacacion.fechaingreso = DateTime.Parse(dtVacacion.Rows[i]["fechaingreso"].ToString());
                 vacacion.inicio = DateTime.Parse(dtVacacion.Rows[i]["inicio"].ToString());
                 vacacion.fin = DateTime.Parse(dtVacacion.Rows[i]["fin"].ToString());
-                vacacion.sd = double.Parse(dtVacacion.Rows[i]["sd"].ToString());
+                vacacion.sd = decimal.Parse(dtVacacion.Rows[i]["sd"].ToString());
                 vacacion.diasderecho = int.Parse(dtVacacion.Rows[i]["diasderecho"].ToString());
                 vacacion.diasapagar = int.Parse(dtVacacion.Rows[i]["diasapagar"].ToString());
                 vacacion.diaspendientes = int.Parse(dtVacacion.Rows[i]["diaspendientes"].ToString());
-                vacacion.pv = double.Parse(dtVacacion.Rows[i]["pv"].ToString());
-                vacacion.pexenta = double.Parse(dtVacacion.Rows[i]["pexenta"].ToString());
-                vacacion.pgravada = double.Parse(dtVacacion.Rows[i]["pgravada"].ToString());
-                vacacion.isrgravada = double.Parse(dtVacacion.Rows[i]["isrgravada"].ToString());
-                vacacion.pagovacaciones = double.Parse(dtVacacion.Rows[i]["pagovacaciones"].ToString());
-                vacacion.totalprima = double.Parse(dtVacacion.Rows[i]["totalprima"].ToString());
-                vacacion.total = double.Parse(dtVacacion.Rows[i]["total"].ToString());
+                vacacion.pv = decimal.Parse(dtVacacion.Rows[i]["pv"].ToString());
+                vacacion.pexenta = decimal.Parse(dtVacacion.Rows[i]["pexenta"].ToString());
+                vacacion.pgravada = decimal.Parse(dtVacacion.Rows[i]["pgravada"].ToString());
+                vacacion.isrgravada = decimal.Parse(dtVacacion.Rows[i]["isrgravada"].ToString());
+                vacacion.pagovacaciones = decimal.Parse(dtVacacion.Rows[i]["pagovacaciones"].ToString());
+                vacacion.totalprima = decimal.Parse(dtVacacion.Rows[i]["totalprima"].ToString());
+                vacacion.total = decimal.Parse(dtVacacion.Rows[i]["total"].ToString());
                 vacacion.fechapago = DateTime.Parse(dtVacacion.Rows[i]["fechapago"].ToString());
                 vacacion.pagada = bool.Parse(dtVacacion.Rows[i]["pagada"].ToString());
                 vacacion.pvpagada = bool.Parse(dtVacacion.Rows[i]["pvpagada"].ToString());
@@ -108,9 +108,9 @@ namespace Vacaciones.Core
             for (int i = 0; i < dtPrima.Rows.Count; i++)
             {
                 Vacaciones vacacion = new Vacaciones();
-                vacacion.pv = double.Parse(dtPrima.Rows[i]["pv"].ToString());
-                vacacion.pexenta = double.Parse(dtPrima.Rows[i]["pexenta"].ToString());
-                vacacion.pgravada = double.Parse(dtPrima.Rows[i]["pgravada"].ToString());
+                vacacion.pv = decimal.Parse(dtPrima.Rows[i]["pv"].ToString());
+                vacacion.pexenta = decimal.Parse(dtPrima.Rows[i]["pexenta"].ToString());
+                vacacion.pgravada = decimal.Parse(dtPrima.Rows[i]["pgravada"].ToString());
                 lstPrima.Add(vacacion);
             }
             return lstPrima;

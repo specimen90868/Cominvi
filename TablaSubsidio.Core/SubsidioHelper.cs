@@ -19,8 +19,8 @@ namespace TablaSubsidio.Core
             {
                 TablaSubsidio subsidio = new TablaSubsidio();
                 subsidio.id = int.Parse(dtSubsidio.Rows[i]["id"].ToString());
-                subsidio.desde = double.Parse(dtSubsidio.Rows[i]["desde"].ToString());
-                subsidio.cantidad = double.Parse(dtSubsidio.Rows[i]["cantidad"].ToString());
+                subsidio.desde = decimal.Parse(dtSubsidio.Rows[i]["desde"].ToString());
+                subsidio.cantidad = decimal.Parse(dtSubsidio.Rows[i]["cantidad"].ToString());
                 subsidio.periodo = int.Parse(dtSubsidio.Rows[i]["periodo"].ToString());
                 subsidio.anio = int.Parse(dtSubsidio.Rows[i]["anio"].ToString());
                 lstSubsidio.Add(subsidio);
@@ -40,8 +40,8 @@ namespace TablaSubsidio.Core
             {
                 TablaSubsidio subsidio = new TablaSubsidio();
                 subsidio.id = int.Parse(dtSubsidio.Rows[i]["id"].ToString());
-                subsidio.desde = double.Parse(dtSubsidio.Rows[i]["desde"].ToString());
-                subsidio.cantidad = double.Parse(dtSubsidio.Rows[i]["cantidad"].ToString());
+                subsidio.desde = decimal.Parse(dtSubsidio.Rows[i]["desde"].ToString());
+                subsidio.cantidad = decimal.Parse(dtSubsidio.Rows[i]["cantidad"].ToString());
                 subsidio.periodo = int.Parse(dtSubsidio.Rows[i]["periodo"].ToString());
                 subsidio.anio = int.Parse(dtSubsidio.Rows[i]["anio"].ToString());
                 lstSubsidio.Add(subsidio);

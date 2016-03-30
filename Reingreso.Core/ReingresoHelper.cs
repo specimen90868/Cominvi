@@ -26,7 +26,7 @@ namespace Reingreso.Core
                 reingreso.registropatronal = dtReingresos.Rows[i]["registropatronal"].ToString();
                 reingreso.nss = dtReingresos.Rows[i]["nss"].ToString();
                 reingreso.fechaingreso = DateTime.Parse(dtReingresos.Rows[i]["fechaingreso"].ToString());
-                reingreso.sdi = double.Parse(dtReingresos.Rows[i]["sdi"].ToString());
+                reingreso.sdi = decimal.Parse(dtReingresos.Rows[i]["sdi"].ToString());
                 lstReingresos.Add(reingreso);
             }
             return lstReingresos;

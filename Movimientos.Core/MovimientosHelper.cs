@@ -24,7 +24,7 @@ namespace Movimientos.Core
                 mov.idtrabajador = int.Parse(dtMovimientos.Rows[i]["idtrabajador"].ToString());
                 mov.idempresa = int.Parse(dtMovimientos.Rows[i]["idempresa"].ToString());
                 mov.idconcepto = int.Parse(dtMovimientos.Rows[i]["idconcepto"].ToString());
-                mov.cantidad = double.Parse(dtMovimientos.Rows[i]["cantidad"].ToString());
+                mov.cantidad = decimal.Parse(dtMovimientos.Rows[i]["cantidad"].ToString());
                 mov.fechainicio = DateTime.Parse(dtMovimientos.Rows[i]["fechainicio"].ToString());
                 mov.fechafin = DateTime.Parse(dtMovimientos.Rows[i]["fechafin"].ToString());
                 lstMovimientos.Add(mov);
@@ -49,7 +49,7 @@ namespace Movimientos.Core
                 mov.idtrabajador = int.Parse(dtMovimientos.Rows[i]["idtrabajador"].ToString());
                 mov.idempresa = int.Parse(dtMovimientos.Rows[i]["idempresa"].ToString());
                 mov.idconcepto = int.Parse(dtMovimientos.Rows[i]["idconcepto"].ToString());
-                mov.cantidad = double.Parse(dtMovimientos.Rows[i]["cantidad"].ToString());
+                mov.cantidad = decimal.Parse(dtMovimientos.Rows[i]["cantidad"].ToString());
                 mov.fechainicio = DateTime.Parse(dtMovimientos.Rows[i]["fechainicio"].ToString());
                 mov.fechafin = DateTime.Parse(dtMovimientos.Rows[i]["fechafin"].ToString());
                 lstMovimientos.Add(mov);
@@ -72,7 +72,7 @@ namespace Movimientos.Core
                 mov.idtrabajador = int.Parse(dtMovimientos.Rows[i]["idtrabajador"].ToString());
                 mov.idempresa = int.Parse(dtMovimientos.Rows[i]["idempresa"].ToString());
                 mov.idconcepto = int.Parse(dtMovimientos.Rows[i]["idconcepto"].ToString());
-                mov.cantidad = double.Parse(dtMovimientos.Rows[i]["cantidad"].ToString());
+                mov.cantidad = decimal.Parse(dtMovimientos.Rows[i]["cantidad"].ToString());
                 mov.fechainicio = DateTime.Parse(dtMovimientos.Rows[i]["fechainicio"].ToString());
                 mov.fechafin = DateTime.Parse(dtMovimientos.Rows[i]["fechafin"].ToString());
                 lstMovimientos.Add(mov);

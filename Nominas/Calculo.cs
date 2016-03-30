@@ -44,10 +44,10 @@ namespace Nominas
                 vn.modificado = false;
 
                 CalculoFormula formula = new CalculoFormula(lstConceptosPercepciones[i].idtrabajador, inicio.Date, fin.Date, lstConceptosPercepciones[i].formula);
-                vn.cantidad = double.Parse(formula.calcularFormula().ToString());
+                vn.cantidad = decimal.Parse(formula.calcularFormula().ToString());
 
                 CalculoFormula formulaExcento = new CalculoFormula(lstConceptosPercepciones[i].idtrabajador, inicio.Date, fin.Date, lstConceptosPercepciones[i].formulaexento);
-                vn.exento = double.Parse(formulaExcento.calcularFormula().ToString());
+                vn.exento = decimal.Parse(formulaExcento.calcularFormula().ToString());
 
                 Conceptos.Core.ConceptosHelper ch = new Conceptos.Core.ConceptosHelper();
                 ch.Command = cmd;
@@ -214,18 +214,18 @@ namespace Nominas
 
             #region CALCULO
             lstValoresNomina = new List<CalculoNomina.Core.tmpPagoNomina>();
-            double isrAntes = 0, subsidioAntes = 0;
+            decimal isrAntes = 0, subsidioAntes = 0;
 
             for (int i = 0; i < lstConceptosDeducciones.Count; i++)
             {
-                double percepciones = lstPercepciones.Where(e => e.idtrabajador == lstConceptosDeducciones[i].idtrabajador && e.tipoconcepto == "P").Sum(e => e.cantidad);
+                decimal percepciones = lstPercepciones.Where(e => e.idtrabajador == lstConceptosDeducciones[i].idtrabajador && e.tipoconcepto == "P").Sum(e => e.cantidad);
 
                 switch (lstConceptosDeducciones[i].noconcepto)
                 {
                     #region CONCEPTO ISR ANTES DE SUBSIDIO
                     case 8:
 
-                        double excedente = 0, ImpMarginal = 0, isr = 0;
+                        decimal excedente = 0, ImpMarginal = 0, isr = 0;
                         List<TablaIsr.Core.TablaIsr> lstIsr = new List<TablaIsr.Core.TablaIsr>();
                         TablaIsr.Core.IsrHelper isrh = new TablaIsr.Core.IsrHelper();
                         isrh.Command = cmd;
@@ -244,7 +244,7 @@ namespace Nominas
 
                         if (percepciones != 0)
                         {
-                            double baseGravableIsr = lstPercepciones.Where(e => e.idtrabajador == lstConceptosDeducciones[i].idtrabajador).Sum(e => e.gravado);
+                            decimal baseGravableIsr = lstPercepciones.Where(e => e.idtrabajador == lstConceptosDeducciones[i].idtrabajador).Sum(e => e.gravado);
 
                             Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
                             eh.Command = cmd;
@@ -264,18 +264,18 @@ namespace Nominas
                             cnx.Close();
 
                             TablaIsr.Core.TablaIsr _isr = new TablaIsr.Core.TablaIsr();
-                            _isr.inferior = (baseGravableIsr / dias) * 30.4;
+                            _isr.inferior = (baseGravableIsr / dias) * decimal.Parse((30.4).ToString());
 
                             cnx.Open();
                             lstIsr = isrh.isrCorrespondiente(_isr);
                             cnx.Close();
 
-                            excedente = ((baseGravableIsr / dias) * 30.4) - lstIsr[0].inferior;
+                            excedente = ((baseGravableIsr / dias) * decimal.Parse((30.4).ToString())) - lstIsr[0].inferior;
                             ImpMarginal = excedente * (lstIsr[0].porcentaje / 100);
                             isr = ImpMarginal + lstIsr[0].cuota;
 
-                            isrAntesSubsidio.cantidad = (isr / 30.4) * dias;
-                            isrAntes = (isr / 30.4) * dias;
+                            isrAntesSubsidio.cantidad = (isr / decimal.Parse((30.4).ToString())) * dias;
+                            isrAntes = (isr / decimal.Parse((30.4).ToString())) * dias;
                         }
                         else
                         {
@@ -348,7 +348,7 @@ namespace Nominas
 
                         if (percepciones != 0)
                         {
-                            double baseGravableSubsidio = lstPercepciones.Where(e => e.idtrabajador == lstConceptosDeducciones[i].idtrabajador).Sum(e => e.gravado);
+                            decimal baseGravableSubsidio = lstPercepciones.Where(e => e.idtrabajador == lstConceptosDeducciones[i].idtrabajador).Sum(e => e.gravado);
 
                             Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
                             eh.Command = cmd;
@@ -370,15 +370,15 @@ namespace Nominas
                             TablaSubsidio.Core.SubsidioHelper ts = new TablaSubsidio.Core.SubsidioHelper();
                             ts.Command = cmd;
                             TablaSubsidio.Core.TablaSubsidio subsidio = new TablaSubsidio.Core.TablaSubsidio();
-                            subsidio.desde = (baseGravableSubsidio / dias) * 30.4;
+                            subsidio.desde = (baseGravableSubsidio / dias) * decimal.Parse((30.4).ToString());
 
-                            double cantidad = 0;
+                            decimal cantidad = 0;
                             cnx.Open();
-                            cantidad = double.Parse(ts.obtenerCantidadSubsidio(subsidio).ToString());
+                            cantidad = decimal.Parse(ts.obtenerCantidadSubsidio(subsidio).ToString());
                             cnx.Close();
 
-                            subsidioNomina.cantidad = (cantidad / 30.4) * dias;
-                            subsidioAntes = (cantidad / 30.4) * dias;
+                            subsidioNomina.cantidad = (cantidad / decimal.Parse((30.4).ToString())) * dias;
+                            subsidioAntes = (cantidad / decimal.Parse((30.4).ToString())) * dias;
                         }
                         else
                         {
@@ -642,7 +642,7 @@ namespace Nominas
                                 if (activoInfonavit)
                                 {
                                     CalculoFormula cf = new CalculoFormula(lstConceptosDeducciones[i].idtrabajador, inicio.Date, fin.Date, lstConceptosDeducciones[i].formula);
-                                    vn.cantidad = double.Parse(cf.calcularFormula().ToString());
+                                    vn.cantidad = decimal.Parse(cf.calcularFormula().ToString());
                                     vn.exento = 0;
                                     vn.gravado = 0;
                                 }
@@ -657,7 +657,7 @@ namespace Nominas
                             else
                             {
                                 CalculoFormula cf = new CalculoFormula(lstConceptosDeducciones[i].idtrabajador, inicio.Date, fin.Date, lstConceptosDeducciones[i].formula);
-                                vn.cantidad = double.Parse(cf.calcularFormula().ToString());
+                                vn.cantidad = decimal.Parse(cf.calcularFormula().ToString());
                                 vn.exento = 0;
                                 vn.gravado = 0;
                             }

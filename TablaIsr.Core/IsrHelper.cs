@@ -19,9 +19,9 @@ namespace TablaIsr.Core
             {
                 TablaIsr isr = new TablaIsr();
                 isr.id = int.Parse(dtIsr.Rows[i]["id"].ToString());
-                isr.inferior = double.Parse(dtIsr.Rows[i]["inferior"].ToString());
-                isr.cuota = double.Parse(dtIsr.Rows[i]["cuota"].ToString());
-                isr.porcentaje = double.Parse(dtIsr.Rows[i]["porcentaje"].ToString());
+                isr.inferior = decimal.Parse(dtIsr.Rows[i]["inferior"].ToString());
+                isr.cuota = decimal.Parse(dtIsr.Rows[i]["cuota"].ToString());
+                isr.porcentaje = decimal.Parse(dtIsr.Rows[i]["porcentaje"].ToString());
                 isr.periodo = int.Parse(dtIsr.Rows[i]["periodo"].ToString());
                 isr.anio = int.Parse(dtIsr.Rows[i]["anio"].ToString());
                 lstIsr.Add(isr);
@@ -41,9 +41,9 @@ namespace TablaIsr.Core
             {
                 TablaIsr isr = new TablaIsr();
                 isr.id = int.Parse(dtIsr.Rows[i]["id"].ToString());
-                isr.inferior = double.Parse(dtIsr.Rows[i]["inferior"].ToString());
-                isr.cuota = double.Parse(dtIsr.Rows[i]["cuota"].ToString());
-                isr.porcentaje = double.Parse(dtIsr.Rows[i]["porcentaje"].ToString());
+                isr.inferior = decimal.Parse(dtIsr.Rows[i]["inferior"].ToString());
+                isr.cuota = decimal.Parse(dtIsr.Rows[i]["cuota"].ToString());
+                isr.porcentaje = decimal.Parse(dtIsr.Rows[i]["porcentaje"].ToString());
                 isr.periodo = int.Parse(dtIsr.Rows[i]["periodo"].ToString());
                 isr.anio = int.Parse(dtIsr.Rows[i]["anio"].ToString());
                 lstIsr.Add(isr);
@@ -63,9 +63,9 @@ namespace TablaIsr.Core
             {
                 TablaIsr isr = new TablaIsr();
                 isr.id = int.Parse(dtIsr.Rows[i]["id"].ToString());
-                isr.inferior = double.Parse(dtIsr.Rows[i]["inferior"].ToString());
-                isr.cuota = double.Parse(dtIsr.Rows[i]["cuota"].ToString());
-                isr.porcentaje = double.Parse(dtIsr.Rows[i]["porcentaje"].ToString());
+                isr.inferior = decimal.Parse(dtIsr.Rows[i]["inferior"].ToString());
+                isr.cuota = decimal.Parse(dtIsr.Rows[i]["cuota"].ToString());
+                isr.porcentaje = decimal.Parse(dtIsr.Rows[i]["porcentaje"].ToString());
                 isr.periodo = int.Parse(dtIsr.Rows[i]["periodo"].ToString());
                 isr.anio = int.Parse(dtIsr.Rows[i]["anio"].ToString());
                 lstIsr.Add(isr);

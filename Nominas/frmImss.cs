@@ -99,7 +99,7 @@ namespace Nominas
 
             Imss.Core.Imss imss = new Imss.Core.Imss();
             imss.prestacion = txtPrestacion.Text;
-            imss.porcentaje = double.Parse(txtPorcentaje.Text);
+            imss.porcentaje = decimal.Parse(txtPorcentaje.Text);
             
             switch (_tipoOperacion)
             {

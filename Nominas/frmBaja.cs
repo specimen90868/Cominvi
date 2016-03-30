@@ -409,7 +409,7 @@ namespace Nominas
                 try
                 {
                     cnx.Open();
-                    h.valor = (double)(decimal)eh.obtenerSalarioDiarioIntegrado(emp);
+                    h.valor = (decimal)eh.obtenerSalarioDiarioIntegrado(emp);
                     hp.insertarHistorial(h);
                     //eh.bajaEmpleado(emp);
 

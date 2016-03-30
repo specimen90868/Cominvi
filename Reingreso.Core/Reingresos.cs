@@ -15,7 +15,7 @@ namespace Reingreso.Core
         public string nss { get; set; }
         public DateTime fechaingreso { get; set; }
         public int diasproporcionales { get; set; }
-        public double sdi { get; set; }
+        public decimal sdi { get; set; }
         public DateTime periodoinicio { get; set; }
         public DateTime periodofin { get; set; }
     }

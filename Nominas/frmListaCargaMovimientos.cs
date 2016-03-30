@@ -286,9 +286,9 @@ namespace Nominas
 
                         if (formulaexento == "0")
                         {
-                            pn.cantidad = double.Parse(fila.Cells["cantidad"].Value.ToString());
+                            pn.cantidad = decimal.Parse(fila.Cells["cantidad"].Value.ToString());
                             pn.exento = 0;
-                            pn.gravado = double.Parse(fila.Cells["cantidad"].Value.ToString());
+                            pn.gravado = decimal.Parse(fila.Cells["cantidad"].Value.ToString());
                         }
                         else {
                             CalculoFormula cf = new CalculoFormula(idEmpleado,
@@ -296,9 +296,9 @@ namespace Nominas
                                 DateTime.Parse(dgvMovimientos.Rows[0].Cells["fin"].Value.ToString()),
                                 formulaexento);
 
-                            double exento = double.Parse(cf.calcularFormula().ToString());
-                            double cantidad = double.Parse(fila.Cells["cantidad"].Value.ToString());
-                            double gravado = 0;
+                            decimal exento = decimal.Parse(cf.calcularFormula().ToString());
+                            decimal cantidad = decimal.Parse(fila.Cells["cantidad"].Value.ToString());
+                            decimal gravado = 0;
 
                             if (cantidad <= exento)
                             {
@@ -388,7 +388,7 @@ namespace Nominas
 
                         if (formula != "[Deduccion]")
                         {
-                            pn.cantidad = double.Parse(fila.Cells["cantidad"].Value.ToString());
+                            pn.cantidad = decimal.Parse(fila.Cells["cantidad"].Value.ToString());
                             pn.exento = 0;
                             pn.gravado = 0;
 
@@ -440,7 +440,7 @@ namespace Nominas
                             mov.idtrabajador = idEmpleado;
                             mov.idempresa = GLOBALES.IDEMPRESA;
                             mov.idconcepto = lstConcepto[0].id;
-                            mov.cantidad = double.Parse(fila.Cells["cantidad"].Value.ToString());
+                            mov.cantidad = decimal.Parse(fila.Cells["cantidad"].Value.ToString());
                             mov.fechainicio = DateTime.Parse(fila.Cells["inicio"].Value.ToString());
                             mov.fechafin = DateTime.Parse(fila.Cells["fin"].Value.ToString());
 
@@ -498,9 +498,9 @@ namespace Nominas
                 dt.Columns.Add("idconcepto", typeof(Int32));
                 dt.Columns.Add("noconcepto", typeof(Int32));
                 dt.Columns.Add("tipoconcepto", typeof(String));
-                dt.Columns.Add("exento", typeof(Double));
-                dt.Columns.Add("gravado", typeof(Double));
-                dt.Columns.Add("cantidad", typeof(Double));
+                dt.Columns.Add("exento", typeof(Decimal));
+                dt.Columns.Add("gravado", typeof(Decimal));
+                dt.Columns.Add("cantidad", typeof(Decimal));
                 dt.Columns.Add("fechainicio", typeof(DateTime));
                 dt.Columns.Add("fechafin", typeof(DateTime));
                 dt.Columns.Add("noperiodo", typeof(Int32));
