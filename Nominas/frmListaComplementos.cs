@@ -42,7 +42,7 @@ namespace Nominas
             try
             {
                 cnx.Open();
-                lstEmpleados = eh.obtenerEmpleados(empleado);
+                lstEmpleados = eh.obtenerEmpleadosBaja(empleado);
                 cnx.Close();
                 cnx.Dispose();
 

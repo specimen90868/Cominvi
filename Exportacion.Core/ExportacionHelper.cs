@@ -13,7 +13,7 @@ namespace Exportacion.Core
         {
             List<Exportacion> lstExportacion = new List<Exportacion>();
             DataTable dtExportacion = new DataTable();
-            Command.CommandText = "select campo, activo from Exportacion where formulario = @formulario";
+            Command.CommandText = "select campo, activo, orden from Exportacion where formulario = @formulario order by orden asc";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idEmpresa);
             Command.Parameters.AddWithValue("formulario", formulario);
@@ -26,6 +26,7 @@ namespace Exportacion.Core
                 //ex.formulario = dtExportacion.Rows[i]["formulario"].ToString();
                 ex.campo = dtExportacion.Rows[i]["campo"].ToString();
                 ex.activo = bool.Parse(dtExportacion.Rows[i]["activo"].ToString());
+                ex.orden = int.Parse(dtExportacion.Rows[i]["orden"].ToString());
                 lstExportacion.Add(ex);
             }
             return lstExportacion;
@@ -48,6 +49,16 @@ namespace Exportacion.Core
             Command.CommandText = "update Exportacion set activo = @activo where campo = @campo and formulario = @formulario";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("activo", e.activo);
+            Command.Parameters.AddWithValue("campo", e.campo);
+            Command.Parameters.AddWithValue("formulario", e.formulario);
+            return Command.ExecuteNonQuery();
+        }
+
+        public int actualizaOrden(Exportacion e)
+        {
+            Command.CommandText = "update Exportacion set orden = @orden where campo = @campo and formulario = @formulario";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("orden", e.orden);
             Command.Parameters.AddWithValue("campo", e.campo);
             Command.Parameters.AddWithValue("formulario", e.formulario);
             return Command.ExecuteNonQuery();

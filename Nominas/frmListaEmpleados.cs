@@ -23,7 +23,7 @@ namespace Nominas
         SqlConnection cnx;
         SqlCommand cmd;
         List<Empleados.Core.Empleados> lstEmpleados;
-        List<Bajas.Core.Bajas> lstBajas;
+        List<Empleados.Core.EmpleadosEstatus> lstEmpleadosEstatus;
         List<Departamento.Core.Depto> lstDepto;
         List<Puestos.Core.Puestos> lstPuesto;
         #endregion
@@ -56,21 +56,11 @@ namespace Nominas
             Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
             eh.Command = cmd;
 
-            Bajas.Core.BajasHelper bh = new Bajas.Core.BajasHelper();
-            bh.Command = cmd;
-
             Departamento.Core.DeptoHelper dh = new Departamento.Core.DeptoHelper();
             dh.Command = cmd;
 
             Puestos.Core.PuestosHelper ph = new Puestos.Core.PuestosHelper();
             ph.Command = cmd;
-
-            //Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
-            //empleado.idempresa = GLOBALES.IDEMPRESA;
-            //empleado.estatus = _empleadoAltaBaja;
-
-            Bajas.Core.Bajas baja = new Bajas.Core.Bajas();
-            baja.idempresa = GLOBALES.IDEMPRESA;
 
             Departamento.Core.Depto depto = new Departamento.Core.Depto();
             depto.idempresa = GLOBALES.IDEMPRESA;
@@ -80,65 +70,22 @@ namespace Nominas
 
             lstDepto = new List<Departamento.Core.Depto>();
             lstPuesto = new List<Puestos.Core.Puestos>();
+            lstEmpleadosEstatus = new List<Empleados.Core.EmpleadosEstatus>();
 
             try
             {
                 cnx.Open();
-                //lstEmpleados = eh.obtenerEmpleados(empleado);
                 lstEmpleados = eh.obtenerEmpleados(GLOBALES.IDEMPRESA);
-                //lstBajas = bh.obtenerBajas(baja);
+                lstEmpleadosEstatus = eh.obtenerEmpleadosEstatus(GLOBALES.IDEMPRESA);
                 lstDepto = dh.obtenerDepartamentos(depto);
                 lstPuesto = ph.obtenerPuestos(puesto);
                 cnx.Close();
                 cnx.Dispose();
 
-                #region COMENTADO
-                //if (_empleadoAltaBaja == GLOBALES.ACTIVO)
-                //{
-                //    var em = from e in lstEmpleados
-                //             join b in lstBajas on e.idtrabajador equals b.idtrabajador into EmpBaja
-                //             from b in EmpBaja.DefaultIfEmpty()
-                //             select new
-                //             {
-                //                 IdTrabajador = e.idtrabajador,
-                //                 NoEmpleado = e.noempleado,
-                //                 Nombre = e.nombrecompleto,
-                //                 Ingreso = e.fechaingreso,
-                //                 Antiguedad = e.antiguedad + " AÑOS",
-                //                 SDI = e.sdi,
-                //                 SD = e.sd,
-                //                 Sueldo = e.sueldo,
-                //                 Cuenta = e.cuenta,
-                //                 Clabe = e.clabe,
-                //                 FechaBaja = b != null ? b.fecha.ToShortDateString() : " "
-                //             };
-                //    dgvEmpleados.DataSource = em.ToList();
-                //}
-                //else
-                //{
-                //    var em = from e in lstEmpleados
-                //             select new
-                //             {
-                //                 IdTrabajador = e.idtrabajador,
-                //                 NoEmpleado = e.noempleado,
-                //                 Nombre = e.nombrecompleto,
-                //                 Ingreso = e.fechaingreso,
-                //                 Antiguedad = e.antiguedad + " AÑOS",
-                //                 SDI = e.sdi,
-                //                 SD = e.sd,
-                //                 Sueldo = e.sueldo,
-                //                 Cuenta = e.cuenta,
-                //                 Clabe = e.clabe
-                //             };
-                //    dgvEmpleados.DataSource = em.ToList();
-                //}
-                #endregion
-
                 var em = from e in lstEmpleados
+                         join ee in lstEmpleadosEstatus on e.idtrabajador equals ee.idtrabajador
                          join dto in lstDepto on e.iddepartamento equals dto.id
                          join pto in lstPuesto on e.idpuesto equals pto.id
-                         //join b in lstBajas on e.idtrabajador equals b.idtrabajador into EmpBaja
-                         //from b in EmpBaja.DefaultIfEmpty()
                          select new {
                              IdTrabajador = e.idtrabajador,
                              NoEmpleado = e.noempleado,
@@ -150,10 +97,9 @@ namespace Nominas
                              Sueldo = e.sueldo,
                              Cuenta = e.cuenta,
                              Clabe = e.clabe,
-                             Estado = e.estatus == 1 ? "ALTA" : "BAJA",
+                             Estado = ee.estatus == 1 ? "ALTA" : "BAJA",
                              Departamento = dto.descripcion,
                              Puesto = pto.nombre
-                             //FechaBaja = b != null ? b.fecha.ToShortDateString() : " "
                          };
                 dgvEmpleados.DataSource = em.ToList();
 
@@ -252,10 +198,9 @@ namespace Nominas
                 {
 
                     var empleado = from em in lstEmpleados
+                                   join ee in lstEmpleadosEstatus on em.idtrabajador equals ee.idtrabajador
                                    join dto in lstDepto on em.iddepartamento equals dto.id
                                    join pto in lstPuesto on em.idpuesto equals pto.id
-                                   //join b in lstBajas on em.idtrabajador equals b.idtrabajador into EmpBaja
-                                   //from b in EmpBaja.DefaultIfEmpty()
                                    select new
                                    {
                                        IdTrabajador = em.idtrabajador,
@@ -268,20 +213,18 @@ namespace Nominas
                                        Sueldo = em.sueldo,
                                        Cuenta = em.cuenta,
                                        Clabe = em.clabe,
-                                       Estado = em.estatus == 1 ? "ALTA" : "BAJA",
+                                       Estado = ee.estatus == 1 ? "ALTA" : "BAJA",
                                        Departamento = dto.descripcion,
                                        Puesto = pto.nombre
-                                       //FechaBaja = b != null ? b.fecha.ToShortDateString() : " "
                                    };
                     dgvEmpleados.DataSource = empleado.ToList();
                 }
                 else
                 {
                     var busqueda = from b in lstEmpleados
+                                   join ee in lstEmpleadosEstatus on b.idtrabajador equals ee.idtrabajador
                                    join dto in lstDepto on b.iddepartamento equals dto.id
                                    join pto in lstPuesto on b.idpuesto equals pto.id
-                                   //join bj in lstBajas on b.idtrabajador equals bj.idtrabajador into EmpBaja
-                                   //from bj in EmpBaja.DefaultIfEmpty()
                                    where b.nombrecompleto.Contains(txtBuscar.Text.ToUpper()) || b.noempleado.Contains(txtBuscar.Text)
                                    select new
                                    {
@@ -295,10 +238,9 @@ namespace Nominas
                                        Sueldo = b.sueldo,
                                        Cuenta = b.cuenta,
                                        Clabe = b.clabe,
-                                       Estado = b.estatus == 1 ? "ALTA" : "BAJA",
+                                       Estado = ee.estatus == 1 ? "ALTA" : "BAJA",
                                        Departamento = dto.descripcion,
                                        Puesto = pto.nombre
-                                       //FechaBaja = bj != null ? bj.fecha.ToShortDateString() : " "
                                    };
                     dgvEmpleados.DataSource = busqueda.ToList();
                 }
@@ -511,5 +453,6 @@ namespace Nominas
             frmExportarEmpleado ee = new frmExportarEmpleado();
             ee.Show();
         }
+
     }
 }

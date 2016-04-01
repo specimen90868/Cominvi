@@ -55,4 +55,12 @@ namespace Empleados.Core
         public int antiguedadmod { get; set; }
         public DateTime fechaimss { get; set; }
     }
+
+    public class EmpleadosEstatus
+    {
+        public int id { get; set; }
+        public int idtrabajador { get; set; }
+        public int idempresa { get; set; }
+        public int estatus { get; set; }
+    }
 }

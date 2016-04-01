@@ -306,15 +306,15 @@ namespace Nominas
 
                 if (fila.Cells["concepto"].Value.ToString() == "Prima Vacacional")
                 {
-                    vp.diaspago = int.Parse(fila.Cells["diaspago"].Value.ToString());
-                    vp.diaspendientes = dias - vp.diaspago;
+                    vp.diaspago = diasPagoReales;
+                    vp.diaspendientes = dias - diasPagoReales;
                     vp.fechainicio = DateTime.Now.Date;
                     vp.fechafin = DateTime.Now.Date;
                 }
                 else
                 {
                     vp.diaspago = diasPagoReales;
-                    vp.diaspendientes = dias - vp.diaspago;
+                    vp.diaspendientes = dias - diasPagoReales;
                     vp.fechainicio = DateTime.Parse(fila.Cells["fechaaplicacion"].Value.ToString());
                     vp.fechafin = DateTime.Parse(fila.Cells["fechaaplicacion"].Value.ToString()).AddDays(diasPagoReales - 1);
                 }

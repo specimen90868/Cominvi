@@ -33,6 +33,20 @@ namespace Nominas
 
         private void frmExportarEmpleado_Load(object sender, EventArgs e)
         {
+
+            lstvCampos.View = View.Details;
+            lstvCampos.CheckBoxes = false;
+            lstvCampos.GridLines = false;
+            lstvCampos.MultiSelect = false;
+            lstvCampos.Columns.Add("Campos", 100, HorizontalAlignment.Left);
+
+            lstvOrdenCampos.View = View.Details;
+            lstvOrdenCampos.CheckBoxes = false;
+            lstvOrdenCampos.MultiSelect = false;
+            lstvOrdenCampos.GridLines = false;
+            lstvOrdenCampos.Columns.Add("Campos", 100, HorizontalAlignment.Left);
+
+
             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();
             cmd.Connection = cnx;
@@ -56,45 +70,9 @@ namespace Nominas
             
             for (int i = 0; i < lstExportacion.Count; i++)
             {
-                switch (lstExportacion[i].campo)
-                {
-                    case "Nombre": chkNombre.Checked = lstExportacion[i].activo; break;
-                    case "Paterno": chkPaterno.Checked = lstExportacion[i].activo; break;
-                    case "Materno": chkMaterno.Checked = lstExportacion[i].activo; break;
-                    case "NombreCompleto": chkNombreCompleto.Checked = lstExportacion[i].activo; break;
-                    case "Departamento": chkDepartamento.Checked = lstExportacion[i].activo; break;
-                    case "Puesto": chkPuesto.Checked = lstExportacion[i].activo; break;
-                    case "FechaIngreso": chkFechaIngreso.Checked = lstExportacion[i].activo; break;
-                    case "FechaAntiguedad": chkFechaAntiguedad.Checked = lstExportacion[i].activo; break;
-                    case "FechaNacimiento": chkFechaNacimiento.Checked = lstExportacion[i].activo; break;
-                    case "Edad": chkEdad.Checked = lstExportacion[i].activo; break;
-                    case "RFC": chkRfc.Checked = lstExportacion[i].activo; break;
-                    case "CURP": chkCurp.Checked = lstExportacion[i].activo; break;
-                    case "NSS": chkNss.Checked = lstExportacion[i].activo; break;
-                    case "SDI": chkSdi.Checked = lstExportacion[i].activo; break;
-                    case "SD": chkSd.Checked = lstExportacion[i].activo; break;
-                    case "Sueldo": chkSueldo.Checked = lstExportacion[i].activo; break;
-                    case "Estatus": chkEstatus.Checked = lstExportacion[i].activo; break;
-                    case "Cuenta": chkCuenta.Checked = lstExportacion[i].activo; break;
-                    case "Clabe": chkClabe.Checked = lstExportacion[i].activo; break;
-                    case "IDBancario": chkIdBancario.Checked = lstExportacion[i].activo; break;
-                    case "Calle": chkCalle.Checked = lstExportacion[i].activo; break;
-                    case "Exterior": chkExterior.Checked = lstExportacion[i].activo; break;
-                    case "Interior": chkInterior.Checked = lstExportacion[i].activo; break;
-                    case "Colonia": chkColonia.Checked = lstExportacion[i].activo; break;
-                    case "CP": chkCp.Checked = lstExportacion[i].activo; break;
-                    case "Ciudad": chkCiudad.Checked = lstExportacion[i].activo; break;
-                    case "Estado": chkEstado.Checked = lstExportacion[i].activo; break;
-                    case "Pais": chkPais.Checked = lstExportacion[i].activo; break;
-                    case "EstadoCivil": chkEstadoCivil.Checked = lstExportacion[i].activo; break;
-                    case "Sexo": chkSexo.Checked = lstExportacion[i].activo; break;
-                    case "Escolaridad": chkEscolaridad.Checked = lstExportacion[i].activo; break;
-                    case "Nacionalidad": chkNacionalidad.Checked = lstExportacion[i].activo; break;
-                    case "Credito": chkCreditoInfonavit.Checked = lstExportacion[i].activo; break;
-                    case "Descuento": chkValorDescuento.Checked = lstExportacion[i].activo; break;
-                    case "TipoDescuento": chkDescuentoInfonavit.Checked = lstExportacion[i].activo; break;
-                    case "NoEmpleado": chkNoEmpleado.Checked = lstExportacion[i].activo; break;
-                }
+                lstvCampos.Items.Add(lstExportacion[i].campo);
+                if (lstExportacion[i].activo)
+                    lstvOrdenCampos.Items.Add(lstExportacion[i].campo);
             }
         }
 
@@ -106,714 +84,62 @@ namespace Nominas
             if (sfd.ShowDialog() == DialogResult.OK)
             {
                 nombreArchivo = sfd.FileName;
+                campos = "";
+                #region CAMPOS
+
+                for (int i = 0; i < lstvOrdenCampos.Items.Count; i++)
+                {
+                    switch (lstvOrdenCampos.Items[i].Text)
+                    {
+                        case "Nombre": campos += "t.nombres,"; break;
+                        case "Paterno": campos += "t.paterno,"; break;
+                        case "Materno": campos += "t.materno,"; break;
+                        case "NombreCompleto": campos += "t.nombrecompleto,"; break;
+                        case "Departamento": campos += "depto.descripcion,"; break;
+                        case "Puesto": campos += "p.descripcion,"; break;
+                        case "FechaIngreso": campos += "t.fechaingreso,"; break;
+                        case "FechaAntiguedad": campos += "t.fechaantiguedad,"; break;
+                        case "FechaNacimiento": campos += "t.fechanacimiento,"; break;
+                        case "Edad": campos += "t.edad,"; break;
+                        case "RFC": campos += "t.rfc,"; break;
+                        case "CURP": campos += "t.curp,"; break;
+                        case "NSS": campos += "t.nss,"; break;
+                        case "SDI": campos += "t.sdi,"; break;
+                        case "SD": campos += "t.sd,"; break;
+                        case "Sueldo": campos += "t.sueldo,"; break;
+                        case "Estatus": campos += "t.estatus,"; break;
+                        case "Cuenta": campos += "t.cuenta,"; break;
+                        case "Clabe": campos += "t.clabe,"; break;
+                        case "IDBancario": campos += "t.idbancario,"; break;
+                        case "Calle": campos += "d.calle,"; tablaDireccion = direccion(true); break;
+                        case "Exterior": campos += "d.exterior,"; tablaDireccion = direccion(true); break;
+                        case "Interior": campos += "d.interior,"; tablaDireccion = direccion(true); break;
+                        case "Colonia": campos += "d.colonia,"; tablaDireccion = direccion(true); break;
+                        case "CP": campos += "d.cp,"; tablaDireccion = direccion(true); break;
+                        case "Ciudad": campos += "d.ciudad,"; tablaDireccion = direccion(true); break;
+                        case "Estado": campos += "d.estado,"; tablaDireccion = direccion(true); break;
+                        case "Pais": campos += "d.pais,"; tablaDireccion = direccion(true); break;
+                        case "EstadoCivil": campos += "(select descripcion from Catalogo where id = c.estadocivil) as estadocivil,"; break;
+                        case "Sexo": campos += "(select descripcion from Catalogo where id = c.sexo) as sexo,"; break;
+                        case "Escolaridad": campos += "(select descripcion from Catalogo where id = c.escolaridad) as escolaridad,"; break;
+                        case "Nacionalidad": campos += "c.nacionalidad,"; tablaComplemento = complemento(true); break;
+                        case "Credito": campos += "i.credito,"; tablaInfonavit = infonavit(true); break;
+                        case "Descuento": campos += "i.descuento,"; infonavit(true); break;
+                        case "TipoDescuento": campos += "i.valordescuento,"; infonavit(true); break;
+                        case "NoEmpleado": campos += "t.noempleado,"; break;
+                        case "Periodo": campos += "t.idperiodo,"; break;
+                        case "FechaBaja": campos += "b.fecha,"; break;
+                    }
+                }
+
+                #endregion
                 workerExportar.RunWorkerAsync();
             }
         }
 
-        private void frmExportarEmpleado_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            cnx = new SqlConnection(cdn);
-            cmd = new SqlCommand();
-            cmd.Connection = cnx;
-
-            eh = new Exportacion.Core.ExportacionHelper();
-            eh.Command = cmd;
-
-           
-                Exportacion.Core.Exportacion exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkNombre.Checked;
-                exp.campo = "Nombre";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-           
-                exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkPaterno.Checked;
-                exp.campo = "Paterno";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-               exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkMaterno.Checked;
-                exp.campo = "Materno";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-                exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkNombreCompleto.Checked;
-                exp.campo = "NombreCompleto";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-                exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkDepartamento.Checked;
-                exp.campo = "Departamento";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-                exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkPuesto.Checked;
-                exp.campo = "Puesto";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-                exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkFechaIngreso.Checked;
-                exp.campo = "FechaIngreso";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-                exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkFechaAntiguedad.Checked;
-                exp.campo = "FechaAntiguedad";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-           
-               exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkFechaNacimiento.Checked;
-                exp.campo = "FechaNacimiento";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-               exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkEdad.Checked;
-                exp.campo = "Edad";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-                exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkRfc.Checked;
-                exp.campo = "RFC";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-               exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkCurp.Checked;
-                exp.campo = "CURP";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-                exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkNss.Checked;
-                exp.campo = "NSS";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-                exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkSdi.Checked;
-                exp.campo = "SDI";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-                exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkSd.Checked;
-                exp.campo = "SD";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-                exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkSueldo.Checked;
-                exp.campo = "Sueldo";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-                exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkEstatus.Checked;
-                exp.campo = "Estatus";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-                exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkCuenta.Checked;
-                exp.campo = "Cuenta";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-               exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkClabe.Checked;
-                exp.campo = "Clabe";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-                exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkIdBancario.Checked;
-                exp.campo = "IDBancario";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-                exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkCalle.Checked;
-                exp.campo = "Calle";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-                exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkExterior.Checked;
-                exp.campo = "Exterior";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-                exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkInterior.Checked;
-                exp.campo = "Interior";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-                exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkColonia.Checked;
-                exp.campo = "Colonia";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-                exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkCp.Checked;
-                exp.campo = "CP";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-                exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkCiudad.Checked;
-                exp.campo = "Ciudad";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-               exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkEstado.Checked;
-                exp.campo = "Estado";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-                exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkPais.Checked;
-                exp.campo = "Pais";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-                exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkEstadoCivil.Checked;
-                exp.campo = "EstadoCivil";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-                exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkSexo.Checked;
-                exp.campo = "Sexo";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-                exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkEscolaridad.Checked;
-                exp.campo = "Escolaridad";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-                exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkNacionalidad.Checked;
-                exp.campo = "Nacionalidad";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-                exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkCreditoInfonavit.Checked;
-                exp.campo = "Credito";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-                exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkDescuentoInfonavit.Checked;
-                exp.campo = "TipoDescuento";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-            
-                exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkValorDescuento.Checked;
-                exp.campo = "Descuento";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-
-                exp = new Exportacion.Core.Exportacion();
-                exp.activo = chkNoEmpleado.Checked;
-                exp.campo = "NoEmpleado";
-                exp.formulario = "frmListaEmpleados";
-
-                try
-                {
-                    cnx.Open();
-                    eh.actualizaExportacion(exp);
-                    cnx.Close();
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Al actualizar el campo.", "Error");
-                    this.Dispose();
-                }
-
-                cnx.Dispose();
-        }
-
         private void workerExportar_DoWork(object sender, DoWorkEventArgs e)
         {
-            campos = "";
             string c = "";
-
-            #region CAMPOS
-            if (chkNoEmpleado.Checked)
-                campos += "t.noempleado,";
-            if (chkNombre.Checked)
-                campos += "t.nombres,";
-            if (chkPaterno.Checked)
-                campos += "t.paterno,";
-            if (chkMaterno.Checked)
-                campos += "t.materno,";
-            if (chkNombreCompleto.Checked)
-                campos += "t.nombrecompleto,";
-            if (chkDepartamento.Checked)
-                campos += "depto.descripcion,";
-            if (chkPuesto.Checked)
-                campos += "p.descripcion,";
-            if (chkFechaIngreso.Checked)
-                campos += "t.fechaingreso,";
-            if (chkFechaAntiguedad.Checked)
-                campos += "t.fechaantiguedad,";
-            if (chkFechaNacimiento.Checked)
-                campos += "t.fechanacimiento,";
-            if (chkEdad.Checked)
-                campos += "t.edad,";
-            if (chkRfc.Checked)
-                campos += "t.rfc,";
-            if (chkCurp.Checked)
-                campos += "t.curp,";
-            if (chkNss.Checked)
-                campos += "t.nss,";
-            if (chkSdi.Checked)
-                campos += "t.sdi,";
-            if (chkSd.Checked)
-                campos += "t.sd,";
-            if (chkSueldo.Checked)
-                campos += "t.sueldo,";
-            if (chkEstatus.Checked)
-                campos += "t.estatus,";
-            if (chkCuenta.Checked)
-                campos += "t.cuenta,";
-            if (chkClabe.Checked)
-                campos += "t.clabe,";
-            if (chkIdBancario.Checked)
-                campos += "t.idbancario,";
-            if (chkCalle.Checked)
-                campos += "d.calle,";
-            if (chkExterior.Checked)
-                campos += "d.exterior,";
-            if (chkInterior.Checked)
-                campos += "d.interior,";
-            if (chkColonia.Checked)
-                campos += "d.colonia,";
-            if (chkCp.Checked)
-                campos += "d.cp,";
-            if (chkCiudad.Checked)
-                campos += "d.ciudad,";
-            if (chkEstado.Checked)
-                campos += "d.estado,";
-            if (chkPais.Checked)
-                campos += "d.pais,";
-            if (chkEstadoCivil.Checked)
-                campos += "(select descripcion from Catalogo where id = c.estadocivil) as estadocivil,";
-            if (chkSexo.Checked)
-                campos += "(select descripcion from Catalogo where id = c.sexo) as sexo,";
-            if (chkEscolaridad.Checked)
-                campos += "(select descripcion from Catalogo where id = c.escolaridad) as escolaridad,";
-            if (chkNacionalidad.Checked)
-                campos += "c.nacionalidad,";
-            if (chkCreditoInfonavit.Checked)
-                campos += "i.credito,";
-            if (chkDescuentoInfonavit.Checked)
-                campos += "i.descuento,";
-            if (chkValorDescuento.Checked)
-                campos += "i.valordescuento,";
-            #endregion
 
             c = campos.Substring(0, campos.Length - 1);
             
@@ -854,8 +180,6 @@ namespace Nominas
                 iCol++;
             }
 
-            
-
             iCol = 1;
             int progreso = 0;
             int totalRegistro = dt.Rows.Count;
@@ -889,6 +213,7 @@ namespace Nominas
             excel.Range["A1:AI1"].Font.Bold = true;
             excel.Range["A2"].Select();
             excel.ActiveWindow.FreezePanes = true;
+            excel.Range["A1"].AutoFilter(1, System.Type.Missing);
 
             workSheet.SaveAs(nombreArchivo);
             excel.Visible = true;
@@ -904,57 +229,12 @@ namespace Nominas
             toolPorcentaje.Text = "Completado.";
         }
 
-        private void chkCalle_CheckedChanged(object sender, EventArgs e)
-        {
-            tablaDireccion = direccion(chkCalle.Checked);
-        }
-
-        private void chkExterior_CheckedChanged(object sender, EventArgs e)
-        {
-           
-        }
-
-        private void chkInterior_CheckedChanged(object sender, EventArgs e)
-        {
-            tablaDireccion = direccion(chkInterior.Checked);
-        }
-
-        private void chkColonia_CheckedChanged(object sender, EventArgs e)
-        {
-            tablaDireccion = direccion(chkColonia.Checked);
-        }
-
         private string direccion(bool status)
         {
             string tabla = "";
             if (status)
                 tabla = " left join dbo.Direcciones d on t.idtrabajador = d.idpersona ";
             return tabla;
-        }
-
-        private void chkCp_CheckedChanged(object sender, EventArgs e)
-        {
-            tablaDireccion = direccion(chkCp.Checked);
-        }
-
-        private void chkCiudad_CheckedChanged(object sender, EventArgs e)
-        {
-            tablaDireccion = direccion(chkCiudad.Checked);
-        }
-
-        private void chkEstado_CheckedChanged(object sender, EventArgs e)
-        {
-            tablaDireccion = direccion(chkEstado.Checked);
-        }
-
-        private void chkPais_CheckedChanged(object sender, EventArgs e)
-        {
-            tablaDireccion = direccion(chkPais.Checked);
-        }
-
-        private void chkEstadoCivil_CheckedChanged(object sender, EventArgs e)
-        {
-            tablaComplemento = complemento(chkEstadoCivil.Checked);
         }
 
         private string complemento(bool status)
@@ -965,21 +245,6 @@ namespace Nominas
             return tabla;
         }
 
-        private void chkSexo_CheckedChanged(object sender, EventArgs e)
-        {
-            tablaComplemento = complemento(chkSexo.Checked);
-        }
-
-        private void chkEscolaridad_CheckedChanged(object sender, EventArgs e)
-        {
-            tablaComplemento = complemento(chkEscolaridad.Checked);
-        }
-
-        private void chkNacionalidad_CheckedChanged(object sender, EventArgs e)
-        {
-            tablaComplemento = complemento(chkNacionalidad.Checked);
-        }
-
         private string infonavit(bool status)
         {
             string tabla = "";
@@ -988,19 +253,154 @@ namespace Nominas
             return tabla;
         }
 
-        private void chkCreditoInfonavit_CheckedChanged(object sender, EventArgs e)
+        private void lstvCampos_ItemDrag(object sender, ItemDragEventArgs e)
         {
-            tablaInfonavit = infonavit(chkCreditoInfonavit.Checked);
+            DoDragDrop(e.Item, DragDropEffects.Copy);
         }
 
-        private void chkDescuentoInfonavit_CheckedChanged(object sender, EventArgs e)
+        private void lstvOrdenCampos_DragEnter(object sender, DragEventArgs e)
         {
-            tablaInfonavit = infonavit(chkDescuentoInfonavit.Checked);
+            e.Effect = DragDropEffects.Copy;
         }
 
-        private void chkValorDescuento_CheckedChanged(object sender, EventArgs e)
+        private void lstvOrdenCampos_DragDrop(object sender, DragEventArgs e)
         {
-            tablaInfonavit = infonavit(chkValorDescuento.Checked);
+            try
+            {
+                ListViewItem item;
+                item = (ListViewItem)(e.Data.GetData(typeof(ListViewItem)));
+                lstvOrdenCampos.Items.Add(item.Text);
+                guardaEstatus(true, item.Text);
+            }
+            catch (Exception)
+            {
+                return;
+            }
+          
         }
+
+        private void lstvOrdenCampos_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            DoDragDrop(e.Item, DragDropEffects.Copy);
+        }
+
+        private void lstvCampos_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Copy;
+        }
+
+        private void lstvCampos_DragDrop(object sender, DragEventArgs e)
+        {
+            try
+            {
+                ListViewItem item;
+                item = (ListViewItem)(e.Data.GetData(typeof(ListViewItem)));
+                lstvOrdenCampos.Items.RemoveAt(item.Index);
+                guardaEstatus(false, item.Text);
+            }
+            catch (Exception)
+            {
+                return;
+            }
+            
+        }
+
+        private void guardaEstatus(bool estatus, string campo)
+        {
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            eh = new Exportacion.Core.ExportacionHelper();
+            eh.Command = cmd;
+
+            for (int i = 0; i < lstvOrdenCampos.Items.Count; i++)
+            {
+                Exportacion.Core.Exportacion exp = new Exportacion.Core.Exportacion();
+                exp.activo = estatus;
+                exp.campo = campo;
+                exp.formulario = "frmListaEmpleados";
+
+                try
+                {
+                    cnx.Open();
+                    eh.actualizaExportacion(exp);
+                    cnx.Close();
+                }
+                catch
+                {
+                    MessageBox.Show("Error: Al actualizar el campo: " + lstvOrdenCampos.Items[i].Text, "Error");
+                    this.Dispose();
+                }
+            }
+            cnx.Dispose();
+        }
+
+        private void btnArriba_Click(object sender, EventArgs e)
+        {
+            int currentIndex = lstvOrdenCampos.SelectedItems[0].Index;
+            ListViewItem item = lstvOrdenCampos.Items[currentIndex];
+            if (currentIndex > 0)
+            {
+                lstvOrdenCampos.Items.RemoveAt(currentIndex);
+                lstvOrdenCampos.Items.Insert(currentIndex - 1, item);
+            }
+            else
+            {
+                /*If the item is the top item make it the last*/
+                lstvOrdenCampos.Items.RemoveAt(currentIndex);
+                lstvOrdenCampos.Items.Insert(lstvOrdenCampos.Items.Count, item);
+            }
+        }
+
+        private void btnAbajo_Click(object sender, EventArgs e)
+        {
+            int currentIndex = lstvOrdenCampos.SelectedItems[0].Index;
+            int total = lstvOrdenCampos.Items.Count - 1;
+            ListViewItem item = lstvOrdenCampos.Items[currentIndex];
+            if (currentIndex < total)
+            {
+                lstvOrdenCampos.Items.RemoveAt(currentIndex);
+                lstvOrdenCampos.Items.Insert(currentIndex + 1, item);
+            }
+            else
+            {
+                /*If the item is the top item make it the last*/
+                lstvOrdenCampos.Items.RemoveAt(currentIndex);
+                lstvOrdenCampos.Items.Insert(lstvOrdenCampos.Items.Count, item);
+            }
+        }
+
+        private void frmExportarEmpleado_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            Exportacion.Core.ExportacionHelper exph = new Exportacion.Core.ExportacionHelper();
+            exph.Command = cmd;
+
+            for (int i = 0; i < lstvOrdenCampos.Items.Count; i++)
+            {
+                Exportacion.Core.Exportacion exp = new Exportacion.Core.Exportacion();
+                exp.orden = i;
+                exp.campo = lstvOrdenCampos.Items[i].Text;
+                exp.formulario = "frmListaEmpleados";
+
+                try
+                {
+                    cnx.Open();
+                    exph.actualizaOrden(exp);
+                    cnx.Close();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Error: Al actualizar el orden de los campos.", "Error");
+                    cnx.Dispose();
+                }
+            }
+            cnx.Dispose();
+        }
+
     }
 }

@@ -1102,10 +1102,21 @@ namespace Nominas
             int noPeriodo = 0;
             try
             {
-                cnx.Open();
-                noPeriodo = int.Parse(nh.obtenerNoPeriodo(_periodo, periodoInicio).ToString());
-                nh.actualizarNoPeriodo(GLOBALES.IDEMPRESA, periodoInicio.Date, periodoFin.Date, noPeriodo);
-                cnx.Close();
+                if (_tipoNomina == GLOBALES.NORMAL)
+                {
+                    cnx.Open();
+                    noPeriodo = int.Parse(nh.obtenerNoPeriodo(_periodo, periodoInicio).ToString());
+                    nh.actualizarNoPeriodo(GLOBALES.IDEMPRESA, periodoInicio.Date, periodoFin.Date, noPeriodo);
+                    cnx.Close();
+                }
+                else if (_tipoNomina == GLOBALES.EXTRAORDINARIO_NORMAL)
+                {
+                    cnx.Open();
+                    noPeriodo = (int)(nh.obtenerNoPeriodoExtraordinario(GLOBALES.IDEMPRESA, _tipoNomina));
+                    noPeriodo = noPeriodo + 1;
+                    nh.actualizarNoPeriodo(GLOBALES.IDEMPRESA, periodoInicio.Date, periodoFin.Date, noPeriodo);
+                    cnx.Close();
+                }
             }
             catch (Exception)
             {
@@ -1688,6 +1699,8 @@ namespace Nominas
 
         void r_OnReporte(string netocero, string orden, int noreporte, int empleadoinicial, int empleadofinal)
         {
+            NetoCero = "";
+            Orden = "";
             NetoCero = netocero;
             Orden = orden;
 

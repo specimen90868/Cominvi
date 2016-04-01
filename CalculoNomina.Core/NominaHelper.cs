@@ -481,6 +481,17 @@ namespace CalculoNomina.Core
             return _periodo;
         }
 
+        public object obtenerNoPeriodoExtraordinario(int idempresa, int tiponomina)
+        {
+            Command.CommandText = @"select top 1 noperiodo from PagoNomina where idempresa = @idempresa and tiponomina = @tiponomina
+                    order by noperiodo desc";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idempresa);
+            Command.Parameters.AddWithValue("tiponomina", tiponomina);
+            object _periodo = Select(Command);
+            return _periodo;
+        }
+
         public int actualizarNoPeriodo(int idEmpresa, DateTime inicio, DateTime fin, int noPeriodo)
         {
             Command.CommandText = "update tmpPagoNomina set noperiodo = @noperiodo where idempresa = @idempresa and fechainicio = @fechainicio and fechafin = @fechafin";

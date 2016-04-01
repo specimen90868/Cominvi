@@ -23,7 +23,6 @@ namespace Nominas
         SqlConnection cnx;
         SqlCommand cmd;
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-        string sexo;
         List<Empleados.Core.Empleados> lstEmpleado;
         #endregion
 
@@ -207,6 +206,7 @@ namespace Nominas
             ih.Command = cmd;
 
             Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
+            Empleados.Core.EmpleadosEstatus ee = new Empleados.Core.EmpleadosEstatus();
             Historial.Core.Historial historia = new Historial.Core.Historial();
             Reingreso.Core.Reingresos reingreso = new Reingreso.Core.Reingresos();
             Empresas.Core.Empresas empresa = new Empresas.Core.Empresas();
@@ -234,7 +234,10 @@ namespace Nominas
                 empleado.obracivil = true;
             else
                 empleado.obracivil = false;
-            
+
+            ee.idtrabajador = _idempleado;
+            ee.idempresa = GLOBALES.IDEMPRESA;
+            ee.estatus = GLOBALES.ACTIVO;            
 
             historia.idtrabajador = _idempleado;
             historia.idempresa = lstEmpleado[0].idempresa;
@@ -306,6 +309,7 @@ namespace Nominas
             try {
                 cnx.Open();
                 empleadoh.reingreso(empleado);
+                empleadoh.bajaEmpleado(ee);
 
                 rp = (string)eh.obtenerRegistroPatronal(empresa);
 

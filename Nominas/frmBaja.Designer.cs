@@ -154,6 +154,7 @@
             // 
             // txtObservaciones
             // 
+            this.txtObservaciones.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtObservaciones.Location = new System.Drawing.Point(125, 87);
             this.txtObservaciones.Multiline = true;
             this.txtObservaciones.Name = "txtObservaciones";

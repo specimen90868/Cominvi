@@ -51,14 +51,13 @@ namespace Nominas
 
             Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
             empleado.idempresa = GLOBALES.IDEMPRESA;
-            empleado.estatus = GLOBALES.INACTIVO;
 
             try
             {
                 cnx.Open();
                 lstBajas = bh.obtenerBajas(baja);
                 lstCatalogos = ch.obtenerCatalogos();
-                lstEmpleados = eh.obtenerEmpleados(empleado);
+                lstEmpleados = eh.obtenerEmpleadosBaja(empleado);
                 cnx.Close();
                 cnx.Dispose();
 
@@ -225,26 +224,35 @@ namespace Nominas
                 cmd = new SqlCommand();
                 cmd.Connection = cnx;
 
+                Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
+                eh.Command = cmd;
+
                 Bajas.Core.BajasHelper bh = new Bajas.Core.BajasHelper();
                 bh.Command = cmd;
 
                 Historial.Core.HistorialHelper hh = new Historial.Core.HistorialHelper();
                 hh.Command = cmd;
 
+                Empleados.Core.EmpleadosEstatus ee = new Empleados.Core.EmpleadosEstatus();
+                ee.idtrabajador = int.Parse(dgvBajasSua.Rows[fila].Cells[0].Value.ToString());
+                ee.idempresa = GLOBALES.IDEMPRESA;
+                ee.estatus = GLOBALES.ACTIVO;
+
                 Bajas.Core.Bajas baja = new Bajas.Core.Bajas();
                 baja.idtrabajador = int.Parse(dgvBajasSua.Rows[fila].Cells[0].Value.ToString());
                 baja.idempresa = GLOBALES.IDEMPRESA;
-                baja.fecha = DateTime.Parse(dgvBajasSua.Rows[fila].Cells[7].Value.ToString());
+                baja.fecha = DateTime.Parse(dgvBajasSua.Rows[fila].Cells[7].Value.ToString()).Date;
 
                 Historial.Core.Historial historial = new Historial.Core.Historial();
                 historial.idtrabajador = int.Parse(dgvBajasSua.Rows[fila].Cells[0].Value.ToString());
                 historial.idempresa = GLOBALES.IDEMPRESA;
-                historial.fecha_imss = DateTime.Parse(dgvBajasSua.Rows[fila].Cells[7].Value.ToString());
+                historial.fecha_imss = DateTime.Parse(dgvBajasSua.Rows[fila].Cells[7].Value.ToString()).Date;
 
                 try
                 {
                     cnx.Open();
                     bh.eliminaBaja(baja);
+                    eh.bajaEmpleado(ee);
                     cnx.Close();
                 }
                 catch (Exception error)
@@ -267,6 +275,9 @@ namespace Nominas
                     cnx.Dispose();
                     return;
                 }
+
+                MessageBox.Show("Registro eliminado.", "Confirmación");
+                ListaEmpleados();
             }
 
         }

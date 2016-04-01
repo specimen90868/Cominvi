@@ -24,7 +24,6 @@ namespace Nominas
         SqlCommand cmd;
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
         Salario.Core.SalariosHelper sh;
-        string Zona;
         #endregion
 
         #region VARIABLES PUBLICAS

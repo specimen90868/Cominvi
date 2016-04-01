@@ -30,8 +30,6 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.cmbTipoReporte = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cmbEmpleados = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.cmbDeptoInicial = new System.Windows.Forms.ComboBox();
@@ -56,6 +54,8 @@
             this.cmbNetoCero = new System.Windows.Forms.ComboBox();
             this.label11 = new System.Windows.Forms.Label();
             this.cmbOrden = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cmbTipoNomina = new System.Windows.Forms.ComboBox();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -84,27 +84,6 @@
             this.cmbTipoReporte.Size = new System.Drawing.Size(138, 21);
             this.cmbTipoReporte.TabIndex = 1;
             this.cmbTipoReporte.SelectedIndexChanged += new System.EventHandler(this.cmbTipoReporte_SelectedIndexChanged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(179, 100);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(62, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Empleados:";
-            // 
-            // cmbEmpleados
-            // 
-            this.cmbEmpleados.FormattingEnabled = true;
-            this.cmbEmpleados.Items.AddRange(new object[] {
-            "Alta",
-            "Baja"});
-            this.cmbEmpleados.Location = new System.Drawing.Point(182, 116);
-            this.cmbEmpleados.Name = "cmbEmpleados";
-            this.cmbEmpleados.Size = new System.Drawing.Size(138, 21);
-            this.cmbEmpleados.TabIndex = 3;
-            this.cmbEmpleados.SelectedIndexChanged += new System.EventHandler(this.cmbEmpleados_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -313,11 +292,36 @@
             this.cmbOrden.TabIndex = 24;
             this.cmbOrden.SelectedIndexChanged += new System.EventHandler(this.cmbOrden_SelectedIndexChanged);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(179, 100);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(68, 13);
+            this.label2.TabIndex = 25;
+            this.label2.Text = "Tipo nomina:";
+            // 
+            // cmbTipoNomina
+            // 
+            this.cmbTipoNomina.FormattingEnabled = true;
+            this.cmbTipoNomina.Items.AddRange(new object[] {
+            "Normal",
+            "Especial",
+            "Extraordinaria normal",
+            "Extraordinaria especial"});
+            this.cmbTipoNomina.Location = new System.Drawing.Point(182, 117);
+            this.cmbTipoNomina.Name = "cmbTipoNomina";
+            this.cmbTipoNomina.Size = new System.Drawing.Size(138, 21);
+            this.cmbTipoNomina.TabIndex = 26;
+            this.cmbTipoNomina.SelectedIndexChanged += new System.EventHandler(this.cmbTipoNomina_SelectedIndexChanged);
+            // 
             // frmReportes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(332, 387);
+            this.Controls.Add(this.cmbTipoNomina);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.cmbOrden);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.cmbNetoCero);
@@ -339,8 +343,6 @@
             this.Controls.Add(this.cmbDeptoInicial);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.cmbEmpleados);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.cmbTipoReporte);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -360,8 +362,6 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cmbTipoReporte;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox cmbEmpleados;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cmbDeptoInicial;
@@ -386,5 +386,7 @@
         private System.Windows.Forms.ComboBox cmbNetoCero;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ComboBox cmbOrden;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox cmbTipoNomina;
     }
 }

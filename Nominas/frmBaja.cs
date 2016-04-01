@@ -251,6 +251,7 @@ namespace Nominas
         {
             int existeVacaciones = 0, existeIncapacidad = 0;
             int diasProporcionales = 0;
+            int existeBaja = 0;
             DialogResult respuesta = MessageBox.Show("¿Desea dar de baja al empleado?","Confirmación",MessageBoxButtons.YesNo);
             if (respuesta == DialogResult.Yes)
             {
@@ -318,10 +319,21 @@ namespace Nominas
 
                 if (existeIncapacidad != 0)
                 {
-                    cnx.Open();
-                    DateTime fechaInicioIncidencia = DateTime.Parse(ih.fechaInicio(incidencia).ToString());
-                    DateTime fechaFinIncidencia = DateTime.Parse(ih.fechaFin(incidencia).ToString());
-                    cnx.Close();
+                    DateTime fechaInicioIncidencia;
+                    DateTime fechaFinIncidencia;
+                    try
+                    {
+                        cnx.Open();
+                        fechaInicioIncidencia = DateTime.Parse(ih.fechaInicio(incidencia).ToString());
+                        fechaFinIncidencia = DateTime.Parse(ih.fechaFin(incidencia).ToString());
+                        cnx.Close();
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Error: Al obtener las fechas de incapacidad.", "Error");
+                        cnx.Dispose();
+                        return;
+                    }
 
                     if (dtpFechaBaja.Value.Date >= fechaInicioIncidencia.Date && dtpFechaBaja.Value.Date <= fechaFinIncidencia.Date)
                     {
@@ -337,10 +349,23 @@ namespace Nominas
 
                 if (existeVacaciones != 0)
                 {
-                    cnx.Open();
-                    DateTime fechaInicioVac = DateTime.Parse(vh.fechaInicio(vp).ToString());
-                    DateTime fechaFinVac = DateTime.Parse(vh.fechaFin(vp).ToString());
-                    cnx.Close();
+                    DateTime fechaInicioVac;
+                    DateTime fechaFinVac;
+
+                    try
+                    {
+                        cnx.Open();
+                        fechaInicioVac = DateTime.Parse(vh.fechaInicio(vp).ToString());
+                        fechaFinVac = DateTime.Parse(vh.fechaFin(vp).ToString());
+                        cnx.Close();
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Error: Al obtener las fechas de las vacaciones.", "Error");
+                        cnx.Dispose();
+                        return;
+                    }
+                    
 
                     if (dtpFechaBaja.Value.Date >= fechaInicioVac.Date && dtpFechaBaja.Value.Date <= fechaFinVac.Date)
                     {
@@ -365,7 +390,11 @@ namespace Nominas
 
                 Empleados.Core.Empleados emp = new Empleados.Core.Empleados();
                 emp.idtrabajador = _idempleado;
-                emp.estatus = GLOBALES.INACTIVO;
+
+                Empleados.Core.EmpleadosEstatus ee = new Empleados.Core.EmpleadosEstatus();
+                ee.idtrabajador = _idempleado;
+                ee.idempresa = GLOBALES.IDEMPRESA;
+                ee.estatus = GLOBALES.INACTIVO;
 
                 Historial.Core.HistorialHelper hp = new Historial.Core.HistorialHelper();
                 hp.Command = cmd;
@@ -409,9 +438,31 @@ namespace Nominas
                 try
                 {
                     cnx.Open();
+                    existeBaja = (int)bh.existeBaja(baja);
+                    cnx.Close();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Error: Al verificar la existencia de la baja.", "Error");
+                    cnx.Dispose();
+                    return;
+                }
+
+                if (existeBaja != 0)
+                {
+                    MessageBox.Show(
+                        string.Format("El trabajador ya cuenta con una baja en el periodo del: \r\n \r\n {0} al {1}", 
+                        periodoInicio.Date.ToShortDateString(), periodoFin.Date.ToShortDateString()),
+                        "Información");
+                    return;
+                }
+
+                try
+                {
+                    cnx.Open();
                     h.valor = (decimal)eh.obtenerSalarioDiarioIntegrado(emp);
                     hp.insertarHistorial(h);
-                    //eh.bajaEmpleado(emp);
+                    eh.bajaEmpleado(ee);
 
                     baja.registropatronal = (string)ep.obtenerRegistroPatronal(empresa);
                     baja.nss = (string)eh.obtenerNss(emp);

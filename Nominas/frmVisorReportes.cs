@@ -419,26 +419,12 @@ namespace Nominas
                     daReciboNomina.SelectCommand = cmd;
                     daReciboNomina.Fill(dtReciboNomina);
 
-                    //dsReportes.PreNominaImagenDataTable dtReciboLogo = new dsReportes.PreNominaImagenDataTable();
-                    //SqlDataAdapter daReciboLogo = new SqlDataAdapter();
-                    //cmd3.CommandText = "exec stp_rptImagen @idpersona, @tipopersona";
-                    //cmd3.Parameters.Clear();
-                    //cmd3.Parameters.AddWithValue("idpersona", GLOBALES.IDEMPRESA);
-                    //cmd3.Parameters.AddWithValue("tipopersona", 0);
-                    //daReciboLogo.SelectCommand = cmd3;
-                    //daReciboLogo.Fill(dtReciboLogo);
-
                     rd = new ReportDataSource();
                     rd.Value = dtReciboNomina;
                     rd.Name = "dsNominaRecibo";
-
-                    //rd2 = new ReportDataSource();
-                    //rd2.Value = dtReciboLogo;
-                    //rd2.Name = "dsImagenReciboNomina";
-
+                    
                     rpvVisor.LocalReport.DataSources.Clear();
                     rpvVisor.LocalReport.DataSources.Add(rd);
-                    //rpvVisor.LocalReport.DataSources.Add(rd2);
 
                     rpvVisor.LocalReport.ReportEmbeddedResource = "rptNominaRecibos.rdlc";
                     rpvVisor.LocalReport.ReportPath = @"rptNominaRecibos.rdlc";

@@ -53,7 +53,7 @@ namespace Nominas
             {
                 cnx.Open();
                 lstAusentismo = ah.obtenerAusentimos(ausentismo);
-                lstEmpleados = eh.obtenerEmpleados(empleado);
+                lstEmpleados = eh.obtenerEmpleadosBaja(empleado);
                 cnx.Close();
                 cnx.Dispose();
 

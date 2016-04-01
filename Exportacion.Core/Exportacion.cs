@@ -12,5 +12,6 @@ namespace Exportacion.Core
         public string formulario { get; set; }
         public string campo { get; set; }
         public bool activo { get; set; }
+        public int orden { get; set; }
     }
 }

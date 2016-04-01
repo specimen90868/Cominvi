@@ -25,7 +25,6 @@ namespace Nominas
         SqlCommand cmd;
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
         int idTrabajador = 0;
-        bool FLAGCALCULO = false, FLAGCARGA = false;
         #endregion
 
         #region VARIABLES PUBLICAS
@@ -668,10 +667,22 @@ namespace Nominas
             int noPeriodo = 0;
             try
             {
-                cnx.Open();
-                noPeriodo = int.Parse(nh.obtenerNoPeriodo(_periodo, _inicioPeriodo).ToString());
-                nh.actualizarNoPeriodo(GLOBALES.IDEMPRESA, _inicioPeriodo.Date, _finPeriodo.Date, noPeriodo);
-                cnx.Close();
+                if (_tipoNormalEspecial == GLOBALES.NORMAL)
+                {
+                    cnx.Open();
+                    noPeriodo = int.Parse(nh.obtenerNoPeriodo(_periodo, _inicioPeriodo).ToString());
+                    nh.actualizarNoPeriodo(GLOBALES.IDEMPRESA, _inicioPeriodo.Date, _finPeriodo.Date, noPeriodo);
+                    cnx.Close();
+                }
+                else if (_tipoNormalEspecial == GLOBALES.EXTRAORDINARIO_NORMAL)
+                {
+                    cnx.Open();
+                    noPeriodo = (int)(nh.obtenerNoPeriodoExtraordinario(GLOBALES.IDEMPRESA, _tipoNormalEspecial));
+                    noPeriodo = noPeriodo + 1;
+                    nh.actualizarNoPeriodo(GLOBALES.IDEMPRESA, _inicioPeriodo.Date, _finPeriodo.Date, noPeriodo);
+                    cnx.Close();
+                }
+                
             }
             catch (Exception)
             {
@@ -814,8 +825,7 @@ namespace Nominas
             if (lstReciboPercepciones.Count != 0)
             {
                 string formulaDiasAPagar = "[DiasLaborados]-[Faltas]-[DiasIncapacidad]";
-                FLAGCALCULO = true;
-
+                
                 Conceptos.Core.ConceptosHelper conceptoh = new Conceptos.Core.ConceptosHelper();
                 conceptoh.Command = cmd;
 
@@ -903,8 +913,7 @@ namespace Nominas
                 if (netoPagar < 0)
                     MessageBox.Show("El neto a pagar es negativo: " + netoPagar.ToString("#,##0.00"), "Información");
             }
-            else
-                FLAGCALCULO = false;
+            
         }
 
         private void muestraFaltas()
@@ -2114,8 +2123,8 @@ namespace Nominas
                     vp.periodoinicio = _inicioPeriodo;
                     vp.periodofin = _finPeriodo;
                     vp.diasderecho = dias;
-                    vp.diaspago = int.Parse(txtDiasPagoPV.Text);
-                    vp.diaspendientes = dias - int.Parse(txtDiasPagoPV.Text);
+                    vp.diaspago = diasPagoReales;
+                    vp.diaspendientes = dias - diasPagoReales;
                     vp.fechapago = DateTime.Now.Date;
                     vp.fechainicio = DateTime.Now.Date;
                     vp.fechafin = DateTime.Now.Date;
@@ -2141,7 +2150,7 @@ namespace Nominas
                     vp.periodofin = _finPeriodo;
                     vp.diasderecho = dias;
                     vp.diaspago = diasPagoReales;
-                    vp.diaspendientes = dias - int.Parse(txtDiasPagoV.Text);
+                    vp.diaspendientes = dias - diasPagoReales;
                     vp.fechapago = DateTime.Now.Date;
                     vp.fechainicio = dtpFechaInicioVacaciones.Value.Date;
                     vp.fechafin = dtpFechaInicioVacaciones.Value.AddDays(diasPagoReales - 1);
@@ -2193,14 +2202,48 @@ namespace Nominas
                 }
                 else
                 {
+                    Faltas.Core.FaltasHelper fh = new Faltas.Core.FaltasHelper();
+                    fh.Command = cmd;
+
+                    Faltas.Core.Faltas falta = new Faltas.Core.Faltas();
+                    falta.idempresa = GLOBALES.IDEMPRESA;
+                    falta.idtrabajador = idTrabajador;
+                    falta.fechainicio = _inicioPeriodo.Date;
+                    falta.fechafin = _finPeriodo.Date;
+
+                    int existeFaltas = 0;
+                    try
+                    {
+                        cnx.Open();
+                        existeFaltas = (int)fh.existeFalta(falta);
+                        cnx.Close();
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error: Al obtener las faltas del trabajador. \r\n" + error.Message, "Error");
+                        cnx.Dispose();
+                        return;
+                    }
+
+                    int diasPagoReales = int.Parse(txtDiasPagoV.Text) + existeFaltas;
+                    if (diasPagoReales > _periodo)
+                    {
+                        diasPagoReales = _periodo - existeFaltas;
+                        MessageBox.Show("Existen faltas del trabajador, se ajustaron las vacaciones a: " + diasPagoReales.ToString() + " dia(s).", "Información");
+                    }
+                    else
+                    {
+                        diasPagoReales = int.Parse(txtDiasPagoV.Text);
+                    }
+
                     vp = new Vacaciones.Core.VacacionesPrima();
                     vp.idtrabajador = idTrabajador;
                     vp.idempresa = GLOBALES.IDEMPRESA;
                     vp.periodoinicio = _inicioPeriodo;
                     vp.periodofin = _finPeriodo;
                     vp.diasderecho = dias;
-                    vp.diaspago = int.Parse(txtDiasPagoPV.Text);
-                    vp.diaspendientes = dias - int.Parse(txtDiasPagoPV.Text);
+                    vp.diaspago = diasPagoReales;
+                    vp.diaspendientes = dias - diasPagoReales;
                     vp.fechapago = DateTime.Now.Date;
                     vp.fechainicio = DateTime.Now.Date;
                     vp.fechafin = DateTime.Now.Date;
@@ -2248,7 +2291,6 @@ namespace Nominas
                 dgvDeducciones.DataSource = null;
                 dgvPercepciones.Columns.Clear();
                 dgvDeducciones.Columns.Clear();
-                FLAGCALCULO = false;
             }
             catch{
                 MessageBox.Show("Error: Al eliminar los datos de la nomina.", "Error");

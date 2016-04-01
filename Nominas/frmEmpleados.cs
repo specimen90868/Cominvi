@@ -412,6 +412,10 @@ namespace Nominas
             else
                 em.obracivil = false;
 
+            Empleados.Core.EmpleadosEstatus ee = new Empleados.Core.EmpleadosEstatus();
+            ee.estatus = 1;
+            ee.idempresa = GLOBALES.IDEMPRESA;
+
             hh = new Historial.Core.HistorialHelper();
             hh.Command = cmd;
             Historial.Core.Historial h = new Historial.Core.Historial();
@@ -536,6 +540,9 @@ namespace Nominas
                         h.idtrabajador = idtrabajador;
                         h.idempresa = GLOBALES.IDEMPRESA;
                         hh.insertarHistorial(h);
+
+                        ee.idtrabajador = idtrabajador;
+                        eh.insertaEmpleadoEstatus(ee);
 
                         a.idtrabajador = idtrabajador;
                         a.idempresa = GLOBALES.IDEMPRESA;

@@ -210,7 +210,7 @@ namespace Nominas
                     existeFalta = (int)fh.existeFalta(_idEmpleado, dtpFechaInicio.Value.AddDays(a).Date);
                     cnx.Close();
                 }
-                catch (Exception error)
+                catch
                 {
                     MessageBox.Show("Error: Al obtener la existencia de faltas.", "Error");
                     cnx.Dispose();

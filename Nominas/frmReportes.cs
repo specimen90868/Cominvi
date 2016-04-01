@@ -33,6 +33,7 @@ namespace Nominas
         CalculoNomina.Core.NominaHelper nh;
         int noReporte;
         string netocero, orden;
+        int tipoNomina;
         #endregion
 
         #region DELEGADOS
@@ -68,6 +69,13 @@ namespace Nominas
 
             dh = new Departamento.Core.DeptoHelper();
             dh.Command = cmd;
+
+            eh = new Empleados.Core.EmpleadosHelper();
+            eh.Command = cmd;
+
+            Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
+            empleado.idempresa = GLOBALES.IDEMPRESA;
+
             Departamento.Core.Depto depto = new Departamento.Core.Depto();
             depto.idempresa = GLOBALES.IDEMPRESA;
             depto.estatus = GLOBALES.ACTIVO;
@@ -81,6 +89,8 @@ namespace Nominas
             List<Departamento.Core.Depto> lstDeptosDe = new List<Departamento.Core.Depto>();
             List<Departamento.Core.Depto> lstDeptosHasta = new List<Departamento.Core.Depto>();
             List<Periodos.Core.Periodos> lstPeriodos = new List<Periodos.Core.Periodos>();
+            List<Empleados.Core.Empleados> lstEmpleadoDe = new List<Empleados.Core.Empleados>();
+            List<Empleados.Core.Empleados> lstEmpleadoHasta = new List<Empleados.Core.Empleados>();
 
             try
             {
@@ -88,6 +98,8 @@ namespace Nominas
                 lstDeptosDe = dh.obtenerDepartamentos(depto);
                 lstDeptosHasta = dh.obtenerDepartamentos(depto);
                 lstPeriodos = ph.obtenerPeriodos(periodo);
+                lstEmpleadoDe = eh.obtenerEmpleadosBaja(empleado);
+                lstEmpleadoHasta = eh.obtenerEmpleadosBaja(empleado);
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -105,8 +117,16 @@ namespace Nominas
             cmbPeriodo.DisplayMember = "pago";
             cmbPeriodo.ValueMember = "idperiodo";
 
+            cmbEmpleadoInicial.DataSource = lstEmpleadoDe;
+            cmbEmpleadoInicial.DisplayMember = "noempleado";
+            cmbEmpleadoInicial.ValueMember = "idtrabajador";
+
+            cmbEmpleadoFinal.DataSource = lstEmpleadoHasta;
+            cmbEmpleadoFinal.DisplayMember = "noempleado";
+            cmbEmpleadoFinal.ValueMember = "idtrabajador";
+
             cmbTipoReporte.SelectedIndex = 0;
-            cmbEmpleados.SelectedIndex = 0;
+            cmbTipoNomina.SelectedIndex = 0;
             cmbNetoCero.SelectedIndex = 0;
             cmbOrden.SelectedIndex = 3;
 
@@ -118,7 +138,6 @@ namespace Nominas
                 dtpInicioPeriodo.Enabled = false;
                 dtpFinPeriodo.Enabled = false;
                 cmbTipoReporte.Enabled = false;
-                cmbEmpleados.Enabled = false;
                 cmbDeptoInicial.Enabled = false;
                 cmbDeptoFinal.Enabled = false;
                 cmbEmpleadoInicial.Enabled = false;
@@ -207,7 +226,7 @@ namespace Nominas
                     if (_ReportePreNomina)
                         vr._tipoNomina = _tipoNomina;
                     else
-                        vr._tipoNomina = (cmbEmpleados.Text == "Alta" ? 0 : 1);
+                        vr._tipoNomina = tipoNomina;
                     vr._noReporte = noReporte;
                     vr._deptoInicio = int.Parse(cmbDeptoInicial.SelectedValue.ToString());
                     vr._deptoFin = int.Parse(cmbDeptoFinal.SelectedValue.ToString());
@@ -249,7 +268,6 @@ namespace Nominas
             switch (cmbTipoReporte.Text)
             {
                 case "Empleados":
-                    cmbEmpleados.Enabled = true;
                     cmbDeptoInicial.Enabled = true;
                     cmbDeptoFinal.Enabled = true;
                     cmbEmpleadoInicial.Enabled = true;
@@ -265,7 +283,7 @@ namespace Nominas
                     cmbOrden.SelectedIndex = 3;
                     break;
                 case "Departamentos":
-                    cmbEmpleados.Enabled = true;
+                    
                     cmbDeptoInicial.Enabled = true;
                     cmbDeptoFinal.Enabled = true;
                     cmbEmpleadoInicial.Enabled = false;
@@ -278,7 +296,7 @@ namespace Nominas
                     cmbOrden.SelectedIndex = 0;
                     break;
                 case "Total General":
-                    cmbEmpleados.Enabled = true;
+                    
                     cmbDeptoInicial.Enabled = false;
                     cmbDeptoFinal.Enabled = false;
                     cmbEmpleadoInicial.Enabled = false;
@@ -293,7 +311,7 @@ namespace Nominas
                     noReporte = 3;
                     break;
                 case "Tabular":
-                    cmbEmpleados.Enabled = true;
+                    
                     cmbDeptoInicial.Enabled = true;
                     cmbDeptoFinal.Enabled = true;
                     cmbEmpleadoInicial.Enabled = true;
@@ -308,7 +326,7 @@ namespace Nominas
                     cmbOrden.Items.Add("Departamento, No. de Empleado");
                     break;
                 case "Recibos de Nomina":
-                    cmbEmpleados.Enabled = true;
+                   
                     cmbDeptoInicial.Enabled = true;
                     cmbDeptoFinal.Enabled = true;
                     cmbEmpleadoInicial.Enabled = true;
@@ -325,7 +343,7 @@ namespace Nominas
                     break;
 
                 case "Recibos Timbrados": 
-                    cmbEmpleados.Enabled = true;
+                    
                     cmbDeptoInicial.Enabled = true;
                     cmbDeptoFinal.Enabled = true;
                     cmbEmpleadoInicial.Enabled = true;
@@ -341,7 +359,7 @@ namespace Nominas
                     cmbOrden.SelectedIndex = 0;
                     break;
                 case "Gravados y Exentos":
-                    cmbEmpleados.Enabled = false;
+                   
                     cmbDeptoInicial.Enabled = false;
                     cmbDeptoFinal.Enabled = false;
                     cmbEmpleadoInicial.Enabled = false;
@@ -399,7 +417,7 @@ namespace Nominas
                     int.Parse(cmbDeptoFinal.SelectedValue.ToString()),
                     int.Parse(cmbEmpleadoInicial.SelectedValue.ToString()),
                     int.Parse(cmbEmpleadoFinal.SelectedValue.ToString()),
-                    (cmbEmpleados.Text == "Alta" ? 0 : 1),
+                    tipoNomina,
                     netocero, orden);
                 cnx.Close();
                 cnx.Dispose();
@@ -736,42 +754,6 @@ namespace Nominas
             toolEtapa.Text = "Reporte a Excel";
         }
 
-        private void cmbEmpleados_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            cnx = new SqlConnection(cdn);
-            cmd = new SqlCommand();
-            cmd.Connection = cnx;
-
-            eh = new Empleados.Core.EmpleadosHelper();
-            eh.Command = cmd;
-            Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
-            empleado.idempresa = GLOBALES.IDEMPRESA;
-            empleado.estatus = (cmbEmpleados.Text == "Alta" ? GLOBALES.ACTIVO : GLOBALES.INACTIVO);
-
-            List<Empleados.Core.Empleados> lstEmpleadoDe = new List<Empleados.Core.Empleados>();
-            List<Empleados.Core.Empleados> lstEmpleadoHasta = new List<Empleados.Core.Empleados>();
-
-            try
-            {
-                cnx.Open();
-                
-                lstEmpleadoDe = eh.obtenerEmpleados(empleado);
-                lstEmpleadoHasta = eh.obtenerEmpleados(empleado);
-                
-                cnx.Close();
-                cnx.Dispose();
-            }
-            catch (Exception error) { MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error"); }
-
-            cmbEmpleadoInicial.DataSource = lstEmpleadoDe;
-            cmbEmpleadoInicial.DisplayMember = "noempleado";
-            cmbEmpleadoInicial.ValueMember = "idtrabajador";
-
-            cmbEmpleadoFinal.DataSource = lstEmpleadoHasta;
-            cmbEmpleadoFinal.DisplayMember = "noempleado";
-            cmbEmpleadoFinal.ValueMember = "idtrabajador";
-        }
-
         private void cmbNetoCero_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (cmbNetoCero.Text)
@@ -789,6 +771,25 @@ namespace Nominas
                 case "Departamento": orden = " d.descripcion "; break;
                 case "No. de Empleado, Departamento": orden = " t.noempleado, d.descripcion "; break;
                 case "Departamento, No. de Empleado": orden = " d.descripcion, t.noempleado "; break;
+            }
+        }
+
+        private void cmbTipoNomina_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (cmbTipoReporte.Text)
+            {
+                case "Normal":
+                    tipoNomina = GLOBALES.NORMAL;
+                    break;
+                case "Especial":
+                    tipoNomina = GLOBALES.ESPECIAL;
+                    break;
+                case "Extraordinaria normal":
+                    tipoNomina = GLOBALES.EXTRAORDINARIO_NORMAL;
+                    break;
+                case "Extraordinaria especial":
+                    tipoNomina = GLOBALES.EXTRAORDINARIO_ESPECIAL;
+                    break;
             }
         }
     }
