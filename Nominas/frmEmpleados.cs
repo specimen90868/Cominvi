@@ -413,7 +413,7 @@ namespace Nominas
                 em.obracivil = false;
 
             Empleados.Core.EmpleadosEstatus ee = new Empleados.Core.EmpleadosEstatus();
-            ee.estatus = 1;
+            ee.estatus = GLOBALES.ACTIVO;
             ee.idempresa = GLOBALES.IDEMPRESA;
 
             hh = new Historial.Core.HistorialHelper();

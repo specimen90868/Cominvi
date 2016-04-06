@@ -281,5 +281,66 @@ namespace Nominas
             }
 
         }
+
+        private void txtBuscar_Click(object sender, EventArgs e)
+        {
+            txtBuscar.Text = "";
+            txtBuscar.Font = new Font("Segoe UI", 9);
+            txtBuscar.ForeColor = System.Drawing.Color.Black;
+        }
+
+        private void txtBuscar_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                if (string.IsNullOrEmpty(txtBuscar.Text) || string.IsNullOrWhiteSpace(txtBuscar.Text))
+                {
+
+                    var baj = from b in lstBajas
+                              join c in lstCatalogos on b.motivo equals c.id
+                              join t in lstEmpleados on b.idtrabajador equals t.idtrabajador
+                              select new
+                              {
+                                  Id = b.idtrabajador,
+                                  NoEmpleado = t.noempleado,
+                                  RegistroPatronal = b.registropatronal,
+                                  Nss = b.nss,
+                                  Nombre = t.nombrecompleto,
+                                  Motivo = c.descripcion,
+                                  MValor = c.valor,
+                                  Baja = b.fecha
+                              };
+                    dgvBajasSua.DataSource = baj.ToList();
+                }
+                else
+                {
+                    var busqueda = from b in lstBajas
+                                   join c in lstCatalogos on b.motivo equals c.id
+                                   join t in lstEmpleados on b.idtrabajador equals t.idtrabajador
+                                   where t.nombrecompleto.Contains(txtBuscar.Text.ToUpper()) || t.noempleado.Contains(txtBuscar.Text)
+                                   select new
+                                   {
+                                       Id = b.idtrabajador,
+                                       NoEmpleado = t.noempleado,
+                                       RegistroPatronal = b.registropatronal,
+                                       Nss = b.nss,
+                                       Nombre = t.nombrecompleto,
+                                       Motivo = c.descripcion,
+                                       MValor = c.valor,
+                                       Baja = b.fecha
+                                   };
+                    dgvBajasSua.DataSource = busqueda.ToList();
+                }
+                dgvBajasSua.Columns["Id"].Visible = false;
+                dgvBajasSua.Columns["MValor"].Visible = false;
+            }
+        }
+
+        private void txtBuscar_Leave(object sender, EventArgs e)
+        {
+            txtBuscar.Text = "Buscar empleado...";
+            txtBuscar.Font = new Font("Segoe UI", 9, FontStyle.Italic);
+            txtBuscar.ForeColor = System.Drawing.Color.Gray;
+        }
     }
 }

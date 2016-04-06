@@ -71,6 +71,8 @@
             this.toolExtraordinario = new System.Windows.Forms.ToolStripMenuItem();
             this.toolExtraordinarioEspecial = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolImpresionRecibos = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolEnvioRecibos = new System.Windows.Forms.ToolStripMenuItem();
             this.toolReportes = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuCatalogos = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuDepartamentos = new System.Windows.Forms.ToolStripMenuItem();
@@ -97,7 +99,6 @@
             this.toolEstatusPerfil = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolPorcentaje = new System.Windows.Forms.ToolStripStatusLabel();
             this.workAntiguedad = new System.ComponentModel.BackgroundWorker();
-            this.toolImpresionRecibos = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPrincipal.SuspendLayout();
             this.stsPrincipal.SuspendLayout();
             this.SuspendLayout();
@@ -387,6 +388,7 @@
             this.toolCalculoNomina,
             this.toolStripSeparator9,
             this.toolImpresionRecibos,
+            this.toolEnvioRecibos,
             this.toolReportes});
             this.mnuNominas.Name = "mnuNominas";
             this.mnuNominas.Size = new System.Drawing.Size(67, 20);
@@ -415,6 +417,7 @@
             this.toolNominaEspecial.Name = "toolNominaEspecial";
             this.toolNominaEspecial.Size = new System.Drawing.Size(192, 22);
             this.toolNominaEspecial.Text = "Especial";
+            this.toolNominaEspecial.Visible = false;
             this.toolNominaEspecial.Click += new System.EventHandler(this.toolNominaEspecial_Click);
             // 
             // toolExtraordinario
@@ -429,12 +432,27 @@
             this.toolExtraordinarioEspecial.Name = "toolExtraordinarioEspecial";
             this.toolExtraordinarioEspecial.Size = new System.Drawing.Size(192, 22);
             this.toolExtraordinarioEspecial.Text = "Extraordinario especial";
+            this.toolExtraordinarioEspecial.Visible = false;
             this.toolExtraordinarioEspecial.Click += new System.EventHandler(this.toolExtraordinarioEspecial_Click);
             // 
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
             this.toolStripSeparator9.Size = new System.Drawing.Size(181, 6);
+            // 
+            // toolImpresionRecibos
+            // 
+            this.toolImpresionRecibos.Name = "toolImpresionRecibos";
+            this.toolImpresionRecibos.Size = new System.Drawing.Size(184, 22);
+            this.toolImpresionRecibos.Text = "Impresión de recibos";
+            this.toolImpresionRecibos.Click += new System.EventHandler(this.toolImpresionRecibos_Click);
+            // 
+            // toolEnvioRecibos
+            // 
+            this.toolEnvioRecibos.Name = "toolEnvioRecibos";
+            this.toolEnvioRecibos.Size = new System.Drawing.Size(184, 22);
+            this.toolEnvioRecibos.Text = "Envio de recibos";
+            this.toolEnvioRecibos.Click += new System.EventHandler(this.toolEnvioRecibos_Click);
             // 
             // toolReportes
             // 
@@ -635,13 +653,6 @@
             this.workAntiguedad.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.workAntiguedad_ProgressChanged);
             this.workAntiguedad.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workAntiguedad_RunWorkerCompleted);
             // 
-            // toolImpresionRecibos
-            // 
-            this.toolImpresionRecibos.Name = "toolImpresionRecibos";
-            this.toolImpresionRecibos.Size = new System.Drawing.Size(184, 22);
-            this.toolImpresionRecibos.Text = "Impresión de recibos";
-            this.toolImpresionRecibos.Click += new System.EventHandler(this.toolImpresionRecibos_Click);
-            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -736,6 +747,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolImportarEmpleados;
         private System.Windows.Forms.ToolStripMenuItem toolRegistroBajas;
         private System.Windows.Forms.ToolStripMenuItem toolImpresionRecibos;
+        private System.Windows.Forms.ToolStripMenuItem toolEnvioRecibos;
     }
 }
 

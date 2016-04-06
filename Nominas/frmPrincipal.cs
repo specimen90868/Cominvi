@@ -668,6 +668,12 @@ namespace Nominas
             frmImpresionRecibos ir = new frmImpresionRecibos();
             ir.Show();
         }
+
+        private void toolEnvioRecibos_Click(object sender, EventArgs e)
+        {
+            frmEnvioRecibos er = new frmEnvioRecibos();
+            er.Show();
+        }
     }
 }
 

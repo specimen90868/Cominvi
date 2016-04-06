@@ -509,6 +509,7 @@ namespace Nominas
                 dt.Columns.Add("tiponomina", typeof(Int32));
                 dt.Columns.Add("modificado", typeof(Boolean));
                 dt.Columns.Add("fechapago", typeof(DateTime));
+                dt.Columns.Add("obracivil", typeof(Boolean));
 
                 int index = 1;
                 for (int i = 0; i < lstMovimientos.Count; i++)
@@ -531,6 +532,7 @@ namespace Nominas
                     dtFila["tiponomina"] = lstMovimientos[i].tiponomina;
                     dtFila["modificado"] = lstMovimientos[i].modificado;
                     dtFila["fechapago"] = new DateTime(1900,1,1);
+                    dtFila["obracivil"] = false;
                     dt.Rows.Add(dtFila);
                     index++;
                 }

@@ -34,9 +34,12 @@
             this.toolBusqueda = new System.Windows.Forms.ToolStrip();
             this.toolFiltrar = new System.Windows.Forms.ToolStripButton();
             this.toolExportar = new System.Windows.Forms.ToolStripButton();
+            this.toolEliminar = new System.Windows.Forms.ToolStripButton();
             this.dgvBajasSua = new System.Windows.Forms.DataGridView();
             this.workBajas = new System.ComponentModel.BackgroundWorker();
-            this.toolEliminar = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.txtBuscar = new System.Windows.Forms.ToolStripTextBox();
             this.toolVentana.SuspendLayout();
             this.toolBusqueda.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBajasSua)).BeginInit();
@@ -65,7 +68,10 @@
             this.toolBusqueda.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolFiltrar,
             this.toolExportar,
-            this.toolEliminar});
+            this.toolEliminar,
+            this.toolStripSeparator1,
+            this.toolStripLabel1,
+            this.txtBuscar});
             this.toolBusqueda.Location = new System.Drawing.Point(0, 27);
             this.toolBusqueda.Name = "toolBusqueda";
             this.toolBusqueda.Size = new System.Drawing.Size(680, 25);
@@ -90,6 +96,15 @@
             this.toolExportar.Text = "Exportar";
             this.toolExportar.Click += new System.EventHandler(this.toolExportar_Click);
             // 
+            // toolEliminar
+            // 
+            this.toolEliminar.Image = ((System.Drawing.Image)(resources.GetObject("toolEliminar.Image")));
+            this.toolEliminar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolEliminar.Name = "toolEliminar";
+            this.toolEliminar.Size = new System.Drawing.Size(70, 22);
+            this.toolEliminar.Text = "Eliminar";
+            this.toolEliminar.Click += new System.EventHandler(this.toolEliminar_Click);
+            // 
             // dgvBajasSua
             // 
             this.dgvBajasSua.AllowUserToAddRows = false;
@@ -108,14 +123,28 @@
             this.workBajas.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workBajas_DoWork);
             this.workBajas.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workBajas_RunWorkerCompleted);
             // 
-            // toolEliminar
+            // toolStripSeparator1
             // 
-            this.toolEliminar.Image = ((System.Drawing.Image)(resources.GetObject("toolEliminar.Image")));
-            this.toolEliminar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolEliminar.Name = "toolEliminar";
-            this.toolEliminar.Size = new System.Drawing.Size(70, 22);
-            this.toolEliminar.Text = "Eliminar";
-            this.toolEliminar.Click += new System.EventHandler(this.toolEliminar_Click);
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(45, 22);
+            this.toolStripLabel1.Text = "Buscar:";
+            // 
+            // txtBuscar
+            // 
+            this.txtBuscar.AutoSize = false;
+            this.txtBuscar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic);
+            this.txtBuscar.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.txtBuscar.Name = "txtBuscar";
+            this.txtBuscar.Size = new System.Drawing.Size(200, 25);
+            this.txtBuscar.Text = "Buscar empleado...";
+            this.txtBuscar.Leave += new System.EventHandler(this.txtBuscar_Leave);
+            this.txtBuscar.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBuscar_KeyPress);
+            this.txtBuscar.Click += new System.EventHandler(this.txtBuscar_Click);
             // 
             // frmListaBajasSua
             // 
@@ -148,5 +177,8 @@
         private System.Windows.Forms.DataGridView dgvBajasSua;
         private System.ComponentModel.BackgroundWorker workBajas;
         private System.Windows.Forms.ToolStripButton toolEliminar;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.ToolStripTextBox txtBuscar;
     }
 }

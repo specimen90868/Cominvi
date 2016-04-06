@@ -205,14 +205,15 @@ namespace CalculoNomina.Core
             return lstNetos;
         }
 
-        public List<tmpPagoNomina> obtenerUltimaNomina(int idEmpresa)
+        public List<tmpPagoNomina> obtenerUltimaNomina(int idEmpresa, int tipoNomina)
         {
             List<tmpPagoNomina> lstPagoNomina = new List<tmpPagoNomina>();
             DataTable dtPagoNomina = new DataTable();
-            Command.CommandText = @"select distinct top 1 fechainicio, fechafin from PagoNomina where idempresa = @idempresa 
+            Command.CommandText = @"select distinct top 1 fechainicio, fechafin from PagoNomina where idempresa = @idempresa and tiponomina = @tiponomina 
                                     order by fechainicio desc";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idEmpresa);
+            Command.Parameters.AddWithValue("tiponomina", tipoNomina);
             dtPagoNomina = SelectData(Command);
             for (int i = 0; i < dtPagoNomina.Rows.Count; i++)
             {
@@ -471,6 +472,19 @@ namespace CalculoNomina.Core
             return Command.ExecuteNonQuery();
         }
 
+        public int actualizaDiasFechaPagoExtraordinaria(tmpPagoNomina pn, DateTime fechapago)
+        {
+            Command.CommandText = @"update tmpPagoNomina set diaslaborados = @diaslaborados, fechapago = @fechapago 
+                                    where fechainicio = @fechainicio and fechafin = @fechafin and tiponomina = @tiponomina";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("diaslaborados", pn.diaslaborados);
+            Command.Parameters.AddWithValue("fechainicio", pn.fechainicio);
+            Command.Parameters.AddWithValue("fechafin", pn.fechafin);
+            Command.Parameters.AddWithValue("fechapago", fechapago);
+            Command.Parameters.AddWithValue("tiponomina", pn.tiponomina);
+            return Command.ExecuteNonQuery();
+        }
+
         public object obtenerNoPeriodo(int periodo, DateTime fecha)
         {
             Command.CommandText = "exec stp_NumeroPeriodo @periodo, @fecha";
@@ -503,14 +517,15 @@ namespace CalculoNomina.Core
             return Command.ExecuteNonQuery();
         }
 
-        public List<tmpPagoNomina> obtenerPeriodosNomina(int idEmpresa)
+        public List<tmpPagoNomina> obtenerPeriodosNomina(int idEmpresa, int tipoNomina)
         {
             DataTable dtPeriodos = new DataTable();
             List<tmpPagoNomina> lstPeriodos = new List<tmpPagoNomina>();
-            Command.CommandText = @"select distinct fechainicio, fechafin from PagoNomina where idempresa = @idempresa
+            Command.CommandText = @"select distinct fechainicio, fechafin from PagoNomina where idempresa = @idempresa and tiponomina = @tiponomina
                 order by fechainicio";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idEmpresa);
+            Command.Parameters.AddWithValue("tiponomina", tipoNomina);
             dtPeriodos = SelectData(Command);
             for (int i = 0; i < dtPeriodos.Rows.Count; i++)
             {
@@ -522,6 +537,38 @@ namespace CalculoNomina.Core
             return lstPeriodos;
         }
 
+        public object existeXMLTrabajador(int idempresa, int idtrabajador, DateTime inicio)
+        {
+            Command.CommandText = @"select count(*) from xmlCabecera where idempresa = @idempresa and idtrabajador = @idtrabajador and
+                    periodoinicio = @inicio";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idempresa);
+            Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
+            Command.Parameters.AddWithValue("inicio", inicio);
+            object dato = Select(Command);
+            return dato;
+        }
+
+        public List<XmlCabecera> obtenerXmlTrabajador(int idempresa, int idtrabajador, DateTime inicio)
+        {
+            DataTable dtXml = new DataTable();
+            List<XmlCabecera> lstXml = new List<XmlCabecera>();
+            Command.CommandText = @"select idtrabajador, xml from xmlCabecera where idempresa = @idempresa and periodoinicio = @inicio 
+                    and idtrabajador = @idtrabajador";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idempresa);
+            Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
+            Command.Parameters.AddWithValue("inicio", inicio);
+            dtXml = SelectData(Command);
+            for (int i = 0; i < dtXml.Rows.Count; i++)
+            {
+                XmlCabecera xml = new XmlCabecera();
+                xml.idtrabajador = int.Parse(dtXml.Rows[i]["idtrabajador"].ToString());
+                xml.xml = dtXml.Rows[i]["xml"].ToString();
+                lstXml.Add(xml);
+            }
+            return lstXml;
+        }
 
         #region DATOS NOMINA POR TRABAJADOR
         public List<Nomina> conceptosNominaTrabajador(int idEmpresa, string tipoConcepto, int idTrabajador, DateTime inicio, DateTime fin)

@@ -40,12 +40,15 @@
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnAceptar = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cmbTipoNomina = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // lstvPeriodos
             // 
             this.lstvPeriodos.CheckBoxes = true;
-            this.lstvPeriodos.Location = new System.Drawing.Point(15, 37);
+            this.lstvPeriodos.Location = new System.Drawing.Point(15, 72);
+            this.lstvPeriodos.MultiSelect = false;
             this.lstvPeriodos.Name = "lstvPeriodos";
             this.lstvPeriodos.Size = new System.Drawing.Size(231, 126);
             this.lstvPeriodos.TabIndex = 0;
@@ -54,7 +57,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 21);
+            this.label1.Location = new System.Drawing.Point(12, 56);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(51, 13);
             this.label1.TabIndex = 1;
@@ -63,7 +66,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(249, 21);
+            this.label2.Location = new System.Drawing.Point(249, 56);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(82, 13);
             this.label2.TabIndex = 3;
@@ -71,7 +74,7 @@
             // 
             // lstvDepartamentos
             // 
-            this.lstvDepartamentos.Location = new System.Drawing.Point(252, 37);
+            this.lstvDepartamentos.Location = new System.Drawing.Point(252, 72);
             this.lstvDepartamentos.Name = "lstvDepartamentos";
             this.lstvDepartamentos.Size = new System.Drawing.Size(231, 126);
             this.lstvDepartamentos.TabIndex = 4;
@@ -81,7 +84,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 172);
+            this.label3.Location = new System.Drawing.Point(12, 207);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(62, 13);
             this.label3.TabIndex = 5;
@@ -89,7 +92,7 @@
             // 
             // lstvEmpleados
             // 
-            this.lstvEmpleados.Location = new System.Drawing.Point(15, 188);
+            this.lstvEmpleados.Location = new System.Drawing.Point(15, 223);
             this.lstvEmpleados.Name = "lstvEmpleados";
             this.lstvEmpleados.Size = new System.Drawing.Size(468, 253);
             this.lstvEmpleados.TabIndex = 6;
@@ -97,7 +100,7 @@
             // 
             // btnSeleccionarTodos
             // 
-            this.btnSeleccionarTodos.Location = new System.Drawing.Point(15, 447);
+            this.btnSeleccionarTodos.Location = new System.Drawing.Point(15, 482);
             this.btnSeleccionarTodos.Name = "btnSeleccionarTodos";
             this.btnSeleccionarTodos.Size = new System.Drawing.Size(59, 23);
             this.btnSeleccionarTodos.TabIndex = 7;
@@ -107,7 +110,7 @@
             // 
             // btnLimpiar
             // 
-            this.btnLimpiar.Location = new System.Drawing.Point(80, 447);
+            this.btnLimpiar.Location = new System.Drawing.Point(80, 482);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(59, 23);
             this.btnLimpiar.TabIndex = 8;
@@ -118,7 +121,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(150, 452);
+            this.label4.Location = new System.Drawing.Point(150, 487);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(43, 13);
             this.label4.TabIndex = 9;
@@ -128,7 +131,7 @@
             // 
             this.txtBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtBuscar.ForeColor = System.Drawing.SystemColors.WindowFrame;
-            this.txtBuscar.Location = new System.Drawing.Point(199, 449);
+            this.txtBuscar.Location = new System.Drawing.Point(199, 484);
             this.txtBuscar.Name = "txtBuscar";
             this.txtBuscar.Size = new System.Drawing.Size(105, 20);
             this.txtBuscar.TabIndex = 10;
@@ -139,7 +142,7 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(408, 447);
+            this.btnCancelar.Location = new System.Drawing.Point(408, 482);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
             this.btnCancelar.TabIndex = 11;
@@ -149,7 +152,7 @@
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Location = new System.Drawing.Point(327, 447);
+            this.btnAceptar.Location = new System.Drawing.Point(327, 482);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(75, 23);
             this.btnAceptar.TabIndex = 12;
@@ -157,11 +160,34 @@
             this.btnAceptar.UseVisualStyleBackColor = true;
             this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(12, 25);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(83, 13);
+            this.label5.TabIndex = 13;
+            this.label5.Text = "Tipo de nómina:";
+            // 
+            // cmbTipoNomina
+            // 
+            this.cmbTipoNomina.FormattingEnabled = true;
+            this.cmbTipoNomina.Items.AddRange(new object[] {
+            "Normal",
+            "Extraordinaria normal"});
+            this.cmbTipoNomina.Location = new System.Drawing.Point(101, 22);
+            this.cmbTipoNomina.Name = "cmbTipoNomina";
+            this.cmbTipoNomina.Size = new System.Drawing.Size(145, 21);
+            this.cmbTipoNomina.TabIndex = 14;
+            this.cmbTipoNomina.SelectedIndexChanged += new System.EventHandler(this.cmbTipoNomina_SelectedIndexChanged);
+            // 
             // frmImpresionRecibos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(492, 493);
+            this.ClientSize = new System.Drawing.Size(492, 518);
+            this.Controls.Add(this.cmbTipoNomina);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.txtBuscar);
@@ -198,5 +224,7 @@
         private System.Windows.Forms.TextBox txtBuscar;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Button btnAceptar;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox cmbTipoNomina;
     }
 }

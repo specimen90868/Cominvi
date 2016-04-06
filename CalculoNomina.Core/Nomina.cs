@@ -89,4 +89,11 @@ namespace CalculoNomina.Core
         public decimal tt { get; set; }
         public string uuid { get; set; }
     }
+
+    public class XmlCabecera
+    {
+        public int idtrabajador { get; set; }
+        public int idempresa { get; set; }
+        public string xml { get; set; }
+    }
 }

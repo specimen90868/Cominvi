@@ -373,26 +373,29 @@ namespace Nominas
 
         private void dtpInicioPeriodo_ValueChanged(object sender, EventArgs e)
         {
-            if (cmbPeriodo.Text == "SEMANAL")
+            if (tipoNomina == GLOBALES.NORMAL)
             {
-                DateTime dt = dtpInicioPeriodo.Value;
-                while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
-                dtpInicioPeriodo.Value = dt;
-                dtpFinPeriodo.Value = dt.AddDays(6);
-            }
-            else
-            {
-                if (dtpInicioPeriodo.Value.Day <= 15)
+                if (cmbPeriodo.Text == "SEMANAL")
                 {
-                    dtpInicioPeriodo.Value = new DateTime(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month, 1);
-                    dtpFinPeriodo.Value = new DateTime(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month, 15);
+                    DateTime dt = dtpInicioPeriodo.Value;
+                    while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
+                    dtpInicioPeriodo.Value = dt;
+                    dtpFinPeriodo.Value = dt.AddDays(6);
                 }
                 else
                 {
-                    dtpInicioPeriodo.Value = new DateTime(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month, 16);
-                    dtpFinPeriodo.Value = new DateTime(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month, DateTime.DaysInMonth(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month));
+                    if (dtpInicioPeriodo.Value.Day <= 15)
+                    {
+                        dtpInicioPeriodo.Value = new DateTime(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month, 1);
+                        dtpFinPeriodo.Value = new DateTime(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month, 15);
+                    }
+                    else
+                    {
+                        dtpInicioPeriodo.Value = new DateTime(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month, 16);
+                        dtpFinPeriodo.Value = new DateTime(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month, DateTime.DaysInMonth(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month));
+                    }
                 }
-            }
+            }            
         }
 
         private void excelTabular()
@@ -487,9 +490,7 @@ namespace Nominas
                         iCol++;
                     }
                 }
-                
                 iCol = 1;
-
             }
             iFil++;
 
@@ -498,17 +499,17 @@ namespace Nominas
                 rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, 2];
                 rng.Columns.AutoFit();
 
-                rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, 12];
+                rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, 13];
                 rng.NumberFormat = "#,##0.00";
-                rng.Formula = string.Format("=C{0}+D{0}+E{0}+F{0}+G{0}+H{0}+I{0}+J{0}+K{0}", i);
-
-                rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, 21];
-                rng.NumberFormat = "#,##0.00";
-                rng.Formula = string.Format("=M{0}+N{0}+O{0}+P{0}+Q{0}+R{0}+T{0}", i);
+                rng.Formula = string.Format("=C{0}+D{0}+E{0}+F{0}+G{0}+H{0}+I{0}+J{0}+K{0}+L{0}", i);
 
                 rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, 22];
                 rng.NumberFormat = "#,##0.00";
-                rng.Formula = string.Format("=L{0}+S{0}-U{0}", i);
+                rng.Formula = string.Format("=N{0}+O{0}+P{0}+Q{0}+R{0}+S{0}+U{0}", i);
+
+                rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, 23];
+                rng.NumberFormat = "#,##0.00";
+                rng.Formula = string.Format("=M{0}+T{0}-V{0}", i);
             }
 
             int suma = iFil - 1;
@@ -559,12 +560,12 @@ namespace Nominas
             rng.Font.Bold = true;
             rng.Formula = string.Format("=SUM(K6:K{0})", suma.ToString());
 
-            //TOTAL PERCEPCIONES
             rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 12];
             rng.NumberFormat = "#,##0.00";
             rng.Font.Bold = true;
             rng.Formula = string.Format("=SUM(L6:L{0})", suma.ToString());
 
+            //TOTAL PERCEPCIONES
             rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 13];
             rng.NumberFormat = "#,##0.00";
             rng.Font.Bold = true;
@@ -605,30 +606,35 @@ namespace Nominas
             rng.Font.Bold = true;
             rng.Formula = string.Format("=SUM(T6:T{0})", suma.ToString());
 
-            //TOTAL DEDUCCIONES
             rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 21];
             rng.NumberFormat = "#,##0.00";
             rng.Font.Bold = true;
             rng.Formula = string.Format("=SUM(U6:U{0})", suma.ToString());
 
-            //TOTAL NETO
+            //TOTAL DEDUCCIONES
             rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 22];
             rng.NumberFormat = "#,##0.00";
             rng.Font.Bold = true;
             rng.Formula = string.Format("=SUM(V6:V{0})", suma.ToString());
 
+            //TOTAL NETO
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 23];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            rng.Formula = string.Format("=SUM(W6:W{0})", suma.ToString());
+
             excel.Range["A1", "G3"].Font.Bold = true;
-            excel.Range["A5", "V5"].Font.Bold = true;
-            excel.Range["B:V"].EntireColumn.AutoFit();
+            excel.Range["A5", "W5"].Font.Bold = true;
+            excel.Range["B:W"].EntireColumn.AutoFit();
             excel.Range["A6"].Select();
             excel.ActiveWindow.FreezePanes = true;
-            excel.Range["A5", "V5"].Interior.ColorIndex = 36;
-            excel.Range["A5", "K5"].Font.ColorIndex = 1;
-            excel.Range["M5", "U5"].Font.ColorIndex = 1;
-            excel.Range["L5"].Font.ColorIndex = 32;
-            excel.Range["U5"].Font.ColorIndex = 32;
+            excel.Range["A5", "W5"].Interior.ColorIndex = 36;
+            excel.Range["A5", "L5"].Font.ColorIndex = 1;
+            excel.Range["N5", "V5"].Font.ColorIndex = 1;
+            excel.Range["M5"].Font.ColorIndex = 32;
             excel.Range["V5"].Font.ColorIndex = 32;
-            excel.Range["B6", "V" + iFil.ToString()].NumberFormat = "#,##0.00";
+            excel.Range["W5"].Font.ColorIndex = 32;
+            excel.Range["B6", "W" + iFil.ToString()].NumberFormat = "#,##0.00";
 
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Title = "Guardar como";
@@ -776,19 +782,15 @@ namespace Nominas
 
         private void cmbTipoNomina_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (cmbTipoReporte.Text)
+            switch (cmbTipoNomina.Text)
             {
                 case "Normal":
                     tipoNomina = GLOBALES.NORMAL;
-                    break;
-                case "Especial":
-                    tipoNomina = GLOBALES.ESPECIAL;
+                    dtpFinPeriodo.Enabled = false;
                     break;
                 case "Extraordinaria normal":
                     tipoNomina = GLOBALES.EXTRAORDINARIO_NORMAL;
-                    break;
-                case "Extraordinaria especial":
-                    tipoNomina = GLOBALES.EXTRAORDINARIO_ESPECIAL;
+                    dtpFinPeriodo.Enabled = true;
                     break;
             }
         }

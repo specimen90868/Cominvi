@@ -38,6 +38,9 @@
     <Reference Include="Gma.QrCodeNet.Encoding">
       <HintPath>..\packages\QrCode.Net.0.4.0.0\lib\net45\Gma.QrCodeNet.Encoding.dll</HintPath>
     </Reference>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\Dlls\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
     <Reference Include="System" />
@@ -145,6 +148,12 @@
     </Compile>
     <Compile Include="frmEmpresas.Designer.cs">
       <DependentUpon>frmEmpresas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmEnvioRecibos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEnvioRecibos.Designer.cs">
+      <DependentUpon>frmEnvioRecibos.cs</DependentUpon>
     </Compile>
     <Compile Include="frmExpediente.cs">
       <SubType>Form</SubType>
@@ -621,6 +630,9 @@
     <EmbeddedResource Include="frmEmpresas.resx">
       <DependentUpon>frmEmpresas.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmEnvioRecibos.resx">
+      <DependentUpon>frmEnvioRecibos.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmExpediente.resx">
       <DependentUpon>frmExpediente.cs</DependentUpon>
     </EmbeddedResource>
@@ -909,6 +921,10 @@
     <ProjectReference Include="..\Conceptos.Core\Conceptos.Core.csproj">
       <Project>{c6321c6d-e28f-43ea-a0af-a1420a27c9da}</Project>
       <Name>Conceptos.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Configuracion.Core\Configuracion.Core.csproj">
+      <Project>{08353a02-63a4-4b0b-9ad5-5d708c062101}</Project>
+      <Name>Configuracion.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Data.Obj\Data.Obj.csproj">
       <Project>{2f926e34-44b7-49dc-b955-9b33f8b55c96}</Project>

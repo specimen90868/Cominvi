@@ -38,6 +38,8 @@ namespace Nominas
         public int _empleadoFin;
         public string _orden;
         public string _netoCero;
+        public string _departamentos;
+        public string _empleados;
         #endregion
 
         private void frmVisorReportes_Load(object sender, EventArgs e)
@@ -471,6 +473,31 @@ namespace Nominas
 
                     rpvVisor.LocalReport.ReportEmbeddedResource = "rptPreNominaRecibo.rdlc";
                     rpvVisor.LocalReport.ReportPath = @"rptPreNominaRecibo.rdlc";
+
+                    break;
+                case 10: 
+
+                    dsReportes.NominaRecibosDataTable dtImpresionNomina = new dsReportes.NominaRecibosDataTable();
+                    SqlDataAdapter daImpresionNomina = new SqlDataAdapter();
+                    cmd.CommandText = "exec stp_rptNominaImpresion @idempresa, @fechainicio, @deptos, @empleados, @tiponomina";
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("idempresa", GLOBALES.IDEMPRESA);
+                    cmd.Parameters.AddWithValue("fechainicio", _inicioPeriodo);
+                    cmd.Parameters.AddWithValue("deptos", _departamentos);
+                    cmd.Parameters.AddWithValue("empleados", _empleados);
+                    cmd.Parameters.AddWithValue("tiponomina", _tipoNomina);
+                    daImpresionNomina.SelectCommand = cmd;
+                    daImpresionNomina.Fill(dtImpresionNomina);
+
+                    rd = new ReportDataSource();
+                    rd.Value = dtImpresionNomina;
+                    rd.Name = "dsNominaRecibo";
+                    
+                    rpvVisor.LocalReport.DataSources.Clear();
+                    rpvVisor.LocalReport.DataSources.Add(rd);
+
+                    rpvVisor.LocalReport.ReportEmbeddedResource = "rptNominaRecibos.rdlc";
+                    rpvVisor.LocalReport.ReportPath = @"rptNominaRecibos.rdlc";
 
                     break;
             }
