@@ -150,7 +150,7 @@ namespace Nominas
                         break;
 
                     case "DiasLaborados":
-                        int existe = 0, diasBaja = 0, idperiodo = 0, diasPago = 0, diasMesLaborados = 0, diasFaltas = 0;
+                        int existe = 0, diasBaja = 0, idperiodo = 0, diasPago = 0, diasFaltas = 0;
                         int existeAlta = 0, diasAlta = 0;
                         int existeReingreso = 0, diasReingreso = 0;
 

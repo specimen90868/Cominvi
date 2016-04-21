@@ -27,7 +27,6 @@ namespace Nominas
         string ruta, nombreEmpresa;
         string ExcelConString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties='Excel 12.0;'";
         int idEmpresa;
-        Empresas.Core.EmpresasHelper eh;
         Empleados.Core.EmpleadosHelper emph;
         Faltas.Core.FaltasHelper fh;
         DateTime inicio, fin;

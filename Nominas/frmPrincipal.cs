@@ -389,6 +389,9 @@ namespace Nominas
 
         private void mnuEmpleadoNomina_Click(object sender, EventArgs e)
         {
+            if (GLOBALES.FORMISOPEN("frmListaEmpleados"))
+                return;
+            
             frmListaEmpleados le = new frmListaEmpleados();
             //le._empleadoAltaBaja = GLOBALES.ACTIVO;
             le.WindowState = FormWindowState.Maximized;

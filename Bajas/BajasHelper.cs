@@ -65,6 +65,16 @@ namespace Bajas.Core
             return dato;
         }
 
+        public object obtenerFechaBaja(Bajas b)
+        { 
+            Command.CommandText = @"select top 1 fecha from suaBajas where idempresa = @idempresa and idtrabajador = @idtrabajador order by fecha desc";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", b.idempresa);
+            Command.Parameters.AddWithValue("idtrabajador", b.idtrabajador);
+            object dato = Select(Command);
+            return dato;
+        }
+
         public object diasProporcionales(Bajas b)
         {
             Command.CommandText = "select diasproporcionales from suaBajas where idtrabajador = @idtrabajador and periodoinicio = @periodoinicio and periodofin = @periodofin";

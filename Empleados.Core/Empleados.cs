@@ -63,4 +63,25 @@ namespace Empleados.Core
         public int idempresa { get; set; }
         public int estatus { get; set; }
     }
+
+    public class CatalogoEmpleado
+    {
+        public int idtrabajador { get; set; }
+        public string noempleado { get; set; }
+        public string paterno { get; set; }
+        public string materno { get; set; }
+        public string nombres { get; set; }
+        public string nombrecompleto { get; set; }
+        public string curp { get; set; }
+        public DateTime fechaingreso { get; set; }
+        public int antiguedad { get; set; }
+        public decimal sdi { get; set; }
+        public decimal sd { get; set; }
+        public decimal sueldo { get; set; }
+        public string cuenta { get; set; }
+        public string estatus { get; set; }
+        public string departamento { get; set; }
+        public string puesto { get; set; }
+        public string fechabaja { get; set; }
+    }
 }

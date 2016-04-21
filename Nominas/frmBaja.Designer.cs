@@ -37,8 +37,6 @@
             this.btnAceptar = new System.Windows.Forms.Button();
             this.lblNombreEmpleado = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.dtpPeriodoInicio = new System.Windows.Forms.DateTimePicker();
-            this.dtpPeriodoFin = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
             this.txtObservaciones = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
@@ -76,7 +74,6 @@
             this.cmbMotivoBaja.Name = "cmbMotivoBaja";
             this.cmbMotivoBaja.Size = new System.Drawing.Size(200, 21);
             this.cmbMotivoBaja.TabIndex = 1;
-            this.cmbMotivoBaja.SelectedIndexChanged += new System.EventHandler(this.cmbMotivoBaja_SelectedIndexChanged);
             // 
             // Cancelar
             // 
@@ -124,25 +121,6 @@
             this.label3.Text = "Periodo:";
             this.label3.Visible = false;
             // 
-            // dtpPeriodoInicio
-            // 
-            this.dtpPeriodoInicio.Enabled = false;
-            this.dtpPeriodoInicio.Location = new System.Drawing.Point(122, 279);
-            this.dtpPeriodoInicio.Name = "dtpPeriodoInicio";
-            this.dtpPeriodoInicio.Size = new System.Drawing.Size(200, 20);
-            this.dtpPeriodoInicio.TabIndex = 8;
-            this.dtpPeriodoInicio.Visible = false;
-            this.dtpPeriodoInicio.ValueChanged += new System.EventHandler(this.dtpPeriodoInicio_ValueChanged);
-            // 
-            // dtpPeriodoFin
-            // 
-            this.dtpPeriodoFin.Enabled = false;
-            this.dtpPeriodoFin.Location = new System.Drawing.Point(122, 305);
-            this.dtpPeriodoFin.Name = "dtpPeriodoFin";
-            this.dtpPeriodoFin.Size = new System.Drawing.Size(200, 20);
-            this.dtpPeriodoFin.TabIndex = 9;
-            this.dtpPeriodoFin.Visible = false;
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -168,8 +146,6 @@
             this.ClientSize = new System.Drawing.Size(340, 273);
             this.Controls.Add(this.txtObservaciones);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.dtpPeriodoFin);
-            this.Controls.Add(this.dtpPeriodoInicio);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lblNombreEmpleado);
             this.Controls.Add(this.btnAceptar);
@@ -200,8 +176,6 @@
         private System.Windows.Forms.Button btnAceptar;
         private System.Windows.Forms.Label lblNombreEmpleado;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.DateTimePicker dtpPeriodoInicio;
-        private System.Windows.Forms.DateTimePicker dtpPeriodoFin;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtObservaciones;
     }

@@ -31,16 +31,11 @@ namespace Nominas
         bool FLAGPRIMERCALCULO = true;
         bool EXISTEPRENOMINA = false;
 
-        Empresas.Core.EmpresasHelper eh;
-        Empleados.Core.EmpleadosHelper emph;
         CalculoNomina.Core.NominaHelper nh;
         Faltas.Core.FaltasHelper fh;
-        ProgramacionConcepto.Core.ProgramacionHelper pch;
-        Movimientos.Core.MovimientosHelper mh;
         List<CalculoNomina.Core.tmpPagoNomina> lstValoresNomina;
         List<CalculoNomina.Core.DatosEmpleado> lstEmpleadosNomina;
         List<CalculoNomina.Core.DatosFaltaIncapacidad> lstEmpleadosFaltaIncapacidad;
-        DataTable dt;
         DateTime periodoInicio, periodoFin;
         #endregion
 
@@ -404,21 +399,32 @@ namespace Nominas
 
             lstEmpleadosNomina = new List<CalculoNomina.Core.DatosEmpleado>();
             lstEmpleadosFaltaIncapacidad = new List<CalculoNomina.Core.DatosFaltaIncapacidad>();
-
+            DateTime fecha = new DateTime(1900,1,1);
             try
             {
                 cnx.Open();
                 if (_tipoNomina == GLOBALES.NORMAL || _tipoNomina == GLOBALES.EXTRAORDINARIO_NORMAL)
                 {
-                    lstEmpleadosNomina = nh.obtenerDatosEmpleado(GLOBALES.IDEMPRESA, GLOBALES.ACTIVO, _obracivil);
-                    lstEmpleadosFaltaIncapacidad = nh.obtenerDatosFaltaInc(GLOBALES.IDEMPRESA, GLOBALES.ACTIVO, _obracivil);
+                    if (_periodo == 7)
+                        fecha = periodoInicio.AddDays(7);
+                    else
+                    {
+                        if (periodoInicio.Day < 15)
+                            fecha = periodoInicio.AddDays(15);
+                        else
+                            fecha = periodoInicio.AddDays(
+                                DateTime.DaysInMonth(periodoInicio.Year, periodoInicio.Month) - 15);
+                    }
+                        
+                    lstEmpleadosNomina = nh.obtenerDatosEmpleado(GLOBALES.IDEMPRESA, GLOBALES.ACTIVO, _obracivil, fecha);
+                    lstEmpleadosFaltaIncapacidad = nh.obtenerDatosFaltaInc(GLOBALES.IDEMPRESA, GLOBALES.ACTIVO, _obracivil, fecha);
                 }
 
-                if (_tipoNomina == GLOBALES.ESPECIAL || _tipoNomina == GLOBALES.EXTRAORDINARIO_ESPECIAL)
-                {
-                    lstEmpleadosNomina = nh.obtenerDatosEmpleado(GLOBALES.IDEMPRESA, GLOBALES.INACTIVO, _obracivil);
-                    lstEmpleadosFaltaIncapacidad = nh.obtenerDatosFaltaInc(GLOBALES.IDEMPRESA, GLOBALES.INACTIVO, _obracivil);
-                }
+                //if (_tipoNomina == GLOBALES.ESPECIAL || _tipoNomina == GLOBALES.EXTRAORDINARIO_ESPECIAL)
+                //{
+                //    lstEmpleadosNomina = nh.obtenerDatosEmpleado(GLOBALES.IDEMPRESA, GLOBALES.INACTIVO, _obracivil);
+                //    lstEmpleadosFaltaIncapacidad = nh.obtenerDatosFaltaInc(GLOBALES.IDEMPRESA, GLOBALES.INACTIVO, _obracivil);
+                //}
 
                 cnx.Close();
                 cnx.Dispose();
@@ -451,15 +457,27 @@ namespace Nominas
             nh.Command = cmd;
 
             lstEmpleadosFaltaIncapacidad = new List<CalculoNomina.Core.DatosFaltaIncapacidad>();
-
+            DateTime fecha;
             try
             {
                 cnx.Open();
                 if (_tipoNomina == GLOBALES.NORMAL || _tipoNomina == GLOBALES.EXTRAORDINARIO_NORMAL)
-                    lstEmpleadosFaltaIncapacidad = nh.obtenerDatosFaltaInc(GLOBALES.IDEMPRESA, GLOBALES.ACTIVO, _obracivil);
-
-                if (_tipoNomina == GLOBALES.ESPECIAL || _tipoNomina == GLOBALES.EXTRAORDINARIO_ESPECIAL)
-                    lstEmpleadosFaltaIncapacidad = nh.obtenerDatosFaltaInc(GLOBALES.IDEMPRESA, GLOBALES.INACTIVO, _obracivil);
+                {
+                    if (_periodo == 7)
+                        fecha = periodoInicio.AddDays(7);
+                    else
+                    {
+                        if (periodoInicio.Day < 15)
+                            fecha = periodoInicio.AddDays(15);
+                        else
+                            fecha = periodoInicio.AddDays(
+                                DateTime.DaysInMonth(periodoInicio.Year, periodoInicio.Month) - 15);
+                    }
+                    lstEmpleadosFaltaIncapacidad = nh.obtenerDatosFaltaInc(GLOBALES.IDEMPRESA, GLOBALES.ACTIVO, _obracivil, fecha);
+                }
+                
+                //if (_tipoNomina == GLOBALES.ESPECIAL || _tipoNomina == GLOBALES.EXTRAORDINARIO_ESPECIAL)
+                //    lstEmpleadosFaltaIncapacidad = nh.obtenerDatosFaltaInc(GLOBALES.IDEMPRESA, GLOBALES.INACTIVO, _obracivil);
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -1229,14 +1247,15 @@ namespace Nominas
             pn.fechainicio = periodoInicio.Date;
             pn.fechafin = periodoFin.Date;
             pn.guardada = true;
+            pn.tiponomina = _tipoNomina;
             pn.obracivil = _obracivil;
 
             try
             {
                 cnx.Open();
                 nh.guardaPreNomina(pn);
+                nh.aplicaBajaObraCivil(pn);
                 cnx.Close();
-                cnx.Dispose();
             }
             catch (Exception error)
             {
@@ -1269,6 +1288,7 @@ namespace Nominas
                         return;
                     }
                 }
+                cnx.Dispose();
             }
 
 
@@ -1458,7 +1478,7 @@ namespace Nominas
                 existeVacacion = (int)vh.existeVacacionEnFalta(int.Parse(dgvFaltas.Rows[e.RowIndex].Cells["idtrabajadorfalta"].Value.ToString()), fechaColumna.Date);
                 cnx.Close();
             }
-            catch (Exception error)
+            catch
             {
                 MessageBox.Show("Error: \r\n \r\n No se pudo verificar la incapacidad, verifique.", "Error");
                 dgvFaltas.Rows[e.RowIndex].Cells[dgvFaltas.Columns[e.ColumnIndex].Name.ToString()].Value = "";
@@ -1485,7 +1505,7 @@ namespace Nominas
                     cnx.Close();
                     cnx.Dispose();
                 }
-                catch (Exception error)
+                catch
                 {
                     MessageBox.Show("Error: \r\n \r\n Se ingreso un valor incorrecto, verifique.", "Error");
                     dgvFaltas.Rows[e.RowIndex].Cells[dgvFaltas.Columns[e.ColumnIndex].Name.ToString()].Value = "";
@@ -1782,10 +1802,11 @@ namespace Nominas
                 vr._empleadoFin = empleadofinal;
                 vr.Show();
             }
-            else
-            {
+            else if (noreporte == 6)
                 workExcel.RunWorkerAsync();
-            }
+            else if (noreporte == 11)
+                workerGravadosExentos.RunWorkerAsync();
+            
         }
 
         private void workExcel_DoWork(object sender, DoWorkEventArgs e)
@@ -2393,6 +2414,128 @@ namespace Nominas
         private void toolGuardar_Click(object sender, EventArgs e)
         {
             guardaPreNomina();
+        }
+
+        private void toolGravadosExentos_Click(object sender, EventArgs e)
+        {
+            frmReportes r = new frmReportes();
+            r.OnReporte += r_OnReporte;
+            r._inicio = periodoInicio.Date;
+            r._fin = periodoFin.Date;
+            r._noReporte = 11;
+            r._ReportePreNomina = true;
+            r._tipoNomina = _tipoNomina;
+            r.Show();
+        }
+
+        private void workerGravadosExentos_DoWork(object sender, DoWorkEventArgs e)
+        {
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+            nh = new CalculoNomina.Core.NominaHelper();
+            nh.Command = cmd;
+
+            CalculoNomina.Core.tmpPagoNomina pn = new CalculoNomina.Core.tmpPagoNomina();
+            pn.idempresa = GLOBALES.IDEMPRESA;
+            pn.fechainicio = periodoInicio.Date;
+            pn.fechafin = periodoFin.Date;
+
+            DataTable dt = new DataTable();
+            try
+            {
+                cnx.Open();
+                dt = nh.obtenerPreGravadosExentos(pn);
+                cnx.Close();
+                cnx.Dispose();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+            }
+
+            if (dt.Rows.Count == 0)
+            {
+                MessageBox.Show("No es posible generar el reporte. \r\n \r\n Verifique los parametros del reporte.", "Error");
+                return;
+            }
+
+            Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
+            excel.Workbooks.Add();
+
+            Microsoft.Office.Interop.Excel._Worksheet workSheet = excel.ActiveSheet;
+
+            excel.Cells[1, 1] = dt.Rows[0][0];
+            excel.Cells[2, 1] = "RFC:";
+            excel.Cells[3, 1] = "REG. PAT:";
+
+            excel.Cells[2, 2] = dt.Rows[0][1];
+            excel.Cells[3, 2] = dt.Rows[0][2];
+
+            //SE COLOCAN LOS TITULOS DE LAS COLUMNAS
+            int iCol = 1;
+            for (int i = 3; i < dt.Columns.Count; i++)
+            {
+                excel.Cells[5, iCol] = dt.Columns[i].ColumnName;
+                iCol++;
+            }
+            //SE COLOCAN LOS DATOS
+            int contadorDt = dt.Rows.Count;
+            int contador = 0;
+            int progreso = 0;
+            iCol = 1;
+            int iFil = 6;
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                progreso = (contador * 100) / contadorDt;
+                workerGravadosExentos.ReportProgress(progreso, "Reporte a Excel");
+                contador++;
+
+                if (i != dt.Rows.Count - 1)
+                {
+                    for (int j = 3; j < dt.Columns.Count; j++)
+                    {
+                        excel.Cells[iFil, iCol] = dt.Rows[i][j];
+                        iCol++;
+                    }
+                    iFil++;
+                }
+                else
+                {
+                    for (int j = 3; j < dt.Columns.Count; j++)
+                    {
+                        excel.Cells[iFil, iCol] = dt.Rows[i][j];
+                        iCol++;
+                    }
+                }
+
+                iCol = 1;
+
+            }
+            iFil++;
+
+            excel.Range["A1", "B3"].Font.Bold = true;
+            excel.Range["B:J"].EntireColumn.AutoFit();
+            excel.Range["A6"].Select();
+            excel.ActiveWindow.FreezePanes = true;
+            excel.Range["A5", "J5"].Font.Bold = true;
+            excel.Range["A5", "J5"].Interior.ColorIndex = 36;
+            excel.Range["C6", "G" + iFil.ToString()].NumberFormat = "#,##0.00";
+
+            workSheet.SaveAs("Reporte_GravadosExentos.xlsx");
+            excel.Visible = true;
+        }
+
+        private void workerGravadosExentos_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            toolPorcentaje.Text = e.ProgressPercentage.ToString() + "%";
+            toolEtapa.Text = e.UserState.ToString();
+        }
+
+        private void workerGravadosExentos_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            toolPorcentaje.Text = "Completado.";
         }
     }
 }

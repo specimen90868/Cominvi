@@ -47,6 +47,7 @@
             this.toolTitulo = new System.Windows.Forms.ToolStrip();
             this.toolEmpleados = new System.Windows.Forms.ToolStripLabel();
             this.dgvEmpleados = new System.Windows.Forms.DataGridView();
+            this.toolActualizar = new System.Windows.Forms.ToolStripButton();
             this.toolBusqueda.SuspendLayout();
             this.toolTitulo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmpleados)).BeginInit();
@@ -66,6 +67,7 @@
             this.toolStripSeparator1,
             this.toolIncrementoSalario,
             this.toolExportar,
+            this.toolActualizar,
             this.toolStripSeparator2,
             this.lblBuscar,
             this.txtBuscar});
@@ -220,6 +222,16 @@
             this.dgvEmpleados.TabIndex = 5;
             this.dgvEmpleados.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmpleados_CellDoubleClick);
             // 
+            // toolActualizar
+            // 
+            this.toolActualizar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolActualizar.Image = ((System.Drawing.Image)(resources.GetObject("toolActualizar.Image")));
+            this.toolActualizar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolActualizar.Name = "toolActualizar";
+            this.toolActualizar.Size = new System.Drawing.Size(23, 22);
+            this.toolActualizar.Text = "toolStripButton1";
+            this.toolActualizar.Click += new System.EventHandler(this.toolActualizar_Click);
+            // 
             // frmListaEmpleados
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -262,5 +274,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton toolReingreso;
         private System.Windows.Forms.ToolStripButton toolExportar;
+        private System.Windows.Forms.ToolStripButton toolActualizar;
     }
 }

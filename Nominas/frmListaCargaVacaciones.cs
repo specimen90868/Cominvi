@@ -28,11 +28,9 @@ namespace Nominas
         string ruta, nombreEmpresa = "";
         string ExcelConString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties='Excel 12.0;'";
         int idEmpresa;
-        Empresas.Core.EmpresasHelper eh;
         Empleados.Core.EmpleadosHelper emph;
         Vacaciones.Core.VacacionesHelper vh;
         Periodos.Core.PeriodosHelper ph;
-        string noempleados = "";
         #endregion
 
         #region VARIABLES PUBLICA

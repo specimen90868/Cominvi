@@ -23,10 +23,12 @@ namespace Nominas
         #region VARIABLES GLOBALES
         SqlConnection cnx;
         SqlCommand cmd;
-        List<Ausentismo.Core.Ausentismo> lstAusentismo;
+        List<Faltas.Core.Faltas> lstAusentismo;
         List<Empleados.Core.Empleados> lstEmpleados;
-        Ausentismo.Core.AusentismoHelper ah;
+        Faltas.Core.FaltasHelper fh;
         Empleados.Core.EmpleadosHelper eh;
+        Empresas.Core.EmpresasHelper empresah;
+        string registroPatronal = "";
         FolderBrowserDialog ubicacion;
         StreamWriter sw;
         #endregion
@@ -37,23 +39,25 @@ namespace Nominas
             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();
             cmd.Connection = cnx;
-            ah = new Ausentismo.Core.AusentismoHelper();
+            fh = new Faltas.Core.FaltasHelper();
             eh = new Empleados.Core.EmpleadosHelper();
-            ah.Command = cmd;
+            empresah = new Empresas.Core.EmpresasHelper();
+            fh.Command = cmd;
             eh.Command = cmd;
-
-            Ausentismo.Core.Ausentismo ausentismo = new Ausentismo.Core.Ausentismo();
-            ausentismo.idempresa = GLOBALES.IDEMPRESA;
+            empresah.Command = cmd;
 
             Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
             empleado.idempresa = GLOBALES.IDEMPRESA;
-            empleado.estatus = GLOBALES.INACTIVO;
+
+            Empresas.Core.Empresas empresa = new Empresas.Core.Empresas();
+            empresa.idempresa = GLOBALES.IDEMPRESA;
 
             try
             {
                 cnx.Open();
-                lstAusentismo = ah.obtenerAusentimos(ausentismo);
-                lstEmpleados = eh.obtenerEmpleadosBaja(empleado);
+                lstAusentismo = fh.obtenerFaltas(GLOBALES.IDEMPRESA);
+                lstEmpleados = eh.obtenerEmpleadosAusentismo(empleado);
+                registroPatronal = empresah.obtenerRegistroPatronal(empresa).ToString();
                 cnx.Close();
                 cnx.Dispose();
 
@@ -61,11 +65,12 @@ namespace Nominas
                           join t in lstEmpleados on a.idtrabajador equals t.idtrabajador
                           select new
                           {
-                              RegistroPatronal = a.registropatronal,
-                              Nss = a.nss,
+                              NoEmpleado = t.noempleado,
+                              Nss = t.nss + t.digitoverificador.ToString(),
                               Nombre = t.nombrecompleto,
-                              Baja = a.fecha_imss,
-                              Dias = a.dias
+                              Fecha = a.fecha,
+                              Dias = a.faltas,
+                              Sbc = t.sdi
                           };
                 dgvAusentismoSua.DataSource = au.ToList();
 
@@ -118,11 +123,12 @@ namespace Nominas
                           join t in lstEmpleados on a.idtrabajador equals t.idtrabajador
                           select new
                           {
-                              RegistroPatronal = a.registropatronal,
-                              Nss = a.nss,
+                              NoEmpleado = t.noempleado,
+                              Nss = t.nss + t.digitoverificador.ToString(),
                               Nombre = t.nombrecompleto,
-                              Baja = a.fecha_imss,
-                              Dias = a.dias
+                              Fecha = a.fecha,
+                              Dias = a.faltas,
+                              Sbc = t.sdi
                           };
                 dgvAusentismoSua.DataSource = au.ToList();
             }
@@ -130,14 +136,15 @@ namespace Nominas
             {
                 var au = from a in lstAusentismo
                           join t in lstEmpleados on a.idtrabajador equals t.idtrabajador
-                          where (a.fecha_imss >= new DateTime(desde.Year, desde.Month, desde.Day) && a.fecha_imss <= new DateTime(hasta.Year, hasta.Month, hasta.Day))
+                          where (a.fecha >= new DateTime(desde.Year, desde.Month, desde.Day) && a.fecha <= new DateTime(hasta.Year, hasta.Month, hasta.Day))
                           select new
                           {
-                              RegistroPatronal = a.registropatronal,
-                              Nss = a.nss,
+                              NoEmpleado = t.noempleado,
+                              Nss = t.nss + t.digitoverificador.ToString(),
                               Nombre = t.nombrecompleto,
-                              Baja = a.fecha_imss,
-                              Dias = a.dias
+                              Fecha = a.fecha,
+                              Dias = a.faltas,
+                              Sbc = t.sdi
                           };
                 dgvAusentismoSua.DataSource = au.ToList();
             }
@@ -163,24 +170,24 @@ namespace Nominas
         private void workAusentismo_DoWork(object sender, DoWorkEventArgs e)
         {
             string linea1 = "";
-
+            int sbc = 0;
+            string _sbc = "";
             try
             {
                 using (sw = new StreamWriter(ubicacion.SelectedPath + @"\Ausentismo_Sua.txt"))
                 {
                     for (int i = 0; i < dgvAusentismoSua.Rows.Count; i++)
                     {
-                        linea1 = "";
-                        DateTime baja = DateTime.Parse(dgvAusentismoSua.Rows[i].Cells["Baja"].Value.ToString());
-                        int dias = int.Parse(dgvAusentismoSua.Rows[i].Cells["Dias"].Value.ToString());
-
-                        linea1 += dgvAusentismoSua.Rows[i].Cells["RegistroPatronal"].Value.ToString();
+                        _sbc = dgvAusentismoSua.Rows[i].Cells["Sbc"].Value.ToString().Replace(".", "");
+                        sbc = int.Parse(_sbc);
+                        linea1 = "";                        
+                        linea1 += registroPatronal;
                         linea1 += dgvAusentismoSua.Rows[i].Cells["Nss"].Value.ToString();
-                        linea1 += "01";
-                        linea1 += baja.ToString("ddMMyyyy");
+                        linea1 += "11";
+                        linea1 += DateTime.Parse(dgvAusentismoSua.Rows[i].Cells["Fecha"].Value.ToString()).ToString("ddMMyyyy");
                         linea1 += (" ").ToString().PadLeft(8);
-                        linea1 += dias.ToString("D2");
-                        linea1 += "000000000";
+                        linea1 += int.Parse(dgvAusentismoSua.Rows[i].Cells["Dias"].Value.ToString()).ToString("D2");
+                        linea1 += sbc.ToString("D7");
                         sw.WriteLine(linea1);
                     }
                 }

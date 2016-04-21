@@ -101,6 +101,8 @@
             this.cmbTipoRegimen = new System.Windows.Forms.ComboBox();
             this.mtxtNoEmpleado = new System.Windows.Forms.MaskedTextBox();
             this.chkObraCivil = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.dtpFechaBaja = new System.Windows.Forms.DateTimePicker();
             this.toolAcciones.SuspendLayout();
             this.toolEmpleado.SuspendLayout();
             this.SuspendLayout();
@@ -509,7 +511,7 @@
             // lblEstado
             // 
             this.lblEstado.AutoSize = true;
-            this.lblEstado.Location = new System.Drawing.Point(78, 298);
+            this.lblEstado.Location = new System.Drawing.Point(78, 323);
             this.lblEstado.Name = "lblEstado";
             this.lblEstado.Size = new System.Drawing.Size(43, 13);
             this.lblEstado.TabIndex = 224;
@@ -519,7 +521,7 @@
             // 
             this.cmbEstado.FormattingEnabled = true;
             this.cmbEstado.ItemHeight = 13;
-            this.cmbEstado.Location = new System.Drawing.Point(127, 295);
+            this.cmbEstado.Location = new System.Drawing.Point(127, 320);
             this.cmbEstado.Name = "cmbEstado";
             this.cmbEstado.Size = new System.Drawing.Size(151, 21);
             this.cmbEstado.TabIndex = 225;
@@ -535,7 +537,7 @@
             // rbtnHombre
             // 
             this.rbtnHombre.AutoSize = true;
-            this.rbtnHombre.Location = new System.Drawing.Point(128, 322);
+            this.rbtnHombre.Location = new System.Drawing.Point(128, 347);
             this.rbtnHombre.Name = "rbtnHombre";
             this.rbtnHombre.Size = new System.Drawing.Size(62, 17);
             this.rbtnHombre.TabIndex = 9;
@@ -546,7 +548,7 @@
             // rbtnMujer
             // 
             this.rbtnMujer.AutoSize = true;
-            this.rbtnMujer.Location = new System.Drawing.Point(206, 322);
+            this.rbtnMujer.Location = new System.Drawing.Point(206, 347);
             this.rbtnMujer.Name = "rbtnMujer";
             this.rbtnMujer.Size = new System.Drawing.Size(51, 17);
             this.rbtnMujer.TabIndex = 10;
@@ -557,7 +559,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(86, 324);
+            this.label12.Location = new System.Drawing.Point(86, 349);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(34, 13);
             this.label12.TabIndex = 230;
@@ -773,11 +775,31 @@
             this.chkObraCivil.Text = "Es Obra Civil";
             this.chkObraCivil.UseVisualStyleBackColor = true;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(42, 297);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(78, 13);
+            this.label4.TabIndex = 252;
+            this.label4.Text = "Fecha de baja:";
+            // 
+            // dtpFechaBaja
+            // 
+            this.dtpFechaBaja.Enabled = false;
+            this.dtpFechaBaja.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpFechaBaja.Location = new System.Drawing.Point(128, 295);
+            this.dtpFechaBaja.Name = "dtpFechaBaja";
+            this.dtpFechaBaja.Size = new System.Drawing.Size(151, 20);
+            this.dtpFechaBaja.TabIndex = 253;
+            // 
             // frmEmpleados
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(696, 670);
+            this.Controls.Add(this.dtpFechaBaja);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.chkObraCivil);
             this.Controls.Add(this.mtxtNoEmpleado);
             this.Controls.Add(this.cmbTipoRegimen);
@@ -931,5 +953,7 @@
         private System.Windows.Forms.ComboBox cmbTipoRegimen;
         private System.Windows.Forms.MaskedTextBox mtxtNoEmpleado;
         private System.Windows.Forms.CheckBox chkObraCivil;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.DateTimePicker dtpFechaBaja;
     }
 }

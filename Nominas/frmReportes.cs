@@ -142,6 +142,23 @@ namespace Nominas
                 cmbDeptoFinal.Enabled = false;
                 cmbEmpleadoInicial.Enabled = false;
                 cmbEmpleadoFinal.Enabled = false;
+
+                if (_noReporte == 2)
+                {
+                    cmbOrden.Items.Clear();
+                    cmbOrden.Items.Add("Departamento");
+                    cmbOrden.SelectedIndex = 0;
+                }
+                else
+                {
+                    cmbOrden.Items.Clear();
+                    cmbOrden.Items.Add("No. de Empleado");
+                    cmbOrden.Items.Add("Departamento");
+                    cmbOrden.Items.Add("No. de Empleado, Departamento");
+                    cmbOrden.Items.Add("Departamento, No. de Empleado");
+                    cmbOrden.SelectedIndex = 0;
+                }
+
                 if (_noReporte == 9 || _noReporte == 1)
                 {
                     cmbEmpleadoInicial.Enabled = true;
@@ -707,7 +724,6 @@ namespace Nominas
             int progreso = 0;
             iCol = 1;
             int iFil = 6;
-            Microsoft.Office.Interop.Excel.Range rng;
             
             for (int i = 0; i < dt.Rows.Count; i++)
             {

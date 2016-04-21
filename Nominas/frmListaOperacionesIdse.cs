@@ -34,7 +34,7 @@ namespace Nominas
         Catalogos.Core.CatalogosHelper ch;
         Empleados.Core.EmpleadosHelper eh;
         FolderBrowserDialog ubicacion;
-        StreamWriter sw, sw2;
+        StreamWriter sw;
         #endregion
 
         #region VARIABLES PUBLICAS

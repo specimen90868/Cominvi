@@ -39,7 +39,7 @@ namespace Nominas
 
         private void toolGuardarCerrar_Click(object sender, EventArgs e)
         {
-            guardar(0);
+            guardar(1);
         }
 
         private void toolGuardarNuevo_Click(object sender, EventArgs e)

@@ -25,8 +25,7 @@ namespace Nominas
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
         Empleados.Core.EmpleadosHelper eh;
         Periodos.Core.PeriodosHelper ph;
-        bool ausentismo = false;
-        int diasAusentismo = 0, periodo = 0;
+        int periodo = 0;
         DateTime periodoInicio, periodoFin;
         #endregion
 
@@ -98,87 +97,7 @@ namespace Nominas
             {
                 periodo = d.dias;
             }
-            //obtenerPeriodoActual();
-        }
-
-        private void obtenerPeriodoActual()
-        {
-            cnx = new SqlConnection(cdn);
-            cmd = new SqlCommand();
-            cmd.Connection = cnx;
-
-            CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
-            nh.Command = cmd;
-
-            List<CalculoNomina.Core.tmpPagoNomina> lstUltimaNomina = new List<CalculoNomina.Core.tmpPagoNomina>();
-
-            try
-            {
-                cnx.Open();
-                lstUltimaNomina = nh.obtenerUltimaNomina(GLOBALES.IDEMPRESA, true);
-                cnx.Close();
-                cnx.Dispose();
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-            }
-
-            if (lstUltimaNomina.Count != 0)
-            {
-                if (periodo == 7)
-                {
-                    periodoInicio = lstUltimaNomina[0].fechafin.AddDays(1);
-                    periodoFin = lstUltimaNomina[0].fechafin.AddDays(7);
-                }
-                else
-                {
-                    periodoInicio = lstUltimaNomina[0].fechafin.AddDays(1);
-                    if (periodoInicio.Day <= 15)
-                        periodoFin = lstUltimaNomina[0].fechafin.AddDays(15);
-                    else
-                        periodoFin = lstUltimaNomina[0].fechafin.AddDays(
-                            DateTime.DaysInMonth(periodoInicio.Year, periodoInicio.Month) - 15);
-                }
-
-                dtpPeriodoInicio.Enabled = false;
-                dtpPeriodoFin.Enabled = false;
-                dtpPeriodoInicio.Value = periodoInicio;
-                dtpPeriodoFin.Value = periodoFin;
-            }
-            else
-            {
-                dtpPeriodoInicio.Visible = true;
-                dtpPeriodoFin.Visible = true;
-                Periodo();
-            }
-        }
-
-        private void Periodo()
-        {
-            if (periodo == 7)
-            {
-                DateTime dt = dtpPeriodoInicio.Value.Date;
-                while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
-                dtpPeriodoInicio.Value = dt;
-                dtpPeriodoFin.Value = dt.AddDays(6);
-            }
-            else
-            {
-                if (dtpPeriodoInicio.Value.Day <= 15)
-                {
-                    dtpPeriodoInicio.Value = new DateTime(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month, 1);
-                    dtpPeriodoFin.Value = new DateTime(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month, 15);
-                }
-                else
-                {
-                    dtpPeriodoInicio.Value = new DateTime(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month, 16);
-                    dtpPeriodoFin.Value = new DateTime(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month, DateTime.DaysInMonth(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month));
-                }
-            }
-
-            periodoInicio = dtpPeriodoInicio.Value.Date;
-            periodoFin = dtpPeriodoFin.Value.Date;
+            
         }
 
         private bool CalculaDiaHabil()
@@ -255,25 +174,26 @@ namespace Nominas
             DialogResult respuesta = MessageBox.Show("¿Desea dar de baja al empleado?","Confirmación",MessageBoxButtons.YesNo);
             if (respuesta == DialogResult.Yes)
             {
-                if (ausentismo)
-                {
-                    frmDiasAusentismo da = new frmDiasAusentismo();
-                    da.OnDiasAusentismo += da_OnDiasAusentismo;
-                    da.ShowDialog();
-                }
+                //if (ausentismo)
+                //{
+                //    frmDiasAusentismo da = new frmDiasAusentismo();
+                //    da.OnDiasAusentismo += da_OnDiasAusentismo;
+                //    da.ShowDialog();
+                //}
 
-                if (diasAusentismo == 0 && ausentismo)
-                {
-                    MessageBox.Show("El número de dias es 0 o se presionó el boton cancelar. Por favor revisar.", "Error");
-                    return;
-                }
+                //if (diasAusentismo == 0 && ausentismo)
+                //{
+                //    MessageBox.Show("El número de dias es 0 o se presionó el boton cancelar. Por favor revisar.", "Error");
+                //    return;
+                //}
 
                 cnx = new SqlConnection(cdn);
                 cmd = new SqlCommand();
                 cmd.Connection = cnx;
 
                 PeriodoFechaAplicacion();
-
+                
+                #region EXISTENCIA DE INCAPACIDAD
                 Incidencias.Core.IncidenciasHelper ih = new Incidencias.Core.IncidenciasHelper();
                 ih.Command = cmd;
 
@@ -282,6 +202,7 @@ namespace Nominas
                 incidencia.fechainicio = periodoInicio.Date;
                 incidencia.fechafin = periodoFin.Date;
 
+               
                 try
                 {
                     cnx.Open();
@@ -294,7 +215,9 @@ namespace Nominas
                     cnx.Dispose();
                     return;
                 }
+                #endregion
 
+                #region EXISTENCIA DE VACACIONES
                 Vacaciones.Core.VacacionesHelper vh = new Vacaciones.Core.VacacionesHelper();
                 vh.Command = cmd;
 
@@ -304,6 +227,7 @@ namespace Nominas
                 vp.periodofin = periodoFin;
                 vp.vacacionesprima = "V";
 
+               
                 try
                 {
                     cnx.Open();
@@ -316,6 +240,7 @@ namespace Nominas
                     cnx.Dispose();
                     return;
                 }
+                #endregion
 
                 if (existeIncapacidad != 0)
                 {
@@ -407,14 +332,14 @@ namespace Nominas
                 h.idempresa = GLOBALES.IDEMPRESA;
                 h.motivobaja = int.Parse(cmbMotivoBaja.SelectedValue.ToString());
 
-                Ausentismo.Core.AusentismoHelper ah = new Ausentismo.Core.AusentismoHelper();
-                ah.Command = cmd;
+                //Ausentismo.Core.AusentismoHelper ah = new Ausentismo.Core.AusentismoHelper();
+                //ah.Command = cmd;
 
-                Ausentismo.Core.Ausentismo a = new Ausentismo.Core.Ausentismo();
-                a.idtrabajador = _idempleado;
-                a.idempresa = GLOBALES.IDEMPRESA;
-                a.fecha_imss = dtpFechaBaja.Value;
-                a.dias = diasAusentismo;
+                //Ausentismo.Core.Ausentismo a = new Ausentismo.Core.Ausentismo();
+                //a.idtrabajador = _idempleado;
+                //a.idempresa = GLOBALES.IDEMPRESA;
+                //a.fecha_imss = dtpFechaBaja.Value;
+                //a.dias = diasAusentismo;
 
                 Bajas.Core.BajasHelper bh = new Bajas.Core.BajasHelper();
                 bh.Command = cmd;
@@ -468,12 +393,12 @@ namespace Nominas
                     baja.nss = (string)eh.obtenerNss(emp);
                     bh.insertaBaja(baja);
 
-                    if (ausentismo)
-                    {
-                        a.registropatronal = (string)ep.obtenerRegistroPatronal(empresa);
-                        a.nss = (string)eh.obtenerNss(emp);
-                        ah.insertaAusentismo(a);
-                    }
+                    //if (ausentismo)
+                    //{
+                    //    a.registropatronal = (string)ep.obtenerRegistroPatronal(empresa);
+                    //    a.nss = (string)eh.obtenerNss(emp);
+                    //    ah.insertaAusentismo(a);
+                    //}
 
                     cnx.Close();
                     cnx.Dispose();
@@ -490,43 +415,6 @@ namespace Nominas
                 this.Dispose();
             }
             
-        }
-
-        void da_OnDiasAusentismo(int dias)
-        {
-            diasAusentismo = dias;
-        }
-
-        private void cmbMotivoBaja_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cmbMotivoBaja.Text.Equals("AUSENTISMO"))
-                ausentismo = true;
-            else
-                ausentismo = false;
-        }
-
-        private void dtpPeriodoInicio_ValueChanged(object sender, EventArgs e)
-        {
-            //if (periodo == 7)
-            //{
-            //    DateTime dt = dtpPeriodoInicio.Value;
-            //    while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
-            //    dtpPeriodoInicio.Value = dt;
-            //    dtpPeriodoFin.Value = dt.AddDays(6);
-            //}
-            //else
-            //{
-            //    if (dtpPeriodoInicio.Value.Day <= 15)
-            //    {
-            //        dtpPeriodoInicio.Value = new DateTime(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month, 1);
-            //        dtpPeriodoFin.Value = new DateTime(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month, 15);
-            //    }
-            //    else
-            //    {
-            //        dtpPeriodoInicio.Value = new DateTime(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month, 16);
-            //        dtpPeriodoFin.Value = new DateTime(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month, DateTime.DaysInMonth(dtpPeriodoInicio.Value.Year, dtpPeriodoInicio.Value.Month));
-            //    }
-            //}
         }
 
         private void PeriodoFechaAplicacion()

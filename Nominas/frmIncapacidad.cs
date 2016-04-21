@@ -202,6 +202,33 @@ namespace Nominas
             int existeFalta = 0;
             bool FLAGFALTAS = false;
 
+            Incidencias.Core.IncidenciasHelper incidenciah = new Incidencias.Core.IncidenciasHelper();
+            incidenciah.Command = cmd;
+            DateTime ffi;
+            object datoFecha;
+            try
+            {
+                cnx.Open();
+                datoFecha = incidenciah.finIncapacidad(_idEmpleado);              
+                cnx.Close();
+            }
+            catch {
+                MessageBox.Show("Error: Al obtener la ultima fecha de incapacidad.", "Error");
+                cnx.Dispose();
+                return;
+            }
+
+            if (datoFecha != null)
+            {
+                ffi = DateTime.Parse(datoFecha.ToString());
+                if (dtpFechaInicio.Value.Date <= ffi.Date)
+                {
+                    MessageBox.Show("La fecha de inicio de la incapacidad es menor a la fecha de termino \r\n de la incapacidad anterior.", "Información");
+                    return;
+                }
+            }
+            
+
             while (dtpFechaInicio.Value.AddDays(a).Date <= finIncapacidad.Date)
             {
                 try
@@ -226,7 +253,7 @@ namespace Nominas
                         FLAGFALTAS = true;
                         cnx.Close();
                     }
-                    catch (Exception error) 
+                    catch 
                     {
                         MessageBox.Show("Error: Al eliminar la falta existente.", "Error");
                         cnx.Dispose();

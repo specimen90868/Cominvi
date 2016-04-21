@@ -37,9 +37,7 @@ namespace Nominas
         string estado;
         Bitmap bmp;
         bool ImagenAsignada = false, historicoDepto = false, historicoPuesto = false;
-        bool FLAGHISTORICO = false;
         string departamento = "", puesto = "";
-        int existeNoEmpleado = 0;
         #endregion
 
         #region DELEGADOS
@@ -154,12 +152,20 @@ namespace Nominas
 
             if (_tipoOperacion == GLOBALES.CONSULTAR || _tipoOperacion == GLOBALES.MODIFICAR)
             {
+                object fechaBaja;
                 cnx = new SqlConnection();
                 cnx.ConnectionString = cdn;
                 cmd = new SqlCommand();
                 cmd.Connection = cnx;
                 eh = new Empleados.Core.EmpleadosHelper();
                 eh.Command = cmd;
+
+                Bajas.Core.BajasHelper bh = new Bajas.Core.BajasHelper();
+                bh.Command = cmd;
+
+                Bajas.Core.Bajas b = new Bajas.Core.Bajas();
+                b.idempresa = GLOBALES.IDEMPRESA;
+                b.idtrabajador = _idempleado;
 
                 List<Empleados.Core.Empleados> lstEmpleado;
 
@@ -170,8 +176,16 @@ namespace Nominas
                 {
                     cnx.Open();
                     lstEmpleado = eh.obtenerEmpleado(em);
+                    fechaBaja = bh.obtenerFechaBaja(b);
                     cnx.Close();
                     cnx.Dispose();
+
+                    if (fechaBaja != null)
+                    {
+                        dtpFechaBaja.Value = DateTime.Parse(fechaBaja.ToString());
+                    }
+                    else
+                        dtpFechaBaja.Value = new DateTime(1900, 1, 1);
 
                     for (int i = 0; i < lstEmpleado.Count; i++)
                     {
@@ -360,6 +374,8 @@ namespace Nominas
             Empleados.Core.Empleados existeEmpleado = new Empleados.Core.Empleados();
             existeEmpleado.nss = txtNSS.Text;
             existeEmpleado.digitoverificador = int.Parse(txtNSS.Text.Substring(10,1));
+            existeEmpleado.idempresa = GLOBALES.IDEMPRESA;
+
             int existeNss;
             try
             {

@@ -222,6 +222,11 @@ namespace Nominas
 
         private void btnEnviar_Click(object sender, EventArgs e)
         {
+            if (txtCorreoElectronico.Text.Length == 0)
+            {
+                MessageBox.Show("No es posible enviarlos, falta ingresar el correo.", "Información");
+                return;
+            }
             fecha = "";
             fechafin = "";
             for (int i = 0; i < lstvPeriodos.SelectedItems.Count; i++)
@@ -398,6 +403,8 @@ namespace Nominas
                 {
                     using (ZipFile zip = new ZipFile())
                     {
+                        if (File.Exists(ruta + "RecibosNomina_" + DateTime.Parse(fecha).ToString("yyyyMMdd") + ".zip"))
+                            File.Delete(ruta + "RecibosNomina_" + DateTime.Parse(fecha).ToString("yyyyMMdd") + ".zip");
                         zip.AddDirectory(ruta + DateTime.Parse(fecha).ToString("yyyyMMdd") + "\\");
                         zip.Save(ruta + "RecibosNomina_" + DateTime.Parse(fecha).ToString("yyyyMMdd") + ".zip");
                     }
@@ -449,8 +456,8 @@ namespace Nominas
         {
             lblEtapa.Text = "Terminado.";
             Directory.Delete(ruta + DateTime.Parse(fecha).ToString("yyyyMMdd") + "\\", true);
-            File.Delete(ruta + "RecibosNomina_" + DateTime.Parse(fecha).ToString("yyyyMMdd") + ".zip");
             MessageBox.Show("Mensaje enviado.", "Confirmación");
+            //File.Delete(ruta + "RecibosNomina_" + DateTime.Parse(fecha).ToString("yyyyMMdd") + ".zip");
         }
 
         private void btnSeleccionarTodos_Click(object sender, EventArgs e)

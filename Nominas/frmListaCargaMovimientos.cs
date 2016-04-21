@@ -29,7 +29,6 @@ namespace Nominas
         string ExcelConString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties='Excel 12.0;'";
         int idEmpresa;
         Empleados.Core.EmpleadosHelper emph;
-        Movimientos.Core.MovimientosHelper mh;
         Conceptos.Core.ConceptosHelper ch;
         #endregion
 

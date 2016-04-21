@@ -78,20 +78,43 @@ namespace Empleados.Core
             return lstEmpleados;
         }
 
-        public List<Empleados> obtenerEmpleados(int idEmpresa)
+        public List<Empleados> obtenerEmpleadosAusentismo(Empleados e)
         {
             DataTable dtEmpleados = new DataTable();
             List<Empleados> lstEmpleados = new List<Empleados>();
-            Command.CommandText = @"select idtrabajador, noempleado, paterno, materno, nombres, nombrecompleto, curp, fechaingreso, 
-                    antiguedad, sdi, sd, sueldo, cuenta, clabe, idbancario, estatus, iddepartamento, idpuesto from trabajadores 
-                    where idempresa = @idempresa";
+            Command.CommandText = @"select idtrabajador, noempleado, nombrecompleto, nss, digitoverificador, sdi 
+                from trabajadores where idempresa = @idempresa";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", e.idempresa);
+            dtEmpleados = SelectData(Command);
+
+            for (int i = 0; i < dtEmpleados.Rows.Count; i++)
+            {
+                Empleados empleado = new Empleados();
+                empleado.idtrabajador = int.Parse(dtEmpleados.Rows[i]["idtrabajador"].ToString());
+                empleado.noempleado = dtEmpleados.Rows[i]["noempleado"].ToString();
+                empleado.nombrecompleto = dtEmpleados.Rows[i]["nombrecompleto"].ToString();
+                empleado.nss = dtEmpleados.Rows[i]["nss"].ToString();
+                empleado.digitoverificador = int.Parse(dtEmpleados.Rows[i]["digitoverificador"].ToString());
+                empleado.sdi = decimal.Parse(dtEmpleados.Rows[i]["sdi"].ToString());
+                lstEmpleados.Add(empleado);
+            }
+
+            return lstEmpleados;
+        }
+
+        public List<CatalogoEmpleado> obtenerEmpleados(int idEmpresa)
+        {
+            DataTable dtEmpleados = new DataTable();
+            List<CatalogoEmpleado> lstEmpleados = new List<CatalogoEmpleado>();
+            Command.CommandText = @"exec stp_Empleados @idempresa";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idEmpresa);
             dtEmpleados = SelectData(Command);
 
             for (int i = 0; i < dtEmpleados.Rows.Count; i++)
             {
-                Empleados empleado = new Empleados();
+                CatalogoEmpleado empleado = new CatalogoEmpleado();
                 empleado.idtrabajador = int.Parse(dtEmpleados.Rows[i]["idtrabajador"].ToString());
                 empleado.noempleado = dtEmpleados.Rows[i]["noempleado"].ToString();
                 empleado.paterno = dtEmpleados.Rows[i]["paterno"].ToString();
@@ -105,11 +128,10 @@ namespace Empleados.Core
                 empleado.sd = decimal.Parse(dtEmpleados.Rows[i]["sd"].ToString());
                 empleado.sueldo = decimal.Parse(dtEmpleados.Rows[i]["sueldo"].ToString());
                 empleado.cuenta = dtEmpleados.Rows[i]["cuenta"].ToString();
-                empleado.clabe = dtEmpleados.Rows[i]["clabe"].ToString();
-                empleado.idbancario = dtEmpleados.Rows[i]["idbancario"].ToString();
-                empleado.estatus = int.Parse(dtEmpleados.Rows[i]["estatus"].ToString());
-                empleado.iddepartamento = int.Parse(dtEmpleados.Rows[i]["iddepartamento"].ToString());
-                empleado.idpuesto = int.Parse(dtEmpleados.Rows[i]["idpuesto"].ToString());
+                empleado.estatus = dtEmpleados.Rows[i]["estatus"].ToString();
+                empleado.departamento = dtEmpleados.Rows[i]["departamento"].ToString();
+                empleado.puesto = dtEmpleados.Rows[i]["puesto"].ToString();
+                empleado.fechabaja = dtEmpleados.Rows[i]["fechabaja"].ToString();
                 lstEmpleados.Add(empleado);
             }
 
@@ -332,7 +354,7 @@ namespace Empleados.Core
 
         public object obtenerEstatus(Empleados e)
         {
-            Command.CommandText = "select estatus from trabajadores where idtrabajador = @idtrabajador";
+            Command.CommandText = "select estatus from trabajadoresestatus where idtrabajador = @idtrabajador";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador",e.idtrabajador);
             object estatus = Select(Command);
@@ -515,10 +537,11 @@ namespace Empleados.Core
 
         public int bajaEmpleado(EmpleadosEstatus ee)
         {
-            Command.CommandText = "update trabajadoresestatus set estatus = @estatus where idtrabajador = @idtrabajador";
+            Command.CommandText = "update trabajadoresestatus set estatus = @estatus where idtrabajador = @idtrabajador and idempresa = @idempresa";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("estatus",ee.estatus);
             Command.Parameters.AddWithValue("idtrabajador", ee.idtrabajador);
+            Command.Parameters.AddWithValue("idempresa", ee.idempresa);
             return Command.ExecuteNonQuery();
         }
 
@@ -569,10 +592,11 @@ namespace Empleados.Core
 
         public object existeEmpleado(Empleados e)
         {
-            Command.CommandText = "select count(idtrabajador) from trabajadores where nss = @nss and digitoverificador = @digito";
+            Command.CommandText = "select count(idtrabajador) from trabajadores where nss = @nss and digitoverificador = @digito and idempresa = @idempresa";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("nss", e.nss);
             Command.Parameters.AddWithValue("digito", e.digitoverificador);
+            Command.Parameters.AddWithValue("idempresa", e.idempresa);
             object dato = Select(Command);
             return dato;
         }

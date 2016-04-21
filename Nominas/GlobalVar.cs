@@ -178,5 +178,32 @@ namespace Nominas
             return coincidencias;
         }
 
+        public static Boolean FORMISOPEN(String FormABuscar)
+        {
+
+            Boolean lEncontrado = false;
+
+            foreach (Form form in Application.OpenForms)
+            {
+
+                if (form.Name == FormABuscar)
+                {
+
+                    form.WindowState = FormWindowState.Normal;
+
+                    form.Activate();
+
+                    lEncontrado = true;
+
+                    break;
+
+                }
+
+            }
+
+            return lEncontrado;
+
+        }
+
     }   
 }

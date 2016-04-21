@@ -119,6 +119,16 @@ namespace Incidencias.Core
             return dato;
         }
 
+        public object finIncapacidad(int idtrabajador)
+        {
+            Command.CommandText = @"select top 1 finincapacidad from incidencias where idtrabajador = @idtrabajador 
+                    order by inicioincapacidad desc";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
+            object dato = Select(Command);
+            return dato;
+        }
+
         public object diasIncidencia(Incidencias i)
         {
             Command.CommandText = "select isnull(sum(dias),0) as dias from incidencias where idtrabajador = @idtrabajador and fechainicio between @inicio and @fin";

@@ -107,6 +107,7 @@ namespace Faltas.Core
                 falta.faltas = int.Parse(dtFaltas.Rows[i]["faltas"].ToString());
                 falta.fechainicio = DateTime.Parse(dtFaltas.Rows[i]["fechainicio"].ToString());
                 falta.fechafin = DateTime.Parse(dtFaltas.Rows[i]["fechafin"].ToString());
+                falta.fecha = DateTime.Parse(dtFaltas.Rows[i]["fecha"].ToString());
                 lstFaltas.Add(falta);
             }
             return lstFaltas;
