@@ -486,6 +486,7 @@ namespace Nominas
                     cmd.Parameters.AddWithValue("deptos", _departamentos);
                     cmd.Parameters.AddWithValue("empleados", _empleados);
                     cmd.Parameters.AddWithValue("tiponomina", _tipoNomina);
+                    cmd.CommandTimeout = 40;
                     daImpresionNomina.SelectCommand = cmd;
                     daImpresionNomina.Fill(dtImpresionNomina);
 
@@ -498,7 +499,160 @@ namespace Nominas
 
                     rpvVisor.LocalReport.ReportEmbeddedResource = "rptNominaRecibos.rdlc";
                     rpvVisor.LocalReport.ReportPath = @"rptNominaRecibos.rdlc";
+                    dtImpresionNomina.Dispose();
+                    daImpresionNomina.Dispose();
+                    break;
 
+                case 11:
+                    dsReportes.EstatusEmpleadoDataTable dtEstatusEmpleado = new dsReportes.EstatusEmpleadoDataTable();
+                    dsReportes.AltasDataTable dtAltaEmpleado = new dsReportes.AltasDataTable();
+                    dsReportes.ReingresosDataTable dtReingresoEmpledo = new dsReportes.ReingresosDataTable();
+                    dsReportes.BajasDataTable dtBajaEmpleado = new dsReportes.BajasDataTable();
+                    dsReportes.FaltasDataTable dtFaltasEmpleado = new dsReportes.FaltasDataTable();
+                    dsReportes.IncidenciasDataTable dtIncidenciasEmpleado = new dsReportes.IncidenciasDataTable();
+                    dsReportes.VacacionesPrimaDataTable dtVacacionesEmpleado = new dsReportes.VacacionesPrimaDataTable();
+                    dsReportes.ConceptosDataTable dtConceptosEmpleado = new dsReportes.ConceptosDataTable();
+
+                    SqlDataAdapter daEstatusEmpleado = new SqlDataAdapter();
+                    SqlDataAdapter daAltaEmpleado = new SqlDataAdapter();
+                    SqlDataAdapter daReingresoEmpleado = new SqlDataAdapter();
+                    SqlDataAdapter daBajaEmpleado = new SqlDataAdapter();
+                    SqlDataAdapter daFaltasEmpleado = new SqlDataAdapter();
+                    SqlDataAdapter daIncideciasEmpleado = new SqlDataAdapter();
+                    SqlDataAdapter daVacacionesEmplead = new SqlDataAdapter();
+                    SqlDataAdapter daConceptosEmpleado = new SqlDataAdapter();
+                    //ESTATUS EMPLEADOS
+                    cmd.CommandText = @"select t.idtrabajador, t.nombrecompleto, t.noempleado, t.fechaantiguedad,
+                            t.sdi, t.estatus as estatusnomina, te.estatus as estatuscatalogo
+                            from trabajadores t inner join trabajadoresestatus te
+                            on t.idtrabajador = te.idtrabajador
+                            where te.idempresa = @idempresa and te.idtrabajador = @idtrabajador";
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("idempresa", GLOBALES.IDEMPRESA);
+                    cmd.Parameters.AddWithValue("idtrabajador", _empleadoInicio);
+                    cmd.CommandTimeout = 40;
+                    daEstatusEmpleado.SelectCommand = cmd;
+                    daEstatusEmpleado.Fill(dtEstatusEmpleado);
+                    //ALTAS DEL EMPLEADO
+                    cmd.CommandText = @"select idtrabajador, fechaingreso, diasproporcionales, periodoinicio, periodofin
+                        from suaAltas where idempresa = @idempresa and periodoinicio = @periodoinicio and idtrabajador = @idtrabajador";
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("idempresa", GLOBALES.IDEMPRESA);
+                    cmd.Parameters.AddWithValue("idtrabajador", _empleadoInicio);
+                    cmd.Parameters.AddWithValue("periodoinicio", _inicioPeriodo);
+                    cmd.CommandTimeout = 40;
+                    daAltaEmpleado.SelectCommand = cmd;
+                    daAltaEmpleado.Fill(dtAltaEmpleado);
+                    //REINGRESO DEL EMPLEADO
+                    cmd.CommandText = @"select idtrabajador, fechaingreso, diasproporcionales, periodoinicio, periodofin
+                        from suaReingresos where idempresa = @idempresa and periodoinicio = @periodoinicio and idtrabajador = @idtrabajador";
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("idempresa", GLOBALES.IDEMPRESA);
+                    cmd.Parameters.AddWithValue("idtrabajador", _empleadoInicio);
+                    cmd.Parameters.AddWithValue("periodoinicio", _inicioPeriodo);
+                    cmd.CommandTimeout = 40;
+                    daReingresoEmpleado.SelectCommand = cmd;
+                    daReingresoEmpleado.Fill(dtReingresoEmpledo);
+                    //BAJA DEL EMPLEADO
+                    cmd.CommandText = @"select idtrabajador, fecha, diasproporcionales, periodoinicio, periodofin
+                        from suaBajas where idempresa = @idempresa and periodoinicio = @periodoinicio and idtrabajador = @idtrabajador";
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("idempresa", GLOBALES.IDEMPRESA);
+                    cmd.Parameters.AddWithValue("idtrabajador", _empleadoInicio);
+                    cmd.Parameters.AddWithValue("periodoinicio", _inicioPeriodo);
+                    cmd.CommandTimeout = 40;
+                    daBajaEmpleado.SelectCommand = cmd;
+                    daBajaEmpleado.Fill(dtBajaEmpleado);
+                    //FALTAS DEL EMPLEADO
+                    cmd.CommandText = @"select idtrabajador, fecha, faltas, fechainicio, fechafin 
+                        from faltas where idempresa = @idempresa and fechainicio = @fechainicio and idtrabajador = @idtrabajador";
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("idempresa", GLOBALES.IDEMPRESA);
+                    cmd.Parameters.AddWithValue("idtrabajador", _empleadoInicio);
+                    cmd.Parameters.AddWithValue("fechainicio", _inicioPeriodo);
+                    cmd.CommandTimeout = 40;
+                    daFaltasEmpleado.SelectCommand = cmd;
+                    daFaltasEmpleado.Fill(dtFaltasEmpleado);
+                    //INCIDENCAS DEL EMPLEADO
+                    cmd.CommandText = @"select idtrabajador, fechainicio, fechafin, isnull(sum(dias),0) as dias, 
+                        periodoinicio, periodofin from incidencias
+                        where idempresa = @idempresa and periodoinicio = @periodoinicio and idtrabajador = @idtrabajador
+                        group by idtrabajador, fechainicio, fechafin, periodoinicio, periodofin";
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("idempresa", GLOBALES.IDEMPRESA);
+                    cmd.Parameters.AddWithValue("idtrabajador", _empleadoInicio);
+                    cmd.Parameters.AddWithValue("periodoinicio", _inicioPeriodo);
+                    cmd.CommandTimeout = 40;
+                    daIncideciasEmpleado.SelectCommand = cmd;
+                    daIncideciasEmpleado.Fill(dtIncidenciasEmpleado);
+                    //VACACIONES DEL EMPLEADO
+                    cmd.CommandText = @"select idtrabajador, diaspago, periodoinicio, periodofin,
+                        case when vacacionesprima = 'P' then 'Prima Vacacional' else 'Vacaciones' end vacacionesprima
+                        from vacacionesprima
+                        where idempresa = @idempresa and periodoinicio = @periodoinicio and idtrabajador = @idtrabajador";
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("idempresa", GLOBALES.IDEMPRESA);
+                    cmd.Parameters.AddWithValue("idtrabajador", _empleadoInicio);
+                    cmd.Parameters.AddWithValue("periodoinicio", _inicioPeriodo);
+                    cmd.CommandTimeout = 40;
+                    daVacacionesEmplead.SelectCommand = cmd;
+                    daVacacionesEmplead.Fill(dtVacacionesEmpleado);
+                    //CONCEPTOS DEL EMPLEADO
+                    cmd.CommandText = @"select ct.idempleado, count(idconcepto) as cantidad, c.concepto
+                        from conceptotrabajador ct
+                        inner join conceptos c on ct.idconcepto = c.id
+                        where idempleado = @idempleado
+                        group by ct.idempleado, c.concepto, c.noconcepto";
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("idempleado", _empleadoInicio);
+                    cmd.CommandTimeout = 40;
+                    daConceptosEmpleado.SelectCommand = cmd;
+                    daConceptosEmpleado.Fill(dtConceptosEmpleado);
+
+                    rpvVisor.LocalReport.DataSources.Clear();
+
+                    rd = new ReportDataSource();
+                    rd.Value = dtEstatusEmpleado;
+                    rd.Name = "dsEstatusEmpleado";
+                    rpvVisor.LocalReport.DataSources.Add(rd);
+
+                    rd = new ReportDataSource();
+                    rd.Value = dtAltaEmpleado;
+                    rd.Name = "dsAltas";
+                    rpvVisor.LocalReport.DataSources.Add(rd);
+
+                    rd = new ReportDataSource();
+                    rd.Value = dtReingresoEmpledo;
+                    rd.Name = "dsReingresos";
+                    rpvVisor.LocalReport.DataSources.Add(rd);
+
+                    rd = new ReportDataSource();
+                    rd.Value = dtBajaEmpleado;
+                    rd.Name = "dsBajas";
+                    rpvVisor.LocalReport.DataSources.Add(rd);
+
+                    rd = new ReportDataSource();
+                    rd.Value = dtFaltasEmpleado;
+                    rd.Name = "dsFaltas";
+                    rpvVisor.LocalReport.DataSources.Add(rd);
+
+                    rd = new ReportDataSource();
+                    rd.Value = dtIncidenciasEmpleado;
+                    rd.Name = "dsIncidencias";
+                    rpvVisor.LocalReport.DataSources.Add(rd);
+
+                    rd = new ReportDataSource();
+                    rd.Value = dtVacacionesEmpleado;
+                    rd.Name = "dsVacacionesPrima";
+                    rpvVisor.LocalReport.DataSources.Add(rd);
+
+                    rd = new ReportDataSource();
+                    rd.Value = dtConceptosEmpleado;
+                    rd.Name = "dsConceptos";
+                    rpvVisor.LocalReport.DataSources.Add(rd);
+
+                    rpvVisor.LocalReport.ReportEmbeddedResource = "rptNominaDiagnostico.rdlc";
+                    rpvVisor.LocalReport.ReportPath = @"rptNominaDiagnostico.rdlc";
                     break;
             }
 

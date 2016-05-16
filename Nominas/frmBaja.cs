@@ -267,7 +267,7 @@ namespace Nominas
                     }
                     if (dtpFechaBaja.Value.Date <= fechaInicioIncidencia.Date)
                     {
-                        MessageBox.Show("No se puede dar de baja. La fecha de baja es menor a la fecha de inicio de incapacidad.", "Error");
+                        MessageBox.Show("No se puede dar de baja. Existe una incapacidad.", "Error");
                         return;
                     }
                 }
@@ -299,7 +299,7 @@ namespace Nominas
                     }
                     if (dtpFechaBaja.Value.Date <= fechaInicioVac.Date)
                     {
-                        MessageBox.Show("No se puede dar de baja. La fecha de baja es menor a la fecha de inicio de vacaciones.", "Error");
+                        MessageBox.Show("No se puede dar de baja. El trabajador tiene vacaciones.", "Error");
                         return;
                     }
                 }

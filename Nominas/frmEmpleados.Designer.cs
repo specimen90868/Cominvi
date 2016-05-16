@@ -519,6 +519,7 @@
             // 
             // cmbEstado
             // 
+            this.cmbEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbEstado.FormattingEnabled = true;
             this.cmbEstado.ItemHeight = 13;
             this.cmbEstado.Location = new System.Drawing.Point(127, 320);

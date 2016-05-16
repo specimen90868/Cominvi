@@ -622,7 +622,14 @@ namespace Nominas
 
         private void toolCalcular_Click(object sender, EventArgs e)
         {
-            calcular();   
+            if (_tipoNomina == GLOBALES.NORMAL)
+                calcular();
+            else
+            {
+                toolPorcentaje.Text = "Completado.";
+                toolEtapa.Text = " ";
+            }
+
         }
 
         private void calcular()
@@ -2370,7 +2377,7 @@ namespace Nominas
             nh.Command = cmd;
 
             cnx.Open();
-            nh.eliminaPreNomina(GLOBALES.IDEMPRESA, periodoInicio.Date, periodoFin.Date, false);
+            nh.eliminaPreNomina(GLOBALES.IDEMPRESA, periodoInicio.Date, periodoFin.Date, false, _obracivil);
             cnx.Close();
 
             dgvEmpleados.DataSource = null;

@@ -30,7 +30,7 @@ namespace Nominas
         int idEmpresa;
         Empresas.Core.EmpresasHelper eh;
         Empleados.Core.EmpleadosHelper emph;
-        Incapacidad.Core.IncapacidadHelper ih;
+        //Incapacidad.Core.IncapacidadHelper ih;
         #endregion
 
         private void toolCargar_Click(object sender, EventArgs e)
@@ -273,16 +273,16 @@ namespace Nominas
             bulk = new SqlBulkCopy(cnx);
             cmd.Connection = cnx;
 
-            ih = new Incapacidad.Core.IncapacidadHelper();
-            ih.bulkCommand = bulk;
-            ih.Command = cmd;
+            //ih = new Incapacidad.Core.IncapacidadHelper();
+            //ih.bulkCommand = bulk;
+            //ih.Command = cmd;
 
             try
             {
                 cnx.Open();
-                ih.bulkIncapacidad(dt, "tmpIncapacidades");
-                ih.stpIncapacidad(DateTime.Parse(dgvCargaIncapacidades.Rows[0].Cells["inicioperiodo"].Value.ToString()),
-                    DateTime.Parse(dgvCargaIncapacidades.Rows[0].Cells["finperiodo"].Value.ToString()));
+                //ih.bulkIncapacidad(dt, "tmpIncapacidades");
+                //ih.stpIncapacidad(DateTime.Parse(dgvCargaIncapacidades.Rows[0].Cells["inicioperiodo"].Value.ToString()),
+                //    DateTime.Parse(dgvCargaIncapacidades.Rows[0].Cells["finperiodo"].Value.ToString()));
                 cnx.Close();
                 cnx.Dispose();
 

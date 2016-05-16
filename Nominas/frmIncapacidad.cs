@@ -204,12 +204,13 @@ namespace Nominas
 
             Incidencias.Core.IncidenciasHelper incidenciah = new Incidencias.Core.IncidenciasHelper();
             incidenciah.Command = cmd;
-            DateTime ffi;
-            object datoFecha;
+            DateTime fii, ffi;
+            bool FLAG_FINICIO = false, FLAG_FFIN = false;
+            List<Incidencias.Core.Incidencias> datoFechas = new List<Incidencias.Core.Incidencias>();
             try
             {
                 cnx.Open();
-                datoFecha = incidenciah.finIncapacidad(_idEmpleado);              
+                datoFechas = incidenciah.finIncapacidad(_idEmpleado);              
                 cnx.Close();
             }
             catch {
@@ -218,12 +219,31 @@ namespace Nominas
                 return;
             }
 
-            if (datoFecha != null)
+
+            if (datoFechas != null)
             {
-                ffi = DateTime.Parse(datoFecha.ToString());
-                if (dtpFechaInicio.Value.Date <= ffi.Date)
+                fii = dtpFechaInicio.Value.Date;
+                ffi = dtpFechaInicio.Value.AddDays(int.Parse(txtDiasIncapacidad.Text) - 1);
+                for (int i = 0; i < datoFechas.Count; i++)
                 {
-                    MessageBox.Show("La fecha de inicio de la incapacidad es menor a la fecha de termino \r\n de la incapacidad anterior.", "Información");
+                    if (fii.Date <= datoFechas[i].finincapacidad.Date)
+                    {
+                        FLAG_FINICIO = true;
+                    }
+                    if (ffi.Date >= datoFechas[i].inicioincapacidad.Date)
+                    {
+                        FLAG_FFIN = true;
+                    }
+                }
+                //ffi = DateTime.Parse(datoFecha.ToString());
+                if (FLAG_FINICIO && FLAG_FFIN)
+                {
+                    MessageBox.Show("Las fechas de la incapacidad se empalman con una ya existente.", "Información");
+                    return;
+                }
+                else if (FLAG_FINICIO)
+                {
+                    MessageBox.Show("Las fechas de la incapacidad se empalman con una ya existente.", "Información");
                     return;
                 }
             }

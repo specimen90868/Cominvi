@@ -41,13 +41,13 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolIncrementoSalario = new System.Windows.Forms.ToolStripButton();
             this.toolExportar = new System.Windows.Forms.ToolStripButton();
+            this.toolActualizar = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.lblBuscar = new System.Windows.Forms.ToolStripLabel();
             this.txtBuscar = new System.Windows.Forms.ToolStripTextBox();
             this.toolTitulo = new System.Windows.Forms.ToolStrip();
             this.toolEmpleados = new System.Windows.Forms.ToolStripLabel();
             this.dgvEmpleados = new System.Windows.Forms.DataGridView();
-            this.toolActualizar = new System.Windows.Forms.ToolStripButton();
             this.toolBusqueda.SuspendLayout();
             this.toolTitulo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmpleados)).BeginInit();
@@ -73,7 +73,7 @@
             this.txtBuscar});
             this.toolBusqueda.Location = new System.Drawing.Point(0, 27);
             this.toolBusqueda.Name = "toolBusqueda";
-            this.toolBusqueda.Size = new System.Drawing.Size(1198, 25);
+            this.toolBusqueda.Size = new System.Drawing.Size(1076, 25);
             this.toolBusqueda.TabIndex = 3;
             this.toolBusqueda.Text = "ToolStrip1";
             // 
@@ -168,6 +168,16 @@
             this.toolExportar.Text = "Exportar";
             this.toolExportar.Click += new System.EventHandler(this.toolExportar_Click);
             // 
+            // toolActualizar
+            // 
+            this.toolActualizar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolActualizar.Image = ((System.Drawing.Image)(resources.GetObject("toolActualizar.Image")));
+            this.toolActualizar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolActualizar.Name = "toolActualizar";
+            this.toolActualizar.Size = new System.Drawing.Size(23, 22);
+            this.toolActualizar.Text = "toolStripButton1";
+            this.toolActualizar.Click += new System.EventHandler(this.toolActualizar_Click);
+            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
@@ -197,7 +207,7 @@
             this.toolEmpleados});
             this.toolTitulo.Location = new System.Drawing.Point(0, 0);
             this.toolTitulo.Name = "toolTitulo";
-            this.toolTitulo.Size = new System.Drawing.Size(1198, 27);
+            this.toolTitulo.Size = new System.Drawing.Size(1076, 27);
             this.toolTitulo.TabIndex = 4;
             this.toolTitulo.Text = "ToolStrip1";
             // 
@@ -218,25 +228,15 @@
             this.dgvEmpleados.MultiSelect = false;
             this.dgvEmpleados.Name = "dgvEmpleados";
             this.dgvEmpleados.ReadOnly = true;
-            this.dgvEmpleados.Size = new System.Drawing.Size(1198, 672);
+            this.dgvEmpleados.Size = new System.Drawing.Size(1076, 672);
             this.dgvEmpleados.TabIndex = 5;
             this.dgvEmpleados.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmpleados_CellDoubleClick);
-            // 
-            // toolActualizar
-            // 
-            this.toolActualizar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolActualizar.Image = ((System.Drawing.Image)(resources.GetObject("toolActualizar.Image")));
-            this.toolActualizar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolActualizar.Name = "toolActualizar";
-            this.toolActualizar.Size = new System.Drawing.Size(23, 22);
-            this.toolActualizar.Text = "toolStripButton1";
-            this.toolActualizar.Click += new System.EventHandler(this.toolActualizar_Click);
             // 
             // frmListaEmpleados
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1198, 724);
+            this.ClientSize = new System.Drawing.Size(1076, 724);
             this.Controls.Add(this.dgvEmpleados);
             this.Controls.Add(this.toolBusqueda);
             this.Controls.Add(this.toolTitulo);

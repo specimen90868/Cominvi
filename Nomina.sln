@@ -65,8 +65,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Imss.Core", "Imss.Core\Imss
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Faltas.Core", "Faltas.Core\Faltas.Core.csproj", "{BAFE81B0-03B5-4408-B2FA-A4BECBE1783C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Incapacidad.Core", "Incapacidad.Core\Incapacidad.Core.csproj", "{3E2FDC56-09C7-4B0C-8DD2-F5251AC2AADB}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formulas.Core", "Formulas.Core\Formulas.Core.csproj", "{B1CFC7AF-DC8B-4406-A0FF-4D621B623A37}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vacaciones.Core", "Vacaciones.Core\Vacaciones.Core.csproj", "{C07D9805-4692-400D-AA2B-4A7D8F69F569}"
@@ -213,10 +211,6 @@ Global
 		{BAFE81B0-03B5-4408-B2FA-A4BECBE1783C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BAFE81B0-03B5-4408-B2FA-A4BECBE1783C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BAFE81B0-03B5-4408-B2FA-A4BECBE1783C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3E2FDC56-09C7-4B0C-8DD2-F5251AC2AADB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3E2FDC56-09C7-4B0C-8DD2-F5251AC2AADB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3E2FDC56-09C7-4B0C-8DD2-F5251AC2AADB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3E2FDC56-09C7-4B0C-8DD2-F5251AC2AADB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B1CFC7AF-DC8B-4406-A0FF-4D621B623A37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B1CFC7AF-DC8B-4406-A0FF-4D621B623A37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1CFC7AF-DC8B-4406-A0FF-4D621B623A37}.Release|Any CPU.ActiveCfg = Release|Any CPU

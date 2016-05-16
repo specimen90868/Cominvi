@@ -448,14 +448,16 @@ namespace CalculoNomina.Core
             return Command.ExecuteNonQuery();
         }
 
-        public int eliminaPreNomina(int idEmpresa, DateTime inicio, DateTime fin, bool modificado)
+        public int eliminaPreNomina(int idEmpresa, DateTime inicio, DateTime fin, bool modificado, bool obracivil)
         {
-            Command.CommandText = "delete from tmpPagoNomina where idempresa = @idempresa and fechainicio = @fechainicio and fechafin = @fechafin and modificado = @modificado";
+            Command.CommandText = @"delete from tmpPagoNomina where idempresa = @idempresa and fechainicio = @fechainicio and fechafin = @fechafin and modificado = @modificado
+                and obracivil = @obracivil";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idEmpresa);
             Command.Parameters.AddWithValue("fechainicio", inicio);
             Command.Parameters.AddWithValue("fechafin", fin);
             Command.Parameters.AddWithValue("modificado", modificado);
+            Command.Parameters.AddWithValue("obracivil", obracivil);
             return Command.ExecuteNonQuery();
         }
 
@@ -788,6 +790,18 @@ namespace CalculoNomina.Core
             Command.Parameters.AddWithValue("inicio", inicio);
             Command.Parameters.AddWithValue("fin", fin);
             return Command.ExecuteNonQuery();
+        }
+
+        public int existeNullQR(int idempresa, DateTime inicio, DateTime fin)
+        {
+            Command.CommandText = @"select count(*) from xmlcabecera where idempresa = @idempresa and periodoinicio = @inicio
+                and periodofin = @fin and codeqr is null";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("inicio", inicio);
+            Command.Parameters.AddWithValue("fin", fin);
+            Command.Parameters.AddWithValue("idempresa", idempresa);
+            int dato = (int)Select(Command);
+            return dato;
         }
         #endregion
 

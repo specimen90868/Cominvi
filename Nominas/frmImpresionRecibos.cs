@@ -226,6 +226,7 @@ namespace Nominas
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
+            int existeNullCodeQR = 0;
             fecha = "";
             fechafin = "";
 
@@ -241,60 +242,75 @@ namespace Nominas
                 fechafin = lstvPeriodos.SelectedItems[i].SubItems[1].Text;
             }
             
-
-            List<CalculoNomina.Core.CodigoBidimensional> lstXml = new List<CalculoNomina.Core.CodigoBidimensional>();
             try
             {
                 cnx.Open();
-                lstXml = nh.obtenerListaQr(GLOBALES.IDEMPRESA, DateTime.Parse(fecha).Date, DateTime.Parse(fechafin).Date);
+                existeNullCodeQR = nh.existeNullQR(GLOBALES.IDEMPRESA, DateTime.Parse(fecha).Date, DateTime.Parse(fechafin).Date);
                 cnx.Close();
             }
             catch (Exception error)
             {
-                MessageBox.Show("Error: Al obtener el listado de los XML." + error.Message, "Error");
+                MessageBox.Show("Error: Al obtener existencia de nulos Code QR. " + error.Message, "Error");
                 cnx.Dispose();
                 return;
             }
 
-            string codigoQR = "";
-            string[] valores = null;
-            string numero = "";
-            string vEntero = "";
-            string vDecimal = "";
-
-            for (int i = 0; i < lstXml.Count; i++)
+            if (existeNullCodeQR != 0)
             {
-                numero = lstXml[i].tt.ToString();
-                valores = numero.Split('.');
-                vEntero = valores[0];
-                vDecimal = valores[1];
-                codigoQR = string.Format("?re={0}&rr={1}&tt={2}.{3}&id={4}", lstXml[i].re, lstXml[i].rr,
-                    vEntero.PadLeft(10, '0'), vDecimal.PadRight(6, '0'), lstXml[i].uuid);
-                var qrEncoder = new QrEncoder(ErrorCorrectionLevel.H);
-                var qrCode = qrEncoder.Encode(codigoQR);
-                var renderer = new GraphicsRenderer(new FixedModuleSize(2, QuietZoneModules.Two), Brushes.Black, Brushes.White);
-
-                using (var stream = new FileStream(lstXml[i].uuid + ".png", FileMode.Create))
-                    renderer.WriteToStream(qrCode.Matrix, ImageFormat.Png, stream);
-
-                Bitmap bmp = new Bitmap(lstXml[i].uuid + ".png");
-                Byte[] qr = GLOBALES.IMAGEN_BYTES(bmp);
-                bmp.Dispose();
-                File.Delete(lstXml[i].uuid + ".png");
+                List<CalculoNomina.Core.CodigoBidimensional> lstXml = new List<CalculoNomina.Core.CodigoBidimensional>();
                 try
                 {
                     cnx.Open();
-                    nh.actualizaXml(GLOBALES.IDEMPRESA, DateTime.Parse(fecha).Date, DateTime.Parse(fechafin).Date, lstXml[i].idtrabajador, qr);
+                    lstXml = nh.obtenerListaQr(GLOBALES.IDEMPRESA, DateTime.Parse(fecha).Date, DateTime.Parse(fechafin).Date);
                     cnx.Close();
                 }
-                catch (Exception)
+                catch (Exception error)
                 {
-                    MessageBox.Show("Error: Al actualizar el código QR.", "Error");
+                    MessageBox.Show("Error: Al obtener el listado de XMLs." + error.Message, "Error");
                     cnx.Dispose();
                     return;
                 }
-            }
 
+                string codigoQR = "";
+                string[] valores = null;
+                string numero = "";
+                string vEntero = "";
+                string vDecimal = "";
+
+                for (int i = 0; i < lstXml.Count; i++)
+                {
+                    numero = lstXml[i].tt.ToString();
+                    valores = numero.Split('.');
+                    vEntero = valores[0];
+                    vDecimal = valores[1];
+                    codigoQR = string.Format("?re={0}&rr={1}&tt={2}.{3}&id={4}", lstXml[i].re, lstXml[i].rr,
+                        vEntero.PadLeft(10, '0'), vDecimal.PadRight(6, '0'), lstXml[i].uuid);
+                    var qrEncoder = new QrEncoder(ErrorCorrectionLevel.H);
+                    var qrCode = qrEncoder.Encode(codigoQR);
+                    var renderer = new GraphicsRenderer(new FixedModuleSize(2, QuietZoneModules.Two), Brushes.Black, Brushes.White);
+
+                    using (var stream = new FileStream(lstXml[i].uuid + ".png", FileMode.Create))
+                        renderer.WriteToStream(qrCode.Matrix, ImageFormat.Png, stream);
+
+                    Bitmap bmp = new Bitmap(lstXml[i].uuid + ".png");
+                    Byte[] qr = GLOBALES.IMAGEN_BYTES(bmp);
+                    bmp.Dispose();
+                    File.Delete(lstXml[i].uuid + ".png");
+                    try
+                    {
+                        cnx.Open();
+                        nh.actualizaXml(GLOBALES.IDEMPRESA, DateTime.Parse(fecha).Date, DateTime.Parse(fechafin).Date, lstXml[i].idtrabajador, qr);
+                        cnx.Close();
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Error: Al actualizar el código QR.", "Error");
+                        cnx.Dispose();
+                        return;
+                    }
+                }
+            }
+            
             idEmpleados = "";
             for (int i = 0; i < lstvEmpleados.Items.Count; i++)
             {

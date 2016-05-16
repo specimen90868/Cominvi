@@ -859,6 +859,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Reportes\rptNominaDiagnostico.rdlc" />
     <EmbeddedResource Include="Reportes\rptNominaRecibos.rdlc" />
     <EmbeddedResource Include="Reportes\rptPreNominaDepto.rdlc" />
     <EmbeddedResource Include="Reportes\rptPreNominaEmpleados.rdlc" />
@@ -887,7 +888,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Altas.Core\Altas.Core.csproj">
@@ -985,10 +988,6 @@
     <ProjectReference Include="..\Imss.Core\Imss.Core.csproj">
       <Project>{60942491-b274-4b96-8acc-90e7b95aff0f}</Project>
       <Name>Imss.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Incapacidad.Core\Incapacidad.Core.csproj">
-      <Project>{3e2fdc56-09c7-4b0c-8dd2-f5251ac2aadb}</Project>
-      <Name>Incapacidad.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Incidencias.Core\Incidencias.Core.csproj">
       <Project>{84522361-3292-4887-be8d-7aae8d9bf0e0}</Project>

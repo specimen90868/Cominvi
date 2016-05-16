@@ -2494,5 +2494,14 @@ namespace Nominas
             pc.Show();
         }
 
+        private void toolDiagnostico_Click(object sender, EventArgs e)
+        {
+            frmVisorReportes vr = new frmVisorReportes();
+            vr._noReporte = 11;
+            vr._inicioPeriodo = _inicioPeriodo;
+            vr._empleadoInicio = idTrabajador;
+            vr.Show();
+        }
+
     }
 }
