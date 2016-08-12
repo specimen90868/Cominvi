@@ -28,19 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmListaCargaEmpleados));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmListaCargaEmpleados));
             this.dgvCargaEmpleados = new System.Windows.Forms.DataGridView();
-            this.toolBusqueda = new System.Windows.Forms.ToolStrip();
-            this.toolCargar = new System.Windows.Forms.ToolStripButton();
-            this.toolLimpiar = new System.Windows.Forms.ToolStripButton();
-            this.toolAplicar = new System.Windows.Forms.ToolStripButton();
-            this.toolTitulo = new System.Windows.Forms.ToolStrip();
-            this.toolEmpleados = new System.Windows.Forms.ToolStripLabel();
-            this.workerImporta = new System.ComponentModel.BackgroundWorker();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lblPorcentaje = new System.Windows.Forms.ToolStripStatusLabel();
             this.noempleado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.paterno = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.materno = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -53,6 +43,16 @@
             this.nss = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dv = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sdi = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolBusqueda = new System.Windows.Forms.ToolStrip();
+            this.toolCargar = new System.Windows.Forms.ToolStripButton();
+            this.toolLimpiar = new System.Windows.Forms.ToolStripButton();
+            this.toolAplicar = new System.Windows.Forms.ToolStripButton();
+            this.toolTitulo = new System.Windows.Forms.ToolStrip();
+            this.toolEmpleados = new System.Windows.Forms.ToolStripLabel();
+            this.workerImporta = new System.ComponentModel.BackgroundWorker();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblPorcentaje = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCargaEmpleados)).BeginInit();
             this.toolBusqueda.SuspendLayout();
             this.toolTitulo.SuspendLayout();
@@ -84,6 +84,80 @@
             this.dgvCargaEmpleados.ReadOnly = true;
             this.dgvCargaEmpleados.Size = new System.Drawing.Size(709, 438);
             this.dgvCargaEmpleados.TabIndex = 13;
+            // 
+            // noempleado
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.noempleado.DefaultCellStyle = dataGridViewCellStyle1;
+            this.noempleado.HeaderText = "No. Empleado";
+            this.noempleado.Name = "noempleado";
+            this.noempleado.ReadOnly = true;
+            // 
+            // paterno
+            // 
+            this.paterno.HeaderText = "Paterno";
+            this.paterno.Name = "paterno";
+            this.paterno.ReadOnly = true;
+            // 
+            // materno
+            // 
+            this.materno.HeaderText = "Materno";
+            this.materno.Name = "materno";
+            this.materno.ReadOnly = true;
+            // 
+            // nombre
+            // 
+            this.nombre.HeaderText = "Nombre";
+            this.nombre.Name = "nombre";
+            this.nombre.ReadOnly = true;
+            // 
+            // periodo
+            // 
+            this.periodo.HeaderText = "Periodo";
+            this.periodo.Name = "periodo";
+            this.periodo.ReadOnly = true;
+            // 
+            // departamento
+            // 
+            this.departamento.HeaderText = "Departamento";
+            this.departamento.Name = "departamento";
+            this.departamento.ReadOnly = true;
+            // 
+            // puesto
+            // 
+            this.puesto.HeaderText = "Puesto";
+            this.puesto.Name = "puesto";
+            this.puesto.ReadOnly = true;
+            // 
+            // fechaingreso
+            // 
+            this.fechaingreso.HeaderText = "Fecha Ingreso";
+            this.fechaingreso.Name = "fechaingreso";
+            this.fechaingreso.ReadOnly = true;
+            // 
+            // curp
+            // 
+            this.curp.HeaderText = "Curp";
+            this.curp.Name = "curp";
+            this.curp.ReadOnly = true;
+            // 
+            // nss
+            // 
+            this.nss.HeaderText = "Nss";
+            this.nss.Name = "nss";
+            this.nss.ReadOnly = true;
+            // 
+            // dv
+            // 
+            this.dv.HeaderText = "Dig. V.";
+            this.dv.Name = "dv";
+            this.dv.ReadOnly = true;
+            // 
+            // sdi
+            // 
+            this.sdi.HeaderText = "Sueldo Integrado";
+            this.sdi.Name = "sdi";
+            this.sdi.ReadOnly = true;
             // 
             // toolBusqueda
             // 
@@ -172,80 +246,6 @@
             this.lblPorcentaje.Size = new System.Drawing.Size(23, 17);
             this.lblPorcentaje.Text = "0%";
             // 
-            // noempleado
-            // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.noempleado.DefaultCellStyle = dataGridViewCellStyle1;
-            this.noempleado.HeaderText = "No. Empleado";
-            this.noempleado.Name = "noempleado";
-            this.noempleado.ReadOnly = true;
-            // 
-            // paterno
-            // 
-            this.paterno.HeaderText = "Paterno";
-            this.paterno.Name = "paterno";
-            this.paterno.ReadOnly = true;
-            // 
-            // materno
-            // 
-            this.materno.HeaderText = "Materno";
-            this.materno.Name = "materno";
-            this.materno.ReadOnly = true;
-            // 
-            // nombre
-            // 
-            this.nombre.HeaderText = "Nombre";
-            this.nombre.Name = "nombre";
-            this.nombre.ReadOnly = true;
-            // 
-            // periodo
-            // 
-            this.periodo.HeaderText = "Periodo";
-            this.periodo.Name = "periodo";
-            this.periodo.ReadOnly = true;
-            // 
-            // departamento
-            // 
-            this.departamento.HeaderText = "Departamento";
-            this.departamento.Name = "departamento";
-            this.departamento.ReadOnly = true;
-            // 
-            // puesto
-            // 
-            this.puesto.HeaderText = "Puesto";
-            this.puesto.Name = "puesto";
-            this.puesto.ReadOnly = true;
-            // 
-            // fechaingreso
-            // 
-            this.fechaingreso.HeaderText = "Fecha Ingreso";
-            this.fechaingreso.Name = "fechaingreso";
-            this.fechaingreso.ReadOnly = true;
-            // 
-            // curp
-            // 
-            this.curp.HeaderText = "Curp";
-            this.curp.Name = "curp";
-            this.curp.ReadOnly = true;
-            // 
-            // nss
-            // 
-            this.nss.HeaderText = "Nss";
-            this.nss.Name = "nss";
-            this.nss.ReadOnly = true;
-            // 
-            // dv
-            // 
-            this.dv.HeaderText = "Dig. V.";
-            this.dv.Name = "dv";
-            this.dv.ReadOnly = true;
-            // 
-            // sdi
-            // 
-            this.sdi.HeaderText = "Sueldo Integrado";
-            this.sdi.Name = "sdi";
-            this.sdi.ReadOnly = true;
-            // 
             // frmListaCargaEmpleados
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -257,6 +257,7 @@
             this.Controls.Add(this.toolTitulo);
             this.Name = "frmListaCargaEmpleados";
             this.Text = "Carga de empleados";
+            this.Load += new System.EventHandler(this.frmListaCargaEmpleados_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCargaEmpleados)).EndInit();
             this.toolBusqueda.ResumeLayout(false);
             this.toolBusqueda.PerformLayout();

@@ -16,5 +16,7 @@ namespace Historial.Core
         public DateTime fecha_sistema { get; set; }
         public int idempresa { get; set; }
         public int motivobaja { get; set; }
+        public int iddepartamento { get; set; }
+        public int idpuesto { get; set; }
     }
 }

@@ -91,7 +91,7 @@ namespace Nominas
                 case 2:
                     try
                     {
-                        puesto.id = _idPuesto;
+                        puesto.idpuesto = _idPuesto;
                         puesto.nombre = txtDescripcion.Text;
                         cnx.Open();
                         ph.actualizaPuesto(puesto);
@@ -132,7 +132,7 @@ namespace Nominas
                 ph.Command = cmd;
 
                 Puestos.Core.Puestos p = new Puestos.Core.Puestos();
-                p.id = _idPuesto;
+                p.idpuesto = _idPuesto;
 
                 List<Puestos.Core.Puestos> lstPuesto;
 

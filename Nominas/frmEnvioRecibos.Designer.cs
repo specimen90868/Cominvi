@@ -44,9 +44,8 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblEtapa = new System.Windows.Forms.ToolStripStatusLabel();
             this.workerEnvio = new System.ComponentModel.BackgroundWorker();
-            this.btnLimpiar = new System.Windows.Forms.Button();
-            this.btnSeleccionarTodos = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
+            this.chkTodos = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmpleados)).BeginInit();
             this.BarraEstado.SuspendLayout();
             this.SuspendLayout();
@@ -84,7 +83,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(244, 71);
+            this.label2.Location = new System.Drawing.Point(244, 51);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(82, 13);
             this.label2.TabIndex = 7;
@@ -108,6 +107,7 @@
             this.lstvPeriodos.Size = new System.Drawing.Size(231, 126);
             this.lstvPeriodos.TabIndex = 5;
             this.lstvPeriodos.UseCompatibleStateImageBehavior = false;
+            this.lstvPeriodos.SelectedIndexChanged += new System.EventHandler(this.lstvPeriodos_SelectedIndexChanged);
             // 
             // btnEnviar
             // 
@@ -149,11 +149,11 @@
             // 
             this.dgvEmpleados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvEmpleados.ColumnHeadersVisible = false;
-            this.dgvEmpleados.Location = new System.Drawing.Point(10, 248);
+            this.dgvEmpleados.Location = new System.Drawing.Point(10, 232);
             this.dgvEmpleados.Name = "dgvEmpleados";
             this.dgvEmpleados.RowHeadersVisible = false;
             this.dgvEmpleados.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dgvEmpleados.Size = new System.Drawing.Size(466, 204);
+            this.dgvEmpleados.Size = new System.Drawing.Size(466, 220);
             this.dgvEmpleados.TabIndex = 18;
             // 
             // Visor
@@ -195,43 +195,33 @@
             this.workerEnvio.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.workerEnvio_ProgressChanged);
             this.workerEnvio.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workerEnvio_RunWorkerCompleted);
             // 
-            // btnLimpiar
-            // 
-            this.btnLimpiar.Location = new System.Drawing.Point(419, 219);
-            this.btnLimpiar.Name = "btnLimpiar";
-            this.btnLimpiar.Size = new System.Drawing.Size(59, 23);
-            this.btnLimpiar.TabIndex = 22;
-            this.btnLimpiar.Text = "Limpiar";
-            this.btnLimpiar.UseVisualStyleBackColor = true;
-            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
-            // 
-            // btnSeleccionarTodos
-            // 
-            this.btnSeleccionarTodos.Location = new System.Drawing.Point(354, 219);
-            this.btnSeleccionarTodos.Name = "btnSeleccionarTodos";
-            this.btnSeleccionarTodos.Size = new System.Drawing.Size(59, 23);
-            this.btnSeleccionarTodos.TabIndex = 21;
-            this.btnSeleccionarTodos.Text = "Todos";
-            this.btnSeleccionarTodos.UseVisualStyleBackColor = true;
-            this.btnSeleccionarTodos.Click += new System.EventHandler(this.btnSeleccionarTodos_Click);
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(7, 229);
+            this.label5.Location = new System.Drawing.Point(7, 216);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(62, 13);
             this.label5.TabIndex = 23;
             this.label5.Text = "Empleados:";
+            // 
+            // chkTodos
+            // 
+            this.chkTodos.AutoSize = true;
+            this.chkTodos.Location = new System.Drawing.Point(247, 67);
+            this.chkTodos.Name = "chkTodos";
+            this.chkTodos.Size = new System.Drawing.Size(111, 17);
+            this.chkTodos.TabIndex = 24;
+            this.chkTodos.Text = "Seleccionar todos";
+            this.chkTodos.UseVisualStyleBackColor = true;
+            this.chkTodos.CheckedChanged += new System.EventHandler(this.chkTodos_CheckedChanged);
             // 
             // frmEnvioRecibos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(486, 507);
+            this.Controls.Add(this.chkTodos);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.btnLimpiar);
-            this.Controls.Add(this.btnSeleccionarTodos);
             this.Controls.Add(this.BarraEstado);
             this.Controls.Add(this.dgvEmpleados);
             this.Controls.Add(this.txtCorreoElectronico);
@@ -276,8 +266,7 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel lblEtapa;
         private System.ComponentModel.BackgroundWorker workerEnvio;
-        private System.Windows.Forms.Button btnLimpiar;
-        private System.Windows.Forms.Button btnSeleccionarTodos;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.CheckBox chkTodos;
     }
 }

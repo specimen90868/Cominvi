@@ -54,15 +54,9 @@ namespace Nominas
             Configuracion.Core.ConfiguracionHelper confh = new Configuracion.Core.ConfiguracionHelper();
             confh.Command = cmd;
 
-            Departamento.Core.Depto depto = new Departamento.Core.Depto();
-            depto.idempresa = GLOBALES.IDEMPRESA;
-
-            List<Departamento.Core.Depto> lstDeptos = new List<Departamento.Core.Depto>();
-
             try
             {
                 cnx.Open();
-                lstDeptos = dh.obtenerDepartamentos(depto);
                 correoEnvio = confh.obtenerValorConfiguracion("CorreoEnvio").ToString();
                 passwordEnvio = confh.obtenerValorConfiguracion("PasswordEnvio").ToString();
                 puertoEnvio = int.Parse(confh.obtenerValorConfiguracion("PuertoEnvio").ToString());
@@ -94,12 +88,6 @@ namespace Nominas
             lstvDepartamentos.Columns.Add("Id", 60, HorizontalAlignment.Left);
             lstvDepartamentos.Columns.Add("Departamento", 150, HorizontalAlignment.Left);
 
-            for (int i = 0; i < lstDeptos.Count; i++)
-            {
-                ListViewItem Lista;
-                Lista = lstvDepartamentos.Items.Add(lstDeptos[i].id.ToString());
-                Lista.SubItems.Add(lstDeptos[i].descripcion.ToString());
-            }
             this.Visor.RefreshReport();
         }
 
@@ -356,6 +344,7 @@ namespace Nominas
                         cmd.Parameters.AddWithValue("fechainicio", DateTime.Parse(fecha).Date);
                         cmd.Parameters.AddWithValue("tiponomina", tipoNomina);
                         cmd.Parameters.AddWithValue("idtrabajador", int.Parse(dgvEmpleados.Rows[i].Cells["idtrabajador"].Value.ToString()));
+                        cmd.CommandTimeout = 300;
                         daImpresionNomina.SelectCommand = cmd;
                         daImpresionNomina.Fill(dtImpresionNomina);
 
@@ -479,16 +468,62 @@ namespace Nominas
             //File.Delete(ruta + "RecibosNomina_" + DateTime.Parse(fecha).ToString("yyyyMMdd") + ".zip");
         }
 
-        private void btnSeleccionarTodos_Click(object sender, EventArgs e)
+        private void lstvPeriodos_SelectedIndexChanged(object sender, EventArgs e)
         {
-            for (int i = 0; i < lstvDepartamentos.Items.Count; i++)
-                lstvDepartamentos.Items[i].Checked = true;
+            for (int i = 0; i < lstvPeriodos.SelectedItems.Count; i++)
+            {
+                fecha = lstvPeriodos.SelectedItems[i].Text;
+                fechafin = lstvPeriodos.SelectedItems[i].SubItems[1].Text;
+            }
+
+            lstvDepartamentos.Items.Clear();
+
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            Departamento.Core.DeptoHelper dh = new Departamento.Core.DeptoHelper();
+            dh.Command = cmd;
+
+            Departamento.Core.Depto depto = new Departamento.Core.Depto();
+            depto.idempresa = GLOBALES.IDEMPRESA;
+
+            List<Departamento.Core.Depto> lstDeptos = new List<Departamento.Core.Depto>();
+
+            try
+            {
+                cnx.Open();
+                lstDeptos = dh.obtenerDepartamentos(GLOBALES.IDEMPRESA, DateTime.Parse(fecha), (cmbTipoNomina.Text == "Normal" ? 0 : 2));
+                cnx.Close();
+                cnx.Dispose();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error: Al obtener los periodos de la empresa.", "Error");
+                cnx.Dispose();
+                return;
+            }
+
+            for (int i = 0; i < lstDeptos.Count; i++)
+            {
+                ListViewItem Lista;
+                Lista = lstvDepartamentos.Items.Add(lstDeptos[i].id.ToString());
+                Lista.SubItems.Add(lstDeptos[i].descripcion.ToString());
+            }
         }
 
-        private void btnLimpiar_Click(object sender, EventArgs e)
+        private void chkTodos_CheckedChanged(object sender, EventArgs e)
         {
-            for (int i = 0; i < lstvDepartamentos.Items.Count; i++)
-                lstvDepartamentos.Items[i].Checked = false;
+            if (chkTodos.Checked)
+            {
+                for (int i = 0; i < lstvDepartamentos.Items.Count; i++)
+                    lstvDepartamentos.Items[i].Checked = true;
+            }
+            else
+            {
+                for (int i = 0; i < lstvDepartamentos.Items.Count; i++)
+                    lstvDepartamentos.Items[i].Checked = false;
+            }
         }
     }
 }

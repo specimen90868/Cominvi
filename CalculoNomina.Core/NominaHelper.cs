@@ -9,7 +9,7 @@ namespace CalculoNomina.Core
 {
     public class NominaHelper : Data.Obj.DataObj
     {
-        public List<DatosEmpleado> obtenerDatosEmpleado(int idEmpresa, int estatus, bool obracivil, DateTime inicio)
+        public List<DatosEmpleado> obtenerDatosEmpleado(int idEmpresa, int estatus, bool obracivil, DateTime inicio, DateTime fin)
         {
             List<DatosEmpleado> lstDatosEmpleados = new List<DatosEmpleado>();
             DataTable dtDatosEmpleados = new DataTable();
@@ -17,16 +17,17 @@ namespace CalculoNomina.Core
                 0 as asistencia, 0 as puntualidad, 0 as horas from Trabajadores where idempresa = @idempresa and estatus = @estatus 
                 and obracivil = @obracivil and idtrabajador not in (
                 select idtrabajador from suaAltas 
-                where idempresa = @idempresa and periodoinicio = @inicio
+                where idempresa = @idempresa and periodoinicio = @inicio and periodofin = @fin
                 union
                 select idtrabajador from suaReingresos 
-                where idempresa = @idempresa and periodoinicio = @inicio
+                where idempresa = @idempresa and periodoinicio = @inicio and periodofin = @fin
                 ) order by noempleado asc";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idEmpresa);
             Command.Parameters.AddWithValue("estatus", estatus);
             Command.Parameters.AddWithValue("obracivil", obracivil);
             Command.Parameters.AddWithValue("inicio", inicio);
+            Command.Parameters.AddWithValue("fin", fin);
             dtDatosEmpleados = SelectData(Command);
             for (int i = 0; i < dtDatosEmpleados.Rows.Count; i++)
             {
@@ -87,7 +88,7 @@ namespace CalculoNomina.Core
             return lstDatosEmpleados;
         }
 
-        public List<DatosFaltaIncapacidad> obtenerDatosFaltaInc(int idEmpresa, int estatus, bool obracivil, DateTime inicio)
+        public List<DatosFaltaIncapacidad> obtenerDatosFaltaInc(int idEmpresa, int estatus, bool obracivil, DateTime inicio, DateTime fin)
         {
             List<DatosFaltaIncapacidad> lstDatosEmpleados = new List<DatosFaltaIncapacidad>();
             DataTable dtDatosEmpleados = new DataTable();
@@ -95,16 +96,17 @@ namespace CalculoNomina.Core
                 from Trabajadores where idempresa = @idempresa and estatus = @estatus and obracivil = @obracivil 
                 and idtrabajador not in (
                 select idtrabajador from suaAltas 
-                where idempresa = @idempresa and periodoinicio = @inicio
+                where idempresa = @idempresa and periodoinicio = @inicio and periodofin = @fin
                 union
                 select idtrabajador from suaReingresos 
-                where idempresa = @idempresa and periodoinicio = @inicio
+                where idempresa = @idempresa and periodoinicio = @inicio and periodofin = @fin
                 ) order by noempleado asc";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idEmpresa);
             Command.Parameters.AddWithValue("estatus", estatus);
             Command.Parameters.AddWithValue("obracivil", obracivil);
             Command.Parameters.AddWithValue("inicio", inicio);
+            Command.Parameters.AddWithValue("fin", fin);
             dtDatosEmpleados = SelectData(Command);
             for (int i = 0; i < dtDatosEmpleados.Rows.Count; i++)
             {
@@ -351,7 +353,7 @@ namespace CalculoNomina.Core
 
         public int guardaPreNomina(tmpPagoNomina pn)
         {
-            Command.CommandText = "update tmpPagoNomina set guardada = @guardada where idempresa = @idempresa and fechainicio = @fechainicio and fechafin = @fechafin and obracivil = @obracivil";
+            Command.CommandText = "update tmpPagoNomina set guardada = @guardada, obracivil = @obracivil where idempresa = @idempresa and fechainicio = @fechainicio and fechafin = @fechafin and obracivil = @obracivil";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("guardada", pn.guardada);
             Command.Parameters.AddWithValue("idempresa", pn.idempresa);
@@ -363,12 +365,13 @@ namespace CalculoNomina.Core
 
         public int aplicaBajaObraCivil(tmpPagoNomina pn)
         {
-            Command.CommandText = @"exec stp_AplicaBajasObraCivil @idempresa, @fechainicio, @fechafin, @tiponomina";
+            Command.CommandText = @"exec stp_AplicaBajasObraCivil @idempresa, @fechainicio, @fechafin, @tiponomina, @obracivil";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", pn.idempresa);
             Command.Parameters.AddWithValue("fechainicio", pn.fechainicio);
             Command.Parameters.AddWithValue("fechafin", pn.fechafin);
             Command.Parameters.AddWithValue("tiponomina", pn.tiponomina);
+            Command.Parameters.AddWithValue("obracivil", pn.obracivil);
             return Command.ExecuteNonQuery();
         }
 
@@ -461,6 +464,14 @@ namespace CalculoNomina.Core
             return Command.ExecuteNonQuery();
         }
 
+        public int eliminaPreNomina(int idtrabajador)
+        {
+            Command.CommandText = "delete from tmpPagoNomina where idtrabajador = @idtrabajador and guardada = 0";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
+            return Command.ExecuteNonQuery();
+        }
+
         public object existeConcepto(tmpPagoNomina pn)
         {
             Command.CommandText = @"select count(*) from tmpPagoNomina where idempresa = @idempresa and idtrabajador = @idtrabajador and 
@@ -500,16 +511,15 @@ namespace CalculoNomina.Core
             return Command.ExecuteNonQuery();
         }
 
-        public int actualizaDiasFechaPago(tmpPagoNomina pn, DateTime fechapago)
+        public int actualizaDiasFechaPago(tmpPagoNomina pn)
         {
-            Command.CommandText = @"update tmpPagoNomina set diaslaborados = @diaslaborados, fechapago = @fechapago 
+            Command.CommandText = @"update tmpPagoNomina set diaslaborados = @diaslaborados 
                                     where idtrabajador = @idtrabajador and fechainicio = @fechainicio and fechafin = @fechafin";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("diaslaborados", pn.diaslaborados);
             Command.Parameters.AddWithValue("idtrabajador", pn.idtrabajador);
             Command.Parameters.AddWithValue("fechainicio", pn.fechainicio);
             Command.Parameters.AddWithValue("fechafin", pn.fechafin);
-            Command.Parameters.AddWithValue("fechapago", fechapago);
             return Command.ExecuteNonQuery();
         }
 
@@ -609,6 +619,62 @@ namespace CalculoNomina.Core
                 lstXml.Add(xml);
             }
             return lstXml;
+        }
+
+        public List<tmpPagoNomina> fechaPreNominaObraCivil(int idempresa, int idtrabajador, DateTime inicio, DateTime fin)
+        {
+            List<tmpPagoNomina> lstPreNomina = new List<tmpPagoNomina>();
+            Command.CommandText = @"select distinct fechainicio, fechafin from tmpPagoNomina where idempresa = @idempresa and 
+                obracivil = 1 and idtrabajador = @idtrabajador and guardada = 1 and fechainicio = @fechainicio and 
+                fechafin = @fechafin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idempresa);
+            Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
+            Command.Parameters.AddWithValue("fechainicio", inicio);
+            Command.Parameters.AddWithValue("fechafin", fin);
+            DataTable dtPreNomina = new DataTable();
+            dtPreNomina = SelectData(Command);
+            for (int i = 0; i < dtPreNomina.Rows.Count; i++)
+            {
+                tmpPagoNomina tmp = new tmpPagoNomina();
+                tmp.fechainicio = DateTime.Parse(dtPreNomina.Rows[i]["fechainicio"].ToString());
+                tmp.fechafin = DateTime.Parse(dtPreNomina.Rows[i]["fechafin"].ToString());
+                lstPreNomina.Add(tmp);
+            }
+            return lstPreNomina;
+        }
+
+        public int eliminaNominaTrabajador(int idtrabajador, DateTime inicio, DateTime fin, int tiponomina)
+        {
+            Command.CommandText = "delete from tmpPagoNomina where idtrabajador = @idtrabajador and fechainicio = @fechainicio and fechafin = @fechafin and tiponomina = @tiponomina and modificado = 0";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
+            Command.Parameters.AddWithValue("fechainicio", inicio);
+            Command.Parameters.AddWithValue("fechafin", fin);
+            Command.Parameters.AddWithValue("tiponomina", tiponomina);
+            return Command.ExecuteNonQuery();
+        }
+
+        public List<tmpPagoNomina> obtenerIdTrabajadoresTempNomina(int idempresa, int tiponomina, DateTime inicio, DateTime fin)
+        {
+            DataTable dtTrabajadores = new DataTable();
+            List<tmpPagoNomina> lstPeriodos = new List<tmpPagoNomina>();
+            Command.CommandText = @"select distinct idtrabajador from tmpPagoNomina where idempresa = @idempresa
+                and fechainicio = @fechainicio and fechafin = @fechafin and tiponomina = @tiponomina
+                order by idtrabajador asc";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idempresa);
+            Command.Parameters.AddWithValue("tiponomina", tiponomina);
+            Command.Parameters.AddWithValue("fechainicio", inicio);
+            Command.Parameters.AddWithValue("fechafin", fin);
+            dtTrabajadores = SelectData(Command);
+            for (int i = 0; i < dtTrabajadores.Rows.Count; i++)
+            {
+                tmpPagoNomina pn = new tmpPagoNomina();
+                pn.idtrabajador = int.Parse(dtTrabajadores.Rows[i]["idtrabajador"].ToString());
+                lstPeriodos.Add(pn);
+            }
+            return lstPeriodos;
         }
 
         #region DATOS NOMINA POR TRABAJADOR

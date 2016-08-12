@@ -46,7 +46,7 @@ namespace Nominas
                 var puesto = from p in lstPuestos
                           select new
                           {
-                              Id = p.id,
+                              Id = p.idpuesto,
                               Descripcion = p.nombre
                           };
                 dgvPuestos.DataSource = puesto.ToList();
@@ -142,7 +142,7 @@ namespace Nominas
                 Puestos.Core.PuestosHelper ph = new Puestos.Core.PuestosHelper();
                 ph.Command = cmd;
                 Puestos.Core.Puestos puesto = new Puestos.Core.Puestos();
-                puesto.id = id;
+                puesto.idpuesto = id;
                 
                 try
                 {
@@ -175,7 +175,7 @@ namespace Nominas
                     var puesto = from p in lstPuestos
                                 select new
                                 {
-                                    Id = p.id,
+                                    Id = p.idpuesto,
                                     Nombre = p.nombre
                                 };
                     dgvPuestos.DataSource = puesto.ToList();
@@ -186,7 +186,7 @@ namespace Nominas
                                    where b.nombre.Contains(txtBuscar.Text.ToUpper())
                                    select new
                                    {
-                                       Id = b.id,
+                                       Id = b.idpuesto,
                                        Nombre = b.nombre
                                    };
                     dgvPuestos.DataSource = busqueda.ToList();

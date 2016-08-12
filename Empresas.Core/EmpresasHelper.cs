@@ -107,6 +107,15 @@ namespace Empresas.Core
             return id;
         }
 
+        public object obtenerDiasEmpresa(Empresas e)
+        {
+            Command.CommandText = "select dias from dbo.Periodos where idempresa = @idempresa";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", e.idempresa);
+            object dato = Select(Command);
+            return dato;
+        }
+
         public int insertaEmpresa(Empresas e)
         {
             Command.CommandText = "insert into empresas (nombre, rfc, registro, digitoverificador, representante, estatus, certificado, llave, password, regimen, nocertificado, vigenciacertificado) " +

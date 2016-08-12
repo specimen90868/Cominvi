@@ -96,6 +96,21 @@ namespace Nominas
         {
             dgvBajasSua.RowHeadersVisible = false;
             ListaEmpleados();
+            CargaPerfil("Empleados en Baja");
+        }
+
+        private void CargaPerfil(string nombre)
+        {
+            List<Autorizaciones.Core.Ediciones> lstEdiciones = GLOBALES.PERFILEDICIONES(nombre);
+
+            for (int i = 0; i < lstEdiciones.Count; i++)
+            {
+                switch (lstEdiciones[i].permiso.ToString())
+                {
+                    case "Exportar": toolExportar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                    case "Eliminar": toolEliminar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                }
+            }
         }
 
         private void CargaPerfil()
@@ -253,6 +268,7 @@ namespace Nominas
                     cnx.Open();
                     bh.eliminaBaja(baja);
                     eh.bajaEmpleado(ee);
+                    eh.actualizaEstatus(int.Parse(dgvBajasSua.Rows[fila].Cells[0].Value.ToString()));
                     cnx.Close();
                 }
                 catch (Exception error)

@@ -136,7 +136,7 @@
             // 
             this.mnuAbrirEmpresa.Image = ((System.Drawing.Image)(resources.GetObject("mnuAbrirEmpresa.Image")));
             this.mnuAbrirEmpresa.Name = "mnuAbrirEmpresa";
-            this.mnuAbrirEmpresa.Size = new System.Drawing.Size(154, 22);
+            this.mnuAbrirEmpresa.Size = new System.Drawing.Size(161, 22);
             this.mnuAbrirEmpresa.Text = "Abrir Empresa";
             this.mnuAbrirEmpresa.Click += new System.EventHandler(this.mnuAbrirEmpresa_Click);
             // 
@@ -156,14 +156,16 @@
             // 
             this.mnuIniciarSesion.Image = ((System.Drawing.Image)(resources.GetObject("mnuIniciarSesion.Image")));
             this.mnuIniciarSesion.Name = "mnuIniciarSesion";
-            this.mnuIniciarSesion.Size = new System.Drawing.Size(154, 22);
+            this.mnuIniciarSesion.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.mnuIniciarSesion.Size = new System.Drawing.Size(161, 22);
             this.mnuIniciarSesion.Text = "Iniciar sesión";
             this.mnuIniciarSesion.Click += new System.EventHandler(this.mniIniciarSesion_Click);
             // 
             // mnuCerrarSesion
             // 
             this.mnuCerrarSesion.Name = "mnuCerrarSesion";
-            this.mnuCerrarSesion.Size = new System.Drawing.Size(154, 22);
+            this.mnuCerrarSesion.ShortcutKeys = System.Windows.Forms.Keys.F3;
+            this.mnuCerrarSesion.Size = new System.Drawing.Size(161, 22);
             this.mnuCerrarSesion.Text = "Cerrar sesión";
             this.mnuCerrarSesion.Click += new System.EventHandler(this.mnuCerrarSesion_Click);
             // 
@@ -667,6 +669,7 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmPrincipal_FormClosed);
             this.Load += new System.EventHandler(this.frmPrincipal_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmPrincipal_KeyDown);
             this.mnuPrincipal.ResumeLayout(false);
             this.mnuPrincipal.PerformLayout();
             this.stsPrincipal.ResumeLayout(false);

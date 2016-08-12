@@ -10,6 +10,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 
 using System.IO;
+using System.Management;
 
 namespace Nominas
 {
@@ -45,6 +46,7 @@ namespace Nominas
         #region TIPOS DE ESTATUS
         public static int ACTIVO = 1;
         public static int INACTIVO = 0;
+        public static int REINGRESO = 2;
         #endregion
 
         #region TIPOS CREDITO INFONAVIT
@@ -68,6 +70,7 @@ namespace Nominas
         public static int IDPERFIL { get; set; }
         public static int IDEMPRESA { get; set; }
         public static string NOMBREEMPRESA { get; set; }
+        public static int DIASPERIODO { get; set; }
         public static int SESION { get; set; }
 
         public static string VALIDAR(Control control, Type tipo)
@@ -180,7 +183,6 @@ namespace Nominas
 
         public static Boolean FORMISOPEN(String FormABuscar)
         {
-
             Boolean lEncontrado = false;
 
             foreach (Form form in Application.OpenForms)
@@ -204,6 +206,24 @@ namespace Nominas
             return lEncontrado;
 
         }
+
+        //public static Boolean IDENTIFICADOR(string wmiClass, string wmiProperty, string serialHD)
+        //{
+        //    Boolean result = false;
+        //    ManagementClass mc = new ManagementClass(wmiClass);
+        //    ManagementObjectCollection moc = mc.GetInstances();
+        //    foreach (ManagementObject mo in moc)
+        //    {
+        //        if (mo[wmiProperty].ToString() == serialHD)
+        //        {
+        //            result = true;
+        //            break;
+        //        }
+        //        else
+        //            result = false;
+        //    }
+        //    return result;
+        //}
 
     }   
 }

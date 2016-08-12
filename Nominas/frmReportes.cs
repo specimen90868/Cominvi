@@ -531,17 +531,17 @@ namespace Nominas
                 rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, 2];
                 rng.Columns.AutoFit();
 
-                rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, 13];
+                rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, 14];
                 rng.NumberFormat = "#,##0.00";
-                rng.Formula = string.Format("=C{0}+D{0}+E{0}+F{0}+G{0}+H{0}+I{0}+J{0}+K{0}+L{0}", i);
-
-                rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, 22];
-                rng.NumberFormat = "#,##0.00";
-                rng.Formula = string.Format("=N{0}+O{0}+P{0}+Q{0}+R{0}+S{0}+U{0}", i);
+                rng.Formula = string.Format("=C{0}+D{0}+E{0}+F{0}+G{0}+H{0}+I{0}+J{0}+K{0}+L{0}+M{0}", i);
 
                 rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, 23];
                 rng.NumberFormat = "#,##0.00";
-                rng.Formula = string.Format("=M{0}+T{0}-V{0}", i);
+                rng.Formula = string.Format("=O{0}+P{0}+Q{0}+R{0}+S{0}+T{0}+V{0}", i);
+
+                rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, 24];
+                rng.NumberFormat = "#,##0.00";
+                rng.Formula = string.Format("=N{0}+U{0}-W{0}", i);
             }
 
             int suma = iFil - 1;
@@ -597,12 +597,12 @@ namespace Nominas
             rng.Font.Bold = true;
             rng.Formula = string.Format("=SUM(L6:L{0})", suma.ToString());
 
-            //TOTAL PERCEPCIONES
             rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 13];
             rng.NumberFormat = "#,##0.00";
             rng.Font.Bold = true;
             rng.Formula = string.Format("=SUM(M6:M{0})", suma.ToString());
 
+            //TOTAL PERCEPCIONES
             rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 14];
             rng.NumberFormat = "#,##0.00";
             rng.Font.Bold = true;
@@ -643,30 +643,35 @@ namespace Nominas
             rng.Font.Bold = true;
             rng.Formula = string.Format("=SUM(U6:U{0})", suma.ToString());
 
-            //TOTAL DEDUCCIONES
             rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 22];
             rng.NumberFormat = "#,##0.00";
             rng.Font.Bold = true;
             rng.Formula = string.Format("=SUM(V6:V{0})", suma.ToString());
 
-            //TOTAL NETO
+            //TOTAL DEDUCCIONES
             rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 23];
             rng.NumberFormat = "#,##0.00";
             rng.Font.Bold = true;
             rng.Formula = string.Format("=SUM(W6:W{0})", suma.ToString());
 
+            //TOTAL NETO
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 24];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            rng.Formula = string.Format("=SUM(X6:X{0})", suma.ToString());
+
             excel.Range["A1", "G3"].Font.Bold = true;
-            excel.Range["A5", "W5"].Font.Bold = true;
-            excel.Range["B:W"].EntireColumn.AutoFit();
+            excel.Range["A5", "X5"].Font.Bold = true;
+            excel.Range["B:X"].EntireColumn.AutoFit();
             excel.Range["A6"].Select();
             excel.ActiveWindow.FreezePanes = true;
-            excel.Range["A5", "W5"].Interior.ColorIndex = 36;
-            excel.Range["A5", "L5"].Font.ColorIndex = 1;
-            excel.Range["N5", "V5"].Font.ColorIndex = 1;
-            excel.Range["M5"].Font.ColorIndex = 32;
-            excel.Range["V5"].Font.ColorIndex = 32;
+            excel.Range["A5", "X5"].Interior.ColorIndex = 36;
+            excel.Range["A5", "M5"].Font.ColorIndex = 1;
+            excel.Range["O5", "V5"].Font.ColorIndex = 1;
+            excel.Range["N5"].Font.ColorIndex = 32;
             excel.Range["W5"].Font.ColorIndex = 32;
-            excel.Range["B6", "W" + iFil.ToString()].NumberFormat = "#,##0.00";
+            excel.Range["X5"].Font.ColorIndex = 32;
+            excel.Range["B6", "X" + iFil.ToString()].NumberFormat = "#,##0.00";
 
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Title = "Guardar como";

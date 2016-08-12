@@ -60,6 +60,11 @@ namespace Nominas
             cmbPeriodo.DataSource = lstPeriodos;
             cmbPeriodo.DisplayMember = "pago";
             cmbPeriodo.ValueMember = "idperiodo";
+
+            if (GLOBALES.DIASPERIODO == 7)
+                chkObraCivil.Visible = true;
+            else
+                chkObraCivil.Visible = false;
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)

@@ -142,6 +142,9 @@ namespace Nominas
                 txtPassword.Visible = false;
                 txtPassword2.Visible = false;
 
+                txtPassword.Text = "1";
+                txtPassword2.Text = "1";
+
                 try
                 {
                     cnx.Open();
@@ -153,7 +156,7 @@ namespace Nominas
                     {
                         txtNombre.Text = dtUsuario.Rows[i]["nombre"].ToString();
                         txtUsuario.Text = dtUsuario.Rows[i]["usuario"].ToString();
-                        cmbPerfil.SelectedValue = dtUsuario.Rows[i]["idperfil"].ToString();
+                        cmbPerfil.SelectedValue = int.Parse(dtUsuario.Rows[i]["idperfil"].ToString());
                     }
                 }
                 catch (Exception error)

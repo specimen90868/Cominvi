@@ -175,7 +175,7 @@
             this.toolActualizar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolActualizar.Name = "toolActualizar";
             this.toolActualizar.Size = new System.Drawing.Size(23, 22);
-            this.toolActualizar.Text = "toolStripButton1";
+            this.toolActualizar.Text = "Actualizar";
             this.toolActualizar.Click += new System.EventHandler(this.toolActualizar_Click);
             // 
             // toolStripSeparator2
@@ -194,7 +194,7 @@
             this.txtBuscar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic);
             this.txtBuscar.ForeColor = System.Drawing.Color.Gray;
             this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(300, 25);
+            this.txtBuscar.Size = new System.Drawing.Size(300, 23);
             this.txtBuscar.Text = "Buscar empleado...";
             this.txtBuscar.Leave += new System.EventHandler(this.txtBuscar_Leave);
             this.txtBuscar.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBuscar_KeyPress);
@@ -225,7 +225,6 @@
             this.dgvEmpleados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvEmpleados.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvEmpleados.Location = new System.Drawing.Point(0, 52);
-            this.dgvEmpleados.MultiSelect = false;
             this.dgvEmpleados.Name = "dgvEmpleados";
             this.dgvEmpleados.ReadOnly = true;
             this.dgvEmpleados.Size = new System.Drawing.Size(1076, 672);

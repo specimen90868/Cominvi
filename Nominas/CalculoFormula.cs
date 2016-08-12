@@ -14,6 +14,7 @@ namespace Nominas
         private DateTime inicioPeriodo;
         private DateTime finPeriodo;
         private string formula;
+        private string formula2;
         private List<CalculoNomina.Core.tmpPagoNomina> lstPercepciones;
 
         public CalculoFormula(int _idTrabajador, DateTime _inicio, DateTime _fin, string _formula, List<CalculoNomina.Core.tmpPagoNomina> _lstPercepciones = null)
@@ -508,8 +509,6 @@ namespace Nominas
                         break;
 
                     case "Infonavit":
-                        
-                        List<string> variablesInfonavit = new List<string>();
 
                         Infonavit.Core.InfonavitHelper infh = new Infonavit.Core.InfonavitHelper();
                         infh.Command = cmd;
@@ -519,31 +518,116 @@ namespace Nominas
                         inf.idtrabajador = idTrabajador;
                         inf.activo = true;
 
+                        List<Infonavit.Core.Infonavit> _lstPeriodoInfonavit = new List<Infonavit.Core.Infonavit>();
+                     
                         cnx.Open();
                         lstInfonavit = infh.obtenerInfonavit(inf);
                         cnx.Close();
-
+                        
                         if (lstInfonavit.Count != 0)
                         {
                             if (lstInfonavit[0].fecha <= finPeriodo)
                             {
+                                cnx.Open();
+                                _lstPeriodoInfonavit = infh.obtenerDiasInfonavit(inf);
+                                cnx.Close();
+
                                 Conceptos.Core.ConceptosHelper ch = new Conceptos.Core.ConceptosHelper();
                                 ch.Command = cmd;
                                 Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
                                 concepto.idempresa = GLOBALES.IDEMPRESA;
 
                                 if (lstInfonavit[0].descuento == GLOBALES.dPORCENTAJE)
+                                {
                                     concepto.noconcepto = 10; //INFONAVIT PORCENTAJE
+                                    if (_lstPeriodoInfonavit.Count == 2)
+                                    {
+                                        if (_lstPeriodoInfonavit[0].fecha >= inicioPeriodo && _lstPeriodoInfonavit[0].fecha <= finPeriodo)
+                                        {
+                                            cnx.Open();
+                                            formula = ch.obtenerFormula(concepto).ToString();
+                                            cnx.Close();
+                                            formula2 = formula;
+                                            formula2 = formula2.Replace("ValorInfonavit", "ValorInfonavit2");
+                                            formula2 = formula2.Replace("PeriodoInfonavit", "PeriodoInfonavit2");
+                                            formula = string.Format("({0}) + ({1})", formula, formula2);
+                                        }
+                                        else
+                                        {
+                                            cnx.Open();
+                                            formula = ch.obtenerFormula(concepto).ToString();
+                                            cnx.Close();
+                                        }
+                                    }
+                                    else
+                                    {
+                                        cnx.Open();
+                                        formula = ch.obtenerFormula(concepto).ToString();
+                                        cnx.Close();
+                                    }
+                                }
+
 
                                 if (lstInfonavit[0].descuento == GLOBALES.dVSMDF)
+                                {
                                     concepto.noconcepto = 11; //INFONAVIT VSMDF
+                                    if (_lstPeriodoInfonavit.Count == 2)
+                                    {
+                                        if (_lstPeriodoInfonavit[0].fecha >= inicioPeriodo && _lstPeriodoInfonavit[0].fecha <= finPeriodo)
+                                        {
+                                            cnx.Open();
+                                            formula = ch.obtenerFormula(concepto).ToString();
+                                            cnx.Close();
+                                            formula2 = formula;
+                                            formula2 = formula2.Replace("ValorInfonavit", "ValorInfonavit2");
+                                            formula2 = formula2.Replace("PeriodoInfonavit", "PeriodoInfonavit2");
+                                            formula = string.Format("({0}) + ({1})", formula, formula2);
+                                        }
+                                        else
+                                        {
+                                            cnx.Open();
+                                            formula = ch.obtenerFormula(concepto).ToString();
+                                            cnx.Close();
+                                        }
+                                    }
+                                    else
+                                    {
+                                        cnx.Open();
+                                        formula = ch.obtenerFormula(concepto).ToString();
+                                        cnx.Close();
+                                    }
+                                }
+
 
                                 if (lstInfonavit[0].descuento == GLOBALES.dPESOS)
+                                {
                                     concepto.noconcepto = 12; //INFONAVIT FIJO
-
-                                cnx.Open();
-                                formula = ch.obtenerFormula(concepto).ToString();
-                                cnx.Close();
+                                    if (_lstPeriodoInfonavit.Count == 2)
+                                    {
+                                        if (_lstPeriodoInfonavit[0].fecha >= inicioPeriodo && _lstPeriodoInfonavit[0].fecha <= finPeriodo)
+                                        {
+                                            cnx.Open();
+                                            formula = ch.obtenerFormula(concepto).ToString();
+                                            cnx.Close();
+                                            formula2 = formula;
+                                            formula2 = formula2.Replace("ValorInfonavit", "ValorInfonavit2");
+                                            formula2 = formula2.Replace("PeriodoInfonavit", "PeriodoInfonavit2");
+                                            formula = string.Format("({0}) + ({1})", formula, formula2);
+                                        }
+                                        else
+                                        {
+                                            cnx.Open();
+                                            formula = ch.obtenerFormula(concepto).ToString();
+                                            cnx.Close();
+                                        }
+                                    }
+                                    else
+                                    {
+                                        cnx.Open();
+                                        formula = ch.obtenerFormula(concepto).ToString();
+                                        cnx.Close();
+                                    }
+                                }
 
                                 return calcularFormula();
                             }
@@ -566,6 +650,18 @@ namespace Nominas
                         cnx.Close();
 
                         formula = formula.Replace("[" + variables[i] + "]", valorInfonavit.ToString());
+                        break;
+
+                    case "ValorInfonavit2":
+                        object valorInfonavit2;
+                        Infonavit.Core.InfonavitHelper vih2 = new Infonavit.Core.InfonavitHelper();
+                        vih2.Command = cmd;
+
+                        cnx.Open();
+                        valorInfonavit2 = vih2.obtenerValorInfonavit(idTrabajador);
+                        cnx.Close();
+
+                        formula = formula.Replace("[" + variables[i] + "]", valorInfonavit2.ToString());
                         break;
 
                     case "DiasBimestre":
@@ -661,16 +757,71 @@ namespace Nominas
                         break;
 
                     case "PeriodoInfonavit":
-
+                        
+                        int diasPI = 0;
                         Infonavit.Core.InfonavitHelper iph = new Infonavit.Core.InfonavitHelper();
                         iph.Command = cmd;
 
                         Infonavit.Core.Infonavit infP = new Infonavit.Core.Infonavit();
                         infP.idtrabajador = idTrabajador;
+
                         List<Infonavit.Core.Infonavit> lstPeriodoInfonavit = new List<Infonavit.Core.Infonavit>();
 
                         cnx.Open();
                         lstPeriodoInfonavit = iph.obtenerDiasInfonavit(infP);
+                        cnx.Close();
+
+                        //Empleados.Core.EmpleadosHelper epih = new Empleados.Core.EmpleadosHelper();
+                        //epih.Command = cmd;
+
+                        //cnx.Open();
+                        //int idperiodoPI = (int)epih.obtenerIdPeriodo(idTrabajador);
+                        //cnx.Close();
+
+                        //Periodos.Core.PeriodosHelper ppih = new Periodos.Core.PeriodosHelper();
+                        //ppih.Command = cmd;
+
+                        //Periodos.Core.Periodos pPI = new Periodos.Core.Periodos();
+                        //pPI.idperiodo = idperiodoPI;
+
+                        //cnx.Open();
+                        //int diasPI = (int)ppih.DiasDePago(pPI);
+                        //cnx.Close();
+
+                        //if (lstPeriodoInfonavit.Count == 1)
+                            if (lstPeriodoInfonavit[0].fecha >= inicioPeriodo && lstPeriodoInfonavit[0].fecha <= finPeriodo)
+                                formula = formula.Replace("[" + variables[i] + "]", lstPeriodoInfonavit[0].dias.ToString());
+                            else
+                            {
+                                CalculoFormula cf = new CalculoFormula(idTrabajador, inicioPeriodo, finPeriodo, "[DiasLaborados]-[Faltas]-[DiasIncapacidad]");
+                                diasPI = int.Parse(cf.calcularFormula().ToString());
+                                formula = formula.Replace("[" + variables[i] + "]", diasPI.ToString());
+                            }
+                             
+                        //else if (lstPeriodoInfonavit.Count == 2)
+                        //    if (lstPeriodoInfonavit[0].fecha >= inicioPeriodo && lstPeriodoInfonavit[0].fecha <= finPeriodo)
+                        //        formula = formula.Replace("[" + variables[i] + "]", lstPeriodoInfonavit[0].dias.ToString());
+                        //    else
+                        //    {
+                        //        CalculoFormula cf = new CalculoFormula(idTrabajador, inicioPeriodo, finPeriodo, "[DiasLaborados]-[Faltas]-[DiasIncapacidad]");
+                        //        diasPI = int.Parse(cf.calcularFormula().ToString());
+                        //        formula = formula.Replace("[" + variables[i] + "]", diasPI.ToString());
+                        //    }
+                            
+                        break;
+                    case "PeriodoInfonavit2":
+
+                        int diasPI2 = 0;
+                        Infonavit.Core.InfonavitHelper iph2 = new Infonavit.Core.InfonavitHelper();
+                        iph2.Command = cmd;
+
+                        Infonavit.Core.Infonavit infP2 = new Infonavit.Core.Infonavit();
+                        infP2.idtrabajador = idTrabajador;
+
+                        List<Infonavit.Core.Infonavit> lstPeriodoInfonavit2 = new List<Infonavit.Core.Infonavit>();
+
+                        cnx.Open();
+                        lstPeriodoInfonavit2 = iph2.obtenerDiasInfonavit(infP2);
                         cnx.Close();
 
                         Empleados.Core.EmpleadosHelper epih = new Empleados.Core.EmpleadosHelper();
@@ -687,58 +838,61 @@ namespace Nominas
                         pPI.idperiodo = idperiodoPI;
 
                         cnx.Open();
-                        int diasPI = (int)ppih.DiasDePago(pPI);
+                        diasPI2 = (int)ppih.DiasDePago(pPI);
                         cnx.Close();
 
-                        if (lstPeriodoInfonavit.Count == 1)
-                            if (lstPeriodoInfonavit[0].fecha >= inicioPeriodo && lstPeriodoInfonavit[0].fecha <= finPeriodo)
-                                formula = formula.Replace("[" + variables[i] + "]", lstPeriodoInfonavit[0].dias.ToString());
-                            else
-                            {
-                                CalculoFormula cf = new CalculoFormula(idTrabajador, inicioPeriodo, finPeriodo, "[DiasLaborados]-[Faltas]-[DiasIncapacidad]");
-                                diasPI = int.Parse(cf.calcularFormula().ToString());
-                                formula = formula.Replace("[" + variables[i] + "]", diasPI.ToString());
-                            }
-                             
-                        else if (lstPeriodoInfonavit.Count == 2)
-                            if (lstPeriodoInfonavit[0].fecha >= inicioPeriodo && lstPeriodoInfonavit[0].fecha <= finPeriodo)
-                            {
-                                string _formula = formula;
-                                formula = formula.Replace("[" + variables[i] + "]", lstPeriodoInfonavit[0].dias.ToString());
-                                _formula = _formula.Replace("[" + variables[i] + "]", lstPeriodoInfonavit[1].dias.ToString());
-                                formula = formula + "+" + _formula;
-                            }
-                            else
-                            {
-                                CalculoFormula cf = new CalculoFormula(idTrabajador, inicioPeriodo, finPeriodo, "[DiasLaborados]-[Faltas]-[DiasIncapacidad]");
-                                diasPI = int.Parse(cf.calcularFormula().ToString());
-                                formula = formula.Replace("[" + variables[i] + "]", diasPI.ToString());
-                            }
-                            
+                        diasPI2 = diasPI2 - lstPeriodoInfonavit2[0].dias;
+
+                        formula = formula.Replace("[" + variables[i] + "]", diasPI2.ToString());
+                        
                         break;
                     case "SeguroInfonavit":
+
+                        Infonavit.Core.InfonavitHelper infhSI = new Infonavit.Core.InfonavitHelper();
+                        infhSI.Command = cmd;
 
                         Empleados.Core.EmpleadosHelper esih = new Empleados.Core.EmpleadosHelper();
                         esih.Command = cmd;
 
+                        List<Infonavit.Core.Infonavit> lstInfonavitSI = new List<Infonavit.Core.Infonavit>();
+
+                        Infonavit.Core.Infonavit infSI = new Infonavit.Core.Infonavit();
+                        infSI.idtrabajador = idTrabajador;
+                        infSI.activo = true;
+                     
                         cnx.Open();
-                        int idperiodoSI = (int)esih.obtenerIdPeriodo(idTrabajador);
+                        lstInfonavitSI = infhSI.obtenerInfonavit(infSI);
                         cnx.Close();
 
-                        Periodos.Core.PeriodosHelper psih = new Periodos.Core.PeriodosHelper();
-                        psih.Command = cmd;
+                        if (lstInfonavitSI.Count != 0)
+                        {
+                            if (lstInfonavitSI[0].fecha <= finPeriodo)
+                            {
+                                cnx.Open();
+                                int idperiodoSI = (int)esih.obtenerIdPeriodo(idTrabajador);
+                                cnx.Close();
 
-                        Periodos.Core.Periodos psi = new Periodos.Core.Periodos();
-                        psi.idperiodo = idperiodoSI;
+                                Periodos.Core.PeriodosHelper psih = new Periodos.Core.PeriodosHelper();
+                                psih.Command = cmd;
 
-                        cnx.Open();
-                        int diasSI = (int)psih.DiasDePago(psi);
-                        cnx.Close();
+                                Periodos.Core.Periodos psi = new Periodos.Core.Periodos();
+                                psi.idperiodo = idperiodoSI;
 
-                        if (diasSI == 7)
-                            formula = formula.Replace("[" + variables[i] + "]", (1.5).ToString());
+                                cnx.Open();
+                                int diasSI = (int)psih.DiasDePago(psi);
+                                cnx.Close();
+
+                                if (diasSI == 7)
+                                    formula = formula.Replace("[" + variables[i] + "]", (1.5).ToString());
+                                else
+                                    formula = formula.Replace("[" + variables[i] + "]", (3).ToString());
+                            }
+                            else
+                                return 0;
+                        }
                         else
-                            formula = formula.Replace("[" + variables[i] + "]", (3).ToString());
+                            return 0;
+
                         break;
                     case "CuotaFija":
 

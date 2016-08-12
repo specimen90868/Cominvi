@@ -191,7 +191,7 @@ namespace Nominas
                 return;
             }
 
-
+            
             //bool alta_reingreso = ChecaFechaAltaReingreso();
 
             //if (dtpFechaAplicacion.Value.Date > dtpFinPeriodo.Value.Date)
@@ -226,6 +226,8 @@ namespace Nominas
             i.fecha = dtpFechaAplicacion.Value.Date;
             i.inicio = periodoInicio.Date;
             i.fin = periodoFin.Date;
+            i.registro = DateTime.Now;
+            i.idusuario = GLOBALES.IDUSUARIO;
 
             if (rbtnPesos.Checked)
                 if (Periodo == 7)
@@ -265,10 +267,21 @@ namespace Nominas
                 case 0:
                     try
                     {
+                        int existeCredito = 0;
                         cnx.Open();
-                        ih.insertaInfonavit(i);
-                        ch.insertaConceptoTrabajador(ctInfonavit);
-                        ch.insertaConceptoTrabajador(ctSeguroInfonavit);
+                        existeCredito = int.Parse(ih.existeInfonavit(_idEmpleado, txtNumeroCredito.Text.Trim()).ToString());
+                        if (existeCredito != 0)
+                        {
+                            MessageBox.Show("El número de credito que desea ingresar ya existe.\r\n" +
+                                            "Si es una modificación del crédito use la opción \"Modificación\"");
+                            this.Dispose();
+                        }
+                        else
+                        {
+                            ih.insertaInfonavit(i);
+                            ch.insertaConceptoTrabajador(ctInfonavit);
+                            ch.insertaConceptoTrabajador(ctSeguroInfonavit);
+                        }
                         cnx.Close();
                         cnx.Dispose();
                     }
@@ -290,7 +303,7 @@ namespace Nominas
                         else if (_modificar == 1)
                         {
                             ih.insertaInfonavit(i);
-                            ih.actualizaEstatusInfonavit(IdInfonavit);
+                            ih.actualizaEstatusInfonavit(IdInfonavit, DateTime.Now, GLOBALES.IDUSUARIO);
                         }
                         cnx.Close();
                         cnx.Dispose();

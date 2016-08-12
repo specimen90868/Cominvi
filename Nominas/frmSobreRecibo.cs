@@ -78,7 +78,7 @@ namespace Nominas
 
             var dato = from emp in lstEmpleado
                        join d in lstDepartamento on emp.iddepartamento equals d.id
-                       join p in lstPuesto on emp.idpuesto equals p.id
+                       join p in lstPuesto on emp.idpuesto equals p.idpuesto
                        select new { 
                            emp.noempleado,
                            emp.nombrecompleto,
@@ -180,6 +180,7 @@ namespace Nominas
                     * con el SP stp_DatosNominaTrabajador para el calculo.
                     *****************************************************************/
                 cnx.Open();
+                nh.eliminaNominaTrabajador(idTrabajador, _inicioPeriodo, _finPeriodo, _tipoNormalEspecial);
                 lstConceptosPercepciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "P", idTrabajador, _inicioPeriodo, _finPeriodo);
                 lstConceptosDeducciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "D", idTrabajador, _inicioPeriodo, _finPeriodo);
                 cnx.Close();
@@ -1780,7 +1781,7 @@ namespace Nominas
 
             int fila = dgvProgramacion.CurrentCell.RowIndex;
             ProgramacionConcepto.Core.ProgramacionConcepto pc = new ProgramacionConcepto.Core.ProgramacionConcepto();
-            pc.idprogramacion = int.Parse(dgvProgramacion.Rows[fila].Cells[0].Value.ToString());
+            pc.idprogramacion = int.Parse(dgvProgramacion.Rows[fila].Cells["idpc"].Value.ToString());
 
             try{
                 cnx.Open();
@@ -2106,7 +2107,7 @@ namespace Nominas
                         return;
                     }
 
-                    int diasPagoReales = int.Parse(txtDiasPagoV.Text) + existeFaltas;
+                    int diasPagoReales = int.Parse(txtDiasPagoPV.Text) + existeFaltas;
                     if (diasPagoReales > _periodo)
                     {
                         diasPagoReales = _periodo - existeFaltas;
@@ -2114,7 +2115,7 @@ namespace Nominas
                     }
                     else
                     {
-                        diasPagoReales = int.Parse(txtDiasPagoV.Text);
+                        diasPagoReales = int.Parse(txtDiasPagoPV.Text);
                     }
 
                     vp = new Vacaciones.Core.VacacionesPrima();
@@ -2141,6 +2142,17 @@ namespace Nominas
                         MessageBox.Show("Error: Al ingresar el registro de prima vacacional.", "Error");
                         cnx.Dispose();
                         return;
+                    }
+
+                    diasPagoReales = int.Parse(txtDiasPagoV.Text) + existeFaltas;
+                    if (diasPagoReales > _periodo)
+                    {
+                        diasPagoReales = _periodo - existeFaltas;
+                        MessageBox.Show("Existen faltas del trabajador, se ajustaron las vacaciones a: " + diasPagoReales.ToString() + " dia(s).", "Información");
+                    }
+                    else
+                    {
+                        diasPagoReales = int.Parse(txtDiasPagoV.Text);
                     }
 
                     vp = new Vacaciones.Core.VacacionesPrima();
@@ -2225,7 +2237,7 @@ namespace Nominas
                         return;
                     }
 
-                    int diasPagoReales = int.Parse(txtDiasPagoV.Text) + existeFaltas;
+                    int diasPagoReales = int.Parse(txtDiasPagoPV.Text) + existeFaltas;
                     if (diasPagoReales > _periodo)
                     {
                         diasPagoReales = _periodo - existeFaltas;
@@ -2233,7 +2245,7 @@ namespace Nominas
                     }
                     else
                     {
-                        diasPagoReales = int.Parse(txtDiasPagoV.Text);
+                        diasPagoReales = int.Parse(txtDiasPagoPV.Text);
                     }
 
                     vp = new Vacaciones.Core.VacacionesPrima();
@@ -2501,6 +2513,16 @@ namespace Nominas
             vr._inicioPeriodo = _inicioPeriodo;
             vr._empleadoInicio = idTrabajador;
             vr.Show();
+        }
+
+        private void frmSobreRecibo_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (mtxtNoEmpleado.Text != "")
+            {
+                cnx.Dispose();
+                cmd.Dispose();
+            }
+            
         }
 
     }

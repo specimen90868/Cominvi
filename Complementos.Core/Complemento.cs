@@ -17,6 +17,13 @@ namespace Complementos.Core
         public int escolaridad { get; set; }
         public string clinica { get; set; }
         public string nacionalidad { get; set; }
+        public string tempresa1 { get; set; }
+        public string tempresa2 { get; set; }
+        public string tempresa3 { get; set; }
+        public string extension { get; set; }
+        public string cempresa { get; set; }
+        public string cpersonal { get; set; }
+        public string email { get; set; }
         public string observaciones { get; set; }
     }
 }

@@ -8,7 +8,7 @@ namespace Puestos.Core
 {
     public class Puestos
     {
-        public int id { get; set; }
+        public int idpuesto { get; set; }
         public string nombre { get; set; }
         public int estatus { get; set; }
         public int idempresa { get; set; }

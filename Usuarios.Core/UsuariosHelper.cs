@@ -68,7 +68,7 @@ namespace Usuarios.Core
         {
             Command.CommandText = "update usuarios set usuario = @usuario, nombre = @nombre, activo = @activo, idperfil = @idperfil where idusuario = @id";
             Command.Parameters.Clear();
-            Command.Parameters.AddWithValue("id", usr.usuario);
+            Command.Parameters.AddWithValue("id", usr.idusuario);
             Command.Parameters.AddWithValue("usuario", usr.usuario);
             Command.Parameters.AddWithValue("nombre", usr.nombre);
             Command.Parameters.AddWithValue("activo", usr.activo);

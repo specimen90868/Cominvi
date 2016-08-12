@@ -202,7 +202,7 @@
             this.btnCalcular.Location = new System.Drawing.Point(284, 471);
             this.btnCalcular.Name = "btnCalcular";
             this.btnCalcular.Size = new System.Drawing.Size(54, 20);
-            this.btnCalcular.TabIndex = 23;
+            this.btnCalcular.TabIndex = 27;
             this.btnCalcular.Text = "Calcular";
             this.btnCalcular.UseVisualStyleBackColor = true;
             this.btnCalcular.Click += new System.EventHandler(this.btnCalcular_Click);
@@ -213,7 +213,7 @@
             this.txtNSS.Mask = "99999999999";
             this.txtNSS.Name = "txtNSS";
             this.txtNSS.Size = new System.Drawing.Size(151, 20);
-            this.txtNSS.TabIndex = 14;
+            this.txtNSS.TabIndex = 15;
             // 
             // txtCURP
             // 
@@ -221,7 +221,7 @@
             this.txtCURP.Location = new System.Drawing.Point(415, 139);
             this.txtCURP.Name = "txtCURP";
             this.txtCURP.Size = new System.Drawing.Size(151, 20);
-            this.txtCURP.TabIndex = 12;
+            this.txtCURP.TabIndex = 13;
             this.txtCURP.Leave += new System.EventHandler(this.txtCURP_Leave);
             // 
             // Label27
@@ -249,7 +249,7 @@
             this.cmbTipoSalario.Location = new System.Drawing.Point(126, 392);
             this.cmbTipoSalario.Name = "cmbTipoSalario";
             this.cmbTipoSalario.Size = new System.Drawing.Size(152, 21);
-            this.cmbTipoSalario.TabIndex = 21;
+            this.cmbTipoSalario.TabIndex = 23;
             // 
             // lblTipoSalario
             // 
@@ -267,7 +267,7 @@
             this.txtSueldo.Name = "txtSueldo";
             this.txtSueldo.ReadOnly = true;
             this.txtSueldo.Size = new System.Drawing.Size(152, 20);
-            this.txtSueldo.TabIndex = 22;
+            this.txtSueldo.TabIndex = 24;
             this.txtSueldo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblSueldo
@@ -285,7 +285,7 @@
             this.txtSD.Name = "txtSD";
             this.txtSD.ReadOnly = true;
             this.txtSD.Size = new System.Drawing.Size(152, 20);
-            this.txtSD.TabIndex = 24;
+            this.txtSD.TabIndex = 25;
             this.txtSD.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblSD
@@ -302,7 +302,7 @@
             this.txtSDI.Location = new System.Drawing.Point(126, 471);
             this.txtSDI.Name = "txtSDI";
             this.txtSDI.Size = new System.Drawing.Size(152, 20);
-            this.txtSDI.TabIndex = 25;
+            this.txtSDI.TabIndex = 26;
             this.txtSDI.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblSDI
@@ -335,6 +335,7 @@
             // 
             // cmbPeriodo
             // 
+            this.cmbPeriodo.Enabled = false;
             this.cmbPeriodo.FormattingEnabled = true;
             this.cmbPeriodo.Location = new System.Drawing.Point(415, 245);
             this.cmbPeriodo.Name = "cmbPeriodo";
@@ -416,7 +417,7 @@
             this.txtRFC.Location = new System.Drawing.Point(415, 113);
             this.txtRFC.Name = "txtRFC";
             this.txtRFC.Size = new System.Drawing.Size(151, 20);
-            this.txtRFC.TabIndex = 11;
+            this.txtRFC.TabIndex = 12;
             // 
             // label5
             // 
@@ -525,7 +526,7 @@
             this.cmbEstado.Location = new System.Drawing.Point(127, 320);
             this.cmbEstado.Name = "cmbEstado";
             this.cmbEstado.Size = new System.Drawing.Size(151, 21);
-            this.cmbEstado.TabIndex = 225;
+            this.cmbEstado.TabIndex = 9;
             // 
             // txtAntiguedadMod
             // 
@@ -541,7 +542,7 @@
             this.rbtnHombre.Location = new System.Drawing.Point(128, 347);
             this.rbtnHombre.Name = "rbtnHombre";
             this.rbtnHombre.Size = new System.Drawing.Size(62, 17);
-            this.rbtnHombre.TabIndex = 9;
+            this.rbtnHombre.TabIndex = 10;
             this.rbtnHombre.TabStop = true;
             this.rbtnHombre.Text = "Hombre";
             this.rbtnHombre.UseVisualStyleBackColor = true;
@@ -552,7 +553,7 @@
             this.rbtnMujer.Location = new System.Drawing.Point(206, 347);
             this.rbtnMujer.Name = "rbtnMujer";
             this.rbtnMujer.Size = new System.Drawing.Size(51, 17);
-            this.rbtnMujer.TabIndex = 10;
+            this.rbtnMujer.TabIndex = 11;
             this.rbtnMujer.TabStop = true;
             this.rbtnMujer.Text = "Mujer";
             this.rbtnMujer.UseVisualStyleBackColor = true;
@@ -571,7 +572,7 @@
             this.btnObtenerCurp.Location = new System.Drawing.Point(572, 139);
             this.btnObtenerCurp.Name = "btnObtenerCurp";
             this.btnObtenerCurp.Size = new System.Drawing.Size(63, 23);
-            this.btnObtenerCurp.TabIndex = 13;
+            this.btnObtenerCurp.TabIndex = 14;
             this.btnObtenerCurp.Text = "Obtener";
             this.btnObtenerCurp.UseVisualStyleBackColor = true;
             this.btnObtenerCurp.Click += new System.EventHandler(this.btnObtenerCurp_Click);
@@ -583,7 +584,7 @@
             this.btnVer.Location = new System.Drawing.Point(415, 328);
             this.btnVer.Name = "btnVer";
             this.btnVer.Size = new System.Drawing.Size(67, 35);
-            this.btnVer.TabIndex = 19;
+            this.btnVer.TabIndex = 21;
             this.btnVer.Text = "Ver";
             this.btnVer.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnVer.UseVisualStyleBackColor = true;
@@ -596,7 +597,7 @@
             this.btnAsignar.Location = new System.Drawing.Point(499, 328);
             this.btnAsignar.Name = "btnAsignar";
             this.btnAsignar.Size = new System.Drawing.Size(67, 35);
-            this.btnAsignar.TabIndex = 20;
+            this.btnAsignar.TabIndex = 22;
             this.btnAsignar.Text = "Asignar";
             this.btnAsignar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnAsignar.UseVisualStyleBackColor = true;
@@ -630,11 +631,12 @@
             // 
             // cmbZona
             // 
+            this.cmbZona.Enabled = false;
             this.cmbZona.FormattingEnabled = true;
             this.cmbZona.Location = new System.Drawing.Point(415, 272);
             this.cmbZona.Name = "cmbZona";
             this.cmbZona.Size = new System.Drawing.Size(151, 21);
-            this.cmbZona.TabIndex = 237;
+            this.cmbZona.TabIndex = 19;
             // 
             // label15
             // 
@@ -680,7 +682,7 @@
             this.mtxtCuentaBancaria.Mask = "9999999999";
             this.mtxtCuentaBancaria.Name = "mtxtCuentaBancaria";
             this.mtxtCuentaBancaria.Size = new System.Drawing.Size(152, 20);
-            this.mtxtCuentaBancaria.TabIndex = 242;
+            this.mtxtCuentaBancaria.TabIndex = 28;
             this.mtxtCuentaBancaria.Text = "0000000000";
             // 
             // mtxtCuentaClabe
@@ -689,7 +691,7 @@
             this.mtxtCuentaClabe.Mask = "999 999 99999999999 9";
             this.mtxtCuentaClabe.Name = "mtxtCuentaClabe";
             this.mtxtCuentaClabe.Size = new System.Drawing.Size(152, 20);
-            this.mtxtCuentaClabe.TabIndex = 243;
+            this.mtxtCuentaClabe.TabIndex = 29;
             this.mtxtCuentaClabe.Text = "000000000000000000";
             // 
             // mtxtIdBancario
@@ -698,7 +700,7 @@
             this.mtxtIdBancario.Mask = "9999";
             this.mtxtIdBancario.Name = "mtxtIdBancario";
             this.mtxtIdBancario.Size = new System.Drawing.Size(152, 20);
-            this.mtxtIdBancario.TabIndex = 244;
+            this.mtxtIdBancario.TabIndex = 30;
             this.mtxtIdBancario.Text = "0000";
             // 
             // dtpFechaAplicacionHistorico
@@ -729,6 +731,7 @@
             // 
             // cmbMetodoPago
             // 
+            this.cmbMetodoPago.Enabled = false;
             this.cmbMetodoPago.FormattingEnabled = true;
             this.cmbMetodoPago.Items.AddRange(new object[] {
             "EFECTIVO",
@@ -737,7 +740,7 @@
             this.cmbMetodoPago.Location = new System.Drawing.Point(126, 629);
             this.cmbMetodoPago.Name = "cmbMetodoPago";
             this.cmbMetodoPago.Size = new System.Drawing.Size(152, 21);
-            this.cmbMetodoPago.TabIndex = 248;
+            this.cmbMetodoPago.TabIndex = 31;
             // 
             // label21
             // 
@@ -750,11 +753,12 @@
             // 
             // cmbTipoRegimen
             // 
+            this.cmbTipoRegimen.Enabled = false;
             this.cmbTipoRegimen.FormattingEnabled = true;
             this.cmbTipoRegimen.Location = new System.Drawing.Point(415, 299);
             this.cmbTipoRegimen.Name = "cmbTipoRegimen";
             this.cmbTipoRegimen.Size = new System.Drawing.Size(151, 21);
-            this.cmbTipoRegimen.TabIndex = 250;
+            this.cmbTipoRegimen.TabIndex = 20;
             // 
             // mtxtNoEmpleado
             // 
@@ -772,7 +776,7 @@
             this.chkObraCivil.Location = new System.Drawing.Point(126, 90);
             this.chkObraCivil.Name = "chkObraCivil";
             this.chkObraCivil.Size = new System.Drawing.Size(86, 17);
-            this.chkObraCivil.TabIndex = 251;
+            this.chkObraCivil.TabIndex = 32;
             this.chkObraCivil.Text = "Es Obra Civil";
             this.chkObraCivil.UseVisualStyleBackColor = true;
             // 
@@ -792,7 +796,7 @@
             this.dtpFechaBaja.Location = new System.Drawing.Point(128, 295);
             this.dtpFechaBaja.Name = "dtpFechaBaja";
             this.dtpFechaBaja.Size = new System.Drawing.Size(151, 20);
-            this.dtpFechaBaja.TabIndex = 253;
+            this.dtpFechaBaja.TabIndex = 8;
             // 
             // frmEmpleados
             // 

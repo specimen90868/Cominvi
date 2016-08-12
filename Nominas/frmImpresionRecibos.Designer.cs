@@ -34,14 +34,14 @@
             this.lstvDepartamentos = new System.Windows.Forms.ListView();
             this.label3 = new System.Windows.Forms.Label();
             this.lstvEmpleados = new System.Windows.Forms.ListView();
-            this.btnSeleccionarTodos = new System.Windows.Forms.Button();
-            this.btnLimpiar = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnAceptar = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.cmbTipoNomina = new System.Windows.Forms.ComboBox();
+            this.chkImprimirTodos = new System.Windows.Forms.CheckBox();
+            this.chkTodos = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // lstvPeriodos
@@ -53,6 +53,7 @@
             this.lstvPeriodos.Size = new System.Drawing.Size(231, 126);
             this.lstvPeriodos.TabIndex = 0;
             this.lstvPeriodos.UseCompatibleStateImageBehavior = false;
+            this.lstvPeriodos.SelectedIndexChanged += new System.EventHandler(this.lstvPeriodos_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -92,36 +93,16 @@
             // 
             // lstvEmpleados
             // 
-            this.lstvEmpleados.Location = new System.Drawing.Point(15, 223);
+            this.lstvEmpleados.Location = new System.Drawing.Point(15, 244);
             this.lstvEmpleados.Name = "lstvEmpleados";
-            this.lstvEmpleados.Size = new System.Drawing.Size(468, 253);
+            this.lstvEmpleados.Size = new System.Drawing.Size(468, 232);
             this.lstvEmpleados.TabIndex = 6;
             this.lstvEmpleados.UseCompatibleStateImageBehavior = false;
-            // 
-            // btnSeleccionarTodos
-            // 
-            this.btnSeleccionarTodos.Location = new System.Drawing.Point(15, 482);
-            this.btnSeleccionarTodos.Name = "btnSeleccionarTodos";
-            this.btnSeleccionarTodos.Size = new System.Drawing.Size(59, 23);
-            this.btnSeleccionarTodos.TabIndex = 7;
-            this.btnSeleccionarTodos.Text = "Todos";
-            this.btnSeleccionarTodos.UseVisualStyleBackColor = true;
-            this.btnSeleccionarTodos.Click += new System.EventHandler(this.btnSeleccionarTodos_Click);
-            // 
-            // btnLimpiar
-            // 
-            this.btnLimpiar.Location = new System.Drawing.Point(80, 482);
-            this.btnLimpiar.Name = "btnLimpiar";
-            this.btnLimpiar.Size = new System.Drawing.Size(59, 23);
-            this.btnLimpiar.TabIndex = 8;
-            this.btnLimpiar.Text = "Limpiar";
-            this.btnLimpiar.UseVisualStyleBackColor = true;
-            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(150, 487);
+            this.label4.Location = new System.Drawing.Point(131, 224);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(43, 13);
             this.label4.TabIndex = 9;
@@ -131,7 +112,7 @@
             // 
             this.txtBuscar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtBuscar.ForeColor = System.Drawing.SystemColors.WindowFrame;
-            this.txtBuscar.Location = new System.Drawing.Point(199, 484);
+            this.txtBuscar.Location = new System.Drawing.Point(180, 221);
             this.txtBuscar.Name = "txtBuscar";
             this.txtBuscar.Size = new System.Drawing.Size(105, 20);
             this.txtBuscar.TabIndex = 10;
@@ -181,19 +162,41 @@
             this.cmbTipoNomina.TabIndex = 14;
             this.cmbTipoNomina.SelectedIndexChanged += new System.EventHandler(this.cmbTipoNomina_SelectedIndexChanged);
             // 
+            // chkImprimirTodos
+            // 
+            this.chkImprimirTodos.AutoSize = true;
+            this.chkImprimirTodos.Location = new System.Drawing.Point(252, 200);
+            this.chkImprimirTodos.Name = "chkImprimirTodos";
+            this.chkImprimirTodos.Size = new System.Drawing.Size(90, 17);
+            this.chkImprimirTodos.TabIndex = 15;
+            this.chkImprimirTodos.Text = "Imprimir todos";
+            this.chkImprimirTodos.UseVisualStyleBackColor = true;
+            this.chkImprimirTodos.CheckedChanged += new System.EventHandler(this.chkImprimirTodos_CheckedChanged);
+            // 
+            // chkTodos
+            // 
+            this.chkTodos.AutoSize = true;
+            this.chkTodos.Location = new System.Drawing.Point(15, 223);
+            this.chkTodos.Name = "chkTodos";
+            this.chkTodos.Size = new System.Drawing.Size(111, 17);
+            this.chkTodos.TabIndex = 16;
+            this.chkTodos.Text = "Seleccionar todos";
+            this.chkTodos.UseVisualStyleBackColor = true;
+            this.chkTodos.CheckedChanged += new System.EventHandler(this.chkTodos_CheckedChanged);
+            // 
             // frmImpresionRecibos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(492, 518);
+            this.Controls.Add(this.chkTodos);
+            this.Controls.Add(this.chkImprimirTodos);
             this.Controls.Add(this.cmbTipoNomina);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.txtBuscar);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.btnLimpiar);
-            this.Controls.Add(this.btnSeleccionarTodos);
             this.Controls.Add(this.lstvEmpleados);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lstvDepartamentos);
@@ -218,13 +221,13 @@
         private System.Windows.Forms.ListView lstvDepartamentos;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ListView lstvEmpleados;
-        private System.Windows.Forms.Button btnSeleccionarTodos;
-        private System.Windows.Forms.Button btnLimpiar;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtBuscar;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Button btnAceptar;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox cmbTipoNomina;
+        private System.Windows.Forms.CheckBox chkImprimirTodos;
+        private System.Windows.Forms.CheckBox chkTodos;
     }
 }

@@ -120,6 +120,7 @@
             // 
             this.dgvMovimientos.AllowUserToAddRows = false;
             this.dgvMovimientos.AllowUserToDeleteRows = false;
+            this.dgvMovimientos.AllowUserToOrderColumns = true;
             this.dgvMovimientos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvMovimientos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.noempleado,
@@ -138,31 +139,26 @@
             // 
             this.noempleado.HeaderText = "No. Empleado";
             this.noempleado.Name = "noempleado";
-            this.noempleado.ReadOnly = true;
             // 
             // cantidad
             // 
             this.cantidad.HeaderText = "Cantidad";
             this.cantidad.Name = "cantidad";
-            this.cantidad.ReadOnly = true;
             // 
             // concepto
             // 
             this.concepto.HeaderText = "Concepto";
             this.concepto.Name = "concepto";
-            this.concepto.ReadOnly = true;
             // 
             // inicio
             // 
             this.inicio.HeaderText = "Fecha Inicio";
             this.inicio.Name = "inicio";
-            this.inicio.ReadOnly = true;
             // 
             // fin
             // 
             this.fin.HeaderText = "Fecha Fin";
             this.fin.Name = "fin";
-            this.fin.ReadOnly = true;
             // 
             // workMovimientos
             // 

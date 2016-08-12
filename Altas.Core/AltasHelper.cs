@@ -69,7 +69,19 @@ namespace Altas.Core
 
             return lstAltas;
         }
-        
+
+        public int existeAlta(int idEmpresa, int idTrabajador, DateTime inicio)
+        {
+            Command.CommandText = @"select count(*) from suaAltas where idempresa = @idempresa and periodoinicio = @inicio
+                        and idtrabajador = @idtrabajador";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", idTrabajador);
+            Command.Parameters.AddWithValue("idempresa", idEmpresa);
+            Command.Parameters.AddWithValue("inicio", inicio);
+            int dato = int.Parse(Select(Command).ToString());
+            return dato;
+        }
+
         public int insertaAlta(Altas a)
         {
             Command.CommandText = "insert into suaAltas (idtrabajador,idempresa,registropatronal,nss,rfc,curp,paterno,materno,nombre,contrato,jornada,fechaingreso,diasproporcionales,sdi,fechanacimiento,estado,noestado,sexo,periodoinicio,periodofin) " +
@@ -164,6 +176,14 @@ namespace Altas.Core
             Command.Parameters.AddWithValue("fin", a.periodoFin);
             object dato = Select(Command);
             return dato;
+        }
+
+        public int eliminaAlta(int idtrabajador)
+        {
+            Command.CommandText = "delete from suaAltas where idtrabajador = @idtrabajador";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
+            return Command.ExecuteNonQuery();
         }
     }
 }

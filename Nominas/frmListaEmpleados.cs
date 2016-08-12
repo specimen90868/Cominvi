@@ -33,15 +33,15 @@ namespace Nominas
         {
             dgvEmpleados.RowHeadersVisible = false;
             ListaEmpleados();
-
-            if (_empleadoAltaBaja == GLOBALES.INACTIVO)
-            {
-                CargaPerfil(GLOBALES.INACTIVO, "Empleados en Baja");
-            }
-            else
-            {
-                CargaPerfil(GLOBALES.ACTIVO, "Empleados de nómina");
-            }
+            CargaPerfil(GLOBALES.ACTIVO, "Empleados de nómina");
+            //if (_empleadoAltaBaja == GLOBALES.INACTIVO)
+            //{
+            //    CargaPerfil(GLOBALES.INACTIVO, "Empleados en Baja");
+            //}
+            //else
+            //{
+            //    CargaPerfil(GLOBALES.ACTIVO, "Empleados de nómina");
+            //}
         }
 
         private void ListaEmpleados()
@@ -61,7 +61,7 @@ namespace Nominas
                 cnx.Close();
                 cnx.Dispose();
 
-                var em = from e in lstEmpleados
+                var em = from e in lstEmpleados orderby e.noempleado ascending
                          select new
                          {
                              IdTrabajador = e.idtrabajador,
@@ -175,7 +175,7 @@ namespace Nominas
                 if (string.IsNullOrEmpty(txtBuscar.Text) || string.IsNullOrWhiteSpace(txtBuscar.Text))
                 {
 
-                    var empleado = from em in lstEmpleados
+                    var empleado = from em in lstEmpleados orderby em.noempleado ascending
                                    select new
                                    {
                                        IdTrabajador = em.idtrabajador,
@@ -198,6 +198,7 @@ namespace Nominas
                 {
                     var busqueda = from b in lstEmpleados
                                    where b.nombrecompleto.Contains(txtBuscar.Text.ToUpper()) || b.noempleado.Contains(txtBuscar.Text)
+                                   orderby b.noempleado ascending
                                    select new
                                    {
                                        IdTrabajador = b.idtrabajador,
@@ -302,9 +303,6 @@ namespace Nominas
             DialogResult respuesta = MessageBox.Show("¿Quiere eliminar la trabajador?. \r\n \r\n CUIDADO. Esta acción eliminará permanentemente el Empleado.", "Confirmación", MessageBoxButtons.YesNo);
             if (respuesta == DialogResult.Yes)
             {
-                //eh = new Empleados.Core.EmpleadosHelper();
-                //eh.Command = cmd;
-
                 try
                 {
                     cnx.Open();
@@ -351,7 +349,7 @@ namespace Nominas
                 return;
             }
 
-            if (estatus == 1)
+            if (estatus == 1 || estatus == 2)
             {
                 frmBaja b = new frmBaja();
                 b.OnBajaEmpleado += b_OnBajaEmpleado;

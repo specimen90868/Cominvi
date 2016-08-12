@@ -20,6 +20,8 @@ namespace Infonavit.Core
         public DateTime fecha { get; set; }
         public DateTime inicio { get; set; }
         public DateTime fin { get; set; }
+        public DateTime registro { get; set; }
+        public int idusuario { get; set; }
     }
 
     public class suaInfonavit

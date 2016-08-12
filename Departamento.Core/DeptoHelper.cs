@@ -28,6 +28,29 @@ namespace Departamento.Core
             return lstDeptos;
         }
 
+        public List<Depto> obtenerDepartamentos(int idEmpresa, DateTime fecha, int tipoNomina)
+        {
+            DataTable dtDeptos = new DataTable();
+            List<Depto> lstDeptos = new List<Depto>();
+            Command.CommandText = @"select distinct pn.iddepartamento as id, depto.descripcion as descripcion from PagoNomina pn inner join Departamentos depto on
+                pn.iddepartamento = depto.id where pn.idempresa = @idempresa
+                and pn.fechainicio = @fecha and tiponomina = @tiponomina order by pn.iddepartamento asc";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idEmpresa);
+            Command.Parameters.AddWithValue("fecha", fecha);
+            Command.Parameters.AddWithValue("tipoNomina", tipoNomina);
+            dtDeptos = SelectData(Command);
+            for (int i = 0; i < dtDeptos.Rows.Count; i++)
+            {
+                Depto d = new Depto();
+                d.id = int.Parse(dtDeptos.Rows[i]["id"].ToString());
+                d.descripcion = dtDeptos.Rows[i]["descripcion"].ToString();
+                lstDeptos.Add(d);
+            }
+
+            return lstDeptos;
+        }
+
         public List<Depto> obtenerDepartamento(Depto d)
         {
             DataTable dtDepto = new DataTable();

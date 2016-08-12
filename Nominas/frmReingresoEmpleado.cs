@@ -90,7 +90,7 @@ namespace Nominas
 
             cmbPuesto.DataSource = lstPuesto.ToList();
             cmbPuesto.DisplayMember = "nombre";
-            cmbPuesto.ValueMember = "id";
+            cmbPuesto.ValueMember = "idpuesto";
 
             cmbPeriodo.DataSource = lstPeriodo.ToList();
             cmbPeriodo.DisplayMember = "pago";
@@ -237,7 +237,7 @@ namespace Nominas
 
             ee.idtrabajador = _idempleado;
             ee.idempresa = GLOBALES.IDEMPRESA;
-            ee.estatus = GLOBALES.ACTIVO;            
+            ee.estatus = GLOBALES.REINGRESO;            
 
             historia.idtrabajador = _idempleado;
             historia.idempresa = lstEmpleado[0].idempresa;
@@ -246,6 +246,8 @@ namespace Nominas
             historia.fecha_sistema = DateTime.Now;
             historia.motivobaja = 0;
             historia.tipomovimiento = GLOBALES.mREINGRESO;
+            historia.iddepartamento = int.Parse(cmbDepartamento.SelectedValue.ToString());
+            historia.idpuesto = int.Parse(cmbPuesto.SelectedValue.ToString());
 
             empresa.idempresa = lstEmpleado[0].idempresa;
 

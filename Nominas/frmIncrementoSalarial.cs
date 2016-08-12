@@ -31,6 +31,8 @@ namespace Nominas
         Puestos.Core.PuestosHelper puestoh;
         int idperiodo, antiguedad;
         string nss, rp;
+        bool departamento = false, puesto = false;
+        int iddepto = 0, idpuesto = 0;
         #endregion
 
         #region DELEGADOS
@@ -45,6 +47,9 @@ namespace Nominas
 
         private void frmIncrementoSalarial_Load(object sender, EventArgs e)
         {
+            cmbDepartamento.Enabled = false;
+            cmbPuesto.Enabled = false;
+
             lblEmpleado.Text = _nombreEmpleado;
             cnx = new SqlConnection();
             cnx.ConnectionString = cdn;
@@ -98,22 +103,36 @@ namespace Nominas
                 MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
             }
 
+            cmbDepartamento.DataSource = lstDepartamento.ToList();
+            cmbDepartamento.DisplayMember = "descripcion";
+            cmbDepartamento.ValueMember = "id";
+
+            cmbPuesto.DataSource = lstPuesto.ToList();
+            cmbPuesto.DisplayMember = "nombre";
+            cmbPuesto.ValueMember = "idpuesto";
+
             var dato = from emp in lstEmpleado
                        join depto in lstDepartamento on emp.iddepartamento equals depto.id
-                       join pto in lstPuesto on emp.idpuesto equals pto.id
+                       join pto in lstPuesto on emp.idpuesto equals pto.idpuesto
                        select new
                        {
                            emp.noempleado,
                            emp.nombrecompleto,
+                           depto.id,
                            depto.descripcion,
+                           pto.idpuesto,
                            pto.nombre
                        };
             foreach (var inf in dato)
             {
+                iddepto = inf.id;
+                idpuesto = inf.id;
+                cmbDepartamento.SelectedValue = inf.id;
+                cmbPuesto.SelectedValue = inf.idpuesto;
                 mtxtNoEmpleado.Text = inf.noempleado;
                 txtDepartamento.Text = inf.descripcion;
                 txtPuesto.Text = inf.nombre;
-            }
+            }            
         }
 
         private void txtSDI_Leave(object sender, EventArgs e)
@@ -199,6 +218,16 @@ namespace Nominas
             empleado.sd = decimal.Parse(txtSD.Text);
             empleado.sueldo = decimal.Parse(txtSueldo.Text);
 
+            if (departamento)
+                empleado.iddepartamento = int.Parse(cmbDepartamento.SelectedValue.ToString());
+            else
+                empleado.iddepartamento = iddepto;
+
+            if (puesto)
+                empleado.idpuesto = int.Parse(cmbPuesto.SelectedValue.ToString());
+            else
+                empleado.idpuesto = idpuesto;
+
             Historial.Core.Historial historia = new Historial.Core.Historial();
             historia.idtrabajador = _idempleado;
             historia.idempresa = GLOBALES.IDEMPRESA;
@@ -207,6 +236,16 @@ namespace Nominas
             historia.fecha_imss = dtpFecha.Value;
             historia.fecha_sistema = DateTime.Now;
             historia.motivobaja = 0;
+
+            if (departamento)
+                historia.iddepartamento = int.Parse(cmbDepartamento.SelectedValue.ToString());
+            else
+                historia.iddepartamento = iddepto;
+
+            if (puesto)
+                historia.idpuesto = int.Parse(cmbPuesto.SelectedValue.ToString());
+            else
+                historia.idpuesto = idpuesto;
 
             Modificaciones.Core.Modificaciones mod = new Modificaciones.Core.Modificaciones();
             mod.idtrabajador = _idempleado;
@@ -219,8 +258,42 @@ namespace Nominas
             try {
                 cnx.Open();
                 eh.actualizaSueldo(empleado);
+                eh.actualizaDeptoPuesto(empleado);
                 hh.insertarHistorial(historia);
                 mh.insertaModificacion(mod);
+
+                if (departamento)
+                {
+                    Historial.Core.Historial historiaDepto = new Historial.Core.Historial();
+                    historiaDepto.idtrabajador = _idempleado;
+                    historiaDepto.idempresa = GLOBALES.IDEMPRESA;
+                    historiaDepto.tipomovimiento = GLOBALES.mCAMBIODEPARTAMENTO;
+                    historiaDepto.valor = decimal.Parse(txtSDI.Text);
+                    historiaDepto.fecha_imss = dtpFecha.Value;
+                    historiaDepto.fecha_sistema = DateTime.Now;
+                    historiaDepto.motivobaja = 0;
+                    historiaDepto.iddepartamento = int.Parse(cmbDepartamento.SelectedValue.ToString());
+                    historiaDepto.idpuesto = idpuesto;
+                    hh.insertarHistorial(historiaDepto);
+                    eh.actualizaDeptoPuesto(empleado);
+                }
+
+                if (puesto)
+                {
+                    Historial.Core.Historial historiaPuesto = new Historial.Core.Historial();
+                    historiaPuesto.idtrabajador = _idempleado;
+                    historiaPuesto.idempresa = GLOBALES.IDEMPRESA;
+                    historiaPuesto.tipomovimiento = GLOBALES.mCAMBIOPUESTO;
+                    historiaPuesto.valor = decimal.Parse(txtSDI.Text);
+                    historiaPuesto.fecha_imss = dtpFecha.Value;
+                    historiaPuesto.fecha_sistema = DateTime.Now;
+                    historiaPuesto.motivobaja = 0;
+                    historiaPuesto.iddepartamento = int.Parse(cmbDepartamento.SelectedValue.ToString());
+                    historiaPuesto.idpuesto = int.Parse(cmbPuesto.SelectedValue.ToString());
+                    hh.insertarHistorial(historiaPuesto);
+                    eh.actualizaDeptoPuesto(empleado);
+                }
+
                 cnx.Close();
                 cnx.Dispose();
 
@@ -238,6 +311,34 @@ namespace Nominas
         private void toolCerrar_Click(object sender, EventArgs e)
         {
             this.Dispose();
+        }
+
+        private void chkCambioDeptoPto_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkCambioDeptoPto.Checked)
+            {
+                cmbDepartamento.Enabled = true;
+                departamento = true;
+            }
+            else
+            {
+                cmbDepartamento.Enabled = false;
+                departamento = false;
+            }
+        }
+
+        private void chkModificaPuesto_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkModificaPuesto.Checked)
+            {
+                puesto = true;
+                cmbPuesto.Enabled = true;
+            }
+            else
+            {
+                puesto = false;
+                cmbPuesto.Enabled = false;
+            }
         }
     }
 }

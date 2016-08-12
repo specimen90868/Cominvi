@@ -70,6 +70,19 @@
             this.txtObservaciones = new System.Windows.Forms.TextBox();
             this.lblEmpleado = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.mTelEmpresa = new System.Windows.Forms.MaskedTextBox();
+            this.mTelPersonal = new System.Windows.Forms.MaskedTextBox();
+            this.txtExtension = new System.Windows.Forms.TextBox();
+            this.txtCorreo = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.mCelEmpresa = new System.Windows.Forms.MaskedTextBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.mTelEmpresa2 = new System.Windows.Forms.MaskedTextBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.mTelEmpresa3 = new System.Windows.Forms.MaskedTextBox();
             this.toolTitulo.SuspendLayout();
             this.toolAcciones.SuspendLayout();
             this.SuspendLayout();
@@ -124,7 +137,7 @@
             // Label16
             // 
             this.Label16.AutoSize = true;
-            this.Label16.BackColor = System.Drawing.Color.White;
+            this.Label16.BackColor = System.Drawing.SystemColors.Control;
             this.Label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
             this.Label16.Location = new System.Drawing.Point(12, 119);
             this.Label16.Name = "Label16";
@@ -197,7 +210,7 @@
             this.txtCP.Location = new System.Drawing.Point(335, 254);
             this.txtCP.Mask = "00000";
             this.txtCP.Name = "txtCP";
-            this.txtCP.Size = new System.Drawing.Size(49, 20);
+            this.txtCP.Size = new System.Drawing.Size(40, 20);
             this.txtCP.TabIndex = 8;
             // 
             // Label3
@@ -271,7 +284,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.White;
+            this.label1.BackColor = System.Drawing.SystemColors.Control;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
             this.label1.Location = new System.Drawing.Point(12, 352);
             this.label1.Name = "label1";
@@ -367,7 +380,7 @@
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(302, 399);
+            this.label20.Location = new System.Drawing.Point(311, 399);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(41, 13);
             this.label20.TabIndex = 245;
@@ -376,7 +389,7 @@
             // txtClinica
             // 
             this.txtClinica.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtClinica.Location = new System.Drawing.Point(351, 396);
+            this.txtClinica.Location = new System.Drawing.Point(358, 397);
             this.txtClinica.Name = "txtClinica";
             this.txtClinica.Size = new System.Drawing.Size(42, 20);
             this.txtClinica.TabIndex = 14;
@@ -384,7 +397,7 @@
             // txtNacionalidad
             // 
             this.txtNacionalidad.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtNacionalidad.Location = new System.Drawing.Point(351, 422);
+            this.txtNacionalidad.Location = new System.Drawing.Point(137, 531);
             this.txtNacionalidad.Name = "txtNacionalidad";
             this.txtNacionalidad.Size = new System.Drawing.Size(130, 20);
             this.txtNacionalidad.TabIndex = 15;
@@ -392,7 +405,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(273, 426);
+            this.label21.Location = new System.Drawing.Point(58, 534);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(72, 13);
             this.label21.TabIndex = 248;
@@ -401,7 +414,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(49, 534);
+            this.label22.Location = new System.Drawing.Point(49, 586);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(81, 13);
             this.label22.TabIndex = 249;
@@ -410,7 +423,7 @@
             // txtObservaciones
             // 
             this.txtObservaciones.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtObservaciones.Location = new System.Drawing.Point(136, 531);
+            this.txtObservaciones.Location = new System.Drawing.Point(143, 583);
             this.txtObservaciones.Multiline = true;
             this.txtObservaciones.Name = "txtObservaciones";
             this.txtObservaciones.Size = new System.Drawing.Size(445, 134);
@@ -436,11 +449,134 @@
             this.label23.TabIndex = 250;
             this.label23.Text = "Empleado:";
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(271, 425);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(81, 13);
+            this.label11.TabIndex = 252;
+            this.label11.Text = "Tel. Empresa 1:";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(280, 529);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(72, 13);
+            this.label12.TabIndex = 253;
+            this.label12.Text = "Tel. Personal:";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(311, 557);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(41, 13);
+            this.label18.TabIndex = 254;
+            this.label18.Text = "Correo:";
+            // 
+            // mTelEmpresa
+            // 
+            this.mTelEmpresa.Location = new System.Drawing.Point(358, 424);
+            this.mTelEmpresa.Mask = "(999)-999-9999";
+            this.mTelEmpresa.Name = "mTelEmpresa";
+            this.mTelEmpresa.Size = new System.Drawing.Size(81, 20);
+            this.mTelEmpresa.TabIndex = 255;
+            // 
+            // mTelPersonal
+            // 
+            this.mTelPersonal.Location = new System.Drawing.Point(358, 531);
+            this.mTelPersonal.Mask = "(999)-999-9999";
+            this.mTelPersonal.Name = "mTelPersonal";
+            this.mTelPersonal.Size = new System.Drawing.Size(81, 20);
+            this.mTelPersonal.TabIndex = 258;
+            // 
+            // txtExtension
+            // 
+            this.txtExtension.Location = new System.Drawing.Point(445, 424);
+            this.txtExtension.Name = "txtExtension";
+            this.txtExtension.Size = new System.Drawing.Size(43, 20);
+            this.txtExtension.TabIndex = 260;
+            this.txtExtension.Text = "00000";
+            // 
+            // txtCorreo
+            // 
+            this.txtCorreo.Location = new System.Drawing.Point(358, 557);
+            this.txtCorreo.Name = "txtCorreo";
+            this.txtCorreo.Size = new System.Drawing.Size(230, 20);
+            this.txtCorreo.TabIndex = 261;
+            this.txtCorreo.Text = "user@dominio.com";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(280, 503);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(72, 13);
+            this.label19.TabIndex = 262;
+            this.label19.Text = "Cel. Empresa:";
+            // 
+            // mCelEmpresa
+            // 
+            this.mCelEmpresa.Location = new System.Drawing.Point(358, 504);
+            this.mCelEmpresa.Mask = "(999)-999-9999";
+            this.mCelEmpresa.Name = "mCelEmpresa";
+            this.mCelEmpresa.Size = new System.Drawing.Size(81, 20);
+            this.mCelEmpresa.TabIndex = 263;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(271, 451);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(81, 13);
+            this.label24.TabIndex = 264;
+            this.label24.Text = "Tel. Empresa 2:";
+            // 
+            // mTelEmpresa2
+            // 
+            this.mTelEmpresa2.Location = new System.Drawing.Point(358, 451);
+            this.mTelEmpresa2.Mask = "(999)-000-0000";
+            this.mTelEmpresa2.Name = "mTelEmpresa2";
+            this.mTelEmpresa2.Size = new System.Drawing.Size(81, 20);
+            this.mTelEmpresa2.TabIndex = 265;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(271, 477);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(81, 13);
+            this.label25.TabIndex = 266;
+            this.label25.Text = "Tel. Empresa 3:";
+            // 
+            // mTelEmpresa3
+            // 
+            this.mTelEmpresa3.Location = new System.Drawing.Point(358, 478);
+            this.mTelEmpresa3.Mask = "(000)-000-0000";
+            this.mTelEmpresa3.Name = "mTelEmpresa3";
+            this.mTelEmpresa3.Size = new System.Drawing.Size(81, 20);
+            this.mTelEmpresa3.TabIndex = 267;
+            // 
             // frmComplementos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(602, 700);
+            this.ClientSize = new System.Drawing.Size(602, 766);
+            this.Controls.Add(this.mTelEmpresa3);
+            this.Controls.Add(this.label25);
+            this.Controls.Add(this.mTelEmpresa2);
+            this.Controls.Add(this.label24);
+            this.Controls.Add(this.mCelEmpresa);
+            this.Controls.Add(this.label19);
+            this.Controls.Add(this.txtCorreo);
+            this.Controls.Add(this.txtExtension);
+            this.Controls.Add(this.mTelPersonal);
+            this.Controls.Add(this.mTelEmpresa);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.label11);
             this.Controls.Add(this.lblEmpleado);
             this.Controls.Add(this.label23);
             this.Controls.Add(this.txtObservaciones);
@@ -534,5 +670,18 @@
         private System.Windows.Forms.TextBox txtObservaciones;
         private System.Windows.Forms.Label lblEmpleado;
         private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.MaskedTextBox mTelEmpresa;
+        private System.Windows.Forms.MaskedTextBox mTelPersonal;
+        private System.Windows.Forms.TextBox txtExtension;
+        private System.Windows.Forms.TextBox txtCorreo;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.MaskedTextBox mCelEmpresa;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.MaskedTextBox mTelEmpresa2;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.MaskedTextBox mTelEmpresa3;
     }
 }

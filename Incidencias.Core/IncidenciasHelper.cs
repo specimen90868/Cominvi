@@ -123,7 +123,7 @@ namespace Incidencias.Core
         {
             List<Incidencias> lstIncidencias = new List<Incidencias>();
             DataTable dt = new DataTable();
-            Command.CommandText = @"select top 10 inicioincapacidad, finincapacidad from incidencias where idempresa = 2 and idtrabajador = 3684
+            Command.CommandText = @"select top 10 inicioincapacidad, finincapacidad from incidencias where idempresa = 2 and idtrabajador = @idtrabajador
                     group by inicioincapacidad, finincapacidad
                     order by inicioincapacidad desc";
             Command.Parameters.Clear();

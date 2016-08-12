@@ -28,6 +28,13 @@ namespace Nominas
         {
             txtUsuario.Clear();
             txtPassword.Clear();
+
+            //Boolean a = GLOBALES.IDENTIFICADOR("Win32_DiskDrive", "SerialNumber", "131025JD12001A04AUVA");
+            //if (!a)
+            //{
+            //    MessageBox.Show("La aplicación no puede ejecutar. \r\n \r\nLicencia no válida.", "Información");
+            //    this.Dispose();
+            //}
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)

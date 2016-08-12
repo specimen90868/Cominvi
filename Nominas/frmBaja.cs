@@ -25,6 +25,7 @@ namespace Nominas
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
         Empleados.Core.EmpleadosHelper eh;
         Periodos.Core.PeriodosHelper ph;
+        CalculoNomina.Core.NominaHelper nh;
         int periodo = 0;
         DateTime periodoInicio, periodoFin;
         #endregion
@@ -304,6 +305,8 @@ namespace Nominas
                     }
                 }
 
+              
+
                 Empresas.Core.EmpresasHelper ep = new Empresas.Core.EmpresasHelper();
                 ep.Command = cmd;
 
@@ -331,6 +334,8 @@ namespace Nominas
                 h.fecha_sistema = DateTime.Now;
                 h.idempresa = GLOBALES.IDEMPRESA;
                 h.motivobaja = int.Parse(cmbMotivoBaja.SelectedValue.ToString());
+                h.iddepartamento = 0;
+                h.idpuesto = 0;
 
                 //Ausentismo.Core.AusentismoHelper ah = new Ausentismo.Core.AusentismoHelper();
                 //ah.Command = cmd;
@@ -353,6 +358,7 @@ namespace Nominas
                 baja.periodoinicio = periodoInicio.Date;
                 baja.periodofin = periodoFin.Date;
                 baja.observaciones = txtObservaciones.Text;
+                baja.registro = DateTime.Now;
 
                 diasProporcionales = (int)(dtpFechaBaja.Value.Date - periodoInicio.Date).TotalDays + 1;
                 if (diasProporcionales == 16)
@@ -382,11 +388,62 @@ namespace Nominas
                     return;
                 }
 
+
+                bool obraCivil = false;
+                try
+                {
+                    cnx.Open();
+                    obraCivil = bool.Parse(eh.esObraCivil(GLOBALES.IDEMPRESA, _idempleado).ToString());
+                    cnx.Close();
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show("Error: Al obtener dato de obra civil. \r\n \r\n" + error.Message, "Error");
+                    return;
+                }
+
+                if (obraCivil)
+                {
+                    nh = new CalculoNomina.Core.NominaHelper();
+                    nh.Command = cmd;
+                    List<CalculoNomina.Core.tmpPagoNomina> lstNomina = new List<CalculoNomina.Core.tmpPagoNomina>();
+                    try
+                    {
+                        cnx.Open();
+                        lstNomina = nh.fechaPreNominaObraCivil(GLOBALES.IDEMPRESA, _idempleado, periodoInicio, periodoFin);
+                        cnx.Close();
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error: Al obtener las fechas de pago. \r\n \r\n" + error.Message, "Error");
+                        return;
+                    }
+
+                    if(lstNomina.Count != 0)
+                        if (dtpFechaBaja.Value.Date >= lstNomina[0].fechainicio && dtpFechaBaja.Value.Date <= lstNomina[0].fechafin)
+                        {
+                            try
+                            {
+                                Bajas.Core.Bajas bajaTrabajador = new Bajas.Core.Bajas();
+                                bajaTrabajador.idtrabajador = _idempleado;
+                                cnx.Open();
+                                bh.bajaEmpleado(bajaTrabajador);
+                                cnx.Close();
+                            }
+                            catch (Exception error)
+                            {
+                                MessageBox.Show("Error: Al dar baja del empleado. \r\n \r\n" + error.Message, "Error");
+                                return;
+                            }
+                        }
+                }
+
                 try
                 {
                     cnx.Open();
                     h.valor = (decimal)eh.obtenerSalarioDiarioIntegrado(emp);
                     hp.insertarHistorial(h);
+                    //ACTUALIZA TABLA trabajadoresestatus
                     eh.bajaEmpleado(ee);
 
                     baja.registropatronal = (string)ep.obtenerRegistroPatronal(empresa);

@@ -220,7 +220,7 @@ namespace Nominas
             }
 
 
-            if (datoFechas != null)
+            if (datoFechas.Count != 0)
             {
                 fii = dtpFechaInicio.Value.Date;
                 ffi = dtpFechaInicio.Value.AddDays(int.Parse(txtDiasIncapacidad.Text) - 1);

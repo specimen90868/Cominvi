@@ -361,6 +361,15 @@ namespace Empleados.Core
             return estatus;
         }
 
+        public object obtenerEstatus(int idtrabajador)
+        {
+            Command.CommandText = "select estatus from trabajadores where idtrabajador = @idtrabajador";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
+            object estatus = Select(Command);
+            return estatus;
+        }
+
         public object obtenerIdTrabajador(Empleados e)
         {
             Command.CommandText = "select idtrabajador from trabajadores where rfc = @rfc";
@@ -535,6 +544,14 @@ namespace Empleados.Core
             return Command.ExecuteNonQuery();
         }
 
+        public int eliminaEmpleadoEstatus(int idtrabajador)
+        {
+            Command.CommandText = "delete from trabajadoresestatus where idtrabajador = @idtrabajador";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
+            return Command.ExecuteNonQuery();
+        }
+
         public int bajaEmpleado(EmpleadosEstatus ee)
         {
             Command.CommandText = "update trabajadoresestatus set estatus = @estatus where idtrabajador = @idtrabajador and idempresa = @idempresa";
@@ -582,11 +599,29 @@ namespace Empleados.Core
             return Command.ExecuteNonQuery();
         }
 
+        public int actualizaDeptoPuesto(Empleados e)
+        {
+            Command.CommandText = "update trabajadores set iddepartamento = @iddepartamento, idpuesto = @idpuesto where idtrabajador = @idtrabajador";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("iddepartamento", e.iddepartamento);
+            Command.Parameters.AddWithValue("idpuesto", e.idpuesto);
+            Command.Parameters.AddWithValue("idtrabajador", e.idtrabajador);
+            return Command.ExecuteNonQuery();
+        }
+
         public int actualizaAntiguedad(int idEmpresa)
         {
             Command.CommandText = "exec stp_ActualizaAntiguedad @idempresa";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idEmpresa);
+            return Command.ExecuteNonQuery();
+        }
+
+        public int actualizaEstatus(int idtrabajador)
+        {
+            Command.CommandText = "update trabajadores set estatus = 1 where idtrabajador = @idtrabajador";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
             return Command.ExecuteNonQuery();
         }
 
@@ -634,6 +669,16 @@ namespace Empleados.Core
                 lstEmpleados.Add(emp);
             }
             return lstEmpleados;
+        }
+
+        public object esObraCivil(int idempresa, int idtrabajador)
+        {
+            Command.CommandText = @"select obracivil from trabajadores where idempresa = @idempresa and idtrabajador = @idtrabajador";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idempresa);
+            Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
+            object dato = Select(Command);
+            return dato;
         }
 
     }

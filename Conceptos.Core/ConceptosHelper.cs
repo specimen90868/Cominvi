@@ -281,6 +281,14 @@ namespace Conceptos.Core
             return Command.ExecuteNonQuery();
         }
 
+        public int eliminaConceptoTrabajador(int idtrabajador)
+        {
+            Command.CommandText = "delete from ConceptoTrabajador where idempleado = @idtrabajador";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
+            return Command.ExecuteNonQuery();
+        }
+
         #endregion
 
     }

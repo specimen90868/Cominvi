@@ -28,6 +28,8 @@ namespace Historial.Core
                 historial.fecha_imss = DateTime.Parse(dtHistorial.Rows[i]["fecha_imss"].ToString());
                 historial.fecha_sistema = DateTime.Parse(dtHistorial.Rows[i]["fecha_sistema"].ToString());
                 historial.motivobaja = int.Parse(dtHistorial.Rows[i]["motivobaja"].ToString());
+                historial.iddepartamento = int.Parse(dtHistorial.Rows[i]["iddepartamento"].ToString());
+                historial.idpuesto = int.Parse(dtHistorial.Rows[i]["idpuesto"].ToString());
                 lstHistorial.Add(historial);
             }
             return lstHistorial;
@@ -35,8 +37,8 @@ namespace Historial.Core
 
         public int insertarHistorial(Historial h)
         {
-            Command.CommandText = "insert into MovimientoTrabajador (idtrabajador, tipomovimiento, valor, fecha_imss, fecha_sistema, idempresa, motivobaja) values " +
-                "(@idtrabajador, @tipomovimiento, @valor, @fecha_imss, @fecha_sistema, @idempresa, @motivobaja)";
+            Command.CommandText = "insert into MovimientoTrabajador (idtrabajador, tipomovimiento, valor, fecha_imss, fecha_sistema, idempresa, motivobaja, iddepartamento, idpuesto) values " +
+                "(@idtrabajador, @tipomovimiento, @valor, @fecha_imss, @fecha_sistema, @idempresa, @motivobaja, @iddepartamento, @idpuesto)";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", h.idtrabajador);
             Command.Parameters.AddWithValue("tipomovimiento", h.tipomovimiento);
@@ -45,6 +47,8 @@ namespace Historial.Core
             Command.Parameters.AddWithValue("fecha_sistema", h.fecha_sistema);
             Command.Parameters.AddWithValue("idempresa", h.idempresa);
             Command.Parameters.AddWithValue("motivobaja", h.motivobaja);
+            Command.Parameters.AddWithValue("iddepartamento", h.iddepartamento);
+            Command.Parameters.AddWithValue("idpuesto", h.idpuesto);
             return Command.ExecuteNonQuery();
         }
 
@@ -58,6 +62,13 @@ namespace Historial.Core
             return Command.ExecuteNonQuery();
         }
 
+        public int eliminaHistorial(int idtrabajador)
+        {
+            Command.CommandText = "delete from movimientotrabajador where idtrabajador = @idtrabajador";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
+            return Command.ExecuteNonQuery();
+        }
         public void bulkMovimientos(DataTable dt, string tabla)
         {
             bulkCommand.DestinationTableName = tabla;

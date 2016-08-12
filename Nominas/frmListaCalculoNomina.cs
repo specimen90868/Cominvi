@@ -152,9 +152,16 @@ namespace Nominas
             FLAGPRIMERCALCULO = false;
 
             if (_obracivil)
+            {
                 toolGuardar.Visible = true;
+                toolAutorizar.Visible = false;
+            }
             else
+            {
                 toolGuardar.Visible = false;
+                toolAutorizar.Visible = true;
+            }
+            
 
             if (_tipoNomina == GLOBALES.NORMAL)
                 CargaPerfil("Normal");
@@ -232,21 +239,21 @@ namespace Nominas
                                 cnx.Open();
                                 lstUltimaNomina = nh.obtenerUltimaNomina(GLOBALES.IDEMPRESA, _obracivil);
                                 cnx.Close();
+
+                                if (lstUltimaNomina[0].guardada)
+                                {
+                                    periodoInicio = lstUltimaNomina[0].fechafin.AddDays(1);
+                                    periodoFin = lstUltimaNomina[0].fechafin.AddDays(7);
+                                }
+                                else
+                                {
+                                    periodoInicio = lstUltimaNomina[0].fechainicio;
+                                    periodoFin = lstUltimaNomina[0].fechafin;
+                                }
                             }
                             catch (Exception error)
                             {
                                 MessageBox.Show("Error: PreNomina de Obra Civil.\r\n \r\n" + error.Message, "Error");
-                            }
-
-                            if (lstUltimaNomina[0].guardada)
-                            {
-                                periodoInicio = lstUltimaNomina[0].fechafin.AddDays(1);
-                                periodoFin = lstUltimaNomina[0].fechafin.AddDays(7);
-                            }
-                            else
-                            {
-                                periodoInicio = lstUltimaNomina[0].fechainicio;
-                                periodoFin = lstUltimaNomina[0].fechafin;
                             }
                         }
                     }
@@ -400,25 +407,37 @@ namespace Nominas
             lstEmpleadosNomina = new List<CalculoNomina.Core.DatosEmpleado>();
             lstEmpleadosFaltaIncapacidad = new List<CalculoNomina.Core.DatosFaltaIncapacidad>();
             DateTime fecha = new DateTime(1900,1,1);
+            DateTime fechaf = new DateTime(1900, 1, 1);
             try
             {
-                cnx.Open();
-                if (_tipoNomina == GLOBALES.NORMAL || _tipoNomina == GLOBALES.EXTRAORDINARIO_NORMAL)
+                
+                //if (_tipoNomina == GLOBALES.NORMAL || _tipoNomina == GLOBALES.EXTRAORDINARIO_NORMAL)
+                //{
+                    
+                //}
+
+                if (_periodo == 7)
                 {
-                    if (_periodo == 7)
-                        fecha = periodoInicio.AddDays(7);
+                    fecha = periodoInicio.AddDays(7);
+                    fechaf = periodoFin.AddDays(7);
+                }
+                else
+                {
+                    if (periodoInicio.Day < 15)
+                    {
+                        fecha = periodoInicio.AddDays(15);
+                        fechaf = periodoFin.AddDays(DateTime.DaysInMonth(periodoInicio.Year, periodoInicio.Month) - 15);
+                    }
                     else
                     {
-                        if (periodoInicio.Day < 15)
-                            fecha = periodoInicio.AddDays(15);
-                        else
-                            fecha = periodoInicio.AddDays(
-                                DateTime.DaysInMonth(periodoInicio.Year, periodoInicio.Month) - 15);
+                        fecha = periodoInicio.AddDays(
+                            DateTime.DaysInMonth(periodoInicio.Year, periodoInicio.Month) - 15);
+                        fechaf = periodoFin.AddDays(15);
                     }
-                        
-                    lstEmpleadosNomina = nh.obtenerDatosEmpleado(GLOBALES.IDEMPRESA, GLOBALES.ACTIVO, _obracivil, fecha);
-                    lstEmpleadosFaltaIncapacidad = nh.obtenerDatosFaltaInc(GLOBALES.IDEMPRESA, GLOBALES.ACTIVO, _obracivil, fecha);
                 }
+                cnx.Open();
+                lstEmpleadosNomina = nh.obtenerDatosEmpleado(GLOBALES.IDEMPRESA, GLOBALES.ACTIVO, _obracivil, fecha, fechaf);
+                lstEmpleadosFaltaIncapacidad = nh.obtenerDatosFaltaInc(GLOBALES.IDEMPRESA, GLOBALES.ACTIVO, _obracivil, fecha, fechaf);
 
                 //if (_tipoNomina == GLOBALES.ESPECIAL || _tipoNomina == GLOBALES.EXTRAORDINARIO_ESPECIAL)
                 //{
@@ -442,7 +461,6 @@ namespace Nominas
 
             for (int i = 1; i < dgvFaltas.Columns.Count; i++)
                 dgvFaltas.AutoResizeColumn(i);
-
             #endregion
         }
 
@@ -458,22 +476,32 @@ namespace Nominas
 
             lstEmpleadosFaltaIncapacidad = new List<CalculoNomina.Core.DatosFaltaIncapacidad>();
             DateTime fecha;
+            DateTime fechaf;
             try
             {
                 cnx.Open();
                 if (_tipoNomina == GLOBALES.NORMAL || _tipoNomina == GLOBALES.EXTRAORDINARIO_NORMAL)
                 {
                     if (_periodo == 7)
+                    {
                         fecha = periodoInicio.AddDays(7);
+                        fechaf = periodoFin.AddDays(7);
+                    }
                     else
                     {
                         if (periodoInicio.Day < 15)
+                        {
                             fecha = periodoInicio.AddDays(15);
+                            fechaf = periodoFin.AddDays(DateTime.DaysInMonth(periodoInicio.Year, periodoInicio.Month) - 15);
+                        }
                         else
+                        {
                             fecha = periodoInicio.AddDays(
                                 DateTime.DaysInMonth(periodoInicio.Year, periodoInicio.Month) - 15);
+                            fechaf = periodoFin.AddDays(15);
+                        }
                     }
-                    lstEmpleadosFaltaIncapacidad = nh.obtenerDatosFaltaInc(GLOBALES.IDEMPRESA, GLOBALES.ACTIVO, _obracivil, fecha);
+                    lstEmpleadosFaltaIncapacidad = nh.obtenerDatosFaltaInc(GLOBALES.IDEMPRESA, GLOBALES.ACTIVO, _obracivil, fecha, fechaf);
                 }
                 
                 //if (_tipoNomina == GLOBALES.ESPECIAL || _tipoNomina == GLOBALES.EXTRAORDINARIO_ESPECIAL)
@@ -623,7 +651,10 @@ namespace Nominas
         private void toolCalcular_Click(object sender, EventArgs e)
         {
             if (_tipoNomina == GLOBALES.NORMAL)
+            {
+                toolCalcular.Enabled = false;
                 calcular();
+            }
             else
             {
                 toolPorcentaje.Text = "Completado.";
@@ -711,6 +742,17 @@ namespace Nominas
             CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
             nh.Command = cmd;
 
+            Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
+            eh.Command = cmd;
+
+            Altas.Core.AltasHelper ah = new Altas.Core.AltasHelper();
+            ah.Command = cmd;
+
+            Reingreso.Core.ReingresoHelper rh = new Reingreso.Core.ReingresoHelper();
+            rh.Command = cmd;
+
+            int estatus = 0;
+            int existeAltaReingreso = 0;
             #region LISTAS
             List<CalculoNomina.Core.Nomina> lstConceptosPercepciones = new List<CalculoNomina.Core.Nomina>();
             List<CalculoNomina.Core.Nomina> lstConceptosDeducciones = new List<CalculoNomina.Core.Nomina>();
@@ -725,13 +767,60 @@ namespace Nominas
 
             foreach (DataGridViewRow fila in dgvEmpleados.Rows)
             {
+                try
+                {
+                    cnx.Open();
+                    estatus = int.Parse(eh.obtenerEstatus(int.Parse(fila.Cells["idtrabajador"].Value.ToString())).ToString());
+                    cnx.Close();
+
+                    if (estatus == 0)
+                    {
+                        cnx.Open();
+                        nh.eliminaPreNomina(int.Parse(fila.Cells["idtrabajador"].Value.ToString()));
+                        cnx.Close();
+                        continue;
+                    }
+                    else
+                    {
+                        
+                        cnx.Open();
+                        existeAltaReingreso = ah.existeAlta(GLOBALES.IDEMPRESA, int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoFin.AddDays(1));
+                        cnx.Close();
+                        
+                        if (existeAltaReingreso != 0)
+                        {
+                            cnx.Open();
+                            nh.eliminaPreNomina(int.Parse(fila.Cells["idtrabajador"].Value.ToString()));
+                            cnx.Close();
+                            continue;
+                        }
+
+                        cnx.Open();
+                        existeAltaReingreso = rh.existeReingreso(GLOBALES.IDEMPRESA, int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoFin.AddDays(1));
+                        cnx.Close();
+                        if (existeAltaReingreso != 0)
+                        {
+                            cnx.Open();
+                            nh.eliminaPreNomina(int.Parse(fila.Cells["idtrabajador"].Value.ToString()));
+                            cnx.Close();
+                            continue;
+                        }
+                        
+                    }
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show("Error al verificar el estatus del trabajador: " + fila.Cells["noempleado"].Value.ToString() + "\r\n\r\n" + error.Message, "Error");
+                    cnx.Close();
+                    continue;
+                }
+
                 progreso = (indice * 100) / total;
                 indice++;
 
                 if (FLAGPRIMERCALCULO)
                 {
                     workerCalculo.ReportProgress(progreso, "CARGANDO DATOS DE LOS TRABAJADORES. ESPERE A QUE TERMINE EL PROCESO.");
-                    FLAGPRIMERCALCULO = false;
                 }
                 else
                     workerCalculo.ReportProgress(progreso, "CALCULANDO.");
@@ -740,6 +829,7 @@ namespace Nominas
                 try
                 {
                     cnx.Open();
+                    nh.eliminaNominaTrabajador(int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicio.Date, periodoFin.Date, _tipoNomina);
                     lstConceptosPercepciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "P", int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicio.Date, periodoFin.Date);
                     lstConceptosDeducciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "D", int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicio.Date, periodoFin.Date);
                     cnx.Close();
@@ -1121,6 +1211,9 @@ namespace Nominas
         {
             toolPorcentaje.Text = "Completado.";
             toolEtapa.Text = " ";
+            toolCalcular.Enabled = true;
+            if (FLAGPRIMERCALCULO)
+                FLAGPRIMERCALCULO = false;
         }
 
         private void calculoNoPeriodo()
@@ -1237,6 +1330,8 @@ namespace Nominas
 
         private void toolCerrar_Click(object sender, EventArgs e)
         {
+            cnx.Dispose();
+            cmd.Dispose();
             this.Dispose();
         }
 
@@ -1256,11 +1351,22 @@ namespace Nominas
             pn.guardada = true;
             pn.tiponomina = _tipoNomina;
             pn.obracivil = _obracivil;
+            
 
             try
             {
                 cnx.Open();
                 nh.guardaPreNomina(pn);
+                cnx.Close();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+            }
+
+            try
+            {
+                cnx.Open();
                 nh.aplicaBajaObraCivil(pn);
                 cnx.Close();
             }
@@ -1269,37 +1375,34 @@ namespace Nominas
                 MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
             }
 
-            if (_obracivil)
+            string formulaDiasAPagar = "[DiasLaborados]-[Faltas]-[DiasIncapacidad]";
+            foreach (DataGridViewRow fila in dgvEmpleados.Rows)
             {
-                string formulaDiasAPagar = "[DiasLaborados]-[Faltas]-[DiasIncapacidad]";
-                foreach (DataGridViewRow fila in dgvEmpleados.Rows)
+                CalculoFormula cf = new CalculoFormula(int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicio, periodoFin, formulaDiasAPagar);
+                int diasAPagar = int.Parse(cf.calcularFormula().ToString());
+
+                pn = new CalculoNomina.Core.tmpPagoNomina();
+                pn.idtrabajador = int.Parse(fila.Cells["idtrabajador"].Value.ToString());
+                pn.diaslaborados = diasAPagar;
+                pn.fechainicio = periodoInicio;
+                pn.fechafin = periodoFin;
+
+                try
                 {
-                    CalculoFormula cf = new CalculoFormula(int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicio, periodoFin, formulaDiasAPagar);
-                    int diasAPagar = int.Parse(cf.calcularFormula().ToString());
-
-                    pn = new CalculoNomina.Core.tmpPagoNomina();
-                    pn.idtrabajador = int.Parse(fila.Cells["idtrabajador"].Value.ToString());
-                    pn.diaslaborados = diasAPagar;
-                    pn.fechainicio = periodoInicio;
-                    pn.fechafin = periodoFin;
-
-                    try
-                    {
-                        cnx.Open();
-                        nh.actualizaDiasFechaPago(pn, DateTime.Now.Date);
-                        cnx.Close();
-                    }
-                    catch (Exception error)
-                    {
-                        MessageBox.Show("Error: Al actualizar los dias laborados. \r\n \r\n" + error.Message, "Error");
-                        return;
-                    }
+                    cnx.Open();
+                    nh.actualizaDiasFechaPago(pn);
+                    cnx.Close();
                 }
-                cnx.Dispose();
+                catch (Exception error)
+                {
+                    MessageBox.Show("Error: Al actualizar los dias laborados. \r\n \r\n" + error.Message, "Error");
+                    return;
+                }
             }
+            cnx.Dispose();
+            
 
-
-            MessageBox.Show("ATENCION: La Pre Nómina de Obra Civil será guardada, \r\n ésta ya no será modificada. \r\n\r\n Se cerrará la ventana para concluir.", "Información");
+            MessageBox.Show("ATENCION: La Pre Nómina de Obra Civil se ha guardado, \r\n ésta ya no será modificada. \r\n\r\n Se cerrará la ventana para concluir.", "Información");
             this.Dispose();
         }
 
@@ -1315,16 +1418,31 @@ namespace Nominas
                 nh = new CalculoNomina.Core.NominaHelper();
                 nh.Command = cmd;
 
+                List<CalculoNomina.Core.tmpPagoNomina> lstTrabajadores = new List<CalculoNomina.Core.tmpPagoNomina>();
+
                 if (_tipoNomina == GLOBALES.NORMAL)
                 {
-                    string formulaDiasAPagar = "[DiasLaborados]-[Faltas]-[DiasIncapacidad]";
-                    foreach (DataGridViewRow fila in dgvEmpleados.Rows)
+                    try
                     {
-                        CalculoFormula cf = new CalculoFormula(int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicio, periodoFin, formulaDiasAPagar);
+                        cnx.Open();
+                        lstTrabajadores = nh.obtenerIdTrabajadoresTempNomina(GLOBALES.IDEMPRESA, _tipoNomina, periodoInicio, periodoFin);
+                        cnx.Close();
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error: Al obtener los trabajadores. \r\n \r\n" + error.Message, "Error");
+                        return;
+                    }
+
+                    string formulaDiasAPagar = "[DiasLaborados]-[Faltas]-[DiasIncapacidad]";
+
+                    for (int i = 0; i < lstTrabajadores.Count; i++)
+                    {
+                        CalculoFormula cf = new CalculoFormula(lstTrabajadores[i].idtrabajador, periodoInicio, periodoFin, formulaDiasAPagar);
                         int diasAPagar = int.Parse(cf.calcularFormula().ToString());
 
                         CalculoNomina.Core.tmpPagoNomina pn = new CalculoNomina.Core.tmpPagoNomina();
-                        pn.idtrabajador = int.Parse(fila.Cells["idtrabajador"].Value.ToString());
+                        pn.idtrabajador = lstTrabajadores[i].idtrabajador;
                         pn.diaslaborados = diasAPagar;
                         pn.fechainicio = periodoInicio;
                         pn.fechafin = periodoFin;
@@ -1332,7 +1450,7 @@ namespace Nominas
                         try
                         {
                             cnx.Open();
-                            nh.actualizaDiasFechaPago(pn, DateTime.Now.Date);
+                            nh.actualizaDiasFechaPago(pn);
                             cnx.Close();
                         }
                         catch (Exception error)
@@ -1341,7 +1459,31 @@ namespace Nominas
                             return;
                         }
                     }
+                    //foreach (DataGridViewRow fila in dgvEmpleados.Rows)
+                    //{
+                    //    CalculoFormula cf = new CalculoFormula(int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicio, periodoFin, formulaDiasAPagar);
+                    //    int diasAPagar = int.Parse(cf.calcularFormula().ToString());
+
+                    //    CalculoNomina.Core.tmpPagoNomina pn = new CalculoNomina.Core.tmpPagoNomina();
+                    //    pn.idtrabajador = int.Parse(fila.Cells["idtrabajador"].Value.ToString());
+                    //    pn.diaslaborados = diasAPagar;
+                    //    pn.fechainicio = periodoInicio;
+                    //    pn.fechafin = periodoFin;
+
+                    //    try
+                    //    {
+                    //        cnx.Open();
+                    //        nh.actualizaDiasFechaPago(pn);
+                    //        cnx.Close();
+                    //    }
+                    //    catch (Exception error)
+                    //    {
+                    //        MessageBox.Show("Error: Al actualizar los dias laborados. \r\n \r\n" + error.Message, "Error");
+                    //        return;
+                    //    }
+                    //}
                 }
+
                 else if (_tipoNomina == GLOBALES.EXTRAORDINARIO_NORMAL)
                 {
                     CalculoNomina.Core.tmpPagoNomina pn = new CalculoNomina.Core.tmpPagoNomina();
@@ -1943,17 +2085,17 @@ namespace Nominas
                 rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, 2];
                 rng.Columns.AutoFit();
 
-                rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, 13];
+                rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, 14];
                 rng.NumberFormat = "#,##0.00";
-                rng.Formula = string.Format("=C{0}+D{0}+E{0}+F{0}+G{0}+H{0}+I{0}+J{0}+K{0}+L{0}", i);
-
-                rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, 22];
-                rng.NumberFormat = "#,##0.00";
-                rng.Formula = string.Format("=N{0}+O{0}+P{0}+Q{0}+R{0}+S{0}+U{0}", i);
+                rng.Formula = string.Format("=C{0}+D{0}+E{0}+F{0}+G{0}+H{0}+I{0}+J{0}+K{0}+L{0}+M{0}", i);
 
                 rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, 23];
                 rng.NumberFormat = "#,##0.00";
-                rng.Formula = string.Format("=M{0}+T{0}-V{0}", i);
+                rng.Formula = string.Format("=O{0}+P{0}+Q{0}+R{0}+S{0}+T{0}+V{0}", i);
+
+                rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, 24];
+                rng.NumberFormat = "#,##0.00";
+                rng.Formula = string.Format("=N{0}+U{0}-W{0}", i);
             }
 
             int suma = iFil - 1;
@@ -2009,12 +2151,12 @@ namespace Nominas
             rng.Font.Bold = true;
             rng.Formula = string.Format("=SUM(L6:L{0})", suma.ToString());
 
-            //TOTAL PERCEPCIONES
             rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 13];
             rng.NumberFormat = "#,##0.00";
             rng.Font.Bold = true;
             rng.Formula = string.Format("=SUM(M6:M{0})", suma.ToString());
 
+            //TOTAL PERCEPCIONES
             rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 14];
             rng.NumberFormat = "#,##0.00";
             rng.Font.Bold = true;
@@ -2055,30 +2197,35 @@ namespace Nominas
             rng.Font.Bold = true;
             rng.Formula = string.Format("=SUM(U6:U{0})", suma.ToString());
 
-            //TOTAL DEDUCCIONES
             rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 22];
             rng.NumberFormat = "#,##0.00";
             rng.Font.Bold = true;
             rng.Formula = string.Format("=SUM(V6:V{0})", suma.ToString());
 
-            //TOTAL NETO
+            //TOTAL DEDUCCIONES
             rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 23];
             rng.NumberFormat = "#,##0.00";
             rng.Font.Bold = true;
             rng.Formula = string.Format("=SUM(W6:W{0})", suma.ToString());
 
+            //TOTAL NETO
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 24];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            rng.Formula = string.Format("=SUM(X6:X{0})", suma.ToString());
+
             excel.Range["A1", "G3"].Font.Bold = true;
-            excel.Range["A5", "W5"].Font.Bold = true;
-            excel.Range["B:W"].EntireColumn.AutoFit();
+            excel.Range["A5", "X5"].Font.Bold = true;
+            excel.Range["B:X"].EntireColumn.AutoFit();
             excel.Range["A6"].Select();
             excel.ActiveWindow.FreezePanes = true;
-            excel.Range["A5", "W5"].Interior.ColorIndex = 36;
-            excel.Range["A5", "L5"].Font.ColorIndex = 1;
-            excel.Range["N5", "V5"].Font.ColorIndex = 1;
-            excel.Range["M5"].Font.ColorIndex = 32;
-            excel.Range["V5"].Font.ColorIndex = 32;
+            excel.Range["A5", "X5"].Interior.ColorIndex = 36;
+            excel.Range["A5", "M5"].Font.ColorIndex = 1;
+            excel.Range["O5", "V5"].Font.ColorIndex = 1;
+            excel.Range["N5"].Font.ColorIndex = 32;
             excel.Range["W5"].Font.ColorIndex = 32;
-            excel.Range["B6", "W" + iFil.ToString()].NumberFormat = "#,##0.00";
+            excel.Range["X5"].Font.ColorIndex = 32;
+            excel.Range["B6", "X" + iFil.ToString()].NumberFormat = "#,##0.00";
             
             workSheet.SaveAs("Reporte_Tabular.xlsx");
             excel.Visible = true;

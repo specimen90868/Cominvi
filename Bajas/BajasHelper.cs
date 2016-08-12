@@ -88,8 +88,8 @@ namespace Bajas.Core
 
         public int insertaBaja(Bajas a)
         {
-            Command.CommandText = "insert into suaBajas (idtrabajador, idempresa, registropatronal, nss, motivo, fecha, diasproporcionales, periodoinicio, periodofin, observaciones) " +
-                "values (@idtrabajador, @idempresa, @registropatronal, @nss, @motivo, @fecha, @dias, @inicio, @fin, @observaciones)";
+            Command.CommandText = "insert into suaBajas (idtrabajador, idempresa, registropatronal, nss, motivo, fecha, diasproporcionales, periodoinicio, periodofin, observaciones, registro) " +
+                "values (@idtrabajador, @idempresa, @registropatronal, @nss, @motivo, @fecha, @dias, @inicio, @fin, @observaciones, @registro)";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador",a.idtrabajador);
             Command.Parameters.AddWithValue("idempresa", a.idempresa);
@@ -101,6 +101,7 @@ namespace Bajas.Core
             Command.Parameters.AddWithValue("inicio", a.periodoinicio);
             Command.Parameters.AddWithValue("fin", a.periodofin);
             Command.Parameters.AddWithValue("observaciones", a.observaciones);
+            Command.Parameters.AddWithValue("registro", a.registro);
             return Command.ExecuteNonQuery();
         }
 

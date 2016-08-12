@@ -51,8 +51,12 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.txtPuesto = new System.Windows.Forms.TextBox();
-            this.lblFechaAplicacionHistorico = new System.Windows.Forms.Label();
-            this.dtpFechaAplicacionHistorico = new System.Windows.Forms.DateTimePicker();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.cmbDepartamento = new System.Windows.Forms.ComboBox();
+            this.cmbPuesto = new System.Windows.Forms.ComboBox();
+            this.chkCambioDeptoPto = new System.Windows.Forms.CheckBox();
+            this.chkModificaPuesto = new System.Windows.Forms.CheckBox();
             this.toolTitulo.SuspendLayout();
             this.toolAcciones.SuspendLayout();
             this.SuspendLayout();
@@ -127,16 +131,16 @@
             // Label2
             // 
             this.Label2.AutoSize = true;
-            this.Label2.Location = new System.Drawing.Point(93, 271);
+            this.Label2.Location = new System.Drawing.Point(90, 266);
             this.Label2.Name = "Label2";
-            this.Label2.Size = new System.Drawing.Size(37, 13);
+            this.Label2.Size = new System.Drawing.Size(40, 13);
             this.Label2.TabIndex = 261;
-            this.Label2.Text = "Fecha";
+            this.Label2.Text = "Fecha:";
             // 
             // dtpFecha
             // 
             this.dtpFecha.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFecha.Location = new System.Drawing.Point(136, 267);
+            this.dtpFecha.Location = new System.Drawing.Point(136, 264);
             this.dtpFecha.Name = "dtpFecha";
             this.dtpFecha.Size = new System.Drawing.Size(92, 20);
             this.dtpFecha.TabIndex = 260;
@@ -144,11 +148,11 @@
             // Label9
             // 
             this.Label9.AutoSize = true;
-            this.Label9.Location = new System.Drawing.Point(35, 238);
+            this.Label9.Location = new System.Drawing.Point(32, 238);
             this.Label9.Name = "Label9";
-            this.Label9.Size = new System.Drawing.Size(95, 13);
+            this.Label9.Size = new System.Drawing.Size(98, 13);
             this.Label9.TabIndex = 259;
-            this.Label9.Text = "Sueldo del periodo";
+            this.Label9.Text = "Sueldo del periodo:";
             // 
             // txtSueldo
             // 
@@ -180,20 +184,20 @@
             // Label10
             // 
             this.Label10.AutoSize = true;
-            this.Label10.Location = new System.Drawing.Point(16, 182);
+            this.Label10.Location = new System.Drawing.Point(13, 182);
             this.Label10.Name = "Label10";
-            this.Label10.Size = new System.Drawing.Size(114, 13);
+            this.Label10.Size = new System.Drawing.Size(117, 13);
             this.Label10.TabIndex = 254;
-            this.Label10.Text = "Salario diario integrado";
+            this.Label10.Text = "Salario diario integrado:";
             // 
             // Label8
             // 
             this.Label8.AutoSize = true;
-            this.Label8.Location = new System.Drawing.Point(63, 210);
+            this.Label8.Location = new System.Drawing.Point(60, 210);
             this.Label8.Name = "Label8";
-            this.Label8.Size = new System.Drawing.Size(67, 13);
+            this.Label8.Size = new System.Drawing.Size(70, 13);
             this.Label8.TabIndex = 257;
-            this.Label8.Text = "Salario diario";
+            this.Label8.Text = "Salario diario:";
             // 
             // Label16
             // 
@@ -261,30 +265,73 @@
             this.txtPuesto.Size = new System.Drawing.Size(164, 20);
             this.txtPuesto.TabIndex = 284;
             // 
-            // lblFechaAplicacionHistorico
+            // label5
             // 
-            this.lblFechaAplicacionHistorico.AutoSize = true;
-            this.lblFechaAplicacionHistorico.Location = new System.Drawing.Point(240, 182);
-            this.lblFechaAplicacionHistorico.Name = "lblFechaAplicacionHistorico";
-            this.lblFechaAplicacionHistorico.Size = new System.Drawing.Size(106, 13);
-            this.lblFechaAplicacionHistorico.TabIndex = 286;
-            this.lblFechaAplicacionHistorico.Text = "Fecha de aplicación:";
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(53, 295);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(77, 13);
+            this.label5.TabIndex = 285;
+            this.label5.Text = "Departamento:";
             // 
-            // dtpFechaAplicacionHistorico
+            // label6
             // 
-            this.dtpFechaAplicacionHistorico.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFechaAplicacionHistorico.Location = new System.Drawing.Point(243, 198);
-            this.dtpFechaAplicacionHistorico.Name = "dtpFechaAplicacionHistorico";
-            this.dtpFechaAplicacionHistorico.Size = new System.Drawing.Size(84, 20);
-            this.dtpFechaAplicacionHistorico.TabIndex = 285;
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(87, 324);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(43, 13);
+            this.label6.TabIndex = 286;
+            this.label6.Text = "Puesto:";
+            // 
+            // cmbDepartamento
+            // 
+            this.cmbDepartamento.FormattingEnabled = true;
+            this.cmbDepartamento.Location = new System.Drawing.Point(136, 292);
+            this.cmbDepartamento.Name = "cmbDepartamento";
+            this.cmbDepartamento.Size = new System.Drawing.Size(164, 21);
+            this.cmbDepartamento.TabIndex = 287;
+            // 
+            // cmbPuesto
+            // 
+            this.cmbPuesto.FormattingEnabled = true;
+            this.cmbPuesto.Location = new System.Drawing.Point(136, 321);
+            this.cmbPuesto.Name = "cmbPuesto";
+            this.cmbPuesto.Size = new System.Drawing.Size(164, 21);
+            this.cmbPuesto.TabIndex = 288;
+            // 
+            // chkCambioDeptoPto
+            // 
+            this.chkCambioDeptoPto.AutoSize = true;
+            this.chkCambioDeptoPto.Location = new System.Drawing.Point(306, 294);
+            this.chkCambioDeptoPto.Name = "chkCambioDeptoPto";
+            this.chkCambioDeptoPto.Size = new System.Drawing.Size(101, 17);
+            this.chkCambioDeptoPto.TabIndex = 289;
+            this.chkCambioDeptoPto.Text = "Modificar Depto";
+            this.chkCambioDeptoPto.UseVisualStyleBackColor = true;
+            this.chkCambioDeptoPto.CheckedChanged += new System.EventHandler(this.chkCambioDeptoPto_CheckedChanged);
+            // 
+            // chkModificaPuesto
+            // 
+            this.chkModificaPuesto.AutoSize = true;
+            this.chkModificaPuesto.Location = new System.Drawing.Point(306, 323);
+            this.chkModificaPuesto.Name = "chkModificaPuesto";
+            this.chkModificaPuesto.Size = new System.Drawing.Size(105, 17);
+            this.chkModificaPuesto.TabIndex = 290;
+            this.chkModificaPuesto.Text = "Modificar Puesto";
+            this.chkModificaPuesto.UseVisualStyleBackColor = true;
+            this.chkModificaPuesto.CheckedChanged += new System.EventHandler(this.chkModificaPuesto_CheckedChanged);
             // 
             // frmIncrementoSalarial
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(429, 364);
-            this.Controls.Add(this.lblFechaAplicacionHistorico);
-            this.Controls.Add(this.dtpFechaAplicacionHistorico);
+            this.ClientSize = new System.Drawing.Size(429, 421);
+            this.Controls.Add(this.chkModificaPuesto);
+            this.Controls.Add(this.chkCambioDeptoPto);
+            this.Controls.Add(this.cmbPuesto);
+            this.Controls.Add(this.cmbDepartamento);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.txtPuesto);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtDepartamento);
@@ -341,8 +388,12 @@
 
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtPuesto;
-        private System.Windows.Forms.Label lblFechaAplicacionHistorico;
-        private System.Windows.Forms.DateTimePicker dtpFechaAplicacionHistorico;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox cmbDepartamento;
+        private System.Windows.Forms.ComboBox cmbPuesto;
+        private System.Windows.Forms.CheckBox chkCambioDeptoPto;
+        private System.Windows.Forms.CheckBox chkModificaPuesto;
 
     }
 }

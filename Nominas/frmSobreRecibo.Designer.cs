@@ -37,6 +37,7 @@
             this.toolIspt = new System.Windows.Forms.ToolStripButton();
             this.toolInfonavit = new System.Windows.Forms.ToolStripButton();
             this.toolEliminar = new System.Windows.Forms.ToolStripButton();
+            this.toolDiagnostico = new System.Windows.Forms.ToolStripButton();
             this.TabPrincipal = new System.Windows.Forms.TabControl();
             this.tabPercepcionesDeducciones = new System.Windows.Forms.TabPage();
             this.label9 = new System.Windows.Forms.Label();
@@ -161,7 +162,6 @@
             this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.toolDiagnostico = new System.Windows.Forms.ToolStripButton();
             this.toolAcciones.SuspendLayout();
             this.TabPrincipal.SuspendLayout();
             this.tabPercepcionesDeducciones.SuspendLayout();
@@ -278,6 +278,16 @@
             this.toolEliminar.Size = new System.Drawing.Size(70, 22);
             this.toolEliminar.Text = "Eliminar";
             this.toolEliminar.Click += new System.EventHandler(this.toolEliminar_Click);
+            // 
+            // toolDiagnostico
+            // 
+            this.toolDiagnostico.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolDiagnostico.Image = ((System.Drawing.Image)(resources.GetObject("toolDiagnostico.Image")));
+            this.toolDiagnostico.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolDiagnostico.Name = "toolDiagnostico";
+            this.toolDiagnostico.Size = new System.Drawing.Size(23, 22);
+            this.toolDiagnostico.Text = "Diagnostico";
+            this.toolDiagnostico.Click += new System.EventHandler(this.toolDiagnostico_Click);
             // 
             // TabPrincipal
             // 
@@ -1508,16 +1518,6 @@
             this.dataGridViewTextBoxColumn16.HeaderText = "Fin";
             this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
             // 
-            // toolDiagnostico
-            // 
-            this.toolDiagnostico.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolDiagnostico.Image = ((System.Drawing.Image)(resources.GetObject("toolDiagnostico.Image")));
-            this.toolDiagnostico.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolDiagnostico.Name = "toolDiagnostico";
-            this.toolDiagnostico.Size = new System.Drawing.Size(23, 22);
-            this.toolDiagnostico.Text = "Diagnostico";
-            this.toolDiagnostico.Click += new System.EventHandler(this.toolDiagnostico_Click);
-            // 
             // frmSobreRecibo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1532,6 +1532,7 @@
             this.MinimizeBox = false;
             this.Name = "frmSobreRecibo";
             this.Text = "Sobre-recibo";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmSobreRecibo_FormClosing);
             this.Load += new System.EventHandler(this.frmSobreRecibo_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmSobreRecibo_KeyDown);
             this.toolAcciones.ResumeLayout(false);

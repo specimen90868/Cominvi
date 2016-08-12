@@ -65,6 +65,9 @@ namespace Nominas
             Catalogos.Core.Catalogo tr = new Catalogos.Core.Catalogo();
             tr.grupodescripcion = "TIPO DE REGIMEN";
 
+            Catalogos.Core.Catalogo mp = new Catalogos.Core.Catalogo();
+            mp.grupodescripcion = "METODO DE PAGO";
+
             dh = new Departamento.Core.DeptoHelper();
             dh.Command = cmd;
             Departamento.Core.Depto depto = new Departamento.Core.Depto();
@@ -93,6 +96,7 @@ namespace Nominas
             List<Periodos.Core.Periodos> lstPeriodos = new List<Periodos.Core.Periodos>();
             List<Salario.Core.Salarios> lstSalario = new List<Salario.Core.Salarios>();
             List<Catalogos.Core.Catalogo> lstTipoRegimen = new List<Catalogos.Core.Catalogo>();
+            List<Catalogos.Core.Catalogo> lstMetodoPago = new List<Catalogos.Core.Catalogo>();
 
             try
             {
@@ -104,6 +108,7 @@ namespace Nominas
                 lstPeriodos = pdh.obtenerPeriodos(periodo);
                 lstSalario = sh.obtenerSalarios();
                 lstTipoRegimen = cath.obtenerGrupo(tr);
+                lstMetodoPago = cath.obtenerGrupo(mp);
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -123,7 +128,7 @@ namespace Nominas
 
             cmbPuesto.DataSource = lstPuesto.ToList();
             cmbPuesto.DisplayMember = "nombre";
-            cmbPuesto.ValueMember = "id";
+            cmbPuesto.ValueMember = "idpuesto";
 
             cmbEstado.DataSource = lstEstados.ToList();
             cmbEstado.DisplayMember = "nombre";
@@ -142,6 +147,11 @@ namespace Nominas
             cmbTipoRegimen.ValueMember = "id";
 
             cmbMetodoPago.SelectedIndex = 2;
+
+            //cmbMetodoPago.DataSource = lstMetodoPago.ToList();
+            //cmbMetodoPago.DisplayMember = "descripcion";
+            //cmbMetodoPago.ValueMember = "id";
+
         }
 
         private void frmEmpleados_Load(object sender, EventArgs e)
@@ -150,6 +160,11 @@ namespace Nominas
             lblFechaAplicacionHistorico.Visible = false;
             dtpFechaAplicacionHistorico.Visible = false;
 
+            if (GLOBALES.DIASPERIODO == 7)
+                chkObraCivil.Visible = true;
+            else
+                chkObraCivil.Visible = false;
+            
             if (_tipoOperacion == GLOBALES.CONSULTAR || _tipoOperacion == GLOBALES.MODIFICAR)
             {
                 object fechaBaja;
@@ -248,6 +263,7 @@ namespace Nominas
                     GLOBALES.INHABILITAR(this, typeof(DateTimePicker));
                     GLOBALES.INHABILITAR(this, typeof(ComboBox));
                     GLOBALES.INHABILITAR(this, typeof(RadioButton));
+                    GLOBALES.INHABILITAR(this, typeof(CheckBox));
                     toolGuardarCerrar.Enabled = false;
                     toolGuardarNuevo.Enabled = false;
                 }
@@ -362,6 +378,12 @@ namespace Nominas
                 return;
             }
 
+            if (txtNSS.Text.Length != 11)
+            {
+                MessageBox.Show("El campo NSS es mayor o meno a 11 dígitos.", "Error");
+                return;
+            }
+
             int idtrabajador;
 
             cnx = new SqlConnection();
@@ -372,8 +394,8 @@ namespace Nominas
             eh.Command = cmd;
 
             Empleados.Core.Empleados existeEmpleado = new Empleados.Core.Empleados();
-            existeEmpleado.nss = txtNSS.Text;
-            existeEmpleado.digitoverificador = int.Parse(txtNSS.Text.Substring(10,1));
+            existeEmpleado.nss = txtNSS.Text.Trim().Substring(0, 10);
+            existeEmpleado.digitoverificador = int.Parse(txtNSS.Text.Trim().Substring(10,1));
             existeEmpleado.idempresa = GLOBALES.IDEMPRESA;
 
             int existeNss;
@@ -404,8 +426,8 @@ namespace Nominas
             em.idempresa = GLOBALES.IDEMPRESA;
             em.rfc = txtRFC.Text;
             em.curp = txtCURP.Text;
-            em.nss = txtNSS.Text.Substring(0,10);
-            em.digitoverificador = int.Parse(txtNSS.Text.Substring(10,1));
+            em.nss = txtNSS.Text.Trim().Substring(0,10);
+            em.digitoverificador = int.Parse(txtNSS.Text.Trim().Substring(10,1));
 
             em.iddepartamento = int.Parse(cmbDepartamento.SelectedValue.ToString());
             em.idpuesto = int.Parse(cmbPuesto.SelectedValue.ToString());
@@ -422,105 +444,34 @@ namespace Nominas
             em.clabe = mtxtCuentaClabe.Text;
             em.idbancario = mtxtIdBancario.Text;
             em.metodopago = cmbMetodoPago.Text;
+            //em.metodopago = int.Parse(cmbMetodoPago.SelectedValue.ToString());
 
             if (chkObraCivil.Checked)
                 em.obracivil = true;
             else
                 em.obracivil = false;
 
-            Empleados.Core.EmpleadosEstatus ee = new Empleados.Core.EmpleadosEstatus();
-            ee.estatus = GLOBALES.ACTIVO;
-            ee.idempresa = GLOBALES.IDEMPRESA;
-
-            hh = new Historial.Core.HistorialHelper();
-            hh.Command = cmd;
-            Historial.Core.Historial h = new Historial.Core.Historial();
-            h.tipomovimiento = GLOBALES.mALTA;
-            h.valor = decimal.Parse(txtSDI.Text);
-            h.fecha_imss = dtpFechaIngreso.Value;
-            h.fecha_sistema = DateTime.Now;
-            h.motivobaja = 0;
+            //hh = new Historial.Core.HistorialHelper();
+            //hh.Command = cmd;
+            //Historial.Core.Historial h = new Historial.Core.Historial();
+            //h.idempresa = GLOBALES.IDEMPRESA;
+            //h.tipomovimiento = GLOBALES.mALTA;
+            //h.valor = decimal.Parse(txtSDI.Text);
+            //h.fecha_imss = dtpFechaIngreso.Value;
+            //h.fecha_sistema = DateTime.Now;
+            //h.motivobaja = 0;
+            //h.iddepartamento = int.Parse(cmbDepartamento.SelectedValue.ToString());
+            //h.idpuesto = int.Parse(cmbPuesto.SelectedValue.ToString());
 
             ih = new Imagen.Core.ImagenesHelper();
             ih.Command = cmd;
 
             Imagen.Core.Imagenes img = null;
 
-            pdh = new Periodos.Core.PeriodosHelper();
-            pdh.Command = cmd;
-
-            Periodos.Core.Periodos p = new Periodos.Core.Periodos();
-            p.idperiodo = int.Parse(cmbPeriodo.SelectedValue.ToString());
-            int diasPago = 0;
-            try { cnx.Open(); diasPago = (int)pdh.DiasDePago(p); cnx.Close(); } catch { MessageBox.Show("Error: Al obtener los dias de pago.", "Error"); }
-
-            DateTime dt = dtpFechaIngreso.Value.Date;
-            DateTime periodoInicio, periodoFin;
-            int diasProporcionales = 0;
-            if (diasPago == 7)
-            {
-                while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
-                periodoInicio = dt;
-                periodoFin = dt.AddDays(6);
-                diasProporcionales = (int)(periodoFin.Date - dtpFechaIngreso.Value.Date).TotalDays + 1;
-            }
-            else
-            {
-                if (dt.Day <= 15)
-                {
-                    periodoInicio = new DateTime(dt.Year, dt.Month, 1);
-                    periodoFin = new DateTime(dt.Year, dt.Month, 15);
-                    diasProporcionales = (int)(periodoFin.Date - dtpFechaIngreso.Value.Date).TotalDays + 1;
-                }
-                else
-                {
-                    int diasMes = DateTime.DaysInMonth(dt.Year, dt.Month);
-                    int diasNoLaborados = 0;
-                    periodoInicio = new DateTime(dt.Year, dt.Month, 16);
-                    periodoFin = new DateTime(dt.Year, dt.Month, DateTime.DaysInMonth(dt.Year, dt.Month));
-                    diasNoLaborados = (int)(dtpFechaIngreso.Value.Date - periodoInicio).TotalDays;
-
-                    switch (diasMes)
-                    {
-                        case 28:
-                            diasProporcionales = 15 - diasNoLaborados;
-                            break;
-                        case 29:
-                            diasProporcionales = 15 - diasNoLaborados;
-                            break;
-                        case 30:
-                            diasProporcionales = (diasMes - 15) - diasNoLaborados;
-                            break;
-                        case 31:
-                            diasProporcionales = (diasMes - 16) - diasNoLaborados;
-                            break;
-                    }
-                }
-            }
-
-            Altas.Core.AltasHelper ah = new Altas.Core.AltasHelper();
-            ah.Command = cmd;
-            Altas.Core.Altas a = new Altas.Core.Altas();
-            a.nss = txtNSS.Text;
-            a.rfc = txtRFC.Text;
-            a.curp = txtCURP.Text;
-            a.paterno = txtApPaterno.Text;
-            a.materno = txtApMaterno.Text;
-            a.nombre = txtNombre.Text;
-            a.fechaingreso = dtpFechaIngreso.Value;
-            a.diasproporcionales = diasProporcionales;
-            a.sdi = decimal.Parse(txtSDI.Text);
-            a.fechanacimiento = dtpFechaNacimiento.Value;
-            a.estado = cmbEstado.Text;
-            a.noestado = int.Parse(cmbEstado.SelectedValue.ToString());
-            a.sexo = ObtieneSexo();
-            a.periodoInicio = periodoInicio;
-            a.periodoFin = periodoFin;
-
-            Empresas.Core.EmpresasHelper empresash = new Empresas.Core.EmpresasHelper();
-            empresash.Command = cmd;
-            Empresas.Core.Empresas empresa = new Empresas.Core.Empresas();
-            empresa.idempresa = GLOBALES.IDEMPRESA;
+            //Empresas.Core.EmpresasHelper empresash = new Empresas.Core.EmpresasHelper();
+            //empresash.Command = cmd;
+            //Empresas.Core.Empresas empresa = new Empresas.Core.Empresas();
+            //empresa.idempresa = GLOBALES.IDEMPRESA;
 
             try
             {
@@ -541,9 +492,12 @@ namespace Nominas
                 case 0:
                     try
                     {
+                        //Empleados.Core.EmpleadosEstatus ee = new Empleados.Core.EmpleadosEstatus();
+                        //ee.estatus = GLOBALES.ACTIVO;
+                        //ee.idempresa = GLOBALES.IDEMPRESA;
+                        
                         em.estatus = GLOBALES.ACTIVO;
                         em.idusuario = GLOBALES.IDUSUARIO;
-                        
                         if (existeNss != 0)
                         {
                             MessageBox.Show("El empleado que desea ingresar ya existe actualmente. \r\n \r\n Es necesario realizar un reingreso.", "Error");
@@ -553,19 +507,16 @@ namespace Nominas
                         cnx.Open();
                         eh.insertaEmpleado(em);
                         idtrabajador = (int)eh.obtenerIdTrabajador(em);
-                        h.idtrabajador = idtrabajador;
-                        h.idempresa = GLOBALES.IDEMPRESA;
-                        hh.insertarHistorial(h);
+                        
+                        //h.idtrabajador = idtrabajador;
+                        //hh.insertarHistorial(h);
 
-                        ee.idtrabajador = idtrabajador;
-                        eh.insertaEmpleadoEstatus(ee);
+                        //ee.idtrabajador = idtrabajador;
+                        //eh.insertaEmpleadoEstatus(ee);
 
-                        a.idtrabajador = idtrabajador;
-                        a.idempresa = GLOBALES.IDEMPRESA;
-                        a.contrato = 4;
-                        a.jornada = 12;
-                        a.registropatronal = empresash.obtenerRegistroPatronal(empresa).ToString();
-                        ah.insertaAlta(a);
+                        //a.idtrabajador = idtrabajador;
+                        //a.registropatronal = empresash.obtenerRegistroPatronal(empresa).ToString();
+                        //ah.insertaAlta(a);
 
                         if (ImagenAsignada == true)
                         {
@@ -584,6 +535,85 @@ namespace Nominas
                 case 2:
                     try
                     {
+                        em.idtrabajador = _idempleado;
+
+                        pdh = new Periodos.Core.PeriodosHelper();
+                        pdh.Command = cmd;
+
+                        Periodos.Core.Periodos p = new Periodos.Core.Periodos();
+                        p.idperiodo = int.Parse(cmbPeriodo.SelectedValue.ToString());
+                        int diasPago = 0;
+                        try { cnx.Open(); diasPago = (int)pdh.DiasDePago(p); cnx.Close(); }
+                        catch { MessageBox.Show("Error: Al obtener los dias de pago.", "Error"); }
+
+                        DateTime dt = dtpFechaIngreso.Value.Date;
+                        DateTime periodoInicio, periodoFin;
+                        int diasProporcionales = 0;
+                        if (diasPago == 7)
+                        {
+                            while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
+                            periodoInicio = dt;
+                            periodoFin = dt.AddDays(6);
+                            diasProporcionales = (int)(periodoFin.Date - dtpFechaIngreso.Value.Date).TotalDays + 1;
+                        }
+                        else
+                        {
+                            if (dt.Day <= 15)
+                            {
+                                periodoInicio = new DateTime(dt.Year, dt.Month, 1);
+                                periodoFin = new DateTime(dt.Year, dt.Month, 15);
+                                diasProporcionales = (int)(periodoFin.Date - dtpFechaIngreso.Value.Date).TotalDays + 1;
+                            }
+                            else
+                            {
+                                int diasMes = DateTime.DaysInMonth(dt.Year, dt.Month);
+                                int diasNoLaborados = 0;
+                                periodoInicio = new DateTime(dt.Year, dt.Month, 16);
+                                periodoFin = new DateTime(dt.Year, dt.Month, DateTime.DaysInMonth(dt.Year, dt.Month));
+                                diasNoLaborados = (int)(dtpFechaIngreso.Value.Date - periodoInicio).TotalDays;
+
+                                switch (diasMes)
+                                {
+                                    case 28:
+                                        diasProporcionales = 15 - diasNoLaborados;
+                                        break;
+                                    case 29:
+                                        diasProporcionales = 15 - diasNoLaborados;
+                                        break;
+                                    case 30:
+                                        diasProporcionales = (diasMes - 15) - diasNoLaborados;
+                                        break;
+                                    case 31:
+                                        diasProporcionales = (diasMes - 16) - diasNoLaborados;
+                                        break;
+                                }
+                            }
+                        }
+
+                        Altas.Core.AltasHelper ah = new Altas.Core.AltasHelper();
+                        ah.Command = cmd;
+                        Altas.Core.Altas a = new Altas.Core.Altas();
+                        a.idempresa = GLOBALES.IDEMPRESA;
+                        a.contrato = 4;
+                        a.jornada = 12;
+                        a.nss = txtNSS.Text;
+                        a.rfc = txtRFC.Text;
+                        a.curp = txtCURP.Text;
+                        a.paterno = txtApPaterno.Text;
+                        a.materno = txtApMaterno.Text;
+                        a.nombre = txtNombre.Text;
+                        a.fechaingreso = dtpFechaIngreso.Value;
+                        a.diasproporcionales = diasProporcionales;
+                        a.sdi = decimal.Parse(txtSDI.Text);
+                        a.fechanacimiento = dtpFechaNacimiento.Value;
+                        a.estado = cmbEstado.Text;
+                        a.noestado = int.Parse(cmbEstado.SelectedValue.ToString());
+                        a.sexo = ObtieneSexo();
+                        a.periodoInicio = periodoInicio;
+                        a.periodoFin = periodoFin;
+
+                        hh = new Historial.Core.HistorialHelper();
+                        hh.Command = cmd;
                         Historial.Core.Historial hDepto = null;
                         Historial.Core.Historial hPuesto = null;
                         if (historicoDepto)
@@ -596,6 +626,8 @@ namespace Nominas
                             hDepto.motivobaja = 0;
                             hDepto.tipomovimiento = GLOBALES.mCAMBIODEPARTAMENTO;
                             hDepto.fecha_imss = dtpFechaAplicacionHistorico.Value.Date;
+                            hDepto.iddepartamento = int.Parse(cmbDepartamento.SelectedValue.ToString());
+                            hDepto.idpuesto = int.Parse(cmbPuesto.SelectedValue.ToString());
                         }
 
                         if (historicoPuesto)
@@ -608,9 +640,10 @@ namespace Nominas
                             hPuesto.motivobaja = 0;
                             hPuesto.tipomovimiento = GLOBALES.mCAMBIOPUESTO;
                             hPuesto.fecha_imss = dtpFechaAplicacionHistorico.Value.Date;
+                            hPuesto.iddepartamento = int.Parse(cmbDepartamento.SelectedValue.ToString());
+                            hPuesto.idpuesto = int.Parse(cmbPuesto.SelectedValue.ToString());
                         }
-                            
-                        em.idtrabajador = _idempleado;
+                        
                         cnx.Open();
                         eh.actualizaEmpleado(em);
 
@@ -829,8 +862,12 @@ namespace Nominas
 
         private void txtCURP_Leave(object sender, EventArgs e)
         {
-            if (txtCURP.Text.Length == 0 || txtCURP.Text.Length < 18)
+            if (txtCURP.Text.Length == 0 || txtCURP.Text.Length < 18 || txtCURP.Text.Length >= 19)
+            {
+                MessageBox.Show("Verifique el CURP, ya que es menor a 18 digitos o los excede.", "Error");
                 return;
+            }
+            
 
             int numero17 = 0;
             string posicion17 = txtCURP.Text.Substring(16, 1);
@@ -886,6 +923,8 @@ namespace Nominas
                 case "VZ": estado = "VERACRUZ"; break;
                 case "YN": estado = "YUCATAN"; break;
                 case "ZS": estado = "ZACATECAS"; break;
+                default: MessageBox.Show("Verifique el CURP, es incorrecta.", "Error");
+                    return;
             }
             cmbEstado.SelectedIndex = cmbEstado.FindString(estado);
 

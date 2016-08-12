@@ -73,8 +73,8 @@ namespace Nominas
                 cnx.Dispose();
 
                 var lista = from emp in lstEmpleados join his in lstHistorial on emp.idtrabajador equals his.idtrabajador
-                            join d in lstDepto on emp.iddepartamento equals d.id
-                            join p in lstPuesto on emp.idpuesto equals p.id
+                            join d in lstDepto on his.iddepartamento equals d.id
+                            join p in lstPuesto on his.idpuesto equals p.idpuesto orderby his.fecha_imss ascending
                          select new
                          {
                              IdTrabajador = emp.idtrabajador,

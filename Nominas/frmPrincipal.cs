@@ -29,6 +29,7 @@ namespace Nominas
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
         SqlConnection cnx;
         SqlCommand cmd;
+        bool FLAG_SESIONACTIVA = false;
         #endregion
 
         private void frmPrincipal_Load(object sender, EventArgs e)
@@ -117,7 +118,7 @@ namespace Nominas
                         mnuComplementos.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "Empleados en Baja":
-                        mnuEmpleadosBaja.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        toolRegistroBajas.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "Expedientes":
                         mnuExpedientes.Enabled = Convert.ToBoolean(lstMenu[i].accion);
@@ -161,30 +162,6 @@ namespace Nominas
                     case "Bajas Idse":
                         toolBajaIdse.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
-                    case "Vacaciones":
-                        //toolVacaciones.Enabled = Convert.ToBoolean(lstMenu[i].accion);
-                        break;
-                    case "Cargar Vacaciones":
-                        //toolCargaVacaciones.Enabled = Convert.ToBoolean(lstMenu[i].accion);
-                        break;
-                    case "Historial de Vacaciones":
-                        //toolHistorialVacaciones.Enabled = Convert.ToBoolean(lstMenu[i].accion);
-                        break;
-                    case "Conceptos - Empleado":
-                        //tool.Enabled = Convert.ToBoolean(lstMenu[i].accion);
-                        break;
-                    case "Programación de concepto":
-                        //toolProgramacion.Enabled = Convert.ToBoolean(lstMenu[i].accion);
-                        break;
-                    case "Movimientos":
-                        //toolMovimientos.Enabled = Convert.ToBoolean(lstMenu[i].accion);
-                        break;
-                    case "Carga movimientos":
-                        //toolCargaMovimientos.Enabled = Convert.ToBoolean(lstMenu[i].accion);
-                        break;
-                    case "Historial de movimientos":
-                        //toolHistorialMovimientos.Enabled = Convert.ToBoolean(lstMenu[i].accion);
-                        break;
                     case "Calculo de nómina":
                         toolCalculoNomina.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
@@ -194,8 +171,11 @@ namespace Nominas
                     case "Especial":
                         toolNominaEspecial.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
-                    case "Autorizar nómina":
-                        //toolAutorizarNomina.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                    case "Impresión de recibos":
+                        toolImpresionRecibos.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Envio de recibos":
+                        toolEnvioRecibos.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "Reportes":
                         toolReportes.Enabled = Convert.ToBoolean(lstMenu[i].accion);
@@ -211,6 +191,12 @@ namespace Nominas
                         break;
                     case "Conceptos":
                         toolConceptos.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Conceptos - Empleado":
+                        toolConceptoEmpleado.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        break;
+                    case "Programación de Concepto":
+                        toolProgramacionConcepto.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "Empresas":
                         mnuEmpresa.Enabled = Convert.ToBoolean(lstMenu[i].accion);
@@ -263,6 +249,7 @@ namespace Nominas
                 mnuCerrarEmpresa.Enabled = false;
                 mnuCerrarSesion.Enabled = true;
                 mnuIniciarSesion.Enabled = false;
+                FLAG_SESIONACTIVA = false;
             }
             else if (sesion == 2)
             {
@@ -270,6 +257,7 @@ namespace Nominas
                 mnuCerrarEmpresa.Enabled = true;
                 mnuCerrarSesion.Enabled = true;
                 mnuIniciarSesion.Enabled = false;
+                FLAG_SESIONACTIVA = true;
             }
             else
             {
@@ -283,6 +271,7 @@ namespace Nominas
                 mnuCerrarEmpresa.Enabled = false;
                 mnuCerrarSesion.Enabled = false;
                 mnuIniciarSesion.Enabled = true;
+                FLAG_SESIONACTIVA = true;
             }
 
         }
@@ -298,12 +287,22 @@ namespace Nominas
 
         private void mniIniciarSesion_Click(object sender, EventArgs e)
         {
+            IniciaSesion();
+        }
+
+        void IniciaSesion()
+        {
             frmLogIn login = new frmLogIn();
             login.ShowDialog();
             MenuInicial(0);
         }
 
         private void mnuCerrarSesion_Click(object sender, EventArgs e)
+        {
+            CierraSesion();
+        }
+
+        void CierraSesion()
         {
             foreach (Form frm in this.MdiChildren)
             {
@@ -676,6 +675,19 @@ namespace Nominas
         {
             frmEnvioRecibos er = new frmEnvioRecibos();
             er.Show();
+        }
+
+        private void frmPrincipal_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!FLAG_SESIONACTIVA)
+                if (e.KeyData == Keys.F1)
+                {
+                    IniciaSesion();
+                }
+                else if (e.KeyData == Keys.F3)
+                {
+                    CierraSesion();
+                }
         }
     }
 }

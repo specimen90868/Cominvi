@@ -111,7 +111,7 @@
             // lblPassword
             // 
             this.lblPassword.AutoSize = true;
-            this.lblPassword.Location = new System.Drawing.Point(81, 167);
+            this.lblPassword.Location = new System.Drawing.Point(81, 195);
             this.lblPassword.Name = "lblPassword";
             this.lblPassword.Size = new System.Drawing.Size(56, 13);
             this.lblPassword.TabIndex = 177;
@@ -120,7 +120,7 @@
             // lblPassword2
             // 
             this.lblPassword2.AutoSize = true;
-            this.lblPassword2.Location = new System.Drawing.Point(34, 193);
+            this.lblPassword2.Location = new System.Drawing.Point(34, 221);
             this.lblPassword2.Name = "lblPassword2";
             this.lblPassword2.Size = new System.Drawing.Size(103, 13);
             this.lblPassword2.TabIndex = 179;
@@ -128,7 +128,7 @@
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(143, 164);
+            this.txtPassword.Location = new System.Drawing.Point(143, 192);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(121, 20);
@@ -136,7 +136,7 @@
             // 
             // txtPassword2
             // 
-            this.txtPassword2.Location = new System.Drawing.Point(143, 190);
+            this.txtPassword2.Location = new System.Drawing.Point(143, 218);
             this.txtPassword2.Name = "txtPassword2";
             this.txtPassword2.PasswordChar = '*';
             this.txtPassword2.Size = new System.Drawing.Size(121, 20);
@@ -171,7 +171,7 @@
             // 
             // txtUsuario
             // 
-            this.txtUsuario.Location = new System.Drawing.Point(143, 138);
+            this.txtUsuario.Location = new System.Drawing.Point(143, 166);
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(121, 20);
             this.txtUsuario.TabIndex = 2;
@@ -179,7 +179,7 @@
             // Label1
             // 
             this.Label1.AutoSize = true;
-            this.Label1.Location = new System.Drawing.Point(90, 141);
+            this.Label1.Location = new System.Drawing.Point(90, 169);
             this.Label1.Name = "Label1";
             this.Label1.Size = new System.Drawing.Size(46, 13);
             this.Label1.TabIndex = 174;
@@ -188,7 +188,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(103, 219);
+            this.label2.Location = new System.Drawing.Point(103, 141);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(33, 13);
             this.label2.TabIndex = 180;
@@ -197,7 +197,7 @@
             // cmbPerfil
             // 
             this.cmbPerfil.FormattingEnabled = true;
-            this.cmbPerfil.Location = new System.Drawing.Point(143, 216);
+            this.cmbPerfil.Location = new System.Drawing.Point(143, 138);
             this.cmbPerfil.Name = "cmbPerfil";
             this.cmbPerfil.Size = new System.Drawing.Size(121, 21);
             this.cmbPerfil.TabIndex = 5;

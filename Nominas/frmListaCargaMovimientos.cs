@@ -122,6 +122,8 @@ namespace Nominas
                                 oda.SelectCommand = cmdOle;
                                 oda.Fill(dt);
                                 con.Close();
+                                cmdOle.Dispose();
+                                con.Dispose();
 
                                 nombreEmpresa = dt.Columns[1].ColumnName;
                                 idEmpresa = int.Parse(dt.Columns[3].ColumnName.ToString());
@@ -130,7 +132,7 @@ namespace Nominas
 
                                 if (GLOBALES.IDEMPRESA != idEmpresa)
                                 {
-                                    MessageBox.Show("Los datos a ingresar pertenecen a otra empresa. Verifique. \r\n \r\n La ventana se cerrara." , "Error");
+                                    MessageBox.Show("Los datos a ingresar pertenecen a otra empresa. Verifique. \r\n \r\n La ventana se cerrara.", "Error");
                                     this.Dispose();
                                 }
 
@@ -140,7 +142,7 @@ namespace Nominas
                                     this.Dispose();
                                 }
 
-                                for (int i = 5; i < dt.Rows.Count; i++)
+                                for (int i = 6; i < dt.Rows.Count; i++)
                                 {
                                     for (int j = 1; j < dt.Columns.Count; j++)
                                     {
@@ -149,7 +151,7 @@ namespace Nominas
                                             dgvMovimientos.Rows.Add(
                                                 dt.Rows[i][0].ToString(), //no empleado
                                                 dt.Rows[i][j].ToString(), //cantidad
-                                                dt.Rows[4][j].ToString(), //concepto
+                                                dt.Rows[5][j].ToString(), //concepto
                                                 dt.Rows[1][1].ToString(), //fecha inicio
                                                 dt.Rows[2][1].ToString()); //fecha fin
                                         }
@@ -183,7 +185,7 @@ namespace Nominas
                 MessageBox.Show("No se puede aplicar verifique.", "Error");
                 return;
             }
-
+            toolAplicar.Enabled = false;
             workMovimientos.RunWorkerAsync();
         }
 
@@ -347,9 +349,9 @@ namespace Nominas
                                 nh.actualizaConceptoModificado(pn);
                                 cnx.Close();
                             }
-                            catch
+                            catch (Exception error)
                             {
-                                MessageBox.Show("Error al obtener la existencia del concepto.\r\n \r\n Esta ventana se cerrará.", "Error");
+                                MessageBox.Show("Error al obtener la actualizar el concepto.\r\n \r\n Esta ventana se cerrará.\r\n" + error.Message, "Error");
                                 cnx.Dispose();
                                 workMovimientos.CancelAsync();
                                 this.Dispose();
@@ -602,6 +604,7 @@ namespace Nominas
         {
             MessageBox.Show("Movimientos importados", "Confirmacón");
             dgvMovimientos.Rows.Clear();
+            toolAplicar.Enabled = true;
         }
 
         private void frmListaCargaMovimientos_Load(object sender, EventArgs e)

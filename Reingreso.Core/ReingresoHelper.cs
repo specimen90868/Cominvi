@@ -81,6 +81,17 @@ namespace Reingreso.Core
             return dato;
         }
 
+        public int existeReingreso(int idEmpresa, int idTrabajador, DateTime inicio)
+        {
+            Command.CommandText = "select count(*) from suaReingresos where idempresa = @idempresa and idtrabajador = @idtrabajador and periodoinicio = @inicio";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", idTrabajador);
+            Command.Parameters.AddWithValue("inicio", inicio);
+            Command.Parameters.AddWithValue("idempresa", idEmpresa);
+            int dato = int.Parse(Select(Command).ToString());
+            return dato;
+        }
+
         public object diasProporcionales(Reingresos r)
         {
             Command.CommandText = "select diasproporcionales from suaReingresos where idtrabajador = @idtrabajador and periodoinicio = @periodoinicio and periodofin = @periodofin";

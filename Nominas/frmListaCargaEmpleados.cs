@@ -22,17 +22,17 @@ namespace Nominas
         string ruta, nombreEmpresa;
         string ExcelConString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties='Excel 12.0;'";
         int idEmpresa;
-        Empresas.Core.EmpresasHelper eh;
+        //Empresas.Core.EmpresasHelper eh;
         Empleados.Core.EmpleadosHelper emph;
         Periodos.Core.PeriodosHelper ph;
         Departamento.Core.DeptoHelper dh;
         Puestos.Core.PuestosHelper puestoh;
         Factores.Core.FactoresHelper fh;
-        Historial.Core.HistorialHelper hh;
-        Altas.Core.AltasHelper ah;
+        //Historial.Core.HistorialHelper hh;
+        //Altas.Core.AltasHelper ah;
         Estados.Core.EstadosHelper edoh;
         int idDepto, idPuesto, idPeriodo;
-        string registroPatronal;
+        //string registroPatronal;
         DateTime periodoInicio, periodoFin;
         #endregion
 
@@ -442,6 +442,10 @@ namespace Nominas
                 empleado.metodopago = "TRANSFERENCIA";
                 empleado.tiporegimen = 60;
 
+                //Empleados.Core.EmpleadosEstatus ee = new Empleados.Core.EmpleadosEstatus();
+                //ee.estatus = GLOBALES.ACTIVO;
+                //ee.idempresa = GLOBALES.IDEMPRESA;
+
                 cnx = new SqlConnection(cdn);
                 cmd = new SqlCommand();
                 cmd.Connection = cnx;
@@ -472,6 +476,8 @@ namespace Nominas
                     {
                         cnx.Open();
                         emph.insertaEmpleado(empleado);
+                        //ee.idtrabajador = (int)emph.obtenerIdTrabajador(empleado);
+                        //emph.insertaEmpleadoEstatus(ee);
                         cnx.Close();
                     }
                     catch (Exception)
@@ -495,102 +501,102 @@ namespace Nominas
                         return;
                     }
 
-                    cnx = new SqlConnection(cdn);
-                    cmd = new SqlCommand();
-                    cmd.Connection = cnx;
+                    //cnx = new SqlConnection(cdn);
+                    //cmd = new SqlCommand();
+                    //cmd.Connection = cnx;
 
-                    hh = new Historial.Core.HistorialHelper();
-                    hh.Command = cmd;
+                    //hh = new Historial.Core.HistorialHelper();
+                    //hh.Command = cmd;
 
-                    Historial.Core.Historial historial = new Historial.Core.Historial();
-                    historial.idtrabajador = idEmpleado;
-                    historial.tipomovimiento = GLOBALES.mALTA;
-                    historial.valor = empleado.sdi;
-                    historial.fecha_imss = DateTime.Parse(fila.Cells["fechaingreso"].Value.ToString());
-                    historial.fecha_sistema = DateTime.Now.Date;
-                    historial.idempresa = GLOBALES.IDEMPRESA;
-                    historial.motivobaja = 0;
+                    //Historial.Core.Historial historial = new Historial.Core.Historial();
+                    //historial.idtrabajador = idEmpleado;
+                    //historial.tipomovimiento = GLOBALES.mALTA;
+                    //historial.valor = empleado.sdi;
+                    //historial.fecha_imss = DateTime.Parse(fila.Cells["fechaingreso"].Value.ToString());
+                    //historial.fecha_sistema = DateTime.Now.Date;
+                    //historial.idempresa = GLOBALES.IDEMPRESA;
+                    //historial.motivobaja = 0;
 
-                    try
-                    {
-                        cnx.Open();
-                        hh.insertarHistorial(historial);
-                        cnx.Close();
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("Error: Al ingresar historial del trabajador. No. empleado: " + fila.Cells["noempleado"].Value.ToString(), "Error");
-                        cnx.Dispose();
-                        return;
-                    }
+                    //try
+                    //{
+                    //    cnx.Open();
+                    //    hh.insertarHistorial(historial);
+                    //    cnx.Close();
+                    //}
+                    //catch (Exception)
+                    //{
+                    //    MessageBox.Show("Error: Al ingresar historial del trabajador. No. empleado: " + fila.Cells["noempleado"].Value.ToString(), "Error");
+                    //    cnx.Dispose();
+                    //    return;
+                    //}
 
-                    cnx = new SqlConnection(cdn);
-                    cmd = new SqlCommand();
-                    cmd.Connection = cnx;
+                    //cnx = new SqlConnection(cdn);
+                    //cmd = new SqlCommand();
+                    //cmd.Connection = cnx;
 
-                    eh = new Empresas.Core.EmpresasHelper();
-                    eh.Command = cmd;
+                    //eh = new Empresas.Core.EmpresasHelper();
+                    //eh.Command = cmd;
 
-                    Empresas.Core.Empresas empresa = new Empresas.Core.Empresas();
-                    empresa.idempresa = GLOBALES.IDEMPRESA;
+                    //Empresas.Core.Empresas empresa = new Empresas.Core.Empresas();
+                    //empresa.idempresa = GLOBALES.IDEMPRESA;
 
-                    try
-                    {
-                        cnx.Open();
-                        registroPatronal = eh.obtenerRegistroPatronal(empresa).ToString();
-                        cnx.Close();
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("Error: Al obtener el registro patronal. NoEmpleado: " + fila.Cells["noempleado"].Value.ToString() + ".", "Error");
-                        cnx.Dispose();
-                        return;
-                    }
+                    //try
+                    //{
+                    //    cnx.Open();
+                    //    registroPatronal = eh.obtenerRegistroPatronal(empresa).ToString();
+                    //    cnx.Close();
+                    //}
+                    //catch (Exception)
+                    //{
+                    //    MessageBox.Show("Error: Al obtener el registro patronal. NoEmpleado: " + fila.Cells["noempleado"].Value.ToString() + ".", "Error");
+                    //    cnx.Dispose();
+                    //    return;
+                    //}
 
-                    Altas.Core.Altas alta = new Altas.Core.Altas();
-                    alta.idtrabajador = idEmpleado;
-                    alta.idempresa = GLOBALES.IDEMPRESA;
-                    alta.registropatronal = registroPatronal;
-                    alta.nss = empleado.nss + empleado.digitoverificador.ToString();
-                    alta.rfc = empleado.rfc;
-                    alta.curp = empleado.curp;
-                    alta.paterno = empleado.paterno;
-                    alta.materno = empleado.materno;
-                    alta.nombre = empleado.nombres;
-                    alta.contrato = 4;
-                    alta.jornada = 12;
-                    alta.fechaingreso = empleado.fechaingreso;
-                    alta.diasproporcionales = ObtenerDiasProporcionales(empleado.fechaingreso);
-                    alta.sdi = empleado.sdi;
-                    alta.cp = "0";
-                    alta.fechanacimiento = empleado.fechanacimiento;
-                    alta.estado = ObtenerEstado(empleado.curp);
-                    alta.noestado = ObtenerIdEstado(alta.estado);
-                    alta.clinica = "0";
-                    alta.sexo = ObtenerSexo(empleado.curp);
-                    alta.periodoInicio = periodoInicio;
-                    alta.periodoFin = periodoFin;
+                    //Altas.Core.Altas alta = new Altas.Core.Altas();
+                    //alta.idtrabajador = idEmpleado;
+                    //alta.idempresa = GLOBALES.IDEMPRESA;
+                    //alta.registropatronal = registroPatronal;
+                    //alta.nss = empleado.nss + empleado.digitoverificador.ToString();
+                    //alta.rfc = empleado.rfc;
+                    //alta.curp = empleado.curp;
+                    //alta.paterno = empleado.paterno;
+                    //alta.materno = empleado.materno;
+                    //alta.nombre = empleado.nombres;
+                    //alta.contrato = 4;
+                    //alta.jornada = 12;
+                    //alta.fechaingreso = empleado.fechaingreso;
+                    //alta.diasproporcionales = ObtenerDiasProporcionales(empleado.fechaingreso);
+                    //alta.sdi = empleado.sdi;
+                    //alta.cp = "0";
+                    //alta.fechanacimiento = empleado.fechanacimiento;
+                    //alta.estado = ObtenerEstado(empleado.curp);
+                    //alta.noestado = ObtenerIdEstado(alta.estado);
+                    //alta.clinica = "0";
+                    //alta.sexo = ObtenerSexo(empleado.curp);
+                    //alta.periodoInicio = periodoInicio;
+                    //alta.periodoFin = periodoFin;
 
 
-                    cnx = new SqlConnection(cdn);
-                    cmd = new SqlCommand();
-                    cmd.Connection = cnx;
+                    //cnx = new SqlConnection(cdn);
+                    //cmd = new SqlCommand();
+                    //cmd.Connection = cnx;
 
-                    ah = new Altas.Core.AltasHelper();
-                    ah.Command = cmd;
+                    //ah = new Altas.Core.AltasHelper();
+                    //ah.Command = cmd;
 
-                    try
-                    {
-                        cnx.Open();
-                        ah.insertaAlta(alta);
-                        cnx.Close();
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("Error: Al ingresar alta del trabajador. No. empleado: " + fila.Cells["noempleado"].Value.ToString(), "Error");
-                        cnx.Dispose();
-                        return;
-                    }
+                    //try
+                    //{
+                    //    cnx.Open();
+                    //    ah.insertaAlta(alta);
+                    //    cnx.Close();
+                    //}
+                    //catch (Exception)
+                    //{
+                    //    MessageBox.Show("Error: Al ingresar alta del trabajador. No. empleado: " + fila.Cells["noempleado"].Value.ToString(), "Error");
+                    //    cnx.Dispose();
+                    //    return;
+                    //}
                 }
             }
             cnx.Dispose();
@@ -610,6 +616,25 @@ namespace Nominas
         private void toolLimpiar_Click(object sender, EventArgs e)
         {
             dgvCargaEmpleados.Rows.Clear();
+        }
+
+        private void frmListaCargaEmpleados_Load(object sender, EventArgs e)
+        {
+            CargaPerfil("Importar empleados");
+        }
+
+        private void CargaPerfil(string nombre)
+        {
+            List<Autorizaciones.Core.Ediciones> lstEdiciones = GLOBALES.PERFILEDICIONES(nombre);
+
+            for (int i = 0; i < lstEdiciones.Count; i++)
+            {
+                switch (lstEdiciones[i].permiso.ToString())
+                {
+                    case "Cargar": toolCargar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                    case "Aplicar": toolAplicar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
+                }
+            }
         }
     }
 }

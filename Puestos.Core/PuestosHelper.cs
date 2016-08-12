@@ -21,7 +21,7 @@ namespace Puestos.Core
             for (int i = 0; i < dtPuestos.Rows.Count; i++)
             {
                 Puestos p = new Puestos();
-                p.id = int.Parse(dtPuestos.Rows[i]["id"].ToString());
+                p.idpuesto = int.Parse(dtPuestos.Rows[i]["id"].ToString());
                 p.nombre = dtPuestos.Rows[i]["descripcion"].ToString();
                 lstPuestos.Add(p);
             }
@@ -34,12 +34,12 @@ namespace Puestos.Core
             List<Puestos> lstPuestos = new List<Puestos>();
             Command.CommandText = "select id, descripcion from puestos where id = @id";
             Command.Parameters.Clear();
-            Command.Parameters.AddWithValue("id",p.id);
+            Command.Parameters.AddWithValue("id",p.idpuesto);
             dtPuestos = SelectData(Command);
             for (int i = 0; i < dtPuestos.Rows.Count; i++)
             {
                 Puestos puesto = new Puestos();
-                puesto.id = int.Parse(dtPuestos.Rows[i]["id"].ToString());
+                puesto.idpuesto = int.Parse(dtPuestos.Rows[i]["id"].ToString());
                 puesto.nombre = dtPuestos.Rows[i]["descripcion"].ToString();
                 lstPuestos.Add(puesto);
             }
@@ -70,7 +70,7 @@ namespace Puestos.Core
         {
             Command.CommandText = "update puestos set descripcion = @descripcion where id = @id";
             Command.Parameters.Clear();
-            Command.Parameters.AddWithValue("id",p.id);
+            Command.Parameters.AddWithValue("id",p.idpuesto);
             Command.Parameters.AddWithValue("descripcion", p.nombre);
             return Command.ExecuteNonQuery();
         }
@@ -79,7 +79,7 @@ namespace Puestos.Core
         {
             Command.CommandText = "update puestos set estatus = 0 where id = @id";
             Command.Parameters.Clear();
-            Command.Parameters.AddWithValue("id", p.id);
+            Command.Parameters.AddWithValue("id", p.idpuesto);
             return Command.ExecuteNonQuery();
         }
     }

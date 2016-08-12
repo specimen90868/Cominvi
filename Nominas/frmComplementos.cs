@@ -142,6 +142,13 @@ namespace Nominas
                         cmbEscolaridad.SelectedValue = lstComplemento[i].escolaridad;
                         txtClinica.Text = lstComplemento[i].clinica;
                         txtNacionalidad.Text = lstComplemento[i].nacionalidad;
+                        mTelEmpresa.Text = lstComplemento[i].tempresa1;
+                        mTelEmpresa2.Text = lstComplemento[i].tempresa2;
+                        mTelEmpresa3.Text = lstComplemento[i].tempresa3;
+                        txtExtension.Text = lstComplemento[i].extension;
+                        mCelEmpresa.Text = lstComplemento[i].cempresa;
+                        mTelPersonal.Text = lstComplemento[i].cpersonal;
+                        txtCorreo.Text = lstComplemento[i].email;
                         txtObservaciones.Text = lstComplemento[i].observaciones;
                     }
 
@@ -230,6 +237,13 @@ namespace Nominas
             c.escolaridad = int.Parse(cmbEscolaridad.SelectedValue.ToString());
             c.clinica = txtClinica.Text;
             c.nacionalidad = txtNacionalidad.Text;
+            c.tempresa1 = mTelEmpresa.Text;
+            c.tempresa2 = mTelEmpresa2.Text;
+            c.tempresa3 = mTelEmpresa3.Text;
+            c.extension = txtExtension.Text;
+            c.cempresa = mCelEmpresa.Text;
+            c.cpersonal = mTelPersonal.Text;
+            c.email = txtCorreo.Text;
             c.observaciones = txtObservaciones.Text;
 
             Altas.Core.Altas a = new Altas.Core.Altas();

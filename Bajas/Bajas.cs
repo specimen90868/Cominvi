@@ -19,5 +19,6 @@ namespace Bajas.Core
         public DateTime periodoinicio { get; set; }
         public DateTime periodofin { get; set; }
         public string observaciones { get; set; }
+        public DateTime registro { get; set; }
     }
 }

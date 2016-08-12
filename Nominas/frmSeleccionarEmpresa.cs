@@ -80,7 +80,33 @@ namespace Nominas
             int fila = dgvEmpresas.CurrentCell.RowIndex;
             GLOBALES.IDEMPRESA = int.Parse(dgvEmpresas.Rows[fila].Cells[0].Value.ToString());
             GLOBALES.NOMBREEMPRESA = dgvEmpresas.Rows[fila].Cells[1].Value.ToString();
-            
+
+            string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
+            SqlConnection cnx = new SqlConnection();
+            SqlCommand cmd = new SqlCommand();
+
+            cnx.ConnectionString = cdn;
+            cmd.Connection = cnx;
+
+            Empresas.Core.EmpresasHelper eh = new Empresas.Core.EmpresasHelper();
+            eh.Command = cmd;
+
+            Empresas.Core.Empresas empresa = new Empresas.Core.Empresas();
+            empresa.idempresa = GLOBALES.IDEMPRESA;
+            try
+            {
+                cnx.Open();
+
+                GLOBALES.DIASPERIODO = int.Parse(eh.obtenerDiasEmpresa(empresa).ToString());
+
+                cnx.Close();
+                cnx.Dispose();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
+            }
+
             if (OnAbrirEmpresa != null)
                 OnAbrirEmpresa();
             
