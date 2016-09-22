@@ -308,6 +308,35 @@ namespace Nominas
                 }
             }
 
+            CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
+            nh.Command = cmd;
+
+            List<CalculoNomina.Core.tmpPagoNomina> lstFechas = new List<CalculoNomina.Core.tmpPagoNomina>();
+            bool verificaFechas = false;
+
+            try
+            {
+                cnx.Open();
+                lstFechas = nh.obtenerUltimaNomina(GLOBALES.IDEMPRESA, GLOBALES.NORMAL, diasPago);
+                cnx.Close();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error: Al obtener la fecha de la ultima nómina calculada", "Error");
+            }
+
+            if (dtpFechaReingreso.Value.Date <= lstFechas[0].fechainicio.Date || dtpFechaReingreso.Value.Date <= lstFechas[0].fechafin.Date)
+                verificaFechas = false;
+            else
+                verificaFechas = true;
+
+
+            if (!verificaFechas)
+            {
+                MessageBox.Show("La fecha de ingreso es invalida. Fecha menor al ultimo periodo calculado, verifique.", "Error");
+                return;
+            }
+
             try {
                 cnx.Open();
                 empleadoh.reingreso(empleado);

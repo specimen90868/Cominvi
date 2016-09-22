@@ -25,12 +25,14 @@ namespace Nominas
         SqlCommand cmd;
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
         int idTrabajador = 0;
+        DateTime periodoInicioPosterior, periodoFinPosterior;
         #endregion
 
         #region VARIABLES PUBLICAS
         public int _tipoNormalEspecial;
         public DateTime _inicioPeriodo, _finPeriodo;
         public int _periodo;
+        public bool _obracivil;
         #endregion
 
         void b_OnBuscar(int id, string nombre)
@@ -115,6 +117,8 @@ namespace Nominas
         private void toolCalcular_Click(object sender, EventArgs e)
         {
             int existeConcepto = 0;
+            int estatus = 0;
+            int existeAltaReingreso = 0;
             //string noConceptosPercepciones = "", noConceptosDeducciones = "";
             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();
@@ -128,6 +132,79 @@ namespace Nominas
 
             CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
             nh.Command = cmd;
+
+            Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
+            eh.Command = cmd;
+
+            Altas.Core.AltasHelper ah = new Altas.Core.AltasHelper();
+            ah.Command = cmd;
+
+            Reingreso.Core.ReingresoHelper rh = new Reingreso.Core.ReingresoHelper();
+            rh.Command = cmd;
+
+            if (_periodo == 7)
+            {
+                periodoInicioPosterior = _finPeriodo.AddDays(1);
+                periodoFinPosterior = _finPeriodo.AddDays(7);
+            }
+            else
+            {
+                periodoInicioPosterior = _finPeriodo.AddDays(1);
+
+                if (periodoInicioPosterior.Day <= 15)
+                    periodoFinPosterior = _finPeriodo.AddDays(15);
+                else
+                    periodoFinPosterior = new DateTime(periodoInicioPosterior.Year, periodoInicioPosterior.Month,
+                        DateTime.DaysInMonth(periodoInicioPosterior.Year, periodoInicioPosterior.Month));
+            }
+
+            try
+            {
+                cnx.Open();
+                estatus = int.Parse(eh.obtenerEstatus(idTrabajador).ToString());
+                cnx.Close();
+
+                if (estatus == 0)
+                {
+                    cnx.Open();
+                    nh.eliminaPreNomina(idTrabajador);
+                    cnx.Close();
+                 }
+                else
+                {
+
+                    cnx.Open();
+                    existeAltaReingreso = ah.existeAlta(GLOBALES.IDEMPRESA, idTrabajador, periodoInicioPosterior, periodoFinPosterior);
+                    cnx.Close();
+                    
+                    if (existeAltaReingreso != 0)
+                    {
+                        cnx.Open();
+                        nh.eliminaPreNomina(idTrabajador);
+                        cnx.Close();
+                        MessageBox.Show("INFORMACION:\r\n\r\nEl trabajador a calcular fue dado de alta con fecha posterior al calculo actual.\r\nNo se calcula el trabajador.", "Información");
+                        return;
+                    }
+
+                    cnx.Open();
+                    existeAltaReingreso = rh.existeReingreso(GLOBALES.IDEMPRESA, idTrabajador, periodoInicioPosterior, periodoFinPosterior);
+                    cnx.Close();
+
+                    if (existeAltaReingreso != 0)
+                    {
+                        cnx.Open();
+                        nh.eliminaPreNomina(idTrabajador);
+                        cnx.Close();
+                        MessageBox.Show("INFORMACION:\r\n\r\nEl trabajador a calcular fue dado de alta con fecha posterior al calculo actual.\r\nNo se calcula el trabajador.", "Información");
+                        return;
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error al verificar el estatus del trabajador(ID): " + idTrabajador + "\r\n\r\n" + error.Message, "Error");
+                cnx.Close();
+            }
 
            
             #region CONCEPTOS Y FORMULAS DEL TRABAJADOR
@@ -181,8 +258,8 @@ namespace Nominas
                     *****************************************************************/
                 cnx.Open();
                 nh.eliminaNominaTrabajador(idTrabajador, _inicioPeriodo, _finPeriodo, _tipoNormalEspecial);
-                lstConceptosPercepciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "P", idTrabajador, _inicioPeriodo, _finPeriodo);
-                lstConceptosDeducciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "D", idTrabajador, _inicioPeriodo, _finPeriodo);
+                lstConceptosPercepciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "P", idTrabajador, _inicioPeriodo, _finPeriodo, _periodo);
+                lstConceptosDeducciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "D", idTrabajador, _inicioPeriodo, _finPeriodo, _periodo);
                 cnx.Close();
                 /**************************TERMINA*********************************/
             }
@@ -717,6 +794,8 @@ namespace Nominas
             dt.Columns.Add("tiponomina", typeof(Int32));
             dt.Columns.Add("modificado", typeof(Boolean));
             dt.Columns.Add("fechapago", typeof(DateTime));
+            dt.Columns.Add("obracivil", typeof(Boolean));
+            dt.Columns.Add("periodo", typeof(Int32));
 
             for (int i = 0; i < lstValores.Count; i++)
             {
@@ -738,6 +817,8 @@ namespace Nominas
                 dtFila["tiponomina"] = lstValores[i].tiponomina;
                 dtFila["modificado"] = lstValores[i].modificado;
                 dtFila["fechapago"] = new DateTime(1900,1,1);
+                dtFila["obracivil"] = _obracivil;
+                dtFila["periodo"] = _periodo;
                 dt.Rows.Add(dtFila);
             }
 
@@ -813,8 +894,8 @@ namespace Nominas
             try
             {
                 cnx.Open();
-                lstReciboPercepciones = nh.obtenerDatosRecibo(pnp);
-                lstReciboDeducciones = nh.obtenerDatosRecibo(pnd);
+                lstReciboPercepciones = nh.obtenerDatosRecibo(pnp, _periodo);
+                lstReciboDeducciones = nh.obtenerDatosRecibo(pnd, _periodo);
                 cnx.Close();
                 
             }
@@ -841,7 +922,7 @@ namespace Nominas
                 try
                 {
                     cnx.Open();
-                    lstConceptos = conceptoh.obtenerConceptos(c);
+                    lstConceptos = conceptoh.obtenerConceptos(c, _periodo);
                     cnx.Close();
                     cnx.Dispose();
                 }
@@ -1028,7 +1109,7 @@ namespace Nominas
             {
                 cnx.Open();
                 lstProgramacionConcepto = pch.obtenerProgramacion(pc);
-                lstConceptos = ch.obtenerConceptos(c);
+                lstConceptos = ch.obtenerConceptos(c, _periodo);
                 lstEmpleado = emph.obtenerEmpleado(empleado);
                 cnx.Close();
                 cnx.Dispose();
@@ -1102,7 +1183,7 @@ namespace Nominas
             {
                 cnx.Open();
                 lstMovimientos = mh.obtenerMovimientosTrabajador(m);
-                lstConceptos = ch.obtenerConceptos(c);
+                lstConceptos = ch.obtenerConceptos(c, _periodo);
                 lstEmpleado = emph.obtenerEmpleado(empleado);
                 cnx.Close();
                 cnx.Dispose();
@@ -1399,6 +1480,7 @@ namespace Nominas
             b.OnBuscar += b_OnBuscar;
             b._catalogo = GLOBALES.EMPLEADOS;
             b._tipoNomina = _tipoNormalEspecial;
+            b._periodo = _periodo;
             b.Show();
         }
 
@@ -1762,6 +1844,7 @@ namespace Nominas
             pc._idEmpleado = idTrabajador;
             pc._nombreEmpleado = txtNombreCompleto.Text;
             pc._tipoOperacion = GLOBALES.NUEVO;
+            pc._periodo = _periodo;
             pc.Show();
         }
 
@@ -1801,7 +1884,6 @@ namespace Nominas
         private void toolAgregarMovimiento_Click(object sender, EventArgs e)
         {
             frmMovimientos m = new frmMovimientos();
-            m._ventana = "Movimiento";
             m.OnMovimientoNuevo += m_OnMovimientoNuevo;
             m._idEmpleado = idTrabajador;
             m._periodo = _periodo;

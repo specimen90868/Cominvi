@@ -33,7 +33,6 @@
             this.toolVentana = new System.Windows.Forms.ToolStripLabel();
             this.toolAcciones = new System.Windows.Forms.ToolStrip();
             this.toolGuardar = new System.Windows.Forms.ToolStripButton();
-            this.toolBuscar = new System.Windows.Forms.ToolStripButton();
             this.toolCerrar = new System.Windows.Forms.ToolStripButton();
             this.lblEmpleado = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
@@ -70,7 +69,6 @@
             // 
             this.toolAcciones.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolGuardar,
-            this.toolBuscar,
             this.toolCerrar});
             this.toolAcciones.Location = new System.Drawing.Point(0, 27);
             this.toolAcciones.Name = "toolAcciones";
@@ -86,15 +84,6 @@
             this.toolGuardar.Size = new System.Drawing.Size(69, 22);
             this.toolGuardar.Text = "Guardar";
             this.toolGuardar.Click += new System.EventHandler(this.toolGuardar_Click);
-            // 
-            // toolBuscar
-            // 
-            this.toolBuscar.Image = ((System.Drawing.Image)(resources.GetObject("toolBuscar.Image")));
-            this.toolBuscar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolBuscar.Name = "toolBuscar";
-            this.toolBuscar.Size = new System.Drawing.Size(62, 22);
-            this.toolBuscar.Text = "Buscar";
-            this.toolBuscar.Click += new System.EventHandler(this.toolBuscar_Click);
             // 
             // toolCerrar
             // 
@@ -222,7 +211,6 @@
         internal System.Windows.Forms.ToolStrip toolAcciones;
         internal System.Windows.Forms.ToolStripButton toolGuardar;
         private System.Windows.Forms.ToolStripButton toolCerrar;
-        private System.Windows.Forms.ToolStripButton toolBuscar;
         private System.Windows.Forms.Label lblEmpleado;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label1;

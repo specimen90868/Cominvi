@@ -50,7 +50,6 @@
             this.cmbTipoIncapacidad = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.cmbTipoCaso = new System.Windows.Forms.ComboBox();
-            this.btnCambiar = new System.Windows.Forms.Button();
             this.txtDepartamento = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.mtxtNoEmpleado = new System.Windows.Forms.MaskedTextBox();
@@ -252,18 +251,6 @@
             this.cmbTipoCaso.Size = new System.Drawing.Size(141, 21);
             this.cmbTipoCaso.TabIndex = 271;
             // 
-            // btnCambiar
-            // 
-            this.btnCambiar.Enabled = false;
-            this.btnCambiar.Location = new System.Drawing.Point(292, 199);
-            this.btnCambiar.Name = "btnCambiar";
-            this.btnCambiar.Size = new System.Drawing.Size(62, 23);
-            this.btnCambiar.TabIndex = 272;
-            this.btnCambiar.Text = "Cambiar";
-            this.btnCambiar.UseVisualStyleBackColor = true;
-            this.btnCambiar.Visible = false;
-            this.btnCambiar.Click += new System.EventHandler(this.btnCambiar_Click);
-            // 
             // txtDepartamento
             // 
             this.txtDepartamento.BackColor = System.Drawing.SystemColors.Control;
@@ -332,7 +319,6 @@
             this.Controls.Add(this.label8);
             this.Controls.Add(this.mtxtNoEmpleado);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.btnCambiar);
             this.Controls.Add(this.cmbTipoCaso);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.cmbTipoIncapacidad);
@@ -385,7 +371,6 @@
         private System.Windows.Forms.ComboBox cmbTipoIncapacidad;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cmbTipoCaso;
-        private System.Windows.Forms.Button btnCambiar;
         private System.Windows.Forms.TextBox txtDepartamento;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.MaskedTextBox mtxtNoEmpleado;

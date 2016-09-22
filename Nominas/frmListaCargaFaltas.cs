@@ -372,19 +372,5 @@ namespace Nominas
         {
             dgvCargaFaltas.RowHeadersVisible = false;
         }
-
-        private void toolNuevo_Click(object sender, EventArgs e)
-        {
-            frmFaltas f = new frmFaltas();
-            f.OnFaltas += f_OnFaltas;
-            f._tipoForma = 1; //SE AÑADE DIRECTO AL DATAGRIDVIEW
-            f.ShowDialog();
-        }
-
-        void f_OnFaltas(string noempleado, string nombre, string paterno, string materno, int faltas, DateTime fechainicio, DateTime fechafin)
-        {
-            dgvCargaFaltas.Rows.Add(noempleado, nombre, paterno, materno, faltas, fechainicio, fechafin);
-        }
-
     }
 }

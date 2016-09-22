@@ -59,7 +59,7 @@ namespace Nominas
                         select new
                         {
                             IdEmpresa = em.idempresa,
-                            Nombre = em.nombre,
+                            Nombre = em.nombre + " " + em.observacion,
                             Registro = em.registro + em.digitoverificador
                         };
                 dgvEmpresas.DataSource = e.ToList();
@@ -68,6 +68,10 @@ namespace Nominas
                 dgvEmpresas.RowHeadersVisible = false;
 
                 dgvEmpresas.Columns[0].Visible = false;
+                for (int i = 0; i < dgvEmpresas.Columns.Count; i++)
+                {
+                    dgvEmpresas.AutoResizeColumn(i);
+                }
             }
             catch (Exception error) 
             {

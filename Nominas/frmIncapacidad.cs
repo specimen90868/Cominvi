@@ -50,6 +50,7 @@ namespace Nominas
             frmBuscar b = new frmBuscar();
             b.OnBuscar += b_OnBuscar;
             b._catalogo = GLOBALES.EMPLEADOS;
+            b._busqueda = GLOBALES.FORMULARIOS;
             b.ShowDialog();
         }
 
@@ -129,7 +130,6 @@ namespace Nominas
 
             txtDepartamento.Text = lstDepto[0].descripcion;
             //obtenerPeriodoActual();
-            btnCambiar.Enabled = true;
         }
 
         private void frmIncapacidad_Load(object sender, EventArgs e)
@@ -502,98 +502,6 @@ namespace Nominas
                 //    }
                 //    break;
             }
-        }
-
-        private void obtenerPeriodoActual()
-        {
-            cnx = new SqlConnection(cdn);
-            cmd = new SqlCommand();
-            cmd.Connection = cnx;
-
-            CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
-            nh.Command = cmd;
-
-            List<CalculoNomina.Core.tmpPagoNomina> lstUltimaNomina = new List<CalculoNomina.Core.tmpPagoNomina>();
-
-            try
-            {
-                cnx.Open();
-                lstUltimaNomina = nh.obtenerUltimaNomina(GLOBALES.IDEMPRESA, false);
-                cnx.Close();
-                cnx.Dispose();
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-            }
-
-            if (lstUltimaNomina.Count != 0)
-            {
-                if (periodo == 7)
-                {
-                    periodoInicio = lstUltimaNomina[0].fechafin.AddDays(1);
-                    periodoFin = lstUltimaNomina[0].fechafin.AddDays(7);
-                }
-                else
-                {
-                    periodoInicio = lstUltimaNomina[0].fechafin.AddDays(1);
-                    if (periodoInicio.Day <= 15)
-                        periodoFin = lstUltimaNomina[0].fechafin.AddDays(15);
-                    else
-                        periodoFin = lstUltimaNomina[0].fechafin.AddDays(
-                            DateTime.DaysInMonth(periodoInicio.Year, periodoInicio.Month) - 15);
-                }
-
-                dtpInicioPeriodo.Enabled = false;
-                dtpFinPeriodo.Enabled = false;
-                dtpInicioPeriodo.Value = periodoInicio;
-                dtpFinPeriodo.Value = periodoFin;
-            }
-            else
-            {
-                dtpInicioPeriodo.Visible = true;
-                dtpFinPeriodo.Visible = true;
-                //Periodo();
-            }
-        }
-
-        private void Periodo()
-        {
-            if (periodo == 7)
-            {
-                DateTime dt = dtpInicioPeriodo.Value.Date;
-                while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
-                dtpInicioPeriodo.Value = dt;
-                dtpFinPeriodo.Value = dt.AddDays(6);
-            }
-            else
-            {
-                if (dtpInicioPeriodo.Value.Day <= 15)
-                {
-                    dtpInicioPeriodo.Value = new DateTime(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month, 1);
-                    dtpFinPeriodo.Value = new DateTime(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month, 15);
-                }
-                else
-                {
-                    dtpInicioPeriodo.Value = new DateTime(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month, 16);
-                    dtpFinPeriodo.Value = new DateTime(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month, DateTime.DaysInMonth(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month));
-                }
-
-            }
-        }
-
-        private void btnCambiar_Click(object sender, EventArgs e)
-        {
-            frmCambioPeriodo cp = new frmCambioPeriodo();
-            cp.OnNuevoPeriodo += cp_OnNuevoPeriodo;
-            cp._periodo = periodo;
-            cp.ShowDialog();
-        }
-
-        void cp_OnNuevoPeriodo(DateTime inicio, DateTime fin)
-        {
-            dtpInicioPeriodo.Value = inicio;
-            dtpFinPeriodo.Value = fin;
         }
 
         private void PeriodoFechaAplicacion()

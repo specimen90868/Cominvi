@@ -177,12 +177,12 @@
             // 
             this.txtFormula.Location = new System.Drawing.Point(102, 184);
             this.txtFormula.Name = "txtFormula";
-            this.txtFormula.Size = new System.Drawing.Size(148, 20);
+            this.txtFormula.Size = new System.Drawing.Size(280, 20);
             this.txtFormula.TabIndex = 4;
             // 
             // btnEditor
             // 
-            this.btnEditor.Location = new System.Drawing.Point(256, 183);
+            this.btnEditor.Location = new System.Drawing.Point(388, 182);
             this.btnEditor.Name = "btnEditor";
             this.btnEditor.Size = new System.Drawing.Size(43, 22);
             this.btnEditor.TabIndex = 5;
@@ -203,12 +203,12 @@
             // 
             this.txtExento.Location = new System.Drawing.Point(102, 210);
             this.txtExento.Name = "txtExento";
-            this.txtExento.Size = new System.Drawing.Size(148, 20);
+            this.txtExento.Size = new System.Drawing.Size(280, 20);
             this.txtExento.TabIndex = 6;
             // 
             // btnEditor2
             // 
-            this.btnEditor2.Location = new System.Drawing.Point(256, 209);
+            this.btnEditor2.Location = new System.Drawing.Point(388, 209);
             this.btnEditor2.Name = "btnEditor2";
             this.btnEditor2.Size = new System.Drawing.Size(43, 21);
             this.btnEditor2.TabIndex = 7;

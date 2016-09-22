@@ -42,6 +42,8 @@
             this.cmbTipoNomina = new System.Windows.Forms.ComboBox();
             this.chkImprimirTodos = new System.Windows.Forms.CheckBox();
             this.chkTodos = new System.Windows.Forms.CheckBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.cmbPeriodo = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // lstvPeriodos
@@ -184,11 +186,31 @@
             this.chkTodos.UseVisualStyleBackColor = true;
             this.chkTodos.CheckedChanged += new System.EventHandler(this.chkTodos_CheckedChanged);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(252, 25);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(46, 13);
+            this.label6.TabIndex = 17;
+            this.label6.Text = "Periodo:";
+            // 
+            // cmbPeriodo
+            // 
+            this.cmbPeriodo.FormattingEnabled = true;
+            this.cmbPeriodo.Location = new System.Drawing.Point(304, 22);
+            this.cmbPeriodo.Name = "cmbPeriodo";
+            this.cmbPeriodo.Size = new System.Drawing.Size(179, 21);
+            this.cmbPeriodo.TabIndex = 18;
+            this.cmbPeriodo.SelectedIndexChanged += new System.EventHandler(this.cmbPeriodo_SelectedIndexChanged);
+            // 
             // frmImpresionRecibos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(492, 518);
+            this.Controls.Add(this.cmbPeriodo);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.chkTodos);
             this.Controls.Add(this.chkImprimirTodos);
             this.Controls.Add(this.cmbTipoNomina);
@@ -229,5 +251,7 @@
         private System.Windows.Forms.ComboBox cmbTipoNomina;
         private System.Windows.Forms.CheckBox chkImprimirTodos;
         private System.Windows.Forms.CheckBox chkTodos;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox cmbPeriodo;
     }
 }

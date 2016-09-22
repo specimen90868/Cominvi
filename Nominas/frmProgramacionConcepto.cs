@@ -23,6 +23,7 @@ namespace Nominas
         public int _idEmpleado = 0;
         public string _nombreEmpleado;
         public int _tipoOperacion;
+        public int _periodo;
         #endregion
 
         #region VARIABLES GLOBALES
@@ -34,31 +35,14 @@ namespace Nominas
         #endregion
 
         #region DELEGADOS
-        public delegate void delOnNuevaProgramacion(int edicion);
-        public event delOnNuevaProgramacion OnNuevaProgramacion;
-
         public delegate void delOnProgramacion();
         public event delOnProgramacion OnProgramacion;
         #endregion
 
-        private void toolBuscar_Click(object sender, EventArgs e)
-        {
-            frmBuscar b = new frmBuscar();
-            b.OnBuscar += b_OnBuscar;
-            b._catalogo = GLOBALES.EMPLEADOS;
-            b.Show();
-        }
-
-        void b_OnBuscar(int id, string nombre)
-        {
-            _idEmpleado = id;
-            lblEmpleado.Text = nombre;
-        }
-
         private void frmProgramacionConcepto_Load(object sender, EventArgs e)
         {
             cargaCombo();
-            if (_tipoOperacion == GLOBALES.CONSULTAR || _tipoOperacion == GLOBALES.MODIFICAR)
+            if (_tipoOperacion == GLOBALES.MODIFICAR)
             {
                 lblEmpleado.Text = _nombreEmpleado;
                 cnx = new SqlConnection();
@@ -98,7 +82,6 @@ namespace Nominas
                     GLOBALES.INHABILITAR(this, typeof(TextBox));
                     GLOBALES.INHABILITAR(this, typeof(ComboBox));
                     GLOBALES.INHABILITAR(this, typeof(DateTimePicker));
-                    toolBuscar.Enabled = false;
                     toolGuardar.Enabled = false;
                 }
                 else
@@ -129,7 +112,7 @@ namespace Nominas
             try
             {
                 cnx.Open();
-                lstConceptos = ch.obtenerConceptos(concepto);
+                lstConceptos = ch.obtenerConceptos(concepto, _periodo);
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -213,9 +196,6 @@ namespace Nominas
                     }
                     break;
             }
-
-            if (OnNuevaProgramacion != null)
-                OnNuevaProgramacion(_tipoOperacion);
 
             if (OnProgramacion != null)
                 OnProgramacion();

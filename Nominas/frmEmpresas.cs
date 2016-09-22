@@ -28,6 +28,8 @@ namespace Nominas
         Direccion.Core.DireccionesHelper dh;
         Imagen.Core.ImagenesHelper ih;
         Bitmap bmp;
+        DateTime inicioPeriodo, finPeriodo;
+        bool capturaFecha = false;
         bool ImagenAsignada = false;
         #endregion
         
@@ -83,6 +85,7 @@ namespace Nominas
             em.password = txtPassword.Text;
             em.nocertificado = txtNoCertificado.Text;
             em.vigenciacertificado = dtpVigencia.Value.Date;
+            em.observacion = txtObservacion.Text;
 
             dh = new Direccion.Core.DireccionesHelper();
             dh.Command = cmd;
@@ -103,6 +106,35 @@ namespace Nominas
             ih.Command = cmd;
 
             Imagen.Core.Imagenes img = null;
+
+            Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
+            ph.Command = cmd;
+
+            Periodos.Core.Periodos periodo = new Periodos.Core.Periodos();
+            periodo.dias = int.Parse(txtDias.Text);
+            periodo.estatus = GLOBALES.ACTIVO;
+            periodo.pago = cmbPago.Text;
+
+            CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
+            nh.Command = cmd;
+
+            CalculoNomina.Core.PagoNomina pn = new CalculoNomina.Core.PagoNomina();
+            pn.idtrabajador = 0;
+            pn.idconcepto = 0;
+            pn.noconcepto = 0;
+            pn.tipoconcepto = "P";
+            pn.exento = 0;
+            pn.gravado = 0;
+            pn.cantidad = 0;
+            pn.fechainicio = inicioPeriodo;
+            pn.fechafin = finPeriodo;
+            pn.noperiodo = 0;
+            pn.diaslaborados = 0;
+            pn.idusuario = 0;
+            pn.tiponomina = 0;
+            pn.fechapago = finPeriodo;
+            pn.iddepartamento = 0;
+            pn.idpuesto = 0;            
 
             try
             {
@@ -134,6 +166,10 @@ namespace Nominas
                             img.idpersona = idempresa;
                             ih.insertaImagen(img);
                         }
+                        periodo.idempresa = idempresa;
+                        ph.insertaPeriodo(periodo);
+                        pn.idempresa = idempresa;
+                        nh.insertaPrimerPeriodoNomina(pn);
                         cnx.Close();
                         cnx.Dispose();
                     }
@@ -200,6 +236,9 @@ namespace Nominas
             /// _tipoOperacion CONSULTA = 1, EDICION = 2
             if (_tipoOperacion == GLOBALES.CONSULTAR || _tipoOperacion == GLOBALES.MODIFICAR)
             {
+                cmbPago.Visible = false;
+                txtDias.Visible = false;
+
                 cnx = new SqlConnection();
                 cnx.ConnectionString = cdn;
                 cmd = new SqlCommand();
@@ -230,6 +269,7 @@ namespace Nominas
                         txtRepresentante.Text = lstEmpresa[i].representante;
                         txtRfc.Text = lstEmpresa[i].rfc;
                         txtRegistroPatronal.Text = lstEmpresa[i].registro;
+                        txtObservacion.Text = lstEmpresa[i].observacion;
                         txtDigitoVerificador.Text = lstEmpresa[i].digitoverificador.ToString();
                         txtRegimen.Text = lstEmpresa[i].regimen.ToString();
                         txtCertificado.Text = lstEmpresa[i].certificado;
@@ -261,16 +301,18 @@ namespace Nominas
                 if (_tipoOperacion == GLOBALES.CONSULTAR)
                 {
                     toolTitulo.Text = "Consulta Empresa";
-                    GLOBALES.INHABILITAR(this, typeof(TextBox));
-                    GLOBALES.INHABILITAR(this, typeof(MaskedTextBox));
-                    GLOBALES.INHABILITAR(this, typeof(CheckBox));
+                    ((Control)this.tabEmpresa).Enabled = false;
+                    ((Control)this.tabPeriodo).Enabled = false;
+                    ((Control)this.tabDomicilio).Enabled = false;
+                    ((Control)this.tabTimbrado).Enabled = false;
                     btnAsignar.Enabled = false;
-                    //toolGuardarCerrar.Enabled = false;
-                    //toolGuardarNuevo.Enabled = false;
+                    toolGuardarCerrar.Enabled = false;
+                    toolGuardarNuevo.Enabled = false;
                 }
                 else
                     toolTitulo.Text = "Edición Empresa";
             }
+            cmbPago.SelectedIndex = 0;
         }
 
         private void btnAsignar_Click(object sender, EventArgs e)
@@ -323,17 +365,87 @@ namespace Nominas
 
         private void toolGuardarCerrar_Click(object sender, EventArgs e)
         {
-            guardar(1);
+            if (_tipoOperacion == GLOBALES.CONSULTAR || _tipoOperacion == GLOBALES.MODIFICAR)
+            {
+                guardar(1);
+            }
+            else
+            {
+                frmInicioPeriodo ip = new frmInicioPeriodo();
+                ip._periodo = int.Parse(txtDias.Text);
+                ip.OnNuevoPeriodo += ip_OnNuevoPeriodo;
+                ip.ShowDialog();
+                if (capturaFecha)
+                    guardar(1);
+                else
+                    return;
+            }
+
+        }
+
+        void ip_OnNuevoPeriodo(DateTime inicio, DateTime fin)
+        {
+            if (inicio.Date != new DateTime(1900, 1, 1).Date)
+            {
+                if (int.Parse(txtDias.Text) == 7)
+                {
+                    inicioPeriodo = inicio.AddDays(-7);
+                    finPeriodo = inicioPeriodo.AddDays(-1);
+                }
+                else
+                {
+                    if (inicio.Day <= 15)
+                    {
+                        inicioPeriodo = inicio.AddDays(DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month) - 15);
+                        finPeriodo = inicio.AddDays(-1);
+                    }
+                    else
+                    {
+                        inicioPeriodo = inicio.AddDays(-15);
+                        finPeriodo = inicio.AddDays(-1);
+                    }
+                }
+
+                capturaFecha = true;
+            }
+            else
+                capturaFecha = false;
         }
 
         private void toolGuardarNuevo_Click(object sender, EventArgs e)
         {
-            guardar(0);
+            if (_tipoOperacion == GLOBALES.CONSULTAR || _tipoOperacion == GLOBALES.MODIFICAR)
+            {
+                guardar(1);
+            }
+            else
+            {
+                frmInicioPeriodo ip = new frmInicioPeriodo();
+                ip._periodo = int.Parse(txtDias.Text);
+                ip.OnNuevoPeriodo += ip_OnNuevoPeriodo;
+                ip.ShowDialog();
+                if (capturaFecha)
+                    guardar(0);
+                else
+                    return;
+            }
         }
 
         private void toolCerrar_Click(object sender, EventArgs e)
         {
             this.Dispose();
+        }
+
+        private void cmbPago_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbPago.SelectedIndex.Equals(1))
+            {
+                txtDias.Text = "15";
+            }
+            else
+            {
+                txtDias.Text = "7";
+            }
         }
     }
 }

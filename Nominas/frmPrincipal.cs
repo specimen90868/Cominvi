@@ -168,9 +168,6 @@ namespace Nominas
                     case "Normal":
                         toolNominaNormal.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
-                    case "Especial":
-                        toolNominaEspecial.Enabled = Convert.ToBoolean(lstMenu[i].accion);
-                        break;
                     case "Impresión de recibos":
                         toolImpresionRecibos.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
@@ -194,9 +191,6 @@ namespace Nominas
                         break;
                     case "Conceptos - Empleado":
                         toolConceptoEmpleado.Enabled = Convert.ToBoolean(lstMenu[i].accion);
-                        break;
-                    case "Programación de Concepto":
-                        toolProgramacionConcepto.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "Empresas":
                         mnuEmpresa.Enabled = Convert.ToBoolean(lstMenu[i].accion);
@@ -433,14 +427,6 @@ namespace Nominas
 
         }
 
-        private void mnuEmpleadosBaja_Click(object sender, EventArgs e)
-        {
-            frmListaEmpleados le = new frmListaEmpleados();
-            le._empleadoAltaBaja = GLOBALES.INACTIVO;
-            le.MdiParent = this;
-            le.Show();
-        }
-
         private void toolProcesoSalarial_Click(object sender, EventArgs e)
         {
             frmListaProcesoSalarial lps = new frmListaProcesoSalarial();
@@ -561,14 +547,7 @@ namespace Nominas
             frmSeleccionPeriodo sp = new frmSeleccionPeriodo();
             sp._TipoNomina = GLOBALES.NORMAL;
             sp.MdiParent = this;
-            sp.Show();
-        }
-
-        private void toolNominaEspecial_Click(object sender, EventArgs e)
-        {
-            frmSeleccionPeriodo sp = new frmSeleccionPeriodo();
-            sp._TipoNomina = GLOBALES.ESPECIAL;
-            sp.MdiParent = this;
+            sp.StartPosition = FormStartPosition.CenterScreen;
             sp.Show();
         }
 
@@ -594,25 +573,10 @@ namespace Nominas
             lce.Show();
         }
 
-        private void toolProgramacionConcepto_Click(object sender, EventArgs e)
-        {
-            frmListaProgramacionConceptos lpc = new frmListaProgramacionConceptos();
-            lpc.MdiParent = this;
-            lpc.Show();
-        }
-
         private void toolExtraordinario_Click(object sender, EventArgs e)
         {
             frmSeleccionPeriodo sp = new frmSeleccionPeriodo();
             sp._TipoNomina = GLOBALES.EXTRAORDINARIO_NORMAL;
-            sp.MdiParent = this;
-            sp.Show();
-        }
-
-        private void toolExtraordinarioEspecial_Click(object sender, EventArgs e)
-        {
-            frmSeleccionPeriodo sp = new frmSeleccionPeriodo();
-            sp._TipoNomina = GLOBALES.EXTRAORDINARIO_ESPECIAL;
             sp.MdiParent = this;
             sp.Show();
         }
@@ -626,18 +590,34 @@ namespace Nominas
             Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
             eh.Command = cmd;
 
+            Aplicaciones.Core.AplicacionesHelper aplih = new Aplicaciones.Core.AplicacionesHelper();
+            aplih.Command = cmd;
+
+            List<Aplicaciones.Core.Aplicaciones> lstAplicaciones = new List<Aplicaciones.Core.Aplicaciones>();
+
             try
             {
                 cnx.Open();
                 eh.actualizaAntiguedad(GLOBALES.IDEMPRESA);
+                lstAplicaciones = aplih.obtenerFechasDeAplicacion();
                 cnx.Close();
-                cnx.Dispose();
             }
             catch (Exception)
             {
                 MessageBox.Show("Erro: Al ejecutar el SP Actualiza Antiguedad", "Error");
                 cnx.Dispose();
                 return;
+            }
+
+            for (int i = 0; i < lstAplicaciones.Count; i++)
+            {
+                if (lstAplicaciones[i].fecha <= DateTime.Now.Date)
+                {
+                    cnx.Open();
+                    eh.actualizaDeptoPuesto(lstAplicaciones[i].iddeptopuesto, lstAplicaciones[i].idtrabajador, lstAplicaciones[i].deptopuesto);
+                    aplih.eliminaAplicacion(lstAplicaciones[i].id);
+                    cnx.Close();
+                }
             }
         }
 

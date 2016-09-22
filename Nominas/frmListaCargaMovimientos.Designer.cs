@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmListaCargaMovimientos));
             this.toolBusqueda = new System.Windows.Forms.ToolStrip();
-            this.toolNuevo = new System.Windows.Forms.ToolStripButton();
             this.toolCargar = new System.Windows.Forms.ToolStripButton();
             this.toolLimpiar = new System.Windows.Forms.ToolStripButton();
             this.toolAplicar = new System.Windows.Forms.ToolStripButton();
@@ -51,7 +50,6 @@
             // toolBusqueda
             // 
             this.toolBusqueda.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolNuevo,
             this.toolCargar,
             this.toolLimpiar,
             this.toolAplicar});
@@ -60,16 +58,6 @@
             this.toolBusqueda.Size = new System.Drawing.Size(769, 25);
             this.toolBusqueda.TabIndex = 12;
             this.toolBusqueda.Text = "ToolStrip1";
-            // 
-            // toolNuevo
-            // 
-            this.toolNuevo.Image = ((System.Drawing.Image)(resources.GetObject("toolNuevo.Image")));
-            this.toolNuevo.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolNuevo.Name = "toolNuevo";
-            this.toolNuevo.Size = new System.Drawing.Size(62, 22);
-            this.toolNuevo.Text = "Nuevo";
-            this.toolNuevo.Visible = false;
-            this.toolNuevo.Click += new System.EventHandler(this.toolNuevo_Click);
             // 
             // toolCargar
             // 
@@ -139,26 +127,31 @@
             // 
             this.noempleado.HeaderText = "No. Empleado";
             this.noempleado.Name = "noempleado";
+            this.noempleado.ReadOnly = true;
             // 
             // cantidad
             // 
             this.cantidad.HeaderText = "Cantidad";
             this.cantidad.Name = "cantidad";
+            this.cantidad.ReadOnly = true;
             // 
             // concepto
             // 
             this.concepto.HeaderText = "Concepto";
             this.concepto.Name = "concepto";
+            this.concepto.ReadOnly = true;
             // 
             // inicio
             // 
             this.inicio.HeaderText = "Fecha Inicio";
             this.inicio.Name = "inicio";
+            this.inicio.ReadOnly = true;
             // 
             // fin
             // 
             this.fin.HeaderText = "Fecha Fin";
             this.fin.Name = "fin";
+            this.fin.ReadOnly = true;
             // 
             // workMovimientos
             // 
@@ -192,7 +185,6 @@
         #endregion
 
         internal System.Windows.Forms.ToolStrip toolBusqueda;
-        private System.Windows.Forms.ToolStripButton toolNuevo;
         private System.Windows.Forms.ToolStripButton toolCargar;
         private System.Windows.Forms.ToolStripButton toolLimpiar;
         private System.Windows.Forms.ToolStripButton toolAplicar;

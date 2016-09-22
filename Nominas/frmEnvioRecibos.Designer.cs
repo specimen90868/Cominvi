@@ -46,6 +46,8 @@
             this.workerEnvio = new System.ComponentModel.BackgroundWorker();
             this.label5 = new System.Windows.Forms.Label();
             this.chkTodos = new System.Windows.Forms.CheckBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.cmbPeriodo = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmpleados)).BeginInit();
             this.BarraEstado.SuspendLayout();
             this.SuspendLayout();
@@ -215,11 +217,31 @@
             this.chkTodos.UseVisualStyleBackColor = true;
             this.chkTodos.CheckedChanged += new System.EventHandler(this.chkTodos_CheckedChanged);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(244, 21);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(46, 13);
+            this.label6.TabIndex = 25;
+            this.label6.Text = "Periodo:";
+            // 
+            // cmbPeriodo
+            // 
+            this.cmbPeriodo.FormattingEnabled = true;
+            this.cmbPeriodo.Location = new System.Drawing.Point(296, 18);
+            this.cmbPeriodo.Name = "cmbPeriodo";
+            this.cmbPeriodo.Size = new System.Drawing.Size(182, 21);
+            this.cmbPeriodo.TabIndex = 26;
+            this.cmbPeriodo.SelectedIndexChanged += new System.EventHandler(this.cmbPeriodo_SelectedIndexChanged);
+            // 
             // frmEnvioRecibos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(486, 507);
+            this.Controls.Add(this.cmbPeriodo);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.chkTodos);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.BarraEstado);
@@ -268,5 +290,7 @@
         private System.ComponentModel.BackgroundWorker workerEnvio;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.CheckBox chkTodos;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox cmbPeriodo;
     }
 }

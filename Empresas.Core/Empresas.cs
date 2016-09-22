@@ -21,6 +21,6 @@ namespace Empresas.Core
         public string regimen { get; set; }
         public string nocertificado { get; set; }
         public DateTime vigenciacertificado { get; set; }
-
+        public string observacion { get; set; }
     }
 }

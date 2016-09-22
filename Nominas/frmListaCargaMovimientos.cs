@@ -38,44 +38,7 @@ namespace Nominas
         public DateTime _finPeriodo;
         #endregion
 
-        private void toolNuevo_Click(object sender, EventArgs e)
-        {
-            frmMovimientos m = new frmMovimientos();
-            m._tipoNomina = _tipoNomina;
-            m._ventana = "Carga";
-            m.OnMovimiento += m_OnMovimiento;
-            m.MdiParent = this.MdiParent;
-            m.Show();
-        }
-
-        void m_OnMovimiento(int idEmpleado, string concepto, double cantidad, DateTime inicio, DateTime fin)
-        {
-            cnx = new SqlConnection(cdn);
-            cmd = new SqlCommand();
-            cmd.Connection = cnx;
-
-            emph = new Empleados.Core.EmpleadosHelper();
-            emph.Command = cmd;
-
-            Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
-            empleado.idtrabajador = idEmpleado;
-            List<Empleados.Core.Empleados> lstEmpleado = new List<Empleados.Core.Empleados>();
-            try
-            {
-                cnx.Open();
-                lstEmpleado = emph.obtenerEmpleado(empleado);
-                cnx.Close();
-                cnx.Dispose();
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show("Error: Obtener No. de Empleado. \r\n \r\n" + error.Message, "Error");
-                return;
-            }
-
-            dgvMovimientos.Rows.Add(lstEmpleado[0].noempleado, concepto, cantidad.ToString(), inicio.ToShortDateString(), fin.ToShortDateString());
-        }
-
+       
         private void toolCargar_Click(object sender, EventArgs e)
         {
             cnx = new SqlConnection(cdn);
@@ -620,9 +583,7 @@ namespace Nominas
             {
                 switch (lstEdiciones[i].permiso.ToString())
                 {
-                    case "Crear":
-                        toolNuevo.Enabled = Convert.ToBoolean(lstEdiciones[i].accion);
-                        break;
+                    case "Crear": break;
                     case "Cargar": toolCargar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
                     case "Aplicar": toolAplicar.Enabled = Convert.ToBoolean(lstEdiciones[i].accion); break;
 

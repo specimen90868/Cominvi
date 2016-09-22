@@ -61,9 +61,12 @@ namespace Nominas
 
         #region TIPO NOMINA
         public static int NORMAL = 0;
-        public static int ESPECIAL = 1;
         public static int EXTRAORDINARIO_NORMAL = 2;
-        public static int EXTRAORDINARIO_ESPECIAL = 3;
+        #endregion
+
+        #region BUSQUEDAS
+        public static int FORMULARIOS = 0;
+        public static int NOMINA = 1;
         #endregion
 
         public static int IDUSUARIO { get; set; }

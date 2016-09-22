@@ -70,14 +70,15 @@ namespace Altas.Core
             return lstAltas;
         }
 
-        public int existeAlta(int idEmpresa, int idTrabajador, DateTime inicio)
+        public int existeAlta(int idEmpresa, int idTrabajador, DateTime inicio, DateTime fin)
         {
-            Command.CommandText = @"select count(*) from suaAltas where idempresa = @idempresa and periodoinicio = @inicio
+            Command.CommandText = @"select count(*) from suaAltas where idempresa = @idempresa and periodoinicio = @inicio and periodofin = @fin
                         and idtrabajador = @idtrabajador";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", idTrabajador);
             Command.Parameters.AddWithValue("idempresa", idEmpresa);
             Command.Parameters.AddWithValue("inicio", inicio);
+            Command.Parameters.AddWithValue("fin", fin);
             int dato = int.Parse(Select(Command).ToString());
             return dato;
         }

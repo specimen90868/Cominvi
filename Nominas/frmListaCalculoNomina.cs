@@ -37,6 +37,7 @@ namespace Nominas
         List<CalculoNomina.Core.DatosEmpleado> lstEmpleadosNomina;
         List<CalculoNomina.Core.DatosFaltaIncapacidad> lstEmpleadosFaltaIncapacidad;
         DateTime periodoInicio, periodoFin;
+        DateTime periodoInicioPosterior, periodoFinPosterior;
         #endregion
 
         #region VARIABLES PUBLICAS
@@ -52,7 +53,7 @@ namespace Nominas
             lcm._inicioPeriodo = periodoInicio.Date;
             lcm._finPeriodo = periodoFin.Date;
             lcm.ShowDialog();
-            if (_tipoNomina == GLOBALES.EXTRAORDINARIO_NORMAL || _tipoNomina == GLOBALES.EXTRAORDINARIO_ESPECIAL)
+            if (_tipoNomina == GLOBALES.EXTRAORDINARIO_NORMAL)
                 movimientosEspeciales();
         }
 
@@ -81,7 +82,7 @@ namespace Nominas
             try
             {
                 cnx.Open();
-                lstPreNominaEspecial = nh.obtenerPreNomina(pn);
+                lstPreNominaEspecial = nh.obtenerPreNomina(pn, _periodo);
                 if (lstPreNominaEspecial.Count != 0)
                 {
                     var dato = lstPreNominaEspecial.GroupBy(id => id.idtrabajador).Select(grp => grp.First()).ToList();
@@ -90,7 +91,7 @@ namespace Nominas
                         idtrabajadores += a.idtrabajador.ToString() + ",";
                     }
                     idtrabajadores = idtrabajadores.Substring(0, idtrabajadores.Length - 1);
-                    lstEmp = nh.obtenerDatosEmpleado(GLOBALES.IDEMPRESA, idtrabajadores);
+                    lstEmp = nh.obtenerDatosEmpleado(GLOBALES.IDEMPRESA, idtrabajadores, _periodo);
                 }
                 cnx.Close();
                 cnx.Dispose();
@@ -155,23 +156,20 @@ namespace Nominas
             {
                 toolGuardar.Visible = true;
                 toolAutorizar.Visible = false;
+                toolSeparadorAutorizar.Visible = false;
             }
             else
             {
                 toolGuardar.Visible = false;
                 toolAutorizar.Visible = true;
+                toolSeparadorGuardar.Visible = false;
             }
             
 
             if (_tipoNomina == GLOBALES.NORMAL)
                 CargaPerfil("Normal");
-            if (_tipoNomina == GLOBALES.ESPECIAL)
-                CargaPerfil("Especial");
             if (_tipoNomina == GLOBALES.EXTRAORDINARIO_NORMAL)
                 CargaPerfil("Normal");
-            if (_tipoNomina == GLOBALES.EXTRAORDINARIO_ESPECIAL)
-                CargaPerfil("Especial");
-
             obtenerPeriodoCalculo();
 
             #region DISEÑO EXTRA DEL GRID EMPLEADOS
@@ -190,7 +188,7 @@ namespace Nominas
 
             disenoGridFaltas();
 
-            if (_tipoNomina != GLOBALES.EXTRAORDINARIO_NORMAL && _tipoNomina != GLOBALES.EXTRAORDINARIO_ESPECIAL)
+            if (_tipoNomina != GLOBALES.EXTRAORDINARIO_NORMAL)
             {
                 CargaPreNomina(periodoInicio, periodoFin);
                 if (!EXISTEPRENOMINA)
@@ -211,12 +209,12 @@ namespace Nominas
 
             List<CalculoNomina.Core.tmpPagoNomina> lstUltimaNomina = new List<CalculoNomina.Core.tmpPagoNomina>();
 
-            if (_tipoNomina != GLOBALES.EXTRAORDINARIO_NORMAL && _tipoNomina != GLOBALES.EXTRAORDINARIO_ESPECIAL)
+            if (_tipoNomina != GLOBALES.EXTRAORDINARIO_NORMAL)
             {
                 try
                 {
                     cnx.Open();
-                    lstUltimaNomina = nh.obtenerUltimaNomina(GLOBALES.IDEMPRESA, GLOBALES.NORMAL);
+                    lstUltimaNomina = nh.obtenerUltimaNomina(GLOBALES.IDEMPRESA, GLOBALES.NORMAL, _periodo);
                     cnx.Close();
                 }
                 catch (Exception error)
@@ -230,6 +228,8 @@ namespace Nominas
                     {
                         periodoInicio = lstUltimaNomina[0].fechafin.AddDays(1);
                         periodoFin = lstUltimaNomina[0].fechafin.AddDays(7);
+                        periodoInicioPosterior = periodoFin.AddDays(1);
+                        periodoFinPosterior = periodoFin.AddDays(7);
 
                         if (_obracivil)
                         {
@@ -244,11 +244,15 @@ namespace Nominas
                                 {
                                     periodoInicio = lstUltimaNomina[0].fechafin.AddDays(1);
                                     periodoFin = lstUltimaNomina[0].fechafin.AddDays(7);
+                                    periodoInicioPosterior = periodoFin.AddDays(1);
+                                    periodoFinPosterior = periodoFin.AddDays(7);
                                 }
                                 else
                                 {
                                     periodoInicio = lstUltimaNomina[0].fechainicio;
                                     periodoFin = lstUltimaNomina[0].fechafin;
+                                    periodoInicioPosterior = periodoFin.AddDays(1);
+                                    periodoFinPosterior = periodoFin.AddDays(7);
                                 }
                             }
                             catch (Exception error)
@@ -260,11 +264,19 @@ namespace Nominas
                     else
                     {
                         periodoInicio = lstUltimaNomina[0].fechafin.AddDays(1);
+                        
                         if (periodoInicio.Day <= 15)
                             periodoFin = lstUltimaNomina[0].fechafin.AddDays(15);
                         else
                             periodoFin = new DateTime(periodoInicio.Year, periodoInicio.Month, 
                                 DateTime.DaysInMonth(periodoInicio.Year, periodoInicio.Month));
+
+                        periodoInicioPosterior = periodoFin.AddDays(1);
+                        if (periodoInicioPosterior.Day <= 15)
+                            periodoFinPosterior = periodoFin.AddDays(15);
+                        else
+                            periodoFinPosterior = new DateTime(periodoInicioPosterior.Year, periodoInicioPosterior.Month,
+                                DateTime.DaysInMonth(periodoInicioPosterior.Year, periodoInicioPosterior.Month));
                     }
 
                 }
@@ -276,18 +288,26 @@ namespace Nominas
                         while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
                         periodoInicio = dt;
                         periodoFin = dt.AddDays(6);
+                        periodoInicioPosterior = periodoFin.AddDays(1);
+                        periodoFinPosterior = periodoFin.AddDays(7);
                     }
                     else
                     {
+                        
                         if (dt.Day <= 15)
                         {
                             periodoInicio = new DateTime(dt.Year, dt.Month, 1);
                             periodoFin = new DateTime(dt.Year, dt.Month, 15);
+                            periodoInicioPosterior = periodoFin.AddDays(1);
+                            periodoFinPosterior = new DateTime(periodoInicioPosterior.Year, periodoInicioPosterior.Month,
+                                DateTime.DaysInMonth(periodoInicioPosterior.Year, periodoInicioPosterior.Month) - 15);
                         }
                         else
                         {
                             periodoInicio = new DateTime(dt.Year, dt.Month, 16);
                             periodoFin = new DateTime(dt.Year, dt.Month, DateTime.DaysInMonth(dt.Year, dt.Month));
+                            periodoInicioPosterior = periodoFin.AddDays(1);
+                            periodoFinPosterior = periodoFin.AddDays(15);
                         }
                     }
                 }
@@ -321,7 +341,7 @@ namespace Nominas
             dgvFaltas.Columns["iddepartamentofalta"].Visible = false;
             dgvFaltas.Columns["idpuestofalta"].Visible = false;
 
-            if (_tipoNomina != GLOBALES.EXTRAORDINARIO_NORMAL && _tipoNomina != GLOBALES.EXTRAORDINARIO_ESPECIAL)
+            if (_tipoNomina != GLOBALES.EXTRAORDINARIO_NORMAL)
             {
                 if (_periodo == 7)
                 {
@@ -418,26 +438,25 @@ namespace Nominas
 
                 if (_periodo == 7)
                 {
-                    fecha = periodoInicio.AddDays(7);
+                    fecha = periodoFin.AddDays(1);
                     fechaf = periodoFin.AddDays(7);
                 }
                 else
                 {
                     if (periodoInicio.Day < 15)
                     {
-                        fecha = periodoInicio.AddDays(15);
+                        fecha = periodoFin.AddDays(1);
                         fechaf = periodoFin.AddDays(DateTime.DaysInMonth(periodoInicio.Year, periodoInicio.Month) - 15);
                     }
                     else
                     {
-                        fecha = periodoInicio.AddDays(
-                            DateTime.DaysInMonth(periodoInicio.Year, periodoInicio.Month) - 15);
+                        fecha = periodoFin.AddDays(1);
                         fechaf = periodoFin.AddDays(15);
                     }
                 }
                 cnx.Open();
-                lstEmpleadosNomina = nh.obtenerDatosEmpleado(GLOBALES.IDEMPRESA, GLOBALES.ACTIVO, _obracivil, fecha, fechaf);
-                lstEmpleadosFaltaIncapacidad = nh.obtenerDatosFaltaInc(GLOBALES.IDEMPRESA, GLOBALES.ACTIVO, _obracivil, fecha, fechaf);
+                lstEmpleadosNomina = nh.obtenerDatosEmpleado(GLOBALES.IDEMPRESA, GLOBALES.ACTIVO, _obracivil, fecha, fechaf, _periodo);
+                lstEmpleadosFaltaIncapacidad = nh.obtenerDatosFaltaInc(GLOBALES.IDEMPRESA, GLOBALES.ACTIVO, _obracivil, fecha, fechaf, _periodo);
 
                 //if (_tipoNomina == GLOBALES.ESPECIAL || _tipoNomina == GLOBALES.EXTRAORDINARIO_ESPECIAL)
                 //{
@@ -501,7 +520,7 @@ namespace Nominas
                             fechaf = periodoFin.AddDays(15);
                         }
                     }
-                    lstEmpleadosFaltaIncapacidad = nh.obtenerDatosFaltaInc(GLOBALES.IDEMPRESA, GLOBALES.ACTIVO, _obracivil, fecha, fechaf);
+                    lstEmpleadosFaltaIncapacidad = nh.obtenerDatosFaltaInc(GLOBALES.IDEMPRESA, GLOBALES.ACTIVO, _obracivil, fecha, fechaf, _periodo);
                 }
                 
                 //if (_tipoNomina == GLOBALES.ESPECIAL || _tipoNomina == GLOBALES.EXTRAORDINARIO_ESPECIAL)
@@ -691,8 +710,8 @@ namespace Nominas
             dt.Columns.Add("modificado", typeof(Boolean));
             dt.Columns.Add("fechapago", typeof(DateTime));
             dt.Columns.Add("obracivil", typeof(Boolean));
-            
-            
+            dt.Columns.Add("periodo", typeof(Int32));
+                        
             for (int i = 0; i < lstValores.Count; i++)
             {
                 dtFila = dt.NewRow();
@@ -714,6 +733,7 @@ namespace Nominas
                 dtFila["modificado"] = lstValores[i].modificado;
                 dtFila["fechapago"] = new DateTime(1900,1,1);
                 dtFila["obracivil"] = _obracivil;
+                dtFila["periodo"] = _periodo;
                 dt.Rows.Add(dtFila);
             }
             bulk = new SqlBulkCopy(cnx);
@@ -765,6 +785,10 @@ namespace Nominas
             int existeConcepto = 0;
             total = dgvEmpleados.Rows.Count;
 
+            StreamWriter swLog = new StreamWriter(@"C:\Temp\LogHealthTrabajador" + DateTime.Now.Year.ToString() + "_" + DateTime.Now.Month.ToString() + "_" +
+                        DateTime.Now.Day.ToString() + "_" + DateTime.Now.Minute.ToString() + ".txt", true);
+            swLog.WriteLine(String.Format("Calculo de Nómina: Del {0} al {1}", periodoInicio.ToShortDateString(), periodoFin.ToShortDateString()));
+
             foreach (DataGridViewRow fila in dgvEmpleados.Rows)
             {
                 try
@@ -773,36 +797,42 @@ namespace Nominas
                     estatus = int.Parse(eh.obtenerEstatus(int.Parse(fila.Cells["idtrabajador"].Value.ToString())).ToString());
                     cnx.Close();
 
+                    swLog.WriteLine(String.Format("Empleado: {0}, Estatus: {1}", fila.Cells["idtrabajador"].Value.ToString(), estatus.ToString()));
+
                     if (estatus == 0)
                     {
                         cnx.Open();
                         nh.eliminaPreNomina(int.Parse(fila.Cells["idtrabajador"].Value.ToString()));
                         cnx.Close();
+                        swLog.WriteLine(String.Format("Empleado: {0}, Se elimina Prenomina", fila.Cells["idtrabajador"].Value.ToString()));
                         continue;
                     }
                     else
                     {
                         
                         cnx.Open();
-                        existeAltaReingreso = ah.existeAlta(GLOBALES.IDEMPRESA, int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoFin.AddDays(1));
+                        existeAltaReingreso = ah.existeAlta(GLOBALES.IDEMPRESA, int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicioPosterior, periodoFinPosterior);
                         cnx.Close();
-                        
+                        swLog.WriteLine(String.Format("Empleado: {0}, Existencia de Alta: {1}, Fecha Inicio: {2}, Fecha Fin: {3} ", fila.Cells["idtrabajador"].Value.ToString(), existeAltaReingreso, periodoInicioPosterior.ToShortDateString(), periodoFinPosterior.ToShortDateString()));
                         if (existeAltaReingreso != 0)
                         {
                             cnx.Open();
                             nh.eliminaPreNomina(int.Parse(fila.Cells["idtrabajador"].Value.ToString()));
                             cnx.Close();
+                            swLog.WriteLine(String.Format("Empleado: {0}, Se elimina Prenomina", fila.Cells["idtrabajador"].Value.ToString()));
                             continue;
                         }
 
                         cnx.Open();
-                        existeAltaReingreso = rh.existeReingreso(GLOBALES.IDEMPRESA, int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoFin.AddDays(1));
+                        existeAltaReingreso = rh.existeReingreso(GLOBALES.IDEMPRESA, int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicioPosterior, periodoFinPosterior);
                         cnx.Close();
+                        swLog.WriteLine(String.Format("Empleado: {0}, Existencia de Reingreso: {1}, Fecha Inicio: {2}, Fecha Fin: {3} ", fila.Cells["idtrabajador"].Value.ToString(), existeAltaReingreso, periodoInicioPosterior.ToShortDateString(), periodoFinPosterior.ToShortDateString()));
                         if (existeAltaReingreso != 0)
                         {
                             cnx.Open();
                             nh.eliminaPreNomina(int.Parse(fila.Cells["idtrabajador"].Value.ToString()));
                             cnx.Close();
+                            swLog.WriteLine(String.Format("Empleado: {0}, Se elimina Prenomina", fila.Cells["idtrabajador"].Value.ToString()));
                             continue;
                         }
                         
@@ -830,8 +860,8 @@ namespace Nominas
                 {
                     cnx.Open();
                     nh.eliminaNominaTrabajador(int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicio.Date, periodoFin.Date, _tipoNomina);
-                    lstConceptosPercepciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "P", int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicio.Date, periodoFin.Date);
-                    lstConceptosDeducciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "D", int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicio.Date, periodoFin.Date);
+                    lstConceptosPercepciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "P", int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicio.Date, periodoFin.Date, _periodo);
+                    lstConceptosDeducciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "D", int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicio.Date, periodoFin.Date, _periodo);
                     cnx.Close();
                 }
                 catch (Exception error)
@@ -1139,6 +1169,7 @@ namespace Nominas
                 BulkData(lstOtrasDeducciones);
                 #endregion
             }
+            swLog.Close();
 
             #region PERIODO
             calculoNoPeriodo();
@@ -1233,7 +1264,7 @@ namespace Nominas
                     nh.actualizarNoPeriodo(GLOBALES.IDEMPRESA, periodoInicio.Date, periodoFin.Date, noPeriodo);
                     cnx.Close();
                 }
-                else if (_tipoNomina == GLOBALES.EXTRAORDINARIO_NORMAL || _tipoNomina == GLOBALES.EXTRAORDINARIO_ESPECIAL)
+                else if (_tipoNomina == GLOBALES.EXTRAORDINARIO_NORMAL)
                 {
                     cnx.Open();
                     noPeriodo = (int)(nh.obtenerNoPeriodoExtraordinario(GLOBALES.IDEMPRESA, _tipoNomina));
@@ -1280,7 +1311,7 @@ namespace Nominas
             try
             {
                 cnx.Open();
-                lstPreNomina = nh.obtenerPreNomina(pnCargar);
+                lstPreNomina = nh.obtenerPreNomina(pnCargar, _periodo);
                 //nh.cargaPreNomina(pnGuardada);
                 cnx.Close();
                 cnx.Dispose();
@@ -1356,7 +1387,7 @@ namespace Nominas
             try
             {
                 cnx.Open();
-                nh.guardaPreNomina(pn);
+                nh.guardaPreNomina(pn, _periodo);
                 cnx.Close();
             }
             catch (Exception error)
@@ -1367,7 +1398,7 @@ namespace Nominas
             try
             {
                 cnx.Open();
-                nh.aplicaBajaObraCivil(pn);
+                nh.aplicaBajaObraCivil(pn, _periodo);
                 cnx.Close();
             }
             catch (Exception error)
@@ -1390,7 +1421,7 @@ namespace Nominas
                 try
                 {
                     cnx.Open();
-                    nh.actualizaDiasFechaPago(pn);
+                    nh.actualizaDiasFechaPago(pn, _periodo);
                     cnx.Close();
                 }
                 catch (Exception error)
@@ -1425,7 +1456,7 @@ namespace Nominas
                     try
                     {
                         cnx.Open();
-                        lstTrabajadores = nh.obtenerIdTrabajadoresTempNomina(GLOBALES.IDEMPRESA, _tipoNomina, periodoInicio, periodoFin);
+                        lstTrabajadores = nh.obtenerIdTrabajadoresTempNomina(GLOBALES.IDEMPRESA, _tipoNomina, periodoInicio, periodoFin, _periodo);
                         cnx.Close();
                     }
                     catch (Exception error)
@@ -1450,7 +1481,7 @@ namespace Nominas
                         try
                         {
                             cnx.Open();
-                            nh.actualizaDiasFechaPago(pn);
+                            nh.actualizaDiasFechaPago(pn, _periodo);
                             cnx.Close();
                         }
                         catch (Exception error)
@@ -1494,7 +1525,7 @@ namespace Nominas
                     try
                     {
                         cnx.Open();
-                        nh.actualizaDiasFechaPagoExtraordinaria(pn, DateTime.Now.Date);
+                        nh.actualizaDiasFechaPagoExtraordinaria(pn, DateTime.Now.Date, _periodo);
                         cnx.Close();
                     }
                     catch (Exception error)
@@ -1507,7 +1538,7 @@ namespace Nominas
                 try
                 {
                     cnx.Open();
-                    nh.stpAutorizaNomina(GLOBALES.IDEMPRESA, periodoInicio.Date, periodoFin.Date, GLOBALES.IDUSUARIO, _tipoNomina);
+                    nh.stpAutorizaNomina(GLOBALES.IDEMPRESA, periodoInicio.Date, periodoFin.Date, GLOBALES.IDUSUARIO, _tipoNomina, _periodo);
                     cnx.Close();
                     cnx.Dispose();
 
@@ -1537,6 +1568,7 @@ namespace Nominas
             frmFiltroNomina fn = new frmFiltroNomina();
             fn._filtro = 2;
             fn._tipoNomina = _tipoNomina;
+            fn._periodo = _periodo;
             fn.OnFiltro += fn_OnFiltro;
             fn.ShowDialog();
         }
@@ -1545,6 +1577,7 @@ namespace Nominas
         {
             frmVisorReportes vr = new frmVisorReportes();
             vr._noReporte = 0;
+            vr._periodo = _periodo;
             vr._tipoNomina = _tipoNomina;
             vr._inicioPeriodo = periodoInicio.Date;
             vr._finPeriodo = periodoFin.Date;
@@ -1937,8 +1970,11 @@ namespace Nominas
             NetoCero = netocero;
             Orden = orden;
 
-            if (noreporte != 6)
-            {
+            if (noreporte == 6)
+                workExcel.RunWorkerAsync();
+            else if (noreporte == 11)
+                workerGravadosExentos.RunWorkerAsync();
+            else {
                 frmVisorReportes vr = new frmVisorReportes();
                 vr._noReporte = noreporte;
                 vr._inicioPeriodo = periodoInicio.Date;
@@ -1949,12 +1985,10 @@ namespace Nominas
                 vr._tipoNomina = _tipoNomina;
                 vr._empleadoInicio = empleadoinicial;
                 vr._empleadoFin = empleadofinal;
+                vr._periodo = _periodo;
                 vr.Show();
             }
-            else if (noreporte == 6)
-                workExcel.RunWorkerAsync();
-            else if (noreporte == 11)
-                workerGravadosExentos.RunWorkerAsync();
+                
             
         }
 
@@ -1976,7 +2010,7 @@ namespace Nominas
             try
             {
                 cnx.Open();
-                dt = nh.obtenerPreNominaTabular(pn, NetoCero, Orden);
+                dt = nh.obtenerPreNominaTabular(pn, NetoCero, Orden, _periodo);
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -2369,6 +2403,7 @@ namespace Nominas
             sr._inicioPeriodo = periodoInicio.Date;
             sr._finPeriodo = periodoFin.Date;
             sr._periodo = _periodo;
+            sr._obracivil = _obracivil;
             sr.Show();
         }
 
@@ -2392,7 +2427,7 @@ namespace Nominas
             try
             {
                 cnx.Open();
-                lstPreNomina = nh.obtenerPreNomina(pn);
+                lstPreNomina = nh.obtenerPreNomina(pn, _periodo);
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -2449,7 +2484,7 @@ namespace Nominas
             disenoGridFaltas();
             cargaEmpleadosFaltas();
 
-            if (_tipoNomina != GLOBALES.EXTRAORDINARIO_NORMAL && _tipoNomina != GLOBALES.EXTRAORDINARIO_ESPECIAL)
+            if (_tipoNomina != GLOBALES.EXTRAORDINARIO_NORMAL)
             {
                 this.Text = String.Format("Periodo de Pago: Del {0} al {1}.", periodoInicio.ToShortDateString(), periodoFin.ToShortDateString());
                 toolPeriodo.Text = String.Format("Periodo de Pago: Del {0} al {1}.", periodoInicio.ToShortDateString(), periodoFin.ToShortDateString());
@@ -2466,7 +2501,7 @@ namespace Nominas
                 try
                 {
                     cnx.Open();
-                    existeNominaExtraordinaria = (int)nh.existeNomina(GLOBALES.IDEMPRESA, periodoInicio, periodoFin);
+                    existeNominaExtraordinaria = (int)nh.existeNomina(GLOBALES.IDEMPRESA, periodoInicio, periodoFin, _periodo);
                     cnx.Close();
                     cnx.Dispose();
                 }
@@ -2599,7 +2634,7 @@ namespace Nominas
             try
             {
                 cnx.Open();
-                dt = nh.obtenerPreGravadosExentos(pn);
+                dt = nh.obtenerPreGravadosExentos(pn, _periodo);
                 cnx.Close();
                 cnx.Dispose();
             }

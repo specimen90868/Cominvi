@@ -36,6 +36,8 @@ namespace Nominas
         public int _catalogo;
         public int _tipoNomina;
         public bool _obracivil;
+        public int _periodo;
+        public int _busqueda;
         #endregion
 
         private void frmBuscar_Load(object sender, EventArgs e)
@@ -57,13 +59,14 @@ namespace Nominas
 
                 if (_tipoNomina == GLOBALES.NORMAL)
                     em.estatus = GLOBALES.ACTIVO;
-                if (_tipoNomina == GLOBALES.ESPECIAL)
-                    em.estatus = GLOBALES.INACTIVO;
 
                 try
                 {
                     cnx.Open();
-                    lstEmpleados = eh.obtenerEmpleados(em);
+                    if(_busqueda == GLOBALES.NOMINA)
+                        lstEmpleados = eh.obtenerEmpleados(em, _periodo);
+                    if (_busqueda == GLOBALES.FORMULARIOS)
+                        lstEmpleados = eh.obtenerEmpleados(em);
                     cnx.Close();
                     cnx.Dispose();
 

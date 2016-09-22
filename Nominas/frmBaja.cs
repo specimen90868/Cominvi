@@ -419,8 +419,9 @@ namespace Nominas
                         return;
                     }
 
-                    if(lstNomina.Count != 0)
-                        if (dtpFechaBaja.Value.Date >= lstNomina[0].fechainicio && dtpFechaBaja.Value.Date <= lstNomina[0].fechafin)
+                    if (lstNomina.Count != 0)
+                    {
+                        if (dtpFechaBaja.Value.Date <= lstNomina[0].fechafin)
                         {
                             try
                             {
@@ -436,6 +437,7 @@ namespace Nominas
                                 return;
                             }
                         }
+                    }
                 }
 
                 try

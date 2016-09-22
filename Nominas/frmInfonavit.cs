@@ -164,7 +164,6 @@ namespace Nominas
                     toolVentana.Text = "Edición del Crédito";
                     lblEmpleado.Text = _nombreEmpleado;
                     toolBuscar.Enabled = false;
-                    btnCambiar.Enabled = true;
                     //obtenerPeriodoActual();
                 }
 
@@ -191,7 +190,6 @@ namespace Nominas
                 return;
             }
 
-            
             //bool alta_reingreso = ChecaFechaAltaReingreso();
 
             //if (dtpFechaAplicacion.Value.Date > dtpFinPeriodo.Value.Date)
@@ -251,8 +249,8 @@ namespace Nominas
             try
             {
                 cnx.Open();
-                ctInfonavit.idconcepto = (int)ch.obtenerIdConcepto(9, GLOBALES.IDEMPRESA);
-                ctSeguroInfonavit.idconcepto = (int)ch.obtenerIdConcepto(21, GLOBALES.IDEMPRESA);
+                ctInfonavit.idconcepto = (int)ch.obtenerIdConcepto(9, GLOBALES.IDEMPRESA, Periodo);
+                ctSeguroInfonavit.idconcepto = (int)ch.obtenerIdConcepto(21, GLOBALES.IDEMPRESA, Periodo);
                 cnx.Close();
             }
             catch
@@ -326,6 +324,7 @@ namespace Nominas
             frmBuscar b = new frmBuscar();
             b._catalogo = GLOBALES.EMPLEADOS;
             b.OnBuscar += b_OnBuscar;
+            b._busqueda = GLOBALES.FORMULARIOS;
             b.Show();
         }
 
@@ -388,7 +387,6 @@ namespace Nominas
                 Periodo = (int)eh.obtenerDiasPeriodo(_idEmpleado);
                 cnx.Close();
                 //obtenerPeriodoActual();
-                btnCambiar.Enabled = true;
             }
             catch (Exception error)
             {
@@ -416,25 +414,6 @@ namespace Nominas
         private void rbtnPesos_CheckedChanged(object sender, EventArgs e)
         {
             Descuento = GLOBALES.dPESOS;
-        }
-
-        private void dtpInicioPeriodo_ValueChanged(object sender, EventArgs e)
-        {
-            //periodo();
-        }
-
-        private void btnCambiar_Click(object sender, EventArgs e)
-        {
-            frmCambioPeriodo cp = new frmCambioPeriodo();
-            cp.OnNuevoPeriodo += cp_OnNuevoPeriodo;
-            cp._periodo = Periodo;
-            cp.ShowDialog();
-        }
-
-        void cp_OnNuevoPeriodo(DateTime inicio, DateTime fin)
-        {
-            dtpInicioPeriodo.Value = inicio;
-            dtpFinPeriodo.Value = fin;
         }
 
         private void PeriodoFechaAplicacion()

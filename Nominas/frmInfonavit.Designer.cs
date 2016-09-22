@@ -47,14 +47,10 @@
             this.Label50 = new System.Windows.Forms.Label();
             this.Label51 = new System.Windows.Forms.Label();
             this.chkInactivo = new System.Windows.Forms.CheckBox();
-            this.lblPeriodo = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.txtDescripcion = new System.Windows.Forms.TextBox();
             this.dtpFechaAplicacion = new System.Windows.Forms.DateTimePicker();
-            this.dtpInicioPeriodo = new System.Windows.Forms.DateTimePicker();
-            this.dtpFinPeriodo = new System.Windows.Forms.DateTimePicker();
-            this.btnCambiar = new System.Windows.Forms.Button();
             this.txtDepartamento = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.mtxtNoEmpleado = new System.Windows.Forms.MaskedTextBox();
@@ -238,16 +234,6 @@
             this.chkInactivo.Text = "No calcular";
             this.chkInactivo.UseVisualStyleBackColor = true;
             // 
-            // lblPeriodo
-            // 
-            this.lblPeriodo.AutoSize = true;
-            this.lblPeriodo.Location = new System.Drawing.Point(205, 196);
-            this.lblPeriodo.Name = "lblPeriodo";
-            this.lblPeriodo.Size = new System.Drawing.Size(46, 13);
-            this.lblPeriodo.TabIndex = 267;
-            this.lblPeriodo.Text = "Periodo:";
-            this.lblPeriodo.Visible = false;
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -280,36 +266,6 @@
             this.dtpFechaAplicacion.Name = "dtpFechaAplicacion";
             this.dtpFechaAplicacion.Size = new System.Drawing.Size(199, 20);
             this.dtpFechaAplicacion.TabIndex = 271;
-            // 
-            // dtpInicioPeriodo
-            // 
-            this.dtpInicioPeriodo.Location = new System.Drawing.Point(265, 193);
-            this.dtpInicioPeriodo.Name = "dtpInicioPeriodo";
-            this.dtpInicioPeriodo.Size = new System.Drawing.Size(200, 20);
-            this.dtpInicioPeriodo.TabIndex = 272;
-            this.dtpInicioPeriodo.Visible = false;
-            this.dtpInicioPeriodo.ValueChanged += new System.EventHandler(this.dtpInicioPeriodo_ValueChanged);
-            // 
-            // dtpFinPeriodo
-            // 
-            this.dtpFinPeriodo.Enabled = false;
-            this.dtpFinPeriodo.Location = new System.Drawing.Point(265, 219);
-            this.dtpFinPeriodo.Name = "dtpFinPeriodo";
-            this.dtpFinPeriodo.Size = new System.Drawing.Size(200, 20);
-            this.dtpFinPeriodo.TabIndex = 273;
-            this.dtpFinPeriodo.Visible = false;
-            // 
-            // btnCambiar
-            // 
-            this.btnCambiar.Enabled = false;
-            this.btnCambiar.Location = new System.Drawing.Point(390, 245);
-            this.btnCambiar.Name = "btnCambiar";
-            this.btnCambiar.Size = new System.Drawing.Size(75, 23);
-            this.btnCambiar.TabIndex = 274;
-            this.btnCambiar.Text = "Cambiar";
-            this.btnCambiar.UseVisualStyleBackColor = true;
-            this.btnCambiar.Visible = false;
-            this.btnCambiar.Click += new System.EventHandler(this.btnCambiar_Click);
             // 
             // txtDepartamento
             // 
@@ -357,14 +313,10 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.mtxtNoEmpleado);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.btnCambiar);
-            this.Controls.Add(this.dtpFinPeriodo);
-            this.Controls.Add(this.dtpInicioPeriodo);
             this.Controls.Add(this.dtpFechaAplicacion);
             this.Controls.Add(this.txtDescripcion);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.lblPeriodo);
             this.Controls.Add(this.chkInactivo);
             this.Controls.Add(this.rbtnPesos);
             this.Controls.Add(this.rbtnVsmdf);
@@ -411,14 +363,10 @@
         internal System.Windows.Forms.Label Label50;
         internal System.Windows.Forms.Label Label51;
         private System.Windows.Forms.CheckBox chkInactivo;
-        private System.Windows.Forms.Label lblPeriodo;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtDescripcion;
         private System.Windows.Forms.DateTimePicker dtpFechaAplicacion;
-        private System.Windows.Forms.DateTimePicker dtpInicioPeriodo;
-        private System.Windows.Forms.DateTimePicker dtpFinPeriodo;
-        private System.Windows.Forms.Button btnCambiar;
         private System.Windows.Forms.TextBox txtDepartamento;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.MaskedTextBox mtxtNoEmpleado;

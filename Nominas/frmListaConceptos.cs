@@ -41,7 +41,7 @@ namespace Nominas
             try
             {
                 cnx.Open();
-                lstConceptos = ch.obtenerConceptos(concepto);
+                lstConceptos = ch.obtenerConceptos(concepto, 0);
                 cnx.Close();
                 cnx.Dispose();
 

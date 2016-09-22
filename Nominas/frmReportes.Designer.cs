@@ -222,6 +222,7 @@
             this.cmbPeriodo.Name = "cmbPeriodo";
             this.cmbPeriodo.Size = new System.Drawing.Size(200, 21);
             this.cmbPeriodo.TabIndex = 19;
+            this.cmbPeriodo.SelectedIndexChanged += new System.EventHandler(this.cmbPeriodo_SelectedIndexChanged);
             // 
             // statusStrip1
             // 
@@ -231,7 +232,7 @@
             this.toolEtapa});
             this.statusStrip1.Location = new System.Drawing.Point(0, 392);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(332, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(337, 22);
             this.statusStrip1.TabIndex = 20;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -317,7 +318,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(332, 414);
+            this.ClientSize = new System.Drawing.Size(337, 414);
             this.Controls.Add(this.cmbTipoNomina);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cmbOrden);
@@ -349,6 +350,7 @@
             this.Name = "frmReportes";
             this.Text = "Reportes de nómina";
             this.Load += new System.EventHandler(this.frmReportes_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmReportes_KeyDown);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);

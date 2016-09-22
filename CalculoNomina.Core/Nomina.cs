@@ -96,4 +96,26 @@ namespace CalculoNomina.Core
         public int idempresa { get; set; }
         public string xml { get; set; }
     }
+
+    public class PagoNomina
+    {
+        public int id { get; set; }
+        public int idtrabajador { get; set; }
+        public int idempresa { get; set; }
+        public int idconcepto { get; set; }
+        public int noconcepto { get; set; }
+        public string tipoconcepto { get; set; }
+        public decimal exento { get; set; }
+        public decimal gravado { get; set; }
+        public decimal cantidad { get; set; }
+        public DateTime fechainicio { get; set; }
+        public DateTime fechafin { get; set; }
+        public int noperiodo { get; set; }
+        public int diaslaborados { get; set; }
+        public int idusuario { get; set; }
+        public int tiponomina { get; set; }
+        public DateTime fechapago { get; set; }
+        public int iddepartamento { get; set; }
+        public int idpuesto { get; set; }
+    }
 }

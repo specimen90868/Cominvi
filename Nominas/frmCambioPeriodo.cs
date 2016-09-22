@@ -66,7 +66,7 @@ namespace Nominas
             CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
             nh.Command = cmd;
 
-            if (_tipoNomina != GLOBALES.EXTRAORDINARIO_NORMAL && _tipoNomina != GLOBALES.EXTRAORDINARIO_ESPECIAL)
+            if (_tipoNomina != GLOBALES.EXTRAORDINARIO_NORMAL)
             {
                 if (_periodo == 7)
                 {
@@ -99,7 +99,7 @@ namespace Nominas
                 try
                 {
                     cnx.Open();
-                    existe = (int)nh.existeNomina(GLOBALES.IDEMPRESA, periodoInicio.Date, periodoFin.Date);
+                    existe = (int)nh.existeNomina(GLOBALES.IDEMPRESA, periodoInicio.Date, periodoFin.Date, _periodo);
                     cnx.Close();
                     if (existe != 0)
                     {

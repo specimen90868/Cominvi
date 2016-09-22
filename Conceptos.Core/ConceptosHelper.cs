@@ -9,13 +9,42 @@ namespace Conceptos.Core
 {
     public class ConceptosHelper : Data.Obj.DataObj
     {
-        public List<Conceptos> obtenerConceptos(Conceptos c)
+        public List<Conceptos> obtenerConceptos(Conceptos c, int periodo)
         {
             List<Conceptos> lstConcepto = new List<Conceptos>();
             DataTable dtConceptos = new DataTable();
-            Command.CommandText = "select * from conceptos where idempresa = @idempresa";
+            Command.CommandText = "select * from conceptos where idempresa = @idempresa and periodo = @periodo";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa",c.idempresa);
+            Command.Parameters.AddWithValue("periodo", periodo);
+            dtConceptos = SelectData(Command);
+            for (int i = 0; i < dtConceptos.Rows.Count; i++)
+            {
+                Conceptos concepto = new Conceptos();
+                concepto.id = int.Parse(dtConceptos.Rows[i]["id"].ToString());
+                concepto.concepto = dtConceptos.Rows[i]["concepto"].ToString();
+                concepto.noconcepto = int.Parse(dtConceptos.Rows[i]["noconcepto"].ToString());
+                concepto.tipoconcepto = dtConceptos.Rows[i]["tipoconcepto"].ToString();
+                concepto.formula = dtConceptos.Rows[i]["formula"].ToString();
+                concepto.formulaexento = dtConceptos.Rows[i]["formulaexento"].ToString();
+                concepto.gravado = bool.Parse(dtConceptos.Rows[i]["gravado"].ToString());
+                concepto.exento = bool.Parse(dtConceptos.Rows[i]["exento"].ToString());
+                concepto.gruposat = dtConceptos.Rows[i]["gruposat"].ToString();
+                concepto.visible = bool.Parse(dtConceptos.Rows[i]["visible"].ToString());
+                lstConcepto.Add(concepto);
+            }
+            return lstConcepto;
+        }
+
+        public List<Conceptos> obtenerConceptosDeducciones(Conceptos c, int periodo)
+        {
+            List<Conceptos> lstConcepto = new List<Conceptos>();
+            DataTable dtConceptos = new DataTable();
+            Command.CommandText = "select * from conceptos where idempresa = @idempresa and tipoconcepto = @tipoconcepto and periodo = @periodo";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", c.idempresa);
+            Command.Parameters.AddWithValue("tipoconcepto", c.tipoconcepto);
+            Command.Parameters.AddWithValue("periodo", periodo);
             dtConceptos = SelectData(Command);
             for (int i = 0; i < dtConceptos.Rows.Count; i++)
             {
@@ -117,12 +146,13 @@ namespace Conceptos.Core
             return dato;
         }
 
-        public object obtenerIdConcepto(int noconcepto, int idempresa)
+        public object obtenerIdConcepto(int noconcepto, int idempresa, int periodo)
         {
-            Command.CommandText = "select id from Conceptos where noconcepto = @noconcepto and idempresa = @idempresa";
+            Command.CommandText = "select id from Conceptos where noconcepto = @noconcepto and idempresa = @idempresa and periodo = @periodo";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("noconcepto", noconcepto);
             Command.Parameters.AddWithValue("idempresa", idempresa);
+            Command.Parameters.AddWithValue("periodo", periodo);
             object dato = Select(Command);
             return dato;
         }

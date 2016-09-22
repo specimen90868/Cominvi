@@ -36,7 +36,6 @@
             this.toolTitulo = new System.Windows.Forms.ToolStrip();
             this.toolEmpleados = new System.Windows.Forms.ToolStripLabel();
             this.toolBusqueda = new System.Windows.Forms.ToolStrip();
-            this.toolNuevo = new System.Windows.Forms.ToolStripButton();
             this.toolCargar = new System.Windows.Forms.ToolStripButton();
             this.toolLimpiar = new System.Windows.Forms.ToolStripButton();
             this.toolAplicar = new System.Windows.Forms.ToolStripButton();
@@ -81,7 +80,6 @@
             // toolBusqueda
             // 
             this.toolBusqueda.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolNuevo,
             this.toolCargar,
             this.toolLimpiar,
             this.toolAplicar});
@@ -90,16 +88,6 @@
             this.toolBusqueda.Size = new System.Drawing.Size(778, 25);
             this.toolBusqueda.TabIndex = 9;
             this.toolBusqueda.Text = "ToolStrip1";
-            // 
-            // toolNuevo
-            // 
-            this.toolNuevo.Image = ((System.Drawing.Image)(resources.GetObject("toolNuevo.Image")));
-            this.toolNuevo.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolNuevo.Name = "toolNuevo";
-            this.toolNuevo.Size = new System.Drawing.Size(62, 22);
-            this.toolNuevo.Text = "Nuevo";
-            this.toolNuevo.Visible = false;
-            this.toolNuevo.Click += new System.EventHandler(this.toolNuevo_Click);
             // 
             // toolCargar
             // 
@@ -261,7 +249,6 @@
         internal System.Windows.Forms.ToolStrip toolTitulo;
         internal System.Windows.Forms.ToolStripLabel toolEmpleados;
         internal System.Windows.Forms.ToolStrip toolBusqueda;
-        private System.Windows.Forms.ToolStripButton toolNuevo;
         private System.Windows.Forms.DataGridView dgvCargaFaltas;
         private System.Windows.Forms.ToolStripButton toolCargar;
         private System.Windows.Forms.ToolStripButton toolAplicar;

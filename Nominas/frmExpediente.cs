@@ -193,6 +193,7 @@ namespace Nominas
             frmBuscar b = new frmBuscar();
             b._catalogo = GLOBALES.EMPLEADOS;
             b.OnBuscar += b_OnBuscar;
+            b._busqueda = GLOBALES.FORMULARIOS;
             b.Show();
         }
 

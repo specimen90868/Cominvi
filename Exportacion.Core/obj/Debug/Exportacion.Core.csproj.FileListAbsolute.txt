@@ -2,5 +2,6 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Exportacion.Core\bin\Debug\Ex
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Exportacion.Core\bin\Debug\Exportacion.Core.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Exportacion.Core\bin\Debug\Data.Obj.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Exportacion.Core\bin\Debug\Data.Obj.pdb
+C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Exportacion.Core\obj\Debug\Exportacion.Core.csprojResolveAssemblyReference.cache
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Exportacion.Core\obj\Debug\Exportacion.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Exportacion.Core\obj\Debug\Exportacion.Core.pdb

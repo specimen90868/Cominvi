@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMovimientos));
             this.toolAcciones = new System.Windows.Forms.ToolStrip();
             this.toolGuardar = new System.Windows.Forms.ToolStripButton();
-            this.toolBuscar = new System.Windows.Forms.ToolStripButton();
             this.toolCerrar = new System.Windows.Forms.ToolStripButton();
             this.toolTitulo = new System.Windows.Forms.ToolStrip();
             this.toolVentana = new System.Windows.Forms.ToolStripLabel();
@@ -55,7 +54,6 @@
             // 
             this.toolAcciones.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolGuardar,
-            this.toolBuscar,
             this.toolCerrar});
             this.toolAcciones.Location = new System.Drawing.Point(0, 27);
             this.toolAcciones.Name = "toolAcciones";
@@ -72,15 +70,6 @@
             this.toolGuardar.Text = "Guardar";
             this.toolGuardar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.toolGuardar.Click += new System.EventHandler(this.toolGuardar_Click);
-            // 
-            // toolBuscar
-            // 
-            this.toolBuscar.Image = ((System.Drawing.Image)(resources.GetObject("toolBuscar.Image")));
-            this.toolBuscar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolBuscar.Name = "toolBuscar";
-            this.toolBuscar.Size = new System.Drawing.Size(62, 22);
-            this.toolBuscar.Text = "Buscar";
-            this.toolBuscar.Click += new System.EventHandler(this.toolBuscar_Click);
             // 
             // toolCerrar
             // 
@@ -256,7 +245,6 @@
 
         internal System.Windows.Forms.ToolStrip toolAcciones;
         internal System.Windows.Forms.ToolStripButton toolGuardar;
-        private System.Windows.Forms.ToolStripButton toolBuscar;
         private System.Windows.Forms.ToolStripButton toolCerrar;
         internal System.Windows.Forms.ToolStrip toolTitulo;
         internal System.Windows.Forms.ToolStripLabel toolVentana;

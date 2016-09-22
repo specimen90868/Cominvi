@@ -178,12 +178,6 @@
     <Compile Include="frmFactores.Designer.cs">
       <DependentUpon>frmFactores.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmFaltas.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmFaltas.Designer.cs">
-      <DependentUpon>frmFaltas.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmFiltro.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -238,6 +232,12 @@
     <Compile Include="frmInfonavit.Designer.cs">
       <DependentUpon>frmInfonavit.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmInicioPeriodo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmInicioPeriodo.Designer.cs">
+      <DependentUpon>frmInicioPeriodo.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmIsr.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -279,12 +279,6 @@
     </Compile>
     <Compile Include="frmListaCargaFaltas.Designer.cs">
       <DependentUpon>frmListaCargaFaltas.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmListaCargaIncapacidades.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmListaCargaIncapacidades.Designer.cs">
-      <DependentUpon>frmListaCargaIncapacidades.cs</DependentUpon>
     </Compile>
     <Compile Include="frmListaCargaMovimientos.cs">
       <SubType>Form</SubType>
@@ -346,12 +340,6 @@
     <Compile Include="frmListaFactores.Designer.cs">
       <DependentUpon>frmListaFactores.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmListaFaltas.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmListaFaltas.Designer.cs">
-      <DependentUpon>frmListaFaltas.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmListaHistorial.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -394,12 +382,6 @@
     <Compile Include="frmListaModificacionesSua.Designer.cs">
       <DependentUpon>frmListaModificacionesSua.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmListaMovimientos.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmListaMovimientos.Designer.cs">
-      <DependentUpon>frmListaMovimientos.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmListaOperacionesIdse.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -423,12 +405,6 @@
     </Compile>
     <Compile Include="frmListaProcesoSalarial.Designer.cs">
       <DependentUpon>frmListaProcesoSalarial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmListaProgramacionConceptos.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmListaProgramacionConceptos.Designer.cs">
-      <DependentUpon>frmListaProgramacionConceptos.cs</DependentUpon>
     </Compile>
     <Compile Include="frmListaPuestos.cs">
       <SubType>Form</SubType>
@@ -460,35 +436,11 @@
     <Compile Include="frmListaUsuarios.Designer.cs">
       <DependentUpon>frmListaUsuarios.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmListaVacaciones.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmListaVacaciones.Designer.cs">
-      <DependentUpon>frmListaVacaciones.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmLogIn.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmLogIn.Designer.cs">
       <DependentUpon>frmLogIn.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmModificacionInfonavit.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmModificacionInfonavit.Designer.cs">
-      <DependentUpon>frmModificacionInfonavit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmModificaSalarioImss.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmModificaSalarioImss.Designer.cs">
-      <DependentUpon>frmModificaSalarioImss.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmModificaSueldoEmpleado.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmModificaSueldoEmpleado.Designer.cs">
-      <DependentUpon>frmModificaSueldoEmpleado.cs</DependentUpon>
     </Compile>
     <Compile Include="frmMovimientos.cs">
       <SubType>Form</SubType>
@@ -550,23 +502,11 @@
     <Compile Include="frmSeleccionarEmpresa.Designer.cs">
       <DependentUpon>frmSeleccionarEmpresa.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmSeleccionarPreNomina.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmSeleccionarPreNomina.Designer.cs">
-      <DependentUpon>frmSeleccionarPreNomina.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmSeleccionPeriodo.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmSeleccionPeriodo.Designer.cs">
       <DependentUpon>frmSeleccionPeriodo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmSeleccionTipoNomina.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmSeleccionTipoNomina.Designer.cs">
-      <DependentUpon>frmSeleccionTipoNomina.cs</DependentUpon>
     </Compile>
     <Compile Include="frmSobreRecibo.cs">
       <SubType>Form</SubType>
@@ -647,9 +587,6 @@
     <EmbeddedResource Include="frmFactores.resx">
       <DependentUpon>frmFactores.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmFaltas.resx">
-      <DependentUpon>frmFaltas.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="frmFiltro.resx">
       <DependentUpon>frmFiltro.cs</DependentUpon>
     </EmbeddedResource>
@@ -677,6 +614,9 @@
     <EmbeddedResource Include="frmInfonavit.resx">
       <DependentUpon>frmInfonavit.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmInicioPeriodo.resx">
+      <DependentUpon>frmInicioPeriodo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmIsr.resx">
       <DependentUpon>frmIsr.cs</DependentUpon>
     </EmbeddedResource>
@@ -697,9 +637,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmListaCargaFaltas.resx">
       <DependentUpon>frmListaCargaFaltas.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmListaCargaIncapacidades.resx">
-      <DependentUpon>frmListaCargaIncapacidades.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmListaCargaMovimientos.resx">
       <DependentUpon>frmListaCargaMovimientos.cs</DependentUpon>
@@ -731,9 +668,6 @@
     <EmbeddedResource Include="frmListaFactores.resx">
       <DependentUpon>frmListaFactores.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmListaFaltas.resx">
-      <DependentUpon>frmListaFaltas.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="frmListaHistorial.resx">
       <DependentUpon>frmListaHistorial.cs</DependentUpon>
     </EmbeddedResource>
@@ -755,9 +689,6 @@
     <EmbeddedResource Include="frmListaModificacionesSua.resx">
       <DependentUpon>frmListaModificacionesSua.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmListaMovimientos.resx">
-      <DependentUpon>frmListaMovimientos.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="frmListaOperacionesIdse.resx">
       <DependentUpon>frmListaOperacionesIdse.cs</DependentUpon>
     </EmbeddedResource>
@@ -769,9 +700,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmListaProcesoSalarial.resx">
       <DependentUpon>frmListaProcesoSalarial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmListaProgramacionConceptos.resx">
-      <DependentUpon>frmListaProgramacionConceptos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmListaPuestos.resx">
       <DependentUpon>frmListaPuestos.cs</DependentUpon>
@@ -788,20 +716,8 @@
     <EmbeddedResource Include="frmListaUsuarios.resx">
       <DependentUpon>frmListaUsuarios.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmListaVacaciones.resx">
-      <DependentUpon>frmListaVacaciones.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="frmLogIn.resx">
       <DependentUpon>frmLogIn.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmModificacionInfonavit.resx">
-      <DependentUpon>frmModificacionInfonavit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmModificaSalarioImss.resx">
-      <DependentUpon>frmModificaSalarioImss.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmModificaSueldoEmpleado.resx">
-      <DependentUpon>frmModificaSueldoEmpleado.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMovimientos.resx">
       <DependentUpon>frmMovimientos.cs</DependentUpon>
@@ -833,14 +749,8 @@
     <EmbeddedResource Include="frmSeleccionarEmpresa.resx">
       <DependentUpon>frmSeleccionarEmpresa.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmSeleccionarPreNomina.resx">
-      <DependentUpon>frmSeleccionarPreNomina.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="frmSeleccionPeriodo.resx">
       <DependentUpon>frmSeleccionPeriodo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmSeleccionTipoNomina.resx">
-      <DependentUpon>frmSeleccionTipoNomina.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmSobreRecibo.resx">
       <DependentUpon>frmSobreRecibo.cs</DependentUpon>
@@ -901,6 +811,10 @@
     <ProjectReference Include="..\Altas.Core\Altas.Core.csproj">
       <Project>{f9993063-7518-4a2b-bb85-80e5d98d1941}</Project>
       <Name>Altas.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aplicaciones.Core\Aplicaciones.Core.csproj">
+      <Project>{b4f75932-ed25-4c53-8cc9-d2e401a32aae}</Project>
+      <Name>Aplicaciones.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Ausentismo.Core\Ausentismo.Core.csproj">
       <Project>{9fe8e205-241a-4754-ab40-92acbe07af94}</Project>

@@ -48,12 +48,17 @@ namespace Nominas
             Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
             concepto.idempresa = GLOBALES.IDEMPRESA;
 
+            Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
+            eh.Command = cmd;
+            
             List<Conceptos.Core.Conceptos> lstConceptos = new List<Conceptos.Core.Conceptos>();
 
             try 
             {
+                int periodo = 0; 
                 cnx.Open();
-                lstConceptos = ch.obtenerConceptos(concepto);
+                periodo = int.Parse(eh.obtenerDiasPeriodo(_idEmpleado).ToString());
+                lstConceptos = ch.obtenerConceptos(concepto, periodo);
                 cnx.Close();
                 cnx.Dispose();
             }

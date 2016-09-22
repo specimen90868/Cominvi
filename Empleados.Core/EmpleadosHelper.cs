@@ -45,11 +45,35 @@ namespace Empleados.Core
             return lstEmpleados;
         }
 
+        public List<Empleados> obtenerEmpleados(Empleados e, int periodo)
+        {
+            DataTable dtEmpleados = new DataTable();
+            List<Empleados> lstEmpleados = new List<Empleados>();
+            Command.CommandText =  @"select idtrabajador, noempleado, nombrecompleto from trabajadores where idempresa = @idempresa and estatus = @estatus and
+                                    idperiodo in (select idperiodo from periodos where idempresa = @idempresa and dias = @dias)";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", e.idempresa);
+            Command.Parameters.AddWithValue("estatus", e.estatus);
+            Command.Parameters.AddWithValue("dias", periodo);
+            dtEmpleados = SelectData(Command);
+
+            for (int i = 0; i < dtEmpleados.Rows.Count; i++)
+            {
+                Empleados empleado = new Empleados();
+                empleado.idtrabajador = int.Parse(dtEmpleados.Rows[i]["idtrabajador"].ToString());
+                empleado.noempleado = dtEmpleados.Rows[i]["noempleado"].ToString();
+                empleado.nombrecompleto = dtEmpleados.Rows[i]["nombrecompleto"].ToString();
+                lstEmpleados.Add(empleado);
+            }
+
+            return lstEmpleados;
+        }
+
         public List<Empleados> obtenerEmpleadosBaja(Empleados e)
         {
             DataTable dtEmpleados = new DataTable();
             List<Empleados> lstEmpleados = new List<Empleados>();
-            Command.CommandText = "select idtrabajador, noempleado, paterno, materno, nombres, nombrecompleto, curp, fechaingreso, antiguedad, sdi, sd, sueldo, cuenta, clabe, idbancario from trabajadores where idempresa = @idempresa";
+            Command.CommandText = @"select idtrabajador, noempleado, paterno, materno, nombres, nombrecompleto, curp, fechaingreso, antiguedad, sdi, sd, sueldo, cuenta, clabe, idbancario from trabajadores where idempresa = @idempresa";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", e.idempresa);
             dtEmpleados = SelectData(Command);
@@ -77,6 +101,29 @@ namespace Empleados.Core
 
             return lstEmpleados;
         }
+
+        public List<Empleados> obtenerEmpleadosBaja(Empleados e, int periodo)
+        {
+            DataTable dtEmpleados = new DataTable();
+            List<Empleados> lstEmpleados = new List<Empleados>();
+            Command.CommandText = @"select idtrabajador, noempleado from trabajadores where idempresa = @idempresa
+                                    and idperiodo in (select idperiodo from periodos where idempresa = @idempresa and dias = @dias)";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", e.idempresa);
+            Command.Parameters.AddWithValue("dias", periodo);
+            dtEmpleados = SelectData(Command);
+
+            for (int i = 0; i < dtEmpleados.Rows.Count; i++)
+            {
+                Empleados empleado = new Empleados();
+                empleado.idtrabajador = int.Parse(dtEmpleados.Rows[i]["idtrabajador"].ToString());
+                empleado.noempleado = dtEmpleados.Rows[i]["noempleado"].ToString();
+                lstEmpleados.Add(empleado);
+            }
+
+            return lstEmpleados;
+        }
+
 
         public List<Empleados> obtenerEmpleadosAusentismo(Empleados e)
         {
@@ -609,6 +656,27 @@ namespace Empleados.Core
             return Command.ExecuteNonQuery();
         }
 
+        public int actualizaDeptoPuesto(int iddeptopuesto, int idtrabajador, string tipo)
+        {
+            if (tipo == "D")
+            {
+                Command.CommandText = "update trabajadores set iddepartamento = @iddepartamento where idtrabajador = @idtrabajador";
+                Command.Parameters.Clear();
+                Command.Parameters.AddWithValue("iddepartamento", iddeptopuesto);
+                Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
+            }
+
+            if (tipo == "P")
+            {
+                Command.CommandText = "update trabajadores set idpuesto = @idpuesto where idtrabajador = @idtrabajador";
+                Command.Parameters.Clear();
+                Command.Parameters.AddWithValue("idpuesto", iddeptopuesto);
+                Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
+            }
+            
+            return Command.ExecuteNonQuery();
+        }
+
         public int actualizaAntiguedad(int idEmpresa)
         {
             Command.CommandText = "exec stp_ActualizaAntiguedad @idempresa";
@@ -652,7 +720,7 @@ namespace Empleados.Core
             List<Empleados> lstEmpleados = new List<Empleados>();
             Command.CommandText = @"select t.idtrabajador, t.noempleado, t.nombrecompleto from trabajadores t
                 inner join pagonomina pn on t.idtrabajador = pn.idtrabajador where
-                t.iddepartamento in (select * from fnListaCadenaATabla(@deptos)) and fechainicio = @fecha and
+                pn.iddepartamento in (select * from fnListaCadenaATabla(@deptos)) and fechainicio = @fecha and
                 t.idempresa = @idempresa
                 group by t.idtrabajador, t.noempleado, t.nombrecompleto";
             Command.Parameters.Clear();

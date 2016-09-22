@@ -81,12 +81,13 @@ namespace Reingreso.Core
             return dato;
         }
 
-        public int existeReingreso(int idEmpresa, int idTrabajador, DateTime inicio)
+        public int existeReingreso(int idEmpresa, int idTrabajador, DateTime inicio, DateTime fin)
         {
-            Command.CommandText = "select count(*) from suaReingresos where idempresa = @idempresa and idtrabajador = @idtrabajador and periodoinicio = @inicio";
+            Command.CommandText = "select count(*) from suaReingresos where idempresa = @idempresa and idtrabajador = @idtrabajador and periodoinicio = @inicio and periodofin = @fin";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", idTrabajador);
             Command.Parameters.AddWithValue("inicio", inicio);
+            Command.Parameters.AddWithValue("fin", fin);
             Command.Parameters.AddWithValue("idempresa", idEmpresa);
             int dato = int.Parse(Select(Command).ToString());
             return dato;

@@ -33,7 +33,8 @@ namespace Nominas
         CalculoNomina.Core.NominaHelper nh;
         int noReporte;
         string netocero, orden;
-        int tipoNomina;
+        int tipoNomina, periodo;
+        Boolean FLAG_COMBOBOX = false;
         #endregion
 
         #region DELEGADOS
@@ -70,12 +71,6 @@ namespace Nominas
             dh = new Departamento.Core.DeptoHelper();
             dh.Command = cmd;
 
-            eh = new Empleados.Core.EmpleadosHelper();
-            eh.Command = cmd;
-
-            Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
-            empleado.idempresa = GLOBALES.IDEMPRESA;
-
             Departamento.Core.Depto depto = new Departamento.Core.Depto();
             depto.idempresa = GLOBALES.IDEMPRESA;
             depto.estatus = GLOBALES.ACTIVO;
@@ -89,17 +84,13 @@ namespace Nominas
             List<Departamento.Core.Depto> lstDeptosDe = new List<Departamento.Core.Depto>();
             List<Departamento.Core.Depto> lstDeptosHasta = new List<Departamento.Core.Depto>();
             List<Periodos.Core.Periodos> lstPeriodos = new List<Periodos.Core.Periodos>();
-            List<Empleados.Core.Empleados> lstEmpleadoDe = new List<Empleados.Core.Empleados>();
-            List<Empleados.Core.Empleados> lstEmpleadoHasta = new List<Empleados.Core.Empleados>();
-
+            
             try
             {
                 cnx.Open();
                 lstDeptosDe = dh.obtenerDepartamentos(depto);
                 lstDeptosHasta = dh.obtenerDepartamentos(depto);
                 lstPeriodos = ph.obtenerPeriodos(periodo);
-                lstEmpleadoDe = eh.obtenerEmpleadosBaja(empleado);
-                lstEmpleadoHasta = eh.obtenerEmpleadosBaja(empleado);
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -113,17 +104,9 @@ namespace Nominas
             cmbDeptoFinal.DisplayMember = "descripcion";
             cmbDeptoFinal.ValueMember = "id";
 
-            cmbPeriodo.DataSource = lstPeriodos;
+            cmbPeriodo.DataSource = lstPeriodos.ToList();
             cmbPeriodo.DisplayMember = "pago";
             cmbPeriodo.ValueMember = "idperiodo";
-
-            cmbEmpleadoInicial.DataSource = lstEmpleadoDe;
-            cmbEmpleadoInicial.DisplayMember = "noempleado";
-            cmbEmpleadoInicial.ValueMember = "idtrabajador";
-
-            cmbEmpleadoFinal.DataSource = lstEmpleadoHasta;
-            cmbEmpleadoFinal.DisplayMember = "noempleado";
-            cmbEmpleadoFinal.ValueMember = "idtrabajador";
 
             cmbTipoReporte.SelectedIndex = 0;
             cmbTipoNomina.SelectedIndex = 0;
@@ -165,7 +148,7 @@ namespace Nominas
                     cmbEmpleadoFinal.Enabled = true;
                 }
             }
-            
+            FLAG_COMBOBOX = true;
         } 
 
         private void btnAceptar_Click(object sender, EventArgs e)
@@ -184,6 +167,7 @@ namespace Nominas
                         nh = new CalculoNomina.Core.NominaHelper();
                         nh.Command = cmd;
 
+                        #region EXISTENCIA DE NULOS EN TABLA xmlCabecera
                         try
                         {
                             cnx.Open();
@@ -196,6 +180,9 @@ namespace Nominas
                             cnx.Dispose();
                             return;
                         }
+                        #endregion
+
+                        #region GENERACION DE CODIGO QR SI EXISTEN NULOS
                         if (existeNullCodeQR != 0)
                         {
                             List<CalculoNomina.Core.CodigoBidimensional> lstXml = new List<CalculoNomina.Core.CodigoBidimensional>();
@@ -250,6 +237,7 @@ namespace Nominas
                                 }
                             }
                         }
+                        #endregion
                     }
 
                     frmVisorReportes vr = new frmVisorReportes();
@@ -266,6 +254,7 @@ namespace Nominas
                     vr._empleadoFin = int.Parse(cmbEmpleadoFinal.SelectedValue.ToString());
                     vr._netoCero = netocero;
                     vr._orden = orden;
+                    vr._periodo = periodo;
                     vr.Show();
                 }
                 else
@@ -453,7 +442,7 @@ namespace Nominas
                     int.Parse(cmbEmpleadoInicial.SelectedValue.ToString()),
                     int.Parse(cmbEmpleadoFinal.SelectedValue.ToString()),
                     tipoNomina,
-                    netocero, orden);
+                    netocero, orden, periodo);
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -704,7 +693,7 @@ namespace Nominas
             try
             {
                 cnx.Open();
-                dt = nh.obtenerGravadosExentos(pn);
+                dt = nh.obtenerGravadosExentos(pn, periodo);
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -829,6 +818,91 @@ namespace Nominas
                     dtpFinPeriodo.Enabled = true;
                     break;
             }
+        }
+
+        private void frmReportes_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.F5)
+            {
+                cnx = new SqlConnection(cdn);
+                cmd = new SqlCommand();
+                cmd.Connection = cnx;
+
+                eh = new Empleados.Core.EmpleadosHelper();
+                eh.Command = cmd;
+
+                Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
+                empleado.idempresa = GLOBALES.IDEMPRESA;
+
+                List<Empleados.Core.Empleados> lstEmpleadoDe = new List<Empleados.Core.Empleados>();
+                List<Empleados.Core.Empleados> lstEmpleadoHasta = new List<Empleados.Core.Empleados>();
+
+                try
+                {
+                    cnx.Open();
+                    lstEmpleadoDe = eh.obtenerEmpleadosBaja(empleado);
+                    lstEmpleadoHasta = eh.obtenerEmpleadosBaja(empleado);
+                    cnx.Close();
+                    cnx.Dispose();
+                }
+                catch (Exception error) { MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error"); }
+
+                cmbEmpleadoInicial.DataSource = lstEmpleadoDe;
+                cmbEmpleadoInicial.DisplayMember = "noempleado";
+                cmbEmpleadoInicial.ValueMember = "idtrabajador";
+
+                cmbEmpleadoFinal.DataSource = lstEmpleadoHasta;
+                cmbEmpleadoFinal.DisplayMember = "noempleado";
+                cmbEmpleadoFinal.ValueMember = "idtrabajador";
+            }
+        }
+
+        private void cmbPeriodo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            eh = new Empleados.Core.EmpleadosHelper();
+            eh.Command = cmd;
+
+            Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
+            empleado.idempresa = GLOBALES.IDEMPRESA;
+
+            Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
+            ph.Command = cmd;
+
+            Periodos.Core.Periodos p = new Periodos.Core.Periodos();
+
+            if (!FLAG_COMBOBOX)
+            {
+                Periodos.Core.Periodos a = (Periodos.Core.Periodos)cmbPeriodo.SelectedValue;
+                p.idperiodo = a.idperiodo;
+            }
+            else
+                p.idperiodo = int.Parse(cmbPeriodo.SelectedValue.ToString());
+            
+            List<Empleados.Core.Empleados> lstEmpleadoDe = new List<Empleados.Core.Empleados>();
+            List<Empleados.Core.Empleados> lstEmpleadoHasta = new List<Empleados.Core.Empleados>();
+
+            try
+            {
+                cnx.Open();
+                periodo = int.Parse(ph.DiasDePago(p).ToString());
+                lstEmpleadoDe = eh.obtenerEmpleadosBaja(empleado, periodo);
+                lstEmpleadoHasta = eh.obtenerEmpleadosBaja(empleado, periodo);
+                cnx.Close();
+                cnx.Dispose();
+            }
+            catch (Exception error) { MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error"); }
+
+            cmbEmpleadoInicial.DataSource = lstEmpleadoDe;
+            cmbEmpleadoInicial.DisplayMember = "noempleado";
+            cmbEmpleadoInicial.ValueMember = "idtrabajador";
+
+            cmbEmpleadoFinal.DataSource = lstEmpleadoHasta;
+            cmbEmpleadoFinal.DisplayMember = "noempleado";
+            cmbEmpleadoFinal.ValueMember = "idtrabajador";
         }
     }
 }

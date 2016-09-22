@@ -33,11 +33,13 @@ namespace Nominas
         Periodos.Core.PeriodosHelper pdh;
         Historial.Core.HistorialHelper hh;
         Salario.Core.SalariosHelper sh;
+        Aplicaciones.Core.AplicacionesHelper aplih;
         string sexo;
         string estado;
         Bitmap bmp;
         bool ImagenAsignada = false, historicoDepto = false, historicoPuesto = false;
         string departamento = "", puesto = "";
+        int idDepto = 0, idPuesto = 0;
         #endregion
 
         #region DELEGADOS
@@ -241,7 +243,9 @@ namespace Nominas
                             cmbMetodoPago.SelectedIndex = 2;
 
                         departamento = cmbDepartamento.Text;
-                        puesto = cmbPeriodo.Text;
+                        puesto = cmbPuesto.Text;
+                        idDepto = int.Parse(lstEmpleado[i].iddepartamento.ToString());
+                        idPuesto = int.Parse(lstEmpleado[i].idpuesto.ToString());
 
                         if (lstEmpleado[i].obracivil)
                             chkObraCivil.Checked = true;
@@ -498,6 +502,7 @@ namespace Nominas
                         
                         em.estatus = GLOBALES.ACTIVO;
                         em.idusuario = GLOBALES.IDUSUARIO;
+
                         if (existeNss != 0)
                         {
                             MessageBox.Show("El empleado que desea ingresar ya existe actualmente. \r\n \r\n Es necesario realizar un reingreso.", "Error");
@@ -616,6 +621,12 @@ namespace Nominas
                         hh.Command = cmd;
                         Historial.Core.Historial hDepto = null;
                         Historial.Core.Historial hPuesto = null;
+
+                        aplih = new Aplicaciones.Core.AplicacionesHelper();
+                        aplih.Command = cmd;
+                        Aplicaciones.Core.Aplicaciones aDepto = new Aplicaciones.Core.Aplicaciones();
+                        Aplicaciones.Core.Aplicaciones aPuesto = new Aplicaciones.Core.Aplicaciones();
+
                         if (historicoDepto)
                         {
                             hDepto = new Historial.Core.Historial();
@@ -628,6 +639,18 @@ namespace Nominas
                             hDepto.fecha_imss = dtpFechaAplicacionHistorico.Value.Date;
                             hDepto.iddepartamento = int.Parse(cmbDepartamento.SelectedValue.ToString());
                             hDepto.idpuesto = int.Parse(cmbPuesto.SelectedValue.ToString());
+
+                            if (dtpFechaAplicacionHistorico.Value.Date > DateTime.Now.Date)
+                            {
+                                aDepto = new Aplicaciones.Core.Aplicaciones();
+                                aDepto.idtrabajador = _idempleado;
+                                aDepto.idempresa = GLOBALES.IDEMPRESA;
+                                aDepto.iddeptopuesto = int.Parse(cmbDepartamento.SelectedValue.ToString());
+                                aDepto.deptopuesto = "D";
+                                aDepto.fecha = dtpFechaAplicacionHistorico.Value.Date;
+                                em.iddepartamento = idDepto;
+                                em.idpuesto = idPuesto;
+                            }
                         }
 
                         if (historicoPuesto)
@@ -642,6 +665,18 @@ namespace Nominas
                             hPuesto.fecha_imss = dtpFechaAplicacionHistorico.Value.Date;
                             hPuesto.iddepartamento = int.Parse(cmbDepartamento.SelectedValue.ToString());
                             hPuesto.idpuesto = int.Parse(cmbPuesto.SelectedValue.ToString());
+
+                            if (dtpFechaAplicacionHistorico.Value.Date > DateTime.Now.Date)
+                            {
+                                aPuesto = new Aplicaciones.Core.Aplicaciones();
+                                aPuesto.idtrabajador = _idempleado;
+                                aPuesto.idempresa = GLOBALES.IDEMPRESA;
+                                aPuesto.iddeptopuesto = int.Parse(cmbPuesto.SelectedValue.ToString());
+                                aPuesto.deptopuesto = "P";
+                                aPuesto.fecha = dtpFechaAplicacionHistorico.Value.Date;
+                                em.iddepartamento = idDepto;
+                                em.idpuesto = idPuesto;
+                            }
                         }
                         
                         cnx.Open();
@@ -660,10 +695,21 @@ namespace Nominas
                             else
                                 ih.insertaImagen(img);
                         }
+
                         if (historicoDepto)
+                        {
                             hh.insertarHistorial(hDepto);
+                            if (dtpFechaAplicacionHistorico.Value.Date > DateTime.Now.Date)
+                                aplih.insertaAplicacion(aDepto);
+                        }
+
                         if (historicoPuesto)
+                        {
                             hh.insertarHistorial(hPuesto);
+                            if (dtpFechaAplicacionHistorico.Value.Date > DateTime.Now.Date)
+                                aplih.insertaAplicacion(aPuesto);
+                        }
+                        
                         cnx.Close();
                         cnx.Dispose();
                     }

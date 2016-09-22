@@ -335,7 +335,6 @@
             // 
             // cmbPeriodo
             // 
-            this.cmbPeriodo.Enabled = false;
             this.cmbPeriodo.FormattingEnabled = true;
             this.cmbPeriodo.Location = new System.Drawing.Point(415, 245);
             this.cmbPeriodo.Name = "cmbPeriodo";

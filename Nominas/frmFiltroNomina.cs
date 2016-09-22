@@ -31,6 +31,7 @@ namespace Nominas
         #region VARIABLES PUBLICAS
         public int _filtro;
         public int _tipoNomina;
+        public int _periodo;
         #endregion
 
         #region DELEGADOS
@@ -60,8 +61,6 @@ namespace Nominas
 
                     if (_tipoNomina == GLOBALES.NORMAL)
                         depto.estatus = GLOBALES.ACTIVO;
-                    if (_tipoNomina == GLOBALES.ESPECIAL)
-                        depto.estatus = GLOBALES.INACTIVO;
 
                     List<Departamento.Core.Depto> lstDeptosDe = new List<Departamento.Core.Depto>();
                     List<Departamento.Core.Depto> lstDeptosHasta = new List<Departamento.Core.Depto>();
@@ -92,8 +91,6 @@ namespace Nominas
 
                     if (_tipoNomina == GLOBALES.NORMAL)
                         puesto.estatus = GLOBALES.ACTIVO;
-                    if (_tipoNomina == GLOBALES.ESPECIAL)
-                        puesto.estatus = GLOBALES.INACTIVO;
 
                     List<Puestos.Core.Puestos> lstPuestosDe = new List<Puestos.Core.Puestos>();
                     List<Puestos.Core.Puestos> lstPuestosHasta = new List<Puestos.Core.Puestos>();
@@ -124,16 +121,14 @@ namespace Nominas
                     
                     if (_tipoNomina == GLOBALES.NORMAL)
                         empleado.estatus = GLOBALES.ACTIVO;
-                    if (_tipoNomina == GLOBALES.ESPECIAL)
-                        empleado.estatus = GLOBALES.INACTIVO;
 
                     List<Empleados.Core.Empleados> lstEmpleadoDe = new List<Empleados.Core.Empleados>();
                     List<Empleados.Core.Empleados> lstEmpleadoHasta = new List<Empleados.Core.Empleados>();
                     try 
                     {
                         cnx.Open();
-                        lstEmpleadoDe = eh.obtenerEmpleados(empleado);
-                        lstEmpleadoHasta = eh.obtenerEmpleados(empleado);
+                        lstEmpleadoDe = eh.obtenerEmpleados(empleado, _periodo);
+                        lstEmpleadoHasta = eh.obtenerEmpleados(empleado, _periodo);
                         cnx.Close();
                         cnx.Dispose();
                     }
