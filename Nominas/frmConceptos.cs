@@ -222,10 +222,15 @@ namespace Nominas
 
         private void btnGrupoSat_Click(object sender, EventArgs e)
         {
-            frmGrupoSat gs = new frmGrupoSat();
-            gs.OnSeleccion += gs_OnSeleccion;
-            gs._percepcionDeduccion = concepto;
-            gs.Show();
+            if (concepto != null)
+            {
+                frmGrupoSat gs = new frmGrupoSat();
+                gs.OnSeleccion += gs_OnSeleccion;
+                gs._percepcionDeduccion = concepto;
+                gs.Show();
+            }
+            else
+                MessageBox.Show("No ha seleccionado el tipo de concepto.", "Información");
         }
 
         void gs_OnSeleccion(string grupo)

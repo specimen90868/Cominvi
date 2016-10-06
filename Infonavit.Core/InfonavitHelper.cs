@@ -27,6 +27,7 @@ namespace Infonavit.Core
                 inf.descuento = int.Parse(dtInfonavit.Rows[i]["descuento"].ToString());
                 inf.valordescuento = decimal.Parse(dtInfonavit.Rows[i]["valordescuento"].ToString());
                 inf.activo = bool.Parse(dtInfonavit.Rows[i]["activo"].ToString());
+                inf.estatus = int.Parse(dtInfonavit.Rows[i]["estatus"].ToString());
                 lstInfonavit.Add(inf);
             }
             return lstInfonavit;
@@ -55,6 +56,7 @@ namespace Infonavit.Core
                 inf.fecha = DateTime.Parse(dtInfonavit.Rows[i]["fecha"].ToString());
                 inf.inicio = DateTime.Parse(dtInfonavit.Rows[i]["inicio"].ToString());
                 inf.fin = DateTime.Parse(dtInfonavit.Rows[i]["fin"].ToString());
+                inf.estatus = int.Parse(dtInfonavit.Rows[i]["estatus"].ToString());
                 lstInfonavit.Add(inf);
             }
             return lstInfonavit;
@@ -228,8 +230,8 @@ namespace Infonavit.Core
 
         public int insertaInfonavit(Infonavit i)
         {
-            Command.CommandText = "insert into infonavit (idempresa,idtrabajador,credito,descuento,valordescuento, activo, descripcion, dias, fecha, inicio, fin, registro, idusuario) " +
-                "values (@idempresa,@idtrabajador,@credito,@descuento,@valordescuento, @activo, @descripcion, @dias, @fecha, @inicio, @fin, @registro, @idusuario)";
+            Command.CommandText = "insert into infonavit (idempresa,idtrabajador,credito,descuento,valordescuento, activo, descripcion, dias, fecha, inicio, fin, registro, idusuario, estatus) " +
+                "values (@idempresa,@idtrabajador,@credito,@descuento,@valordescuento, @activo, @descripcion, @dias, @fecha, @inicio, @fin, @registro, @idusuario, @estatus)";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", i.idempresa);
             Command.Parameters.AddWithValue("idtrabajador", i.idtrabajador);
@@ -244,13 +246,14 @@ namespace Infonavit.Core
             Command.Parameters.AddWithValue("fin", i.fin);
             Command.Parameters.AddWithValue("registro", i.registro);
             Command.Parameters.AddWithValue("idusuario", i.idusuario);
+            Command.Parameters.AddWithValue("estatus", i.estatus);
             return Command.ExecuteNonQuery();
         }
 
         public int actualizaInfonavit(Infonavit i)
         {
             Command.CommandText = "update infonavit set credito = @credito, descuento = @descuento, valordescuento = @valordescuento, activo = @activo, descripcion = @descripcion, " + 
-                "dias = @dias, fecha = @fecha, inicio = @inicio, fin = @fin, registro = @registro, idusuario = @idusuario where idinfonavit = @idinfonavit";
+                "dias = @dias, fecha = @fecha, inicio = @inicio, fin = @fin, registro = @registro, idusuario = @idusuario, estatus = @estatus where idinfonavit = @idinfonavit";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idinfonavit", i.idinfonavit);
             Command.Parameters.AddWithValue("credito", i.credito);
@@ -264,12 +267,13 @@ namespace Infonavit.Core
             Command.Parameters.AddWithValue("fin", i.fin);
             Command.Parameters.AddWithValue("registro", i.registro);
             Command.Parameters.AddWithValue("idusuario", i.idusuario);
+            Command.Parameters.AddWithValue("estatus", i.estatus);
             return Command.ExecuteNonQuery();
         }
 
         public int actualizaEstatusInfonavit(int id, DateTime registro, int idUsuario)
         {
-            Command.CommandText = "update infonavit set activo = 0, registro = @registro, idusuario = @idusuario where idinfonavit = @idinfonavit";
+            Command.CommandText = "update infonavit set activo = 0, estatus = 129, registro = @registro, idusuario = @idusuario where idinfonavit = @idinfonavit";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idinfonavit", id);
             Command.Parameters.AddWithValue("registro", registro);

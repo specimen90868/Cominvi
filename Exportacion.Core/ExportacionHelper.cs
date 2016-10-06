@@ -44,6 +44,22 @@ namespace Exportacion.Core
             return dtDatosExportar;
         }
 
+        public DataTable datosExportar(int idEmpresa, string campos, string tablas, int tiponomina, int periodo, DateTime inicio, DateTime fin)
+        {
+            Command.CommandText = "exec stp_DatosExportacionNomina @idempresa, @campos, @tablas, @tiponomina, @periodo, @inicio, @fin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idEmpresa);
+            Command.Parameters.AddWithValue("campos", campos);
+            Command.Parameters.AddWithValue("tablas", tablas);
+            Command.Parameters.AddWithValue("tiponomina", tiponomina);
+            Command.Parameters.AddWithValue("periodo", periodo);
+            Command.Parameters.AddWithValue("inicio", inicio);
+            Command.Parameters.AddWithValue("fin", fin);
+            DataTable dtDatosExportar = new DataTable();
+            dtDatosExportar = SelectData(Command);
+            return dtDatosExportar;
+        }
+
         public int actualizaExportacion(Exportacion e)
         {
             Command.CommandText = "update Exportacion set activo = @activo where campo = @campo and formulario = @formulario";

@@ -14,5 +14,10 @@ namespace Aplicaciones.Core
         public int iddeptopuesto { get; set; }
         public string deptopuesto { get; set; }
         public DateTime fecha { get; set; }
+        public DateTime registro { get; set; }
+        public int idusuario { get; set; }
+        public DateTime periodoinicio { get; set; }
+        public DateTime periodofin { get; set; }
+
     }
 }

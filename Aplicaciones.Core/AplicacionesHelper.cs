@@ -11,14 +11,18 @@ namespace Aplicaciones.Core
     {
         public int insertaAplicacion(Aplicaciones a)
         {
-            Command.CommandText = @"insert into Aplicaciones (idtrabajador, idempresa, iddeptopuesto, deptopuesto, fecha) values (
-                                    @idtrabajador,@idempresa,@iddeptopuesto,@deptopuesto,@fecha)";
+            Command.CommandText = @"insert into Aplicaciones (idtrabajador, idempresa, iddeptopuesto, deptopuesto, fecha, registro, idusuario, periodoinicio, periodofin) values (
+                                    @idtrabajador,@idempresa,@iddeptopuesto,@deptopuesto,@fecha,@registro,@idusuario, @periodoinicio, @periodofin)";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", a.idtrabajador);
             Command.Parameters.AddWithValue("idempresa", a.idempresa);
             Command.Parameters.AddWithValue("iddeptopuesto", a.iddeptopuesto);
             Command.Parameters.AddWithValue("deptopuesto", a.deptopuesto);
             Command.Parameters.AddWithValue("fecha", a.fecha);
+            Command.Parameters.AddWithValue("registro", a.registro);
+            Command.Parameters.AddWithValue("idusuario", a.idusuario);
+            Command.Parameters.AddWithValue("periodoinicio", a.periodoinicio);
+            Command.Parameters.AddWithValue("periodofin", a.periodofin);
             return Command.ExecuteNonQuery();
         }
 
@@ -37,6 +41,10 @@ namespace Aplicaciones.Core
                 ap.iddeptopuesto = int.Parse(dt.Rows[i]["iddeptopuesto"].ToString());
                 ap.deptopuesto = dt.Rows[i]["deptopuesto"].ToString();
                 ap.fecha = DateTime.Parse(dt.Rows[i]["fecha"].ToString());
+                ap.registro = DateTime.Parse(dt.Rows[i]["registro"].ToString());
+                ap.idusuario = int.Parse(dt.Rows[i]["idusuario"].ToString());
+                ap.periodoinicio = DateTime.Parse(dt.Rows[i]["periodoinicio"].ToString());
+                ap.periodofin = DateTime.Parse(dt.Rows[i]["periodofin"].ToString());
                 lstAplicaciones.Add(ap);
             }
             return lstAplicaciones;

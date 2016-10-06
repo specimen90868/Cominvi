@@ -101,7 +101,7 @@ namespace Nominas
             {
                 cnx.Open();
 
-                GLOBALES.DIASPERIODO = int.Parse(eh.obtenerDiasEmpresa(empresa).ToString());
+                GLOBALES.OBRACIVIL = eh.obtenerObraCivilEmpresa(empresa);
 
                 cnx.Close();
                 cnx.Dispose();

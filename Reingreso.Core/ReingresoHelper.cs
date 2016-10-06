@@ -55,8 +55,8 @@ namespace Reingreso.Core
 
         public int insertaReingreso(Reingresos r)
         {
-            Command.CommandText = "insert into suaReingresos (idtrabajador, idempresa, registropatronal, nss, fechaingreso, diasproporcionales, sdi, periodoinicio, periodofin) " +
-                "values (@idtrabajador, @idempresa, @registropatronal, @nss, @fechaingreso, @diasproporcionales, @sdi, @periodoinicio, @periodofin)";
+            Command.CommandText = "insert into suaReingresos (idtrabajador, idempresa, registropatronal, nss, fechaingreso, diasproporcionales, sdi, periodoinicio, periodofin, registro) " +
+                "values (@idtrabajador, @idempresa, @registropatronal, @nss, @fechaingreso, @diasproporcionales, @sdi, @periodoinicio, @periodofin, @registro)";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador",r.idtrabajador);
             Command.Parameters.AddWithValue("idempresa", r.idempresa);
@@ -67,6 +67,7 @@ namespace Reingreso.Core
             Command.Parameters.AddWithValue("sdi", r.sdi);
             Command.Parameters.AddWithValue("periodoinicio", r.periodoinicio);
             Command.Parameters.AddWithValue("periodofin", r.periodofin);
+            Command.Parameters.AddWithValue("registro", r.registro);
             return Command.ExecuteNonQuery();
         }
 

@@ -44,6 +44,7 @@ namespace Nominas
 
         private void frmInfonavit_Load(object sender, EventArgs e)
         {
+            cargaCombo();
             if (_tipoOperacion == GLOBALES.CONSULTAR || _tipoOperacion == GLOBALES.MODIFICAR)
             {
                 cnx = new SqlConnection();
@@ -121,6 +122,7 @@ namespace Nominas
                             chkInactivo.Checked = true;
                         txtDescripcion.Text = lstInfonavit[j].descripcion;
                         dtpFechaAplicacion.Value = lstInfonavit[j].fecha;
+                        cmbEstatusInfonavit.SelectedValue = lstInfonavit[j].estatus;
                         //dtpInicioPeriodo.Value = lstInfonavit[j].inicio.AddDays(1);
                         //dtpFinPeriodo.Value = lstInfonavit[j].fin;
                         
@@ -156,6 +158,8 @@ namespace Nominas
                     GLOBALES.INHABILITAR(this, typeof(RadioButton));
                     GLOBALES.INHABILITAR(this, typeof(CheckBox));
                     GLOBALES.INHABILITAR(this, typeof(DateTimePicker));
+                    GLOBALES.INHABILITAR(this, typeof(MaskedTextBox));
+                    GLOBALES.INHABILITAR(this, typeof(ComboBox));
                     toolGuardar.Enabled = false;
                     toolBuscar.Enabled = false;
                 }
@@ -172,6 +176,34 @@ namespace Nominas
                     //dtpInicioPeriodo.Enabled = true;
                 }
             }
+        }
+
+        private void cargaCombo()
+        {
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            Catalogos.Core.CatalogosHelper ch = new Catalogos.Core.CatalogosHelper();
+            ch.Command = cmd;
+            Catalogos.Core.Catalogo cat = new Catalogos.Core.Catalogo();
+            cat.grupodescripcion = "ESTATUS INFONAVIT";
+            List<Catalogos.Core.Catalogo> lstCatalogo = new List<Catalogos.Core.Catalogo>();
+            try
+            {
+                cnx.Open();
+                lstCatalogo = ch.obtenerGrupo(cat);
+                cnx.Close();
+                cnx.Dispose();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error: Al obtener el catalogo.", "Error");
+                cnx.Dispose();
+            }
+            cmbEstatusInfonavit.DataSource = lstCatalogo;
+            cmbEstatusInfonavit.DisplayMember = "descripcion";
+            cmbEstatusInfonavit.ValueMember = "id";
         }
 
         private void toolGuardar_Click(object sender, EventArgs e)
@@ -226,6 +258,7 @@ namespace Nominas
             i.fin = periodoFin.Date;
             i.registro = DateTime.Now;
             i.idusuario = GLOBALES.IDUSUARIO;
+            i.estatus = int.Parse(cmbEstatusInfonavit.SelectedValue.ToString());
 
             if (rbtnPesos.Checked)
                 if (Periodo == 7)

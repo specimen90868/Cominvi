@@ -54,6 +54,14 @@ namespace Bajas.Core
             return lstBaja;
         }
 
+        public string obtenerObservaciones(int id)
+        {
+            Command.CommandText = "select observaciones from suaBajas where id = @id";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("id", id);
+            return Select(Command).ToString();
+        }
+
         public object existeBaja(Bajas b)
         {
             Command.CommandText = "select count(*) from suaBajas where idtrabajador = @idtrabajador and periodoinicio = @periodoinicio and periodofin = @periodofin";

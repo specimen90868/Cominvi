@@ -121,6 +121,25 @@ namespace Nominas
             periodo.estatus = 1;
             periodo.idempresa = GLOBALES.IDEMPRESA;
 
+            int existe = 0;
+            try
+            {
+                cnx.Open();
+                existe = (int)ph.obtenerPeriodo(GLOBALES.IDEMPRESA, periodo.dias);
+                cnx.Close();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error: Al obtener si existe el periodo.\r\n\r\n" + error.Message, "Error");
+                cnx.Dispose();
+            }
+
+            if (existe != 0)
+            {
+                MessageBox.Show("La empresa ya cuenta con el periodo elegido.", "Información");
+                return;
+            }
+
             switch (_tipoOperacion)
             {
                 case 0:

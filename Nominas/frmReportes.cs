@@ -117,7 +117,7 @@ namespace Nominas
             {
                 dtpInicioPeriodo.Value = _inicio;
                 dtpFinPeriodo.Value = _fin;
-                cmbPeriodo.Enabled = false;
+                cmbPeriodo.Enabled = true;
                 dtpInicioPeriodo.Enabled = false;
                 dtpFinPeriodo.Enabled = false;
                 cmbTipoReporte.Enabled = false;

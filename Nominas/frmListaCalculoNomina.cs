@@ -50,6 +50,7 @@ namespace Nominas
         {
             frmListaCargaMovimientos lcm = new frmListaCargaMovimientos();
             lcm._tipoNomina = _tipoNomina;
+            lcm._periodo = _periodo;
             lcm._inicioPeriodo = periodoInicio.Date;
             lcm._finPeriodo = periodoFin.Date;
             lcm.ShowDialog();
@@ -773,6 +774,7 @@ namespace Nominas
 
             int estatus = 0;
             int existeAltaReingreso = 0;
+
             #region LISTAS
             List<CalculoNomina.Core.Nomina> lstConceptosPercepciones = new List<CalculoNomina.Core.Nomina>();
             List<CalculoNomina.Core.Nomina> lstConceptosDeducciones = new List<CalculoNomina.Core.Nomina>();
@@ -1542,8 +1544,6 @@ namespace Nominas
                     cnx.Close();
                     cnx.Dispose();
 
-                    MessageBox.Show("Nomina autorizada.", "Confirmación");
-
                     if (_tipoNomina == GLOBALES.NORMAL)
                     {
                         obtenerPeriodoCalculo();
@@ -1554,7 +1554,8 @@ namespace Nominas
                     {
                         dgvEmpleados.Rows.Clear();
                     }
-                    
+
+                    MessageBox.Show("Nomina autorizada.", "Confirmación");
                 }
                 catch (Exception error)
                 {

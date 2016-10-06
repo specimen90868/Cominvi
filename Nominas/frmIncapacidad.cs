@@ -527,6 +527,12 @@ namespace Nominas
                 }
 
             }
+        }
+
+        private void txtCertificado_Leave(object sender, EventArgs e)
+        {
+            String cert = txtCertificado.Text;
+            txtCertificado.Text = cert.ToUpper();
         } 
     }
 }

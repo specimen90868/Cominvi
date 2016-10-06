@@ -274,6 +274,27 @@ namespace CalculoNomina.Core
             return lstPagoNomina;
         }
 
+        public List<tmpPagoNomina> obtenerUltimaNominaTrabajador(int idEmpresa, int idtrabajador, int periodo)
+        {
+            List<tmpPagoNomina> lstPagoNomina = new List<tmpPagoNomina>();
+            DataTable dtPagoNomina = new DataTable();
+            Command.CommandText = @"select distinct top 1 fechainicio, fechafin from PagoNomina where idempresa = @idempresa 
+                                    and idtrabajador = @idtrabajador and periodo = @periodo order by fechainicio desc";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idEmpresa);
+            Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
+            Command.Parameters.AddWithValue("periodo", periodo);
+            dtPagoNomina = SelectData(Command);
+            for (int i = 0; i < dtPagoNomina.Rows.Count; i++)
+            {
+                tmpPagoNomina pn = new tmpPagoNomina();
+                pn.fechainicio = DateTime.Parse(dtPagoNomina.Rows[i]["fechainicio"].ToString());
+                pn.fechafin = DateTime.Parse(dtPagoNomina.Rows[i]["fechafin"].ToString());
+                lstPagoNomina.Add(pn);
+            }
+            return lstPagoNomina;
+        }
+
         public DataTable obtenerPreNominaTabular(tmpPagoNomina pn, string netocero, string order, int periodo)
         {
             DataTable dtPagoNomina = new DataTable();
@@ -486,6 +507,15 @@ namespace CalculoNomina.Core
             Command.CommandText = "delete from tmpPagoNomina where idtrabajador = @idtrabajador and guardada = 0";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
+            return Command.ExecuteNonQuery();
+        }
+
+        public int eliminaPreNomina(int idtrabajador, int periodo)
+        {
+            Command.CommandText = "delete from tmpPagoNomina where idtrabajador = @idtrabajador and periodo = @periodo";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
+            Command.Parameters.AddWithValue("periodo", periodo);
             return Command.ExecuteNonQuery();
         }
 

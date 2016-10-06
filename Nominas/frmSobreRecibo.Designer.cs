@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSobreRecibo));
             this.toolAcciones = new System.Windows.Forms.ToolStrip();
             this.toolCalcular = new System.Windows.Forms.ToolStripButton();
@@ -162,6 +163,8 @@
             this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.contextFaltas = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.contextEliminar = new System.Windows.Forms.ToolStripMenuItem();
             this.toolAcciones.SuspendLayout();
             this.TabPrincipal.SuspendLayout();
             this.tabPercepcionesDeducciones.SuspendLayout();
@@ -197,6 +200,7 @@
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
+            this.contextFaltas.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolAcciones
@@ -469,6 +473,7 @@
             // 
             // lstvFechasFalta
             // 
+            this.lstvFechasFalta.ContextMenuStrip = this.contextFaltas;
             this.lstvFechasFalta.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstvFechasFalta.Location = new System.Drawing.Point(0, 0);
             this.lstvFechasFalta.Name = "lstvFechasFalta";
@@ -1518,6 +1523,21 @@
             this.dataGridViewTextBoxColumn16.HeaderText = "Fin";
             this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
             // 
+            // contextFaltas
+            // 
+            this.contextFaltas.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.contextEliminar});
+            this.contextFaltas.Name = "contextFaltas";
+            this.contextFaltas.Size = new System.Drawing.Size(153, 48);
+            this.contextFaltas.Text = "Faltas";
+            // 
+            // contextEliminar
+            // 
+            this.contextEliminar.Name = "contextEliminar";
+            this.contextEliminar.Size = new System.Drawing.Size(152, 22);
+            this.contextEliminar.Text = "Eliminar";
+            this.contextEliminar.Click += new System.EventHandler(this.contextEliminar_Click);
+            // 
             // frmSobreRecibo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1582,6 +1602,7 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel3.ResumeLayout(false);
+            this.contextFaltas.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1721,5 +1742,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn16;
         private System.Windows.Forms.ToolStripButton toolEditar;
         private System.Windows.Forms.ToolStripButton toolDiagnostico;
+        private System.Windows.Forms.ContextMenuStrip contextFaltas;
+        private System.Windows.Forms.ToolStripMenuItem contextEliminar;
     }
 }

@@ -33,7 +33,7 @@ namespace Nominas
         #endregion
 
         #region VARIABLES PUBLICA
-        public int _tipoNomina;
+        public int _tipoNomina, _periodo;
         public DateTime _inicioPeriodo;
         public DateTime _finPeriodo;
         #endregion
@@ -474,6 +474,7 @@ namespace Nominas
                 dt.Columns.Add("modificado", typeof(Boolean));
                 dt.Columns.Add("fechapago", typeof(DateTime));
                 dt.Columns.Add("obracivil", typeof(Boolean));
+                dt.Columns.Add("periodo", typeof(Int32));
 
                 int index = 1;
                 for (int i = 0; i < lstMovimientos.Count; i++)
@@ -497,6 +498,7 @@ namespace Nominas
                     dtFila["modificado"] = lstMovimientos[i].modificado;
                     dtFila["fechapago"] = new DateTime(1900,1,1);
                     dtFila["obracivil"] = false;
+                    dtFila["periodo"] = _periodo;
                     dt.Rows.Add(dtFila);
                     index++;
                 }

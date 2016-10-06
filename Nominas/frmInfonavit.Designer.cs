@@ -43,7 +43,6 @@
             this.Label52 = new System.Windows.Forms.Label();
             this.txtValor = new System.Windows.Forms.TextBox();
             this.rbtnPorcentaje = new System.Windows.Forms.RadioButton();
-            this.txtNumeroCredito = new System.Windows.Forms.TextBox();
             this.Label50 = new System.Windows.Forms.Label();
             this.Label51 = new System.Windows.Forms.Label();
             this.chkInactivo = new System.Windows.Forms.CheckBox();
@@ -55,6 +54,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.mtxtNoEmpleado = new System.Windows.Forms.MaskedTextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.txtNumeroCredito = new System.Windows.Forms.MaskedTextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cmbEstatusInfonavit = new System.Windows.Forms.ComboBox();
             this.toolTitulo.SuspendLayout();
             this.toolAcciones.SuspendLayout();
             this.SuspendLayout();
@@ -199,13 +201,6 @@
             this.rbtnPorcentaje.UseVisualStyleBackColor = true;
             this.rbtnPorcentaje.CheckedChanged += new System.EventHandler(this.rbtnPorcentaje_CheckedChanged);
             // 
-            // txtNumeroCredito
-            // 
-            this.txtNumeroCredito.Location = new System.Drawing.Point(122, 167);
-            this.txtNumeroCredito.Name = "txtNumeroCredito";
-            this.txtNumeroCredito.Size = new System.Drawing.Size(76, 20);
-            this.txtNumeroCredito.TabIndex = 261;
-            // 
             // Label50
             // 
             this.Label50.AutoSize = true;
@@ -304,11 +299,39 @@
             this.label4.TabIndex = 275;
             this.label4.Text = "No. Empleado:";
             // 
+            // txtNumeroCredito
+            // 
+            this.txtNumeroCredito.Location = new System.Drawing.Point(123, 168);
+            this.txtNumeroCredito.Mask = "9999999999";
+            this.txtNumeroCredito.Name = "txtNumeroCredito";
+            this.txtNumeroCredito.Size = new System.Drawing.Size(76, 20);
+            this.txtNumeroCredito.TabIndex = 279;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(218, 197);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(45, 13);
+            this.label5.TabIndex = 280;
+            this.label5.Text = "Estatus:";
+            // 
+            // cmbEstatusInfonavit
+            // 
+            this.cmbEstatusInfonavit.FormattingEnabled = true;
+            this.cmbEstatusInfonavit.Location = new System.Drawing.Point(265, 194);
+            this.cmbEstatusInfonavit.Name = "cmbEstatusInfonavit";
+            this.cmbEstatusInfonavit.Size = new System.Drawing.Size(121, 21);
+            this.cmbEstatusInfonavit.TabIndex = 281;
+            // 
             // frmInfonavit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(515, 436);
+            this.Controls.Add(this.cmbEstatusInfonavit);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.txtNumeroCredito);
             this.Controls.Add(this.txtDepartamento);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.mtxtNoEmpleado);
@@ -323,7 +346,6 @@
             this.Controls.Add(this.Label52);
             this.Controls.Add(this.txtValor);
             this.Controls.Add(this.rbtnPorcentaje);
-            this.Controls.Add(this.txtNumeroCredito);
             this.Controls.Add(this.Label50);
             this.Controls.Add(this.Label51);
             this.Controls.Add(this.Label16);
@@ -359,7 +381,6 @@
         internal System.Windows.Forms.Label Label52;
         internal System.Windows.Forms.TextBox txtValor;
         internal System.Windows.Forms.RadioButton rbtnPorcentaje;
-        internal System.Windows.Forms.TextBox txtNumeroCredito;
         internal System.Windows.Forms.Label Label50;
         internal System.Windows.Forms.Label Label51;
         private System.Windows.Forms.CheckBox chkInactivo;
@@ -371,5 +392,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.MaskedTextBox mtxtNoEmpleado;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.MaskedTextBox txtNumeroCredito;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox cmbEstatusInfonavit;
     }
 }

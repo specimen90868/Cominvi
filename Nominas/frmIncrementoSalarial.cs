@@ -34,6 +34,7 @@ namespace Nominas
         string nss, rp;
         bool departamento = false, puesto = false;
         int iddepto = 0, idpuesto = 0;
+        DateTime inicioPeriodo, finPeriodo;
         #endregion
 
         #region DELEGADOS
@@ -219,16 +220,6 @@ namespace Nominas
             empleado.sd = decimal.Parse(txtSD.Text);
             empleado.sueldo = decimal.Parse(txtSueldo.Text);
 
-            if (departamento)
-                empleado.iddepartamento = int.Parse(cmbDepartamento.SelectedValue.ToString());
-            else
-                empleado.iddepartamento = iddepto;
-
-            if (puesto)
-                empleado.idpuesto = int.Parse(cmbPuesto.SelectedValue.ToString());
-            else
-                empleado.idpuesto = idpuesto;
-
             Historial.Core.Historial historia = new Historial.Core.Historial();
             historia.idtrabajador = _idempleado;
             historia.idempresa = GLOBALES.IDEMPRESA;
@@ -281,20 +272,17 @@ namespace Nominas
                     historiaDepto.idpuesto = idpuesto;
                     hh.insertarHistorial(historiaDepto);
                     
-                    if (dtpFecha.Value.Date > DateTime.Now.Date)
-                    {
-                        aDepto = new Aplicaciones.Core.Aplicaciones();
-                        aDepto.idtrabajador = _idempleado;
-                        aDepto.idempresa = GLOBALES.IDEMPRESA;
-                        aDepto.iddeptopuesto = int.Parse(cmbDepartamento.SelectedValue.ToString());
-                        aDepto.deptopuesto = "D";
-                        aDepto.fecha = dtpFecha.Value.Date;
-                        aplih.insertaAplicacion(aDepto);
-                    }
-                    else
-                    {
-                        eh.actualizaDeptoPuesto(empleado);
-                    }
+                    aDepto = new Aplicaciones.Core.Aplicaciones();
+                    aDepto.idtrabajador = _idempleado;
+                    aDepto.idempresa = GLOBALES.IDEMPRESA;
+                    aDepto.iddeptopuesto = int.Parse(cmbDepartamento.SelectedValue.ToString());
+                    aDepto.deptopuesto = "D";
+                    aDepto.fecha = dtpFecha.Value.Date;
+                    aDepto.registro = DateTime.Now.Date;
+                    aDepto.idusuario = GLOBALES.IDUSUARIO;
+                    aDepto.periodoinicio = inicioPeriodo;
+                    aDepto.periodofin = finPeriodo;
+                    aplih.insertaAplicacion(aDepto);
                 }
 
                 if (puesto)
@@ -311,20 +299,17 @@ namespace Nominas
                     historiaPuesto.idpuesto = int.Parse(cmbPuesto.SelectedValue.ToString());
                     hh.insertarHistorial(historiaPuesto);
 
-                    if (dtpFecha.Value.Date > DateTime.Now.Date)
-                    {
-                        aPuesto = new Aplicaciones.Core.Aplicaciones();
-                        aPuesto.idtrabajador = _idempleado;
-                        aPuesto.idempresa = GLOBALES.IDEMPRESA;
-                        aPuesto.iddeptopuesto = int.Parse(cmbPuesto.SelectedValue.ToString());
-                        aPuesto.deptopuesto = "P";
-                        aPuesto.fecha = dtpFecha.Value.Date;
-                        aplih.insertaAplicacion(aPuesto);
-                    }
-                    else {
-                        eh.actualizaDeptoPuesto(empleado);
-                    }
-
+                    aPuesto = new Aplicaciones.Core.Aplicaciones();
+                    aPuesto.idtrabajador = _idempleado;
+                    aPuesto.idempresa = GLOBALES.IDEMPRESA;
+                    aPuesto.iddeptopuesto = int.Parse(cmbPuesto.SelectedValue.ToString());
+                    aPuesto.deptopuesto = "P";
+                    aPuesto.fecha = dtpFecha.Value.Date;
+                    aPuesto.registro = DateTime.Now.Date;
+                    aPuesto.idusuario = GLOBALES.IDUSUARIO;
+                    aPuesto.periodoinicio = inicioPeriodo;
+                    aPuesto.periodofin = finPeriodo;
+                    aplih.insertaAplicacion(aPuesto);
                 }
 
                 cnx.Close();
@@ -371,6 +356,69 @@ namespace Nominas
             {
                 puesto = false;
                 cmbPuesto.Enabled = false;
+            }
+        }
+
+        private void dtpFecha_ValueChanged(object sender, EventArgs e)
+        {
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
+            nh.Command = cmd;
+            List<CalculoNomina.Core.tmpPagoNomina> lstUltimaNomina = new List<CalculoNomina.Core.tmpPagoNomina>();
+
+            eh = new Empleados.Core.EmpleadosHelper();
+            eh.Command = cmd;
+            
+            Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
+            ph.Command = cmd;
+
+            Periodos.Core.Periodos periodo = new Periodos.Core.Periodos();
+
+            int dias = 0;
+            try
+            {
+                cnx.Open();
+                periodo.idperiodo = (int)eh.obtenerIdPeriodo(_idempleado);
+                dias = int.Parse(ph.DiasDePago(periodo).ToString());
+                lstUltimaNomina = nh.obtenerUltimaNominaTrabajador(GLOBALES.IDEMPRESA, _idempleado, dias);
+                cnx.Close();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error: Al obtener la ultima nómina del trabajador.", "Error");
+                cnx.Dispose();
+            }
+
+            if (lstUltimaNomina.Count != 0)
+                if (dtpFecha.Value.Date <= lstUltimaNomina[0].fechafin)
+                {
+                    MessageBox.Show("La fecha de aplicación seleccionada no es valida.\r\n\r\n" +
+                                    "Se empalma con la ultima nomina del trabajador, por favor verifique.", "Información");
+                }
+
+
+            if (dias == 7)
+            {
+                DateTime dt = dtpFecha.Value;
+                while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
+                inicioPeriodo = dt;
+                finPeriodo = dt.AddDays(6);
+            }
+            else
+            {
+                if (dtpFecha.Value.Day <= 15)
+                {
+                    inicioPeriodo = new DateTime(dtpFecha.Value.Year, dtpFecha.Value.Month, 1);
+                    finPeriodo = new DateTime(dtpFecha.Value.Year, dtpFecha.Value.Month, 15);
+                }
+                else
+                {
+                    inicioPeriodo = new DateTime(dtpFecha.Value.Year, dtpFecha.Value.Month, 16);
+                    finPeriodo = new DateTime(dtpFecha.Value.Year, dtpFecha.Value.Month, DateTime.DaysInMonth(dtpFecha.Value.Year, dtpFecha.Value.Month));
+                }
             }
         }
     }

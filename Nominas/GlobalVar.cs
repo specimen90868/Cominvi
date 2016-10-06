@@ -22,6 +22,9 @@ namespace Nominas
         public static int MODIFICAR = 2;
         public static int EMPRESAS = 100;
         public static int EMPLEADOS = 101;
+
+        public static int EXPORTACATALOGO_GENERAL = 0;
+        public static int EXPORTACATALOGO_NOMINA = 1;
         #endregion
 
         #region VARIABLES TIPO PERSONA
@@ -73,7 +76,7 @@ namespace Nominas
         public static int IDPERFIL { get; set; }
         public static int IDEMPRESA { get; set; }
         public static string NOMBREEMPRESA { get; set; }
-        public static int DIASPERIODO { get; set; }
+        public static bool OBRACIVIL { get; set; }
         public static int SESION { get; set; }
 
         public static string VALIDAR(Control control, Type tipo)

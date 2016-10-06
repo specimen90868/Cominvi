@@ -40,7 +40,6 @@
             this.toolEliminar = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolIncrementoSalario = new System.Windows.Forms.ToolStripButton();
-            this.toolExportar = new System.Windows.Forms.ToolStripButton();
             this.toolActualizar = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.lblBuscar = new System.Windows.Forms.ToolStripLabel();
@@ -48,6 +47,9 @@
             this.toolTitulo = new System.Windows.Forms.ToolStrip();
             this.toolEmpleados = new System.Windows.Forms.ToolStripLabel();
             this.dgvEmpleados = new System.Windows.Forms.DataGridView();
+            this.toolExportar = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolCatNomina = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolCatGeneral = new System.Windows.Forms.ToolStripMenuItem();
             this.toolBusqueda.SuspendLayout();
             this.toolTitulo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmpleados)).BeginInit();
@@ -73,7 +75,7 @@
             this.txtBuscar});
             this.toolBusqueda.Location = new System.Drawing.Point(0, 27);
             this.toolBusqueda.Name = "toolBusqueda";
-            this.toolBusqueda.Size = new System.Drawing.Size(1076, 25);
+            this.toolBusqueda.Size = new System.Drawing.Size(1221, 25);
             this.toolBusqueda.TabIndex = 3;
             this.toolBusqueda.Text = "ToolStrip1";
             // 
@@ -159,15 +161,6 @@
             this.toolIncrementoSalario.Text = "Incrementar Salario";
             this.toolIncrementoSalario.Click += new System.EventHandler(this.toolIncrementoSalario_Click);
             // 
-            // toolExportar
-            // 
-            this.toolExportar.Image = ((System.Drawing.Image)(resources.GetObject("toolExportar.Image")));
-            this.toolExportar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolExportar.Name = "toolExportar";
-            this.toolExportar.Size = new System.Drawing.Size(70, 22);
-            this.toolExportar.Text = "Exportar";
-            this.toolExportar.Click += new System.EventHandler(this.toolExportar_Click);
-            // 
             // toolActualizar
             // 
             this.toolActualizar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -194,7 +187,7 @@
             this.txtBuscar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic);
             this.txtBuscar.ForeColor = System.Drawing.Color.Gray;
             this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(300, 23);
+            this.txtBuscar.Size = new System.Drawing.Size(300, 25);
             this.txtBuscar.Text = "Buscar empleado...";
             this.txtBuscar.Leave += new System.EventHandler(this.txtBuscar_Leave);
             this.txtBuscar.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBuscar_KeyPress);
@@ -207,7 +200,7 @@
             this.toolEmpleados});
             this.toolTitulo.Location = new System.Drawing.Point(0, 0);
             this.toolTitulo.Name = "toolTitulo";
-            this.toolTitulo.Size = new System.Drawing.Size(1076, 27);
+            this.toolTitulo.Size = new System.Drawing.Size(1221, 27);
             this.toolTitulo.TabIndex = 4;
             this.toolTitulo.Text = "ToolStrip1";
             // 
@@ -227,15 +220,41 @@
             this.dgvEmpleados.Location = new System.Drawing.Point(0, 52);
             this.dgvEmpleados.Name = "dgvEmpleados";
             this.dgvEmpleados.ReadOnly = true;
-            this.dgvEmpleados.Size = new System.Drawing.Size(1076, 672);
+            this.dgvEmpleados.Size = new System.Drawing.Size(1221, 672);
             this.dgvEmpleados.TabIndex = 5;
             this.dgvEmpleados.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmpleados_CellDoubleClick);
+            // 
+            // toolExportar
+            // 
+            this.toolExportar.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolCatNomina,
+            this.toolCatGeneral});
+            this.toolExportar.Image = ((System.Drawing.Image)(resources.GetObject("toolExportar.Image")));
+            this.toolExportar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolExportar.Name = "toolExportar";
+            this.toolExportar.Size = new System.Drawing.Size(82, 22);
+            this.toolExportar.Text = "Exportar";
+            this.toolExportar.Click += new System.EventHandler(this.toolExportar_Click);
+            // 
+            // toolCatNomina
+            // 
+            this.toolCatNomina.Name = "toolCatNomina";
+            this.toolCatNomina.Size = new System.Drawing.Size(182, 22);
+            this.toolCatNomina.Text = "Catálogo de nómina";
+            this.toolCatNomina.Click += new System.EventHandler(this.toolCatNomina_Click);
+            // 
+            // toolCatGeneral
+            // 
+            this.toolCatGeneral.Name = "toolCatGeneral";
+            this.toolCatGeneral.Size = new System.Drawing.Size(182, 22);
+            this.toolCatGeneral.Text = "Catálogo general";
+            this.toolCatGeneral.Click += new System.EventHandler(this.toolCatGeneral_Click);
             // 
             // frmListaEmpleados
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1076, 724);
+            this.ClientSize = new System.Drawing.Size(1221, 724);
             this.Controls.Add(this.dgvEmpleados);
             this.Controls.Add(this.toolBusqueda);
             this.Controls.Add(this.toolTitulo);
@@ -272,7 +291,9 @@
         private System.Windows.Forms.ToolStripButton toolBaja;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton toolReingreso;
-        private System.Windows.Forms.ToolStripButton toolExportar;
         private System.Windows.Forms.ToolStripButton toolActualizar;
+        private System.Windows.Forms.ToolStripSplitButton toolExportar;
+        private System.Windows.Forms.ToolStripMenuItem toolCatNomina;
+        private System.Windows.Forms.ToolStripMenuItem toolCatGeneral;
     }
 }

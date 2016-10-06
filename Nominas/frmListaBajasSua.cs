@@ -66,6 +66,7 @@ namespace Nominas
                           join t in lstEmpleados on b.idtrabajador equals t.idtrabajador
                           select new
                           {
+                              Folio = b.id,
                               Id = b.idtrabajador,
                               NoEmpleado = t.noempleado,
                               RegistroPatronal = b.registropatronal,
@@ -73,7 +74,8 @@ namespace Nominas
                               Nombre = t.nombrecompleto,
                               Motivo = c.descripcion,
                               MValor = c.valor,
-                              Baja = b.fecha
+                              Baja = b.fecha,
+                              Observaciones = b.observaciones
                           };
 
                 dgvBajasSua.DataSource = baj.ToList();
@@ -83,6 +85,7 @@ namespace Nominas
                     dgvBajasSua.AutoResizeColumn(i);
                 }
 
+                dgvBajasSua.Columns["Folio"].Visible = false;
                 dgvBajasSua.Columns["Id"].Visible = false;
                 dgvBajasSua.Columns["MValor"].Visible = false;
             }
@@ -317,6 +320,7 @@ namespace Nominas
                               join t in lstEmpleados on b.idtrabajador equals t.idtrabajador
                               select new
                               {
+                                  Folio = b.id,
                                   Id = b.idtrabajador,
                                   NoEmpleado = t.noempleado,
                                   RegistroPatronal = b.registropatronal,
@@ -324,7 +328,8 @@ namespace Nominas
                                   Nombre = t.nombrecompleto,
                                   Motivo = c.descripcion,
                                   MValor = c.valor,
-                                  Baja = b.fecha
+                                  Baja = b.fecha,
+                                  Observaciones = b.observaciones
                               };
                     dgvBajasSua.DataSource = baj.ToList();
                 }
@@ -336,6 +341,7 @@ namespace Nominas
                                    where t.nombrecompleto.Contains(txtBuscar.Text.ToUpper()) || t.noempleado.Contains(txtBuscar.Text)
                                    select new
                                    {
+                                       Folio = b.id,
                                        Id = b.idtrabajador,
                                        NoEmpleado = t.noempleado,
                                        RegistroPatronal = b.registropatronal,
@@ -343,10 +349,12 @@ namespace Nominas
                                        Nombre = t.nombrecompleto,
                                        Motivo = c.descripcion,
                                        MValor = c.valor,
-                                       Baja = b.fecha
+                                       Baja = b.fecha,
+                                       Observaciones = b.observaciones
                                    };
                     dgvBajasSua.DataSource = busqueda.ToList();
                 }
+                dgvBajasSua.Columns["Folio"].Visible = false;
                 dgvBajasSua.Columns["Id"].Visible = false;
                 dgvBajasSua.Columns["MValor"].Visible = false;
             }
@@ -357,6 +365,34 @@ namespace Nominas
             txtBuscar.Text = "Buscar empleado...";
             txtBuscar.Font = new Font("Segoe UI", 9, FontStyle.Italic);
             txtBuscar.ForeColor = System.Drawing.Color.Gray;
+        }
+
+        private void dgvBajasSua_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            Bajas.Core.BajasHelper bh = new Bajas.Core.BajasHelper();
+            bh.Command = cmd;
+
+            int fila = dgvBajasSua.CurrentCell.RowIndex;
+
+            try
+            {
+                cnx.Open();
+                string observ = bh.obtenerObservaciones(int.Parse(dgvBajasSua.Rows[fila].Cells[0].Value.ToString()));
+                cnx.Close();
+                cnx.Dispose();
+                MessageBox.Show(String.Format("Motivo de baja:\r\n\r\n{0}", observ));
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error: Al obtener las observaciones del trabajador.","Error");
+                cnx.Dispose();
+            }
+            
         }
     }
 }

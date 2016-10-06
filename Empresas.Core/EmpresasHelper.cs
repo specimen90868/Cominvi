@@ -109,13 +109,13 @@ namespace Empresas.Core
             return id;
         }
 
-        public object obtenerDiasEmpresa(Empresas e)
+        public bool obtenerObraCivilEmpresa(Empresas e)
         {
-            Command.CommandText = "select dias from dbo.Periodos where idempresa = @idempresa";
+            Command.CommandText = "select obracivil from dbo.Empresas where idempresa = @idempresa";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", e.idempresa);
             object dato = Select(Command);
-            return dato;
+            return (bool)dato;
         }
 
         public int insertaEmpresa(Empresas e)

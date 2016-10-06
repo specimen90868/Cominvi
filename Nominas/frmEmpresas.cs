@@ -390,7 +390,7 @@ namespace Nominas
                 if (int.Parse(txtDias.Text) == 7)
                 {
                     inicioPeriodo = inicio.AddDays(-7);
-                    finPeriodo = inicioPeriodo.AddDays(-1);
+                    finPeriodo = inicio.AddDays(-1);
                 }
                 else
                 {

@@ -2585,6 +2585,7 @@ namespace Nominas
             pc._idEmpleado = idTrabajador;
             pc._nombreEmpleado = txtNombreCompleto.Text;
             pc._tipoOperacion = GLOBALES.MODIFICAR;
+            pc._periodo = _periodo;
             pc.Show();
         }
 
@@ -2605,6 +2606,33 @@ namespace Nominas
                 cmd.Dispose();
             }
             
+        }
+
+        private void contextEliminar_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem i in lstvFechasFalta.SelectedItems)
+            {
+                cnx = new SqlConnection(cdn);
+                cmd = new SqlCommand();
+                cmd.Connection = cnx;
+
+                Faltas.Core.FaltasHelper fh = new Faltas.Core.FaltasHelper();
+                fh.Command = cmd;
+
+                try
+                {
+                    cnx.Open();
+                    fh.eliminaFalta(idTrabajador, DateTime.Parse(i.Text).Date);
+                    cnx.Close();
+                    cnx.Dispose();
+                    muestraFaltas();
+                }
+                catch
+                {
+                    MessageBox.Show("Error: Al eliminar la falta.", "Error");
+                    cnx.Dispose();
+                }
+            }
         }
 
     }

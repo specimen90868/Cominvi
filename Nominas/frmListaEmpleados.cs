@@ -420,8 +420,7 @@ namespace Nominas
 
         private void toolExportar_Click(object sender, EventArgs e)
         {
-            frmExportarEmpleado ee = new frmExportarEmpleado();
-            ee.Show();
+            
         }
 
         private void toolActualizar_Click(object sender, EventArgs e)
@@ -429,6 +428,20 @@ namespace Nominas
             dgvEmpleados.DataSource = null;
             dgvEmpleados.RowHeadersVisible = false;
             ListaEmpleados();
+        }
+
+        private void toolCatNomina_Click(object sender, EventArgs e)
+        {
+            frmExportarEmpleado ee = new frmExportarEmpleado();
+            ee._tipoReporte = GLOBALES.EXPORTACATALOGO_NOMINA;
+            ee.Show();
+        }
+
+        private void toolCatGeneral_Click(object sender, EventArgs e)
+        {
+            frmExportarEmpleado ee = new frmExportarEmpleado();
+            ee._tipoReporte = GLOBALES.EXPORTACATALOGO_GENERAL;
+            ee.Show();
         }
 
     }

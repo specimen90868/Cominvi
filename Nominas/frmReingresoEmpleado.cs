@@ -77,7 +77,6 @@ namespace Nominas
                 lstPeriodo = periodoh.obtenerPeriodos(periodo);
                 lstEmpleado = emph.obtenerEmpleado(empleado);
                 cnx.Close();
-                cnx.Dispose();
             }
             catch (Exception error) 
             {
@@ -99,7 +98,12 @@ namespace Nominas
             txtNombreCompleto.Text = _nombreEmpleado;
             mtxtNoEmpleado.Text = lstEmpleado[0].noempleado;
             cmbMetodoPago.SelectedIndex = 2;
-            
+
+            if (GLOBALES.OBRACIVIL)
+                chkObraCivil.Visible = true;
+            else
+                chkObraCivil.Visible = false;
+           
         }
 
         private int ObtieneEdad(DateTime fecha)
@@ -255,6 +259,7 @@ namespace Nominas
             reingreso.idempresa = lstEmpleado[0].idempresa;
             reingreso.fechaingreso = dtpFechaReingreso.Value;
             reingreso.sdi = decimal.Parse(txtSDI.Text);
+            reingreso.registro = DateTime.Now;
 
             Periodos.Core.PeriodosHelper pdh = new Periodos.Core.PeriodosHelper();
             pdh.Command = cmd;
@@ -396,6 +401,7 @@ namespace Nominas
                     cnx.Open();
                     ih.actualizaEstatusInfonavit(lstInfonavit[0].idinfonavit, _idempleado);
                     cnx.Close();
+                    MessageBox.Show("Trabajador cuenta con Infonavit. Crédito: " + lstInfonavit[0].credito, "Información");
                 }
                 catch (Exception)
                 {

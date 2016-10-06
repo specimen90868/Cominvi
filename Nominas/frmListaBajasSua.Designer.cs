@@ -35,11 +35,11 @@
             this.toolFiltrar = new System.Windows.Forms.ToolStripButton();
             this.toolExportar = new System.Windows.Forms.ToolStripButton();
             this.toolEliminar = new System.Windows.Forms.ToolStripButton();
-            this.dgvBajasSua = new System.Windows.Forms.DataGridView();
-            this.workBajas = new System.ComponentModel.BackgroundWorker();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.txtBuscar = new System.Windows.Forms.ToolStripTextBox();
+            this.dgvBajasSua = new System.Windows.Forms.DataGridView();
+            this.workBajas = new System.ComponentModel.BackgroundWorker();
             this.toolVentana.SuspendLayout();
             this.toolBusqueda.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBajasSua)).BeginInit();
@@ -105,24 +105,6 @@
             this.toolEliminar.Text = "Eliminar";
             this.toolEliminar.Click += new System.EventHandler(this.toolEliminar_Click);
             // 
-            // dgvBajasSua
-            // 
-            this.dgvBajasSua.AllowUserToAddRows = false;
-            this.dgvBajasSua.AllowUserToDeleteRows = false;
-            this.dgvBajasSua.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvBajasSua.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvBajasSua.Location = new System.Drawing.Point(0, 52);
-            this.dgvBajasSua.Name = "dgvBajasSua";
-            this.dgvBajasSua.ReadOnly = true;
-            this.dgvBajasSua.Size = new System.Drawing.Size(680, 524);
-            this.dgvBajasSua.TabIndex = 9;
-            // 
-            // workBajas
-            // 
-            this.workBajas.WorkerReportsProgress = true;
-            this.workBajas.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workBajas_DoWork);
-            this.workBajas.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workBajas_RunWorkerCompleted);
-            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
@@ -145,6 +127,25 @@
             this.txtBuscar.Leave += new System.EventHandler(this.txtBuscar_Leave);
             this.txtBuscar.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBuscar_KeyPress);
             this.txtBuscar.Click += new System.EventHandler(this.txtBuscar_Click);
+            // 
+            // dgvBajasSua
+            // 
+            this.dgvBajasSua.AllowUserToAddRows = false;
+            this.dgvBajasSua.AllowUserToDeleteRows = false;
+            this.dgvBajasSua.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvBajasSua.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvBajasSua.Location = new System.Drawing.Point(0, 52);
+            this.dgvBajasSua.Name = "dgvBajasSua";
+            this.dgvBajasSua.ReadOnly = true;
+            this.dgvBajasSua.Size = new System.Drawing.Size(680, 524);
+            this.dgvBajasSua.TabIndex = 9;
+            this.dgvBajasSua.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBajasSua_CellDoubleClick);
+            // 
+            // workBajas
+            // 
+            this.workBajas.WorkerReportsProgress = true;
+            this.workBajas.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workBajas_DoWork);
+            this.workBajas.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workBajas_RunWorkerCompleted);
             // 
             // frmListaBajasSua
             // 

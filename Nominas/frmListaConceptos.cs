@@ -38,10 +38,16 @@ namespace Nominas
             Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
             concepto.idempresa = GLOBALES.IDEMPRESA;
 
+            int periodo = 0;
+            if (cmbPeriodos.Text == "SEMANAL")
+                periodo = 7;
+            else if (cmbPeriodos.Text == "QUINCENAL")
+                periodo = 15;
+
             try
             {
                 cnx.Open();
-                lstConceptos = ch.obtenerConceptos(concepto, 0);
+                lstConceptos = ch.obtenerConceptos(concepto, periodo);
                 cnx.Close();
                 cnx.Dispose();
 
@@ -51,7 +57,9 @@ namespace Nominas
                                  Id = c.id,
                                  Concepto = c.concepto,
                                  Tipo = (c.tipoconcepto == "P") ? "PERCEPCION" : "DEDUCCION",
-                                 NoConcepto = c.noconcepto
+                                 NoConcepto = c.noconcepto,
+                                 Formula = c.formula,
+                                 Exento = c.formulaexento
                              };
                 dgvConceptos.DataSource = con.ToList();
 
@@ -109,6 +117,34 @@ namespace Nominas
 
         private void frmListaConceptos_Load(object sender, EventArgs e)
         {
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
+            ph.Command = cmd;
+
+            Periodos.Core.Periodos periodo = new Periodos.Core.Periodos();
+            periodo.idempresa = GLOBALES.IDEMPRESA;
+
+            List<Periodos.Core.Periodos> lstPeriodos = new List<Periodos.Core.Periodos>();
+            try
+            {
+                cnx.Open();
+                lstPeriodos = ph.obtenerPeriodos(periodo);
+                cnx.Close();
+                cnx.Dispose();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("Error: Al obtener los periodos de la empresa.\r\n\r\n" + error.Message, "Error");
+                cnx.Dispose();
+            }
+
+            cmbPeriodos.DataSource = lstPeriodos;
+            cmbPeriodos.DisplayMember = "pago";
+            cmbPeriodos.ValueMember = "dias";
+
             dgvConceptos.RowHeadersVisible = false;
             ListaConceptos();
             CargaPerfil();
@@ -158,6 +194,11 @@ namespace Nominas
                     MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
                 }
             }
+        }
+
+        private void cmbPeriodos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ListaConceptos();
         }
     }
 }

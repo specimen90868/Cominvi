@@ -61,7 +61,7 @@ namespace Nominas
             cmbPeriodo.DisplayMember = "pago";
             cmbPeriodo.ValueMember = "idperiodo";
 
-            if (GLOBALES.DIASPERIODO == 7)
+            if (GLOBALES.OBRACIVIL)
                 chkObraCivil.Visible = true;
             else
                 chkObraCivil.Visible = false;

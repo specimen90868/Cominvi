@@ -304,9 +304,7 @@ namespace Nominas
                         return;
                     }
                 }
-
-              
-
+            
                 Empresas.Core.EmpresasHelper ep = new Empresas.Core.EmpresasHelper();
                 ep.Command = cmd;
 
@@ -421,7 +419,7 @@ namespace Nominas
 
                     if (lstNomina.Count != 0)
                     {
-                        if (dtpFechaBaja.Value.Date <= lstNomina[0].fechafin)
+                        if (dtpFechaBaja.Value.Date <= lstNomina[0].fechainicio || dtpFechaBaja.Value.Date <= lstNomina[0].fechafin)
                         {
                             try
                             {
@@ -429,6 +427,7 @@ namespace Nominas
                                 bajaTrabajador.idtrabajador = _idempleado;
                                 cnx.Open();
                                 bh.bajaEmpleado(bajaTrabajador);
+                                //nh.eliminaPreNomina(_idempleado, periodo);
                                 cnx.Close();
                             }
                             catch (Exception error)

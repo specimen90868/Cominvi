@@ -18,5 +18,6 @@ namespace Reingreso.Core
         public decimal sdi { get; set; }
         public DateTime periodoinicio { get; set; }
         public DateTime periodofin { get; set; }
+        public DateTime registro { get; set; }
     }
 }

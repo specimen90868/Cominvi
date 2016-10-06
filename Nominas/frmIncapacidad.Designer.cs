@@ -43,7 +43,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtDiasIncapacidad = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.txtCertificado = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txtDescripcion = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -56,6 +55,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.lblEmpleado = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
+            this.txtCertificado = new System.Windows.Forms.MaskedTextBox();
             this.toolTitulo.SuspendLayout();
             this.toolAcciones.SuspendLayout();
             this.SuspendLayout();
@@ -191,14 +191,6 @@
             this.label4.TabIndex = 264;
             this.label4.Text = "Certificado:";
             // 
-            // txtCertificado
-            // 
-            this.txtCertificado.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtCertificado.Location = new System.Drawing.Point(129, 172);
-            this.txtCertificado.Name = "txtCertificado";
-            this.txtCertificado.Size = new System.Drawing.Size(100, 20);
-            this.txtCertificado.TabIndex = 265;
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -308,11 +300,22 @@
             this.label23.TabIndex = 278;
             this.label23.Text = "Empleado:";
             // 
+            // txtCertificado
+            // 
+            this.txtCertificado.BeepOnError = true;
+            this.txtCertificado.Location = new System.Drawing.Point(129, 172);
+            this.txtCertificado.Mask = "AAAAAAAA";
+            this.txtCertificado.Name = "txtCertificado";
+            this.txtCertificado.Size = new System.Drawing.Size(100, 20);
+            this.txtCertificado.TabIndex = 280;
+            this.txtCertificado.Leave += new System.EventHandler(this.txtCertificado_Leave);
+            // 
             // frmIncapacidad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(509, 440);
+            this.Controls.Add(this.txtCertificado);
             this.Controls.Add(this.lblEmpleado);
             this.Controls.Add(this.label23);
             this.Controls.Add(this.txtDepartamento);
@@ -325,7 +328,6 @@
             this.Controls.Add(this.label6);
             this.Controls.Add(this.txtDescripcion);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.txtCertificado);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtDiasIncapacidad);
             this.Controls.Add(this.label2);
@@ -364,7 +366,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtDiasIncapacidad;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txtCertificado;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtDescripcion;
         private System.Windows.Forms.Label label6;
@@ -377,5 +378,6 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label lblEmpleado;
         private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.MaskedTextBox txtCertificado;
     }
 }

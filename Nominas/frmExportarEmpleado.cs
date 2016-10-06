@@ -24,11 +24,18 @@ namespace Nominas
         SqlCommand cmd;
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
         Exportacion.Core.ExportacionHelper eh;
+        Periodos.Core.PeriodosHelper ph;
         string campos = "";
         string tablaDireccion = "";
         string tablaComplemento = "";
         string tablaInfonavit = "";
         string nombreArchivo = "";
+        int tipoNomina = 0;
+        int periodo = 0;
+        #endregion
+
+        #region VARIABLES PUBLICAS
+        public int _tipoReporte;
         #endregion
 
         private void frmExportarEmpleado_Load(object sender, EventArgs e)
@@ -54,11 +61,20 @@ namespace Nominas
             eh = new Exportacion.Core.ExportacionHelper();
             eh.Command = cmd;
 
+            ph = new Periodos.Core.PeriodosHelper();
+            ph.Command = cmd;
+
+            Periodos.Core.Periodos periodo = new Periodos.Core.Periodos();
+            periodo.idempresa = GLOBALES.IDEMPRESA;
+
+
+            List<Periodos.Core.Periodos> lstPeriodos = new List<Periodos.Core.Periodos>();
             List<Exportacion.Core.Exportacion> lstExportacion = new List<Exportacion.Core.Exportacion>();
 
             try {
                 cnx.Open();
                 lstExportacion = eh.obtenerDatos(GLOBALES.IDEMPRESA, "frmListaEmpleados");
+                lstPeriodos = ph.obtenerPeriodos(periodo);
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -74,6 +90,25 @@ namespace Nominas
                 if (lstExportacion[i].activo)
                     lstvOrdenCampos.Items.Add(lstExportacion[i].campo);
             }
+
+            cmbPeriodo.DataSource = lstPeriodos;
+            cmbPeriodo.DisplayMember = "pago";
+            cmbPeriodo.ValueMember = "dias";
+
+            cmbTipoNomina.SelectedIndex = 0;
+
+            if (_tipoReporte == GLOBALES.EXPORTACATALOGO_GENERAL)
+            {
+                cmbPeriodo.Enabled = false;
+                cmbTipoNomina.Enabled = false;
+                dtpFechaInicio.Enabled = false;
+            }
+            else
+            {
+                cmbPeriodo.Enabled = true;
+                cmbTipoNomina.Enabled = true;
+                dtpFechaInicio.Enabled = true;
+            }
         }
 
         private void toolExportar_Click(object sender, EventArgs e)
@@ -85,6 +120,10 @@ namespace Nominas
             {
                 nombreArchivo = sfd.FileName;
                 campos = "";
+
+                tipoNomina = cmbTipoNomina.SelectedIndex;
+                periodo = (int)cmbPeriodo.SelectedValue;
+
                 #region CAMPOS
 
                 for (int i = 0; i < lstvOrdenCampos.Items.Count; i++)
@@ -133,6 +172,7 @@ namespace Nominas
                 }
 
                 #endregion
+
                 workerExportar.RunWorkerAsync();
             }
         }
@@ -155,7 +195,11 @@ namespace Nominas
             try
             {
                 cnx.Open();
-                dt = eh.datosExportar(GLOBALES.IDEMPRESA, c, tablaDireccion + tablaComplemento + tablaInfonavit);
+                if (_tipoReporte == GLOBALES.EXPORTACATALOGO_GENERAL)
+                    dt = eh.datosExportar(GLOBALES.IDEMPRESA, c, tablaDireccion + tablaComplemento + tablaInfonavit);
+                else
+                    dt = eh.datosExportar(GLOBALES.IDEMPRESA, c, tablaDireccion + tablaComplemento + tablaInfonavit, tipoNomina, periodo,
+                        dtpFechaInicio.Value.Date, dtpFechaFin.Value.Date);
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -174,38 +218,72 @@ namespace Nominas
             //SE COLOCAN LOS TITULOS DE LAS COLUMNAS
             int iCol = 1;
             int iFil = 2;
-            for (int i = 0; i < dt.Columns.Count; i++)
-            {
-                excel.Cells[1, iCol] = dt.Columns[i].ColumnName;
-                iCol++;
-            }
+            int i = 0;
+            if (_tipoReporte == GLOBALES.EXPORTACATALOGO_GENERAL)
+                for (i = 0; i < dt.Columns.Count; i++)
+                {
+                    excel.Cells[1, iCol] = dt.Columns[i].ColumnName;
+                    iCol++;
+                }
+            else
+                for (i = 1; i < dt.Columns.Count; i++)
+                {
+                    excel.Cells[1, iCol] = dt.Columns[i].ColumnName;
+                    iCol++;
+                }
+            
 
             iCol = 1;
             int progreso = 0;
             int totalRegistro = dt.Rows.Count;
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                progreso = (i * 100) / totalRegistro;
-                workerExportar.ReportProgress(progreso);
-                if (i != dt.Rows.Count - 1)
+            if (_tipoReporte == GLOBALES.EXPORTACATALOGO_GENERAL)
+                for (i = 0; i < dt.Rows.Count; i++)
                 {
-                    for (int j = 0; j < dt.Columns.Count; j++)
+                    progreso = (i * 100) / totalRegistro;
+                    workerExportar.ReportProgress(progreso);
+                    if (i != dt.Rows.Count - 1)
                     {
-                        excel.Cells[iFil, iCol] = dt.Rows[i][j];
-                        iCol++;
+                        for (int j = 0; j < dt.Columns.Count; j++)
+                        {
+                            excel.Cells[iFil, iCol] = dt.Rows[i][j];
+                            iCol++;
+                        }
+                        iFil++;
                     }
-                    iFil++;
+                    else
+                    {
+                        for (int j = 0; j < dt.Columns.Count; j++)
+                        {
+                            excel.Cells[iFil, iCol] = dt.Rows[i][j];
+                            iCol++;
+                        }
+                    }
+                    iCol = 1;
                 }
-                else
+            else
+                for (i = 0; i < dt.Rows.Count; i++)
                 {
-                    for (int j = 0; j < dt.Columns.Count; j++)
+                    progreso = (i * 100) / totalRegistro;
+                    workerExportar.ReportProgress(progreso);
+                    if (i != dt.Rows.Count - 1)
                     {
-                        excel.Cells[iFil, iCol] = dt.Rows[i][j];
-                        iCol++;
+                        for (int j = 1; j < dt.Columns.Count; j++)
+                        {
+                            excel.Cells[iFil, iCol] = dt.Rows[i][j];
+                            iCol++;
+                        }
+                        iFil++;
                     }
+                    else
+                    {
+                        for (int j = 1; j < dt.Columns.Count; j++)
+                        {
+                            excel.Cells[iFil, iCol] = dt.Rows[i][j];
+                            iCol++;
+                        }
+                    }
+                    iCol = 1;
                 }
-                iCol = 1;
-            }
 
             workerExportar.ReportProgress(100);
 
@@ -400,6 +478,31 @@ namespace Nominas
                 }
             }
             cnx.Dispose();
+        }
+
+        private void dtpFechaInicio_ValueChanged(object sender, EventArgs e)
+        {
+            var dias = cmbPeriodo.SelectedValue;
+            if ((int)dias == 7)
+            {
+                DateTime dt = dtpFechaInicio.Value;
+                while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
+                dtpFechaInicio.Value = dt;
+                dtpFechaFin.Value = dt.AddDays(6);
+            }
+            else
+            {
+                if (dtpFechaInicio.Value.Day <= 15)
+                {
+                    dtpFechaInicio.Value = new DateTime(dtpFechaInicio.Value.Year, dtpFechaInicio.Value.Month, 1);
+                    dtpFechaFin.Value = new DateTime(dtpFechaInicio.Value.Year, dtpFechaInicio.Value.Month, 15);
+                }
+                else
+                {
+                    dtpFechaInicio.Value = new DateTime(dtpFechaInicio.Value.Year, dtpFechaInicio.Value.Month, 16);
+                    dtpFechaFin.Value = new DateTime(dtpFechaInicio.Value.Year, dtpFechaInicio.Value.Month, DateTime.DaysInMonth(dtpFechaInicio.Value.Year, dtpFechaInicio.Value.Month));
+                }
+            }
         }
 
     }

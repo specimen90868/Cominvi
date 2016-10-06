@@ -424,7 +424,10 @@ namespace Nominas
 
         private void mnuPreferencias_Click(object sender, EventArgs e)
         {
-
+            frmPreferencias p = new frmPreferencias();
+            p.MdiParent = this;
+            p.WindowState = FormWindowState.Normal;
+            p.Show();
         }
 
         private void toolProcesoSalarial_Click(object sender, EventArgs e)
@@ -590,34 +593,16 @@ namespace Nominas
             Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
             eh.Command = cmd;
 
-            Aplicaciones.Core.AplicacionesHelper aplih = new Aplicaciones.Core.AplicacionesHelper();
-            aplih.Command = cmd;
-
-            List<Aplicaciones.Core.Aplicaciones> lstAplicaciones = new List<Aplicaciones.Core.Aplicaciones>();
-
             try
             {
                 cnx.Open();
                 eh.actualizaAntiguedad(GLOBALES.IDEMPRESA);
-                lstAplicaciones = aplih.obtenerFechasDeAplicacion();
                 cnx.Close();
             }
-            catch (Exception)
+            catch
             {
-                MessageBox.Show("Erro: Al ejecutar el SP Actualiza Antiguedad", "Error");
                 cnx.Dispose();
                 return;
-            }
-
-            for (int i = 0; i < lstAplicaciones.Count; i++)
-            {
-                if (lstAplicaciones[i].fecha <= DateTime.Now.Date)
-                {
-                    cnx.Open();
-                    eh.actualizaDeptoPuesto(lstAplicaciones[i].iddeptopuesto, lstAplicaciones[i].idtrabajador, lstAplicaciones[i].deptopuesto);
-                    aplih.eliminaAplicacion(lstAplicaciones[i].id);
-                    cnx.Close();
-                }
             }
         }
 

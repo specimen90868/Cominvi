@@ -709,6 +709,7 @@
             this.dtpFechaAplicacionHistorico.Name = "dtpFechaAplicacionHistorico";
             this.dtpFechaAplicacionHistorico.Size = new System.Drawing.Size(84, 20);
             this.dtpFechaAplicacionHistorico.TabIndex = 245;
+            this.dtpFechaAplicacionHistorico.ValueChanged += new System.EventHandler(this.dtpFechaAplicacionHistorico_ValueChanged);
             // 
             // lblFechaAplicacionHistorico
             // 

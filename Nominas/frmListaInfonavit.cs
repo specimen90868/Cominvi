@@ -25,6 +25,7 @@ namespace Nominas
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
         List<Empleados.Core.Empleados> lstEmpleados;
         List<Infonavit.Core.Infonavit> lstInfonavit;
+        List<Catalogos.Core.Catalogo> lstCatalogo;
         #endregion
 
         private void ListaEmpleados()
@@ -44,16 +45,23 @@ namespace Nominas
             Infonavit.Core.Infonavit inf = new Infonavit.Core.Infonavit();
             inf.idempresa = GLOBALES.IDEMPRESA;
 
+            Catalogos.Core.CatalogosHelper ch = new Catalogos.Core.CatalogosHelper();
+            ch.Command = cmd;
+            Catalogos.Core.Catalogo cat = new Catalogos.Core.Catalogo();
+            cat.grupodescripcion = "ESTATUS INFONAVIT";
+
             try
             {
                 cnx.Open();
                 lstEmpleados = eh.obtenerEmpleados(empleado);
                 lstInfonavit = ih.obtenerInfonavits(inf);
+                lstCatalogo = ch.obtenerGrupo(cat);
                 cnx.Close();
                 cnx.Dispose();
 
                 var em = from e in lstEmpleados
                          join i in lstInfonavit on e.idtrabajador equals i.idtrabajador
+                         join c in lstCatalogo on i.estatus equals c.id
                          select new
                          {
                              IdTrabajador = e.idtrabajador,
@@ -63,7 +71,8 @@ namespace Nominas
                              Descuento = i.descuento == GLOBALES.dPORCENTAJE ? "PORCENTAJE" :
                              i.descuento == GLOBALES.dVSMDF ? "VSMDF" : "PESOS",
                              Valor = i.valordescuento,
-                             Activo = i.activo ? "ACTIVO" : "NO ACTIVO"
+                             Activo = i.activo ? "ACTIVO" : "NO ACTIVO",
+                             Estatus = c.descripcion
                          };
 
                 dgvInfonavit.DataSource = em.ToList();
@@ -193,6 +202,7 @@ namespace Nominas
                 {
                     var em = from emp in lstEmpleados
                              join i in lstInfonavit on emp.idtrabajador equals i.idtrabajador
+                             join c in lstCatalogo on i.estatus equals c.id
                              select new
                              {
                                  IdTrabajador = emp.idtrabajador,
@@ -202,7 +212,8 @@ namespace Nominas
                                  Descuento = i.descuento == GLOBALES.dPORCENTAJE ? "PORCENTAJE" :
                                  i.descuento == GLOBALES.dVSMDF ? "VSMDF" : "PESOS",
                                  Valor = i.valordescuento,
-                                 Activo = i.activo ? "ACTIVO" : "NO ACTIVO"
+                                 Activo = i.activo ? "ACTIVO" : "NO ACTIVO",
+                                 Estatus = c.descripcion
                              };
                     dgvInfonavit.DataSource = em.ToList();
                 }
@@ -210,6 +221,7 @@ namespace Nominas
                 {
                     var busqueda = from b in lstEmpleados
                                    join i in lstInfonavit on b.idtrabajador equals i.idtrabajador
+                                   join c in lstCatalogo on i.estatus equals c.id
                                    where b.nombrecompleto.Contains(txtBuscar.Text.ToUpper()) || b.noempleado.Contains(txtBuscar.Text)
                                    select new
                                    {
@@ -220,7 +232,8 @@ namespace Nominas
                                        Descuento = i.descuento == GLOBALES.dPORCENTAJE ? "PORCENTAJE" :
                                        i.descuento == GLOBALES.dVSMDF ? "VSMDF" : "PESOS",
                                        Valor = i.valordescuento,
-                                       Activo = i.activo ? "ACTIVO" : "NO ACTIVO"
+                                       Activo = i.activo ? "ACTIVO" : "NO ACTIVO",
+                                       Estatus = c.descripcion
                                    };
                     dgvInfonavit.DataSource = busqueda.ToList();
                 }
