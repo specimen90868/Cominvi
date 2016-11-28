@@ -200,5 +200,11 @@ namespace Nominas
         {
             ListaConceptos();
         }
+
+        private void toolAsignaciones_Click(object sender, EventArgs e)
+        {
+            frmConceptosEmpresa ce = new frmConceptosEmpresa();
+            ce.Show();
+        }
     }
 }

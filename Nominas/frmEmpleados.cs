@@ -31,16 +31,17 @@ namespace Nominas
         Imagen.Core.ImagenesHelper ih;
         Catalogos.Core.CatalogosHelper cath;
         Periodos.Core.PeriodosHelper pdh;
-        Historial.Core.HistorialHelper hh;
+        //Historial.Core.HistorialHelper hh;
         Salario.Core.SalariosHelper sh;
-        Aplicaciones.Core.AplicacionesHelper aplih;
+        //Aplicaciones.Core.AplicacionesHelper aplih;
         string sexo;
         string estado;
         Bitmap bmp;
-        bool ImagenAsignada = false, historicoDepto = false, historicoPuesto = false;
+        bool ImagenAsignada = false;
+        //historicoDepto = false, historicoPuesto = false;
         string departamento = "", puesto = "";
         int idDepto = 0, idPuesto = 0;
-        DateTime inicioPeriodo, finPeriodo;
+        //DateTime inicioPeriodo, finPeriodo;
         #endregion
 
         #region DELEGADOS
@@ -117,7 +118,7 @@ namespace Nominas
             }
             catch (Exception error)
             {
-                MessageBox.Show("Error: \r\n \r\n " + error.Message,"Error");
+                MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
                 this.Dispose();
             }
 
@@ -160,14 +161,12 @@ namespace Nominas
         private void frmEmpleados_Load(object sender, EventArgs e)
         {
             CargaComboBox();
-            lblFechaAplicacionHistorico.Visible = false;
-            dtpFechaAplicacionHistorico.Visible = false;
 
             if (GLOBALES.OBRACIVIL)
                 chkObraCivil.Visible = true;
             else
                 chkObraCivil.Visible = false;
-            
+
             if (_tipoOperacion == GLOBALES.CONSULTAR || _tipoOperacion == GLOBALES.MODIFICAR)
             {
                 object fechaBaja;
@@ -220,7 +219,7 @@ namespace Nominas
                         txtRFC.Text = lstEmpleado[i].rfc;
                         txtCURP.Text = lstEmpleado[i].curp;
                         txtNSS.Text = lstEmpleado[i].nss + lstEmpleado[i].digitoverificador.ToString();
-                        
+
                         cmbDepartamento.SelectedValue = int.Parse(lstEmpleado[i].iddepartamento.ToString());
                         cmbPuesto.SelectedValue = int.Parse(lstEmpleado[i].idpuesto.ToString());
                         cmbPeriodo.SelectedValue = int.Parse(lstEmpleado[i].idperiodo.ToString());
@@ -273,7 +272,10 @@ namespace Nominas
                     toolGuardarNuevo.Enabled = false;
                 }
                 else
+                {
                     toolTitulo.Text = "Edición Empleado";
+                    cmbPeriodo.Enabled = false;
+                }
             }
             else
                 toolHistorial.Enabled = false;
@@ -287,7 +289,7 @@ namespace Nominas
         private void dtpFechaNacimiento_Leave(object sender, EventArgs e)
         {
             txtEdad.Text = ObtieneEdad(dtpFechaNacimiento.Value).ToString();
-            
+
             Empleados.Core.RFC rfc = new Empleados.Core.RFC();
             string _rfc = rfc.ObtieneRFC(txtApPaterno.Text, txtApMaterno.Text, txtNombre.Text);
             string _homo = rfc.ClaveHomonimia(txtApPaterno.Text, txtApMaterno.Text, txtNombre.Text);
@@ -321,7 +323,7 @@ namespace Nominas
                 Periodos.Core.Periodos p = new Periodos.Core.Periodos();
                 Factores.Core.FactoresHelper fh = new Factores.Core.FactoresHelper();
                 Factores.Core.Factores f = new Factores.Core.Factores();
-                
+
                 ph.Command = cmd;
                 fh.Command = cmd;
 
@@ -403,7 +405,7 @@ namespace Nominas
 
             Empleados.Core.Empleados existeEmpleado = new Empleados.Core.Empleados();
             existeEmpleado.nss = txtNSS.Text.Trim().Substring(0, 10);
-            existeEmpleado.digitoverificador = int.Parse(txtNSS.Text.Trim().Substring(10,1));
+            existeEmpleado.digitoverificador = int.Parse(txtNSS.Text.Trim().Substring(10, 1));
             existeEmpleado.idempresa = GLOBALES.IDEMPRESA;
 
             int existeNss;
@@ -434,8 +436,8 @@ namespace Nominas
             em.idempresa = GLOBALES.IDEMPRESA;
             em.rfc = txtRFC.Text;
             em.curp = txtCURP.Text;
-            em.nss = txtNSS.Text.Trim().Substring(0,10);
-            em.digitoverificador = int.Parse(txtNSS.Text.Trim().Substring(10,1));
+            em.nss = txtNSS.Text.Trim().Substring(0, 10);
+            em.digitoverificador = int.Parse(txtNSS.Text.Trim().Substring(10, 1));
 
             em.idperiodo = int.Parse(cmbPeriodo.SelectedValue.ToString());
             em.idsalario = int.Parse(cmbZona.SelectedValue.ToString());
@@ -501,7 +503,7 @@ namespace Nominas
                         //Empleados.Core.EmpleadosEstatus ee = new Empleados.Core.EmpleadosEstatus();
                         //ee.estatus = GLOBALES.ACTIVO;
                         //ee.idempresa = GLOBALES.IDEMPRESA;
-                        
+
                         em.estatus = GLOBALES.ACTIVO;
                         em.idusuario = GLOBALES.IDUSUARIO;
                         em.iddepartamento = int.Parse(cmbDepartamento.SelectedValue.ToString());
@@ -516,7 +518,7 @@ namespace Nominas
                         cnx.Open();
                         eh.insertaEmpleado(em);
                         idtrabajador = (int)eh.obtenerIdTrabajador(em);
-                        
+
                         //h.idtrabajador = idtrabajador;
                         //hh.insertarHistorial(h);
 
@@ -623,67 +625,6 @@ namespace Nominas
                         a.periodoInicio = periodoInicio;
                         a.periodoFin = periodoFin;
 
-                        hh = new Historial.Core.HistorialHelper();
-                        hh.Command = cmd;
-                        Historial.Core.Historial hDepto = null;
-                        Historial.Core.Historial hPuesto = null;
-
-                        aplih = new Aplicaciones.Core.AplicacionesHelper();
-                        aplih.Command = cmd;
-                        Aplicaciones.Core.Aplicaciones aDepto = new Aplicaciones.Core.Aplicaciones();
-                        Aplicaciones.Core.Aplicaciones aPuesto = new Aplicaciones.Core.Aplicaciones();
-
-                        if (historicoDepto)
-                        {
-                            hDepto = new Historial.Core.Historial();
-                            hDepto.idtrabajador = _idempleado;
-                            hDepto.idempresa = GLOBALES.IDEMPRESA;
-                            hDepto.valor = decimal.Parse(txtSDI.Text);
-                            hDepto.fecha_sistema = DateTime.Now;
-                            hDepto.motivobaja = 0;
-                            hDepto.tipomovimiento = GLOBALES.mCAMBIODEPARTAMENTO;
-                            hDepto.fecha_imss = dtpFechaAplicacionHistorico.Value.Date;
-                            hDepto.iddepartamento = int.Parse(cmbDepartamento.SelectedValue.ToString());
-                            hDepto.idpuesto = int.Parse(cmbPuesto.SelectedValue.ToString());
-
-                            aDepto = new Aplicaciones.Core.Aplicaciones();
-                            aDepto.idtrabajador = _idempleado;
-                            aDepto.idempresa = GLOBALES.IDEMPRESA;
-                            aDepto.iddeptopuesto = int.Parse(cmbDepartamento.SelectedValue.ToString());
-                            aDepto.deptopuesto = "D";
-                            aDepto.fecha = dtpFechaAplicacionHistorico.Value.Date;
-                            aDepto.registro = DateTime.Now;
-                            aDepto.idusuario = GLOBALES.IDUSUARIO;
-                            aDepto.periodoinicio = inicioPeriodo;
-                            aDepto.periodofin = finPeriodo;
-                        }
-
-                        if (historicoPuesto)
-                        {
-                            hPuesto = new Historial.Core.Historial();
-                            hPuesto.idtrabajador = _idempleado;
-                            hPuesto.idempresa = GLOBALES.IDEMPRESA;
-                            hPuesto.valor = decimal.Parse(txtSDI.Text);
-                            hPuesto.fecha_sistema = DateTime.Now;
-                            hPuesto.motivobaja = 0;
-                            hPuesto.tipomovimiento = GLOBALES.mCAMBIOPUESTO;
-                            hPuesto.fecha_imss = dtpFechaAplicacionHistorico.Value.Date;
-                            hPuesto.iddepartamento = int.Parse(cmbDepartamento.SelectedValue.ToString());
-                            hPuesto.idpuesto = int.Parse(cmbPuesto.SelectedValue.ToString());
-
-                            aPuesto = new Aplicaciones.Core.Aplicaciones();
-                            aPuesto.idtrabajador = _idempleado;
-                            aPuesto.idempresa = GLOBALES.IDEMPRESA;
-                            aPuesto.iddeptopuesto = int.Parse(cmbPuesto.SelectedValue.ToString());
-                            aPuesto.deptopuesto = "P";
-                            aPuesto.fecha = dtpFechaAplicacionHistorico.Value.Date;
-                            aPuesto.registro = DateTime.Now;
-                            aPuesto.idusuario = GLOBALES.IDUSUARIO;
-                            aPuesto.periodoinicio = inicioPeriodo;
-                            aPuesto.periodofin = finPeriodo;
-                            
-                        }
-                        
                         cnx.Open();
                         eh.actualizaEmpleado(em);
 
@@ -700,21 +641,6 @@ namespace Nominas
                             else
                                 ih.insertaImagen(img);
                         }
-
-                        if (historicoDepto)
-                        {
-                            hh.insertarHistorial(hDepto);
-                            if (dtpFechaAplicacionHistorico.Value.Date > DateTime.Now.Date)
-                                aplih.insertaAplicacion(aDepto);
-                        }
-
-                        if (historicoPuesto)
-                        {
-                            hh.insertarHistorial(hPuesto);
-                            if (dtpFechaAplicacionHistorico.Value.Date > DateTime.Now.Date)
-                                aplih.insertaAplicacion(aPuesto);
-                        }
-                        
                         cnx.Close();
                         cnx.Dispose();
                     }
@@ -766,7 +692,7 @@ namespace Nominas
 
         private string ObtieneEstado()
         {
-            switch(cmbEstado.Text)
+            switch (cmbEstado.Text)
             {
                 case "AGUASCALIENTES": estado = "AS";
                     break;
@@ -891,24 +817,12 @@ namespace Nominas
 
         private void cmbDepartamento_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!departamento.Equals(""))
-                if (!departamento.Equals(cmbDepartamento.Text))
-                {
-                    historicoDepto = true;
-                    lblFechaAplicacionHistorico.Visible = true;
-                    dtpFechaAplicacionHistorico.Visible = true;
-                }
+
         }
 
         private void cmbPuesto_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(!puesto.Equals(""))
-                if (!puesto.Equals(cmbPuesto.Text))
-                {
-                    historicoPuesto = true;
-                    lblFechaAplicacionHistorico.Visible = true;
-                    dtpFechaAplicacionHistorico.Visible = true;
-                }
+
         }
 
         private void txtCURP_Leave(object sender, EventArgs e)
@@ -918,7 +832,7 @@ namespace Nominas
                 MessageBox.Show("Verifique el CURP, ya que es menor a 18 digitos o los excede.", "Error");
                 return;
             }
-            
+
 
             int numero17 = 0;
             string posicion17 = txtCURP.Text.Substring(16, 1);
@@ -1019,62 +933,8 @@ namespace Nominas
 
         private void dtpFechaAplicacionHistorico_ValueChanged(object sender, EventArgs e)
         {
-            cnx = new SqlConnection(cdn);
-            cmd = new SqlCommand();
-            cmd.Connection = cnx;
 
-            CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
-            nh.Command = cmd;
-            List<CalculoNomina.Core.tmpPagoNomina> lstUltimaNomina = new List<CalculoNomina.Core.tmpPagoNomina>();
-
-            Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
-            ph.Command = cmd;
-
-            Periodos.Core.Periodos periodo = new Periodos.Core.Periodos();
-            periodo.idperiodo = (int)cmbPeriodo.SelectedValue;
-
-            int dias = 0;
-            try
-            {
-                cnx.Open();
-                dias = int.Parse(ph.DiasDePago(periodo).ToString());
-                lstUltimaNomina = nh.obtenerUltimaNominaTrabajador(GLOBALES.IDEMPRESA, _idempleado, dias);
-                cnx.Close();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Error: Al obtener la ultima nómina del trabajador.", "Error");
-                cnx.Dispose();
-            }
-
-            if (lstUltimaNomina.Count != 0)
-                if (dtpFechaAplicacionHistorico.Value.Date <= lstUltimaNomina[0].fechafin)
-                {
-                    MessageBox.Show("La fecha de aplicación seleccionada no es valida.\r\n\r\n" +
-                                    "Se empalma con la ultima nomina del trabajador, por favor verifique.","Información");
-                }
-
-            
-            if (dias == 7)
-            {
-                DateTime dt = dtpFechaAplicacionHistorico.Value;
-                while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
-                inicioPeriodo = dt;
-                finPeriodo = dt.AddDays(6);
-            }
-            else
-            {
-                if (dtpFechaAplicacionHistorico.Value.Day <= 15)
-                {
-                    inicioPeriodo = new DateTime(dtpFechaAplicacionHistorico.Value.Year, dtpFechaAplicacionHistorico.Value.Month, 1);
-                    finPeriodo = new DateTime(dtpFechaAplicacionHistorico.Value.Year, dtpFechaAplicacionHistorico.Value.Month, 15);
-                }
-                else
-                {
-                    inicioPeriodo = new DateTime(dtpFechaAplicacionHistorico.Value.Year, dtpFechaAplicacionHistorico.Value.Month, 16);
-                    finPeriodo = new DateTime(dtpFechaAplicacionHistorico.Value.Year, dtpFechaAplicacionHistorico.Value.Month, DateTime.DaysInMonth(dtpFechaAplicacionHistorico.Value.Year, dtpFechaAplicacionHistorico.Value.Month));
-                }
-            }
         }
     }
 }
+

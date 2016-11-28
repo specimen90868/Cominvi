@@ -26,10 +26,15 @@ namespace Aplicaciones.Core
             return Command.ExecuteNonQuery();
         }
 
-        public List<Aplicaciones> obtenerFechasDeAplicacion()
+        public List<Aplicaciones> obtenerFechasDeAplicacion(Aplicaciones a)
         {
             DataTable dt = new DataTable();
-            Command.CommandText = @"select * from Aplicaciones";
+            Command.CommandText = @"select * from Aplicaciones where periodoinicio = @periodoinicio and periodofin = @periodofin
+                                    and idempresa = @idempresa";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("periodoinicio", a.periodoinicio);
+            Command.Parameters.AddWithValue("periodofin", a.periodofin);
+            Command.Parameters.AddWithValue("idempresa", a.idempresa);
             dt = SelectData(Command);
             List<Aplicaciones> lstAplicaciones = new List<Aplicaciones>();
             for (int i = 0; i < dt.Rows.Count; i++)

@@ -19,6 +19,7 @@ namespace Conceptos.Core
         public bool exento { get; set; }
         public string gruposat { get; set; }
         public bool visible { get; set; }
+        public int periodo { get; set; }
     }
 
     public class ConceptoTrabajador
@@ -26,5 +27,15 @@ namespace Conceptos.Core
         public int id { get; set; }
         public int idempleado { get; set; }
         public int idconcepto { get; set; }
+    }
+
+    public class ConceptosEmpresa
+    {
+        public int id { get; set; }
+        public int idempresa { get; set; }
+        public int idconcepto { get; set; }
+        public int noconcepto { get; set; }
+        public bool asignacion { get; set; }
+        public int periodo { get; set; }
     }
 }

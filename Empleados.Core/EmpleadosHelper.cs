@@ -714,19 +714,20 @@ namespace Empleados.Core
             return dato;
         }
 
-        public List<Empleados> obtenerEmpleadoPorDepto(int idEmpresa, string idDepartamentos, DateTime inicio)
+        public List<Empleados> obtenerEmpleadoPorDepto(int idEmpresa, string idDepartamentos, DateTime inicio, int tiponomina)
         {
             DataTable dtEmpleados = new DataTable();
             List<Empleados> lstEmpleados = new List<Empleados>();
             Command.CommandText = @"select t.idtrabajador, t.noempleado, t.nombrecompleto from trabajadores t
                 inner join pagonomina pn on t.idtrabajador = pn.idtrabajador where
                 pn.iddepartamento in (select * from fnListaCadenaATabla(@deptos)) and fechainicio = @fecha and
-                t.idempresa = @idempresa
+                t.idempresa = @idempresa and tiponomina = @tiponomina
                 group by t.idtrabajador, t.noempleado, t.nombrecompleto";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idEmpresa);
             Command.Parameters.AddWithValue("deptos", idDepartamentos);
             Command.Parameters.AddWithValue("fecha", inicio);
+            Command.Parameters.AddWithValue("tiponomina", tiponomina);
             dtEmpleados = SelectData(Command);
             for (int i = 0; i < dtEmpleados.Rows.Count; i++)
             {

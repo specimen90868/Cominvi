@@ -79,6 +79,8 @@
             this.label27 = new System.Windows.Forms.Label();
             this.tabEmpresas = new System.Windows.Forms.TabControl();
             this.tabEmpresa = new System.Windows.Forms.TabPage();
+            this.txtObservacion = new System.Windows.Forms.TextBox();
+            this.label28 = new System.Windows.Forms.Label();
             this.Label15 = new System.Windows.Forms.Label();
             this.Label12 = new System.Windows.Forms.Label();
             this.txtRegimen = new System.Windows.Forms.TextBox();
@@ -90,8 +92,6 @@
             this.tabDomicilio = new System.Windows.Forms.TabPage();
             this.tabPeriodo = new System.Windows.Forms.TabPage();
             this.tabTimbrado = new System.Windows.Forms.TabPage();
-            this.label28 = new System.Windows.Forms.Label();
-            this.txtObservacion = new System.Windows.Forms.TextBox();
             this.toolEmpresa.SuspendLayout();
             this.toolAcciones.SuspendLayout();
             this.tabEmpresas.SuspendLayout();
@@ -161,7 +161,7 @@
             // txtRfc
             // 
             this.txtRfc.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtRfc.Location = new System.Drawing.Point(109, 214);
+            this.txtRfc.Location = new System.Drawing.Point(113, 214);
             this.txtRfc.Name = "txtRfc";
             this.txtRfc.Size = new System.Drawing.Size(97, 20);
             this.txtRfc.TabIndex = 12;
@@ -169,7 +169,7 @@
             // 
             // txtRegistroPatronal
             // 
-            this.txtRegistroPatronal.Location = new System.Drawing.Point(110, 240);
+            this.txtRegistroPatronal.Location = new System.Drawing.Point(113, 240);
             this.txtRegistroPatronal.Mask = "AAAAAAAAAA";
             this.txtRegistroPatronal.Name = "txtRegistroPatronal";
             this.txtRegistroPatronal.Size = new System.Drawing.Size(96, 20);
@@ -369,7 +369,7 @@
             // 
             this.btnVer.Image = ((System.Drawing.Image)(resources.GetObject("btnVer.Image")));
             this.btnVer.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnVer.Location = new System.Drawing.Point(110, 264);
+            this.btnVer.Location = new System.Drawing.Point(113, 264);
             this.btnVer.Name = "btnVer";
             this.btnVer.Size = new System.Drawing.Size(67, 35);
             this.btnVer.TabIndex = 15;
@@ -382,7 +382,7 @@
             // 
             this.btnAsignar.Image = ((System.Drawing.Image)(resources.GetObject("btnAsignar.Image")));
             this.btnAsignar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAsignar.Location = new System.Drawing.Point(183, 264);
+            this.btnAsignar.Location = new System.Drawing.Point(186, 264);
             this.btnAsignar.Name = "btnAsignar";
             this.btnAsignar.Size = new System.Drawing.Size(67, 35);
             this.btnAsignar.TabIndex = 16;
@@ -576,6 +576,22 @@
             this.tabEmpresa.Text = "Empresa";
             this.tabEmpresa.UseVisualStyleBackColor = true;
             // 
+            // txtObservacion
+            // 
+            this.txtObservacion.Location = new System.Drawing.Point(113, 134);
+            this.txtObservacion.Name = "txtObservacion";
+            this.txtObservacion.Size = new System.Drawing.Size(425, 20);
+            this.txtObservacion.TabIndex = 191;
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(37, 137);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(70, 13);
+            this.label28.TabIndex = 190;
+            this.label28.Text = "Observación:";
+            // 
             // Label15
             // 
             this.Label15.AutoSize = true;
@@ -709,22 +725,6 @@
             this.tabTimbrado.TabIndex = 3;
             this.tabTimbrado.Text = "Timbrado";
             this.tabTimbrado.UseVisualStyleBackColor = true;
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(37, 137);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(70, 13);
-            this.label28.TabIndex = 190;
-            this.label28.Text = "Observación:";
-            // 
-            // txtObservacion
-            // 
-            this.txtObservacion.Location = new System.Drawing.Point(113, 134);
-            this.txtObservacion.Name = "txtObservacion";
-            this.txtObservacion.Size = new System.Drawing.Size(425, 20);
-            this.txtObservacion.TabIndex = 191;
             // 
             // frmEmpresas
             // 

@@ -49,6 +49,23 @@ namespace Nominas
                 CalculoFormula formulaExcento = new CalculoFormula(lstConceptosPercepciones[i].idtrabajador, inicio.Date, fin.Date, lstConceptosPercepciones[i].formulaexento);
                 vn.exento = decimal.Parse(formulaExcento.calcularFormula().ToString());
 
+                Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
+                eh.Command = cmd;
+
+                cnx.Open();
+                int idperiodo = (int)eh.obtenerIdPeriodo(lstConceptosPercepciones[i].idtrabajador);
+                cnx.Close();
+
+                Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
+                ph.Command = cmd;
+
+                Periodos.Core.Periodos p = new Periodos.Core.Periodos();
+                p.idperiodo = idperiodo;
+
+                cnx.Open();
+                int dias = (int)ph.DiasDePago(p);
+                cnx.Close();
+
                 Conceptos.Core.ConceptosHelper ch = new Conceptos.Core.ConceptosHelper();
                 ch.Command = cmd;
 
@@ -56,6 +73,7 @@ namespace Nominas
                 c.idempresa = GLOBALES.IDEMPRESA;
                 c.noconcepto = lstConceptosPercepciones[i].noconcepto;
                 c.tipoconcepto = lstConceptosPercepciones[i].tipoconcepto;
+                c.periodo = dias;
 
                 cnx.Open();
                 bool grava = (bool)ch.gravaConcepto(c);
@@ -222,6 +240,76 @@ namespace Nominas
 
                 switch (lstConceptosDeducciones[i].noconcepto)
                 {
+
+                    #region CONCEPTO IMSS
+                    case 99:
+                        int vsmdf, idsalario;
+                        decimal porcentajeImss, excedenteVsmdf, sm, sdiTrabajador;
+                        
+                        Configuracion.Core.ConfiguracionHelper ch = new Configuracion.Core.ConfiguracionHelper();
+                        ch.Command = cmd;
+
+                        Imss.Core.ImssHelper ih = new Imss.Core.ImssHelper();
+                        ih.Command = cmd;
+
+                        Imss.Core.Imss imss = new Imss.Core.Imss();
+                        imss.secalcula = true;
+
+                        Empleados.Core.EmpleadosHelper empleadosHelper = new Empleados.Core.EmpleadosHelper();
+                        empleadosHelper.Command = cmd;
+                        Empleados.Core.Empleados empleadoImss = new Empleados.Core.Empleados();
+                        empleadoImss.idtrabajador = lstConceptosDeducciones[i].idtrabajador;
+
+                        Salario.Core.SalariosHelper sh = new Salario.Core.SalariosHelper();
+                        sh.Command = cmd;
+                        Salario.Core.Salarios salario = new Salario.Core.Salarios();
+                        
+                        cnx.Open();
+                        vsmdf = int.Parse(ch.obtenerValorConfiguracion("VSMDF").ToString());
+                        porcentajeImss = ih.CuotaObreroPatronal(imss);
+                        excedenteVsmdf = ih.ExcedenteVSM(5);
+                        idsalario = int.Parse(empleadosHelper.obtenerIdSalarioMinimo(lstConceptosDeducciones[i].idtrabajador).ToString());
+                        salario.idsalario = idsalario;
+                        sm = decimal.Parse(sh.obtenerSalarioValor(salario).ToString());
+                        sdiTrabajador = decimal.Parse(empleadosHelper.obtenerSalarioDiarioIntegrado(empleadoImss).ToString());
+                        cnx.Close();
+
+                        string formulaDiasAPagar = "[DiasLaborados]-[Faltas]-[DiasIncapacidad]";
+                        CalculoFormula cfImss = new CalculoFormula(lstConceptosDeducciones[i].idtrabajador, inicio, fin, formulaDiasAPagar);
+                        int diasAPagar = int.Parse(cfImss.calcularFormula().ToString());
+
+                        decimal tresVSMG = vsmdf * sm;
+                        decimal excedenteImss = 0;
+                        decimal valorImss = (sdiTrabajador * (porcentajeImss / 100)) * diasAPagar;
+                        decimal totalImss = 0;
+                        if (sdiTrabajador > tresVSMG)
+                        {
+                            excedenteImss = (sdiTrabajador - tresVSMG) * (excedenteVsmdf / 100) * diasAPagar;
+                            totalImss = valorImss + excedenteImss;
+                        }
+                        else
+                            totalImss = valorImss;
+
+                        CalculoNomina.Core.tmpPagoNomina imssNomina = new CalculoNomina.Core.tmpPagoNomina();
+                        imssNomina.idtrabajador = lstConceptosDeducciones[i].idtrabajador;
+                        imssNomina.idempresa = GLOBALES.IDEMPRESA;
+                        imssNomina.idconcepto = lstConceptosDeducciones[i].id;
+                        imssNomina.noconcepto = lstConceptosDeducciones[i].noconcepto;
+                        imssNomina.tipoconcepto = lstConceptosDeducciones[i].tipoconcepto;
+                        imssNomina.fechainicio = inicio.Date;
+                        imssNomina.fechafin = fin.Date;
+                        imssNomina.exento = 0;
+                        imssNomina.gravado = 0;
+                        imssNomina.cantidad = totalImss;
+                        imssNomina.diaslaborados = 0;
+                        imssNomina.guardada = false;
+                        imssNomina.tiponomina = tipoNomina;
+                        imssNomina.modificado = false;
+
+                        lstValoresNomina.Add(imssNomina);
+                        break;
+                    #endregion
+
                     #region CONCEPTO ISR ANTES DE SUBSIDIO
                     case 8:
 
@@ -240,7 +328,7 @@ namespace Nominas
                         isrAntesSubsidio.fechafin = fin.Date;
                         isrAntesSubsidio.exento = 0;
                         isrAntesSubsidio.gravado = 0;
-
+                        
 
                         if (percepciones != 0)
                         {
@@ -273,7 +361,7 @@ namespace Nominas
                             excedente = ((baseGravableIsr / dias) * decimal.Parse((30.4).ToString())) - lstIsr[0].inferior;
                             ImpMarginal = excedente * (lstIsr[0].porcentaje / 100);
                             isr = ImpMarginal + lstIsr[0].cuota;
-
+                            
                             isrAntesSubsidio.cantidad = (isr / decimal.Parse((30.4).ToString())) * dias;
                             isrAntes = (isr / decimal.Parse((30.4).ToString())) * dias;
                         }

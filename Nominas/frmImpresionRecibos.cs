@@ -123,7 +123,7 @@ namespace Nominas
                     try
                     {
                         cnx.Open();
-                        lstEmp = eh.obtenerEmpleadoPorDepto(GLOBALES.IDEMPRESA, idDepartamentos, DateTime.Parse(fecha).Date);
+                        lstEmp = eh.obtenerEmpleadoPorDepto(GLOBALES.IDEMPRESA, idDepartamentos, DateTime.Parse(fecha).Date, (cmbTipoNomina.Text == "Normal" ? 0 : 2));
                         cnx.Close();
                     }
                     catch

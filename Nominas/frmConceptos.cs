@@ -66,6 +66,7 @@ namespace Nominas
             concepto.exento = chkExenta.Checked;
             concepto.visible = chkVisible.Checked;
             concepto.gruposat = txtGrupoSat.Text;
+            concepto.periodo = int.Parse(cmbPeriodo.SelectedValue.ToString());
 
             switch (_tipoOperacion)
             {
@@ -79,7 +80,7 @@ namespace Nominas
                     }
                     catch (Exception error)
                     {
-                        MessageBox.Show("Error al ingresar el factor. \r\n \r\n Error: " + error.Message);
+                        MessageBox.Show("Error al ingresar el concepto. \r\n \r\n Error: " + error.Message);
                     }
                     break;
                 case 2:
@@ -93,7 +94,7 @@ namespace Nominas
                     }
                     catch (Exception error)
                     {
-                        MessageBox.Show("Error al actualizar el factor. \r\n \r\n Error: " + error.Message);
+                        MessageBox.Show("Error al actualizar el concepto. \r\n \r\n Error: " + error.Message);
                     }
                     break;
             }
@@ -145,14 +146,41 @@ namespace Nominas
         {
             txtFormula.Text = "0";
             txtExento.Text = "0";
+
+            cnx = new SqlConnection();
+            cnx.ConnectionString = cdn;
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+            ch = new Conceptos.Core.ConceptosHelper();
+            ch.Command = cmd;
+
+            Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
+            ph.Command = cmd;
+
+            Periodos.Core.Periodos periodo = new Periodos.Core.Periodos();
+            periodo.idempresa = GLOBALES.IDEMPRESA;
+
+            List<Periodos.Core.Periodos> lstPeriodos = new List<Periodos.Core.Periodos>();
+
+            try
+            {
+                cnx.Open();
+                lstPeriodos = ph.obtenerPeriodos(periodo);
+                cnx.Close();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error: Al obtener los periodos de la empresa.", "Error");
+                cnx.Close();
+                return;
+            }
+
+            cmbPeriodo.DataSource = lstPeriodos.ToList();
+            cmbPeriodo.DisplayMember = "pago";
+            cmbPeriodo.ValueMember = "dias";
+            
             if (_tipoOperacion == GLOBALES.CONSULTAR || _tipoOperacion == GLOBALES.MODIFICAR)
             {
-                cnx = new SqlConnection();
-                cnx.ConnectionString = cdn;
-                cmd = new SqlCommand();
-                cmd.Connection = cnx;
-                ch = new Conceptos.Core.ConceptosHelper();
-                ch.Command = cmd;
 
                 Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
                 concepto.id = _idConcepto;

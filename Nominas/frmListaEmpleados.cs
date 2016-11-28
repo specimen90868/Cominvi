@@ -123,16 +123,16 @@ namespace Nominas
         private void Seleccion(int edicion)
         {
             int fila = 0;
-            frmEmpleados e = new frmEmpleados();
-            e.MdiParent = this.MdiParent;
-            e.OnNuevoEmpleado += e_OnNuevoEmpleado;
+            frmEmpleados empleado = new frmEmpleados();
+            empleado.MdiParent = this.MdiParent;
+            empleado.OnNuevoEmpleado += e_OnNuevoEmpleado;
             if (!edicion.Equals(GLOBALES.NUEVO))
             {
                 fila = dgvEmpleados.CurrentCell.RowIndex;
-                e._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
+                empleado._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
             }
-            e._tipoOperacion = edicion;
-            e.Show();
+            empleado._tipoOperacion = edicion;
+            empleado.Show();
         }
 
         void e_OnNuevoEmpleado(int edicion)
@@ -442,6 +442,32 @@ namespace Nominas
             frmExportarEmpleado ee = new frmExportarEmpleado();
             ee._tipoReporte = GLOBALES.EXPORTACATALOGO_GENERAL;
             ee.Show();
+        }
+
+        private void toolDepartamento_Click(object sender, EventArgs e)
+        {
+            int fila = dgvEmpleados.CurrentCell.RowIndex;
+            frmDeptoPuesto dp = new frmDeptoPuesto();
+            dp._deptopuesto = 0;
+            dp._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
+            dp.Show();
+        }
+
+        private void toolPuesto_Click(object sender, EventArgs e)
+        {
+            int fila = dgvEmpleados.CurrentCell.RowIndex;
+            frmDeptoPuesto dp = new frmDeptoPuesto();
+            dp._deptopuesto = 1;
+            dp._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
+            dp.Show();
+        }
+
+        private void toolCambioPeriodo_Click(object sender, EventArgs e)
+        {
+            int fila = dgvEmpleados.CurrentCell.RowIndex;
+            frmPeriodoTrabajador pt = new frmPeriodoTrabajador();
+            pt._idEmpleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
+            pt.Show();
         }
 
     }

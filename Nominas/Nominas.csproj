@@ -124,11 +124,23 @@
     <Compile Include="frmConceptos.Designer.cs">
       <DependentUpon>frmConceptos.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmConceptosEmpresa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConceptosEmpresa.Designer.cs">
+      <DependentUpon>frmConceptosEmpresa.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmDepartamentos.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmDepartamentos.Designer.cs">
       <DependentUpon>frmDepartamentos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmDeptoPuesto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDeptoPuesto.Designer.cs">
+      <DependentUpon>frmDeptoPuesto.cs</DependentUpon>
     </Compile>
     <Compile Include="frmDiasAusentismo.cs">
       <SubType>Form</SubType>
@@ -454,6 +466,12 @@
     <Compile Include="frmPerfiles.Designer.cs">
       <DependentUpon>frmPerfiles.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmPeriodoTrabajador.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPeriodoTrabajador.Designer.cs">
+      <DependentUpon>frmPeriodoTrabajador.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmPeriodos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -566,8 +584,14 @@
     <EmbeddedResource Include="frmConceptos.resx">
       <DependentUpon>frmConceptos.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmConceptosEmpresa.resx">
+      <DependentUpon>frmConceptosEmpresa.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmDepartamentos.resx">
       <DependentUpon>frmDepartamentos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmDeptoPuesto.resx">
+      <DependentUpon>frmDeptoPuesto.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmDiasAusentismo.resx">
       <DependentUpon>frmDiasAusentismo.cs</DependentUpon>
@@ -730,6 +754,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmPerfiles.resx">
       <DependentUpon>frmPerfiles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPeriodoTrabajador.resx">
+      <DependentUpon>frmPeriodoTrabajador.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmPeriodos.resx">
       <DependentUpon>frmPeriodos.cs</DependentUpon>

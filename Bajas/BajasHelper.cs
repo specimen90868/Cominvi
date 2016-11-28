@@ -54,6 +54,32 @@ namespace Bajas.Core
             return lstBaja;
         }
 
+        public List<Bajas> obtenerBaja(int id)
+        {
+            List<Bajas> lstBaja = new List<Bajas>();
+            DataTable dtBajas = new DataTable();
+            Command.CommandText = @"select * from suaBajas where id = @id";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("id", id);
+            dtBajas = SelectData(Command);
+            for (int i = 0; i < dtBajas.Rows.Count; i++)
+            {
+                Bajas baja = new Bajas();
+                baja.id = int.Parse(dtBajas.Rows[i]["id"].ToString());
+                baja.idtrabajador = int.Parse(dtBajas.Rows[i]["idtrabajador"].ToString());
+                baja.idempresa = int.Parse(dtBajas.Rows[i]["idempresa"].ToString());
+                baja.registropatronal = dtBajas.Rows[i]["registropatronal"].ToString();
+                baja.nss = dtBajas.Rows[i]["nss"].ToString();
+                baja.motivo = int.Parse(dtBajas.Rows[i]["motivo"].ToString());
+                baja.fecha = DateTime.Parse(dtBajas.Rows[i]["fecha"].ToString());
+                baja.observaciones = dtBajas.Rows[i]["observaciones"].ToString();
+                baja.periodoinicio = DateTime.Parse(dtBajas.Rows[i]["periodoinicio"].ToString());
+                baja.periodofin = DateTime.Parse(dtBajas.Rows[i]["periodofin"].ToString());
+                lstBaja.Add(baja);
+            }
+            return lstBaja;
+        }
+
         public string obtenerObservaciones(int id)
         {
             Command.CommandText = "select observaciones from suaBajas where id = @id";

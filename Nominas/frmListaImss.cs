@@ -48,7 +48,8 @@ namespace Nominas
                           {
                               Id = i.id,
                               Prestacion = i.prestacion,
-                              Porcentaje = i.porcentaje
+                              Porcentaje = i.porcentaje,
+                              SeCalcula = i.secalcula
                           };
 
                 dgvImss.DataSource = imss.ToList();

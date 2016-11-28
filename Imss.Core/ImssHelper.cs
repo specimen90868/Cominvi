@@ -21,6 +21,7 @@ namespace Imss.Core
                 imss.id = int.Parse(dtImss.Rows[i]["id"].ToString());
                 imss.prestacion = dtImss.Rows[i]["prestacion"].ToString();
                 imss.porcentaje = decimal.Parse(dtImss.Rows[i]["porcentaje"].ToString());
+                imss.secalcula = bool.Parse(dtImss.Rows[i]["secalcula"].ToString());
                 lstImss.Add(imss);
             }
             return lstImss;
@@ -40,6 +41,7 @@ namespace Imss.Core
                 imss.id = int.Parse(dtImss.Rows[j]["id"].ToString());
                 imss.prestacion = dtImss.Rows[j]["prestacion"].ToString();
                 imss.porcentaje = decimal.Parse(dtImss.Rows[j]["porcentaje"].ToString());
+                imss.secalcula = bool.Parse(dtImss.Rows[j]["secalcula"].ToString());
                 lstImss.Add(imss);
             }
             return lstImss;
@@ -47,20 +49,22 @@ namespace Imss.Core
 
         public int insertaImss(Imss i)
         {
-            Command.CommandText = "insert into tablaImss (prestacion, porcentaje) values (@prestacion, @porcentaje)";
+            Command.CommandText = "insert into tablaImss (prestacion, porcentaje, secalcula) values (@prestacion, @porcentaje, @secalcula)";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("prestacion", i.prestacion);
             Command.Parameters.AddWithValue("porcentaje", i.porcentaje);
+            Command.Parameters.AddWithValue("secalcula", i.secalcula);
             return Command.ExecuteNonQuery();
         }
 
         public int actualizaImss(Imss i)
         {
-            Command.CommandText = "update tablaImss set prestacion = @prestacion, porcentaje = @porcentaje where id = @id";
+            Command.CommandText = "update tablaImss set prestacion = @prestacion, porcentaje = @porcentaje, secalcula = @secalcula where id = @id";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("id", i.id);
             Command.Parameters.AddWithValue("prestacion", i.prestacion);
             Command.Parameters.AddWithValue("porcentaje", i.porcentaje);
+            Command.Parameters.AddWithValue("secalcula", i.secalcula);
             return Command.ExecuteNonQuery();
         }
 
@@ -70,6 +74,24 @@ namespace Imss.Core
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("id", i.id);
             return Command.ExecuteNonQuery();
+        }
+
+        public decimal CuotaObreroPatronal(Imss i)
+        {
+            Command.CommandText = @"select sum(porcentaje) from tablaImss where secalcula = @secalcula";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("secalcula", i.secalcula);
+            decimal suma = decimal.Parse(Select(Command).ToString());
+            return suma;
+        }
+
+        public decimal ExcedenteVSM(int id)
+        {
+            Command.CommandText = @"select porcentaje from tablaImss where id = @id";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("id", id);
+            decimal porcentaje = decimal.Parse(Select(Command).ToString());
+            return porcentaje;
         }
     }
 }

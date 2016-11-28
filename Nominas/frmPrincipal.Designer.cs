@@ -387,14 +387,14 @@
             // toolNominaNormal
             // 
             this.toolNominaNormal.Name = "toolNominaNormal";
-            this.toolNominaNormal.Size = new System.Drawing.Size(152, 22);
+            this.toolNominaNormal.Size = new System.Drawing.Size(147, 22);
             this.toolNominaNormal.Text = "Normal";
             this.toolNominaNormal.Click += new System.EventHandler(this.toolNominaNormal_Click);
             // 
             // toolExtraordinario
             // 
             this.toolExtraordinario.Name = "toolExtraordinario";
-            this.toolExtraordinario.Size = new System.Drawing.Size(152, 22);
+            this.toolExtraordinario.Size = new System.Drawing.Size(147, 22);
             this.toolExtraordinario.Text = "Extraordinario";
             this.toolExtraordinario.Click += new System.EventHandler(this.toolExtraordinario_Click);
             // 
@@ -439,35 +439,35 @@
             // mnuDepartamentos
             // 
             this.mnuDepartamentos.Name = "mnuDepartamentos";
-            this.mnuDepartamentos.Size = new System.Drawing.Size(220, 22);
+            this.mnuDepartamentos.Size = new System.Drawing.Size(195, 22);
             this.mnuDepartamentos.Text = "Departamentos";
             this.mnuDepartamentos.Click += new System.EventHandler(this.mnuDepartamentos_Click);
             // 
             // mnuPuestos
             // 
             this.mnuPuestos.Name = "mnuPuestos";
-            this.mnuPuestos.Size = new System.Drawing.Size(220, 22);
+            this.mnuPuestos.Size = new System.Drawing.Size(195, 22);
             this.mnuPuestos.Text = "Puestos";
             this.mnuPuestos.Click += new System.EventHandler(this.mnuPuestos_Click);
             // 
             // mnuPeriodos
             // 
             this.mnuPeriodos.Name = "mnuPeriodos";
-            this.mnuPeriodos.Size = new System.Drawing.Size(220, 22);
+            this.mnuPeriodos.Size = new System.Drawing.Size(195, 22);
             this.mnuPeriodos.Text = "Periodos";
             this.mnuPeriodos.Click += new System.EventHandler(this.mnuPeriodos_Click);
             // 
             // toolConceptos
             // 
             this.toolConceptos.Name = "toolConceptos";
-            this.toolConceptos.Size = new System.Drawing.Size(220, 22);
+            this.toolConceptos.Size = new System.Drawing.Size(195, 22);
             this.toolConceptos.Text = "Conceptos";
             this.toolConceptos.Click += new System.EventHandler(this.toolConceptos_Click);
             // 
             // toolConceptoEmpleado
             // 
             this.toolConceptoEmpleado.Name = "toolConceptoEmpleado";
-            this.toolConceptoEmpleado.Size = new System.Drawing.Size(220, 22);
+            this.toolConceptoEmpleado.Size = new System.Drawing.Size(195, 22);
             this.toolConceptoEmpleado.Text = "Conceptos - Empleado";
             this.toolConceptoEmpleado.Click += new System.EventHandler(this.toolConceptoEmpleado_Click_1);
             // 

@@ -36,6 +36,24 @@ namespace Nominas
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = cnx;
 
+            int idPeriodo = 0, diasPeriodo = 0;
+            Empleados.Core.EmpleadosHelper empleadosHelper = new Empleados.Core.EmpleadosHelper();
+            empleadosHelper.Command = cmd;
+
+            cnx.Open();
+            idPeriodo = int.Parse(empleadosHelper.obtenerIdPeriodo(idTrabajador).ToString());
+            cnx.Close();
+
+            Periodos.Core.PeriodosHelper periodoHelper = new Periodos.Core.PeriodosHelper();
+            periodoHelper.Command = cmd;
+
+            Periodos.Core.Periodos periodos = new Periodos.Core.Periodos();
+            periodos.idperiodo = idPeriodo;
+
+            cnx.Open();
+            diasPeriodo = int.Parse(periodoHelper.DiasDePago(periodos).ToString());
+            cnx.Close();
+
             List<string> variables = new List<string>();
             variables = GLOBALES.EXTRAEVARIABLES(formula, "[", "]");
 
@@ -536,6 +554,7 @@ namespace Nominas
                                 ch.Command = cmd;
                                 Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
                                 concepto.idempresa = GLOBALES.IDEMPRESA;
+                                concepto.periodo = diasPeriodo;
 
                                 if (lstInfonavit[0].descuento == GLOBALES.dPORCENTAJE)
                                 {
@@ -790,7 +809,11 @@ namespace Nominas
 
                         //if (lstPeriodoInfonavit.Count == 1)
                             if (lstPeriodoInfonavit[0].fecha >= inicioPeriodo && lstPeriodoInfonavit[0].fecha <= finPeriodo)
-                                formula = formula.Replace("[" + variables[i] + "]", lstPeriodoInfonavit[0].dias.ToString());
+                            {
+                                CalculoFormula cf = new CalculoFormula(idTrabajador, inicioPeriodo, finPeriodo, "[Faltas]-[DiasIncapacidad]");
+                                diasPI = int.Parse(cf.calcularFormula().ToString());
+                                formula = formula.Replace("[" + variables[i] + "]", (lstPeriodoInfonavit[0].dias - diasPI).ToString());
+                            }
                             else
                             {
                                 CalculoFormula cf = new CalculoFormula(idTrabajador, inicioPeriodo, finPeriodo, "[DiasLaborados]-[Faltas]-[DiasIncapacidad]");

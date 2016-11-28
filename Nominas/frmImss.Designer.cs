@@ -40,6 +40,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.txtPrestacion = new System.Windows.Forms.TextBox();
             this.txtPorcentaje = new System.Windows.Forms.TextBox();
+            this.chkSeCalcula = new System.Windows.Forms.CheckBox();
             this.toolTitulo.SuspendLayout();
             this.toolAcciones.SuspendLayout();
             this.SuspendLayout();
@@ -146,11 +147,22 @@
             this.txtPorcentaje.TabIndex = 112;
             this.txtPorcentaje.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
+            // chkSeCalcula
+            // 
+            this.chkSeCalcula.AutoSize = true;
+            this.chkSeCalcula.Location = new System.Drawing.Point(33, 169);
+            this.chkSeCalcula.Name = "chkSeCalcula";
+            this.chkSeCalcula.Size = new System.Drawing.Size(77, 17);
+            this.chkSeCalcula.TabIndex = 113;
+            this.chkSeCalcula.Text = "Se Calcula";
+            this.chkSeCalcula.UseVisualStyleBackColor = true;
+            // 
             // frmImss
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(532, 516);
+            this.Controls.Add(this.chkSeCalcula);
             this.Controls.Add(this.txtPorcentaje);
             this.Controls.Add(this.txtPrestacion);
             this.Controls.Add(this.label3);
@@ -183,5 +195,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtPrestacion;
         private System.Windows.Forms.TextBox txtPorcentaje;
+        private System.Windows.Forms.CheckBox chkSeCalcula;
     }
 }

@@ -999,6 +999,7 @@ namespace Nominas
                                 vn.guardada = false;
                                 vn.tiponomina = _tipoNomina;
                                 vn.modificado = false;
+                                vn.obracivil = _obracivil;
 
                                 if (lstNoConcepto[0].gravado && !lstNoConcepto[0].exento)
                                 {
@@ -1059,7 +1060,7 @@ namespace Nominas
                 {
                     int existe = 0;
                     Movimientos.Core.Movimientos mov = new Movimientos.Core.Movimientos();
-                    mov.idtrabajador = int.Parse(fila.Cells["idtrabajador"].Value.ToString()); ;
+                    mov.idtrabajador = int.Parse(fila.Cells["idtrabajador"].Value.ToString());
                     mov.fechainicio = periodoInicio.Date;
                     mov.fechafin = periodoFin.Date;
 
@@ -1169,6 +1170,49 @@ namespace Nominas
 
                 #region BULK DATOS PROGRAMACION DE MOVIMIENTOS
                 BulkData(lstOtrasDeducciones);
+                #endregion
+
+                #region APLICACION DE DEPTOS/PUESTOS
+                Aplicaciones.Core.AplicacionesHelper aplicah = new Aplicaciones.Core.AplicacionesHelper();
+                aplicah.Command = cmd;
+                Aplicaciones.Core.Aplicaciones aplicacion = new Aplicaciones.Core.Aplicaciones();
+                aplicacion.periodoinicio = periodoInicio;
+                aplicacion.periodofin = periodoFin;
+                aplicacion.idempresa = GLOBALES.IDEMPRESA;
+                List<Aplicaciones.Core.Aplicaciones> lstAplicaciones = new List<Aplicaciones.Core.Aplicaciones>();
+                try
+                {
+                    cnx.Open();
+                    lstAplicaciones = aplicah.obtenerFechasDeAplicacion(aplicacion);
+                    cnx.Close();
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
+
+                if (lstAplicaciones.Count != 0)
+                {
+                    for (int i = 0; i < lstAplicaciones.Count; i++)
+                    {
+                        Empleados.Core.EmpleadosHelper emph = new Empleados.Core.EmpleadosHelper();
+                        emph.Command = cmd;
+
+                        try
+                        {
+                            cnx.Open();
+                            emph.actualizaDeptoPuesto(lstAplicaciones[i].iddeptopuesto, lstAplicaciones[i].idtrabajador, lstAplicaciones[i].deptopuesto);
+                            aplicah.eliminaAplicacion(lstAplicaciones[i].id);
+                            cnx.Close();
+                        }
+                        catch (Exception)
+                        {
+                            MessageBox.Show("Error: Al modificar y/o eliminar el depto/puesto o aplicación.", "Error");
+                            cnx.Dispose();
+                        }
+                    }
+                }
                 #endregion
             }
             swLog.Close();
@@ -1488,7 +1532,7 @@ namespace Nominas
                         }
                         catch (Exception error)
                         {
-                            MessageBox.Show("Error: Al actualizar los dias laborados. \r\n \r\n" + error.Message, "Error");
+                            MessageBox.Show("Error (Actualizacion Dias Laborados): Al actualizar los dias laborados. \r\n \r\n" + error.Message, "Error");
                             return;
                         }
                     }
@@ -1532,7 +1576,7 @@ namespace Nominas
                     }
                     catch (Exception error)
                     {
-                        MessageBox.Show("Error: Al actualizar los dias laborados. \r\n \r\n" + error.Message, "Error");
+                        MessageBox.Show("Error (Actualizacion dias laborados): Al actualizar los dias laborados. \r\n \r\n" + error.Message, "Error");
                         return;
                     }
                 }
@@ -1552,6 +1596,7 @@ namespace Nominas
                     }
                     else if (_tipoNomina == GLOBALES.EXTRAORDINARIO_NORMAL)
                     {
+                        dgvEmpleados.DataSource = null;
                         dgvEmpleados.Rows.Clear();
                     }
 
@@ -1559,7 +1604,7 @@ namespace Nominas
                 }
                 catch (Exception error)
                 {
-                    MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                    MessageBox.Show("Error (Autorizacion Nómina): \r\n \r\n" + error.Message, "Error");
                 }
             }
         }

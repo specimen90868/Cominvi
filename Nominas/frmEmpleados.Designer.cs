@@ -93,8 +93,6 @@
             this.mtxtCuentaBancaria = new System.Windows.Forms.MaskedTextBox();
             this.mtxtCuentaClabe = new System.Windows.Forms.MaskedTextBox();
             this.mtxtIdBancario = new System.Windows.Forms.MaskedTextBox();
-            this.dtpFechaAplicacionHistorico = new System.Windows.Forms.DateTimePicker();
-            this.lblFechaAplicacionHistorico = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.cmbMetodoPago = new System.Windows.Forms.ComboBox();
             this.label21 = new System.Windows.Forms.Label();
@@ -478,7 +476,6 @@
             this.cmbDepartamento.Name = "cmbDepartamento";
             this.cmbDepartamento.Size = new System.Drawing.Size(151, 21);
             this.cmbDepartamento.TabIndex = 16;
-            this.cmbDepartamento.SelectedIndexChanged += new System.EventHandler(this.cmbDepartamento_SelectedIndexChanged);
             // 
             // cmbPuesto
             // 
@@ -487,7 +484,6 @@
             this.cmbPuesto.Name = "cmbPuesto";
             this.cmbPuesto.Size = new System.Drawing.Size(151, 21);
             this.cmbPuesto.TabIndex = 17;
-            this.cmbPuesto.SelectedIndexChanged += new System.EventHandler(this.cmbPuesto_SelectedIndexChanged);
             // 
             // label10
             // 
@@ -702,24 +698,6 @@
             this.mtxtIdBancario.TabIndex = 30;
             this.mtxtIdBancario.Text = "0000";
             // 
-            // dtpFechaAplicacionHistorico
-            // 
-            this.dtpFechaAplicacionHistorico.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFechaAplicacionHistorico.Location = new System.Drawing.Point(572, 192);
-            this.dtpFechaAplicacionHistorico.Name = "dtpFechaAplicacionHistorico";
-            this.dtpFechaAplicacionHistorico.Size = new System.Drawing.Size(84, 20);
-            this.dtpFechaAplicacionHistorico.TabIndex = 245;
-            this.dtpFechaAplicacionHistorico.ValueChanged += new System.EventHandler(this.dtpFechaAplicacionHistorico_ValueChanged);
-            // 
-            // lblFechaAplicacionHistorico
-            // 
-            this.lblFechaAplicacionHistorico.AutoSize = true;
-            this.lblFechaAplicacionHistorico.Location = new System.Drawing.Point(569, 176);
-            this.lblFechaAplicacionHistorico.Name = "lblFechaAplicacionHistorico";
-            this.lblFechaAplicacionHistorico.Size = new System.Drawing.Size(106, 13);
-            this.lblFechaAplicacionHistorico.TabIndex = 246;
-            this.lblFechaAplicacionHistorico.Text = "Fecha de aplicación:";
-            // 
             // label20
             // 
             this.label20.AutoSize = true;
@@ -811,8 +789,6 @@
             this.Controls.Add(this.label21);
             this.Controls.Add(this.cmbMetodoPago);
             this.Controls.Add(this.label20);
-            this.Controls.Add(this.lblFechaAplicacionHistorico);
-            this.Controls.Add(this.dtpFechaAplicacionHistorico);
             this.Controls.Add(this.mtxtIdBancario);
             this.Controls.Add(this.mtxtCuentaClabe);
             this.Controls.Add(this.mtxtCuentaBancaria);
@@ -950,8 +926,6 @@
         private System.Windows.Forms.MaskedTextBox mtxtCuentaBancaria;
         private System.Windows.Forms.MaskedTextBox mtxtCuentaClabe;
         private System.Windows.Forms.MaskedTextBox mtxtIdBancario;
-        private System.Windows.Forms.DateTimePicker dtpFechaAplicacionHistorico;
-        private System.Windows.Forms.Label lblFechaAplicacionHistorico;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.ComboBox cmbMetodoPago;
         private System.Windows.Forms.Label label21;

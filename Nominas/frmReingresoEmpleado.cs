@@ -98,6 +98,9 @@ namespace Nominas
             txtNombreCompleto.Text = _nombreEmpleado;
             mtxtNoEmpleado.Text = lstEmpleado[0].noempleado;
             cmbMetodoPago.SelectedIndex = 2;
+            mtxtCuentaBancaria.Text = lstEmpleado[0].cuenta;
+            mtxtCuentaClabe.Text = lstEmpleado[0].clabe;
+            mtxtIdBancario.Text = lstEmpleado[0].idbancario;
 
             if (GLOBALES.OBRACIVIL)
                 chkObraCivil.Visible = true;
@@ -322,7 +325,7 @@ namespace Nominas
             try
             {
                 cnx.Open();
-                lstFechas = nh.obtenerUltimaNomina(GLOBALES.IDEMPRESA, GLOBALES.NORMAL, diasPago);
+                lstFechas = nh.obtenerUltimaNominaTrabajador(GLOBALES.IDEMPRESA, GLOBALES.NORMAL, diasPago, _idempleado);
                 cnx.Close();
             }
             catch (Exception)
@@ -330,18 +333,19 @@ namespace Nominas
                 MessageBox.Show("Error: Al obtener la fecha de la ultima nómina calculada", "Error");
             }
 
-            if (dtpFechaReingreso.Value.Date <= lstFechas[0].fechainicio.Date || dtpFechaReingreso.Value.Date <= lstFechas[0].fechafin.Date)
-                verificaFechas = false;
-            else
-                verificaFechas = true;
-
-
-            if (!verificaFechas)
+            if (lstFechas.Count != 0)
             {
-                MessageBox.Show("La fecha de ingreso es invalida. Fecha menor al ultimo periodo calculado, verifique.", "Error");
-                return;
+                if (dtpFechaReingreso.Value.Date <= lstFechas[0].fechainicio.Date || dtpFechaReingreso.Value.Date <= lstFechas[0].fechafin.Date)
+                    verificaFechas = false;
+                else
+                    verificaFechas = true;
+                if (!verificaFechas)
+                {
+                    MessageBox.Show("La fecha de ingreso es invalida. Fecha menor al ultimo periodo calculado, verifique.", "Error");
+                    return;
+                }
             }
-
+                
             try {
                 cnx.Open();
                 empleadoh.reingreso(empleado);

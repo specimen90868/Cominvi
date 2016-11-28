@@ -243,6 +243,7 @@ namespace Nominas
                 }
                 #endregion
 
+                #region VALIDACION DE INCAPACIDAD
                 if (existeIncapacidad != 0)
                 {
                     DateTime fechaInicioIncidencia;
@@ -272,7 +273,9 @@ namespace Nominas
                         return;
                     }
                 }
+                #endregion
 
+                #region VALIDACION DE VACACIONES
                 if (existeVacaciones != 0)
                 {
                     DateTime fechaInicioVac;
@@ -291,7 +294,7 @@ namespace Nominas
                         cnx.Dispose();
                         return;
                     }
-                    
+
 
                     if (dtpFechaBaja.Value.Date >= fechaInicioVac.Date && dtpFechaBaja.Value.Date <= fechaFinVac.Date)
                     {
@@ -304,7 +307,8 @@ namespace Nominas
                         return;
                     }
                 }
-            
+                #endregion
+                
                 Empresas.Core.EmpresasHelper ep = new Empresas.Core.EmpresasHelper();
                 ep.Command = cmd;
 
@@ -419,7 +423,7 @@ namespace Nominas
 
                     if (lstNomina.Count != 0)
                     {
-                        if (dtpFechaBaja.Value.Date <= lstNomina[0].fechainicio || dtpFechaBaja.Value.Date <= lstNomina[0].fechafin)
+                        if (dtpFechaBaja.Value.Date < lstNomina[0].fechainicio)
                         {
                             try
                             {
@@ -427,7 +431,7 @@ namespace Nominas
                                 bajaTrabajador.idtrabajador = _idempleado;
                                 cnx.Open();
                                 bh.bajaEmpleado(bajaTrabajador);
-                                //nh.eliminaPreNomina(_idempleado, periodo);
+                                nh.eliminaPreNomina(_idempleado, periodo);
                                 cnx.Close();
                             }
                             catch (Exception error)
@@ -438,6 +442,48 @@ namespace Nominas
                         }
                     }
                 }
+                else {
+                    nh = new CalculoNomina.Core.NominaHelper();
+                    nh.Command = cmd;
+                    List<CalculoNomina.Core.tmpPagoNomina> lstNomina = new List<CalculoNomina.Core.tmpPagoNomina>();
+                    try
+                    {
+                        cnx.Open();
+                        lstNomina = nh.obtenerUltimaNominaTrabajador(GLOBALES.IDEMPRESA, _idempleado, periodo);
+                        cnx.Close();
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error: Al obtener las fechas de pago. \r\n \r\n" + error.Message, "Error");
+                        return;
+                    }
+
+                    if (lstNomina.Count != 0)
+                    {
+                        if (dtpFechaBaja.Value.Date <= lstNomina[0].fechainicio || dtpFechaBaja.Value.Date <= lstNomina[0].fechafin)
+                        {
+                            try
+                            {
+                                Bajas.Core.Bajas bajaTrabajador = new Bajas.Core.Bajas();
+                                bajaTrabajador.idtrabajador = _idempleado;
+                                cnx.Open();
+                                bh.bajaEmpleado(bajaTrabajador);
+                                nh.eliminaPreNomina(_idempleado, periodo);
+                                cnx.Close();
+                                baja.fecha = lstNomina[0].fechafin;
+                                baja.diasproporcionales = 1;
+                                MessageBox.Show("La baja corresponde a un periodo cerrado. \r\n\r\n Se dará con la fecha de termino del periodo cerrado: " + 
+                                    lstNomina[0].fechafin.ToShortDateString(), "Información");
+                            }
+                            catch (Exception error)
+                            {
+                                MessageBox.Show("Error: Al dar baja del empleado. \r\n \r\n" + error.Message, "Error");
+                                return;
+                            }
+                        }
+                    }
+                }
+
 
                 try
                 {
@@ -468,11 +514,11 @@ namespace Nominas
                 {
                     MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
                 }
+
                 MessageBox.Show("Baja exitosa.", "Información");
                 btnAceptar.Enabled = false;
                 this.Dispose();
             }
-            
         }
 
         private void PeriodoFechaAplicacion()

@@ -145,7 +145,7 @@ namespace Nominas
                     try
                     {
                         cnx.Open();
-                        lstEmp = eh.obtenerEmpleadoPorDepto(GLOBALES.IDEMPRESA, idDepartamentos, DateTime.Parse(fecha).Date);
+                        lstEmp = eh.obtenerEmpleadoPorDepto(GLOBALES.IDEMPRESA, idDepartamentos, DateTime.Parse(fecha).Date, (cmbTipoNomina.Text == "Normal" ? 0 : 2));
                         cnx.Close();
                     }
                     catch
@@ -332,11 +332,11 @@ namespace Nominas
 
                         byte[] bytes = Visor.LocalReport.Render("PDF", null, out mimeType, out encoding, out extension, out streamids, out warnings);
 
-                        if (!Directory.Exists(ruta + DateTime.Parse(fecha).ToString("yyyyMMdd")))
-                            Directory.CreateDirectory(ruta + DateTime.Parse(fecha).ToString("yyyyMMdd"));
+                        if (!Directory.Exists(ruta + DateTime.Parse(fecha).ToString("yyyyMMdd") + "_" + GLOBALES.IDEMPRESA.ToString()))
+                            Directory.CreateDirectory(ruta + DateTime.Parse(fecha).ToString("yyyyMMdd") + "_" + GLOBALES.IDEMPRESA.ToString());
 
                         using (FileStream fs = new FileStream(string.Format(@"{0}\{1}.{2}",
-                            ruta + DateTime.Parse(fecha).ToString("yyyyMMdd"),
+                            ruta + DateTime.Parse(fecha).ToString("yyyyMMdd") + "_" + GLOBALES.IDEMPRESA.ToString(),
                             dgvEmpleados.Rows[i].Cells["nombrecompleto"].Value.ToString() + "_" + DateTime.Parse(fecha).ToString("yyyyMMdd"),
                             "pdf"), FileMode.Create))
                         {
@@ -361,7 +361,7 @@ namespace Nominas
                             return;
                         }
 
-                        using (StreamWriter sw = new StreamWriter(ruta + DateTime.Parse(fecha).ToString("yyyyMMdd") + "\\" + dgvEmpleados.Rows[i].Cells["nombrecompleto"].Value.ToString() + "_" + DateTime.Parse(fecha).ToString("yyyyMMdd") + ".xml"))
+                        using (StreamWriter sw = new StreamWriter(ruta + DateTime.Parse(fecha).ToString("yyyyMMdd") + "_" + GLOBALES.IDEMPRESA.ToString() + "\\" + dgvEmpleados.Rows[i].Cells["nombrecompleto"].Value.ToString() + "_" + DateTime.Parse(fecha).ToString("yyyyMMdd") + ".xml"))
                         {
                             sw.WriteLine(lstXml[0].xml);
                         }
@@ -377,10 +377,10 @@ namespace Nominas
                 {
                     using (ZipFile zip = new ZipFile())
                     {
-                        if (File.Exists(ruta + "RecibosNomina_" + DateTime.Parse(fecha).ToString("yyyyMMdd") + ".zip"))
-                            File.Delete(ruta + "RecibosNomina_" + DateTime.Parse(fecha).ToString("yyyyMMdd") + ".zip");
-                        zip.AddDirectory(ruta + DateTime.Parse(fecha).ToString("yyyyMMdd") + "\\");
-                        zip.Save(ruta + "RecibosNomina_" + DateTime.Parse(fecha).ToString("yyyyMMdd") + ".zip");
+                        if (File.Exists(ruta + "RecibosNomina_" + DateTime.Parse(fecha).ToString("yyyyMMdd") + "_" + GLOBALES.IDEMPRESA + ".zip"))
+                            File.Delete(ruta + "RecibosNomina_" + DateTime.Parse(fecha).ToString("yyyyMMdd") + "_" + GLOBALES.IDEMPRESA + ".zip");
+                        zip.AddDirectory(ruta + DateTime.Parse(fecha).ToString("yyyyMMdd") + "_" + GLOBALES.IDEMPRESA.ToString() + "\\");
+                        zip.Save(ruta + "RecibosNomina_" + DateTime.Parse(fecha).ToString("yyyyMMdd") + "_" + GLOBALES.IDEMPRESA + ".zip");
                     }
                 }
                 catch (Exception)
@@ -390,7 +390,7 @@ namespace Nominas
 
                 MailMessage email = new MailMessage();
                 SmtpClient smtp = new SmtpClient();
-                Attachment comprimido = new Attachment(ruta + "RecibosNomina_" + DateTime.Parse(fecha).ToString("yyyyMMdd") + ".zip");
+                Attachment comprimido = new Attachment(ruta + "RecibosNomina_" + DateTime.Parse(fecha).ToString("yyyyMMdd") + "_" + GLOBALES.IDEMPRESA + ".zip");
                 email.IsBodyHtml = true;
                 email.From = new MailAddress(correoEnvio, "Recibos electrónicos de nómina");
                 email.To.Add(txtCorreoElectronico.Text);
@@ -429,9 +429,9 @@ namespace Nominas
         private void workerEnvio_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             lblEtapa.Text = "Terminado.";
-            Directory.Delete(ruta + DateTime.Parse(fecha).ToString("yyyyMMdd") + "\\", true);
+            Directory.Delete(ruta + DateTime.Parse(fecha).ToString("yyyyMMdd") + "_" + GLOBALES.IDEMPRESA + "\\", true);
+            File.Delete(ruta + "RecibosNomina_" + DateTime.Parse(fecha).ToString("yyyyMMdd") + "_" + GLOBALES.IDEMPRESA +".zip");
             MessageBox.Show("Mensaje enviado.", "Confirmación");
-            //File.Delete(ruta + "RecibosNomina_" + DateTime.Parse(fecha).ToString("yyyyMMdd") + ".zip");
         }
 
         private void lstvPeriodos_SelectedIndexChanged(object sender, EventArgs e)

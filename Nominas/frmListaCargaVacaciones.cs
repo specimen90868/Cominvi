@@ -64,7 +64,7 @@ namespace Nominas
                             cmd.Connection = con;
                             con.Open();
                             DataTable dtExcelSchema = con.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                            sheetName = dtExcelSchema.Rows[6]["TABLE_NAME"].ToString();
+                            sheetName = dtExcelSchema.Rows[5]["TABLE_NAME"].ToString();
                             con.Close();
                         }
                     }

@@ -233,45 +233,80 @@ namespace Nominas
 
         private void toolEliminar_Click(object sender, EventArgs e)
         {
+            int fila = dgvBajasSua.CurrentCell.RowIndex;
+            int idPeriodo = 0, diasPeriodo = 0;
+            string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            Bajas.Core.BajasHelper bh = new Bajas.Core.BajasHelper();
+            bh.Command = cmd;
+
+            CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
+            nh.Command = cmd;
+
+            Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
+            ph.Command = cmd;
+
+            Periodos.Core.Periodos periodo = new Periodos.Core.Periodos();
+
+            Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
+            eh.Command = cmd;
+
+            List<Bajas.Core.Bajas> lstBaja = new List<Bajas.Core.Bajas>();
+            List<CalculoNomina.Core.tmpPagoNomina> lstNomina = new List<CalculoNomina.Core.tmpPagoNomina>();
+
+            try
+            {
+                cnx.Open();
+                idPeriodo = int.Parse(eh.obtenerIdPeriodo(int.Parse(dgvBajasSua.Rows[fila].Cells[1].Value.ToString())).ToString());
+                periodo.idperiodo = idPeriodo;
+                diasPeriodo = int.Parse(ph.DiasDePago(periodo).ToString());
+                lstBaja = bh.obtenerBaja(int.Parse(dgvBajasSua.Rows[fila].Cells[0].Value.ToString()));
+                lstNomina = nh.obtenerUltimaNominaTrabajador(GLOBALES.IDEMPRESA, int.Parse(dgvBajasSua.Rows[fila].Cells[1].Value.ToString()), diasPeriodo);
+                cnx.Close();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error: Al obtener los datos de la baja.", "Error");
+                cnx.Dispose();
+                return;
+            }
+
+            if (lstBaja[0].periodoinicio == lstNomina[0].fechainicio && lstBaja[0].periodofin == lstNomina[0].fechafin)
+            {
+                MessageBox.Show("La baja pertenece a un periodo cerrado. No se puede eliminar.", "Información");
+                return;
+            }
+
             DialogResult respuesta = MessageBox.Show("¿Quiere eliminar la baja?. \r\n \r\n CUIDADO. Esta acción eliminará permanentemente el registro.", "Confirmación", MessageBoxButtons.YesNo);
             if (respuesta == DialogResult.Yes)
             {
-                int fila = dgvBajasSua.CurrentCell.RowIndex;
-                string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-                cnx = new SqlConnection(cdn);
-                cmd = new SqlCommand();
-                cmd.Connection = cnx;
-
-                Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
-                eh.Command = cmd;
-
-                Bajas.Core.BajasHelper bh = new Bajas.Core.BajasHelper();
-                bh.Command = cmd;
-
                 Historial.Core.HistorialHelper hh = new Historial.Core.HistorialHelper();
                 hh.Command = cmd;
 
                 Empleados.Core.EmpleadosEstatus ee = new Empleados.Core.EmpleadosEstatus();
-                ee.idtrabajador = int.Parse(dgvBajasSua.Rows[fila].Cells[0].Value.ToString());
+                ee.idtrabajador = int.Parse(dgvBajasSua.Rows[fila].Cells[1].Value.ToString());
                 ee.idempresa = GLOBALES.IDEMPRESA;
                 ee.estatus = GLOBALES.ACTIVO;
 
                 Bajas.Core.Bajas baja = new Bajas.Core.Bajas();
-                baja.idtrabajador = int.Parse(dgvBajasSua.Rows[fila].Cells[0].Value.ToString());
+                baja.idtrabajador = int.Parse(dgvBajasSua.Rows[fila].Cells[1].Value.ToString());
                 baja.idempresa = GLOBALES.IDEMPRESA;
-                baja.fecha = DateTime.Parse(dgvBajasSua.Rows[fila].Cells[7].Value.ToString()).Date;
+                baja.fecha = DateTime.Parse(dgvBajasSua.Rows[fila].Cells[8].Value.ToString()).Date;
 
                 Historial.Core.Historial historial = new Historial.Core.Historial();
-                historial.idtrabajador = int.Parse(dgvBajasSua.Rows[fila].Cells[0].Value.ToString());
+                historial.idtrabajador = int.Parse(dgvBajasSua.Rows[fila].Cells[1].Value.ToString());
                 historial.idempresa = GLOBALES.IDEMPRESA;
-                historial.fecha_imss = DateTime.Parse(dgvBajasSua.Rows[fila].Cells[7].Value.ToString()).Date;
+                historial.fecha_imss = DateTime.Parse(dgvBajasSua.Rows[fila].Cells[8].Value.ToString()).Date;
 
                 try
                 {
                     cnx.Open();
                     bh.eliminaBaja(baja);
                     eh.bajaEmpleado(ee);
-                    eh.actualizaEstatus(int.Parse(dgvBajasSua.Rows[fila].Cells[0].Value.ToString()));
+                    eh.actualizaEstatus(int.Parse(dgvBajasSua.Rows[fila].Cells[1].Value.ToString()));
                     cnx.Close();
                 }
                 catch (Exception error)

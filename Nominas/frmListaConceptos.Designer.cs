@@ -36,10 +36,12 @@
             this.toolConsultar = new System.Windows.Forms.ToolStripButton();
             this.toolEditar = new System.Windows.Forms.ToolStripButton();
             this.toolBaja = new System.Windows.Forms.ToolStripButton();
-            this.dgvConceptos = new System.Windows.Forms.DataGridView();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.dgvConceptos = new System.Windows.Forms.DataGridView();
             this.cmbPeriodos = new System.Windows.Forms.ComboBox();
+            this.toolAsignaciones = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolTitulo.SuspendLayout();
             this.toolBusqueda.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConceptos)).BeginInit();
@@ -70,6 +72,8 @@
             this.toolConsultar,
             this.toolEditar,
             this.toolBaja,
+            this.toolStripSeparator2,
+            this.toolAsignaciones,
             this.toolStripSeparator1,
             this.toolStripLabel1});
             this.toolBusqueda.Location = new System.Drawing.Point(0, 27);
@@ -114,6 +118,17 @@
             this.toolBaja.Text = "Eliminar";
             this.toolBaja.Click += new System.EventHandler(this.toolBaja_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(51, 22);
+            this.toolStripLabel1.Text = "Periodo:";
+            // 
             // dgvConceptos
             // 
             this.dgvConceptos.AllowUserToAddRows = false;
@@ -127,25 +142,29 @@
             this.dgvConceptos.Size = new System.Drawing.Size(701, 483);
             this.dgvConceptos.TabIndex = 10;
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripLabel1
-            // 
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(51, 22);
-            this.toolStripLabel1.Text = "Periodo:";
-            // 
             // cmbPeriodos
             // 
             this.cmbPeriodos.FormattingEnabled = true;
-            this.cmbPeriodos.Location = new System.Drawing.Point(336, 29);
+            this.cmbPeriodos.Location = new System.Drawing.Point(422, 29);
             this.cmbPeriodos.Name = "cmbPeriodos";
             this.cmbPeriodos.Size = new System.Drawing.Size(121, 21);
             this.cmbPeriodos.TabIndex = 11;
             this.cmbPeriodos.SelectedIndexChanged += new System.EventHandler(this.cmbPeriodos_SelectedIndexChanged);
+            // 
+            // toolAsignaciones
+            // 
+            this.toolAsignaciones.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolAsignaciones.Image = ((System.Drawing.Image)(resources.GetObject("toolAsignaciones.Image")));
+            this.toolAsignaciones.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolAsignaciones.Name = "toolAsignaciones";
+            this.toolAsignaciones.Size = new System.Drawing.Size(81, 22);
+            this.toolAsignaciones.Text = "Asignaciones";
+            this.toolAsignaciones.Click += new System.EventHandler(this.toolAsignaciones_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // frmListaConceptos
             // 
@@ -182,5 +201,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ComboBox cmbPeriodos;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripButton toolAsignaciones;
     }
 }

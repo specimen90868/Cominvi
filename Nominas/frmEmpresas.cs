@@ -297,7 +297,7 @@ namespace Nominas
                 {
                     MessageBox.Show("Error: \r\n \r\n " + error.Message, "Error");
                 }
-                
+
                 if (_tipoOperacion == GLOBALES.CONSULTAR)
                 {
                     toolTitulo.Text = "Consulta Empresa";
@@ -308,10 +308,13 @@ namespace Nominas
                     btnAsignar.Enabled = false;
                     toolGuardarCerrar.Enabled = false;
                     toolGuardarNuevo.Enabled = false;
+                    
                 }
                 else
                     toolTitulo.Text = "Edición Empresa";
             }
+            
+                
             cmbPago.SelectedIndex = 0;
         }
 
@@ -447,5 +450,7 @@ namespace Nominas
                 txtDias.Text = "7";
             }
         }
+
+       
     }
 }

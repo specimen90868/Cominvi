@@ -36,10 +36,17 @@
             this.toolBaja = new System.Windows.Forms.ToolStripButton();
             this.toolHistorial = new System.Windows.Forms.ToolStripButton();
             this.toolReingreso = new System.Windows.Forms.ToolStripButton();
+            this.toolDeptoPuesto = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolDepartamento = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolPuesto = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolCambioPeriodo = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolEliminar = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolIncrementoSalario = new System.Windows.Forms.ToolStripButton();
+            this.toolExportar = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolCatNomina = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolCatGeneral = new System.Windows.Forms.ToolStripMenuItem();
             this.toolActualizar = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.lblBuscar = new System.Windows.Forms.ToolStripLabel();
@@ -47,9 +54,6 @@
             this.toolTitulo = new System.Windows.Forms.ToolStrip();
             this.toolEmpleados = new System.Windows.Forms.ToolStripLabel();
             this.dgvEmpleados = new System.Windows.Forms.DataGridView();
-            this.toolExportar = new System.Windows.Forms.ToolStripSplitButton();
-            this.toolCatNomina = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolCatGeneral = new System.Windows.Forms.ToolStripMenuItem();
             this.toolBusqueda.SuspendLayout();
             this.toolTitulo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmpleados)).BeginInit();
@@ -64,6 +68,8 @@
             this.toolBaja,
             this.toolHistorial,
             this.toolReingreso,
+            this.toolDeptoPuesto,
+            this.toolCambioPeriodo,
             this.toolStripSeparator3,
             this.toolEliminar,
             this.toolStripSeparator1,
@@ -133,6 +139,40 @@
             this.toolReingreso.Text = "Reingreso";
             this.toolReingreso.Click += new System.EventHandler(this.toolReingreso_Click);
             // 
+            // toolDeptoPuesto
+            // 
+            this.toolDeptoPuesto.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolDepartamento,
+            this.toolPuesto});
+            this.toolDeptoPuesto.Image = ((System.Drawing.Image)(resources.GetObject("toolDeptoPuesto.Image")));
+            this.toolDeptoPuesto.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolDeptoPuesto.Name = "toolDeptoPuesto";
+            this.toolDeptoPuesto.Size = new System.Drawing.Size(118, 22);
+            this.toolDeptoPuesto.Text = "Depto / Puesto";
+            // 
+            // toolDepartamento
+            // 
+            this.toolDepartamento.Name = "toolDepartamento";
+            this.toolDepartamento.Size = new System.Drawing.Size(210, 22);
+            this.toolDepartamento.Text = "Cambio de departamento";
+            this.toolDepartamento.Click += new System.EventHandler(this.toolDepartamento_Click);
+            // 
+            // toolPuesto
+            // 
+            this.toolPuesto.Name = "toolPuesto";
+            this.toolPuesto.Size = new System.Drawing.Size(210, 22);
+            this.toolPuesto.Text = "Cambio de puesto";
+            this.toolPuesto.Click += new System.EventHandler(this.toolPuesto_Click);
+            // 
+            // toolCambioPeriodo
+            // 
+            this.toolCambioPeriodo.Image = ((System.Drawing.Image)(resources.GetObject("toolCambioPeriodo.Image")));
+            this.toolCambioPeriodo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolCambioPeriodo.Name = "toolCambioPeriodo";
+            this.toolCambioPeriodo.Size = new System.Drawing.Size(68, 22);
+            this.toolCambioPeriodo.Text = "Periodo";
+            this.toolCambioPeriodo.Click += new System.EventHandler(this.toolCambioPeriodo_Click);
+            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
@@ -161,6 +201,32 @@
             this.toolIncrementoSalario.Text = "Incrementar Salario";
             this.toolIncrementoSalario.Click += new System.EventHandler(this.toolIncrementoSalario_Click);
             // 
+            // toolExportar
+            // 
+            this.toolExportar.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolCatNomina,
+            this.toolCatGeneral});
+            this.toolExportar.Image = ((System.Drawing.Image)(resources.GetObject("toolExportar.Image")));
+            this.toolExportar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolExportar.Name = "toolExportar";
+            this.toolExportar.Size = new System.Drawing.Size(82, 22);
+            this.toolExportar.Text = "Exportar";
+            this.toolExportar.Click += new System.EventHandler(this.toolExportar_Click);
+            // 
+            // toolCatNomina
+            // 
+            this.toolCatNomina.Name = "toolCatNomina";
+            this.toolCatNomina.Size = new System.Drawing.Size(182, 22);
+            this.toolCatNomina.Text = "Catálogo de nómina";
+            this.toolCatNomina.Click += new System.EventHandler(this.toolCatNomina_Click);
+            // 
+            // toolCatGeneral
+            // 
+            this.toolCatGeneral.Name = "toolCatGeneral";
+            this.toolCatGeneral.Size = new System.Drawing.Size(182, 22);
+            this.toolCatGeneral.Text = "Catálogo general";
+            this.toolCatGeneral.Click += new System.EventHandler(this.toolCatGeneral_Click);
+            // 
             // toolActualizar
             // 
             this.toolActualizar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -187,7 +253,7 @@
             this.txtBuscar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic);
             this.txtBuscar.ForeColor = System.Drawing.Color.Gray;
             this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(300, 25);
+            this.txtBuscar.Size = new System.Drawing.Size(300, 23);
             this.txtBuscar.Text = "Buscar empleado...";
             this.txtBuscar.Leave += new System.EventHandler(this.txtBuscar_Leave);
             this.txtBuscar.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBuscar_KeyPress);
@@ -223,32 +289,6 @@
             this.dgvEmpleados.Size = new System.Drawing.Size(1221, 672);
             this.dgvEmpleados.TabIndex = 5;
             this.dgvEmpleados.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmpleados_CellDoubleClick);
-            // 
-            // toolExportar
-            // 
-            this.toolExportar.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolCatNomina,
-            this.toolCatGeneral});
-            this.toolExportar.Image = ((System.Drawing.Image)(resources.GetObject("toolExportar.Image")));
-            this.toolExportar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolExportar.Name = "toolExportar";
-            this.toolExportar.Size = new System.Drawing.Size(82, 22);
-            this.toolExportar.Text = "Exportar";
-            this.toolExportar.Click += new System.EventHandler(this.toolExportar_Click);
-            // 
-            // toolCatNomina
-            // 
-            this.toolCatNomina.Name = "toolCatNomina";
-            this.toolCatNomina.Size = new System.Drawing.Size(182, 22);
-            this.toolCatNomina.Text = "Catálogo de nómina";
-            this.toolCatNomina.Click += new System.EventHandler(this.toolCatNomina_Click);
-            // 
-            // toolCatGeneral
-            // 
-            this.toolCatGeneral.Name = "toolCatGeneral";
-            this.toolCatGeneral.Size = new System.Drawing.Size(182, 22);
-            this.toolCatGeneral.Text = "Catálogo general";
-            this.toolCatGeneral.Click += new System.EventHandler(this.toolCatGeneral_Click);
             // 
             // frmListaEmpleados
             // 
@@ -295,5 +335,9 @@
         private System.Windows.Forms.ToolStripSplitButton toolExportar;
         private System.Windows.Forms.ToolStripMenuItem toolCatNomina;
         private System.Windows.Forms.ToolStripMenuItem toolCatGeneral;
+        private System.Windows.Forms.ToolStripSplitButton toolDeptoPuesto;
+        private System.Windows.Forms.ToolStripMenuItem toolDepartamento;
+        private System.Windows.Forms.ToolStripMenuItem toolPuesto;
+        private System.Windows.Forms.ToolStripButton toolCambioPeriodo;
     }
 }

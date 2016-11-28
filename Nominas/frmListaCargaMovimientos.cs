@@ -67,7 +67,7 @@ namespace Nominas
                             cmdOle.Connection = con;
                             con.Open();
                             DataTable dtExcelSchema = con.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                            sheetName = dtExcelSchema.Rows[5]["TABLE_NAME"].ToString();
+                            sheetName = dtExcelSchema.Rows[4]["TABLE_NAME"].ToString();
                             con.Close();
                         }
                     }
@@ -157,6 +157,7 @@ namespace Nominas
             string formulaexento = "";
             int idConcepto = 0, idEmpleado = 0;
             int existeConcepto = 0;
+            int idPeriodo = 0, diasPeriodo = 0;
             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();
             cmd.Connection = cnx;
@@ -178,11 +179,28 @@ namespace Nominas
 
             foreach (DataGridViewRow fila in dgvMovimientos.Rows)
             {
+                Empleados.Core.EmpleadosHelper empleadosHelper = new Empleados.Core.EmpleadosHelper();
+                empleadosHelper.Command = cmd;
+
+                cnx.Open();
+                idEmpleado = (int)emph.obtenerIdTrabajador(fila.Cells["noempleado"].Value.ToString(), idEmpresa);
+                idPeriodo = int.Parse(empleadosHelper.obtenerIdPeriodo(idEmpleado).ToString());
+                cnx.Close();
+
+                Periodos.Core.PeriodosHelper periodoHelper = new Periodos.Core.PeriodosHelper();
+                periodoHelper.Command = cmd;
+
+                Periodos.Core.Periodos periodos = new Periodos.Core.Periodos();
+                periodos.idperiodo = idPeriodo;
+
+                cnx.Open();
+                diasPeriodo = int.Parse(periodoHelper.DiasDePago(periodos).ToString());
+                cnx.Close();
+
                 try
                 {
                     cnx.Open();
-                    idConcepto = (int)ch.obtenerIdConcepto(fila.Cells["concepto"].Value.ToString().TrimStart().TrimEnd(), idEmpresa);
-                    idEmpleado = (int)emph.obtenerIdTrabajador(fila.Cells["noempleado"].Value.ToString(), idEmpresa);
+                    idConcepto = (int)ch.obtenerIdConcepto(fila.Cells["concepto"].Value.ToString().TrimStart().TrimEnd(), idEmpresa, diasPeriodo);
                     cnx.Close();
 
                 }
@@ -334,6 +352,7 @@ namespace Nominas
                         Conceptos.Core.Conceptos conceptoDeduccion = new Conceptos.Core.Conceptos();
                         conceptoDeduccion.idempresa = GLOBALES.IDEMPRESA;
                         conceptoDeduccion.noconcepto = lstConcepto[0].noconcepto;
+                        conceptoDeduccion.periodo = diasPeriodo;
 
                         try
                         {

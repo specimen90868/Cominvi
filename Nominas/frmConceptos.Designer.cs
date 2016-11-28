@@ -54,6 +54,8 @@
             this.chkExenta = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
             this.txtNoConcepto = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.cmbPeriodo = new System.Windows.Forms.ComboBox();
             this.toolTitulo.SuspendLayout();
             this.toolAcciones.SuspendLayout();
             this.SuspendLayout();
@@ -292,11 +294,30 @@
             this.txtNoConcepto.Text = "0";
             this.txtNoConcepto.Leave += new System.EventHandler(this.txtNoConcepto_Leave);
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(20, 305);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(46, 13);
+            this.label8.TabIndex = 125;
+            this.label8.Text = "Periodo:";
+            // 
+            // cmbPeriodo
+            // 
+            this.cmbPeriodo.FormattingEnabled = true;
+            this.cmbPeriodo.Location = new System.Drawing.Point(102, 302);
+            this.cmbPeriodo.Name = "cmbPeriodo";
+            this.cmbPeriodo.Size = new System.Drawing.Size(148, 21);
+            this.cmbPeriodo.TabIndex = 126;
+            // 
             // frmConceptos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(678, 583);
+            this.Controls.Add(this.cmbPeriodo);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.txtNoConcepto);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.chkExenta);
@@ -357,5 +378,7 @@
         private System.Windows.Forms.CheckBox chkExenta;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtNoConcepto;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox cmbPeriodo;
     }
 }

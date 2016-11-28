@@ -253,6 +253,28 @@ namespace CalculoNomina.Core
             return lstPagoNomina;
         }
 
+        public List<tmpPagoNomina> obtenerUltimaNominaTrabajador(int idEmpresa, int tipoNomina, int periodo, int idtrabajador)
+        {
+            List<tmpPagoNomina> lstPagoNomina = new List<tmpPagoNomina>();
+            DataTable dtPagoNomina = new DataTable();
+            Command.CommandText = @"select distinct top 1 fechainicio, fechafin from PagoNomina where idempresa = @idempresa and tiponomina = @tiponomina and periodo = @periodo
+                                    and idtrabajador = @idtrabajador order by fechainicio desc";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idEmpresa);
+            Command.Parameters.AddWithValue("tiponomina", tipoNomina);
+            Command.Parameters.AddWithValue("periodo", periodo);
+            Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
+            dtPagoNomina = SelectData(Command);
+            for (int i = 0; i < dtPagoNomina.Rows.Count; i++)
+            {
+                tmpPagoNomina pn = new tmpPagoNomina();
+                pn.fechainicio = DateTime.Parse(dtPagoNomina.Rows[i]["fechainicio"].ToString());
+                pn.fechafin = DateTime.Parse(dtPagoNomina.Rows[i]["fechafin"].ToString());
+                lstPagoNomina.Add(pn);
+            }
+            return lstPagoNomina;
+        }
+
         public List<tmpPagoNomina> obtenerUltimaNomina(int idEmpresa, bool obraCivil)
         {
             List<tmpPagoNomina> lstPagoNomina = new List<tmpPagoNomina>();
@@ -279,7 +301,7 @@ namespace CalculoNomina.Core
             List<tmpPagoNomina> lstPagoNomina = new List<tmpPagoNomina>();
             DataTable dtPagoNomina = new DataTable();
             Command.CommandText = @"select distinct top 1 fechainicio, fechafin from PagoNomina where idempresa = @idempresa 
-                                    and idtrabajador = @idtrabajador and periodo = @periodo order by fechainicio desc";
+                                    and idtrabajador = @idtrabajador and periodo = @periodo and tiponomina = 0 order by fechainicio desc";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idEmpresa);
             Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
@@ -512,7 +534,7 @@ namespace CalculoNomina.Core
 
         public int eliminaPreNomina(int idtrabajador, int periodo)
         {
-            Command.CommandText = "delete from tmpPagoNomina where idtrabajador = @idtrabajador and periodo = @periodo";
+            Command.CommandText = "delete from tmpPagoNomina where idtrabajador = @idtrabajador and periodo = @periodo and guardada = 0";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
             Command.Parameters.AddWithValue("periodo", periodo);
