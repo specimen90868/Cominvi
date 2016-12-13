@@ -84,6 +84,7 @@
             this.toolBusqueda.Size = new System.Drawing.Size(1221, 25);
             this.toolBusqueda.TabIndex = 3;
             this.toolBusqueda.Text = "ToolStrip1";
+            this.toolBusqueda.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolBusqueda_ItemClicked);
             // 
             // toolNuevo
             // 

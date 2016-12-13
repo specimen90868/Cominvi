@@ -4,3 +4,10 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Ausentismo.Core\bin\Debug\Dat
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Ausentismo.Core\bin\Debug\Data.Obj.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Ausentismo.Core\obj\Debug\Ausentismo.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Ausentismo.Core\obj\Debug\Ausentismo.Core.pdb
+C:\GitHub\Repositorios\Cominvi\Ausentismo.Core\bin\Debug\Ausentismo.Core.dll
+C:\GitHub\Repositorios\Cominvi\Ausentismo.Core\bin\Debug\Ausentismo.Core.pdb
+C:\GitHub\Repositorios\Cominvi\Ausentismo.Core\bin\Debug\Data.Obj.dll
+C:\GitHub\Repositorios\Cominvi\Ausentismo.Core\bin\Debug\Data.Obj.pdb
+C:\GitHub\Repositorios\Cominvi\Ausentismo.Core\obj\Debug\Ausentismo.Core.csprojResolveAssemblyReference.cache
+C:\GitHub\Repositorios\Cominvi\Ausentismo.Core\obj\Debug\Ausentismo.Core.dll
+C:\GitHub\Repositorios\Cominvi\Ausentismo.Core\obj\Debug\Ausentismo.Core.pdb

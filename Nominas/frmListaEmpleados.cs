@@ -122,9 +122,12 @@ namespace Nominas
 
         private void Seleccion(int edicion)
         {
+            if (GLOBALES.FORMISOPEN("frmEmpleados"))
+                return;
+
             int fila = 0;
             frmEmpleados empleado = new frmEmpleados();
-            empleado.MdiParent = this.MdiParent;
+            //empleado.MdiParent = this.MdiParent;
             empleado.OnNuevoEmpleado += e_OnNuevoEmpleado;
             if (!edicion.Equals(GLOBALES.NUEVO))
             {
@@ -245,6 +248,9 @@ namespace Nominas
 
         private void toolIncrementoSalario_Click(object sender, EventArgs e)
         {
+            if (GLOBALES.FORMISOPEN("frmIncrementoSalarial"))
+                return;
+
             int fila = dgvEmpleados.CurrentCell.RowIndex;
             frmIncrementoSalarial isal = new frmIncrementoSalarial();
             isal.OnIncrementoSalarial += isal_OnIncrementoSalarial;
@@ -261,11 +267,14 @@ namespace Nominas
 
         private void toolHistorial_Click(object sender, EventArgs e)
         {
-            int fila = dgvEmpleados.CurrentCell.RowIndex;
-            frmListaHistorial lh = new frmListaHistorial();
-            lh.MdiParent = this.MdiParent;
-            lh._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
-            lh.Show();
+           if (GLOBALES.FORMISOPEN("frmListaHistorial"))
+               return;
+
+           int fila = dgvEmpleados.CurrentCell.RowIndex;
+           frmListaHistorial lh = new frmListaHistorial();
+           //lh.MdiParent = this.MdiParent;
+           lh._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
+           lh.Show();            
         }
 
         private void toolEliminar_Click(object sender, EventArgs e)
@@ -322,6 +331,9 @@ namespace Nominas
 
         private void toolBaja_Click(object sender, EventArgs e)
         {
+            if (GLOBALES.FORMISOPEN("frmBaja"))
+                return;
+
             int fila = dgvEmpleados.CurrentCell.RowIndex;
 
             string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
@@ -353,7 +365,7 @@ namespace Nominas
             {
                 frmBaja b = new frmBaja();
                 b.OnBajaEmpleado += b_OnBajaEmpleado;
-                b.MdiParent = this.MdiParent;
+                //b.MdiParent = this.MdiParent;
                 b._idempleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
                 b._nombreEmpleado = dgvEmpleados.Rows[fila].Cells[2].Value.ToString();
                 b.Show();
@@ -372,6 +384,9 @@ namespace Nominas
 
         private void toolReingreso_Click(object sender, EventArgs e)
         {
+            if (GLOBALES.FORMISOPEN("frmReingresoEmpleado"))
+                return;
+
             int fila = dgvEmpleados.CurrentCell.RowIndex;
             string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
             cnx = new SqlConnection(cdn);
@@ -432,6 +447,8 @@ namespace Nominas
 
         private void toolCatNomina_Click(object sender, EventArgs e)
         {
+            if (GLOBALES.FORMISOPEN("frmExportaEmpleado"))
+                return;
             frmExportarEmpleado ee = new frmExportarEmpleado();
             ee._tipoReporte = GLOBALES.EXPORTACATALOGO_NOMINA;
             ee.Show();
@@ -439,6 +456,9 @@ namespace Nominas
 
         private void toolCatGeneral_Click(object sender, EventArgs e)
         {
+            if (GLOBALES.FORMISOPEN("frmExportaEmpleado"))
+                return;
+
             frmExportarEmpleado ee = new frmExportarEmpleado();
             ee._tipoReporte = GLOBALES.EXPORTACATALOGO_GENERAL;
             ee.Show();
@@ -446,6 +466,9 @@ namespace Nominas
 
         private void toolDepartamento_Click(object sender, EventArgs e)
         {
+            if (GLOBALES.FORMISOPEN("frmDeptoPuesto"))
+                return;
+
             int fila = dgvEmpleados.CurrentCell.RowIndex;
             frmDeptoPuesto dp = new frmDeptoPuesto();
             dp._deptopuesto = 0;
@@ -455,6 +478,9 @@ namespace Nominas
 
         private void toolPuesto_Click(object sender, EventArgs e)
         {
+            if (GLOBALES.FORMISOPEN("frmDeptoPuesto"))
+                return;
+
             int fila = dgvEmpleados.CurrentCell.RowIndex;
             frmDeptoPuesto dp = new frmDeptoPuesto();
             dp._deptopuesto = 1;
@@ -464,10 +490,17 @@ namespace Nominas
 
         private void toolCambioPeriodo_Click(object sender, EventArgs e)
         {
+            if (GLOBALES.FORMISOPEN("frmPeriodoTrabajador"))
+                return;
             int fila = dgvEmpleados.CurrentCell.RowIndex;
             frmPeriodoTrabajador pt = new frmPeriodoTrabajador();
             pt._idEmpleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
             pt.Show();
+        }
+
+        private void toolBusqueda_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
         }
 
     }

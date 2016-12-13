@@ -274,11 +274,12 @@ namespace Nominas
                 return;
             }
 
-            if (lstBaja[0].periodoinicio == lstNomina[0].fechainicio && lstBaja[0].periodofin == lstNomina[0].fechafin)
-            {
-                MessageBox.Show("La baja pertenece a un periodo cerrado. No se puede eliminar.", "Información");
-                return;
-            }
+            if (lstNomina.Count != 0)
+                if (lstBaja[0].periodoinicio == lstNomina[0].fechainicio && lstBaja[0].periodofin == lstNomina[0].fechafin)
+                {
+                    MessageBox.Show("La baja pertenece a un periodo cerrado. No se puede eliminar.", "Información");
+                    return;
+                }
 
             DialogResult respuesta = MessageBox.Show("¿Quiere eliminar la baja?. \r\n \r\n CUIDADO. Esta acción eliminará permanentemente el registro.", "Confirmación", MessageBoxButtons.YesNo);
             if (respuesta == DialogResult.Yes)

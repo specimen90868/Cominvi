@@ -4,3 +4,10 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Incidencias.Core\bin\Debug\Da
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Incidencias.Core\bin\Debug\Data.Obj.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Incidencias.Core\obj\Debug\Incidencias.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Incidencias.Core\obj\Debug\Incidencias.Core.pdb
+C:\GitHub\Repositorios\Cominvi\Incidencias.Core\bin\Debug\Incidencias.Core.dll
+C:\GitHub\Repositorios\Cominvi\Incidencias.Core\bin\Debug\Incidencias.Core.pdb
+C:\GitHub\Repositorios\Cominvi\Incidencias.Core\bin\Debug\Data.Obj.dll
+C:\GitHub\Repositorios\Cominvi\Incidencias.Core\bin\Debug\Data.Obj.pdb
+C:\GitHub\Repositorios\Cominvi\Incidencias.Core\obj\Debug\Incidencias.Core.csprojResolveAssemblyReference.cache
+C:\GitHub\Repositorios\Cominvi\Incidencias.Core\obj\Debug\Incidencias.Core.dll
+C:\GitHub\Repositorios\Cominvi\Incidencias.Core\obj\Debug\Incidencias.Core.pdb

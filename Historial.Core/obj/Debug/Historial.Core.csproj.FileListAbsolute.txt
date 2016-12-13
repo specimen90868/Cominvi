@@ -4,3 +4,10 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Historial.Core\bin\Debug\Data
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Historial.Core\bin\Debug\Data.Obj.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Historial.Core\obj\Debug\Historial.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Historial.Core\obj\Debug\Historial.Core.pdb
+C:\GitHub\Repositorios\Cominvi\Historial.Core\bin\Debug\Historial.Core.dll
+C:\GitHub\Repositorios\Cominvi\Historial.Core\bin\Debug\Historial.Core.pdb
+C:\GitHub\Repositorios\Cominvi\Historial.Core\bin\Debug\Data.Obj.dll
+C:\GitHub\Repositorios\Cominvi\Historial.Core\bin\Debug\Data.Obj.pdb
+C:\GitHub\Repositorios\Cominvi\Historial.Core\obj\Debug\Historial.Core.csprojResolveAssemblyReference.cache
+C:\GitHub\Repositorios\Cominvi\Historial.Core\obj\Debug\Historial.Core.dll
+C:\GitHub\Repositorios\Cominvi\Historial.Core\obj\Debug\Historial.Core.pdb

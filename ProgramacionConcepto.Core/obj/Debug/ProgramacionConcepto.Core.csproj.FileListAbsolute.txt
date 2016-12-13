@@ -4,3 +4,10 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\ProgramacionConcepto.Core\bin
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\ProgramacionConcepto.Core\bin\Debug\Data.Obj.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\ProgramacionConcepto.Core\obj\Debug\ProgramacionConcepto.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\ProgramacionConcepto.Core\obj\Debug\ProgramacionConcepto.Core.pdb
+C:\GitHub\Repositorios\Cominvi\ProgramacionConcepto.Core\bin\Debug\ProgramacionConcepto.Core.dll
+C:\GitHub\Repositorios\Cominvi\ProgramacionConcepto.Core\bin\Debug\ProgramacionConcepto.Core.pdb
+C:\GitHub\Repositorios\Cominvi\ProgramacionConcepto.Core\bin\Debug\Data.Obj.dll
+C:\GitHub\Repositorios\Cominvi\ProgramacionConcepto.Core\bin\Debug\Data.Obj.pdb
+C:\GitHub\Repositorios\Cominvi\ProgramacionConcepto.Core\obj\Debug\ProgramacionConcepto.Core.csprojResolveAssemblyReference.cache
+C:\GitHub\Repositorios\Cominvi\ProgramacionConcepto.Core\obj\Debug\ProgramacionConcepto.Core.dll
+C:\GitHub\Repositorios\Cominvi\ProgramacionConcepto.Core\obj\Debug\ProgramacionConcepto.Core.pdb

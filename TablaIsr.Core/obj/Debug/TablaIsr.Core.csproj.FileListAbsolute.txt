@@ -4,3 +4,10 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\TablaIsr.Core\bin\Debug\Data.
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\TablaIsr.Core\bin\Debug\Data.Obj.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\TablaIsr.Core\obj\Debug\TablaIsr.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\TablaIsr.Core\obj\Debug\TablaIsr.Core.pdb
+C:\GitHub\Repositorios\Cominvi\TablaIsr.Core\bin\Debug\TablaIsr.Core.dll
+C:\GitHub\Repositorios\Cominvi\TablaIsr.Core\bin\Debug\TablaIsr.Core.pdb
+C:\GitHub\Repositorios\Cominvi\TablaIsr.Core\bin\Debug\Data.Obj.dll
+C:\GitHub\Repositorios\Cominvi\TablaIsr.Core\bin\Debug\Data.Obj.pdb
+C:\GitHub\Repositorios\Cominvi\TablaIsr.Core\obj\Debug\TablaIsr.Core.csprojResolveAssemblyReference.cache
+C:\GitHub\Repositorios\Cominvi\TablaIsr.Core\obj\Debug\TablaIsr.Core.dll
+C:\GitHub\Repositorios\Cominvi\TablaIsr.Core\obj\Debug\TablaIsr.Core.pdb

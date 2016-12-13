@@ -18,3 +18,10 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Empleados.Core\bin\Debug\Data
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Empleados.Core\bin\Debug\Data.Obj.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Empleados.Core\obj\Debug\Empleados.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Empleados.Core\obj\Debug\Empleados.Core.pdb
+C:\GitHub\Repositorios\Cominvi\Empleados.Core\bin\Debug\Empleados.Core.dll
+C:\GitHub\Repositorios\Cominvi\Empleados.Core\bin\Debug\Empleados.Core.pdb
+C:\GitHub\Repositorios\Cominvi\Empleados.Core\bin\Debug\Data.Obj.dll
+C:\GitHub\Repositorios\Cominvi\Empleados.Core\bin\Debug\Data.Obj.pdb
+C:\GitHub\Repositorios\Cominvi\Empleados.Core\obj\Debug\Empleados.Core.csprojResolveAssemblyReference.cache
+C:\GitHub\Repositorios\Cominvi\Empleados.Core\obj\Debug\Empleados.Core.dll
+C:\GitHub\Repositorios\Cominvi\Empleados.Core\obj\Debug\Empleados.Core.pdb

@@ -12,3 +12,7 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Data.Obj\bin\Debug\Data.Obj.p
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Data.Obj\obj\Debug\Data.Obj.csprojResolveAssemblyReference.cache
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Data.Obj\obj\Debug\Data.Obj.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Data.Obj\obj\Debug\Data.Obj.pdb
+C:\GitHub\Repositorios\Cominvi\Data.Obj\bin\Debug\Data.Obj.dll
+C:\GitHub\Repositorios\Cominvi\Data.Obj\bin\Debug\Data.Obj.pdb
+C:\GitHub\Repositorios\Cominvi\Data.Obj\obj\Debug\Data.Obj.dll
+C:\GitHub\Repositorios\Cominvi\Data.Obj\obj\Debug\Data.Obj.pdb

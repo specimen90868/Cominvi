@@ -236,7 +236,7 @@ namespace Nominas
                             diasBaja = (int)bh.diasProporcionales(baja);
                             cnx.Close();
 
-                            totalDias = diasPago - ((diasPago - diasAlta) + (diasPago - diasBaja));
+                            totalDias = diasPago - (diasAlta - diasBaja);
 
                             Faltas.Core.FaltasHelper faltaHelper = new Faltas.Core.FaltasHelper();
                             faltaHelper.Command = cmd;
@@ -346,7 +346,7 @@ namespace Nominas
                             diasBaja = (int)bh.diasProporcionales(baja);
                             cnx.Close();
 
-                            totalDias = diasPago - ((diasPago - diasReingreso) + (diasPago - diasBaja));
+                            totalDias = diasReingreso + diasBaja;
 
                             Faltas.Core.FaltasHelper faltaHelper = new Faltas.Core.FaltasHelper();
                             faltaHelper.Command = cmd;

@@ -541,6 +541,17 @@ namespace CalculoNomina.Core
             return Command.ExecuteNonQuery();
         }
 
+        public int eliminaPreNomina(int idtrabajador, int periodo, DateTime inicio, DateTime fin)
+        {
+            Command.CommandText = "delete from tmpPagoNomina where idtrabajador = @idtrabajador and periodo = @periodo and fechainicio = @fechainicio and fechafin = @fechafin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
+            Command.Parameters.AddWithValue("periodo", periodo);
+            Command.Parameters.AddWithValue("fechainicio", inicio);
+            Command.Parameters.AddWithValue("fechafin", fin);
+            return Command.ExecuteNonQuery();
+        }
+
         public object existeConcepto(tmpPagoNomina pn)
         {
             Command.CommandText = @"select count(*) from tmpPagoNomina where idempresa = @idempresa and idtrabajador = @idtrabajador and 

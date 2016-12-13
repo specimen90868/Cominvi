@@ -18,3 +18,10 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Catalogos.Core\bin\Debug\Data
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Catalogos.Core\bin\Debug\Data.Obj.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Catalogos.Core\obj\Debug\Catalogos.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Catalogos.Core\obj\Debug\Catalogos.Core.pdb
+C:\GitHub\Repositorios\Cominvi\Catalogos.Core\bin\Debug\Catalogos.Core.dll
+C:\GitHub\Repositorios\Cominvi\Catalogos.Core\bin\Debug\Catalogos.Core.pdb
+C:\GitHub\Repositorios\Cominvi\Catalogos.Core\bin\Debug\Data.Obj.dll
+C:\GitHub\Repositorios\Cominvi\Catalogos.Core\bin\Debug\Data.Obj.pdb
+C:\GitHub\Repositorios\Cominvi\Catalogos.Core\obj\Debug\Catalogos.Core.csprojResolveAssemblyReference.cache
+C:\GitHub\Repositorios\Cominvi\Catalogos.Core\obj\Debug\Catalogos.Core.dll
+C:\GitHub\Repositorios\Cominvi\Catalogos.Core\obj\Debug\Catalogos.Core.pdb

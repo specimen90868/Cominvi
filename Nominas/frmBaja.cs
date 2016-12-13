@@ -408,11 +408,13 @@ namespace Nominas
                 {
                     nh = new CalculoNomina.Core.NominaHelper();
                     nh.Command = cmd;
-                    List<CalculoNomina.Core.tmpPagoNomina> lstNomina = new List<CalculoNomina.Core.tmpPagoNomina>();
+                    List<CalculoNomina.Core.tmpPagoNomina> lstPreNominaGuardada = new List<CalculoNomina.Core.tmpPagoNomina>();
+                    List<CalculoNomina.Core.tmpPagoNomina> lstUltimaNomina = new List<CalculoNomina.Core.tmpPagoNomina>();
                     try
                     {
                         cnx.Open();
-                        lstNomina = nh.fechaPreNominaObraCivil(GLOBALES.IDEMPRESA, _idempleado, periodoInicio, periodoFin);
+                        lstUltimaNomina = nh.obtenerUltimaNominaTrabajador(GLOBALES.IDEMPRESA, _idempleado, periodo);
+                        lstPreNominaGuardada = nh.fechaPreNominaObraCivil(GLOBALES.IDEMPRESA, _idempleado, periodoInicio, periodoFin);
                         cnx.Close();
                     }
                     catch (Exception error)
@@ -421,9 +423,18 @@ namespace Nominas
                         return;
                     }
 
-                    if (lstNomina.Count != 0)
+                    if (lstUltimaNomina.Count != 0)
                     {
-                        if (dtpFechaBaja.Value.Date < lstNomina[0].fechainicio)
+                        if (dtpFechaBaja.Value.Date >= lstUltimaNomina[0].fechainicio || dtpFechaBaja.Value.Date <= lstUltimaNomina[0].fechafin)
+                        {
+                            MessageBox.Show("La baja corresponde a un periodo cerrado.", "Información");
+                            return;
+                        }
+                    }
+                    
+                    if (lstPreNominaGuardada.Count != 0)
+                    {
+                        if (dtpFechaBaja.Value.Date <= lstPreNominaGuardada[0].fechafin)
                         {
                             try
                             {

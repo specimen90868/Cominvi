@@ -4,3 +4,10 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Formulas.Core\bin\Debug\Data.
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Formulas.Core\bin\Debug\Data.Obj.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Formulas.Core\obj\Debug\Formulas.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Formulas.Core\obj\Debug\Formulas.Core.pdb
+C:\GitHub\Repositorios\Cominvi\Formulas.Core\bin\Debug\Formulas.Core.dll
+C:\GitHub\Repositorios\Cominvi\Formulas.Core\bin\Debug\Formulas.Core.pdb
+C:\GitHub\Repositorios\Cominvi\Formulas.Core\bin\Debug\Data.Obj.dll
+C:\GitHub\Repositorios\Cominvi\Formulas.Core\bin\Debug\Data.Obj.pdb
+C:\GitHub\Repositorios\Cominvi\Formulas.Core\obj\Debug\Formulas.Core.csprojResolveAssemblyReference.cache
+C:\GitHub\Repositorios\Cominvi\Formulas.Core\obj\Debug\Formulas.Core.dll
+C:\GitHub\Repositorios\Cominvi\Formulas.Core\obj\Debug\Formulas.Core.pdb

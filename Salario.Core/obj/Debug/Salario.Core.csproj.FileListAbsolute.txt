@@ -18,3 +18,10 @@ C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Salario.Core\bin\Debug\Data.O
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Salario.Core\bin\Debug\Data.Obj.pdb
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Salario.Core\obj\Debug\Salario.Core.dll
 C:\Users\fabricio.vilchis\Documents\GitHub\Cominvi\Salario.Core\obj\Debug\Salario.Core.pdb
+C:\GitHub\Repositorios\Cominvi\Salario.Core\bin\Debug\Salario.Core.dll
+C:\GitHub\Repositorios\Cominvi\Salario.Core\bin\Debug\Salario.Core.pdb
+C:\GitHub\Repositorios\Cominvi\Salario.Core\bin\Debug\Data.Obj.dll
+C:\GitHub\Repositorios\Cominvi\Salario.Core\bin\Debug\Data.Obj.pdb
+C:\GitHub\Repositorios\Cominvi\Salario.Core\obj\Debug\Salario.Core.csprojResolveAssemblyReference.cache
+C:\GitHub\Repositorios\Cominvi\Salario.Core\obj\Debug\Salario.Core.dll
+C:\GitHub\Repositorios\Cominvi\Salario.Core\obj\Debug\Salario.Core.pdb
