@@ -61,12 +61,13 @@ namespace Historial.Core
             Command.Parameters.AddWithValue("fecha", h.fecha_imss);
             return Command.ExecuteNonQuery();
         }
-
-        public int eliminaHistorial(int idtrabajador)
+        public int eliminaHistorial(int idtrabajador, int tipo, DateTime fecha)
         {
-            Command.CommandText = "delete from movimientotrabajador where idtrabajador = @idtrabajador";
+            Command.CommandText = "delete from movimientotrabajador where idtrabajador = @idtrabajador and tipomovimiento = @tipomovimiento and fecha_imss = @fechaimss";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
+            Command.Parameters.AddWithValue("tipomovimiento", tipo);
+            Command.Parameters.AddWithValue("fechaimss", fecha);
             return Command.ExecuteNonQuery();
         }
         public void bulkMovimientos(DataTable dt, string tabla)

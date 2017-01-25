@@ -629,13 +629,14 @@ namespace CalculoNomina.Core
             return _periodo;
         }
 
-        public object obtenerNoPeriodoExtraordinario(int idempresa, int tiponomina)
+        public object obtenerNoPeriodoExtraordinario(int idempresa, int tiponomina, int periodo)
         {
-            Command.CommandText = @"select top 1 noperiodo from PagoNomina where idempresa = @idempresa and tiponomina = @tiponomina
+            Command.CommandText = @"select top 1 noperiodo from PagoNomina where idempresa = @idempresa and tiponomina = @tiponomina and periodo = @periodo
                     order by noperiodo desc";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idempresa);
             Command.Parameters.AddWithValue("tiponomina", tiponomina);
+            Command.Parameters.AddWithValue("periodo", periodo);
             object _periodo = Select(Command);
             return _periodo;
         }
@@ -901,22 +902,25 @@ namespace CalculoNomina.Core
         #endregion
 
         #region DATOS PARA QRCODE
-        public List<CodigoBidimensional> obtenerListaQr(int idempresa, DateTime inicio, DateTime fin)
+        public List<CodigoBidimensional> obtenerListaQr(int idempresa, DateTime inicio, DateTime fin, int periodo)
         {
             DataTable dt = new DataTable();
             List<CodigoBidimensional> lstDatos = new List<CodigoBidimensional>();
-            Command.CommandText = @"select e.rfc as Empresa, t.idtrabajador, t.rfc as Trabajador, xml.total, xml.uuid from 
+            Command.CommandText = @"select e.rfc as Empresa, t.idtrabajador, t.rfc as Trabajador, b.total, xml.uuid from 
                                     xmlCabecera xml
                                     inner join trabajadores t
                                     on xml.idtrabajador = t.idtrabajador 
                                     inner join Empresas e
                                     on t.idempresa = e.idempresa
+                                    inner join (select distinct idtrabajador, total from dbo.fnTablaNomina(@idempresa, @fechainicio, @fechafin, @periodo)) b
+                                    on xml.idtrabajador = b.idtrabajador
                                     where xml.idempresa = @idempresa and 
                                     xml.periodoinicio = @fechainicio and xml.periodofin = @fechafin";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idempresa);
             Command.Parameters.AddWithValue("fechainicio", inicio);
             Command.Parameters.AddWithValue("fechafin", fin);
+            Command.Parameters.AddWithValue("periodo", periodo);
             dt = SelectData(Command);
             for (int i = 0; i < dt.Rows.Count; i++)
             {

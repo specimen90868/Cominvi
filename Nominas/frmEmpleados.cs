@@ -39,8 +39,6 @@ namespace Nominas
         Bitmap bmp;
         bool ImagenAsignada = false;
         //historicoDepto = false, historicoPuesto = false;
-        string departamento = "", puesto = "";
-        int idDepto = 0, idPuesto = 0;
         //DateTime inicioPeriodo, finPeriodo;
         #endregion
 
@@ -110,7 +108,7 @@ namespace Nominas
                 lstPuesto = ph.obtenerPuestos(puesto);
                 lstEstados = edoh.obtenerEstados();
                 lstPeriodos = pdh.obtenerPeriodos(periodo);
-                lstSalario = sh.obtenerSalarios();
+                lstSalario = sh.obtenerSalario();
                 lstTipoRegimen = cath.obtenerGrupo(tr);
                 lstMetodoPago = cath.obtenerGrupo(mp);
                 cnx.Close();
@@ -241,11 +239,6 @@ namespace Nominas
                             cmbMetodoPago.SelectedIndex = 1;
                         if (lstEmpleado[i].metodopago == "TRANSFERENCIA")
                             cmbMetodoPago.SelectedIndex = 2;
-
-                        departamento = cmbDepartamento.Text;
-                        puesto = cmbPuesto.Text;
-                        idDepto = int.Parse(lstEmpleado[i].iddepartamento.ToString());
-                        idPuesto = int.Parse(lstEmpleado[i].idpuesto.ToString());
 
                         if (lstEmpleado[i].obracivil)
                             chkObraCivil.Checked = true;
@@ -441,6 +434,8 @@ namespace Nominas
 
             em.idperiodo = int.Parse(cmbPeriodo.SelectedValue.ToString());
             em.idsalario = int.Parse(cmbZona.SelectedValue.ToString());
+            em.iddepartamento = int.Parse(cmbDepartamento.SelectedValue.ToString());
+            em.idpuesto = int.Parse(cmbPuesto.SelectedValue.ToString());
             em.tiposalario = int.Parse(cmbTipoSalario.SelectedValue.ToString());
             em.tiporegimen = int.Parse(cmbTipoRegimen.SelectedValue.ToString());
 
@@ -547,8 +542,6 @@ namespace Nominas
                     try
                     {
                         em.idtrabajador = _idempleado;
-                        em.iddepartamento = idDepto;
-                        em.idpuesto = idPuesto;
 
                         pdh = new Periodos.Core.PeriodosHelper();
                         pdh.Command = cmd;

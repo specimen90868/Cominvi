@@ -516,10 +516,11 @@ namespace Nominas
 
                         dsReportes.NominaRecibosDataTable dtImpresionNomina = new dsReportes.NominaRecibosDataTable();
                         SqlDataAdapter daImpresionNomina = new SqlDataAdapter();
-                        cmd.CommandText = "exec stp_rptNominaImpresion @idempresa, @fechainicio, @empleados, @tiponomina, @todos, @periodo";
+                        cmd.CommandText = "exec stp_rptNominaImpresion @idempresa, @fechainicio, @fechafin, @empleados, @tiponomina, @todos, @periodo";
                         cmd.Parameters.Clear();
                         cmd.Parameters.AddWithValue("idempresa", GLOBALES.IDEMPRESA);
                         cmd.Parameters.AddWithValue("fechainicio", _inicioPeriodo);
+                        cmd.Parameters.AddWithValue("fechafin", _finPeriodo);
                         cmd.Parameters.AddWithValue("todos", _todos);
                         cmd.Parameters.AddWithValue("empleados", _empleados);
                         cmd.Parameters.AddWithValue("tiponomina", _tipoNomina);

@@ -173,6 +173,8 @@ namespace Nominas
                         int existeAlta = 0, diasAlta = 0;
                         int existeReingreso = 0, diasReingreso = 0;
 
+                        DateTime fechaAlta, fechaReingreso, fechaBaja;
+
                         Altas.Core.AltasHelper ah = new Altas.Core.AltasHelper();
                         ah.Command = cmd;
                         Altas.Core.Altas a = new Altas.Core.Altas();
@@ -204,10 +206,25 @@ namespace Nominas
 
                         cnx.Open();
                         existe = (int)bh.existeBaja(baja);
+                        
                         cnx.Close();
 
                         Empleados.Core.EmpleadosHelper edlh = new Empleados.Core.EmpleadosHelper();
                         edlh.Command = cmd;
+
+                        cnx.Open();
+                        idperiodo = (int)edlh.obtenerIdPeriodo(idTrabajador);
+                        cnx.Close();
+
+                        Periodos.Core.PeriodosHelper pdlh = new Periodos.Core.PeriodosHelper();
+                        pdlh.Command = cmd;
+                        
+                        Periodos.Core.Periodos pdl = new Periodos.Core.Periodos();
+                        pdl.idperiodo = idperiodo;
+
+                        cnx.Open();
+                        diasPago = (int)pdlh.DiasDePago(pdl);
+                        cnx.Close();
 
                         #region EXISTE ALTA Y BAJA PERO NO REINGRESO
                         if (existeAlta != 0 && existe != 0 && existeReingreso == 0)
@@ -215,28 +232,20 @@ namespace Nominas
                             int totalDias = 0;
 
                             cnx.Open();
-                            idperiodo = (int)edlh.obtenerIdPeriodo(idTrabajador);
-                            cnx.Close();
-
-                            Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
-                            ph.Command = cmd;
-
-                            Periodos.Core.Periodos p = new Periodos.Core.Periodos();
-                            p.idperiodo = idperiodo;
-
-                            cnx.Open();
-                            diasPago = (int)ph.DiasDePago(p);
-                            cnx.Close();
-
-                            cnx.Open();
                             diasAlta = (int)ah.diasProporcionales(a);
+                            fechaAlta = DateTime.Parse(ah.fechaAlta(a).ToString());
                             cnx.Close();
 
                             cnx.Open();
                             diasBaja = (int)bh.diasProporcionales(baja);
+                            fechaBaja = DateTime.Parse(bh.fechaBaja(baja).ToString());
                             cnx.Close();
 
-                            totalDias = diasPago - (diasAlta - diasBaja);
+                            if (fechaAlta <= fechaBaja) 
+                                totalDias = diasPago - ((diasPago - diasAlta) + (diasPago - diasBaja));
+
+                            if (fechaBaja < fechaAlta)
+                                totalDias = diasAlta + diasBaja;
 
                             Faltas.Core.FaltasHelper faltaHelper = new Faltas.Core.FaltasHelper();
                             faltaHelper.Command = cmd;
@@ -324,29 +333,22 @@ namespace Nominas
                         if (existeReingreso != 0 && existe != 0 && existeAlta == 0)
                         {
                             int totalDias = 0;
-                            cnx.Open();
-                            idperiodo = (int)edlh.obtenerIdPeriodo(idTrabajador);
-                            cnx.Close();
-
-                            Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
-                            ph.Command = cmd;
-
-                            Periodos.Core.Periodos p = new Periodos.Core.Periodos();
-                            p.idperiodo = idperiodo;
-
-                            cnx.Open();
-                            diasPago = (int)ph.DiasDePago(p);
-                            cnx.Close();
 
                             cnx.Open();
                             diasReingreso = (int)rh.diasProporcionales(r);
+                            fechaReingreso = DateTime.Parse(rh.fechaReingreso(r).ToString());
                             cnx.Close();
 
                             cnx.Open();
                             diasBaja = (int)bh.diasProporcionales(baja);
+                            fechaBaja = DateTime.Parse(bh.fechaBaja(baja).ToString());
                             cnx.Close();
 
-                            totalDias = diasReingreso + diasBaja;
+                            if (fechaBaja < fechaReingreso)
+                                totalDias = diasReingreso + diasBaja;
+
+                            if (fechaBaja == fechaReingreso)
+                                totalDias = diasPago - (diasPago - (diasReingreso) + (diasPago - diasBaja));
 
                             Faltas.Core.FaltasHelper faltaHelper = new Faltas.Core.FaltasHelper();
                             faltaHelper.Command = cmd;
@@ -371,6 +373,7 @@ namespace Nominas
                         {
                             cnx.Open();
                             diasReingreso = (int)rh.diasProporcionales(r);
+                            fechaReingreso = DateTime.Parse(rh.fechaReingreso(r).ToString());
                             cnx.Close();
 
                             Faltas.Core.FaltasHelper faltaHelper = new Faltas.Core.FaltasHelper();
@@ -458,19 +461,6 @@ namespace Nominas
                             //cnx.Close();
 
                             //Se obtiene los dias de pago.
-                            cnx.Open();
-                            idperiodo = (int)edlh.obtenerIdPeriodo(idTrabajador);
-                            cnx.Close();
-
-                            Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
-                            ph.Command = cmd;
-
-                            Periodos.Core.Periodos p = new Periodos.Core.Periodos();
-                            p.idperiodo = idperiodo;
-
-                            cnx.Open();
-                            diasPago = (int)ph.DiasDePago(p);
-                            cnx.Close();
 
                             //if (existeFaltaPago != 0 || existeIncidenciaPago != 0)
                             //{
@@ -486,6 +476,51 @@ namespace Nominas
                             //}
 
                             formula = formula.Replace("[" + variables[i] + "]", diasPago.ToString());
+                        }
+                        #endregion
+
+                        #region EXISTE ALTA, BAJA Y REINGRESO
+                        if (existeAlta != 0 && existe != 0 && existeReingreso != 0)
+                        {
+                            int totalDias = 0;
+
+                            cnx.Open();
+                            diasAlta = (int)ah.diasProporcionales(a);
+                            fechaAlta = DateTime.Parse(ah.fechaAlta(a).ToString());
+                            cnx.Close();
+
+                            cnx.Open();
+                            diasBaja = (int)bh.diasProporcionales(baja);
+                            fechaBaja = DateTime.Parse(bh.fechaBaja(baja).ToString());
+                            cnx.Close();
+
+                            cnx.Open();
+                            diasReingreso = (int)rh.diasProporcionales(r);
+                            fechaReingreso = DateTime.Parse(rh.fechaReingreso(r).ToString());
+                            cnx.Close();
+
+                            if (fechaAlta <= fechaBaja)
+                                totalDias = diasPago - ((diasPago - diasAlta) + (diasPago - diasBaja));
+                            if (fechaBaja < fechaReingreso)
+                                totalDias = totalDias + diasReingreso;
+                            if (fechaBaja == fechaReingreso)
+                                totalDias = totalDias + diasReingreso - 1;
+
+                            Faltas.Core.FaltasHelper faltaHelper = new Faltas.Core.FaltasHelper();
+                            faltaHelper.Command = cmd;
+                            Faltas.Core.Faltas faltasDL = new Faltas.Core.Faltas();
+                            faltasDL.idtrabajador = idTrabajador;
+                            faltasDL.fechainicio = inicioPeriodo;
+                            faltasDL.fechafin = finPeriodo;
+
+                            cnx.Open();
+                            diasFaltas = (int)faltaHelper.existeFalta(faltasDL);
+                            cnx.Close();
+
+                            if (diasFaltas >= totalDias)
+                                formula = formula.Replace("[" + variables[i] + "]", diasFaltas.ToString());
+                            else
+                                formula = formula.Replace("[" + variables[i] + "]", totalDias.ToString());
                         }
                         #endregion
 
@@ -563,13 +598,45 @@ namespace Nominas
                                     {
                                         if (_lstPeriodoInfonavit[0].fecha >= inicioPeriodo && _lstPeriodoInfonavit[0].fecha <= finPeriodo)
                                         {
-                                            cnx.Open();
-                                            formula = ch.obtenerFormula(concepto).ToString();
-                                            cnx.Close();
-                                            formula2 = formula;
-                                            formula2 = formula2.Replace("ValorInfonavit", "ValorInfonavit2");
-                                            formula2 = formula2.Replace("PeriodoInfonavit", "PeriodoInfonavit2");
-                                            formula = string.Format("({0}) + ({1})", formula, formula2);
+                                            if (_lstPeriodoInfonavit[0].descuento == _lstPeriodoInfonavit[1].descuento)
+                                            {
+                                                cnx.Open();
+                                                formula = ch.obtenerFormula(concepto).ToString();
+                                                cnx.Close();
+                                                formula2 = formula;
+                                                formula2 = formula2.Replace("ValorInfonavit", "ValorInfonavit2");
+                                                formula2 = formula2.Replace("PeriodoInfonavit", "PeriodoInfonavit2");
+                                                formula = string.Format("({0}) + ({1})", formula, formula2);
+                                            }
+                                            else
+                                            {
+                                                switch (lstInfonavit[0].descuento)
+                                                {
+                                                    case 1: concepto.noconcepto = 10;
+                                                        break;
+                                                    case 2: concepto.noconcepto = 12;
+                                                        break;
+                                                    case 3: concepto.noconcepto = 11;
+                                                        break;
+                                                }
+                                                cnx.Open();
+                                                formula = ch.obtenerFormula(concepto).ToString();
+                                                cnx.Close();
+
+                                                switch (lstInfonavit[1].descuento)
+                                                {
+                                                    case 1: concepto.noconcepto = 10;
+                                                        break;
+                                                    case 2: concepto.noconcepto = 12;
+                                                        break;
+                                                    case 3: concepto.noconcepto = 11;
+                                                        break;
+                                                }
+                                                cnx.Open();
+                                                formula2 = ch.obtenerFormula(concepto).ToString();
+                                                cnx.Close();
+                                                formula = string.Format("({0}) + ({1})", formula, formula2);
+                                            }
                                         }
                                         else
                                         {
@@ -594,13 +661,45 @@ namespace Nominas
                                     {
                                         if (_lstPeriodoInfonavit[0].fecha >= inicioPeriodo && _lstPeriodoInfonavit[0].fecha <= finPeriodo)
                                         {
-                                            cnx.Open();
-                                            formula = ch.obtenerFormula(concepto).ToString();
-                                            cnx.Close();
-                                            formula2 = formula;
-                                            formula2 = formula2.Replace("ValorInfonavit", "ValorInfonavit2");
-                                            formula2 = formula2.Replace("PeriodoInfonavit", "PeriodoInfonavit2");
-                                            formula = string.Format("({0}) + ({1})", formula, formula2);
+                                            if (_lstPeriodoInfonavit[0].descuento == _lstPeriodoInfonavit[1].descuento)
+                                            {
+                                                cnx.Open();
+                                                formula = ch.obtenerFormula(concepto).ToString();
+                                                cnx.Close();
+                                                formula2 = formula;
+                                                formula2 = formula2.Replace("ValorInfonavit", "ValorInfonavit2");
+                                                formula2 = formula2.Replace("PeriodoInfonavit", "PeriodoInfonavit2");
+                                                formula = string.Format("({0}) + ({1})", formula, formula2);
+                                            }
+                                            else
+                                            {
+                                                switch (lstInfonavit[0].descuento)
+                                                {
+                                                    case 1: concepto.noconcepto = 10;
+                                                        break;
+                                                    case 2: concepto.noconcepto = 12;
+                                                        break;
+                                                    case 3: concepto.noconcepto = 11;
+                                                        break;
+                                                }
+                                                cnx.Open();
+                                                formula = ch.obtenerFormula(concepto).ToString();
+                                                cnx.Close();
+
+                                                switch (lstInfonavit[1].descuento)
+                                                {
+                                                    case 1: concepto.noconcepto = 10;
+                                                        break;
+                                                    case 2: concepto.noconcepto = 12;
+                                                        break;
+                                                    case 3: concepto.noconcepto = 11;
+                                                        break;
+                                                }
+                                                cnx.Open();
+                                                formula2 = ch.obtenerFormula(concepto).ToString();
+                                                cnx.Close();
+                                                formula = string.Format("({0}) + ({1})", formula, formula2);
+                                            }
                                         }
                                         else
                                         {
@@ -625,13 +724,45 @@ namespace Nominas
                                     {
                                         if (_lstPeriodoInfonavit[0].fecha >= inicioPeriodo && _lstPeriodoInfonavit[0].fecha <= finPeriodo)
                                         {
-                                            cnx.Open();
-                                            formula = ch.obtenerFormula(concepto).ToString();
-                                            cnx.Close();
-                                            formula2 = formula;
-                                            formula2 = formula2.Replace("ValorInfonavit", "ValorInfonavit2");
-                                            formula2 = formula2.Replace("PeriodoInfonavit", "PeriodoInfonavit2");
-                                            formula = string.Format("({0}) + ({1})", formula, formula2);
+                                            if (_lstPeriodoInfonavit[0].descuento == _lstPeriodoInfonavit[1].descuento)
+                                            {
+                                                cnx.Open();
+                                                formula = ch.obtenerFormula(concepto).ToString();
+                                                cnx.Close();
+                                                formula2 = formula;
+                                                formula2 = formula2.Replace("ValorInfonavit", "ValorInfonavit2");
+                                                formula2 = formula2.Replace("PeriodoInfonavit", "PeriodoInfonavit2");
+                                                formula = string.Format("({0}) + ({1})", formula, formula2);
+                                            }
+                                            else
+                                            {
+                                                switch (lstInfonavit[0].descuento)
+                                                {
+                                                    case 1: concepto.noconcepto = 10;
+                                                        break;
+                                                    case 2: concepto.noconcepto = 12;
+                                                        break;
+                                                    case 3: concepto.noconcepto = 11;
+                                                        break;
+                                                }
+                                                cnx.Open();
+                                                formula = ch.obtenerFormula(concepto).ToString();
+                                                cnx.Close();
+
+                                                switch (lstInfonavit[1].descuento)
+                                                {
+                                                    case 1: concepto.noconcepto = 10;
+                                                        break;
+                                                    case 2: concepto.noconcepto = 12;
+                                                        break;
+                                                    case 3: concepto.noconcepto = 11;
+                                                        break;
+                                                }
+                                                cnx.Open();
+                                                formula2 = ch.obtenerFormula(concepto).ToString();
+                                                cnx.Close();
+                                                formula = string.Format("({0}) + ({1})", formula, formula2);
+                                            }
                                         }
                                         else
                                         {
@@ -808,18 +939,37 @@ namespace Nominas
                         //cnx.Close();
 
                         //if (lstPeriodoInfonavit.Count == 1)
-                            if (lstPeriodoInfonavit[0].fecha >= inicioPeriodo && lstPeriodoInfonavit[0].fecha <= finPeriodo)
-                            {
-                                CalculoFormula cf = new CalculoFormula(idTrabajador, inicioPeriodo, finPeriodo, "[Faltas]-[DiasIncapacidad]");
-                                diasPI = int.Parse(cf.calcularFormula().ToString());
-                                formula = formula.Replace("[" + variables[i] + "]", (lstPeriodoInfonavit[0].dias - diasPI).ToString());
-                            }
-                            else
-                            {
-                                CalculoFormula cf = new CalculoFormula(idTrabajador, inicioPeriodo, finPeriodo, "[DiasLaborados]-[Faltas]-[DiasIncapacidad]");
-                                diasPI = int.Parse(cf.calcularFormula().ToString());
-                                formula = formula.Replace("[" + variables[i] + "]", diasPI.ToString());
-                            }
+                        if (lstPeriodoInfonavit[0].fecha >= inicioPeriodo && lstPeriodoInfonavit[0].fecha <= finPeriodo)
+                        {
+                            int faltaDentroInfonavit = 0;
+                            Faltas.Core.FaltasHelper fih = new Faltas.Core.FaltasHelper();
+                            fih.Command = cmd;
+                            Faltas.Core.Faltas fi = new Faltas.Core.Faltas();
+                            fi.idempresa = GLOBALES.IDEMPRESA;
+                            fi.idtrabajador = idTrabajador;
+                            fi.fechainicio = inicioPeriodo;
+                            fi.fechafin = finPeriodo;
+                            List<Faltas.Core.Faltas> lstFaltasInf = new List<Faltas.Core.Faltas>();
+                            cnx.Open();
+                            lstFaltasInf = fih.obtenerFaltaTrabajador(fi);
+                            cnx.Close();
+                            if (lstFaltasInf.Count != 0)
+                                for (int x = 0; x < lstFaltasInf.Count; x++)
+                                {
+                                    if (lstFaltasInf[x].fecha >= lstPeriodoInfonavit[0].fecha)
+                                    {
+                                        faltaDentroInfonavit += 1;
+                                    }
+                                }
+
+                            formula = formula.Replace("[" + variables[i] + "]", (lstPeriodoInfonavit[0].dias - faltaDentroInfonavit).ToString());
+                        }
+                        else
+                        {
+                            CalculoFormula cf = new CalculoFormula(idTrabajador, inicioPeriodo, finPeriodo, "[DiasLaborados]-[Faltas]-[DiasIncapacidad]");
+                            diasPI = int.Parse(cf.calcularFormula().ToString());
+                            formula = formula.Replace("[" + variables[i] + "]", diasPI.ToString());
+                        }
                              
                         //else if (lstPeriodoInfonavit.Count == 2)
                         //    if (lstPeriodoInfonavit[0].fecha >= inicioPeriodo && lstPeriodoInfonavit[0].fecha <= finPeriodo)

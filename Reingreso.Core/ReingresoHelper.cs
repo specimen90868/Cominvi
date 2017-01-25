@@ -96,7 +96,7 @@ namespace Reingreso.Core
 
         public object diasProporcionales(Reingresos r)
         {
-            Command.CommandText = "select diasproporcionales from suaReingresos where idtrabajador = @idtrabajador and periodoinicio = @periodoinicio and periodofin = @periodofin";
+            Command.CommandText = "select sum(diasproporcionales) as diasproporcionales from suaReingresos where idtrabajador = @idtrabajador and periodoinicio = @periodoinicio and periodofin = @periodofin";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", r.idtrabajador);
             Command.Parameters.AddWithValue("periodoinicio", r.periodoinicio);
@@ -114,6 +114,17 @@ namespace Reingreso.Core
             Command.Parameters.AddWithValue("fin", r.periodofin);
             object dato = Select(Command);
             return dato;
+        }
+
+        public int eliminaReingreso(Reingresos r)
+        {
+            Command.CommandText = "delete from suaReingresos where idtrabajador = @idtrabajador and fechaingreso = @fechaingreso and periodoinicio = @periodoinicio and periodofin = @periodofin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", r.idtrabajador);
+            Command.Parameters.AddWithValue("fechaingreso", r.fechaingreso);
+            Command.Parameters.AddWithValue("periodoinicio", r.periodoinicio);
+            Command.Parameters.AddWithValue("periodofin", r.periodofin);
+            return Command.ExecuteNonQuery();
         }
     }
 }

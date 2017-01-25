@@ -24,6 +24,7 @@ namespace Nominas
         public string _nombreEmpleado;
         public int _tipoOperacion;
         public int _periodo;
+        public int _idprogramacion;
         #endregion
 
         #region VARIABLES GLOBALES
@@ -52,15 +53,12 @@ namespace Nominas
                 pch = new ProgramacionConcepto.Core.ProgramacionHelper();
                 pch.Command = cmd;
 
-                ProgramacionConcepto.Core.ProgramacionConcepto programacion = new ProgramacionConcepto.Core.ProgramacionConcepto();
-                programacion.idtrabajador = _idEmpleado;
-
                 List<ProgramacionConcepto.Core.ProgramacionConcepto> lstProgramacion;
 
                 try
                 {
                     cnx.Open();
-                    lstProgramacion = pch.obtenerProgramacion(programacion);
+                    lstProgramacion = pch.obtenerProgramacion(_idprogramacion);
                     cnx.Close();
                     cnx.Dispose();
 
@@ -156,7 +154,9 @@ namespace Nominas
             pch.Command = cmd;
 
             ProgramacionConcepto.Core.ProgramacionConcepto programacion = new ProgramacionConcepto.Core.ProgramacionConcepto();
+            programacion.idprogramacion = _idprogramacion;
             programacion.idtrabajador = _idEmpleado;
+            programacion.idempresa = GLOBALES.IDEMPRESA;
             programacion.idconcepto = int.Parse(cmbConcepto.SelectedValue.ToString());
             programacion.cantidad = decimal.Parse(txtCantidad.Text);
             programacion.fechafin = dtpFecha.Value;

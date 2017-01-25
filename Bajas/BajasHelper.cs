@@ -111,7 +111,7 @@ namespace Bajas.Core
 
         public object diasProporcionales(Bajas b)
         {
-            Command.CommandText = "select diasproporcionales from suaBajas where idtrabajador = @idtrabajador and periodoinicio = @periodoinicio and periodofin = @periodofin";
+            Command.CommandText = "select sum(diasproporcionales) as diasproporcionales from suaBajas where idtrabajador = @idtrabajador and periodoinicio = @periodoinicio and periodofin = @periodofin";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", b.idtrabajador);
             Command.Parameters.AddWithValue("periodoinicio", b.periodoinicio);
@@ -155,6 +155,17 @@ namespace Bajas.Core
             Command.Parameters.AddWithValue("idempresa", b.idempresa);
             Command.Parameters.AddWithValue("fecha", b.fecha);
             return Command.ExecuteNonQuery();
+        }
+
+        public object fechaBaja(Bajas b)
+        {
+            Command.CommandText = "select fecha from suaBajas where idtrabajador = @idtrabajador and periodoinicio = @inicio and periodofin = @fin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", b.idtrabajador);
+            Command.Parameters.AddWithValue("inicio", b.periodoinicio);
+            Command.Parameters.AddWithValue("fin", b.periodofin);
+            object dato = Select(Command);
+            return dato;
         }
     }
 }

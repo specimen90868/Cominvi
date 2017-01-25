@@ -189,7 +189,7 @@ namespace Nominas
                             try
                             {
                                 cnx.Open();
-                                lstXml = nh.obtenerListaQr(GLOBALES.IDEMPRESA, dtpInicioPeriodo.Value.Date, dtpFinPeriodo.Value.Date);
+                                lstXml = nh.obtenerListaQr(GLOBALES.IDEMPRESA, dtpInicioPeriodo.Value.Date, dtpFinPeriodo.Value.Date, periodo);
                                 cnx.Close();
                             }
                             catch (Exception error)

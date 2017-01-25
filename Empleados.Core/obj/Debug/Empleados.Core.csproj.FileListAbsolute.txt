@@ -22,6 +22,5 @@ C:\GitHub\Repositorios\Cominvi\Empleados.Core\bin\Debug\Empleados.Core.dll
 C:\GitHub\Repositorios\Cominvi\Empleados.Core\bin\Debug\Empleados.Core.pdb
 C:\GitHub\Repositorios\Cominvi\Empleados.Core\bin\Debug\Data.Obj.dll
 C:\GitHub\Repositorios\Cominvi\Empleados.Core\bin\Debug\Data.Obj.pdb
-C:\GitHub\Repositorios\Cominvi\Empleados.Core\obj\Debug\Empleados.Core.csprojResolveAssemblyReference.cache
 C:\GitHub\Repositorios\Cominvi\Empleados.Core\obj\Debug\Empleados.Core.dll
 C:\GitHub\Repositorios\Cominvi\Empleados.Core\obj\Debug\Empleados.Core.pdb

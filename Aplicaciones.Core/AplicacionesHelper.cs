@@ -29,12 +29,11 @@ namespace Aplicaciones.Core
         public List<Aplicaciones> obtenerFechasDeAplicacion(Aplicaciones a)
         {
             DataTable dt = new DataTable();
-            Command.CommandText = @"select * from Aplicaciones where periodoinicio = @periodoinicio and periodofin = @periodofin
-                                    and idempresa = @idempresa";
+            Command.CommandText = @"select * from Aplicaciones where idtrabajador = @idtrabajador and periodoinicio = @periodoinicio and periodofin = @periodofin";
             Command.Parameters.Clear();
-            Command.Parameters.AddWithValue("periodoinicio", a.periodoinicio);
             Command.Parameters.AddWithValue("periodofin", a.periodofin);
-            Command.Parameters.AddWithValue("idempresa", a.idempresa);
+            Command.Parameters.AddWithValue("periodoinicio", a.periodoinicio);
+            Command.Parameters.AddWithValue("idtrabajador", a.idtrabajador);
             dt = SelectData(Command);
             List<Aplicaciones> lstAplicaciones = new List<Aplicaciones>();
             for (int i = 0; i < dt.Rows.Count; i++)
@@ -63,5 +62,36 @@ namespace Aplicaciones.Core
             return Command.ExecuteNonQuery();
         }
 
+        public int aplica(int idtrabajador, DateTime inicio, DateTime fin, int periodo, string tipo, int valor)
+        {
+            if (tipo == "D")
+            {
+                Command.CommandText = @"update tmpPagoNomina set iddepartamento = @valor where idtrabajador = @idtrabajador and fechainicio = @fechainicio and fechafin = @fechafin";
+            }
+            else if (tipo == "P")
+            {
+                Command.CommandText = @"update tmpPagoNomina set idpuesto = @valor where idtrabajador = @idtrabajador and fechainicio = @fechainicio and fechafin = @fechafin";
+            }
+
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("valor", valor);
+            Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
+            Command.Parameters.AddWithValue("fechainicio", inicio);
+            Command.Parameters.AddWithValue("fechafin", fin);
+            return Command.ExecuteNonQuery();
+        }
+
+        public int existeAplicacion(Aplicaciones a)
+        {
+            Command.CommandText = @"select count(*) from aplicaciones where idtrabajador = @idtrabajador and deptopuesto = @deptopuesto and periodoinicio = @periodoinicio
+                                  and periodofin = @periodofin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", a.idtrabajador);
+            Command.Parameters.AddWithValue("deptopuesto", a.deptopuesto);
+            Command.Parameters.AddWithValue("periodoinicio", a.periodoinicio);
+            Command.Parameters.AddWithValue("periodofin", a.periodofin);
+            int dato = int.Parse(Select(Command).ToString());
+            return dato;
+        }
     }
 }

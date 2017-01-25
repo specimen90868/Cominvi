@@ -86,6 +86,7 @@ namespace Nominas
             em.nocertificado = txtNoCertificado.Text;
             em.vigenciacertificado = dtpVigencia.Value.Date;
             em.observacion = txtObservacion.Text;
+            em.obracivil = chkObraCivil.Checked;
 
             dh = new Direccion.Core.DireccionesHelper();
             dh.Command = cmd;
@@ -277,6 +278,7 @@ namespace Nominas
                         txtPassword.Text = lstEmpresa[i].password;
                         txtNoCertificado.Text = lstEmpresa[i].nocertificado;
                         dtpVigencia.Value = lstEmpresa[i].vigenciacertificado;
+                        chkObraCivil.Checked = lstEmpresa[i].obracivil;
                     }
 
                     for (int i = 0; i < lstDireccion.Count; i++)

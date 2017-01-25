@@ -22,5 +22,6 @@ namespace Empresas.Core
         public string nocertificado { get; set; }
         public DateTime vigenciacertificado { get; set; }
         public string observacion { get; set; }
+        public bool obracivil { get; set; }
     }
 }

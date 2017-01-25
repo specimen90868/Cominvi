@@ -148,7 +148,7 @@ namespace Infonavit.Core
         {
             List<Infonavit> lstInfonavit = new List<Infonavit>();
             DataTable dtInfonavit = new DataTable();
-            Command.CommandText = "select top 2 dias, fecha from Infonavit where idtrabajador = @idtrabajador order by fecha desc";
+            Command.CommandText = "select top 2 dias, fecha, descuento from Infonavit where idtrabajador = @idtrabajador order by fecha desc";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", e.idtrabajador);
             dtInfonavit = SelectData(Command);
@@ -157,7 +157,7 @@ namespace Infonavit.Core
                 Infonavit inf = new Infonavit();
                 inf.dias = int.Parse(dtInfonavit.Rows[i]["dias"].ToString());
                 inf.fecha = DateTime.Parse(dtInfonavit.Rows[i]["fecha"].ToString());
-                
+                inf.descuento = int.Parse(dtInfonavit.Rows[i]["descuento"].ToString());
                 lstInfonavit.Add(inf);
             }
             return lstInfonavit;

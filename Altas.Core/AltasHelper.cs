@@ -170,7 +170,7 @@ namespace Altas.Core
 
         public object fechaAlta(Altas a)
         {
-            Command.CommandText = "select fecha from suaAltas where idtrabajador = @idtrabajador and periodoInicio = @inicio and periodofin = @fin";
+            Command.CommandText = "select fechaingreso from suaAltas where idtrabajador = @idtrabajador and periodoInicio = @inicio and periodofin = @fin";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", a.idtrabajador);
             Command.Parameters.AddWithValue("inicio", a.periodoInicio);

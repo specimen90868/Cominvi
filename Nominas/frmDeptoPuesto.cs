@@ -25,7 +25,9 @@ namespace Nominas
         SqlCommand cmd;
         DateTime inicioPeriodo, finPeriodo;
         DateTime periodoInicioCalculo, periodoFinCalculo;
+        DateTime inicioPeriodoActual, finPeriodoActual;
         int idperiodo, iddepto, idpuesto;
+        bool obracivil;
         decimal sdi;
         List<CalculoNomina.Core.tmpPagoNomina> lstUltimaNomina;
         #endregion
@@ -66,6 +68,7 @@ namespace Nominas
             sdi = lstEmpleado[0].sdi;
             iddepto = lstEmpleado[0].iddepartamento;
             idpuesto = lstEmpleado[0].idpuesto;
+            obracivil = lstEmpleado[0].obracivil;
 
             if (_deptopuesto == 0)
             {
@@ -139,6 +142,47 @@ namespace Nominas
             cmd = new SqlCommand();
             cmd.Connection = cnx;
 
+            Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
+            ph.Command = cmd;
+
+            Periodos.Core.Periodos periodo = new Periodos.Core.Periodos();
+            periodo.idperiodo = idperiodo;
+
+            int dias = 0;
+            try
+            {
+                cnx.Open();
+                dias = int.Parse(ph.DiasDePago(periodo).ToString());
+                cnx.Close();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error: Al obtener la ultima nómina del trabajador.", "Error");
+                cnx.Dispose();
+            }
+
+            if (dias == 7)
+            {
+                DateTime dt = dtpFechaAplicacion.Value;
+                while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
+                inicioPeriodo = dt;
+                finPeriodo = dt.AddDays(6);
+            }
+            else
+            {
+                if (dtpFechaAplicacion.Value.Day <= 15)
+                {
+                    inicioPeriodo = new DateTime(dtpFechaAplicacion.Value.Year, dtpFechaAplicacion.Value.Month, 1);
+                    finPeriodo = new DateTime(dtpFechaAplicacion.Value.Year, dtpFechaAplicacion.Value.Month, 15);
+                }
+                else
+                {
+                    inicioPeriodo = new DateTime(dtpFechaAplicacion.Value.Year, dtpFechaAplicacion.Value.Month, 16);
+                    finPeriodo = new DateTime(dtpFechaAplicacion.Value.Year, dtpFechaAplicacion.Value.Month,
+                        DateTime.DaysInMonth(dtpFechaAplicacion.Value.Year, dtpFechaAplicacion.Value.Month));
+                }
+            }
+
             Aplicaciones.Core.AplicacionesHelper ah = new Aplicaciones.Core.AplicacionesHelper();
             ah.Command = cmd;
 
@@ -150,8 +194,8 @@ namespace Nominas
             a.fecha = dtpFechaAplicacion.Value.Date;
             a.registro = DateTime.Now;
             a.idusuario = GLOBALES.IDUSUARIO;
-            a.periodoinicio = inicioPeriodo;
-            a.periodofin = finPeriodo;
+            a.periodoinicio = inicioPeriodo.Date;
+            a.periodofin = finPeriodo.Date;
 
             Historial.Core.HistorialHelper hh = new Historial.Core.HistorialHelper();
             hh.Command = cmd;
@@ -181,56 +225,145 @@ namespace Nominas
                 historial.iddepartamento = iddepto;
             }
 
+            
+
+            #region VALIDA NO EXISTA APLICACION
+            int existe = 0;
             try
             {
                 cnx.Open();
-                hh.insertarHistorial(historial);
+                existe = ah.existeAplicacion(a);
                 cnx.Close();
-
             }
             catch (Exception)
             {
-                MessageBox.Show("Error: Al insertar el historico.", "Error");
+                MessageBox.Show("Error: Al verificar existencia del cambio de depto/puesto.\r\n\r\nLa ventana se cerrará.", "Error");
                 cnx.Dispose();
+                this.Dispose();
             }
 
-            if (inicioPeriodo.Date == periodoInicioCalculo.Date && finPeriodo.Date == periodoFinCalculo.Date)
+            if (existe != 0)
             {
-                Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
-                eh.Command = cmd;
-                try
+                MessageBox.Show("El cambio de depto/puesto ya fue ingresado. Esta ventana se cerrará.", "Información");
+                this.Dispose();
+            }
+            #endregion
+
+            if (GLOBALES.IDEMPRESA != 2)
+            {
+                if (inicioPeriodo.Date < inicioPeriodoActual.Date && finPeriodo.Date < finPeriodoActual.Date || inicioPeriodo.Date == inicioPeriodoActual.Date && finPeriodo.Date == finPeriodoActual.Date)
                 {
-                    cnx.Open();
-                    if (_deptopuesto == 0)
-                        eh.actualizaDeptoPuesto(int.Parse(cmbDeptoPuesto.SelectedValue.ToString()), _idempleado, "D");
-                    else
-                        eh.actualizaDeptoPuesto(int.Parse(cmbDeptoPuesto.SelectedValue.ToString()), _idempleado, "P");
-                    cnx.Close();
-                    cnx.Dispose();
+                    Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
+                    eh.Command = cmd;
+                    try
+                    {
+                        cnx.Open();
+                        if (_deptopuesto == 0)
+                            eh.actualizaDeptoPuesto(int.Parse(cmbDeptoPuesto.SelectedValue.ToString()), _idempleado, "D");
+                        else
+                            eh.actualizaDeptoPuesto(int.Parse(cmbDeptoPuesto.SelectedValue.ToString()), _idempleado, "P");
+                        hh.insertarHistorial(historial);
+                        cnx.Close();
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error: Al actualizar el depto/puesto. \r\n\r\n" + error.Message, "Error");
+                        cnx.Dispose();
+                    }
                 }
-                catch (Exception)
+                else if (inicioPeriodo > inicioPeriodoActual && finPeriodo > finPeriodoActual)
                 {
-                    MessageBox.Show("Error: Al actualizar el depto/puesto.", "Error");
-                    cnx.Dispose();
+                    try
+                    {
+                        cnx.Open();
+                        ah.insertaAplicacion(a);
+                        cnx.Close();
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Error: Al ingresar la aplicacion del depto/puesto.", "Error");
+                        cnx.Dispose();
+                    }
                 }
             }
             else
             {
-                try
+                if (obracivil)
                 {
-                    cnx.Open();
-                    ah.insertaAplicacion(a);
-                    cnx.Close();
-                    cnx.Dispose();
+                    if (inicioPeriodo.Date < inicioPeriodoActual.Date && finPeriodo.Date < finPeriodoActual.Date || inicioPeriodo.Date == inicioPeriodoActual.Date && finPeriodo.Date == finPeriodoActual.Date)
+                    {
+                        Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
+                        eh.Command = cmd;
+                        try
+                        {
+                            cnx.Open();
+                            if (_deptopuesto == 0)
+                                eh.actualizaDeptoPuesto(int.Parse(cmbDeptoPuesto.SelectedValue.ToString()), _idempleado, "D");
+                            else
+                                eh.actualizaDeptoPuesto(int.Parse(cmbDeptoPuesto.SelectedValue.ToString()), _idempleado, "P");
+                            hh.insertarHistorial(historial);
+                            cnx.Close();
+                        }
+                        catch (Exception error)
+                        {
+                            MessageBox.Show("Error: Al actualizar el depto/puesto. \r\n\r\n" + error.Message, "Error");
+                            cnx.Dispose();
+                        }
+                    }
+                    else if (inicioPeriodo > inicioPeriodoActual && finPeriodo > finPeriodoActual)
+                    {
+                        try
+                        {
+                            cnx.Open();
+                            ah.insertaAplicacion(a);
+                            cnx.Close();
+                        }
+                        catch (Exception)
+                        {
+                            MessageBox.Show("Error: Al ingresar la aplicacion del depto/puesto.", "Error");
+                            cnx.Dispose();
+                        }
+                    }
                 }
-                catch (Exception)
+                else
                 {
-                    MessageBox.Show("Error: Al ingresar la aplicacion del depto/puesto.", "Error");
-                    cnx.Dispose();
+                    if (inicioPeriodo.Date < inicioPeriodoActual.Date && finPeriodo.Date < finPeriodoActual.Date)
+                    {
+                        Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
+                        eh.Command = cmd;
+                        try
+                        {
+                            cnx.Open();
+                            if (_deptopuesto == 0)
+                                eh.actualizaDeptoPuesto(int.Parse(cmbDeptoPuesto.SelectedValue.ToString()), _idempleado, "D");
+                            else
+                                eh.actualizaDeptoPuesto(int.Parse(cmbDeptoPuesto.SelectedValue.ToString()), _idempleado, "P");
+                            hh.insertarHistorial(historial);
+                            cnx.Close();
+                        }
+                        catch (Exception error)
+                        {
+                            MessageBox.Show("Error: Al actualizar el depto/puesto. \r\n\r\n" + error.Message, "Error");
+                            cnx.Dispose();
+                        }
+                    }
+                    else if (inicioPeriodo >= inicioPeriodoActual && finPeriodo >= finPeriodoActual)
+                    {
+                        try
+                        {
+                            cnx.Open();
+                            ah.insertaAplicacion(a);
+                            cnx.Close();
+                        }
+                        catch (Exception)
+                        {
+                            MessageBox.Show("Error: Al ingresar la aplicacion del depto/puesto.", "Error");
+                            cnx.Dispose();
+                        }
+                    }
                 }
             }
-
-           
+            cnx.Dispose();
             this.Dispose();
         }
 
@@ -271,29 +404,6 @@ namespace Nominas
                                     "Se empalma con la ultima nomina del trabajador, por favor verifique.", "Información");
                     dtpFechaAplicacion.Value = DateTime.Now;
                 }
-
-
-            if (dias == 7)
-            {
-                DateTime dt = dtpFechaAplicacion.Value;
-                while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
-                inicioPeriodo = dt;
-                finPeriodo = dt.AddDays(6);
-            }
-            else
-            {
-                if (dtpFechaAplicacion.Value.Day <= 15)
-                {
-                    inicioPeriodo = new DateTime(dtpFechaAplicacion.Value.Year, dtpFechaAplicacion.Value.Month, 1);
-                    finPeriodo = new DateTime(dtpFechaAplicacion.Value.Year, dtpFechaAplicacion.Value.Month, 15);
-                }
-                else
-                {
-                    inicioPeriodo = new DateTime(dtpFechaAplicacion.Value.Year, dtpFechaAplicacion.Value.Month, 16);
-                    finPeriodo = new DateTime(dtpFechaAplicacion.Value.Year, dtpFechaAplicacion.Value.Month, 
-                        DateTime.DaysInMonth(dtpFechaAplicacion.Value.Year, dtpFechaAplicacion.Value.Month));
-                }
-            }
         }
 
         private void obtenerPeriodoCalculo()
@@ -302,10 +412,10 @@ namespace Nominas
             cmd = new SqlCommand();
             cmd.Connection = cnx;
 
-            CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
-            nh.Command = cmd;
+            //CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
+            //nh.Command = cmd;
 
-            List<CalculoNomina.Core.tmpPagoNomina> lstUltimaNomina = new List<CalculoNomina.Core.tmpPagoNomina>();
+            //List<CalculoNomina.Core.tmpPagoNomina> lstUltimaNomina = new List<CalculoNomina.Core.tmpPagoNomina>();
 
             Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
             ph.Command = cmd;
@@ -327,37 +437,59 @@ namespace Nominas
                 throw;
             }
             int periodo = lstPeriodo[0].dias;
-                
-            try
-            {
-                cnx.Open();
-                lstUltimaNomina = nh.obtenerUltimaNominaTrabajador(GLOBALES.IDEMPRESA, _idempleado, periodo);
-                cnx.Close();
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
-            }
 
-            if (lstUltimaNomina.Count != 0)
+            if (periodo == 7)
             {
-                if (periodo == 7)
+                DateTime dt = DateTime.Now.Date;
+                while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
+                inicioPeriodoActual = dt;
+                finPeriodoActual = dt.AddDays(6);
+            }
+            else
+            {
+                if (dtpFechaAplicacion.Value.Day <= 15)
                 {
-                    periodoInicioCalculo = lstUltimaNomina[0].fechafin.AddDays(1);
-                    periodoFinCalculo = lstUltimaNomina[0].fechafin.AddDays(7);
+                    inicioPeriodoActual = new DateTime(dtpFechaAplicacion.Value.Year, dtpFechaAplicacion.Value.Month, 1);
+                    finPeriodoActual = new DateTime(dtpFechaAplicacion.Value.Year, dtpFechaAplicacion.Value.Month, 15);
                 }
                 else
                 {
-                    periodoInicioCalculo = lstUltimaNomina[0].fechafin.AddDays(1);
-
-                    if (periodoInicioCalculo.Day <= 15)
-                        periodoFinCalculo = lstUltimaNomina[0].fechafin.AddDays(15);
-                    else
-                        periodoFinCalculo = new DateTime(periodoInicioCalculo.Year, periodoInicioCalculo.Month,
-                            DateTime.DaysInMonth(periodoInicioCalculo.Year, periodoInicioCalculo.Month));
-
+                    inicioPeriodoActual = new DateTime(dtpFechaAplicacion.Value.Year, dtpFechaAplicacion.Value.Month, 16);
+                    finPeriodoActual = new DateTime(dtpFechaAplicacion.Value.Year, dtpFechaAplicacion.Value.Month,
+                        DateTime.DaysInMonth(dtpFechaAplicacion.Value.Year, dtpFechaAplicacion.Value.Month));
                 }
             }
+
+            //try
+            //{
+            //    cnx.Open();
+            //    lstUltimaNomina = nh.obtenerUltimaNominaTrabajador(GLOBALES.IDEMPRESA, _idempleado, periodo);
+            //    cnx.Close();
+            //}
+            //catch (Exception error)
+            //{
+            //    MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+            //}
+
+            //if (lstUltimaNomina.Count != 0)
+            //{
+            //    if (periodo == 7)
+            //    {
+            //        periodoInicioCalculo = lstUltimaNomina[0].fechafin.AddDays(1);
+            //        periodoFinCalculo = lstUltimaNomina[0].fechafin.AddDays(7);
+            //    }
+            //    else
+            //    {
+            //        periodoInicioCalculo = lstUltimaNomina[0].fechafin.AddDays(1);
+
+            //        if (periodoInicioCalculo.Day <= 15)
+            //            periodoFinCalculo = lstUltimaNomina[0].fechafin.AddDays(15);
+            //        else
+            //            periodoFinCalculo = new DateTime(periodoInicioCalculo.Year, periodoInicioCalculo.Month,
+            //                DateTime.DaysInMonth(periodoInicioCalculo.Year, periodoInicioCalculo.Month));
+
+            //    }
+            //}
         }
     }
 }

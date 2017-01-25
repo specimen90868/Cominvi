@@ -250,7 +250,7 @@ namespace Nominas
                 try
                 {
                     cnx.Open();
-                    lstXml = nh.obtenerListaQr(GLOBALES.IDEMPRESA, DateTime.Parse(fecha).Date, DateTime.Parse(fechafin).Date);
+                    lstXml = nh.obtenerListaQr(GLOBALES.IDEMPRESA, DateTime.Parse(fecha).Date, DateTime.Parse(fechafin).Date, periodo);
                     cnx.Close();
                 }
                 catch (Exception error)
@@ -300,10 +300,14 @@ namespace Nominas
                 }
             }
 
-            if (todos)
+            if (todos) 
             {
                 for (int i = 0; i < lstvPeriodos.SelectedItems.Count; i++)
+                {
                     fecha = lstvPeriodos.SelectedItems[i].Text;
+                    fechafin = lstvPeriodos.SelectedItems[i].SubItems[1].Text; 
+                }
+                    
                 idEmpleados = "";
                 frmVisorReportes vr = new frmVisorReportes();
                 vr._tipoNomina = (cmbTipoNomina.SelectedIndex == 0 ? GLOBALES.NORMAL : GLOBALES.EXTRAORDINARIO_NORMAL);
@@ -312,6 +316,7 @@ namespace Nominas
                 vr._todos = todos;
                 vr._noReporte = 10;
                 vr._inicioPeriodo = DateTime.Parse(fecha).Date;
+                vr._finPeriodo = DateTime.Parse(fechafin).Date;
                 vr._periodo = periodo;
                 vr.Show();
             }
@@ -327,7 +332,11 @@ namespace Nominas
                 if (idEmpleados != "")
                 {
                     for (int i = 0; i < lstvPeriodos.SelectedItems.Count; i++)
+                    {
                         fecha = lstvPeriodos.SelectedItems[i].Text;
+                        fechafin = lstvPeriodos.SelectedItems[i].SubItems[1].Text; 
+                    }
+                    
                     idEmpleados = idEmpleados.Substring(0, idEmpleados.Length - 1);
                     frmVisorReportes vr = new frmVisorReportes();
                     vr._tipoNomina = (cmbTipoNomina.SelectedIndex == 0 ? GLOBALES.NORMAL : GLOBALES.EXTRAORDINARIO_NORMAL);
@@ -337,6 +346,7 @@ namespace Nominas
                     vr._noReporte = 10;
                     vr._periodo = periodo;
                     vr._inicioPeriodo = DateTime.Parse(fecha).Date;
+                    vr._finPeriodo = DateTime.Parse(fechafin).Date;
                     vr.Show();
                 }
             }

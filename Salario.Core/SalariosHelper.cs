@@ -29,21 +29,17 @@ namespace Salario.Core
             return lstSalario;
         }
 
-        public List<Salarios> obtenerSalario(DateTime periodo, int idsalario)
+        public List<Salarios> obtenerSalario()
         {
             DataTable dtSalarios = new DataTable();
             List<Salarios> lstSalario = new List<Salarios>();
-            Command.CommandText = "select idsalario, periodo, valor, zona from salariominimo where idsalario = @idsalario and periodo = @periodo";
+            Command.CommandText = "select idsalario, zona + '-' + cast(valor as varchar(5)) as zona from salariominimo order by periodo desc";
             Command.Parameters.Clear();
-            Command.Parameters.AddWithValue("periodo", periodo);
-            Command.Parameters.AddWithValue("idsalario", idsalario);
             dtSalarios = SelectData(Command);
             for (int i = 0; i < dtSalarios.Rows.Count; i++)
             {
                 Salarios s = new Salarios();
                 s.idsalario = int.Parse(dtSalarios.Rows[i]["idsalario"].ToString());
-                s.periodo = DateTime.Parse(dtSalarios.Rows[i]["periodo"].ToString());
-                s.valor = decimal.Parse(dtSalarios.Rows[i]["valor"].ToString());
                 s.zona = dtSalarios.Rows[i]["zona"].ToString();
                 lstSalario.Add(s);
             }

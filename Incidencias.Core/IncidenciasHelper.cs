@@ -150,6 +150,17 @@ namespace Incidencias.Core
             return dato;
         }
 
+        public object diasIncidencia(int idtrabajador, DateTime inicio, DateTime fin)
+        {
+            Command.CommandText = "select dias from incidencias where idtrabajador = @idtrabajador and fechainicio = @inicio and fechafin = @fin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
+            Command.Parameters.AddWithValue("inicio", inicio);
+            Command.Parameters.AddWithValue("fin", fin);
+            object dato = Select(Command);
+            return dato;
+        }
+
         public object existeIncidenciaEnFalta(int id, DateTime fecha)
         {
             Command.CommandText = "select count(*) from incidencias where idtrabajador = @idtrabajador and fechafin >= @fecha and fechainicio <= @fecha";

@@ -187,13 +187,18 @@ namespace Nominas
                 idPeriodo = int.Parse(empleadosHelper.obtenerIdPeriodo(idEmpleado).ToString());
                 cnx.Close();
 
+                Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
+                empleado.idtrabajador = idEmpleado;
+
                 Periodos.Core.PeriodosHelper periodoHelper = new Periodos.Core.PeriodosHelper();
                 periodoHelper.Command = cmd;
 
                 Periodos.Core.Periodos periodos = new Periodos.Core.Periodos();
                 periodos.idperiodo = idPeriodo;
 
+                List<Empleados.Core.Empleados> lstEmpleado = new List<Empleados.Core.Empleados>();
                 cnx.Open();
+                lstEmpleado = empleadosHelper.obtenerEmpleado(empleado);
                 diasPeriodo = int.Parse(periodoHelper.DiasDePago(periodos).ToString());
                 cnx.Close();
 
@@ -241,6 +246,8 @@ namespace Nominas
                 pn.modificado = true;
                 pn.guardada = false;
                 pn.tiponomina = _tipoNomina;
+                pn.iddepartamento = lstEmpleado[0].iddepartamento;
+                pn.idpuesto = lstEmpleado[0].idpuesto;
 
                 CalculoNomina.Core.tmpPagoNomina pne;
 
@@ -494,6 +501,8 @@ namespace Nominas
                 dt.Columns.Add("fechapago", typeof(DateTime));
                 dt.Columns.Add("obracivil", typeof(Boolean));
                 dt.Columns.Add("periodo", typeof(Int32));
+                dt.Columns.Add("iddepartamento", typeof(Int32));
+                dt.Columns.Add("idpuesto", typeof(Int32));
 
                 int index = 1;
                 for (int i = 0; i < lstMovimientos.Count; i++)
@@ -518,6 +527,8 @@ namespace Nominas
                     dtFila["fechapago"] = new DateTime(1900,1,1);
                     dtFila["obracivil"] = false;
                     dtFila["periodo"] = _periodo;
+                    dtFila["iddepartamento"] = lstMovimientos[i].iddepartamento;
+                    dtFila["idpuesto"] = lstMovimientos[i].idpuesto;
                     dt.Rows.Add(dtFila);
                     index++;
                 }

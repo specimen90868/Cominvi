@@ -172,6 +172,8 @@ namespace Nominas
             int existeVacaciones = 0, existeIncapacidad = 0;
             int diasProporcionales = 0;
             int existeBaja = 0;
+            DateTime fechaIngreso;
+
             DialogResult respuesta = MessageBox.Show("¿Desea dar de baja al empleado?","Confirmación",MessageBoxButtons.YesNo);
             if (respuesta == DialogResult.Yes)
             {
@@ -193,6 +195,28 @@ namespace Nominas
                 cmd.Connection = cnx;
 
                 PeriodoFechaAplicacion();
+
+                #region VALIDACION DE LA FECHA DE BAJA
+                Empleados.Core.EmpleadosHelper veh = new Empleados.Core.EmpleadosHelper();
+                veh.Command = cmd;
+                try
+                {
+                    cnx.Open();
+                    fechaIngreso = DateTime.Parse(veh.obtenerFechaIngreso(_idempleado).ToString());
+                    cnx.Close();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Error: Al obtener la fecha de ingreso del trabajador. Vuelva a intentar.", "Error");
+                    return;
+                }
+
+                if (dtpFechaBaja.Value.Date < fechaIngreso)
+                {
+                    MessageBox.Show("La fecha de baja es menor a la fecha de ingreso del trabajador. Verifique.", "Error");
+                    return;
+                }
+                #endregion
                 
                 #region EXISTENCIA DE INCAPACIDAD
                 Incidencias.Core.IncidenciasHelper ih = new Incidencias.Core.IncidenciasHelper();
@@ -356,12 +380,10 @@ namespace Nominas
                 baja.idempresa = GLOBALES.IDEMPRESA;
                 baja.motivo = int.Parse(cmbMotivoBaja.SelectedValue.ToString());
                 baja.fecha = dtpFechaBaja.Value.Date;
-                //baja.diasproporcionales = (int)(dtpFechaBaja.Value.Date - periodoInicio.Date).TotalDays + 1;
                 baja.periodoinicio = periodoInicio.Date;
                 baja.periodofin = periodoFin.Date;
                 baja.observaciones = txtObservaciones.Text;
                 baja.registro = DateTime.Now;
-
                 diasProporcionales = (int)(dtpFechaBaja.Value.Date - periodoInicio.Date).TotalDays + 1;
                 if (diasProporcionales == 16)
                     baja.diasproporcionales = diasProporcionales - 1;
@@ -425,7 +447,7 @@ namespace Nominas
 
                     if (lstUltimaNomina.Count != 0)
                     {
-                        if (dtpFechaBaja.Value.Date >= lstUltimaNomina[0].fechainicio || dtpFechaBaja.Value.Date <= lstUltimaNomina[0].fechafin)
+                        if (dtpFechaBaja.Value.Date >= lstUltimaNomina[0].fechainicio && dtpFechaBaja.Value.Date <= lstUltimaNomina[0].fechafin)
                         {
                             MessageBox.Show("La baja corresponde a un periodo cerrado.", "Información");
                             return;

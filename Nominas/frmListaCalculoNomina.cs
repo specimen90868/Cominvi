@@ -811,7 +811,6 @@ namespace Nominas
                     }
                     else
                     {
-                        
                         cnx.Open();
                         existeAltaReingreso = ah.existeAlta(GLOBALES.IDEMPRESA, int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicioPosterior, periodoFinPosterior);
                         cnx.Close();
@@ -1175,43 +1174,79 @@ namespace Nominas
                 #region APLICACION DE DEPTOS/PUESTOS
                 Aplicaciones.Core.AplicacionesHelper aplicah = new Aplicaciones.Core.AplicacionesHelper();
                 aplicah.Command = cmd;
-                Aplicaciones.Core.Aplicaciones aplicacion = new Aplicaciones.Core.Aplicaciones();
-                aplicacion.periodoinicio = periodoInicio;
-                aplicacion.periodofin = periodoFin;
-                aplicacion.idempresa = GLOBALES.IDEMPRESA;
-                List<Aplicaciones.Core.Aplicaciones> lstAplicaciones = new List<Aplicaciones.Core.Aplicaciones>();
+                Aplicaciones.Core.Aplicaciones aplicacion;
+                List<Aplicaciones.Core.Aplicaciones> lstAplicacion = new List<Aplicaciones.Core.Aplicaciones>();
+                aplicacion = new Aplicaciones.Core.Aplicaciones();
+                aplicacion.idtrabajador = int.Parse(fila.Cells["idtrabajador"].Value.ToString());
+                aplicacion.periodoinicio = periodoInicio.Date;
+                aplicacion.periodofin = periodoFin.Date;
                 try
                 {
                     cnx.Open();
-                    lstAplicaciones = aplicah.obtenerFechasDeAplicacion(aplicacion);
+                    lstAplicacion = aplicah.obtenerFechasDeAplicacion(aplicacion);
                     cnx.Close();
                 }
                 catch (Exception)
                 {
-                    
-                    throw;
+
                 }
 
-                if (lstAplicaciones.Count != 0)
-                {
-                    for (int i = 0; i < lstAplicaciones.Count; i++)
-                    {
-                        Empleados.Core.EmpleadosHelper emph = new Empleados.Core.EmpleadosHelper();
-                        emph.Command = cmd;
+                Empleados.Core.EmpleadosHelper emph = new Empleados.Core.EmpleadosHelper();
+                emph.Command = cmd;
+                Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
+                empleado.idtrabajador = int.Parse(fila.Cells["idtrabajador"].Value.ToString());
+                List<Empleados.Core.Empleados> lstEmpleadoA = new List<Empleados.Core.Empleados>();
+                cnx.Open();
+                lstEmpleadoA = emph.obtenerEmpleado(empleado);
+                cnx.Close();
 
-                        try
+                if (lstAplicacion.Count != 0)
+                {
+                    for (int i = 0; i < lstAplicacion.Count; i++)
+                    {
+                        if (lstAplicacion[i].periodoinicio == periodoInicio.Date && lstAplicacion[i].periodofin == periodoFin)
                         {
-                            cnx.Open();
-                            emph.actualizaDeptoPuesto(lstAplicaciones[i].iddeptopuesto, lstAplicaciones[i].idtrabajador, lstAplicaciones[i].deptopuesto);
-                            aplicah.eliminaAplicacion(lstAplicaciones[i].id);
-                            cnx.Close();
-                        }
-                        catch (Exception)
-                        {
-                            MessageBox.Show("Error: Al modificar y/o eliminar el depto/puesto o aplicación.", "Error");
-                            cnx.Dispose();
+                            if (lstAplicacion.Count == 1)
+                            {
+                                if (lstAplicacion[i].deptopuesto == "D")
+                                {
+                                    cnx.Open();
+                                    aplicah.aplica(int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicio.Date, periodoFin.Date, _periodo, "D", lstAplicacion[i].iddeptopuesto);
+                                    aplicah.aplica(int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicio.Date, periodoFin.Date, _periodo, "P", lstEmpleadoA[0].idpuesto);
+                                    cnx.Close();
+                                }
+                                else if (lstAplicacion[i].deptopuesto == "P")
+                                {
+                                    cnx.Open();
+                                    aplicah.aplica(int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicio.Date, periodoFin.Date, _periodo, "D", lstEmpleadoA[0].iddepartamento);
+                                    aplicah.aplica(int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicio.Date, periodoFin.Date, _periodo, "P", lstAplicacion[i].iddeptopuesto);
+                                    cnx.Close();
+                                }
+                            }
+                            else
+                            {
+                                if (lstAplicacion[i].deptopuesto == "D")
+                                {
+                                    cnx.Open();
+                                    aplicah.aplica(int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicio.Date, periodoFin.Date, _periodo, "D", lstAplicacion[i].iddeptopuesto);
+                                    cnx.Close();
+                                }
+                                else if (lstAplicacion[i].deptopuesto == "P")
+                                {
+                                    cnx.Open();
+                                    aplicah.aplica(int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicio.Date, periodoFin.Date, _periodo, "P", lstAplicacion[i].iddeptopuesto);
+                                    cnx.Close();
+                                }
+                            }
                         }
                     }
+                }
+                else
+                {
+                    cnx.Open();
+                    aplicah.aplica(int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicio.Date, periodoFin.Date, _periodo, "D", lstEmpleadoA[0].iddepartamento);
+                    aplicah.aplica(int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicio.Date, periodoFin.Date, _periodo, "P", lstEmpleadoA[0].idpuesto);
+                    cnx.Close();
                 }
                 #endregion
             }
@@ -1306,14 +1341,14 @@ namespace Nominas
                 if (_tipoNomina == GLOBALES.NORMAL )
                 {
                     cnx.Open();
-                    noPeriodo = int.Parse(nh.obtenerNoPeriodo(_periodo, periodoInicio).ToString());
+                    noPeriodo = int.Parse(nh.obtenerNoPeriodo(_periodo, periodoFin).ToString());
                     nh.actualizarNoPeriodo(GLOBALES.IDEMPRESA, periodoInicio.Date, periodoFin.Date, noPeriodo);
                     cnx.Close();
                 }
                 else if (_tipoNomina == GLOBALES.EXTRAORDINARIO_NORMAL)
                 {
                     cnx.Open();
-                    noPeriodo = (int)(nh.obtenerNoPeriodoExtraordinario(GLOBALES.IDEMPRESA, _tipoNomina));
+                    noPeriodo = (int)(nh.obtenerNoPeriodoExtraordinario(GLOBALES.IDEMPRESA, _tipoNomina, _periodo));
                     noPeriodo = noPeriodo + 1;
                     nh.actualizarNoPeriodo(GLOBALES.IDEMPRESA, periodoInicio.Date, periodoFin.Date, noPeriodo);
                     cnx.Close();
@@ -1429,7 +1464,6 @@ namespace Nominas
             pn.tiponomina = _tipoNomina;
             pn.obracivil = _obracivil;
             
-
             try
             {
                 cnx.Open();

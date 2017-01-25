@@ -92,6 +92,7 @@
             this.tabDomicilio = new System.Windows.Forms.TabPage();
             this.tabPeriodo = new System.Windows.Forms.TabPage();
             this.tabTimbrado = new System.Windows.Forms.TabPage();
+            this.chkObraCivil = new System.Windows.Forms.CheckBox();
             this.toolEmpresa.SuspendLayout();
             this.toolAcciones.SuspendLayout();
             this.tabEmpresas.SuspendLayout();
@@ -549,6 +550,7 @@
             // 
             // tabEmpresa
             // 
+            this.tabEmpresa.Controls.Add(this.chkObraCivil);
             this.tabEmpresa.Controls.Add(this.txtObservacion);
             this.tabEmpresa.Controls.Add(this.label28);
             this.tabEmpresa.Controls.Add(this.Label15);
@@ -726,6 +728,16 @@
             this.tabTimbrado.Text = "Timbrado";
             this.tabTimbrado.UseVisualStyleBackColor = true;
             // 
+            // chkObraCivil
+            // 
+            this.chkObraCivil.AutoSize = true;
+            this.chkObraCivil.Location = new System.Drawing.Point(113, 160);
+            this.chkObraCivil.Name = "chkObraCivil";
+            this.chkObraCivil.Size = new System.Drawing.Size(71, 17);
+            this.chkObraCivil.TabIndex = 192;
+            this.chkObraCivil.Text = "Obra Civil";
+            this.chkObraCivil.UseVisualStyleBackColor = true;
+            // 
             // frmEmpresas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -820,5 +832,6 @@
         private System.Windows.Forms.TabPage tabTimbrado;
         private System.Windows.Forms.TextBox txtObservacion;
         private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.CheckBox chkObraCivil;
     }
 }

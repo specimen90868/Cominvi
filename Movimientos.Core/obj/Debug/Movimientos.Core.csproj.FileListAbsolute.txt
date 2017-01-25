@@ -8,6 +8,5 @@ C:\GitHub\Repositorios\Cominvi\Movimientos.Core\bin\Debug\Movimientos.Core.dll
 C:\GitHub\Repositorios\Cominvi\Movimientos.Core\bin\Debug\Movimientos.Core.pdb
 C:\GitHub\Repositorios\Cominvi\Movimientos.Core\bin\Debug\Data.Obj.dll
 C:\GitHub\Repositorios\Cominvi\Movimientos.Core\bin\Debug\Data.Obj.pdb
-C:\GitHub\Repositorios\Cominvi\Movimientos.Core\obj\Debug\Movimientos.Core.csprojResolveAssemblyReference.cache
 C:\GitHub\Repositorios\Cominvi\Movimientos.Core\obj\Debug\Movimientos.Core.dll
 C:\GitHub\Repositorios\Cominvi\Movimientos.Core\obj\Debug\Movimientos.Core.pdb

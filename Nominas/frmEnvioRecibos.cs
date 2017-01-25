@@ -229,7 +229,7 @@ namespace Nominas
                 try
                 {
                     cnx.Open();
-                    lstQR = nh.obtenerListaQr(GLOBALES.IDEMPRESA, DateTime.Parse(fecha).Date, DateTime.Parse(fechafin).Date);
+                    lstQR = nh.obtenerListaQr(GLOBALES.IDEMPRESA, DateTime.Parse(fecha).Date, DateTime.Parse(fechafin).Date, periodo);
                     cnx.Close();
                 }
                 catch (Exception error)
@@ -303,10 +303,11 @@ namespace Nominas
                     {
                         dsReportes.NominaRecibosDataTable dtImpresionNomina = new dsReportes.NominaRecibosDataTable();
                         SqlDataAdapter daImpresionNomina = new SqlDataAdapter();
-                        cmd.CommandText = "exec stp_rptNominaImpresionTrabajador @idempresa, @fechainicio, @tiponomina, @idtrabajador, @periodo";
+                        cmd.CommandText = "exec stp_rptNominaImpresionTrabajador @idempresa, @fechainicio, @fechafin, @tiponomina, @idtrabajador, @periodo";
                         cmd.Parameters.Clear();
                         cmd.Parameters.AddWithValue("idempresa", GLOBALES.IDEMPRESA);
                         cmd.Parameters.AddWithValue("fechainicio", DateTime.Parse(fecha).Date);
+                        cmd.Parameters.AddWithValue("fechafin", DateTime.Parse(fechafin).Date);
                         cmd.Parameters.AddWithValue("tiponomina", tipoNomina);
                         cmd.Parameters.AddWithValue("idtrabajador", int.Parse(dgvEmpleados.Rows[i].Cells["idtrabajador"].Value.ToString()));
                         cmd.Parameters.AddWithValue("periodo", periodo);

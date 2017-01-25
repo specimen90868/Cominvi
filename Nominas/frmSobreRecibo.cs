@@ -732,6 +732,89 @@ namespace Nominas
             BulkData(lstOtrasDeducciones);
             #endregion
 
+            #region APLICACION DE DEPTOS/PUESTOS
+            cnx = new SqlConnection(cdn);
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            Aplicaciones.Core.AplicacionesHelper aplicah = new Aplicaciones.Core.AplicacionesHelper();
+            aplicah.Command = cmd;
+            Aplicaciones.Core.Aplicaciones aplicacion;
+            List<Aplicaciones.Core.Aplicaciones> lstAplicacion = new List<Aplicaciones.Core.Aplicaciones>();
+            aplicacion = new Aplicaciones.Core.Aplicaciones();
+            aplicacion.idtrabajador = idTrabajador;
+            aplicacion.periodoinicio = _inicioPeriodo.Date;
+            aplicacion.periodofin = _finPeriodo.Date;
+            try
+            {
+                cnx.Open();
+                lstAplicacion = aplicah.obtenerFechasDeAplicacion(aplicacion);
+                cnx.Close();
+            }
+            catch (Exception)
+            {
+
+            }
+
+            Empleados.Core.EmpleadosHelper emph = new Empleados.Core.EmpleadosHelper();
+            emph.Command = cmd;
+            Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
+            empleado.idtrabajador = idTrabajador;
+            List<Empleados.Core.Empleados> lstEmpleadoA = new List<Empleados.Core.Empleados>();
+            cnx.Open();
+            lstEmpleadoA = emph.obtenerEmpleado(empleado);
+            cnx.Close();
+
+            if (lstAplicacion.Count != 0)
+            {
+                for (int i = 0; i < lstAplicacion.Count; i++)
+                {
+                    if (lstAplicacion[i].periodoinicio == _inicioPeriodo.Date && lstAplicacion[i].periodofin == _finPeriodo.Date)
+                    {
+                        if (lstAplicacion.Count == 1)
+                        {
+                            if (lstAplicacion[i].deptopuesto == "D")
+                            {
+                                cnx.Open();
+                                aplicah.aplica(idTrabajador, _inicioPeriodo.Date, _finPeriodo.Date, _periodo, "D", lstAplicacion[i].iddeptopuesto);
+                                aplicah.aplica(idTrabajador, _inicioPeriodo.Date, _finPeriodo.Date, _periodo, "P", lstEmpleadoA[0].idpuesto);
+                                cnx.Close();
+                            }
+                            else if (lstAplicacion[i].deptopuesto == "P")
+                            {
+                                cnx.Open();
+                                aplicah.aplica(idTrabajador, _inicioPeriodo.Date, _finPeriodo.Date, _periodo, "D", lstEmpleadoA[0].iddepartamento);
+                                aplicah.aplica(idTrabajador, _inicioPeriodo.Date, _finPeriodo.Date, _periodo, "P", lstAplicacion[i].iddeptopuesto);
+                                cnx.Close();
+                            }
+                        }
+                        else
+                        {
+                            if (lstAplicacion[i].deptopuesto == "D")
+                            {
+                                cnx.Open();
+                                aplicah.aplica(idTrabajador, _inicioPeriodo.Date, _finPeriodo.Date, _periodo, "D", lstAplicacion[i].iddeptopuesto);
+                                cnx.Close();
+                            }
+                            else if (lstAplicacion[i].deptopuesto == "P")
+                            {
+                                cnx.Open();
+                                aplicah.aplica(idTrabajador, _inicioPeriodo.Date, _finPeriodo.Date, _periodo, "P", lstAplicacion[i].iddeptopuesto);
+                                cnx.Close();
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                cnx.Open();
+                aplicah.aplica(idTrabajador, _inicioPeriodo.Date, _finPeriodo.Date, _periodo, "D", lstEmpleadoA[0].iddepartamento);
+                aplicah.aplica(idTrabajador, _inicioPeriodo.Date, _finPeriodo.Date, _periodo, "P", lstEmpleadoA[0].idpuesto);
+                cnx.Close();
+            }
+            #endregion
+
             #region MOSTRAR DATOS
             muestraDatos();
             #endregion
@@ -755,7 +838,7 @@ namespace Nominas
                 else if (_tipoNormalEspecial == GLOBALES.EXTRAORDINARIO_NORMAL)
                 {
                     cnx.Open();
-                    noPeriodo = (int)(nh.obtenerNoPeriodoExtraordinario(GLOBALES.IDEMPRESA, _tipoNormalEspecial));
+                    noPeriodo = (int)(nh.obtenerNoPeriodoExtraordinario(GLOBALES.IDEMPRESA, _tipoNormalEspecial, _periodo));
                     noPeriodo = noPeriodo + 1;
                     nh.actualizarNoPeriodo(GLOBALES.IDEMPRESA, _inicioPeriodo.Date, _finPeriodo.Date, noPeriodo);
                     cnx.Close();
@@ -2189,10 +2272,27 @@ namespace Nominas
                         return;
                     }
 
-                    int diasPagoReales = int.Parse(txtDiasPagoPV.Text) + existeFaltas;
+                    Incidencias.Core.IncidenciasHelper ih = new Incidencias.Core.IncidenciasHelper();
+                    ih.Command = cmd;
+
+                    int existeIncapacidad = 0;
+                    try
+                    {
+                        cnx.Open();
+                        existeIncapacidad = int.Parse(ih.diasIncidencia(idTrabajador, _inicioPeriodo.Date, _finPeriodo.Date).ToString());
+                        cnx.Close();
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error: Al obtener los dias de incidencia del trabajador. \r\n" + error.Message, "Error");
+                        cnx.Dispose();
+                        return;
+                    }
+
+                    int diasPagoReales = int.Parse(txtDiasPagoPV.Text) + existeFaltas + existeIncapacidad;
                     if (diasPagoReales > _periodo)
                     {
-                        diasPagoReales = _periodo - existeFaltas;
+                        diasPagoReales = _periodo - existeFaltas - existeIncapacidad;
                         MessageBox.Show("Existen faltas del trabajador, se ajustaron las vacaciones a: " + diasPagoReales.ToString() + " dia(s).", "Información");
                     }
                     else
@@ -2226,10 +2326,10 @@ namespace Nominas
                         return;
                     }
 
-                    diasPagoReales = int.Parse(txtDiasPagoV.Text) + existeFaltas;
+                    diasPagoReales = int.Parse(txtDiasPagoV.Text) + existeFaltas + existeIncapacidad;
                     if (diasPagoReales > _periodo)
                     {
-                        diasPagoReales = _periodo - existeFaltas;
+                        diasPagoReales = _periodo - existeFaltas - existeIncapacidad;
                         MessageBox.Show("Existen faltas del trabajador, se ajustaron las vacaciones a: " + diasPagoReales.ToString() + " dia(s).", "Información");
                     }
                     else
@@ -2319,10 +2419,27 @@ namespace Nominas
                         return;
                     }
 
-                    int diasPagoReales = int.Parse(txtDiasPagoPV.Text) + existeFaltas;
+                    Incidencias.Core.IncidenciasHelper ih = new Incidencias.Core.IncidenciasHelper();
+                    ih.Command = cmd;
+
+                    int existeIncapacidad = 0;
+                    try
+                    {
+                        cnx.Open();
+                        existeIncapacidad = int.Parse(ih.diasIncidencia(idTrabajador, _inicioPeriodo.Date, _finPeriodo.Date).ToString());
+                        cnx.Close();
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Error: Al obtener los dias de incidencia del trabajador. \r\n" + error.Message, "Error");
+                        cnx.Dispose();
+                        return;
+                    }
+
+                    int diasPagoReales = int.Parse(txtDiasPagoPV.Text) + existeFaltas + existeIncapacidad;
                     if (diasPagoReales > _periodo)
                     {
-                        diasPagoReales = _periodo - existeFaltas;
+                        diasPagoReales = _periodo - existeFaltas - existeIncapacidad;
                         MessageBox.Show("Existen faltas del trabajador, se ajustaron las vacaciones a: " + diasPagoReales.ToString() + " dia(s).", "Información");
                     }
                     else
@@ -2580,12 +2697,14 @@ namespace Nominas
 
         private void toolEditar_Click(object sender, EventArgs e)
         {
+            int fila = dgvProgramacion.CurrentCell.RowIndex;
             frmProgramacionConcepto pc = new frmProgramacionConcepto();
             pc.OnProgramacion += pc_OnProgramacion;
             pc._idEmpleado = idTrabajador;
             pc._nombreEmpleado = txtNombreCompleto.Text;
             pc._tipoOperacion = GLOBALES.MODIFICAR;
             pc._periodo = _periodo;
+            pc._idprogramacion = int.Parse(dgvProgramacion.Rows[fila].Cells[0].Value.ToString());
             pc.Show();
         }
 

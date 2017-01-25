@@ -626,7 +626,6 @@
             // 
             // cmbZona
             // 
-            this.cmbZona.Enabled = false;
             this.cmbZona.FormattingEnabled = true;
             this.cmbZona.Location = new System.Drawing.Point(415, 272);
             this.cmbZona.Name = "cmbZona";

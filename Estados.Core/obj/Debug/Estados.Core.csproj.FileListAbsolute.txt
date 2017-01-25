@@ -8,6 +8,5 @@ C:\GitHub\Repositorios\Cominvi\Estados.Core\bin\Debug\Estados.Core.dll
 C:\GitHub\Repositorios\Cominvi\Estados.Core\bin\Debug\Estados.Core.pdb
 C:\GitHub\Repositorios\Cominvi\Estados.Core\bin\Debug\Data.Obj.dll
 C:\GitHub\Repositorios\Cominvi\Estados.Core\bin\Debug\Data.Obj.pdb
-C:\GitHub\Repositorios\Cominvi\Estados.Core\obj\Debug\Estados.Core.csprojResolveAssemblyReference.cache
 C:\GitHub\Repositorios\Cominvi\Estados.Core\obj\Debug\Estados.Core.dll
 C:\GitHub\Repositorios\Cominvi\Estados.Core\obj\Debug\Estados.Core.pdb

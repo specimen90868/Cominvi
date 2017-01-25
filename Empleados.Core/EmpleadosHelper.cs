@@ -124,7 +124,6 @@ namespace Empleados.Core
             return lstEmpleados;
         }
 
-
         public List<Empleados> obtenerEmpleadosAusentismo(Empleados e)
         {
             DataTable dtEmpleados = new DataTable();
@@ -251,7 +250,7 @@ namespace Empleados.Core
                 empleado.metodopago = dtEmpleados.Rows[i]["metodopago"].ToString();
                 empleado.tiporegimen = int.Parse(dtEmpleados.Rows[i]["tiporegimen"].ToString());
                 empleado.obracivil = bool.Parse(dtEmpleados.Rows[i]["obracivil"].ToString());
-
+                
                 lstEmpleados.Add(empleado);
             }
 
@@ -355,30 +354,13 @@ namespace Empleados.Core
             return lstEmpleados;
         }
 
-        public List<Empleados> obtenerFechaAntiguedad(Empleados e)
+        public object obtenerFechaIngreso(int idtrabajador)
         {
-            DataTable dtFechas = new DataTable();
-            List<Empleados> lstFechas = new List<Empleados>();
-
-            Command.CommandText = "select idtrabajador, fechaingreso, fechaantiguedad, antiguedad, antiguedadmod, idperiodo from trabajadores where idempresa = @idempresa and estatus = 1";
+            Command.CommandText = "select fechaingreso from trabajadores where idtrabajador = @idtrabajador";
             Command.Parameters.Clear();
-            Command.Parameters.AddWithValue("idempresa", e.idempresa);
-
-            dtFechas = SelectData(Command);
-
-            for (int i = 0; i < dtFechas.Rows.Count; i++)
-            {
-                Empleados empleado = new Empleados();
-                empleado.idtrabajador = int.Parse(dtFechas.Rows[i]["idtrabajador"].ToString());
-                empleado.fechaingreso = DateTime.Parse(dtFechas.Rows[i]["fechaingreso"].ToString());
-                empleado.fechaantiguedad = DateTime.Parse(dtFechas.Rows[i]["fechaantiguedad"].ToString());
-                empleado.idperiodo = int.Parse(dtFechas.Rows[i]["idperiodo"].ToString());
-                empleado.antiguedad = int.Parse(dtFechas.Rows[i]["antiguedad"].ToString());
-                empleado.antiguedadmod = int.Parse(dtFechas.Rows[i]["antiguedadmod"].ToString());
-                lstFechas.Add(empleado);
-            }
-
-            return lstFechas;
+            Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
+            object dato = Select(Command);
+            return dato;
         }
 
         public object obtenerSalarioDiario(Empleados e)
@@ -611,8 +593,9 @@ namespace Empleados.Core
 
         public int reingreso(Empleados e)
         {
-            Command.CommandText = "update trabajadores set idempresa = @idempresa, fechaingreso = @fechaingreso, fechaantiguedad = @fechaantiguedad, antiguedad = @antiguedad, antiguedadmod = @antiguedadmod," + 
-                "iddepartamento = @iddepartamento, idpuesto = @idpuesto, idperiodo = @idperiodo, sueldo = @sueldo, sd = @sd, sdi = @sdi, estatus = @estatus, idusuario = @idusuario, cuenta = @cuenta, clabe = @clabe, idbancario = @idbancario, metodopago = @metodopago where idtrabajador = @idtrabajador";
+            Command.CommandText = @"update trabajadores set idempresa = @idempresa, fechaingreso = @fechaingreso, fechaantiguedad = @fechaantiguedad, antiguedad = @antiguedad, antiguedadmod = @antiguedadmod,
+                iddepartamento = @iddepartamento, idpuesto = @idpuesto, idperiodo = @idperiodo, sueldo = @sueldo, sd = @sd, sdi = @sdi, estatus = @estatus, idusuario = @idusuario, cuenta = @cuenta, clabe = @clabe, 
+                idbancario = @idbancario, metodopago = @metodopago, obracivil = @obracivil where idtrabajador = @idtrabajador";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", e.idempresa);
             Command.Parameters.AddWithValue("fechaingreso", e.fechaingreso);
@@ -632,6 +615,7 @@ namespace Empleados.Core
             Command.Parameters.AddWithValue("clabe", e.clabe);
             Command.Parameters.AddWithValue("idbancario", e.idbancario);
             Command.Parameters.AddWithValue("metodopago", e.idbancario);
+            Command.Parameters.AddWithValue("obracivil", e.obracivil);
             return Command.ExecuteNonQuery();
         }
 

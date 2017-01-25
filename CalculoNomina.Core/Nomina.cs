@@ -58,6 +58,8 @@ namespace CalculoNomina.Core
         public bool modificado { get; set; }
         public bool obracivil { get; set; }
         public int periodo { get; set; }
+        public int iddepartamento { get; set; }
+        public int idpuesto { get; set; }
     }
 
     public class DatosFaltaIncapacidad

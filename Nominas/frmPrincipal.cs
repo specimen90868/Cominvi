@@ -447,7 +447,7 @@ namespace Nominas
         private void mnuInfonavit_Click(object sender, EventArgs e)
         {
             frmListaInfonavit li = new frmListaInfonavit();
-            li.MdiParent = this;
+            //li.MdiParent = this;
             li.Show();
         }
 
