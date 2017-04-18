@@ -33,10 +33,31 @@ namespace Usuarios.Core
         public DataTable obtenerUsuario(int idusuario)
         {
             DataTable dtUsuario = new DataTable();
-            Command.CommandText = "select idusuario, usuario, nombre, idperfil from usuarios where idusuario = @id";
+            Command.CommandText = "select idusuario, usuario, nombre, idperfil, empresas from usuarios where idusuario = @id";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("id", idusuario);
             return dtUsuario = SelectData(Command);
+        }
+
+        public List<Usuarios> Usuario(int idusuario)
+        {
+            DataTable dtUsuario = new DataTable();
+            Command.CommandText = "select idusuario, usuario, nombre, idperfil, empresas from usuarios where idusuario = @id";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("id", idusuario);
+            dtUsuario = SelectData(Command);
+            List<Usuarios> lstUsuario = new List<Usuarios>();
+            for (int i = 0; i < dtUsuario.Rows.Count; i++)
+            {
+                Usuarios user = new Usuarios();
+                user.idusuario = int.Parse(dtUsuario.Rows[i]["idusuario"].ToString());
+                user.usuario = dtUsuario.Rows[i]["usuario"].ToString();
+                user.nombre = dtUsuario.Rows[i]["nombre"].ToString();
+                user.idperfil = int.Parse(dtUsuario.Rows[i]["idperfil"].ToString());
+                user.empresas = dtUsuario.Rows[i]["empresas"].ToString();
+                lstUsuario.Add(user);
+            }
+            return lstUsuario;
         }
 
         public DataTable ValidaUsuario(Usuarios usr)
@@ -53,7 +74,7 @@ namespace Usuarios.Core
 
         public int insertaUsuario(Usuarios usr)
         {
-            Command.CommandText = "insert into usuarios(usuario,nombre,password,activo,fecharegistro,idperfil) values (@usuario,@nombre,@password,@activo,@fecharegistro,@idperfil)";
+            Command.CommandText = "insert into usuarios(usuario,nombre,password,activo,fecharegistro,idperfil,empresas) values (@usuario,@nombre,@password,@activo,@fecharegistro,@idperfil,@empresas)";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("usuario",usr.usuario);
             Command.Parameters.AddWithValue("nombre", usr.nombre);
@@ -61,18 +82,20 @@ namespace Usuarios.Core
             Command.Parameters.AddWithValue("activo", usr.activo);
             Command.Parameters.AddWithValue("fecharegistro", usr.fecharegistro);
             Command.Parameters.AddWithValue("idperfil", usr.idperfil);
+            Command.Parameters.AddWithValue("empresas", usr.empresas);
             return Command.ExecuteNonQuery();
         }
 
         public int modificaUsuario(Usuarios usr)
         {
-            Command.CommandText = "update usuarios set usuario = @usuario, nombre = @nombre, activo = @activo, idperfil = @idperfil where idusuario = @id";
+            Command.CommandText = "update usuarios set usuario = @usuario, nombre = @nombre, activo = @activo, idperfil = @idperfil, empresas = @empresas where idusuario = @id";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("id", usr.idusuario);
             Command.Parameters.AddWithValue("usuario", usr.usuario);
             Command.Parameters.AddWithValue("nombre", usr.nombre);
             Command.Parameters.AddWithValue("activo", usr.activo);
             Command.Parameters.AddWithValue("idperfil", usr.idperfil);
+            Command.Parameters.AddWithValue("empresas", usr.empresas);
             return Command.ExecuteNonQuery();
         }
 

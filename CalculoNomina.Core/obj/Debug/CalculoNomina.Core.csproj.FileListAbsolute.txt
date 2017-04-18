@@ -8,5 +8,6 @@ C:\GitHub\Repositorios\Cominvi\CalculoNomina.Core\bin\Debug\CalculoNomina.Core.d
 C:\GitHub\Repositorios\Cominvi\CalculoNomina.Core\bin\Debug\CalculoNomina.Core.pdb
 C:\GitHub\Repositorios\Cominvi\CalculoNomina.Core\bin\Debug\Data.Obj.dll
 C:\GitHub\Repositorios\Cominvi\CalculoNomina.Core\bin\Debug\Data.Obj.pdb
+C:\GitHub\Repositorios\Cominvi\CalculoNomina.Core\obj\Debug\CalculoNomina.Core.csprojResolveAssemblyReference.cache
 C:\GitHub\Repositorios\Cominvi\CalculoNomina.Core\obj\Debug\CalculoNomina.Core.dll
 C:\GitHub\Repositorios\Cominvi\CalculoNomina.Core\obj\Debug\CalculoNomina.Core.pdb

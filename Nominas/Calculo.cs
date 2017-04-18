@@ -81,8 +81,10 @@ namespace Nominas
                 cnx.Close();
 
                 if (grava && !exenta)
+                {
                     vn.gravado = vn.cantidad;
-
+                }
+                
                 if (grava && exenta)
                 {
                     if (vn.cantidad <= vn.exento)
@@ -243,7 +245,7 @@ namespace Nominas
 
                     #region CONCEPTO IMSS
                     case 99:
-                        int vsmdf, idsalario;
+                        int vsmdf; //idsalario;
                         decimal porcentajeImss, excedenteVsmdf, sm, sdiTrabajador;
                         
                         Configuracion.Core.ConfiguracionHelper ch = new Configuracion.Core.ConfiguracionHelper();
@@ -253,7 +255,7 @@ namespace Nominas
                         ih.Command = cmd;
 
                         Imss.Core.Imss imss = new Imss.Core.Imss();
-                        imss.secalcula = true;
+                        imss.calculo = true;
 
                         Empleados.Core.EmpleadosHelper empleadosHelper = new Empleados.Core.EmpleadosHelper();
                         empleadosHelper.Command = cmd;
@@ -262,15 +264,15 @@ namespace Nominas
 
                         Salario.Core.SalariosHelper sh = new Salario.Core.SalariosHelper();
                         sh.Command = cmd;
-                        Salario.Core.Salarios salario = new Salario.Core.Salarios();
+                        //Salario.Core.Salarios salario = new Salario.Core.Salarios();
                         
                         cnx.Open();
                         vsmdf = int.Parse(ch.obtenerValorConfiguracion("VSMDF").ToString());
                         porcentajeImss = ih.CuotaObreroPatronal(imss);
                         excedenteVsmdf = ih.ExcedenteVSM(5);
-                        idsalario = int.Parse(empleadosHelper.obtenerIdSalarioMinimo(lstConceptosDeducciones[i].idtrabajador).ToString());
-                        salario.idsalario = idsalario;
-                        sm = decimal.Parse(sh.obtenerSalarioValor(salario).ToString());
+                        //idsalario = int.Parse(empleadosHelper.obtenerIdSalarioMinimo(lstConceptosDeducciones[i].idtrabajador).ToString());
+                        //salario.idsalario = idsalario;
+                        sm = decimal.Parse(sh.obtenerSalarioValor().ToString());
                         sdiTrabajador = decimal.Parse(empleadosHelper.obtenerSalarioDiarioIntegrado(empleadoImss).ToString());
                         cnx.Close();
 

@@ -15,5 +15,6 @@ namespace Usuarios.Core
         public bool activo { get; set; }
         public DateTime fecharegistro { get; set; }
         public int idperfil { get; set; }
+        public string empresas { get; set; }
     }
 }

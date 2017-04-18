@@ -11,6 +11,6 @@ namespace Imss.Core
         public int id { get; set; }
         public string prestacion { get; set; }
         public decimal porcentaje { get; set; }
-        public bool secalcula { get; set; }
+        public bool calculo { get; set; }
     }
 }

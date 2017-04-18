@@ -23,5 +23,7 @@ namespace Empresas.Core
         public DateTime vigenciacertificado { get; set; }
         public string observacion { get; set; }
         public bool obracivil { get; set; }
+        public int idregimenfiscal { get; set; }
+        public string codigopostal { get; set; }
     }
 }

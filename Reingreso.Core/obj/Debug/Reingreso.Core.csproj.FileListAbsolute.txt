@@ -8,5 +8,6 @@ C:\GitHub\Repositorios\Cominvi\Reingreso.Core\bin\Debug\Reingreso.Core.dll
 C:\GitHub\Repositorios\Cominvi\Reingreso.Core\bin\Debug\Reingreso.Core.pdb
 C:\GitHub\Repositorios\Cominvi\Reingreso.Core\bin\Debug\Data.Obj.dll
 C:\GitHub\Repositorios\Cominvi\Reingreso.Core\bin\Debug\Data.Obj.pdb
+C:\GitHub\Repositorios\Cominvi\Reingreso.Core\obj\Debug\Reingreso.Core.csprojResolveAssemblyReference.cache
 C:\GitHub\Repositorios\Cominvi\Reingreso.Core\obj\Debug\Reingreso.Core.dll
 C:\GitHub\Repositorios\Cominvi\Reingreso.Core\obj\Debug\Reingreso.Core.pdb

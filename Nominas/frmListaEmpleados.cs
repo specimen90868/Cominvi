@@ -503,5 +503,13 @@ namespace Nominas
 
         }
 
+        private void toolNominaDigital_Click(object sender, EventArgs e)
+        {
+            int fila = dgvEmpleados.CurrentCell.RowIndex;
+            frmTrabajadorNominaDigital tnd = new frmTrabajadorNominaDigital();
+            tnd._idEmpleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
+            tnd.Show();
+        }
+
     }
 }

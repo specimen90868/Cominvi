@@ -274,6 +274,7 @@
             this.label5.Size = new System.Drawing.Size(77, 13);
             this.label5.TabIndex = 285;
             this.label5.Text = "Departamento:";
+            this.label5.Visible = false;
             // 
             // label6
             // 
@@ -283,6 +284,7 @@
             this.label6.Size = new System.Drawing.Size(43, 13);
             this.label6.TabIndex = 286;
             this.label6.Text = "Puesto:";
+            this.label6.Visible = false;
             // 
             // cmbDepartamento
             // 
@@ -291,6 +293,7 @@
             this.cmbDepartamento.Name = "cmbDepartamento";
             this.cmbDepartamento.Size = new System.Drawing.Size(164, 21);
             this.cmbDepartamento.TabIndex = 287;
+            this.cmbDepartamento.Visible = false;
             // 
             // cmbPuesto
             // 
@@ -299,6 +302,7 @@
             this.cmbPuesto.Name = "cmbPuesto";
             this.cmbPuesto.Size = new System.Drawing.Size(164, 21);
             this.cmbPuesto.TabIndex = 288;
+            this.cmbPuesto.Visible = false;
             // 
             // chkCambioDeptoPto
             // 
@@ -309,6 +313,7 @@
             this.chkCambioDeptoPto.TabIndex = 289;
             this.chkCambioDeptoPto.Text = "Modificar Depto";
             this.chkCambioDeptoPto.UseVisualStyleBackColor = true;
+            this.chkCambioDeptoPto.Visible = false;
             this.chkCambioDeptoPto.CheckedChanged += new System.EventHandler(this.chkCambioDeptoPto_CheckedChanged);
             // 
             // chkModificaPuesto
@@ -320,6 +325,7 @@
             this.chkModificaPuesto.TabIndex = 290;
             this.chkModificaPuesto.Text = "Modificar Puesto";
             this.chkModificaPuesto.UseVisualStyleBackColor = true;
+            this.chkModificaPuesto.Visible = false;
             this.chkModificaPuesto.CheckedChanged += new System.EventHandler(this.chkModificaPuesto_CheckedChanged);
             // 
             // frmIncrementoSalarial

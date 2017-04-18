@@ -60,6 +60,7 @@ namespace CalculoNomina.Core
         public int periodo { get; set; }
         public int iddepartamento { get; set; }
         public int idpuesto { get; set; }
+        public int anio { get; set; }
     }
 
     public class DatosFaltaIncapacidad
@@ -120,5 +121,6 @@ namespace CalculoNomina.Core
         public DateTime fechapago { get; set; }
         public int iddepartamento { get; set; }
         public int idpuesto { get; set; }
+        public int anio { get; set; }
     }
 }

@@ -171,27 +171,27 @@
             // 
             this.toolGuardar.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.toolGuardar.Name = "toolGuardar";
-            this.toolGuardar.Size = new System.Drawing.Size(152, 22);
+            this.toolGuardar.Size = new System.Drawing.Size(126, 22);
             this.toolGuardar.Text = "Guardar";
             this.toolGuardar.Click += new System.EventHandler(this.toolGuardar_Click);
             // 
             // toolSeparadorGuardar
             // 
             this.toolSeparadorGuardar.Name = "toolSeparadorGuardar";
-            this.toolSeparadorGuardar.Size = new System.Drawing.Size(149, 6);
+            this.toolSeparadorGuardar.Size = new System.Drawing.Size(123, 6);
             // 
             // toolAutorizar
             // 
             this.toolAutorizar.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.toolAutorizar.Name = "toolAutorizar";
-            this.toolAutorizar.Size = new System.Drawing.Size(152, 22);
+            this.toolAutorizar.Size = new System.Drawing.Size(126, 22);
             this.toolAutorizar.Text = "Autorizar";
             this.toolAutorizar.Click += new System.EventHandler(this.toolAutorizar_Click);
             // 
             // toolSeparadorAutorizar
             // 
             this.toolSeparadorAutorizar.Name = "toolSeparadorAutorizar";
-            this.toolSeparadorAutorizar.Size = new System.Drawing.Size(149, 6);
+            this.toolSeparadorAutorizar.Size = new System.Drawing.Size(123, 6);
             // 
             // toolReportes
             // 
@@ -204,7 +204,7 @@
             this.toolGravadosExentos});
             this.toolReportes.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolReportes.Name = "toolReportes";
-            this.toolReportes.Size = new System.Drawing.Size(152, 22);
+            this.toolReportes.Size = new System.Drawing.Size(126, 22);
             this.toolReportes.Text = "Reportes";
             // 
             // toolCaratula
@@ -866,6 +866,7 @@
             this.Controls.Add(this.toolTitulo);
             this.Name = "frmListaCalculoNomina";
             this.Text = "Nomina";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmListaCalculoNomina_FormClosed);
             this.Load += new System.EventHandler(this.frmListaCalculoNomina_Load);
             this.toolTitulo.ResumeLayout(false);
             this.toolTitulo.PerformLayout();

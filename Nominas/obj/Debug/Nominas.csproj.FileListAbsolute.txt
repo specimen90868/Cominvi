@@ -334,6 +334,7 @@ C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\Empresas.Core.dll
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\Estados.Core.dll
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\Expediente.Core.dll
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\Exportacion.Core.dll
+C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\FactorDescuento.Core.dll
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\Factores.Core.dll
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\Faltas.Core.dll
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\Formulas.Core.dll
@@ -352,6 +353,8 @@ C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\ProgramacionConcepto.Core.dll
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\Puestos.Core.dll
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\Reingreso.Core.dll
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\Salario.Core.dll
+C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\SatCatalogos.Core.dll
+C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\satTrabajadorNomina.Core.dll
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\TablaIsr.Core.dll
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\TablaSubsidio.Core.dll
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\Usuarios.Core.dll
@@ -375,6 +378,7 @@ C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\Empresas.Core.pdb
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\Estados.Core.pdb
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\Expediente.Core.pdb
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\Exportacion.Core.pdb
+C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\FactorDescuento.Core.pdb
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\Factores.Core.pdb
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\Faltas.Core.pdb
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\Formulas.Core.pdb
@@ -391,6 +395,8 @@ C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\ProgramacionConcepto.Core.pdb
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\Puestos.Core.pdb
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\Reingreso.Core.pdb
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\Salario.Core.pdb
+C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\SatCatalogos.Core.pdb
+C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\satTrabajadorNomina.Core.pdb
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\TablaIsr.Core.pdb
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\TablaSubsidio.Core.pdb
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\Usuarios.Core.pdb
@@ -417,6 +423,7 @@ C:\GitHub\Repositorios\Cominvi\Nominas\obj\Debug\Nominas.frmEmpresas.resources
 C:\GitHub\Repositorios\Cominvi\Nominas\obj\Debug\Nominas.frmEnvioRecibos.resources
 C:\GitHub\Repositorios\Cominvi\Nominas\obj\Debug\Nominas.frmExpediente.resources
 C:\GitHub\Repositorios\Cominvi\Nominas\obj\Debug\Nominas.frmExportarEmpleado.resources
+C:\GitHub\Repositorios\Cominvi\Nominas\obj\Debug\Nominas.frmFactorDescuento.resources
 C:\GitHub\Repositorios\Cominvi\Nominas\obj\Debug\Nominas.frmFactores.resources
 C:\GitHub\Repositorios\Cominvi\Nominas\obj\Debug\Nominas.frmFiltro.resources
 C:\GitHub\Repositorios\Cominvi\Nominas\obj\Debug\Nominas.frmFiltroNomina.resources
@@ -444,6 +451,7 @@ C:\GitHub\Repositorios\Cominvi\Nominas\obj\Debug\Nominas.frmListaDepartamentos.r
 C:\GitHub\Repositorios\Cominvi\Nominas\obj\Debug\Nominas.frmListaEmpleados.resources
 C:\GitHub\Repositorios\Cominvi\Nominas\obj\Debug\Nominas.frmListaEmpresas.resources
 C:\GitHub\Repositorios\Cominvi\Nominas\obj\Debug\Nominas.frmListaExpedientes.resources
+C:\GitHub\Repositorios\Cominvi\Nominas\obj\Debug\Nominas.frmListaFactorDescuento.resources
 C:\GitHub\Repositorios\Cominvi\Nominas\obj\Debug\Nominas.frmListaFactores.resources
 C:\GitHub\Repositorios\Cominvi\Nominas\obj\Debug\Nominas.frmListaHistorial.resources
 C:\GitHub\Repositorios\Cominvi\Nominas\obj\Debug\Nominas.frmListaImss.resources
@@ -477,6 +485,7 @@ C:\GitHub\Repositorios\Cominvi\Nominas\obj\Debug\Nominas.frmSeleccionarEmpresa.r
 C:\GitHub\Repositorios\Cominvi\Nominas\obj\Debug\Nominas.frmSeleccionPeriodo.resources
 C:\GitHub\Repositorios\Cominvi\Nominas\obj\Debug\Nominas.frmSobreRecibo.resources
 C:\GitHub\Repositorios\Cominvi\Nominas\obj\Debug\Nominas.frmSubsidio.resources
+C:\GitHub\Repositorios\Cominvi\Nominas\obj\Debug\Nominas.frmTrabajadorNominaDigital.resources
 C:\GitHub\Repositorios\Cominvi\Nominas\obj\Debug\Nominas.frmUsuarios.resources
 C:\GitHub\Repositorios\Cominvi\Nominas\obj\Debug\Nominas.frmVisorReportes.resources
 C:\GitHub\Repositorios\Cominvi\Nominas\obj\Debug\Nominas.Properties.Resources.resources

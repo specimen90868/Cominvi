@@ -77,7 +77,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 100);
+            this.label3.Location = new System.Drawing.Point(10, 98);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(111, 13);
             this.label3.TabIndex = 3;
@@ -139,6 +139,7 @@
             // 
             // dtpFechaAntiguedad
             // 
+            this.dtpFechaAntiguedad.Enabled = false;
             this.dtpFechaAntiguedad.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpFechaAntiguedad.Location = new System.Drawing.Point(127, 94);
             this.dtpFechaAntiguedad.Name = "dtpFechaAntiguedad";
@@ -236,6 +237,8 @@
             this.txtAntiguedadMod.Name = "txtAntiguedadMod";
             this.txtAntiguedadMod.Size = new System.Drawing.Size(27, 20);
             this.txtAntiguedadMod.TabIndex = 20;
+            this.txtAntiguedadMod.Text = "0";
+            this.txtAntiguedadMod.TextChanged += new System.EventHandler(this.txtAntiguedadMod_TextChanged);
             // 
             // label9
             // 
@@ -310,6 +313,7 @@
             // 
             // cmbMetodoPago
             // 
+            this.cmbMetodoPago.Enabled = false;
             this.cmbMetodoPago.FormattingEnabled = true;
             this.cmbMetodoPago.Items.AddRange(new object[] {
             "Efectivo",

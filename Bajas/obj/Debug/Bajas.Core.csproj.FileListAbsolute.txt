@@ -8,5 +8,6 @@ C:\GitHub\Repositorios\Cominvi\Bajas\bin\Debug\Bajas.dll
 C:\GitHub\Repositorios\Cominvi\Bajas\bin\Debug\Bajas.pdb
 C:\GitHub\Repositorios\Cominvi\Bajas\bin\Debug\Data.Obj.dll
 C:\GitHub\Repositorios\Cominvi\Bajas\bin\Debug\Data.Obj.pdb
+C:\GitHub\Repositorios\Cominvi\Bajas\obj\Debug\Bajas.Core.csprojResolveAssemblyReference.cache
 C:\GitHub\Repositorios\Cominvi\Bajas\obj\Debug\Bajas.dll
 C:\GitHub\Repositorios\Cominvi\Bajas\obj\Debug\Bajas.pdb

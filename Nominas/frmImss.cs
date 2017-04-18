@@ -63,7 +63,7 @@ namespace Nominas
                     {
                         txtPrestacion.Text = lstImss[i].prestacion;
                         txtPorcentaje.Text = lstImss[i].porcentaje.ToString();
-                        chkSeCalcula.Checked = lstImss[i].secalcula;
+                        chkSeCalcula.Checked = lstImss[i].calculo;
                     }
                 }
                 catch (Exception error)
@@ -101,7 +101,7 @@ namespace Nominas
             Imss.Core.Imss imss = new Imss.Core.Imss();
             imss.prestacion = txtPrestacion.Text;
             imss.porcentaje = decimal.Parse(txtPorcentaje.Text);
-            imss.secalcula = chkSeCalcula.Checked;
+            imss.calculo = chkSeCalcula.Checked;
 
             switch (_tipoOperacion)
             {

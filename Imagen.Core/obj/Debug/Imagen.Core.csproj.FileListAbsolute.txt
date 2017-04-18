@@ -15,5 +15,6 @@ C:\GitHub\Repositorios\Cominvi\Imagen.Core\bin\Debug\Imagen.Core.dll
 C:\GitHub\Repositorios\Cominvi\Imagen.Core\bin\Debug\Imagen.Core.pdb
 C:\GitHub\Repositorios\Cominvi\Imagen.Core\bin\Debug\Data.Obj.dll
 C:\GitHub\Repositorios\Cominvi\Imagen.Core\bin\Debug\Data.Obj.pdb
+C:\GitHub\Repositorios\Cominvi\Imagen.Core\obj\Debug\Imagen.Core.csprojResolveAssemblyReference.cache
 C:\GitHub\Repositorios\Cominvi\Imagen.Core\obj\Debug\Imagen.Core.dll
 C:\GitHub\Repositorios\Cominvi\Imagen.Core\obj\Debug\Imagen.Core.pdb

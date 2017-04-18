@@ -152,7 +152,7 @@ namespace Incidencias.Core
 
         public object diasIncidencia(int idtrabajador, DateTime inicio, DateTime fin)
         {
-            Command.CommandText = "select dias from incidencias where idtrabajador = @idtrabajador and fechainicio = @inicio and fechafin = @fin";
+            Command.CommandText = "select coalesce(sum(dias),0) as dias from incidencias where idtrabajador = @idtrabajador and fechainicio = @inicio and fechafin = @fin";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idtrabajador", idtrabajador);
             Command.Parameters.AddWithValue("inicio", inicio);

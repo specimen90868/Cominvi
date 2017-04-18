@@ -166,10 +166,10 @@
             this.rbtnVsmdf.AutoSize = true;
             this.rbtnVsmdf.Location = new System.Drawing.Point(123, 259);
             this.rbtnVsmdf.Name = "rbtnVsmdf";
-            this.rbtnVsmdf.Size = new System.Drawing.Size(62, 17);
+            this.rbtnVsmdf.Size = new System.Drawing.Size(123, 17);
             this.rbtnVsmdf.TabIndex = 260;
             this.rbtnVsmdf.TabStop = true;
-            this.rbtnVsmdf.Text = "VSMDF";
+            this.rbtnVsmdf.Text = "Factor de descuento";
             this.rbtnVsmdf.UseVisualStyleBackColor = true;
             this.rbtnVsmdf.CheckedChanged += new System.EventHandler(this.rbtnVsmdf_CheckedChanged);
             // 

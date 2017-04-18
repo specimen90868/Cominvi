@@ -22,5 +22,6 @@ C:\GitHub\Repositorios\Cominvi\Puestos.Core\bin\Debug\Puestos.Core.dll
 C:\GitHub\Repositorios\Cominvi\Puestos.Core\bin\Debug\Puestos.Core.pdb
 C:\GitHub\Repositorios\Cominvi\Puestos.Core\bin\Debug\Data.Obj.dll
 C:\GitHub\Repositorios\Cominvi\Puestos.Core\bin\Debug\Data.Obj.pdb
+C:\GitHub\Repositorios\Cominvi\Puestos.Core\obj\Debug\Puestos.Core.csprojResolveAssemblyReference.cache
 C:\GitHub\Repositorios\Cominvi\Puestos.Core\obj\Debug\Puestos.Core.dll
 C:\GitHub\Repositorios\Cominvi\Puestos.Core\obj\Debug\Puestos.Core.pdb

@@ -184,6 +184,7 @@ namespace Nominas
             int fila = 0;
             frmUsuarios u = new frmUsuarios();
             u.MdiParent = this.MdiParent;
+            u.StartPosition = FormStartPosition.CenterParent;
             u.OnNuevoUsuario += u_OnNuevoUsuario;
             if (!edicion.Equals(GLOBALES.NUEVO))
             {

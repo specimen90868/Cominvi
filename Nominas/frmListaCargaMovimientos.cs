@@ -501,6 +501,7 @@ namespace Nominas
                 dt.Columns.Add("fechapago", typeof(DateTime));
                 dt.Columns.Add("obracivil", typeof(Boolean));
                 dt.Columns.Add("periodo", typeof(Int32));
+                dt.Columns.Add("anio", typeof(Int32));
                 dt.Columns.Add("iddepartamento", typeof(Int32));
                 dt.Columns.Add("idpuesto", typeof(Int32));
 
@@ -527,6 +528,7 @@ namespace Nominas
                     dtFila["fechapago"] = new DateTime(1900,1,1);
                     dtFila["obracivil"] = false;
                     dtFila["periodo"] = _periodo;
+                    dtFila["anio"] = _inicioPeriodo.Year;
                     dtFila["iddepartamento"] = lstMovimientos[i].iddepartamento;
                     dtFila["idpuesto"] = lstMovimientos[i].idpuesto;
                     dt.Rows.Add(dtFila);

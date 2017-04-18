@@ -8,5 +8,6 @@ C:\GitHub\Repositorios\Cominvi\Imss.Core\bin\Debug\Imss.Core.dll
 C:\GitHub\Repositorios\Cominvi\Imss.Core\bin\Debug\Imss.Core.pdb
 C:\GitHub\Repositorios\Cominvi\Imss.Core\bin\Debug\Data.Obj.dll
 C:\GitHub\Repositorios\Cominvi\Imss.Core\bin\Debug\Data.Obj.pdb
+C:\GitHub\Repositorios\Cominvi\Imss.Core\obj\Debug\Imss.Core.csprojResolveAssemblyReference.cache
 C:\GitHub\Repositorios\Cominvi\Imss.Core\obj\Debug\Imss.Core.dll
 C:\GitHub\Repositorios\Cominvi\Imss.Core\obj\Debug\Imss.Core.pdb

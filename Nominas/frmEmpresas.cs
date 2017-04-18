@@ -49,14 +49,35 @@ namespace Nominas
         {
             int existe = 0;
             //SE VALIDA SI TODOS LOS TEXTBOX HAN SIDO LLENADOS.
-            string control = GLOBALES.VALIDAR(this,typeof(TextBox));
+            string control = GLOBALES.VALIDAR(tabEmpresa, typeof(TextBox));
             if (!control.Equals(""))
             {
                 MessageBox.Show("Falta el campo: " + control, "Información");
                 return;
             }
 
-            control = GLOBALES.VALIDAR(this, typeof(MaskedTextBox));
+            control = GLOBALES.VALIDAR(tabEmpresa, typeof(MaskedTextBox));
+            if (!control.Equals(""))
+            {
+                MessageBox.Show("Falta el campo: " + control, "Información");
+                return;
+            }
+
+            control = GLOBALES.VALIDAR(tabDomicilio, typeof(TextBox));
+            if (!control.Equals(""))
+            {
+                MessageBox.Show("Falta el campo: " + control, "Información");
+                return;
+            }
+
+            control = GLOBALES.VALIDAR(tabDomicilio, typeof(MaskedTextBox));
+            if (!control.Equals(""))
+            {
+                MessageBox.Show("Falta el campo: " + control, "Información");
+                return;
+            }
+
+            control = GLOBALES.VALIDAR(tabTimbrado, typeof(TextBox));
             if (!control.Equals(""))
             {
                 MessageBox.Show("Falta el campo: " + control, "Información");
@@ -79,7 +100,7 @@ namespace Nominas
             em.digitoverificador = int.Parse(txtDigitoVerificador.Text);
             em.representante = txtRepresentante.Text;
             em.estatus = 1;
-            em.regimen = txtRegimen.Text;
+            em.regimen = "";
             em.certificado = txtCertificado.Text;
             em.llave = txtLlave.Text;
             em.password = txtPassword.Text;
@@ -87,6 +108,8 @@ namespace Nominas
             em.vigenciacertificado = dtpVigencia.Value.Date;
             em.observacion = txtObservacion.Text;
             em.obracivil = chkObraCivil.Checked;
+            em.idregimenfiscal = int.Parse(cmbRegimenFiscal.SelectedValue.ToString());
+            em.codigopostal = txtCP.Text;
 
             dh = new Direccion.Core.DireccionesHelper();
             dh.Command = cmd;
@@ -116,26 +139,26 @@ namespace Nominas
             periodo.estatus = GLOBALES.ACTIVO;
             periodo.pago = cmbPago.Text;
 
-            CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
-            nh.Command = cmd;
+            //CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
+            //nh.Command = cmd;
 
-            CalculoNomina.Core.PagoNomina pn = new CalculoNomina.Core.PagoNomina();
-            pn.idtrabajador = 0;
-            pn.idconcepto = 0;
-            pn.noconcepto = 0;
-            pn.tipoconcepto = "P";
-            pn.exento = 0;
-            pn.gravado = 0;
-            pn.cantidad = 0;
-            pn.fechainicio = inicioPeriodo;
-            pn.fechafin = finPeriodo;
-            pn.noperiodo = 0;
-            pn.diaslaborados = 0;
-            pn.idusuario = 0;
-            pn.tiponomina = 0;
-            pn.fechapago = finPeriodo;
-            pn.iddepartamento = 0;
-            pn.idpuesto = 0;            
+            //CalculoNomina.Core.PagoNomina pn = new CalculoNomina.Core.PagoNomina();
+            //pn.idtrabajador = 0;
+            //pn.idconcepto = 0;
+            //pn.noconcepto = 0;
+            //pn.tipoconcepto = "P";
+            //pn.exento = 0;
+            //pn.gravado = 0;
+            //pn.cantidad = 0;
+            //pn.fechainicio = inicioPeriodo;
+            //pn.fechafin = finPeriodo;
+            //pn.noperiodo = 0;
+            //pn.diaslaborados = 0;
+            //pn.idusuario = 0;
+            //pn.tiponomina = 0;
+            //pn.fechapago = finPeriodo;
+            //pn.iddepartamento = 0;
+            //pn.idpuesto = 0;            
 
             try
             {
@@ -169,8 +192,8 @@ namespace Nominas
                         }
                         periodo.idempresa = idempresa;
                         ph.insertaPeriodo(periodo);
-                        pn.idempresa = idempresa;
-                        nh.insertaPrimerPeriodoNomina(pn);
+                        //pn.idempresa = idempresa;
+                        //nh.insertaPrimerPeriodoNomina(pn);
                         cnx.Close();
                         cnx.Dispose();
                     }
@@ -234,6 +257,7 @@ namespace Nominas
 
         private void frmEmpresas_Load(object sender, EventArgs e)
         {
+            CargaComboBox();
             /// _tipoOperacion CONSULTA = 1, EDICION = 2
             if (_tipoOperacion == GLOBALES.CONSULTAR || _tipoOperacion == GLOBALES.MODIFICAR)
             {
@@ -272,13 +296,13 @@ namespace Nominas
                         txtRegistroPatronal.Text = lstEmpresa[i].registro;
                         txtObservacion.Text = lstEmpresa[i].observacion;
                         txtDigitoVerificador.Text = lstEmpresa[i].digitoverificador.ToString();
-                        txtRegimen.Text = lstEmpresa[i].regimen.ToString();
                         txtCertificado.Text = lstEmpresa[i].certificado;
                         txtLlave.Text = lstEmpresa[i].llave;
                         txtPassword.Text = lstEmpresa[i].password;
                         txtNoCertificado.Text = lstEmpresa[i].nocertificado;
                         dtpVigencia.Value = lstEmpresa[i].vigenciacertificado;
                         chkObraCivil.Checked = lstEmpresa[i].obracivil;
+                        cmbRegimenFiscal.SelectedValue = lstEmpresa[i].idregimenfiscal;
                     }
 
                     for (int i = 0; i < lstDireccion.Count; i++)
@@ -376,14 +400,15 @@ namespace Nominas
             }
             else
             {
-                frmInicioPeriodo ip = new frmInicioPeriodo();
-                ip._periodo = int.Parse(txtDias.Text);
-                ip.OnNuevoPeriodo += ip_OnNuevoPeriodo;
-                ip.ShowDialog();
-                if (capturaFecha)
-                    guardar(1);
-                else
-                    return;
+                guardar(1);
+                //frmInicioPeriodo ip = new frmInicioPeriodo();
+                //ip._periodo = int.Parse(txtDias.Text);
+                //ip.OnNuevoPeriodo += ip_OnNuevoPeriodo;
+                //ip.ShowDialog();
+                //if (capturaFecha)
+                //    guardar(1);
+                //else
+                //    return;
             }
 
         }
@@ -425,14 +450,15 @@ namespace Nominas
             }
             else
             {
-                frmInicioPeriodo ip = new frmInicioPeriodo();
-                ip._periodo = int.Parse(txtDias.Text);
-                ip.OnNuevoPeriodo += ip_OnNuevoPeriodo;
-                ip.ShowDialog();
-                if (capturaFecha)
-                    guardar(0);
-                else
-                    return;
+                guardar(0);
+                //frmInicioPeriodo ip = new frmInicioPeriodo();
+                //ip._periodo = int.Parse(txtDias.Text);
+                //ip.OnNuevoPeriodo += ip_OnNuevoPeriodo;
+                //ip.ShowDialog();
+                //if (capturaFecha)
+                //    guardar(0);
+                //else
+                //    return;
             }
         }
 
@@ -453,6 +479,34 @@ namespace Nominas
             }
         }
 
+        private void CargaComboBox()
+        {
+            cnx = new SqlConnection();
+            cnx.ConnectionString = cdn;
+            cmd = new SqlCommand();
+            cmd.Connection = cnx;
+
+            SatCatalogos.Core.satCatalogosHelper sch = new SatCatalogos.Core.satCatalogosHelper();
+            sch.Command = cmd;
+            List<SatCatalogos.Core.satRegimenFiscal> lstRegimenFiscal = new List<SatCatalogos.Core.satRegimenFiscal>();
+
+            try
+            {
+                cnx.Open();
+                lstRegimenFiscal = sch.obtenerRegimenes();
+                cnx.Close();
+                cnx.Dispose();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error: Al obtener los datos del regimen fiscal", "Error");
+                cnx.Dispose();
+            }
+
+            cmbRegimenFiscal.DataSource = lstRegimenFiscal.ToList();
+            cmbRegimenFiscal.DisplayMember = "descripcion";
+            cmbRegimenFiscal.ValueMember = "id";
+        }
        
     }
 }

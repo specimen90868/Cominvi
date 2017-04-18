@@ -8,5 +8,6 @@ C:\GitHub\Repositorios\Cominvi\Infonavit.Core\bin\Debug\Infonavit.Core.dll
 C:\GitHub\Repositorios\Cominvi\Infonavit.Core\bin\Debug\Infonavit.Core.pdb
 C:\GitHub\Repositorios\Cominvi\Infonavit.Core\bin\Debug\Data.Obj.dll
 C:\GitHub\Repositorios\Cominvi\Infonavit.Core\bin\Debug\Data.Obj.pdb
+C:\GitHub\Repositorios\Cominvi\Infonavit.Core\obj\Debug\Infonavit.Core.csprojResolveAssemblyReference.cache
 C:\GitHub\Repositorios\Cominvi\Infonavit.Core\obj\Debug\Infonavit.Core.dll
 C:\GitHub\Repositorios\Cominvi\Infonavit.Core\obj\Debug\Infonavit.Core.pdb

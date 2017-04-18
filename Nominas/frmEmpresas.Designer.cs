@@ -79,11 +79,12 @@
             this.label27 = new System.Windows.Forms.Label();
             this.tabEmpresas = new System.Windows.Forms.TabControl();
             this.tabEmpresa = new System.Windows.Forms.TabPage();
+            this.cmbRegimenFiscal = new System.Windows.Forms.ComboBox();
+            this.chkObraCivil = new System.Windows.Forms.CheckBox();
             this.txtObservacion = new System.Windows.Forms.TextBox();
             this.label28 = new System.Windows.Forms.Label();
             this.Label15 = new System.Windows.Forms.Label();
             this.Label12 = new System.Windows.Forms.Label();
-            this.txtRegimen = new System.Windows.Forms.TextBox();
             this.label22 = new System.Windows.Forms.Label();
             this.txtRepresentante = new System.Windows.Forms.TextBox();
             this.Label16 = new System.Windows.Forms.Label();
@@ -92,7 +93,6 @@
             this.tabDomicilio = new System.Windows.Forms.TabPage();
             this.tabPeriodo = new System.Windows.Forms.TabPage();
             this.tabTimbrado = new System.Windows.Forms.TabPage();
-            this.chkObraCivil = new System.Windows.Forms.CheckBox();
             this.toolEmpresa.SuspendLayout();
             this.toolAcciones.SuspendLayout();
             this.tabEmpresas.SuspendLayout();
@@ -482,7 +482,7 @@
             // 
             // dtpVigencia
             // 
-            this.dtpVigencia.Location = new System.Drawing.Point(101, 273);
+            this.dtpVigencia.Location = new System.Drawing.Point(101, 275);
             this.dtpVigencia.Name = "dtpVigencia";
             this.dtpVigencia.Size = new System.Drawing.Size(213, 20);
             this.dtpVigencia.TabIndex = 21;
@@ -550,12 +550,12 @@
             // 
             // tabEmpresa
             // 
+            this.tabEmpresa.Controls.Add(this.cmbRegimenFiscal);
             this.tabEmpresa.Controls.Add(this.chkObraCivil);
             this.tabEmpresa.Controls.Add(this.txtObservacion);
             this.tabEmpresa.Controls.Add(this.label28);
             this.tabEmpresa.Controls.Add(this.Label15);
             this.tabEmpresa.Controls.Add(this.Label12);
-            this.tabEmpresa.Controls.Add(this.txtRegimen);
             this.tabEmpresa.Controls.Add(this.label22);
             this.tabEmpresa.Controls.Add(this.txtRepresentante);
             this.tabEmpresa.Controls.Add(this.Label16);
@@ -577,6 +577,24 @@
             this.tabEmpresa.TabIndex = 0;
             this.tabEmpresa.Text = "Empresa";
             this.tabEmpresa.UseVisualStyleBackColor = true;
+            // 
+            // cmbRegimenFiscal
+            // 
+            this.cmbRegimenFiscal.FormattingEnabled = true;
+            this.cmbRegimenFiscal.Location = new System.Drawing.Point(113, 108);
+            this.cmbRegimenFiscal.Name = "cmbRegimenFiscal";
+            this.cmbRegimenFiscal.Size = new System.Drawing.Size(425, 21);
+            this.cmbRegimenFiscal.TabIndex = 193;
+            // 
+            // chkObraCivil
+            // 
+            this.chkObraCivil.AutoSize = true;
+            this.chkObraCivil.Location = new System.Drawing.Point(113, 160);
+            this.chkObraCivil.Name = "chkObraCivil";
+            this.chkObraCivil.Size = new System.Drawing.Size(71, 17);
+            this.chkObraCivil.TabIndex = 192;
+            this.chkObraCivil.Text = "Obra Civil";
+            this.chkObraCivil.UseVisualStyleBackColor = true;
             // 
             // txtObservacion
             // 
@@ -613,14 +631,6 @@
             this.Label12.Size = new System.Drawing.Size(138, 18);
             this.Label12.TabIndex = 180;
             this.Label12.Text = "Nombre empresa";
-            // 
-            // txtRegimen
-            // 
-            this.txtRegimen.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtRegimen.Location = new System.Drawing.Point(113, 108);
-            this.txtRegimen.Name = "txtRegimen";
-            this.txtRegimen.Size = new System.Drawing.Size(425, 20);
-            this.txtRegimen.TabIndex = 176;
             // 
             // label22
             // 
@@ -728,16 +738,6 @@
             this.tabTimbrado.Text = "Timbrado";
             this.tabTimbrado.UseVisualStyleBackColor = true;
             // 
-            // chkObraCivil
-            // 
-            this.chkObraCivil.AutoSize = true;
-            this.chkObraCivil.Location = new System.Drawing.Point(113, 160);
-            this.chkObraCivil.Name = "chkObraCivil";
-            this.chkObraCivil.Size = new System.Drawing.Size(71, 17);
-            this.chkObraCivil.TabIndex = 192;
-            this.chkObraCivil.Text = "Obra Civil";
-            this.chkObraCivil.UseVisualStyleBackColor = true;
-            // 
             // frmEmpresas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -821,7 +821,6 @@
         private System.Windows.Forms.TabPage tabEmpresa;
         internal System.Windows.Forms.Label Label15;
         internal System.Windows.Forms.Label Label12;
-        private System.Windows.Forms.TextBox txtRegimen;
         private System.Windows.Forms.Label label22;
         internal System.Windows.Forms.TextBox txtRepresentante;
         internal System.Windows.Forms.Label Label16;
@@ -833,5 +832,6 @@
         private System.Windows.Forms.TextBox txtObservacion;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.CheckBox chkObraCivil;
+        private System.Windows.Forms.ComboBox cmbRegimenFiscal;
     }
 }

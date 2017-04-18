@@ -75,6 +75,14 @@ namespace Salario.Core
             return dato;
         }
 
+        public object obtenerSalarioValor()
+        {
+            Command.CommandText = "select top 1 valor from salariominimo order by periodo desc";
+            Command.Parameters.Clear();
+            object dato = Select(Command);
+            return dato;
+        }
+
         public int insertaSalario(Salarios s)
         {
             Command.CommandText = "insert into salariominimo (periodo, valor, zona) values (@periodo, @valor, @zona)";

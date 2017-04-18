@@ -46,27 +46,51 @@ namespace Nominas
             Empresas.Core.EmpresasHelper eh = new Empresas.Core.EmpresasHelper();
             eh.Command = cmd;
 
+            Usuarios.Core.UsuariosHelper uh = new Usuarios.Core.UsuariosHelper();
+            uh.Command = cmd;
+
+            List<Usuarios.Core.Usuarios> lstUsuario = new List<Usuarios.Core.Usuarios>();
+
             try 
             {
                 cnx.Open();
-
                 lstEmpresa = eh.InicioEmpresa();
-
+                lstUsuario = uh.Usuario(GLOBALES.IDUSUARIO);
                 cnx.Close();
                 cnx.Dispose();
-
-                var e = from em in lstEmpresa
+                string valores = lstUsuario[0].empresas;
+                if (valores == "0")
+                {
+                    var e = from em in lstEmpresa
+                            select new
+                            {
+                                IdEmpresa = em.idempresa,
+                                Nombre = em.nombre + " " + em.observacion,
+                                Registro = em.registro + em.digitoverificador
+                            };
+                    dgvEmpresas.DataSource = e.ToList();
+                }
+                else {
+                    string[] empresasUsuario = valores.Split(',');
+                    var empresasWhere = new string[empresasUsuario.Length];
+                    for (int i = 0; i < empresasUsuario.Length; i++)
+                    {
+                        empresasWhere[i] = empresasUsuario[i];
+                    }
+                    var e = from em in lstEmpresa
+                        where empresasWhere.Contains(em.idempresa.ToString())
                         select new
                         {
                             IdEmpresa = em.idempresa,
                             Nombre = em.nombre + " " + em.observacion,
                             Registro = em.registro + em.digitoverificador
                         };
-                dgvEmpresas.DataSource = e.ToList();
+                    dgvEmpresas.DataSource = e.ToList();
+                }
+                
                 dgvEmpresas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 //dgvEmpresas.Columns[1].Width = 200;
                 dgvEmpresas.RowHeadersVisible = false;
-
                 dgvEmpresas.Columns[0].Visible = false;
                 for (int i = 0; i < dgvEmpresas.Columns.Count; i++)
                 {

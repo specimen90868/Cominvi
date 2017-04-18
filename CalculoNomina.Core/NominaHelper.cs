@@ -295,6 +295,26 @@ namespace CalculoNomina.Core
             }
             return lstPagoNomina;
         }
+        public List<tmpPagoNomina> obtenerPreNominaTemp(int idEmpresa, bool obraCivil, int periodo)
+        {
+            List<tmpPagoNomina> lstPagoNomina = new List<tmpPagoNomina>();
+            DataTable dtPagoNomina = new DataTable();
+            Command.CommandText = @"select distinct top 1 fechainicio, fechafin from tmpPagoNomina where idempresa = @idempresa 
+                                    and obracivil = @obracivil and periodo = @periodo order by fechainicio desc";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idEmpresa);
+            Command.Parameters.AddWithValue("obracivil", obraCivil);
+            Command.Parameters.AddWithValue("periodo", periodo);
+            dtPagoNomina = SelectData(Command);
+            for (int i = 0; i < dtPagoNomina.Rows.Count; i++)
+            {
+                tmpPagoNomina pn = new tmpPagoNomina();
+                pn.fechainicio = DateTime.Parse(dtPagoNomina.Rows[i]["fechainicio"].ToString());
+                pn.fechafin = DateTime.Parse(dtPagoNomina.Rows[i]["fechafin"].ToString());
+                lstPagoNomina.Add(pn);
+            }
+            return lstPagoNomina;
+        }
 
         public List<tmpPagoNomina> obtenerUltimaNominaTrabajador(int idEmpresa, int idtrabajador, int periodo)
         {
@@ -629,16 +649,25 @@ namespace CalculoNomina.Core
             return _periodo;
         }
 
-        public object obtenerNoPeriodoExtraordinario(int idempresa, int tiponomina, int periodo)
+        public List<PagoNomina> obtenerNoPeriodoExtraordinario(int idempresa, int tiponomina, int periodo)
         {
-            Command.CommandText = @"select top 1 noperiodo from PagoNomina where idempresa = @idempresa and tiponomina = @tiponomina and periodo = @periodo
+            Command.CommandText = @"select top 1 noperiodo, anio from PagoNomina where idempresa = @idempresa and tiponomina = @tiponomina and periodo = @periodo
                     order by noperiodo desc";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idempresa);
             Command.Parameters.AddWithValue("tiponomina", tiponomina);
             Command.Parameters.AddWithValue("periodo", periodo);
-            object _periodo = Select(Command);
-            return _periodo;
+            List<PagoNomina> lstPagoNomina = new List<PagoNomina>();
+            DataTable dtPagoNomina = new DataTable();
+            dtPagoNomina = SelectData(Command);
+            for (int i = 0; i < dtPagoNomina.Rows.Count; i++)
+            {
+                PagoNomina pn = new PagoNomina();
+                pn.noperiodo = int.Parse(dtPagoNomina.Rows[i]["noperiodo"].ToString());
+                pn.anio = int.Parse(dtPagoNomina.Rows[i]["anio"].ToString());
+            }
+
+            return lstPagoNomina;
         }
 
         public int actualizarNoPeriodo(int idEmpresa, DateTime inicio, DateTime fin, int noPeriodo)

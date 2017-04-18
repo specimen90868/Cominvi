@@ -605,5 +605,10 @@ namespace Nominas
                 }
             }
         }
+
+        private void txtAntiguedadMod_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

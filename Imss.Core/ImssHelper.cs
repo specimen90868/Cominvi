@@ -21,7 +21,7 @@ namespace Imss.Core
                 imss.id = int.Parse(dtImss.Rows[i]["id"].ToString());
                 imss.prestacion = dtImss.Rows[i]["prestacion"].ToString();
                 imss.porcentaje = decimal.Parse(dtImss.Rows[i]["porcentaje"].ToString());
-                imss.secalcula = bool.Parse(dtImss.Rows[i]["secalcula"].ToString());
+                imss.calculo = bool.Parse(dtImss.Rows[i]["calculo"].ToString());
                 lstImss.Add(imss);
             }
             return lstImss;
@@ -41,7 +41,7 @@ namespace Imss.Core
                 imss.id = int.Parse(dtImss.Rows[j]["id"].ToString());
                 imss.prestacion = dtImss.Rows[j]["prestacion"].ToString();
                 imss.porcentaje = decimal.Parse(dtImss.Rows[j]["porcentaje"].ToString());
-                imss.secalcula = bool.Parse(dtImss.Rows[j]["secalcula"].ToString());
+                imss.calculo = bool.Parse(dtImss.Rows[j]["calculo"].ToString());
                 lstImss.Add(imss);
             }
             return lstImss;
@@ -49,22 +49,22 @@ namespace Imss.Core
 
         public int insertaImss(Imss i)
         {
-            Command.CommandText = "insert into tablaImss (prestacion, porcentaje, secalcula) values (@prestacion, @porcentaje, @secalcula)";
+            Command.CommandText = "insert into tablaImss (prestacion, porcentaje, calculo) values (@prestacion, @porcentaje, @secalcula)";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("prestacion", i.prestacion);
             Command.Parameters.AddWithValue("porcentaje", i.porcentaje);
-            Command.Parameters.AddWithValue("secalcula", i.secalcula);
+            Command.Parameters.AddWithValue("secalcula", i.calculo);
             return Command.ExecuteNonQuery();
         }
 
         public int actualizaImss(Imss i)
         {
-            Command.CommandText = "update tablaImss set prestacion = @prestacion, porcentaje = @porcentaje, secalcula = @secalcula where id = @id";
+            Command.CommandText = "update tablaImss set prestacion = @prestacion, calculo = @porcentaje, secalcula = @secalcula where id = @id";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("id", i.id);
             Command.Parameters.AddWithValue("prestacion", i.prestacion);
             Command.Parameters.AddWithValue("porcentaje", i.porcentaje);
-            Command.Parameters.AddWithValue("secalcula", i.secalcula);
+            Command.Parameters.AddWithValue("secalcula", i.calculo);
             return Command.ExecuteNonQuery();
         }
 
@@ -78,9 +78,9 @@ namespace Imss.Core
 
         public decimal CuotaObreroPatronal(Imss i)
         {
-            Command.CommandText = @"select sum(porcentaje) from tablaImss where secalcula = @secalcula";
+            Command.CommandText = @"select sum(porcentaje) from tablaImss where calculo = @calculo";
             Command.Parameters.Clear();
-            Command.Parameters.AddWithValue("secalcula", i.secalcula);
+            Command.Parameters.AddWithValue("calculo", i.calculo);
             decimal suma = decimal.Parse(Select(Command).ToString());
             return suma;
         }

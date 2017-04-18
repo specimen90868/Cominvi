@@ -654,6 +654,12 @@ namespace Nominas
                     CierraSesion();
                 }
         }
+
+        private void toolFactorDescuento_Click(object sender, EventArgs e)
+        {
+            frmListaFactorDescuento lfd = new frmListaFactorDescuento();
+            lfd.Show();
+        }
     }
 }
 

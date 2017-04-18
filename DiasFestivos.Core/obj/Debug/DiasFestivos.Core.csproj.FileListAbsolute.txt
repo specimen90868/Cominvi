@@ -8,5 +8,6 @@ C:\GitHub\Repositorios\Cominvi\DiasFestivos.Core\bin\Debug\DiasFestivos.Core.dll
 C:\GitHub\Repositorios\Cominvi\DiasFestivos.Core\bin\Debug\DiasFestivos.Core.pdb
 C:\GitHub\Repositorios\Cominvi\DiasFestivos.Core\bin\Debug\Data.Obj.dll
 C:\GitHub\Repositorios\Cominvi\DiasFestivos.Core\bin\Debug\Data.Obj.pdb
+C:\GitHub\Repositorios\Cominvi\DiasFestivos.Core\obj\Debug\DiasFestivos.Core.csprojResolveAssemblyReference.cache
 C:\GitHub\Repositorios\Cominvi\DiasFestivos.Core\obj\Debug\DiasFestivos.Core.dll
 C:\GitHub\Repositorios\Cominvi\DiasFestivos.Core\obj\Debug\DiasFestivos.Core.pdb

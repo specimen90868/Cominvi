@@ -8,5 +8,6 @@ C:\GitHub\Repositorios\Cominvi\Exportacion.Core\bin\Debug\Exportacion.Core.dll
 C:\GitHub\Repositorios\Cominvi\Exportacion.Core\bin\Debug\Exportacion.Core.pdb
 C:\GitHub\Repositorios\Cominvi\Exportacion.Core\bin\Debug\Data.Obj.dll
 C:\GitHub\Repositorios\Cominvi\Exportacion.Core\bin\Debug\Data.Obj.pdb
+C:\GitHub\Repositorios\Cominvi\Exportacion.Core\obj\Debug\Exportacion.Core.csprojResolveAssemblyReference.cache
 C:\GitHub\Repositorios\Cominvi\Exportacion.Core\obj\Debug\Exportacion.Core.dll
 C:\GitHub\Repositorios\Cominvi\Exportacion.Core\obj\Debug\Exportacion.Core.pdb

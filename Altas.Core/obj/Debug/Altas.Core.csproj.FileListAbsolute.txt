@@ -8,5 +8,6 @@ C:\GitHub\Repositorios\Cominvi\Altas.Core\bin\Debug\Altas.Core.dll
 C:\GitHub\Repositorios\Cominvi\Altas.Core\bin\Debug\Altas.Core.pdb
 C:\GitHub\Repositorios\Cominvi\Altas.Core\bin\Debug\Data.Obj.dll
 C:\GitHub\Repositorios\Cominvi\Altas.Core\bin\Debug\Data.Obj.pdb
+C:\GitHub\Repositorios\Cominvi\Altas.Core\obj\Debug\Altas.Core.csprojResolveAssemblyReference.cache
 C:\GitHub\Repositorios\Cominvi\Altas.Core\obj\Debug\Altas.Core.dll
 C:\GitHub\Repositorios\Cominvi\Altas.Core\obj\Debug\Altas.Core.pdb

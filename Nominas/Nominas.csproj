@@ -203,6 +203,12 @@
     <Compile Include="frmExportarEmpleado.Designer.cs">
       <DependentUpon>frmExportarEmpleado.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmFactorDescuento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmFactorDescuento.Designer.cs">
+      <DependentUpon>frmFactorDescuento.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmFactores.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -364,6 +370,12 @@
     </Compile>
     <Compile Include="frmListaExpedientes.Designer.cs">
       <DependentUpon>frmListaExpedientes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmListaFactorDescuento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaFactorDescuento.Designer.cs">
+      <DependentUpon>frmListaFactorDescuento.cs</DependentUpon>
     </Compile>
     <Compile Include="frmListaFactores.cs">
       <SubType>Form</SubType>
@@ -563,6 +575,12 @@
     <Compile Include="frmSubsidio.Designer.cs">
       <DependentUpon>frmSubsidio.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmTrabajadorNominaDigital.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTrabajadorNominaDigital.Designer.cs">
+      <DependentUpon>frmTrabajadorNominaDigital.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmUsuarios.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -632,6 +650,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmExportarEmpleado.resx">
       <DependentUpon>frmExportarEmpleado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmFactorDescuento.resx">
+      <DependentUpon>frmFactorDescuento.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmFactores.resx">
       <DependentUpon>frmFactores.cs</DependentUpon>
@@ -713,6 +734,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmListaExpedientes.resx">
       <DependentUpon>frmListaExpedientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListaFactorDescuento.resx">
+      <DependentUpon>frmListaFactorDescuento.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmListaFactores.resx">
       <DependentUpon>frmListaFactores.cs</DependentUpon>
@@ -812,6 +836,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmSubsidio.resx">
       <DependentUpon>frmSubsidio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTrabajadorNominaDigital.resx">
+      <DependentUpon>frmTrabajadorNominaDigital.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmUsuarios.resx">
       <DependentUpon>frmUsuarios.cs</DependentUpon>
@@ -939,6 +966,10 @@
       <Project>{656b8f15-f950-46e4-bfa1-a36fbed92713}</Project>
       <Name>Exportacion.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FactorDescuento.Core\FactorDescuento.Core.csproj">
+      <Project>{9554455a-0c82-4d83-ac5e-41988e85d35d}</Project>
+      <Name>FactorDescuento.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Factores.Core\Factores.Core.csproj">
       <Project>{4975efe5-7f1e-4648-89c1-ff4b4fcafd7a}</Project>
       <Name>Factores.Core</Name>
@@ -1002,6 +1033,14 @@
     <ProjectReference Include="..\Salario.Core\Salario.Core.csproj">
       <Project>{17ca0d9b-32e3-4dd4-9f85-f9a8083a5b67}</Project>
       <Name>Salario.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SatCatalogos.Core\SatCatalogos.Core.csproj">
+      <Project>{22b8e733-8d0f-41f1-8434-cd070391dd1f}</Project>
+      <Name>SatCatalogos.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\satTrabajadorNomina.Core\satTrabajadorNomina.Core.csproj">
+      <Project>{5f14797e-6689-44c2-9821-a0e9c4078508}</Project>
+      <Name>satTrabajadorNomina.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\TablaIsr.Core\TablaIsr.Core.csproj">
       <Project>{c40d6675-7f87-42f8-975b-5ff39c9eec5a}</Project>

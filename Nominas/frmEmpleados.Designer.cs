@@ -496,6 +496,7 @@
             // 
             // dtpFechaAntiguedad
             // 
+            this.dtpFechaAntiguedad.Enabled = false;
             this.dtpFechaAntiguedad.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpFechaAntiguedad.Location = new System.Drawing.Point(127, 243);
             this.dtpFechaAntiguedad.Name = "dtpFechaAntiguedad";
@@ -530,6 +531,7 @@
             this.txtAntiguedadMod.Name = "txtAntiguedadMod";
             this.txtAntiguedadMod.Size = new System.Drawing.Size(30, 20);
             this.txtAntiguedadMod.TabIndex = 226;
+            this.txtAntiguedadMod.Text = "0";
             // 
             // rbtnHombre
             // 
@@ -626,6 +628,7 @@
             // 
             // cmbZona
             // 
+            this.cmbZona.Enabled = false;
             this.cmbZona.FormattingEnabled = true;
             this.cmbZona.Location = new System.Drawing.Point(415, 272);
             this.cmbZona.Name = "cmbZona";

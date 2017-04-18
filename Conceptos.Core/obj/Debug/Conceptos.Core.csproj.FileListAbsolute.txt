@@ -8,5 +8,6 @@ C:\GitHub\Repositorios\Cominvi\Conceptos.Core\bin\Debug\Conceptos.Core.dll
 C:\GitHub\Repositorios\Cominvi\Conceptos.Core\bin\Debug\Conceptos.Core.pdb
 C:\GitHub\Repositorios\Cominvi\Conceptos.Core\bin\Debug\Data.Obj.dll
 C:\GitHub\Repositorios\Cominvi\Conceptos.Core\bin\Debug\Data.Obj.pdb
+C:\GitHub\Repositorios\Cominvi\Conceptos.Core\obj\Debug\Conceptos.Core.csprojResolveAssemblyReference.cache
 C:\GitHub\Repositorios\Cominvi\Conceptos.Core\obj\Debug\Conceptos.Core.dll
 C:\GitHub\Repositorios\Cominvi\Conceptos.Core\obj\Debug\Conceptos.Core.pdb

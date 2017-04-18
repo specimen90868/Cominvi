@@ -8,5 +8,6 @@ C:\GitHub\Repositorios\Cominvi\Faltas.Core\bin\Debug\Faltas.Core.dll
 C:\GitHub\Repositorios\Cominvi\Faltas.Core\bin\Debug\Faltas.Core.pdb
 C:\GitHub\Repositorios\Cominvi\Faltas.Core\bin\Debug\Data.Obj.dll
 C:\GitHub\Repositorios\Cominvi\Faltas.Core\bin\Debug\Data.Obj.pdb
+C:\GitHub\Repositorios\Cominvi\Faltas.Core\obj\Debug\Faltas.Core.csprojResolveAssemblyReference.cache
 C:\GitHub\Repositorios\Cominvi\Faltas.Core\obj\Debug\Faltas.Core.dll
 C:\GitHub\Repositorios\Cominvi\Faltas.Core\obj\Debug\Faltas.Core.pdb

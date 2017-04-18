@@ -22,5 +22,6 @@ C:\GitHub\Repositorios\Cominvi\Perfil.Core\bin\Debug\Perfil.Core.dll
 C:\GitHub\Repositorios\Cominvi\Perfil.Core\bin\Debug\Perfil.Core.pdb
 C:\GitHub\Repositorios\Cominvi\Perfil.Core\bin\Debug\Data.Obj.dll
 C:\GitHub\Repositorios\Cominvi\Perfil.Core\bin\Debug\Data.Obj.pdb
+C:\GitHub\Repositorios\Cominvi\Perfil.Core\obj\Debug\Perfil.Core.csprojResolveAssemblyReference.cache
 C:\GitHub\Repositorios\Cominvi\Perfil.Core\obj\Debug\Perfil.Core.dll
 C:\GitHub\Repositorios\Cominvi\Perfil.Core\obj\Debug\Perfil.Core.pdb

@@ -283,32 +283,86 @@ namespace Nominas
                 }
                 else
                 {
-                    DateTime dt = DateTime.Now.Date;
-                    if (_periodo == 7)
+                    List<CalculoNomina.Core.tmpPagoNomina> lstPreNomina = new List<CalculoNomina.Core.tmpPagoNomina>();
+
+                    try
                     {
-                        while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
-                        periodoInicio = dt;
-                        periodoFin = dt.AddDays(6);
-                        periodoInicioPosterior = periodoFin.AddDays(1);
-                        periodoFinPosterior = periodoFin.AddDays(7);
+                        cnx.Open();
+                        lstPreNomina = nh.obtenerPreNominaTemp(GLOBALES.IDEMPRESA, _obracivil, _periodo);
+                        cnx.Close();
                     }
-                    else
+                    catch (Exception error)
                     {
-                        
-                        if (dt.Day <= 15)
+                        MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error");
+                    }
+
+                    if (lstPreNomina.Count == 0)
+                    {
+                        DialogResult respuesta = MessageBox.Show("Primer periodo de calculo. ¿Desea elegirlo?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (DialogResult.Yes == respuesta)
                         {
-                            periodoInicio = new DateTime(dt.Year, dt.Month, 1);
-                            periodoFin = new DateTime(dt.Year, dt.Month, 15);
-                            periodoInicioPosterior = periodoFin.AddDays(1);
-                            periodoFinPosterior = new DateTime(periodoInicioPosterior.Year, periodoInicioPosterior.Month,
-                                DateTime.DaysInMonth(periodoInicioPosterior.Year, periodoInicioPosterior.Month) - 15);
+                            frmCambioPeriodo cp = new frmCambioPeriodo();
+                            cp._periodo = _periodo;
+                            cp._tipoNomina = _tipoNomina;
+                            cp.OnNuevoPeriodo += cp_OnNuevoPeriodo;
+                            cp.ShowDialog();
                         }
                         else
                         {
-                            periodoInicio = new DateTime(dt.Year, dt.Month, 16);
-                            periodoFin = new DateTime(dt.Year, dt.Month, DateTime.DaysInMonth(dt.Year, dt.Month));
+                            DateTime dt = DateTime.Now.Date;
+                            if (_periodo == 7)
+                            {
+                                while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
+                                periodoInicio = dt;
+                                periodoFin = dt.AddDays(6);
+                                periodoInicioPosterior = periodoFin.AddDays(1);
+                                periodoFinPosterior = periodoFin.AddDays(7);
+                            }
+                            else
+                            {
+
+                                if (dt.Day <= 15)
+                                {
+                                    periodoInicio = new DateTime(dt.Year, dt.Month, 1);
+                                    periodoFin = new DateTime(dt.Year, dt.Month, 15);
+                                    periodoInicioPosterior = periodoFin.AddDays(1);
+                                    periodoFinPosterior = new DateTime(periodoInicioPosterior.Year, periodoInicioPosterior.Month,
+                                        DateTime.DaysInMonth(periodoInicioPosterior.Year, periodoInicioPosterior.Month) - 15);
+                                }
+                                else
+                                {
+                                    periodoInicio = new DateTime(dt.Year, dt.Month, 16);
+                                    periodoFin = new DateTime(dt.Year, dt.Month, DateTime.DaysInMonth(dt.Year, dt.Month));
+                                    periodoInicioPosterior = periodoFin.AddDays(1);
+                                    periodoFinPosterior = periodoFin.AddDays(15);
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (_periodo == 7)
+                        {
+                            periodoInicio = lstPreNomina[0].fechainicio.Date;
+                            periodoFin = lstPreNomina[0].fechafin.Date;
                             periodoInicioPosterior = periodoFin.AddDays(1);
-                            periodoFinPosterior = periodoFin.AddDays(15);
+                            periodoFinPosterior = periodoFin.AddDays(7);
+                        }
+                        else
+                        {
+                            periodoInicio = lstPreNomina[0].fechainicio.Date;
+                            periodoFin = lstPreNomina[0].fechafin.Date;
+                            if (periodoInicio.Day <= 15)
+                            {
+                                periodoInicioPosterior = periodoFin.AddDays(1);
+                                periodoFinPosterior = new DateTime(periodoInicioPosterior.Year, periodoInicioPosterior.Month,
+                                    DateTime.DaysInMonth(periodoInicioPosterior.Year, periodoInicioPosterior.Month) - 15);
+                            }
+                            else
+                            {
+                                periodoInicioPosterior = periodoFin.AddDays(1);
+                                periodoFinPosterior = periodoFin.AddDays(15);
+                            }
                         }
                     }
                 }
@@ -712,6 +766,7 @@ namespace Nominas
             dt.Columns.Add("fechapago", typeof(DateTime));
             dt.Columns.Add("obracivil", typeof(Boolean));
             dt.Columns.Add("periodo", typeof(Int32));
+            dt.Columns.Add("anio",typeof(Int32));
                         
             for (int i = 0; i < lstValores.Count; i++)
             {
@@ -735,6 +790,7 @@ namespace Nominas
                 dtFila["fechapago"] = new DateTime(1900,1,1);
                 dtFila["obracivil"] = _obracivil;
                 dtFila["periodo"] = _periodo;
+                dtFila["anio"] = periodoInicio.Year;
                 dt.Rows.Add(dtFila);
             }
             bulk = new SqlBulkCopy(cnx);
@@ -1335,22 +1391,28 @@ namespace Nominas
             cmd.Connection = cnx;
             nh = new CalculoNomina.Core.NominaHelper();
             nh.Command = cmd;
-            int noPeriodo = 0;
+            object noPeriodo = 0;
+            List<CalculoNomina.Core.PagoNomina> lstPagoNomina = new List<CalculoNomina.Core.PagoNomina>();
             try
             {
                 if (_tipoNomina == GLOBALES.NORMAL )
                 {
                     cnx.Open();
-                    noPeriodo = int.Parse(nh.obtenerNoPeriodo(_periodo, periodoFin).ToString());
-                    nh.actualizarNoPeriodo(GLOBALES.IDEMPRESA, periodoInicio.Date, periodoFin.Date, noPeriodo);
+                    noPeriodo = nh.obtenerNoPeriodo(_periodo, periodoFin).ToString();
+                    nh.actualizarNoPeriodo(GLOBALES.IDEMPRESA, periodoInicio.Date, periodoFin.Date, int.Parse(noPeriodo.ToString()));
                     cnx.Close();
                 }
                 else if (_tipoNomina == GLOBALES.EXTRAORDINARIO_NORMAL)
                 {
                     cnx.Open();
-                    noPeriodo = (int)(nh.obtenerNoPeriodoExtraordinario(GLOBALES.IDEMPRESA, _tipoNomina, _periodo));
-                    noPeriodo = noPeriodo + 1;
-                    nh.actualizarNoPeriodo(GLOBALES.IDEMPRESA, periodoInicio.Date, periodoFin.Date, noPeriodo);
+                    lstPagoNomina = nh.obtenerNoPeriodoExtraordinario(GLOBALES.IDEMPRESA, _tipoNomina, _periodo);
+                    if (lstPagoNomina.Count == 0)
+                        noPeriodo = 1;
+                    else
+                    {
+                        noPeriodo = lstPagoNomina[0].noperiodo + 1;
+                    }
+                    nh.actualizarNoPeriodo(GLOBALES.IDEMPRESA, periodoInicio.Date, periodoFin.Date, int.Parse(noPeriodo.ToString()));
                     cnx.Close();
                 }
             }
@@ -2558,8 +2620,57 @@ namespace Nominas
 
         void cp_OnNuevoPeriodo(DateTime inicio, DateTime fin)
         {
-            periodoInicio = inicio;
-            periodoFin = fin;
+            if (inicio.Date == new DateTime(1900, 1, 1) && fin.Date == new DateTime(1900, 1, 1))
+            {
+                DateTime dt = DateTime.Now.Date;
+                if (_periodo == 7)
+                {
+                    while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
+                    periodoInicio = dt;
+                    periodoFin = dt.AddDays(6);
+                    periodoInicioPosterior = periodoFin.AddDays(1);
+                    periodoFinPosterior = periodoFin.AddDays(7);
+                }
+                else
+                {
+
+                    if (dt.Day <= 15)
+                    {
+                        periodoInicio = new DateTime(dt.Year, dt.Month, 1);
+                        periodoFin = new DateTime(dt.Year, dt.Month, 15);
+                        periodoInicioPosterior = periodoFin.AddDays(1);
+                        periodoFinPosterior = new DateTime(periodoInicioPosterior.Year, periodoInicioPosterior.Month,
+                            DateTime.DaysInMonth(periodoInicioPosterior.Year, periodoInicioPosterior.Month) - 15);
+                    }
+                    else
+                    {
+                        periodoInicio = new DateTime(dt.Year, dt.Month, 16);
+                        periodoFin = new DateTime(dt.Year, dt.Month, DateTime.DaysInMonth(dt.Year, dt.Month));
+                        periodoInicioPosterior = periodoFin.AddDays(1);
+                        periodoFinPosterior = periodoFin.AddDays(15);
+                    }
+                }
+            }
+            else {
+                periodoInicio = inicio;
+                periodoFin = fin;
+
+                if (_periodo == 7)
+                {
+                    periodoInicioPosterior = periodoFin.AddDays(1);
+                    periodoFinPosterior = periodoFin.AddDays(7);
+                }
+                else
+                {
+                    periodoInicioPosterior = periodoFin.AddDays(1);
+                    if (periodoInicioPosterior.Day <= 15)
+                        periodoFinPosterior = periodoFin.AddDays(15);
+                    else
+                        periodoFinPosterior = new DateTime(periodoInicioPosterior.Year, periodoInicioPosterior.Month,
+                            DateTime.DaysInMonth(periodoInicioPosterior.Year, periodoInicioPosterior.Month));
+                }
+            }
+            
             borraGridFaltas();
             disenoGridFaltas();
             cargaEmpleadosFaltas();
@@ -2805,6 +2916,13 @@ namespace Nominas
         private void workerGravadosExentos_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             toolPorcentaje.Text = "Completado.";
+        }
+
+        private void frmListaCalculoNomina_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            cnx.Dispose();
+            cmd.Dispose();
+            this.Dispose();
         }
     }
 }

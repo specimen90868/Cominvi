@@ -300,7 +300,7 @@ namespace Nominas
 
         private void btnCalcular_Click(object sender, EventArgs e)
         {
-            if (txtAntiguedadMod.Text.Length == 0)
+            if (txtAntiguedad.Text.Length == 0)
                 return;
 
             if (txtSDI.Text.Length != 0)
@@ -321,7 +321,7 @@ namespace Nominas
                 fh.Command = cmd;
 
                 p.idperiodo = int.Parse(cmbPeriodo.SelectedValue.ToString());
-                f.anio = int.Parse(txtAntiguedadMod.Text);
+                f.anio = int.Parse(txtAntiguedad.Text);
 
                 try
                 {

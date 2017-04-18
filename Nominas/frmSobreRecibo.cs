@@ -825,22 +825,31 @@ namespace Nominas
             cmd.Connection = cnx;
             nh = new CalculoNomina.Core.NominaHelper();
             nh.Command = cmd;
-            int noPeriodo = 0;
+            object noPeriodo = 0;
+            List<CalculoNomina.Core.PagoNomina> lstPagoNomina = new List<CalculoNomina.Core.PagoNomina>();
             try
             {
                 if (_tipoNormalEspecial == GLOBALES.NORMAL)
                 {
                     cnx.Open();
                     noPeriodo = int.Parse(nh.obtenerNoPeriodo(_periodo, _inicioPeriodo).ToString());
-                    nh.actualizarNoPeriodo(GLOBALES.IDEMPRESA, _inicioPeriodo.Date, _finPeriodo.Date, noPeriodo);
+                    nh.actualizarNoPeriodo(GLOBALES.IDEMPRESA, _inicioPeriodo.Date, _finPeriodo.Date, int.Parse(noPeriodo.ToString()));
                     cnx.Close();
                 }
                 else if (_tipoNormalEspecial == GLOBALES.EXTRAORDINARIO_NORMAL)
                 {
                     cnx.Open();
-                    noPeriodo = (int)(nh.obtenerNoPeriodoExtraordinario(GLOBALES.IDEMPRESA, _tipoNormalEspecial, _periodo));
-                    noPeriodo = noPeriodo + 1;
-                    nh.actualizarNoPeriodo(GLOBALES.IDEMPRESA, _inicioPeriodo.Date, _finPeriodo.Date, noPeriodo);
+                    lstPagoNomina = nh.obtenerNoPeriodoExtraordinario(GLOBALES.IDEMPRESA, _tipoNormalEspecial, _periodo);
+                    if (lstPagoNomina.Count == 0)
+                        noPeriodo = 1;
+                    else
+                    {
+                        if (lstPagoNomina[0].anio == _inicioPeriodo.Year)
+                            noPeriodo = lstPagoNomina[0].noperiodo + 1;
+                        else
+                            noPeriodo = 1;
+                    }
+                    nh.actualizarNoPeriodo(GLOBALES.IDEMPRESA, _inicioPeriodo.Date, _finPeriodo.Date, int.Parse(noPeriodo.ToString()));
                     cnx.Close();
                 }
                 
@@ -879,6 +888,7 @@ namespace Nominas
             dt.Columns.Add("fechapago", typeof(DateTime));
             dt.Columns.Add("obracivil", typeof(Boolean));
             dt.Columns.Add("periodo", typeof(Int32));
+            dt.Columns.Add("anio", typeof(Int32));
 
             for (int i = 0; i < lstValores.Count; i++)
             {
@@ -902,6 +912,7 @@ namespace Nominas
                 dtFila["fechapago"] = new DateTime(1900,1,1);
                 dtFila["obracivil"] = _obracivil;
                 dtFila["periodo"] = _periodo;
+                dtFila["anio"] = _inicioPeriodo.Year;
                 dt.Rows.Add(dtFila);
             }
 

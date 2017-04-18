@@ -127,21 +127,42 @@ namespace Nominas
 
                     case "SalarioMinimo":
 
-                        Empleados.Core.EmpleadosHelper empsh = new Empleados.Core.EmpleadosHelper();
-                        empsh.Command = cmd;
+                        //Empleados.Core.EmpleadosHelper empsh = new Empleados.Core.EmpleadosHelper();
+                        //empsh.Command = cmd;
 
                         Salario.Core.SalariosHelper sh = new Salario.Core.SalariosHelper();
                         sh.Command = cmd;
                         
+                        //cnx.Open();
+                        //int idsalario = (int)empsh.obtenerIdSalarioMinimo(idTrabajador);
+                        //cnx.Close();
+
+                        //Salario.Core.Salarios salario = new Salario.Core.Salarios();
+                        //salario.idsalario = idsalario;
+
                         cnx.Open();
-                        int idsalario = (int)empsh.obtenerIdSalarioMinimo(idTrabajador);
+                        formula = formula.Replace("[" + variables[i] + "]", sh.obtenerSalarioValor().ToString());
                         cnx.Close();
 
-                        Salario.Core.Salarios salario = new Salario.Core.Salarios();
-                        salario.idsalario = idsalario;
+                        break;
+
+                    case "FactorDescuento":
+
+                        //Empleados.Core.EmpleadosHelper empsh = new Empleados.Core.EmpleadosHelper();
+                        //empsh.Command = cmd;
+
+                        FactorDescuento.Core.FactorDescuentoHelper fdh = new FactorDescuento.Core.FactorDescuentoHelper();
+                        fdh.Command = cmd;
+
+                        //cnx.Open();
+                        //int idsalario = (int)empsh.obtenerIdSalarioMinimo(idTrabajador);
+                        //cnx.Close();
+
+                        //Salario.Core.Salarios salario = new Salario.Core.Salarios();
+                        //salario.idsalario = idsalario;
 
                         cnx.Open();
-                        formula = formula.Replace("[" + variables[i] + "]", sh.obtenerSalarioValor(salario).ToString());
+                        formula = formula.Replace("[" + variables[i] + "]", fdh.obtenerFactorDescuento().ToString());
                         cnx.Close();
 
                         break;
@@ -350,6 +371,9 @@ namespace Nominas
                             if (fechaBaja == fechaReingreso)
                                 totalDias = diasPago - (diasPago - (diasReingreso) + (diasPago - diasBaja));
 
+                            if (fechaBaja > fechaReingreso)
+                                totalDias = diasPago - (diasPago - (diasReingreso) + (diasPago - diasBaja));
+
                             Faltas.Core.FaltasHelper faltaHelper = new Faltas.Core.FaltasHelper();
                             faltaHelper.Command = cmd;
                             Faltas.Core.Faltas faltasDL = new Faltas.Core.Faltas();
@@ -401,34 +425,34 @@ namespace Nominas
                         #endregion
 
                         #region NO EXISTE REINGRESO, EXISTE BAJA Y NO EXISTE ALTA
-                        if (existeReingreso == 0 && existe != 0 && existeAlta == 0)
-                        {
-                            cnx.Open();
-                            diasBaja = (int)bh.diasProporcionales(baja);
-                            cnx.Close();
+                        //if (existeReingreso == 0 && existe != 0 && existeAlta == 0)
+                        //{
+                        //    cnx.Open();
+                        //    diasBaja = (int)bh.diasProporcionales(baja);
+                        //    cnx.Close();
 
-                            Faltas.Core.FaltasHelper faltaHelper = new Faltas.Core.FaltasHelper();
-                            faltaHelper.Command = cmd;
-                            Faltas.Core.Faltas faltasDL = new Faltas.Core.Faltas();
-                            faltasDL.idtrabajador = idTrabajador;
-                            faltasDL.fechainicio = inicioPeriodo;
-                            faltasDL.fechafin = finPeriodo;
+                        //    Faltas.Core.FaltasHelper faltaHelper = new Faltas.Core.FaltasHelper();
+                        //    faltaHelper.Command = cmd;
+                        //    Faltas.Core.Faltas faltasDL = new Faltas.Core.Faltas();
+                        //    faltasDL.idtrabajador = idTrabajador;
+                        //    faltasDL.fechainicio = inicioPeriodo;
+                        //    faltasDL.fechafin = finPeriodo;
 
-                            cnx.Open();
-                            diasFaltas = (int)faltaHelper.existeFalta(faltasDL);
-                            cnx.Close();
+                        //    cnx.Open();
+                        //    diasFaltas = (int)faltaHelper.existeFalta(faltasDL);
+                        //    cnx.Close();
 
-                            if (diasFaltas >= diasBaja)
-                                if (diasFaltas == 16)
-                                {
-                                    diasFaltas = diasFaltas - 1;
-                                    formula = formula.Replace("[" + variables[i] + "]", diasFaltas.ToString());
-                                }
-                                else
-                                    formula = formula.Replace("[" + variables[i] + "]", diasFaltas.ToString());
-                            else
-                                formula = formula.Replace("[" + variables[i] + "]", diasBaja.ToString());
-                        }
+                        //    if (diasFaltas >= diasBaja)
+                        //        if (diasFaltas == 16)
+                        //        {
+                        //            diasFaltas = diasFaltas - 1;
+                        //            formula = formula.Replace("[" + variables[i] + "]", diasFaltas.ToString());
+                        //        }
+                        //        else
+                        //            formula = formula.Replace("[" + variables[i] + "]", diasFaltas.ToString());
+                        //    else
+                        //        formula = formula.Replace("[" + variables[i] + "]", diasBaja.ToString());
+                        //}
                         #endregion
 
                         #region NO EXISTE REINGRESO, BAJAS NI ALTAS
@@ -591,12 +615,28 @@ namespace Nominas
                                 concepto.idempresa = GLOBALES.IDEMPRESA;
                                 concepto.periodo = diasPeriodo;
 
-                                if (lstInfonavit[0].descuento == GLOBALES.dPORCENTAJE)
+                                switch (lstInfonavit[0].descuento)
                                 {
-                                    concepto.noconcepto = 10; //INFONAVIT PORCENTAJE
-                                    if (_lstPeriodoInfonavit.Count == 2)
+                                    case 1: concepto.noconcepto = 10; //CONCEPTO INFONAVIT PORCENTAJE
+                                        break;
+                                    case 2: concepto.noconcepto = 12; //CONCEPTO INFONAVIT PESOS
+                                        break;
+                                    case 3: concepto.noconcepto = 11; //CONCEPTO INFONAVIT VSMDF
+                                        break;
+                                }
+
+                                if (_lstPeriodoInfonavit.Count == 2)
+                                {
+                                    if (_lstPeriodoInfonavit[0].fecha >= inicioPeriodo && _lstPeriodoInfonavit[0].fecha <= finPeriodo)
                                     {
-                                        if (_lstPeriodoInfonavit[0].fecha >= inicioPeriodo && _lstPeriodoInfonavit[0].fecha <= finPeriodo)
+                                        if (_lstPeriodoInfonavit[0].dias == diasPeriodo)
+                                        {
+                                            cnx.Open();
+                                            formula = ch.obtenerFormula(concepto).ToString();
+                                            cnx.Close();
+                                        }
+
+                                        if (_lstPeriodoInfonavit[0].dias < diasPeriodo)
                                         {
                                             if (_lstPeriodoInfonavit[0].descuento == _lstPeriodoInfonavit[1].descuento)
                                             {
@@ -610,7 +650,7 @@ namespace Nominas
                                             }
                                             else
                                             {
-                                                switch (lstInfonavit[0].descuento)
+                                                switch (_lstPeriodoInfonavit[0].descuento)
                                                 {
                                                     case 1: concepto.noconcepto = 10;
                                                         break;
@@ -623,7 +663,7 @@ namespace Nominas
                                                 formula = ch.obtenerFormula(concepto).ToString();
                                                 cnx.Close();
 
-                                                switch (lstInfonavit[1].descuento)
+                                                switch (_lstPeriodoInfonavit[1].descuento)
                                                 {
                                                     case 1: concepto.noconcepto = 10;
                                                         break;
@@ -638,12 +678,6 @@ namespace Nominas
                                                 formula = string.Format("({0}) + ({1})", formula, formula2);
                                             }
                                         }
-                                        else
-                                        {
-                                            cnx.Open();
-                                            formula = ch.obtenerFormula(concepto).ToString();
-                                            cnx.Close();
-                                        }
                                     }
                                     else
                                     {
@@ -652,133 +686,145 @@ namespace Nominas
                                         cnx.Close();
                                     }
                                 }
-
-
-                                if (lstInfonavit[0].descuento == GLOBALES.dVSMDF)
+                                else
                                 {
-                                    concepto.noconcepto = 11; //INFONAVIT VSMDF
-                                    if (_lstPeriodoInfonavit.Count == 2)
-                                    {
-                                        if (_lstPeriodoInfonavit[0].fecha >= inicioPeriodo && _lstPeriodoInfonavit[0].fecha <= finPeriodo)
-                                        {
-                                            if (_lstPeriodoInfonavit[0].descuento == _lstPeriodoInfonavit[1].descuento)
-                                            {
-                                                cnx.Open();
-                                                formula = ch.obtenerFormula(concepto).ToString();
-                                                cnx.Close();
-                                                formula2 = formula;
-                                                formula2 = formula2.Replace("ValorInfonavit", "ValorInfonavit2");
-                                                formula2 = formula2.Replace("PeriodoInfonavit", "PeriodoInfonavit2");
-                                                formula = string.Format("({0}) + ({1})", formula, formula2);
-                                            }
-                                            else
-                                            {
-                                                switch (lstInfonavit[0].descuento)
-                                                {
-                                                    case 1: concepto.noconcepto = 10;
-                                                        break;
-                                                    case 2: concepto.noconcepto = 12;
-                                                        break;
-                                                    case 3: concepto.noconcepto = 11;
-                                                        break;
-                                                }
-                                                cnx.Open();
-                                                formula = ch.obtenerFormula(concepto).ToString();
-                                                cnx.Close();
-
-                                                switch (lstInfonavit[1].descuento)
-                                                {
-                                                    case 1: concepto.noconcepto = 10;
-                                                        break;
-                                                    case 2: concepto.noconcepto = 12;
-                                                        break;
-                                                    case 3: concepto.noconcepto = 11;
-                                                        break;
-                                                }
-                                                cnx.Open();
-                                                formula2 = ch.obtenerFormula(concepto).ToString();
-                                                cnx.Close();
-                                                formula = string.Format("({0}) + ({1})", formula, formula2);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            cnx.Open();
-                                            formula = ch.obtenerFormula(concepto).ToString();
-                                            cnx.Close();
-                                        }
-                                    }
-                                    else
-                                    {
-                                        cnx.Open();
-                                        formula = ch.obtenerFormula(concepto).ToString();
-                                        cnx.Close();
-                                    }
+                                    cnx.Open();
+                                    formula = ch.obtenerFormula(concepto).ToString();
+                                    cnx.Close();
                                 }
+                                #region COMENTARIOS INFONAVIT
+                                //if (lstInfonavit[0].descuento == GLOBALES.dPORCENTAJE)
+                                //{
+                                //    concepto.noconcepto = 10; //INFONAVIT PORCENTAJE
+                                    
+                                //}
 
 
-                                if (lstInfonavit[0].descuento == GLOBALES.dPESOS)
-                                {
-                                    concepto.noconcepto = 12; //INFONAVIT FIJO
-                                    if (_lstPeriodoInfonavit.Count == 2)
-                                    {
-                                        if (_lstPeriodoInfonavit[0].fecha >= inicioPeriodo && _lstPeriodoInfonavit[0].fecha <= finPeriodo)
-                                        {
-                                            if (_lstPeriodoInfonavit[0].descuento == _lstPeriodoInfonavit[1].descuento)
-                                            {
-                                                cnx.Open();
-                                                formula = ch.obtenerFormula(concepto).ToString();
-                                                cnx.Close();
-                                                formula2 = formula;
-                                                formula2 = formula2.Replace("ValorInfonavit", "ValorInfonavit2");
-                                                formula2 = formula2.Replace("PeriodoInfonavit", "PeriodoInfonavit2");
-                                                formula = string.Format("({0}) + ({1})", formula, formula2);
-                                            }
-                                            else
-                                            {
-                                                switch (lstInfonavit[0].descuento)
-                                                {
-                                                    case 1: concepto.noconcepto = 10;
-                                                        break;
-                                                    case 2: concepto.noconcepto = 12;
-                                                        break;
-                                                    case 3: concepto.noconcepto = 11;
-                                                        break;
-                                                }
-                                                cnx.Open();
-                                                formula = ch.obtenerFormula(concepto).ToString();
-                                                cnx.Close();
+                                //if (lstInfonavit[0].descuento == GLOBALES.dVSMDF)
+                                //{
+                                //    concepto.noconcepto = 11; //INFONAVIT VSMDF
+                                //    if (_lstPeriodoInfonavit.Count == 2)
+                                //    {
+                                //        if (_lstPeriodoInfonavit[0].fecha >= inicioPeriodo && _lstPeriodoInfonavit[0].fecha <= finPeriodo)
+                                //        {
+                                //            if (_lstPeriodoInfonavit[0].descuento == _lstPeriodoInfonavit[1].descuento)
+                                //            {
+                                //                cnx.Open();
+                                //                formula = ch.obtenerFormula(concepto).ToString();
+                                //                cnx.Close();
+                                //                formula2 = formula;
+                                //                formula2 = formula2.Replace("ValorInfonavit", "ValorInfonavit2");
+                                //                formula2 = formula2.Replace("PeriodoInfonavit", "PeriodoInfonavit2");
+                                //                formula = string.Format("({0}) + ({1})", formula, formula2);
+                                //            }
+                                //            else
+                                //            {
+                                //                switch (_lstPeriodoInfonavit[0].descuento)
+                                //                {
+                                //                    case 1: concepto.noconcepto = 10;
+                                //                        break;
+                                //                    case 2: concepto.noconcepto = 12;
+                                //                        break;
+                                //                    case 3: concepto.noconcepto = 11;
+                                //                        break;
+                                //                }
+                                //                cnx.Open();
+                                //                formula = ch.obtenerFormula(concepto).ToString();
+                                //                cnx.Close();
 
-                                                switch (lstInfonavit[1].descuento)
-                                                {
-                                                    case 1: concepto.noconcepto = 10;
-                                                        break;
-                                                    case 2: concepto.noconcepto = 12;
-                                                        break;
-                                                    case 3: concepto.noconcepto = 11;
-                                                        break;
-                                                }
-                                                cnx.Open();
-                                                formula2 = ch.obtenerFormula(concepto).ToString();
-                                                cnx.Close();
-                                                formula = string.Format("({0}) + ({1})", formula, formula2);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            cnx.Open();
-                                            formula = ch.obtenerFormula(concepto).ToString();
-                                            cnx.Close();
-                                        }
-                                    }
-                                    else
-                                    {
-                                        cnx.Open();
-                                        formula = ch.obtenerFormula(concepto).ToString();
-                                        cnx.Close();
-                                    }
-                                }
+                                //                switch (_lstPeriodoInfonavit[1].descuento)
+                                //                {
+                                //                    case 1: concepto.noconcepto = 10;
+                                //                        break;
+                                //                    case 2: concepto.noconcepto = 12;
+                                //                        break;
+                                //                    case 3: concepto.noconcepto = 11;
+                                //                        break;
+                                //                }
+                                //                cnx.Open();
+                                //                formula2 = ch.obtenerFormula(concepto).ToString();
+                                //                cnx.Close();
+                                //                formula = string.Format("({0}) + ({1})", formula, formula2);
+                                //            }
+                                //        }
+                                //        else
+                                //        {
+                                //            cnx.Open();
+                                //            formula = ch.obtenerFormula(concepto).ToString();
+                                //            cnx.Close();
+                                //        }
+                                //    }
+                                //    else
+                                //    {
+                                //        cnx.Open();
+                                //        formula = ch.obtenerFormula(concepto).ToString();
+                                //        cnx.Close();
+                                //    }
+                                //}
 
+
+                                //if (lstInfonavit[0].descuento == GLOBALES.dPESOS)
+                                //{
+                                //    concepto.noconcepto = 12; //INFONAVIT FIJO
+                                //    if (_lstPeriodoInfonavit.Count == 2)
+                                //    {
+                                //        if (_lstPeriodoInfonavit[0].fecha >= inicioPeriodo && _lstPeriodoInfonavit[0].fecha <= finPeriodo)
+                                //        {
+                                //            if (_lstPeriodoInfonavit[0].descuento == _lstPeriodoInfonavit[1].descuento)
+                                //            {
+                                //                cnx.Open();
+                                //                formula = ch.obtenerFormula(concepto).ToString();
+                                //                cnx.Close();
+                                //                formula2 = formula;
+                                //                formula2 = formula2.Replace("ValorInfonavit", "ValorInfonavit2");
+                                //                formula2 = formula2.Replace("PeriodoInfonavit", "PeriodoInfonavit2");
+                                //                formula = string.Format("({0}) + ({1})", formula, formula2);
+                                //            }
+                                //            else
+                                //            {
+                                //                switch (_lstPeriodoInfonavit[0].descuento)
+                                //                {
+                                //                    case 1: concepto.noconcepto = 10;
+                                //                        break;
+                                //                    case 2: concepto.noconcepto = 12;
+                                //                        break;
+                                //                    case 3: concepto.noconcepto = 11;
+                                //                        break;
+                                //                }
+                                //                cnx.Open();
+                                //                formula = ch.obtenerFormula(concepto).ToString();
+                                //                cnx.Close();
+
+                                //                switch (_lstPeriodoInfonavit[1].descuento)
+                                //                {
+                                //                    case 1: concepto.noconcepto = 10;
+                                //                        break;
+                                //                    case 2: concepto.noconcepto = 12;
+                                //                        break;
+                                //                    case 3: concepto.noconcepto = 11;
+                                //                        break;
+                                //                }
+                                //                cnx.Open();
+                                //                formula2 = ch.obtenerFormula(concepto).ToString();
+                                //                cnx.Close();
+                                //                formula = string.Format("({0}) + ({1})", formula, formula2);
+                                //            }
+                                //        }
+                                //        else
+                                //        {
+                                //            cnx.Open();
+                                //            formula = ch.obtenerFormula(concepto).ToString();
+                                //            cnx.Close();
+                                //        }
+                                //    }
+                                //    else
+                                //    {
+                                //        cnx.Open();
+                                //        formula = ch.obtenerFormula(concepto).ToString();
+                                //        cnx.Close();
+                                //    }
+                                //}
+                                #endregion
                                 return calcularFormula();
                             }
                             else
