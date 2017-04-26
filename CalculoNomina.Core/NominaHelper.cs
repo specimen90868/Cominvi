@@ -353,6 +353,20 @@ namespace CalculoNomina.Core
             return dtPagoNomina;
         }
 
+        public DataTable conceptosPreNominaTabular(tmpPagoNomina pn, int periodo)
+        {
+            DataTable dtPagoNomina = new DataTable();
+            Command.CommandText = "exec stp_ConceptosPreNominaTabular @idempresa, @tiponomina, @periodo, @fechainicio, @fechafin";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", pn.idempresa);
+            Command.Parameters.AddWithValue("tiponomina", pn.tiponomina);
+            Command.Parameters.AddWithValue("periodo", periodo);
+            Command.Parameters.AddWithValue("fechainicio", pn.fechainicio);
+            Command.Parameters.AddWithValue("fechafin", pn.fechafin);
+            dtPagoNomina = SelectData(Command);
+            return dtPagoNomina;
+        }
+
         public DataTable obtenerNominaTabular(tmpPagoNomina pn, int deptoInicial, int deptoFinal, int empleadoInicial, int empleadoFinal, int tiponomina, string neto, string order, int periodo)
         {
             DataTable dtPagoNomina = new DataTable();

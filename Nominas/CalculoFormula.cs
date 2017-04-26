@@ -1101,10 +1101,17 @@ namespace Nominas
                                 int diasSI = (int)psih.DiasDePago(psi);
                                 cnx.Close();
 
-                                if (diasSI == 7)
-                                    formula = formula.Replace("[" + variables[i] + "]", (1.5).ToString());
-                                else
-                                    formula = formula.Replace("[" + variables[i] + "]", (3).ToString());
+                                if (GLOBALES.IDEMPRESA != 14)
+                                {
+                                    if (diasSI == 7)
+                                        formula = formula.Replace("[" + variables[i] + "]", (1.5).ToString());
+                                    else
+                                        formula = formula.Replace("[" + variables[i] + "]", (3).ToString());
+                                }
+                                else {
+                                    formula = formula.Replace("[" + variables[i] + "]", (15).ToString());
+                                }
+                                
                             }
                             else
                                 return 0;

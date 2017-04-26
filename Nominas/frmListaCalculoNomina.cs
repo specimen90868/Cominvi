@@ -2149,10 +2149,12 @@ namespace Nominas
             pn.tiponomina = _tipoNomina;
 
             DataTable dt = new DataTable();
+            DataTable dtConceptos = new DataTable();
             try
             {
                 cnx.Open();
                 dt = nh.obtenerPreNominaTabular(pn, NetoCero, Orden, _periodo);
+                dtConceptos = nh.conceptosPreNominaTabular(pn, _periodo);
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -2184,6 +2186,7 @@ namespace Nominas
                 excel.Cells[5, iCol] = dt.Columns[i].ColumnName;
                 iCol++;
             }
+
             //SE COLOCAN LOS DATOS
             int contadorDt = dt.Rows.Count;
             int contador = 0;
