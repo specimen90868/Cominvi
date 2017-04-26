@@ -295,6 +295,7 @@ namespace CalculoNomina.Core
             }
             return lstPagoNomina;
         }
+
         public List<tmpPagoNomina> obtenerPreNominaTemp(int idEmpresa, bool obraCivil, int periodo)
         {
             List<tmpPagoNomina> lstPagoNomina = new List<tmpPagoNomina>();
