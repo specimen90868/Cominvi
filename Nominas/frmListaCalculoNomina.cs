@@ -2149,10 +2149,12 @@ namespace Nominas
             pn.tiponomina = _tipoNomina;
 
             DataTable dt = new DataTable();
+            DataTable dtConceptos = new DataTable();
             try
             {
                 cnx.Open();
                 dt = nh.obtenerPreNominaTabular(pn, NetoCero, Orden, _periodo);
+                dtConceptos = nh.conceptosNominaTrabajador
                 cnx.Close();
                 cnx.Dispose();
             }
