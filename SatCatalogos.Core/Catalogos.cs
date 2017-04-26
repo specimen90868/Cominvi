@@ -49,5 +49,17 @@ namespace SatCatalogos.Core
         public string descripcion { get; set; }
     }
 
+    public class satTipoDeduccion 
+    {
+        public int id { get; set; }
+        public string tipodeduccion { get; set; }
+        public string descripcion { get; set; }
+    }
 
+    public class satTipoPercepcion
+    {
+        public int id { get; set; }
+        public string tipopercepcion { get; set; }
+        public string descripcion { get; set; }
+    }
 }

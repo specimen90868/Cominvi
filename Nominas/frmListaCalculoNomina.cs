@@ -2261,17 +2261,17 @@ namespace Nominas
                 rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, 2];
                 rng.Columns.AutoFit();
 
-                rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, 14];
+                rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, 15];
                 rng.NumberFormat = "#,##0.00";
-                rng.Formula = string.Format("=C{0}+D{0}+E{0}+F{0}+G{0}+H{0}+I{0}+J{0}+K{0}+L{0}+M{0}", i);
+                rng.Formula = string.Format("=C{0}+D{0}+E{0}+F{0}+G{0}+H{0}+I{0}+J{0}+K{0}+L{0}+M{0}+N{0}", i);
 
-                rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, 23];
+                rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, 25];
                 rng.NumberFormat = "#,##0.00";
-                rng.Formula = string.Format("=O{0}+P{0}+Q{0}+R{0}+S{0}+T{0}+V{0}", i);
+                rng.Formula = string.Format("=P{0}+Q{0}+R{0}+S{0}+T{0}+W{0}+X{0}", i);
 
-                rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, 24];
+                rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, 26];
                 rng.NumberFormat = "#,##0.00";
-                rng.Formula = string.Format("=N{0}+U{0}-W{0}", i);
+                rng.Formula = string.Format("=O{0}+V{0}-Y{0}", i);
             }
 
             int suma = iFil - 1;
@@ -2332,12 +2332,12 @@ namespace Nominas
             rng.Font.Bold = true;
             rng.Formula = string.Format("=SUM(M6:M{0})", suma.ToString());
 
-            //TOTAL PERCEPCIONES
             rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 14];
             rng.NumberFormat = "#,##0.00";
             rng.Font.Bold = true;
+            
             rng.Formula = string.Format("=SUM(N6:N{0})", suma.ToString());
-
+            //TOTAL PERCEPCIONES
             rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 15];
             rng.NumberFormat = "#,##0.00";
             rng.Font.Bold = true;
@@ -2378,30 +2378,40 @@ namespace Nominas
             rng.Font.Bold = true;
             rng.Formula = string.Format("=SUM(V6:V{0})", suma.ToString());
 
-            //TOTAL DEDUCCIONES
             rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 23];
             rng.NumberFormat = "#,##0.00";
             rng.Font.Bold = true;
             rng.Formula = string.Format("=SUM(W6:W{0})", suma.ToString());
 
-            //TOTAL NETO
             rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 24];
             rng.NumberFormat = "#,##0.00";
             rng.Font.Bold = true;
             rng.Formula = string.Format("=SUM(X6:X{0})", suma.ToString());
 
+            //TOTAL DEDUCCIONES
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 25];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            rng.Formula = string.Format("=SUM(Y6:Y{0})", suma.ToString());
+
+            //TOTAL NETO
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 26];
+            rng.NumberFormat = "#,##0.00";
+            rng.Font.Bold = true;
+            rng.Formula = string.Format("=SUM(Z6:Z{0})", suma.ToString());
+
             excel.Range["A1", "G3"].Font.Bold = true;
-            excel.Range["A5", "X5"].Font.Bold = true;
-            excel.Range["B:X"].EntireColumn.AutoFit();
+            excel.Range["A5", "Y5"].Font.Bold = true;
+            excel.Range["B:Z"].EntireColumn.AutoFit();
             excel.Range["A6"].Select();
             excel.ActiveWindow.FreezePanes = true;
-            excel.Range["A5", "X5"].Interior.ColorIndex = 36;
-            excel.Range["A5", "M5"].Font.ColorIndex = 1;
-            excel.Range["O5", "V5"].Font.ColorIndex = 1;
-            excel.Range["N5"].Font.ColorIndex = 32;
-            excel.Range["W5"].Font.ColorIndex = 32;
-            excel.Range["X5"].Font.ColorIndex = 32;
-            excel.Range["B6", "X" + iFil.ToString()].NumberFormat = "#,##0.00";
+            excel.Range["A5", "Z5"].Interior.ColorIndex = 36;
+            excel.Range["A5", "N5"].Font.ColorIndex = 1;
+            excel.Range["P5", "X5"].Font.ColorIndex = 1;
+            excel.Range["O5"].Font.ColorIndex = 32;
+            excel.Range["Y5"].Font.ColorIndex = 32;
+            excel.Range["Z5"].Font.ColorIndex = 32;
+            excel.Range["B6", "Z" + iFil.ToString()].NumberFormat = "#,##0.00";
             
             workSheet.SaveAs("Reporte_Tabular.xlsx");
             excel.Visible = true;
@@ -2923,6 +2933,16 @@ namespace Nominas
             cnx.Dispose();
             cmd.Dispose();
             this.Dispose();
+        }
+
+        private void toolStripSplitButton1_ButtonClick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolReportes_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

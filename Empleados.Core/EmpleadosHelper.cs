@@ -1715,7 +1715,7 @@ namespace Empleados.Core
                 case "COAHUILA": estado = "CL"; break;
                 case "COLIMA": estado = "CM"; break;
                 case "CHIAPAS": estado = "CS"; break;
-                case "CHIHUAHA": estado = "CH"; break;
+                case "CHIHUAHUA": estado = "CH"; break;
                 case "DISTRITO FEDERAL": estado = "DF"; break;
                 case "DURANGO": estado = "DG"; break;
                 case "GUANAJUATO": estado = "GT"; break;

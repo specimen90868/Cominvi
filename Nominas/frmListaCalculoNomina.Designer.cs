@@ -166,32 +166,33 @@
             this.toolStripSplitButton1.Name = "toolStripSplitButton1";
             this.toolStripSplitButton1.Size = new System.Drawing.Size(99, 29);
             this.toolStripSplitButton1.Text = "Nómina";
+            this.toolStripSplitButton1.ButtonClick += new System.EventHandler(this.toolStripSplitButton1_ButtonClick);
             // 
             // toolGuardar
             // 
             this.toolGuardar.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.toolGuardar.Name = "toolGuardar";
-            this.toolGuardar.Size = new System.Drawing.Size(126, 22);
+            this.toolGuardar.Size = new System.Drawing.Size(152, 22);
             this.toolGuardar.Text = "Guardar";
             this.toolGuardar.Click += new System.EventHandler(this.toolGuardar_Click);
             // 
             // toolSeparadorGuardar
             // 
             this.toolSeparadorGuardar.Name = "toolSeparadorGuardar";
-            this.toolSeparadorGuardar.Size = new System.Drawing.Size(123, 6);
+            this.toolSeparadorGuardar.Size = new System.Drawing.Size(149, 6);
             // 
             // toolAutorizar
             // 
             this.toolAutorizar.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.toolAutorizar.Name = "toolAutorizar";
-            this.toolAutorizar.Size = new System.Drawing.Size(126, 22);
+            this.toolAutorizar.Size = new System.Drawing.Size(152, 22);
             this.toolAutorizar.Text = "Autorizar";
             this.toolAutorizar.Click += new System.EventHandler(this.toolAutorizar_Click);
             // 
             // toolSeparadorAutorizar
             // 
             this.toolSeparadorAutorizar.Name = "toolSeparadorAutorizar";
-            this.toolSeparadorAutorizar.Size = new System.Drawing.Size(123, 6);
+            this.toolSeparadorAutorizar.Size = new System.Drawing.Size(149, 6);
             // 
             // toolReportes
             // 
@@ -204,8 +205,9 @@
             this.toolGravadosExentos});
             this.toolReportes.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolReportes.Name = "toolReportes";
-            this.toolReportes.Size = new System.Drawing.Size(126, 22);
+            this.toolReportes.Size = new System.Drawing.Size(152, 22);
             this.toolReportes.Text = "Reportes";
+            this.toolReportes.Click += new System.EventHandler(this.toolReportes_Click);
             // 
             // toolCaratula
             // 

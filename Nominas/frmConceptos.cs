@@ -254,7 +254,7 @@ namespace Nominas
             {
                 frmGrupoSat gs = new frmGrupoSat();
                 gs.OnSeleccion += gs_OnSeleccion;
-                gs._percepcionDeduccion = concepto;
+                gs._percepcionDeduccion = TipoConcepto;
                 gs.Show();
             }
             else

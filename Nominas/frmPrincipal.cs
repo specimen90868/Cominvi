@@ -401,10 +401,14 @@ namespace Nominas
 
         private void mnuEmpresa_Click(object sender, EventArgs e)
         {
-            frmListaEmpresas le = new frmListaEmpresas();
-            le.MdiParent = this;
-            le.WindowState = FormWindowState.Maximized;
-            le.Show();
+            //frmListaEmpresas le = new frmListaEmpresas();
+            frmEmpresas empresa = new frmEmpresas();
+            empresa.MdiParent = this;
+            empresa._tipoOperacion = GLOBALES.MODIFICAR;
+            empresa._idempresa = GLOBALES.IDEMPRESA;
+            empresa._lista = false;
+            empresa.WindowState = FormWindowState.Maximized;
+            empresa.Show();
         }
 
         private void mnuUsuarios_Click(object sender, EventArgs e)
@@ -659,6 +663,14 @@ namespace Nominas
         {
             frmListaFactorDescuento lfd = new frmListaFactorDescuento();
             lfd.Show();
+        }
+
+        private void toolEmpresas_Click(object sender, EventArgs e)
+        {
+            frmListaEmpresas le = new frmListaEmpresas();
+            le.MdiParent = this;
+            le.WindowState = FormWindowState.Maximized;
+            le.Show();
         }
     }
 }

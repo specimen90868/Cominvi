@@ -23,7 +23,7 @@ namespace Nominas
         SqlConnection cnx;
         SqlCommand cmd;
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
-        Catalogos.Core.CatalogosHelper ch;
+        SatCatalogos.Core.satCatalogosHelper sch;
         #endregion
 
         #region VARIABLES PUBLICAS
@@ -41,16 +41,25 @@ namespace Nominas
             cmd = new SqlCommand();
             cmd.Connection = cnx;
 
-            ch = new Catalogos.Core.CatalogosHelper();
-            ch.Command = cmd;
+            sch = new SatCatalogos.Core.satCatalogosHelper();
+            sch.Command = cmd;
 
-            List<Catalogos.Core.Catalogo> lstCatalogo = new List<Catalogos.Core.Catalogo>();
+            List<SatCatalogos.Core.satTipoDeduccion> lstTipoDeduccion = new List<SatCatalogos.Core.satTipoDeduccion>();
+            List<SatCatalogos.Core.satTipoPercepcion> lstTipoPercepcion = new List<SatCatalogos.Core.satTipoPercepcion>();
 
             try
             {
-                cnx.Open();
-                lstCatalogo = ch.obtenerGrupo(_percepcionDeduccion);
-                cnx.Close();
+                if (_percepcionDeduccion == "P") {
+                    cnx.Open();
+                    lstTipoPercepcion = sch.obtenerTipoPercepcion();
+                    cnx.Close();
+                }
+
+                if (_percepcionDeduccion == "D") {
+                    cnx.Open();
+                    lstTipoDeduccion = sch.obtenerTipoDeduccion();
+                    cnx.Close();
+                }
                 cnx.Dispose();
             }
             catch 
@@ -62,12 +71,13 @@ namespace Nominas
 
             dgvGrupos.RowHeadersVisible = false;
             dgvGrupos.ColumnHeadersVisible = false;
-            dgvGrupos.DataSource = lstCatalogo.ToList();
+            if (_percepcionDeduccion == "P")
+                dgvGrupos.DataSource = lstTipoPercepcion.ToList();
+            if (_percepcionDeduccion == "D")
+                dgvGrupos.DataSource = lstTipoDeduccion.ToList();
             dgvGrupos.Columns[0].Visible = false;
             dgvGrupos.Columns[1].Visible = true;
             dgvGrupos.Columns[2].Visible = true;
-            dgvGrupos.Columns[3].Visible = false;
-            dgvGrupos.Columns[4].Visible = false;
 
             for (int i = 0; i < dgvGrupos.Columns.Count; i++)
             {

@@ -42,6 +42,7 @@ namespace Nominas
         public int _tipoOperacion;
         public int _idempresa;
         public int _iddireccion;
+        public bool _lista;
         #endregion
 
 
@@ -258,6 +259,8 @@ namespace Nominas
         private void frmEmpresas_Load(object sender, EventArgs e)
         {
             CargaComboBox();
+            if (!_lista)
+                toolGuardarNuevo.Visible = false;
             /// _tipoOperacion CONSULTA = 1, EDICION = 2
             if (_tipoOperacion == GLOBALES.CONSULTAR || _tipoOperacion == GLOBALES.MODIFICAR)
             {

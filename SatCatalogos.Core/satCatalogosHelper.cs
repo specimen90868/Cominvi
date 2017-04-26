@@ -110,5 +110,42 @@ namespace SatCatalogos.Core
             }
             return lstTipoRegimen;
         }
+
+        public List<satTipoDeduccion> obtenerTipoDeduccion()
+        {
+            DataTable dt = new DataTable();
+            List<satTipoDeduccion> lstTipoDeduccion = new List<satTipoDeduccion>();
+            Command.CommandText = "select * from satTipoDeduccion";
+            Command.Parameters.Clear();
+            dt = SelectData(Command);
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                satTipoDeduccion td = new satTipoDeduccion();
+                td.id = int.Parse(dt.Rows[i]["id"].ToString());
+                td.tipodeduccion = dt.Rows[i]["tipodeduccion"].ToString();
+                td.descripcion = dt.Rows[i]["descripcion"].ToString();
+                lstTipoDeduccion.Add(td);
+            }
+            return lstTipoDeduccion;
+        }
+
+
+        public List<satTipoPercepcion> obtenerTipoPercepcion()
+        {
+            DataTable dt = new DataTable();
+            List<satTipoPercepcion> lstTipoPercepcion = new List<satTipoPercepcion>();
+            Command.CommandText = "select * from satTipoPercepcion";
+            Command.Parameters.Clear();
+            dt = SelectData(Command);
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                satTipoPercepcion tp = new satTipoPercepcion();
+                tp.id = int.Parse(dt.Rows[i]["id"].ToString());
+                tp.tipopercepcion = dt.Rows[i]["tipopercepcion"].ToString();
+                tp.descripcion = dt.Rows[i]["descripcion"].ToString();
+                lstTipoPercepcion.Add(tp);
+            }
+            return lstTipoPercepcion;
+        }
     }
 }

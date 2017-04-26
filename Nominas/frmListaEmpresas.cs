@@ -188,6 +188,7 @@ namespace Nominas
             frmEmpresas e = new frmEmpresas();
             e.MdiParent = this.MdiParent;
             e.OnNuevaEmpresa += e_OnNuevaEmpresa;
+            e._lista = true;
             if (!edicion.Equals(GLOBALES.NUEVO))
             {
                 fila = dgvEmpresas.CurrentCell.RowIndex;

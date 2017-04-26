@@ -90,11 +90,12 @@
             this.toolIsr = new System.Windows.Forms.ToolStripMenuItem();
             this.toolSubsidio = new System.Windows.Forms.ToolStripMenuItem();
             this.toolImss = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolFactorDescuento = new System.Windows.Forms.ToolStripMenuItem();
             this.stsPrincipal = new System.Windows.Forms.StatusStrip();
             this.toolEstatusPerfil = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolPorcentaje = new System.Windows.Forms.ToolStripStatusLabel();
             this.workAntiguedad = new System.ComponentModel.BackgroundWorker();
-            this.toolFactorDescuento = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolEmpresas = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPrincipal.SuspendLayout();
             this.stsPrincipal.SuspendLayout();
             this.SuspendLayout();
@@ -540,7 +541,8 @@
             this.toolIsr,
             this.toolSubsidio,
             this.toolImss,
-            this.toolFactorDescuento});
+            this.toolFactorDescuento,
+            this.toolEmpresas});
             this.mnuTablas.Name = "mnuTablas";
             this.mnuTablas.Size = new System.Drawing.Size(180, 22);
             this.mnuTablas.Text = "Tablas";
@@ -580,6 +582,13 @@
             this.toolImss.Text = "IMSS";
             this.toolImss.Click += new System.EventHandler(this.toolImss_Click);
             // 
+            // toolFactorDescuento
+            // 
+            this.toolFactorDescuento.Name = "toolFactorDescuento";
+            this.toolFactorDescuento.Size = new System.Drawing.Size(181, 22);
+            this.toolFactorDescuento.Text = "Factor de descuento";
+            this.toolFactorDescuento.Click += new System.EventHandler(this.toolFactorDescuento_Click);
+            // 
             // stsPrincipal
             // 
             this.stsPrincipal.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -610,12 +619,12 @@
             this.workAntiguedad.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.workAntiguedad_ProgressChanged);
             this.workAntiguedad.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workAntiguedad_RunWorkerCompleted);
             // 
-            // toolFactorDescuento
+            // toolEmpresas
             // 
-            this.toolFactorDescuento.Name = "toolFactorDescuento";
-            this.toolFactorDescuento.Size = new System.Drawing.Size(181, 22);
-            this.toolFactorDescuento.Text = "Factor de descuento";
-            this.toolFactorDescuento.Click += new System.EventHandler(this.toolFactorDescuento_Click);
+            this.toolEmpresas.Name = "toolEmpresas";
+            this.toolEmpresas.Size = new System.Drawing.Size(181, 22);
+            this.toolEmpresas.Text = "Empresas";
+            this.toolEmpresas.Click += new System.EventHandler(this.toolEmpresas_Click);
             // 
             // frmPrincipal
             // 
@@ -709,6 +718,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolImpresionRecibos;
         private System.Windows.Forms.ToolStripMenuItem toolEnvioRecibos;
         private System.Windows.Forms.ToolStripMenuItem toolFactorDescuento;
+        private System.Windows.Forms.ToolStripMenuItem toolEmpresas;
     }
 }
 
