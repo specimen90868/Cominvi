@@ -181,10 +181,19 @@ namespace Nominas
                 Conceptos.Core.Conceptos concepto = new Conceptos.Core.Conceptos();
                 concepto.id = id;
 
+                Conceptos.Core.ConceptosEmpresa cempresa = new Conceptos.Core.ConceptosEmpresa();
+                cempresa.idempresa = GLOBALES.IDEMPRESA;
+                cempresa.idconcepto = id;
+                if (cmbPeriodos.Text == "SEMANAL")
+                    cempresa.periodo = 7;
+                else if (cmbPeriodos.Text == "QUINCENAL")
+                    cempresa.periodo = 15;
+
                 try
                 {
                     cnx.Open();
                     ch.eliminarConcepto(concepto);
+                    ch.eliminaConceptoEmpresa(cempresa);
                     cnx.Close();
                     cnx.Dispose();
                     ListaConceptos();

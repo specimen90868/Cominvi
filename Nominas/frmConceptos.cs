@@ -68,6 +68,12 @@ namespace Nominas
             concepto.gruposat = txtGrupoSat.Text;
             concepto.periodo = int.Parse(cmbPeriodo.SelectedValue.ToString());
 
+            Conceptos.Core.ConceptosEmpresa cempresa = new Conceptos.Core.ConceptosEmpresa();
+            cempresa.idempresa = GLOBALES.IDEMPRESA;
+            cempresa.noconcepto = int.Parse(txtNoConcepto.Text);
+            cempresa.asignacion = false;
+            cempresa.periodo = int.Parse(cmbPeriodo.SelectedValue.ToString());
+
             switch (_tipoOperacion)
             {
                 case 0:
@@ -75,6 +81,8 @@ namespace Nominas
                     {
                         cnx.Open();
                         ch.insertaConcepto(concepto);
+                        cempresa.idconcepto = ch.obtenerConcepto(GLOBALES.IDEMPRESA, concepto.noconcepto, concepto.periodo);
+                        ch.insertaConceptoEmpresa(cempresa);
                         cnx.Close();
                         cnx.Dispose();
                     }
@@ -283,6 +291,7 @@ namespace Nominas
             {
                 int.Parse(txtNoConcepto.Text);
                 c.noconcepto = int.Parse(txtNoConcepto.Text);
+                c.periodo = int.Parse(cmbPeriodo.SelectedValue.ToString());
                 cnx.Open();
                 existe = (int)ch.existeNoConcepto(c);
                 cnx.Close();

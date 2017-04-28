@@ -93,10 +93,6 @@
             this.mtxtCuentaBancaria = new System.Windows.Forms.MaskedTextBox();
             this.mtxtCuentaClabe = new System.Windows.Forms.MaskedTextBox();
             this.mtxtIdBancario = new System.Windows.Forms.MaskedTextBox();
-            this.label20 = new System.Windows.Forms.Label();
-            this.cmbMetodoPago = new System.Windows.Forms.ComboBox();
-            this.label21 = new System.Windows.Forms.Label();
-            this.cmbTipoRegimen = new System.Windows.Forms.ComboBox();
             this.mtxtNoEmpleado = new System.Windows.Forms.MaskedTextBox();
             this.chkObraCivil = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -578,7 +574,7 @@
             // 
             this.btnVer.Image = ((System.Drawing.Image)(resources.GetObject("btnVer.Image")));
             this.btnVer.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnVer.Location = new System.Drawing.Point(415, 328);
+            this.btnVer.Location = new System.Drawing.Point(415, 301);
             this.btnVer.Name = "btnVer";
             this.btnVer.Size = new System.Drawing.Size(67, 35);
             this.btnVer.TabIndex = 21;
@@ -591,7 +587,7 @@
             // 
             this.btnAsignar.Image = ((System.Drawing.Image)(resources.GetObject("btnAsignar.Image")));
             this.btnAsignar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAsignar.Location = new System.Drawing.Point(499, 328);
+            this.btnAsignar.Location = new System.Drawing.Point(499, 301);
             this.btnAsignar.Name = "btnAsignar";
             this.btnAsignar.Size = new System.Drawing.Size(67, 35);
             this.btnAsignar.TabIndex = 22;
@@ -603,7 +599,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(378, 339);
+            this.label13.Location = new System.Drawing.Point(378, 312);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(31, 13);
             this.label13.TabIndex = 234;
@@ -700,46 +696,6 @@
             this.mtxtIdBancario.TabIndex = 30;
             this.mtxtIdBancario.Text = "0000";
             // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(32, 632);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(88, 13);
-            this.label20.TabIndex = 247;
-            this.label20.Text = "Metodo de pago:";
-            // 
-            // cmbMetodoPago
-            // 
-            this.cmbMetodoPago.Enabled = false;
-            this.cmbMetodoPago.FormattingEnabled = true;
-            this.cmbMetodoPago.Items.AddRange(new object[] {
-            "EFECTIVO",
-            "CHEQUE",
-            "TRANSFERENCIA"});
-            this.cmbMetodoPago.Location = new System.Drawing.Point(126, 629);
-            this.cmbMetodoPago.Name = "cmbMetodoPago";
-            this.cmbMetodoPago.Size = new System.Drawing.Size(152, 21);
-            this.cmbMetodoPago.TabIndex = 31;
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(323, 302);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(86, 13);
-            this.label21.TabIndex = 249;
-            this.label21.Text = "Tipo de régimen:";
-            // 
-            // cmbTipoRegimen
-            // 
-            this.cmbTipoRegimen.Enabled = false;
-            this.cmbTipoRegimen.FormattingEnabled = true;
-            this.cmbTipoRegimen.Location = new System.Drawing.Point(415, 299);
-            this.cmbTipoRegimen.Name = "cmbTipoRegimen";
-            this.cmbTipoRegimen.Size = new System.Drawing.Size(151, 21);
-            this.cmbTipoRegimen.TabIndex = 20;
-            // 
             // mtxtNoEmpleado
             // 
             this.mtxtNoEmpleado.Location = new System.Drawing.Point(126, 191);
@@ -747,6 +703,7 @@
             this.mtxtNoEmpleado.Name = "mtxtNoEmpleado";
             this.mtxtNoEmpleado.Size = new System.Drawing.Size(152, 20);
             this.mtxtNoEmpleado.TabIndex = 4;
+            this.mtxtNoEmpleado.Text = "0000";
             this.mtxtNoEmpleado.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.mtxtNoEmpleado.Leave += new System.EventHandler(this.mtxtNoEmpleado_Leave);
             // 
@@ -782,15 +739,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(696, 670);
+            this.ClientSize = new System.Drawing.Size(696, 644);
             this.Controls.Add(this.dtpFechaBaja);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.chkObraCivil);
             this.Controls.Add(this.mtxtNoEmpleado);
-            this.Controls.Add(this.cmbTipoRegimen);
-            this.Controls.Add(this.label21);
-            this.Controls.Add(this.cmbMetodoPago);
-            this.Controls.Add(this.label20);
             this.Controls.Add(this.mtxtIdBancario);
             this.Controls.Add(this.mtxtCuentaClabe);
             this.Controls.Add(this.mtxtCuentaBancaria);
@@ -928,10 +881,6 @@
         private System.Windows.Forms.MaskedTextBox mtxtCuentaBancaria;
         private System.Windows.Forms.MaskedTextBox mtxtCuentaClabe;
         private System.Windows.Forms.MaskedTextBox mtxtIdBancario;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.ComboBox cmbMetodoPago;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.ComboBox cmbTipoRegimen;
         private System.Windows.Forms.MaskedTextBox mtxtNoEmpleado;
         private System.Windows.Forms.CheckBox chkObraCivil;
         private System.Windows.Forms.Label label4;

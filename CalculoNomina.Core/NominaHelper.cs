@@ -354,16 +354,33 @@ namespace CalculoNomina.Core
             return dtPagoNomina;
         }
 
-        public DataTable conceptosPreNominaTabular(tmpPagoNomina pn, int periodo)
+        public DataTable conceptosPreNominaTabular(tmpPagoNomina pn, int periodo, string tipoconcepto)
         {
             DataTable dtPagoNomina = new DataTable();
-            Command.CommandText = "exec stp_ConceptosPreNominaTabular @idempresa, @tiponomina, @periodo, @fechainicio, @fechafin";
+            Command.CommandText = "exec stp_ConceptosPreNominaTabular @idempresa, @tiponomina, @periodo, @fechainicio, @fechafin, @tipoconcepto";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", pn.idempresa);
             Command.Parameters.AddWithValue("tiponomina", pn.tiponomina);
             Command.Parameters.AddWithValue("periodo", periodo);
             Command.Parameters.AddWithValue("fechainicio", pn.fechainicio);
             Command.Parameters.AddWithValue("fechafin", pn.fechafin);
+            Command.Parameters.AddWithValue("tipoconcepto", tipoconcepto);
+            dtPagoNomina = SelectData(Command);
+            return dtPagoNomina;
+        }
+
+        public DataTable trabajadoresPreNominaTabular(tmpPagoNomina pn, string netocero, string order, int periodo)
+        {
+            DataTable dtPagoNomina = new DataTable();
+            Command.CommandText = "exec stp_trabajadoresPreNominaTabular @tiponomina, @fechainicio, @fechafin, @idempresa, @netocero, @order, @periodo";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("tiponomina", pn.tiponomina);
+            Command.Parameters.AddWithValue("idempresa", pn.idempresa);
+            Command.Parameters.AddWithValue("fechainicio", pn.fechainicio);
+            Command.Parameters.AddWithValue("fechafin", pn.fechafin);
+            Command.Parameters.AddWithValue("netocero", netocero);
+            Command.Parameters.AddWithValue("order", order);
+            Command.Parameters.AddWithValue("periodo", periodo);
             dtPagoNomina = SelectData(Command);
             return dtPagoNomina;
         }
@@ -384,6 +401,45 @@ namespace CalculoNomina.Core
             Command.Parameters.AddWithValue("neto", neto);
             Command.Parameters.AddWithValue("order", order);
             Command.Parameters.AddWithValue("periodo", periodo);
+            dtPagoNomina = SelectData(Command);
+            return dtPagoNomina;
+        }
+
+        public DataTable conceptosNominaTabular(tmpPagoNomina pn, int deptoInicial, int deptoFinal, int empleadoInicial, int empleadoFinal, int tiponomina, int periodo, string tipoconcepto)
+        {
+            DataTable dtPagoNomina = new DataTable();
+            Command.CommandText = "exec stp_ConceptosNominaTabular @idempresa, @tiponomina, @periodo, @fechainicio, @fechafin, @tipoconcepto, @deptoInicial, @deptoFinal, @empleadoInicial, @empleadoFinal ";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", pn.idempresa);
+            Command.Parameters.AddWithValue("fechainicio", pn.fechainicio);
+            Command.Parameters.AddWithValue("fechafin", pn.fechafin);
+            Command.Parameters.AddWithValue("deptoInicial", deptoInicial);
+            Command.Parameters.AddWithValue("deptoFinal", deptoFinal);
+            Command.Parameters.AddWithValue("empleadoInicial", empleadoInicial);
+            Command.Parameters.AddWithValue("empleadoFinal", empleadoFinal);
+            Command.Parameters.AddWithValue("tiponomina", tiponomina);
+            Command.Parameters.AddWithValue("periodo", periodo);
+            Command.Parameters.AddWithValue("tipoconcepto", tipoconcepto);
+            dtPagoNomina = SelectData(Command);
+            return dtPagoNomina;
+        }
+
+        public DataTable trabajadoresNominaTabular(tmpPagoNomina pn, int deptoInicial, int deptoFinal, int empleadoInicial, int empleadoFinal, int tiponomina, string neto, string order, int periodo)
+        {
+            DataTable dtPagoNomina = new DataTable();
+            Command.CommandText = "exec stp_TrabajadoresNominaTabular @tiponomina, @fechainicio, @fechafin, @idempresa, @neto, @order, @periodo, @deptoInicial, @deptoFinal, @empleadoInicial, @empleadoFinal";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", pn.idempresa);
+            Command.Parameters.AddWithValue("fechainicio", pn.fechainicio);
+            Command.Parameters.AddWithValue("fechafin", pn.fechafin);
+            Command.Parameters.AddWithValue("deptoInicial", deptoInicial);
+            Command.Parameters.AddWithValue("deptoFinal", deptoFinal);
+            Command.Parameters.AddWithValue("empleadoInicial", empleadoInicial);
+            Command.Parameters.AddWithValue("empleadoFinal", empleadoFinal);
+            Command.Parameters.AddWithValue("tiponomina", tiponomina);
+            Command.Parameters.AddWithValue("neto", neto);
+            Command.Parameters.AddWithValue("order", order);
+            Command.Parameters.AddWithValue("periodo", periodo); 
             dtPagoNomina = SelectData(Command);
             return dtPagoNomina;
         }

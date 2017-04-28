@@ -2130,8 +2130,7 @@ namespace Nominas
                 vr._periodo = _periodo;
                 vr.Show();
             }
-                
-            
+  
         }
 
         private void workExcel_DoWork(object sender, DoWorkEventArgs e)
@@ -2148,13 +2147,22 @@ namespace Nominas
             pn.fechafin = periodoFin.Date;
             pn.tiponomina = _tipoNomina;
 
-            DataTable dt = new DataTable();
-            DataTable dtConceptos = new DataTable();
+            Empresas.Core.EmpresasHelper eh = new Empresas.Core.EmpresasHelper();
+            eh.Command = cmd;
+
+            List<Empresas.Core.Empresas> lstEmpresa = new List<Empresas.Core.Empresas>();            
+            DataTable dtConceptosP = new DataTable();
+            DataTable dtConceptosD = new DataTable();
+            DataTable dtTrabajadores = new DataTable();
+            DataTable dtDatos = new DataTable();
             try
             {
                 cnx.Open();
-                dt = nh.obtenerPreNominaTabular(pn, NetoCero, Orden, _periodo);
-                dtConceptos = nh.conceptosPreNominaTabular(pn, _periodo);
+                dtConceptosP = nh.conceptosPreNominaTabular(pn, _periodo, "P");
+                dtConceptosD = nh.conceptosPreNominaTabular(pn, _periodo, "D");
+                lstEmpresa = eh.obtenerEmpresa(GLOBALES.IDEMPRESA);
+                dtTrabajadores = nh.trabajadoresPreNominaTabular(pn, NetoCero, Orden, _periodo);
+                dtDatos = nh.obtenerPreNominaTabular(pn, NetoCero, Orden, _periodo);
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -2167,254 +2175,211 @@ namespace Nominas
             excel.Workbooks.Add();
 
             Microsoft.Office.Interop.Excel._Worksheet workSheet = excel.ActiveSheet;
+            Microsoft.Office.Interop.Excel.Range rng;
 
-            excel.Cells[1, 1] = dt.Rows[0][0];
+            excel.Cells[1, 1] = lstEmpresa[0].nombre;
             excel.Cells[1, 6] = "Periodo";
             excel.Cells[2, 1] = "RFC:";
             excel.Cells[3, 1] = "REG. PAT:";
 
-            excel.Cells[2, 2] = dt.Rows[0][1];
-            excel.Cells[3, 2] = dt.Rows[0][2];
+            excel.Cells[2, 2] = lstEmpresa[0].rfc;
+            excel.Cells[3, 2] = lstEmpresa[0].registro + lstEmpresa[0].digitoverificador.ToString();
 
-            excel.Cells[2, 6] = dt.Rows[0][3];
-            excel.Cells[2, 7] = dt.Rows[0][4];
+            excel.Cells[2, 6] = periodoInicio.ToShortDateString();
+            excel.Cells[2, 7] = periodoFin.ToShortDateString();
 
-            //SE COLOCAN LOS TITULOS DE LAS COLUMNAS
-            int iCol = 1;
-            for (int i = 6; i < dt.Columns.Count; i++)
+            //COLUMNAS DE NO DE EMPLEADO Y NOMBRE
+            excel.Cells[5, 1] = "NO. EMPLEADO";
+            excel.Cells[5, 2] = "NOMBRE";
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[5, 1];
+            rng.Interior.ColorIndex = 36;
+            rng.Font.ColorIndex = 1;
+            rng.Font.Bold = true;
+
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[5, 2];
+            rng.Interior.ColorIndex = 36;
+            rng.Font.ColorIndex = 1;
+            rng.Font.Bold = true;
+
+
+            //COLUMNAS DE PERCEPCIONES
+            int iCol = 3;
+            int colTotalPercepciones = 0;
+            for (int i = 0; i < dtConceptosP.Rows.Count; i++)
             {
-                excel.Cells[5, iCol] = dt.Columns[i].ColumnName;
+                excel.Cells[5, iCol] = dtConceptosP.Rows[i]["concepto"].ToString();
+                rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[5, iCol];
+                rng.Interior.ColorIndex = 36;
+                rng.Font.ColorIndex = 1;
+                rng.Font.Bold = true;
                 iCol++;
             }
 
-            //SE COLOCAN LOS DATOS
-            int contadorDt = dt.Rows.Count;
+            //COLUMNA DE TOTAL DE PERCEPCIONES
+            colTotalPercepciones = iCol;
+            excel.Cells[5, colTotalPercepciones] = "TOTAL PERCEPCIONES";
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[5, colTotalPercepciones];
+            rng.Interior.ColorIndex = 36;
+            rng.Font.ColorIndex = 32;
+            rng.Font.Bold = true;
+
+            //COLUMNAS DE DEDUCCIONES
+            iCol++;
+            int colTotalDeducciones = iCol;
+            for (int i = 0; i < dtConceptosD.Rows.Count; i++)
+            {
+                excel.Cells[5, iCol] = dtConceptosD.Rows[i]["concepto"].ToString();
+                rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[5, iCol];
+                rng.Interior.ColorIndex = 36;
+                rng.Font.ColorIndex = 1;
+                rng.Font.Bold = true;
+                iCol++;
+                colTotalDeducciones++;
+            }
+
+            //COLUMNA DE TOTAL DE DEDUCCIONES
+            iCol++;
+            int colTotalNeto = iCol;
+            excel.Cells[5, colTotalDeducciones] = "TOTAL DEDUCCIONES";
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[5, colTotalDeducciones];
+            rng.Interior.ColorIndex = 36;
+            rng.Font.ColorIndex = 32;
+            rng.Font.Bold = true;
+
+            //COLUMNA TOTAL NETO
+            excel.Cells[5, colTotalNeto] = "TOTAL NETO";
+            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[5, colTotalNeto];
+            rng.Interior.ColorIndex = 36;
+            rng.Font.ColorIndex = 32;
+            rng.Font.Bold = true;
+
+            //SE COLOCAN LOS DATOs DEL TRABAJADOR
+            int contadorDt = dtTrabajadores.Rows.Count;
             int contador = 0;
             int progreso = 0;
-            iCol = 1;
             int iFil = 6;
-            Microsoft.Office.Interop.Excel.Range rng;
-            
-            for (int i = 0; i < dt.Rows.Count; i++)
+            for (int i = 0; i < dtTrabajadores.Rows.Count; i++)
             {
                 progreso = (contador * 100) / contadorDt;
-                workExcel.ReportProgress(progreso, "Reporte a Excel");
+                workExcel.ReportProgress(progreso, "Reporte a Excel: Colocando Trabajadores");
                 contador++;
 
-                if (i != dt.Rows.Count - 1)
+                excel.Cells[iFil, 1] = dtTrabajadores.Rows[i]["NO. EMPLEADO"].ToString();
+                excel.Cells[iFil, 2] = dtTrabajadores.Rows[i]["NOMBRE"].ToString();
+                iFil++;
+            }
+
+            //FORMULA DE PERCEPCIONES
+            string columna1, columna2, columna3;
+            for (int i = 6; i < iFil; i++)
+            {
+                columna1 = "C";
+                columna2 = GLOBALES.COLUMNAS_EXCEL(colTotalPercepciones - 1);
+                rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, colTotalPercepciones];
+                rng.NumberFormat = "#,##0.00";
+                rng.Formula = string.Format("=SUM({0}:{1})", columna1 + i.ToString(), columna2 + i.ToString());
+                rng.Calculate();
+            }
+
+            //FORMULA DE DEDUCCIONES
+            var colSubsidio = "";
+            int colSub = 3;
+            for (int i = 3; i < iCol; i++)
+            {
+                colSubsidio = (excel.Cells[5, i] as Microsoft.Office.Interop.Excel.Range).Value;
+                if (colSubsidio == "SUBSIDIO AL EMPLEO")
                 {
-                    for (int j = 6; j < dt.Columns.Count; j++)
+                    colSub = i;
+                    break;
+                }
+            }
+            columna1 = GLOBALES.COLUMNAS_EXCEL(colTotalPercepciones + 1);
+            columna3 = GLOBALES.COLUMNAS_EXCEL(colSub);
+            for (int i = 6; i < iFil; i++)
+            {
+                columna2 = GLOBALES.COLUMNAS_EXCEL(colTotalDeducciones - 1);
+                rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, colTotalDeducciones];
+                rng.NumberFormat = "#,##0.00";
+                rng.Formula = string.Format("=SUM({0}:{1}) - {2}", columna1 + i.ToString(), columna2 + i.ToString(), columna3 + i.ToString());
+                rng.Calculate();
+            }
+
+            //FORMULA TOTAL NETO
+            columna1 = GLOBALES.COLUMNAS_EXCEL(colTotalPercepciones);
+            columna2 = GLOBALES.COLUMNAS_EXCEL(colTotalDeducciones);
+            for (int i = 6; i < iFil; i++)
+            {
+                rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, colTotalNeto];
+                rng.NumberFormat = "#,##0.00";
+                rng.Formula = string.Format("={0}+{1}-{2}", columna1 + i.ToString(), columna3 + i.ToString(), columna2 + i.ToString());
+                rng.Calculate();
+            }
+
+            //SE COLOCAN LOS DATOS DE LAS CANTIDADES
+            contadorDt = dtDatos.Rows.Count;
+            contador = 0;
+            progreso = 0;
+            iFil = 6;
+            double valorCelda = 0;
+            int noEmpleadoCelda = 0;
+            var conceptoColumna = "";
+            int noEmpleadoDt = 0;
+            for (int i = 0; i < dtDatos.Rows.Count; i++)
+            {
+                progreso = (contador * 100) / contadorDt;
+                workExcel.ReportProgress(progreso, "Reporte a Excel: Colocando Datos");
+                contador++;
+
+                valorCelda = (excel.Cells[iFil, 1] as Microsoft.Office.Interop.Excel.Range).Value;
+                noEmpleadoDt = int.Parse(dtDatos.Rows[i]["NO. EMPLEADO"].ToString());
+                noEmpleadoCelda = Convert.ToInt32(valorCelda);
+                if (noEmpleadoCelda == noEmpleadoDt)
+                {
+                    for (int j = 3; j < iCol; j++)
                     {
-                        excel.Cells[iFil, iCol] = dt.Rows[i][j];
-                        iCol++;
+                        conceptoColumna = (excel.Cells[5, j] as Microsoft.Office.Interop.Excel.Range).Value;
+                        if (conceptoColumna == dtDatos.Rows[i]["CONCEPTO"].ToString())
+                        {
+                            excel.Cells[iFil, j] = dtDatos.Rows[i]["CANTIDAD"].ToString();
+                            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, j];
+                            rng.NumberFormat = "#,##0.00";
+                        }
                     }
-
-                    iFil++;
-                    
-                    #region AGRUPADO POR DEPARTAMENTO
-                    //if (dt.Rows[i][5].ToString() == dt.Rows[i + 1][5].ToString())
-                    //    for (int j = 6; j < dt.Columns.Count; j++)
-                    //    {
-                    //        excel.Cells[iFil, iCol] = dt.Rows[i][j];
-                    //        iCol++;
-                    //    }
-                    //else
-                    //{
-                    //    for (int j = 6; j < dt.Columns.Count; j++)
-                    //    {
-                    //        excel.Cells[iFil, iCol] = dt.Rows[i][j];
-                    //        iCol++;
-                    //    }
-                    //    iFil++;
-                    //    rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 1];
-                    //    rng.Font.Bold = true;
-                    //    excel.Cells[iFil, 1] = dt.Rows[i][5];
-
-                    //    rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 9];
-                    //    rng.NumberFormat = "#,##0.00";
-                    //    rng.Font.Bold = true;
-                    //    excel.Cells[iFil, 9] = totalPercepciones.ToString();
-
-                    //    rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 15];
-                    //    rng.NumberFormat = "#,##0.00";
-                    //    rng.Font.Bold = true;
-                    //    excel.Cells[iFil, 15] = totalDeducciones.ToString();
-                    //    iFil++;
-
-                    //    totalPercepciones = 0;
-                    //    totalDeducciones = 0;
-                    //}
-                    #endregion
                 }
                 else
                 {
-                    for (int j = 6; j < dt.Columns.Count; j++)
-                    {
-                        excel.Cells[iFil, iCol] = dt.Rows[i][j];
-                        iCol++;
-                    }
-                   
+                    iFil++;
+                    i--;
+                    contador--;
                 }
-                iCol = 1;
             }
-            iFil++;
 
             for (int i = 6; i < iFil; i++)
             {
-                rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, 2];
-                rng.Columns.AutoFit();
-
-                rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, 15];
-                rng.NumberFormat = "#,##0.00";
-                rng.Formula = string.Format("=C{0}+D{0}+E{0}+F{0}+G{0}+H{0}+I{0}+J{0}+K{0}+L{0}+M{0}+N{0}", i);
-
-                rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, 25];
-                rng.NumberFormat = "#,##0.00";
-                rng.Formula = string.Format("=P{0}+Q{0}+R{0}+S{0}+T{0}+W{0}+X{0}", i);
-
-                rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, 26];
-                rng.NumberFormat = "#,##0.00";
-                rng.Formula = string.Format("=O{0}+V{0}-Y{0}", i);
+                for (int j = 3; j < iCol; j++)
+                {
+                    if ((excel.Cells[i, j] as Microsoft.Office.Interop.Excel.Range).Value == null)
+                    {
+                        excel.Cells[i, j] = "0";
+                        rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, j];
+                        rng.NumberFormat = "#,##0.00";
+                    }           
+                }
             }
 
-            int suma = iFil - 1;
-            iFil++;
-
-            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 3];
-            rng.NumberFormat = "#,##0.00";
-            rng.Font.Bold = true;
-            rng.Formula = string.Format("=SUM(C6:C{0})", suma.ToString());
-            
-            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 4];
-            rng.NumberFormat = "#,##0.00";
-            rng.Font.Bold = true;
-            rng.Formula = string.Format("=SUM(D6:D{0})", suma.ToString());
-
-            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 5];
-            rng.NumberFormat = "#,##0.00";
-            rng.Font.Bold = true;
-            rng.Formula = string.Format("=SUM(E6:E{0})", suma.ToString());
-
-            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 6];
-            rng.NumberFormat = "#,##0.00";
-            rng.Font.Bold = true;
-            rng.Formula = string.Format("=SUM(F6:F{0})", suma.ToString());
-
-            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 7];
-            rng.NumberFormat = "#,##0.00";
-            rng.Font.Bold = true;
-            rng.Formula = string.Format("=SUM(G6:G{0})", suma.ToString());
-
-            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 8];
-            rng.NumberFormat = "#,##0.00";
-            rng.Font.Bold = true;
-            rng.Formula = string.Format("=SUM(H6:H{0})", suma.ToString());
-
-            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 9];
-            rng.NumberFormat = "#,##0.00";
-            rng.Font.Bold = true;
-            rng.Formula = string.Format("=SUM(I6:I{0})", suma.ToString());
-
-            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 10];
-            rng.NumberFormat = "#,##0.00";
-            rng.Font.Bold = true;
-            rng.Formula = string.Format("=SUM(J6:J{0})", suma.ToString());
-
-            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 11];
-            rng.NumberFormat = "#,##0.00";
-            rng.Font.Bold = true;
-            rng.Formula = string.Format("=SUM(K6:K{0})", suma.ToString());
-
-            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 12];
-            rng.NumberFormat = "#,##0.00";
-            rng.Font.Bold = true;
-            rng.Formula = string.Format("=SUM(L6:L{0})", suma.ToString());
-
-            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 13];
-            rng.NumberFormat = "#,##0.00";
-            rng.Font.Bold = true;
-            rng.Formula = string.Format("=SUM(M6:M{0})", suma.ToString());
-
-            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 14];
-            rng.NumberFormat = "#,##0.00";
-            rng.Font.Bold = true;
-            
-            rng.Formula = string.Format("=SUM(N6:N{0})", suma.ToString());
-            //TOTAL PERCEPCIONES
-            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 15];
-            rng.NumberFormat = "#,##0.00";
-            rng.Font.Bold = true;
-            rng.Formula = string.Format("=SUM(O6:O{0})", suma.ToString());
-
-            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 16];
-            rng.NumberFormat = "#,##0.00";
-            rng.Font.Bold = true;
-            rng.Formula = string.Format("=SUM(P6:P{0})", suma.ToString());
-
-            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 17];
-            rng.NumberFormat = "#,##0.00";
-            rng.Font.Bold = true;
-            rng.Formula = string.Format("=SUM(Q6:Q{0})", suma.ToString());
-
-            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 18];
-            rng.NumberFormat = "#,##0.00";
-            rng.Font.Bold = true;
-            rng.Formula = string.Format("=SUM(R6:R{0})", suma.ToString());
-
-            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 19];
-            rng.NumberFormat = "#,##0.00";
-            rng.Font.Bold = true;
-            rng.Formula = string.Format("=SUM(S6:S{0})", suma.ToString());
-
-            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 20];
-            rng.NumberFormat = "#,##0.00";
-            rng.Font.Bold = true;
-            rng.Formula = string.Format("=SUM(T6:T{0})", suma.ToString());
-
-            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 21];
-            rng.NumberFormat = "#,##0.00";
-            rng.Font.Bold = true;
-            rng.Formula = string.Format("=SUM(U6:U{0})", suma.ToString());
-
-            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 22];
-            rng.NumberFormat = "#,##0.00";
-            rng.Font.Bold = true;
-            rng.Formula = string.Format("=SUM(V6:V{0})", suma.ToString());
-
-            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 23];
-            rng.NumberFormat = "#,##0.00";
-            rng.Font.Bold = true;
-            rng.Formula = string.Format("=SUM(W6:W{0})", suma.ToString());
-
-            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 24];
-            rng.NumberFormat = "#,##0.00";
-            rng.Font.Bold = true;
-            rng.Formula = string.Format("=SUM(X6:X{0})", suma.ToString());
-
-            //TOTAL DEDUCCIONES
-            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 25];
-            rng.NumberFormat = "#,##0.00";
-            rng.Font.Bold = true;
-            rng.Formula = string.Format("=SUM(Y6:Y{0})", suma.ToString());
-
-            //TOTAL NETO
-            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, 26];
-            rng.NumberFormat = "#,##0.00";
-            rng.Font.Bold = true;
-            rng.Formula = string.Format("=SUM(Z6:Z{0})", suma.ToString());
+            for (int i = 3; i < iCol + 1; i++)
+            {
+                columna1 = GLOBALES.COLUMNAS_EXCEL(i);
+                rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil + 2, i];
+                rng.Font.Bold = true;
+                rng.NumberFormat = "#,##0.00";
+                rng.Formula = string.Format("=SUM({0}:{1})", columna1 + (6).ToString(), columna1 + iFil.ToString());
+            }
 
             excel.Range["A1", "G3"].Font.Bold = true;
-            excel.Range["A5", "Y5"].Font.Bold = true;
-            excel.Range["B:Z"].EntireColumn.AutoFit();
+            excel.Range["B:AZ"].EntireColumn.AutoFit();
             excel.Range["A6"].Select();
             excel.ActiveWindow.FreezePanes = true;
-            excel.Range["A5", "Z5"].Interior.ColorIndex = 36;
-            excel.Range["A5", "N5"].Font.ColorIndex = 1;
-            excel.Range["P5", "X5"].Font.ColorIndex = 1;
-            excel.Range["O5"].Font.ColorIndex = 32;
-            excel.Range["Y5"].Font.ColorIndex = 32;
-            excel.Range["Z5"].Font.ColorIndex = 32;
-            excel.Range["B6", "Z" + iFil.ToString()].NumberFormat = "#,##0.00";
             
             workSheet.SaveAs("Reporte_Tabular.xlsx");
             excel.Visible = true;
@@ -2553,6 +2518,8 @@ namespace Nominas
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
+            if (GLOBALES.FORMISOPEN("frmSobreRecibo"))
+                return;
             frmSobreRecibo sr = new frmSobreRecibo();
             sr._tipoNormalEspecial = _tipoNomina;
             sr._inicioPeriodo = periodoInicio.Date;

@@ -26,4 +26,6 @@ namespace Empresas.Core
         public int idregimenfiscal { get; set; }
         public string codigopostal { get; set; }
     }
+
+
 }

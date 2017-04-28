@@ -121,6 +121,17 @@ namespace Conceptos.Core
             return lstConcepto;
         }
 
+        public int obtenerConcepto(int idempresa, int noconcepto, int periodo)
+        {
+            Command.CommandText = "select id from conceptos where idempresa = @idempresa and noconcepto = @noconcepto and periodo = @periodo";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", idempresa);
+            Command.Parameters.AddWithValue("noconcepto", noconcepto);
+            Command.Parameters.AddWithValue("periodo", periodo);
+            object valor = Select(Command);
+            return int.Parse(valor.ToString());
+        }
+
         public List<Conceptos> obtenerConceptoNomina(Conceptos c)
         {
             List<Conceptos> lstConcepto = new List<Conceptos>();
@@ -195,10 +206,11 @@ namespace Conceptos.Core
 
         public object existeNoConcepto(Conceptos c)
         {
-            Command.CommandText = "select count(*) from conceptos where idempresa = @idempresa and noconcepto = @noconcepto";
+            Command.CommandText = "select count(*) from conceptos where idempresa = @idempresa and noconcepto = @noconcepto and periodo = @periodo";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", c.idempresa);
             Command.Parameters.AddWithValue("noconcepto", c.noconcepto);
+            Command.Parameters.AddWithValue("periodo", c.periodo);
             object dato = Select(Command);
             return dato;
         }
@@ -370,6 +382,26 @@ namespace Conceptos.Core
                                     and idconcepto = @idconcepto";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("asignacion", ce.asignacion);
+            Command.Parameters.AddWithValue("idempresa", ce.idempresa);
+            Command.Parameters.AddWithValue("periodo", ce.periodo);
+            Command.Parameters.AddWithValue("idconcepto", ce.idconcepto);
+            return Command.ExecuteNonQuery();
+        }
+
+        public int eliminaConceptoEmpresa(ConceptosEmpresa ce)
+        {
+            Command.CommandText = @"delete from ConceptosEmpresa where idempresa = @idempresa and idconcepto = @idconcepto and periodo = @periodo";
+            Command.Parameters.Clear();
+            Command.Parameters.AddWithValue("idempresa", ce.idempresa);
+            Command.Parameters.AddWithValue("periodo", ce.periodo);
+            Command.Parameters.AddWithValue("idconcepto", ce.idconcepto);
+            return Command.ExecuteNonQuery();
+        }
+
+        public int insertaConceptoEmpresa(ConceptosEmpresa ce)
+        {
+            Command.CommandText = @"insert into ConceptosEmpresa (idempresa, idconcepto, noconcepto, asignacion, periodo) values (@idempresa, @idconcepto, @noconcepto, @asignacion, @periodo)";
+            Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", ce.idempresa);
             Command.Parameters.AddWithValue("periodo", ce.periodo);
             Command.Parameters.AddWithValue("idconcepto", ce.idconcepto);

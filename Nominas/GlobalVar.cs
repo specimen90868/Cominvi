@@ -72,6 +72,9 @@ namespace Nominas
         public static int NOMINA = 1;
         #endregion
 
+        public static int REPORTE_TABULAR_PRENOMINA = 0;
+        public static int REPORTE_TABULAR_NOMINA = 1;
+
         public static int IDUSUARIO { get; set; }
         public static int IDPERFIL { get; set; }
         public static int IDEMPRESA { get; set; }
@@ -211,6 +214,171 @@ namespace Nominas
 
             return lEncontrado;
 
+        }
+
+        public static string COLUMNAS_EXCEL(int valor)
+        {
+            string columna = "";
+            switch (valor)
+            {
+                case 1:
+                    columna = "A";
+                    break;
+                case 2:
+                    columna = "B";
+                    break;
+                case 3:
+                    columna = "C";
+                    break;
+                case 4:
+                    columna = "D";
+                    break;
+                case 5:
+                    columna = "E";
+                    break;
+                case 6:
+                    columna = "F";
+                    break;
+                case 7:
+                    columna = "G";
+                    break;
+                case 8:
+                    columna = "H";
+                    break;
+                case 9:
+                    columna = "I";
+                    break;
+                case 10:
+                    columna = "J";
+                    break;
+                case 11:
+                    columna = "K";
+                    break;
+                case 12:
+                    columna = "L";
+                    break;
+                case 13:
+                    columna = "M";
+                    break;
+                case 14:
+                    columna = "N";
+                    break;
+                case 15:
+                    columna = "O";
+                    break;
+                case 16:
+                    columna = "P";
+                    break;
+                case 17:
+                    columna = "Q";
+                    break;
+                case 18:
+                    columna = "R";
+                    break;
+                case 19:
+                    columna = "S";
+                    break;
+                case 20:
+                    columna = "T";
+                    break;
+                case 21:
+                    columna = "U";
+                    break;
+                case 22:
+                    columna = "V";
+                    break;
+                case 23:
+                    columna = "W";
+                    break;
+                case 24:
+                    columna = "X";
+                    break;
+                case 25:
+                    columna = "Y";
+                    break;
+                case 26:
+                    columna = "Z";
+                    break;
+                case 27:
+                    columna = "AA";
+                    break;
+                case 28:
+                    columna = "AB";
+                    break;
+                case 29:
+                    columna = "AC";
+                    break;
+                case 30:
+                    columna = "AD";
+                    break;
+                case 31:
+                    columna = "AE";
+                    break;
+                case 32:
+                    columna = "AF";
+                    break;
+                case 33:
+                    columna = "AG";
+                    break;
+                case 34:
+                    columna = "AH";
+                    break;
+                case 35:
+                    columna = "AI";
+                    break;
+                case 36:
+                    columna = "AJ";
+                    break;
+                case 37:
+                    columna = "AK";
+                    break;
+                case 38:
+                    columna = "AL";
+                    break;
+                case 39:
+                    columna = "AM";
+                    break;
+                case 40:
+                    columna = "AN";
+                    break;
+                case 41:
+                    columna = "AO";
+                    break;
+                case 42:
+                    columna = "AP";
+                    break;
+                case 43:
+                    columna = "AQ";
+                    break;
+                case 44:
+                    columna = "AR";
+                    break;
+                case 45:
+                    columna = "AS";
+                    break;
+                case 46:
+                    columna = "AT";
+                    break;
+                case 47:
+                    columna = "AU";
+                    break;
+                case 48:
+                    columna = "AV";
+                    break;
+                case 49:
+                    columna = "AW";
+                    break;
+                case 50:
+                    columna = "AX";
+                    break;
+                case 51:
+                    columna = "AY";
+                    break;
+                case 52:
+                    columna = "AZ";
+                    break;
+            }
+            return columna;
         }
 
         //public static Boolean IDENTIFICADOR(string wmiClass, string wmiProperty, string serialHD)

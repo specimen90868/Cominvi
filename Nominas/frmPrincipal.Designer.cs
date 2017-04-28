@@ -91,11 +91,11 @@
             this.toolSubsidio = new System.Windows.Forms.ToolStripMenuItem();
             this.toolImss = new System.Windows.Forms.ToolStripMenuItem();
             this.toolFactorDescuento = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolEmpresas = new System.Windows.Forms.ToolStripMenuItem();
             this.stsPrincipal = new System.Windows.Forms.StatusStrip();
             this.toolEstatusPerfil = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolPorcentaje = new System.Windows.Forms.ToolStripStatusLabel();
             this.workAntiguedad = new System.ComponentModel.BackgroundWorker();
-            this.toolEmpresas = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPrincipal.SuspendLayout();
             this.stsPrincipal.SuspendLayout();
             this.SuspendLayout();
@@ -389,14 +389,14 @@
             // toolNominaNormal
             // 
             this.toolNominaNormal.Name = "toolNominaNormal";
-            this.toolNominaNormal.Size = new System.Drawing.Size(147, 22);
-            this.toolNominaNormal.Text = "Normal";
+            this.toolNominaNormal.Size = new System.Drawing.Size(152, 22);
+            this.toolNominaNormal.Text = "Ordinaria";
             this.toolNominaNormal.Click += new System.EventHandler(this.toolNominaNormal_Click);
             // 
             // toolExtraordinario
             // 
             this.toolExtraordinario.Name = "toolExtraordinario";
-            this.toolExtraordinario.Size = new System.Drawing.Size(147, 22);
+            this.toolExtraordinario.Size = new System.Drawing.Size(152, 22);
             this.toolExtraordinario.Text = "Extraordinario";
             this.toolExtraordinario.Click += new System.EventHandler(this.toolExtraordinario_Click);
             // 
@@ -589,6 +589,13 @@
             this.toolFactorDescuento.Text = "Factor de descuento";
             this.toolFactorDescuento.Click += new System.EventHandler(this.toolFactorDescuento_Click);
             // 
+            // toolEmpresas
+            // 
+            this.toolEmpresas.Name = "toolEmpresas";
+            this.toolEmpresas.Size = new System.Drawing.Size(181, 22);
+            this.toolEmpresas.Text = "Empresas";
+            this.toolEmpresas.Click += new System.EventHandler(this.toolEmpresas_Click);
+            // 
             // stsPrincipal
             // 
             this.stsPrincipal.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -618,13 +625,6 @@
             this.workAntiguedad.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workAntiguedad_DoWork);
             this.workAntiguedad.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.workAntiguedad_ProgressChanged);
             this.workAntiguedad.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workAntiguedad_RunWorkerCompleted);
-            // 
-            // toolEmpresas
-            // 
-            this.toolEmpresas.Name = "toolEmpresas";
-            this.toolEmpresas.Size = new System.Drawing.Size(181, 22);
-            this.toolEmpresas.Text = "Empresas";
-            this.toolEmpresas.Click += new System.EventHandler(this.toolEmpresas_Click);
             // 
             // frmPrincipal
             // 

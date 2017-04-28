@@ -107,7 +107,8 @@ namespace Empleados.Core
             DataTable dtEmpleados = new DataTable();
             List<Empleados> lstEmpleados = new List<Empleados>();
             Command.CommandText = @"select idtrabajador, noempleado from trabajadores where idempresa = @idempresa
-                                    and idperiodo in (select idperiodo from periodos where idempresa = @idempresa and dias = @dias)";
+                                    and idperiodo in (select idperiodo from periodos where idempresa = @idempresa and dias = @dias)
+                                    order by idtrabajador asc";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", e.idempresa);
             Command.Parameters.AddWithValue("dias", periodo);
