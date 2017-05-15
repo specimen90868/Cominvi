@@ -155,6 +155,8 @@ namespace Nominas
         private void workMovimientos_DoWork(object sender, DoWorkEventArgs e)
         {
             string formulaexento = "";
+            int tamNoEmpleado = 0;
+            string noEmpleadoExcel = "";
             int idConcepto = 0, idEmpleado = 0;
             int existeConcepto = 0;
             int idPeriodo = 0, diasPeriodo = 0;
@@ -179,12 +181,26 @@ namespace Nominas
 
             foreach (DataGridViewRow fila in dgvMovimientos.Rows)
             {
-                Empleados.Core.EmpleadosHelper empleadosHelper = new Empleados.Core.EmpleadosHelper();
-                empleadosHelper.Command = cmd;
+                //Empleados.Core.EmpleadosHelper empleadosHelper = new Empleados.Core.EmpleadosHelper();
+                //empleadosHelper.Command = cmd;
+
+                noEmpleadoExcel = fila.Cells["noempleado"].Value.ToString();
+                tamNoEmpleado = fila.Cells["noempleado"].Value.ToString().Length;
+                switch (tamNoEmpleado) { 
+                    case 1:
+                        noEmpleadoExcel = "000" + noEmpleadoExcel;
+                        break;
+                    case 2:
+                        noEmpleadoExcel = "00" + noEmpleadoExcel;
+                        break;
+                    case 3:
+                        noEmpleadoExcel = "0" + noEmpleadoExcel;
+                        break;
+                }
 
                 cnx.Open();
-                idEmpleado = (int)emph.obtenerIdTrabajador(fila.Cells["noempleado"].Value.ToString(), idEmpresa);
-                idPeriodo = int.Parse(empleadosHelper.obtenerIdPeriodo(idEmpleado).ToString());
+                idEmpleado = int.Parse(emph.obtenerIdTrabajador(noEmpleadoExcel, idEmpresa).ToString());
+                idPeriodo = int.Parse(emph.obtenerIdPeriodo(idEmpleado).ToString());
                 cnx.Close();
 
                 Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
@@ -198,7 +214,7 @@ namespace Nominas
 
                 List<Empleados.Core.Empleados> lstEmpleado = new List<Empleados.Core.Empleados>();
                 cnx.Open();
-                lstEmpleado = empleadosHelper.obtenerEmpleado(empleado);
+                lstEmpleado = emph.obtenerEmpleado(empleado);
                 diasPeriodo = int.Parse(periodoHelper.DiasDePago(periodos).ToString());
                 cnx.Close();
 

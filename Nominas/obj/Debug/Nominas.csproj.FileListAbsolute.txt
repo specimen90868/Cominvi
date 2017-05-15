@@ -355,10 +355,14 @@ C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\Reingreso.Core.dll
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\Salario.Core.dll
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\SatCatalogos.Core.dll
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\satTrabajadorNomina.Core.dll
+C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\Selenium.WebDriverBackedSelenium.dll
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\TablaIsr.Core.dll
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\TablaSubsidio.Core.dll
+C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\ThoughtWorks.Selenium.Core.dll
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\Usuarios.Core.dll
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\Vacaciones.Core.dll
+C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\WebDriver.dll
+C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\WebDriver.Support.dll
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\Altas.Core.pdb
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\Aplicaciones.Core.pdb
 C:\GitHub\Repositorios\Cominvi\Nominas\bin\Debug\Ausentismo.Core.pdb

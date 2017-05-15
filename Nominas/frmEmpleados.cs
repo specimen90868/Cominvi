@@ -11,6 +11,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+
 namespace Nominas
 {
     public partial class frmEmpleados : Form
@@ -256,17 +259,89 @@ namespace Nominas
             txtAntiguedadMod.Text = ObtieneEdad(dtpFechaAntiguedad.Value).ToString();
         }
 
-        private void dtpFechaNacimiento_Leave(object sender, EventArgs e)
+        private async void dtpFechaNacimiento_Leave(object sender, EventArgs e)
         {
+            MessageBox.Show("Al dar Aceptar se calculará el RFC, por favor esperar a que se muestre.\r\n\r\n" +
+                            "El calculo del RFC es informativo. La RENAPO es la entidad oficial para otorgar el RFC.","Calculo del RFC");
+            txtRFC.Text = await obtieneRFC();
             txtEdad.Text = ObtieneEdad(dtpFechaNacimiento.Value).ToString();
+            //Empleados.Core.RFC rfc = new Empleados.Core.RFC();
+            //string _rfc = rfc.ObtieneRFC(txtApPaterno.Text, txtApMaterno.Text, txtNombre.Text);
+            //string _homo = rfc.ClaveHomonimia(txtApPaterno.Text, txtApMaterno.Text, txtNombre.Text);
+            //string _fecha = dtpFechaNacimiento.Value.ToString("yyMMdd");
+            //string _dv = rfc.DigitoVerificador(_rfc + _fecha + _homo);
+            //_rfc = _rfc + _fecha + _homo + _dv;
+            //txtRFC.Text = _rfc;
+        }
 
-            Empleados.Core.RFC rfc = new Empleados.Core.RFC();
-            string _rfc = rfc.ObtieneRFC(txtApPaterno.Text, txtApMaterno.Text, txtNombre.Text);
-            string _homo = rfc.ClaveHomonimia(txtApPaterno.Text, txtApMaterno.Text, txtNombre.Text);
-            string _fecha = dtpFechaNacimiento.Value.ToString("yyMMdd");
-            string _dv = rfc.DigitoVerificador(_rfc + _fecha + _homo);
-            _rfc = _rfc + _fecha + _homo + _dv;
-            txtRFC.Text = _rfc;
+        private async Task<string> obtieneRFC()
+        {
+            string seleniumDriver = ConfigurationManager.AppSettings["DriverSelenium"];
+            string valorRFC = "";
+            IWebDriver driver;
+            var chromeDriverService = ChromeDriverService.CreateDefaultService(seleniumDriver);
+            chromeDriverService.HideCommandPromptWindow = true;
+            var options = new ChromeOptions();
+            options.AddArgument("--window-position=-32000,-32000");
+            driver = new ChromeDriver(chromeDriverService, options);
+            try
+            {
+                driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(20));
+                driver.Navigate().GoToUrl("http://www.mi-rfc.com.mx/consulta-rfc-homoclave");
+                IWebElement nombre = driver.FindElement(By.Id("nameInput"));
+                IWebElement paterno = driver.FindElement(By.Id("fatherSurnameInput"));
+                IWebElement materno = driver.FindElement(By.Id("motherSurnameInput"));
+                IWebElement dia = driver.FindElement(By.Name("birth_day"));
+                IWebElement mes = driver.FindElement(By.Name("birth_month"));
+                IWebElement anio = driver.FindElement(By.Name("birth_year"));
+                IWebElement rfc = driver.FindElement(By.XPath(".//div[@class='controls no-bottom']/a"));
+
+                nombre.SendKeys(txtNombre.Text);
+                paterno.SendKeys(txtApPaterno.Text);
+                materno.SendKeys(txtApMaterno.Text);
+                dia.SendKeys(dtpFechaNacimiento.Value.Day.ToString());
+                mes.SendKeys(Mes(dtpFechaNacimiento.Value.Month));
+                anio.SendKeys(dtpFechaNacimiento.Value.Year.ToString());
+
+                rfc.Click();
+
+                driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(5));
+
+                IWebElement clave = driver.FindElement(By.XPath(".//div[@class='text']/span"));
+                valorRFC = clave.Text;
+                driver.Close();
+                driver.Dispose();
+                return valorRFC;
+            }
+            catch (Selenium.SeleniumException error)
+            {
+                driver.Close();
+                driver.Dispose();
+                MessageBox.Show("Se encontró un error al obtener el RFC. \r\n\r\n Error: \r\n\r\n " + error.Message);
+                return "";
+            }
+
+        }
+
+        private string Mes(int valor)
+        {
+            string mes = "";
+            switch (valor) {
+
+                case 1: mes = "Enero"; break;
+                case 2: mes = "Febrero"; break;
+                case 3: mes = "Marzo"; break;
+                case 4: mes = "Abril"; break;
+                case 5: mes = "Mayo"; break;
+                case 6: mes = "Junio"; break;
+                case 7: mes = "Julio"; break;
+                case 8: mes = "Agosto"; break;
+                case 9: mes = "Septiembre"; break;
+                case 10: mes = "Octubre"; break;
+                case 11: mes = "Noviembre"; break;
+                case 12: mes = "Diciembre"; break; 
+            }
+            return mes;
         }
 
         private void cmbPeriodo_SelectedIndexChanged(object sender, EventArgs e)

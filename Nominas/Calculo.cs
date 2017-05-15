@@ -540,22 +540,22 @@ namespace Nominas
 
                         if (percepciones != 0)
                         {
-                            Empleados.Core.EmpleadosHelper esh = new Empleados.Core.EmpleadosHelper();
-                            esh.Command = cmd;
+                            //Empleados.Core.EmpleadosHelper esh = new Empleados.Core.EmpleadosHelper();
+                            //esh.Command = cmd;
 
-                            cnx.Open();
-                            int idperiodoSubsidio = (int)esh.obtenerIdPeriodo(lstConceptosDeducciones[i].idtrabajador);
-                            cnx.Close();
+                            //cnx.Open();
+                            //int idperiodoSubsidio = (int)esh.obtenerIdPeriodo(lstConceptosDeducciones[i].idtrabajador);
+                            //cnx.Close();
 
-                            Periodos.Core.PeriodosHelper psh = new Periodos.Core.PeriodosHelper();
-                            psh.Command = cmd;
+                            //Periodos.Core.PeriodosHelper psh = new Periodos.Core.PeriodosHelper();
+                            //psh.Command = cmd;
 
-                            Periodos.Core.Periodos ps = new Periodos.Core.Periodos();
-                            ps.idperiodo = idperiodoSubsidio;
+                            //Periodos.Core.Periodos ps = new Periodos.Core.Periodos();
+                            //ps.idperiodo = idperiodoSubsidio;
 
-                            cnx.Open();
-                            int diasSubsidio = (int)psh.DiasDePago(ps);
-                            cnx.Close();
+                            //cnx.Open();
+                            //int diasSubsidio = (int)psh.DiasDePago(ps);
+                            //cnx.Close();
 
                             if (subsidioAntes > isrAntes)
                                 subsidioDefinitivo.cantidad = subsidioAntes - isrAntes;
@@ -618,22 +618,22 @@ namespace Nominas
 
                         if (percepciones != 0)
                         {
-                            Empleados.Core.EmpleadosHelper eih = new Empleados.Core.EmpleadosHelper();
-                            eih.Command = cmd;
+                            //Empleados.Core.EmpleadosHelper eih = new Empleados.Core.EmpleadosHelper();
+                            //eih.Command = cmd;
 
-                            cnx.Open();
-                            int idperiodoIsr = (int)eih.obtenerIdPeriodo(lstConceptosDeducciones[i].idtrabajador);
-                            cnx.Close();
+                            //cnx.Open();
+                            //int idperiodoIsr = (int)eih.obtenerIdPeriodo(lstConceptosDeducciones[i].idtrabajador);
+                            //cnx.Close();
 
-                            Periodos.Core.PeriodosHelper pih = new Periodos.Core.PeriodosHelper();
-                            pih.Command = cmd;
+                            //Periodos.Core.PeriodosHelper pih = new Periodos.Core.PeriodosHelper();
+                            //pih.Command = cmd;
 
-                            Periodos.Core.Periodos pi = new Periodos.Core.Periodos();
-                            pi.idperiodo = idperiodoIsr;
+                            //Periodos.Core.Periodos pi = new Periodos.Core.Periodos();
+                            //pi.idperiodo = idperiodoIsr;
 
-                            cnx.Open();
-                            int diasIsr = (int)pih.DiasDePago(pi);
-                            cnx.Close();
+                            //cnx.Open();
+                            //int diasIsr = (int)pih.DiasDePago(pi);
+                            //cnx.Close();
 
                             if (subsidioAntes > isrAntes)
                             {

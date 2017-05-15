@@ -127,18 +127,8 @@ namespace Nominas
 
                     case "SalarioMinimo":
 
-                        //Empleados.Core.EmpleadosHelper empsh = new Empleados.Core.EmpleadosHelper();
-                        //empsh.Command = cmd;
-
                         Salario.Core.SalariosHelper sh = new Salario.Core.SalariosHelper();
                         sh.Command = cmd;
-                        
-                        //cnx.Open();
-                        //int idsalario = (int)empsh.obtenerIdSalarioMinimo(idTrabajador);
-                        //cnx.Close();
-
-                        //Salario.Core.Salarios salario = new Salario.Core.Salarios();
-                        //salario.idsalario = idsalario;
 
                         cnx.Open();
                         formula = formula.Replace("[" + variables[i] + "]", sh.obtenerSalarioValor().ToString());
@@ -148,18 +138,8 @@ namespace Nominas
 
                     case "FactorDescuento":
 
-                        //Empleados.Core.EmpleadosHelper empsh = new Empleados.Core.EmpleadosHelper();
-                        //empsh.Command = cmd;
-
                         FactorDescuento.Core.FactorDescuentoHelper fdh = new FactorDescuento.Core.FactorDescuentoHelper();
                         fdh.Command = cmd;
-
-                        //cnx.Open();
-                        //int idsalario = (int)empsh.obtenerIdSalarioMinimo(idTrabajador);
-                        //cnx.Close();
-
-                        //Salario.Core.Salarios salario = new Salario.Core.Salarios();
-                        //salario.idsalario = idsalario;
 
                         cnx.Open();
                         formula = formula.Replace("[" + variables[i] + "]", fdh.obtenerFactorDescuento().ToString());
@@ -1101,16 +1081,11 @@ namespace Nominas
                                 int diasSI = (int)psih.DiasDePago(psi);
                                 cnx.Close();
 
-                                if (GLOBALES.IDEMPRESA != 14)
-                                {
-                                    if (diasSI == 7)
-                                        formula = formula.Replace("[" + variables[i] + "]", (1.5).ToString());
-                                    else
-                                        formula = formula.Replace("[" + variables[i] + "]", (3).ToString());
-                                }
-                                else {
-                                    formula = formula.Replace("[" + variables[i] + "]", (15).ToString());
-                                }
+                                
+                                if (diasSI == 7)
+                                    formula = formula.Replace("[" + variables[i] + "]", (1.5).ToString());
+                                else
+                                    formula = formula.Replace("[" + variables[i] + "]", (3).ToString());
                                 
                             }
                             else
@@ -1225,7 +1200,7 @@ namespace Nominas
                             return 0;
                         }
 
-                    case "Concepto ISR":
+                    case "ISR":
                         int noConceptoISR = 0, noConceptoSubsidio = 0, existeConceptoISR = 0, existeConceptoSubisdio = 0;
                         decimal percepcionISR = lstPercepciones.Where(e => e.idtrabajador == idTrabajador && e.tipoconcepto == "P").Sum(e => e.cantidad);
 
@@ -1318,7 +1293,7 @@ namespace Nominas
                             formula = formula.Replace("[" + variables[i] + "]", (0).ToString());
                         break;
 
-                    case "Concepto Subsidio":
+                    case "Subsidio":
                         decimal percepcionSubs = lstPercepciones.Where(e => e.idtrabajador == idTrabajador && e.tipoconcepto == "P").Sum(e => e.cantidad);
                         int noConceptoSub = 0, noConceptoISRSAE = 0, existeConceptoSub = 0, existeConceptoISRSAE = 0;
 
@@ -1405,6 +1380,59 @@ namespace Nominas
                             }
                         }
                        
+                        break;
+
+                    case "IMSS":
+                        int vsmdf; //idsalario;
+                        decimal porcentajeImss, excedenteVsmdf, sm, sdiTrabajador;
+                        
+                        Configuracion.Core.ConfiguracionHelper configh = new Configuracion.Core.ConfiguracionHelper();
+                        configh.Command = cmd;
+
+                        Imss.Core.ImssHelper imssh = new Imss.Core.ImssHelper();
+                        imssh.Command = cmd;
+
+                        Imss.Core.Imss imss = new Imss.Core.Imss();
+                        imss.calculo = true;
+
+                        Empleados.Core.EmpleadosHelper empleadosImssHelper = new Empleados.Core.EmpleadosHelper();
+                        empleadosImssHelper.Command = cmd;
+
+                        Empleados.Core.Empleados empleadoImss = new Empleados.Core.Empleados();
+                        empleadoImss.idtrabajador = idTrabajador;
+
+                        Salario.Core.SalariosHelper salarioimssh = new Salario.Core.SalariosHelper();
+                        salarioimssh.Command = cmd;
+                        //Salario.Core.Salarios salario = new Salario.Core.Salarios();
+                        
+                        cnx.Open();
+                        vsmdf = int.Parse(configh.obtenerValorConfiguracion("VSMDF").ToString());
+                        porcentajeImss = imssh.CuotaObreroPatronal(imss);
+                        excedenteVsmdf = imssh.ExcedenteVSM(5);
+                        //idsalario = int.Parse(empleadosHelper.obtenerIdSalarioMinimo(lstConceptosDeducciones[i].idtrabajador).ToString());
+                        //salario.idsalario = idsalario;
+                        sm = decimal.Parse(salarioimssh.obtenerSalarioValor().ToString());
+                        sdiTrabajador = decimal.Parse(empleadosHelper.obtenerSalarioDiarioIntegrado(empleadoImss).ToString());
+                        cnx.Close();
+
+                        string formulaDiasAPagar = "[DiasLaborados]-[Faltas]-[DiasIncapacidad]";
+                        CalculoFormula cfImss = new CalculoFormula(idTrabajador, inicioPeriodo, finPeriodo, formulaDiasAPagar);
+                        int diasAPagar = int.Parse(cfImss.calcularFormula().ToString());
+
+                        decimal tresVSMG = vsmdf * sm;
+                        decimal excedenteImss = 0;
+                        decimal valorImss = (sdiTrabajador * (porcentajeImss / 100)) * diasAPagar;
+                        decimal totalImss = 0;
+                        if (sdiTrabajador > tresVSMG)
+                        {
+                            excedenteImss = (sdiTrabajador - tresVSMG) * (excedenteVsmdf / 100) * diasAPagar;
+                            totalImss = valorImss + excedenteImss;
+                        }
+                        else
+                            totalImss = valorImss;
+
+                        formula = formula.Replace("[" + variables[i] + "]", totalImss.ToString());
+                        
                         break;
                 }
             }

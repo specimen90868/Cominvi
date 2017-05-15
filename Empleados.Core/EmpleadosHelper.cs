@@ -418,14 +418,14 @@ namespace Empleados.Core
             return dato;
         }
         
-        public int obtenerIdTrabajador(string noempleado, int idEmpresa)
+        public object obtenerIdTrabajador(string noempleado, int idEmpresa)
         {
             Command.CommandText = "select idtrabajador from trabajadores where noempleado = @noempleado and idempresa = @idempresa";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("noempleado", noempleado);
             Command.Parameters.AddWithValue("idempresa", idEmpresa);
             object dato = Select(Command);
-            return (int)dato;
+            return dato;
         }
         
         public object obtenerIdPeriodo(string noempleado)

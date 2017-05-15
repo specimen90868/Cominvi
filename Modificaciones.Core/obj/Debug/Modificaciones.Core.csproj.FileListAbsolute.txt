@@ -8,6 +8,5 @@ C:\GitHub\Repositorios\Cominvi\Modificaciones.Core\bin\Debug\Modificaciones.Core
 C:\GitHub\Repositorios\Cominvi\Modificaciones.Core\bin\Debug\Modificaciones.Core.pdb
 C:\GitHub\Repositorios\Cominvi\Modificaciones.Core\bin\Debug\Data.Obj.dll
 C:\GitHub\Repositorios\Cominvi\Modificaciones.Core\bin\Debug\Data.Obj.pdb
-C:\GitHub\Repositorios\Cominvi\Modificaciones.Core\obj\Debug\Modificaciones.Core.csprojResolveAssemblyReference.cache
 C:\GitHub\Repositorios\Cominvi\Modificaciones.Core\obj\Debug\Modificaciones.Core.dll
 C:\GitHub\Repositorios\Cominvi\Modificaciones.Core\obj\Debug\Modificaciones.Core.pdb

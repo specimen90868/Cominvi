@@ -8,6 +8,5 @@ C:\GitHub\Repositorios\Cominvi\Expediente.Core\bin\Debug\Expediente.Core.dll
 C:\GitHub\Repositorios\Cominvi\Expediente.Core\bin\Debug\Expediente.Core.pdb
 C:\GitHub\Repositorios\Cominvi\Expediente.Core\bin\Debug\Data.Obj.dll
 C:\GitHub\Repositorios\Cominvi\Expediente.Core\bin\Debug\Data.Obj.pdb
-C:\GitHub\Repositorios\Cominvi\Expediente.Core\obj\Debug\Expediente.Core.csprojResolveAssemblyReference.cache
 C:\GitHub\Repositorios\Cominvi\Expediente.Core\obj\Debug\Expediente.Core.dll
 C:\GitHub\Repositorios\Cominvi\Expediente.Core\obj\Debug\Expediente.Core.pdb

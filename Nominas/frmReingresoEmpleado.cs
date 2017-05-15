@@ -240,6 +240,7 @@ namespace Nominas
             object valor;
             Bajas.Core.BajasHelper bajash = new Bajas.Core.BajasHelper();
             bajash.Command = cmdReingreso;
+
             Bajas.Core.Bajas baja = new Bajas.Core.Bajas();
             baja.idempresa = GLOBALES.IDEMPRESA;
             baja.idtrabajador = _idempleado;

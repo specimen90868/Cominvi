@@ -306,8 +306,8 @@
             // 
             this.cmbTipoNomina.FormattingEnabled = true;
             this.cmbTipoNomina.Items.AddRange(new object[] {
-            "Normal",
-            "Extraordinaria normal"});
+            "Ordinaria",
+            "Extraordinaria"});
             this.cmbTipoNomina.Location = new System.Drawing.Point(120, 42);
             this.cmbTipoNomina.Name = "cmbTipoNomina";
             this.cmbTipoNomina.Size = new System.Drawing.Size(200, 21);

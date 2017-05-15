@@ -123,4 +123,11 @@ namespace CalculoNomina.Core
         public int idpuesto { get; set; }
         public int anio { get; set; }
     }
+
+    public class NominaTabular
+    {
+        public string noempleado { get; set; }
+        public string concepto { get; set; }
+        public decimal cantidad { get; set; }
+    }
 }

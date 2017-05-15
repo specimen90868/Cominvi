@@ -154,6 +154,7 @@ namespace Nominas
         private void btnAceptar_Click(object sender, EventArgs e)
 
         {
+            
             if (!_ReportePreNomina)
             {
                 if (noReporte != 6 && noReporte != 9)
@@ -436,33 +437,12 @@ namespace Nominas
             eh.Command = cmd;
 
             List<Empresas.Core.Empresas> lstEmpresa = new List<Empresas.Core.Empresas>();
-            DataTable dtConceptosP = new DataTable();
-            DataTable dtConceptosD = new DataTable();
-            DataTable dtTrabajadores = new DataTable();
             DataTable dtDatos = new DataTable();
 
             try
             {
                 cnx.Open();
-                dtConceptosP = nh.conceptosNominaTabular(pn, int.Parse(cmbDeptoInicial.SelectedValue.ToString()),
-                    int.Parse(cmbDeptoFinal.SelectedValue.ToString()),
-                    int.Parse(cmbEmpleadoInicial.SelectedValue.ToString()),
-                    int.Parse(cmbEmpleadoFinal.SelectedValue.ToString()),
-                    tipoNomina, periodo, "P");
-
-                dtConceptosD = nh.conceptosNominaTabular(pn, int.Parse(cmbDeptoInicial.SelectedValue.ToString()),
-                    int.Parse(cmbDeptoFinal.SelectedValue.ToString()),
-                    int.Parse(cmbEmpleadoInicial.SelectedValue.ToString()),
-                    int.Parse(cmbEmpleadoFinal.SelectedValue.ToString()),
-                    tipoNomina, periodo, "D");
-
                 lstEmpresa = eh.obtenerEmpresa(GLOBALES.IDEMPRESA);
-
-                dtTrabajadores = nh.trabajadoresNominaTabular(pn, int.Parse(cmbDeptoInicial.SelectedValue.ToString()),
-                    int.Parse(cmbDeptoFinal.SelectedValue.ToString()),
-                    int.Parse(cmbEmpleadoInicial.SelectedValue.ToString()),
-                    int.Parse(cmbEmpleadoFinal.SelectedValue.ToString()),
-                    tipoNomina, netocero, orden, periodo);
 
                 dtDatos = nh.obtenerNominaTabular(pn,
                     int.Parse(cmbDeptoInicial.SelectedValue.ToString()),
@@ -503,188 +483,134 @@ namespace Nominas
             excel.Cells[2, 6] = dtpInicioPeriodo.Value.ToShortDateString();
             excel.Cells[2, 7] = dtpFinPeriodo.Value.ToShortDateString();
 
-            //COLUMNAS DE NO DE EMPLEADO Y NOMBRE
-            excel.Cells[5, 1] = "NO. EMPLEADO";
-            excel.Cells[5, 2] = "NOMBRE";
-            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[5, 1];
-            rng.Interior.ColorIndex = 36;
-            rng.Font.ColorIndex = 1;
-            rng.Font.Bold = true;
-
-            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[5, 2];
-            rng.Interior.ColorIndex = 36;
-            rng.Font.ColorIndex = 1;
-            rng.Font.Bold = true;
-
-
-            //COLUMNAS DE PERCEPCIONES
-            int iCol = 3;
-            int colTotalPercepciones = 0;
-            for (int i = 0; i < dtConceptosP.Rows.Count; i++)
+            //COLOCACION DE COLUMNAS
+            int iCol = 1;
+            int columnasTotales = 0;
+            int colTotalPercepciones = 0, colTotalDeducciones = 0, colTotal = 0, colSubsidio = 0;
+            for (int i = 0; i < dtDatos.Columns.Count; i++)
             {
-                excel.Cells[5, iCol] = dtConceptosP.Rows[i]["concepto"].ToString();
+                excel.Cells[5, iCol] = dtDatos.Columns[i].ColumnName;
                 rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[5, iCol];
                 rng.Interior.ColorIndex = 36;
-                rng.Font.ColorIndex = 1;
                 rng.Font.Bold = true;
+                switch (dtDatos.Columns[i].ColumnName)
+                {
+                    case "TOTAL PERCEPCIONES":
+                        colTotalPercepciones = iCol;
+                        rng.Font.ColorIndex = 32;
+                        break;
+                    case "TOTAL DEDUCCIONES":
+                        colTotalDeducciones = iCol;
+                        rng.Font.ColorIndex = 32;
+                        break;
+                    case "TOTAL":
+                        colTotal = iCol;
+                        rng.Font.ColorIndex = 32;
+                        break;
+                    default:
+                        if (dtDatos.Columns[i].ColumnName == "SUBSIDIO AL EMPLEO")
+                            colSubsidio = iCol;
+                        rng.Font.ColorIndex = 1;
+                        break;
+                }
                 iCol++;
             }
 
-            //COLUMNA DE TOTAL DE PERCEPCIONES
-            colTotalPercepciones = iCol;
-            excel.Cells[5, colTotalPercepciones] = "TOTAL PERCEPCIONES";
-            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[5, colTotalPercepciones];
-            rng.Interior.ColorIndex = 36;
-            rng.Font.ColorIndex = 32;
-            rng.Font.Bold = true;
+            columnasTotales = iCol;
 
-            //COLUMNAS DE DEDUCCIONES
-            iCol++;
-            int colTotalDeducciones = iCol;
-            for (int i = 0; i < dtConceptosD.Rows.Count; i++)
-            {
-                excel.Cells[5, iCol] = dtConceptosD.Rows[i]["concepto"].ToString();
-                rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[5, iCol];
-                rng.Interior.ColorIndex = 36;
-                rng.Font.ColorIndex = 1;
-                rng.Font.Bold = true;
-                iCol++;
-                colTotalDeducciones++;
-            }
-
-            //COLUMNA DE TOTAL DE DEDUCCIONES
-            iCol++;
-            int colTotalNeto = iCol;
-            excel.Cells[5, colTotalDeducciones] = "TOTAL DEDUCCIONES";
-            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[5, colTotalDeducciones];
-            rng.Interior.ColorIndex = 36;
-            rng.Font.ColorIndex = 32;
-            rng.Font.Bold = true;
-
-            //COLUMNA TOTAL NETO
-            excel.Cells[5, colTotalNeto] = "TOTAL NETO";
-            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[5, colTotalNeto];
-            rng.Interior.ColorIndex = 36;
-            rng.Font.ColorIndex = 32;
-            rng.Font.Bold = true;
-
-            //SE COLOCAN LOS DATOs DEL TRABAJADOR
-            int contadorDt = dtTrabajadores.Rows.Count;
+            //COLOCACION DE LOS DATOS
+            int contadorDt = dtDatos.Rows.Count;
             int contador = 0;
             int progreso = 0;
             int iFil = 6;
-            for (int i = 0; i < dtTrabajadores.Rows.Count; i++)
+            iCol = 1;
+            for (int i = 0; i < dtDatos.Rows.Count; i++)
             {
                 progreso = (contador * 100) / contadorDt;
                 toolPorcentaje.Text = progreso.ToString() + "%";
-                toolEtapa.Text = "Reporte a Excel: Colocando Trabajadores";
+                toolEtapa.Text = "Excel: Colocando datos.";
                 contador++;
 
-                excel.Cells[iFil, 1] = dtTrabajadores.Rows[i]["NO. EMPLEADO"].ToString();
-                excel.Cells[iFil, 2] = dtTrabajadores.Rows[i]["NOMBRE"].ToString();
-                iFil++;
+                if (i != dtDatos.Rows.Count - 1)
+                {
+                    for (int j = 0; j < dtDatos.Columns.Count; j++)
+                    {
+                        excel.Cells[iFil, iCol] = dtDatos.Rows[i][j];
+                        iCol++;
+                    }
+                    iFil++;
+                }
+                else
+                {
+                    for (int j = 0; j < dtDatos.Columns.Count; j++)
+                    {
+                        excel.Cells[iFil, iCol] = dtDatos.Rows[i][j];
+                        iCol++;
+                    }
+                }
+                iCol = 1;
             }
+            iFil++;
 
             //FORMULA DE PERCEPCIONES
+            contadorDt = iFil;
+            contador = 0;
+            progreso = 0;
             string columna1, columna2, columna3;
             for (int i = 6; i < iFil; i++)
             {
                 columna1 = "C";
                 columna2 = GLOBALES.COLUMNAS_EXCEL(colTotalPercepciones - 1);
                 rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, colTotalPercepciones];
-                rng.NumberFormat = "#,##0.00";
                 rng.Formula = string.Format("=SUM({0}:{1})", columna1 + i.ToString(), columna2 + i.ToString());
-                rng.Calculate();
+
+                progreso = (contador * 100) / contadorDt;
+                toolPorcentaje.Text = progreso.ToString() + "%";
+                toolEtapa.Text = "Excel: Formula Percepciones.";
+                contador++;
             }
 
             //FORMULA DE DEDUCCIONES
-            var colSubsidio = "";
-            int colSub = 3;
-            for (int i = 3; i < iCol; i++)
-            {
-                colSubsidio = (excel.Cells[5, i] as Microsoft.Office.Interop.Excel.Range).Value;
-                if (colSubsidio == "SUBSIDIO AL EMPLEO")
-                {
-                    colSub = i;
-                    break;
-                }
-            }
             columna1 = GLOBALES.COLUMNAS_EXCEL(colTotalPercepciones + 1);
-            columna3 = GLOBALES.COLUMNAS_EXCEL(colSub);
+            columna3 = GLOBALES.COLUMNAS_EXCEL(colSubsidio);
+            contador = 0;
+            progreso = 0;
             for (int i = 6; i < iFil; i++)
             {
+                progreso = (contador * 100) / contadorDt;
+                toolPorcentaje.Text = progreso.ToString() + "%";
+                toolEtapa.Text = "Excel: Formula Deducciones.";
+                contador++;
+
                 columna2 = GLOBALES.COLUMNAS_EXCEL(colTotalDeducciones - 1);
                 rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, colTotalDeducciones];
-                rng.NumberFormat = "#,##0.00";
-                rng.Formula = string.Format("=SUM({0}:{1}) - {2}", columna1 + i.ToString(), columna2 + i.ToString(), columna3 + i.ToString());
-                rng.Calculate();
+                if (colSubsidio != 0)
+                    rng.Formula = string.Format("=SUM({0}:{1}) - {2}", columna1 + i.ToString(), columna2 + i.ToString(), columna3 + i.ToString());
+                else
+                    rng.Formula = string.Format("=SUM({0}:{1})", columna1 + i.ToString(), columna2 + i.ToString());
             }
 
             //FORMULA TOTAL NETO
             columna1 = GLOBALES.COLUMNAS_EXCEL(colTotalPercepciones);
             columna2 = GLOBALES.COLUMNAS_EXCEL(colTotalDeducciones);
-            for (int i = 6; i < iFil; i++)
-            {
-                rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, colTotalNeto];
-                rng.NumberFormat = "#,##0.00";
-                rng.Formula = string.Format("={0}+{1}-{2}", columna1 + i.ToString(), columna3 + i.ToString(), columna2 + i.ToString());
-                rng.Calculate();
-            }
-
-            //SE COLOCAN LOS DATOS DE LAS CANTIDADES
-            contadorDt = dtDatos.Rows.Count;
             contador = 0;
             progreso = 0;
-            iFil = 6;
-            double valorCelda = 0;
-            int noEmpleadoCelda = 0;
-            var conceptoColumna = "";
-            int noEmpleadoDt = 0;
-            for (int i = 0; i < dtDatos.Rows.Count; i++)
+            for (int i = 6; i < iFil; i++)
             {
                 progreso = (contador * 100) / contadorDt;
                 toolPorcentaje.Text = progreso.ToString() + "%";
-                toolEtapa.Text = "Reporte a Excel: Colocando Datos";
+                toolEtapa.Text = "Excel: Formula Totales.";
                 contador++;
 
-                valorCelda = (excel.Cells[iFil, 1] as Microsoft.Office.Interop.Excel.Range).Value;
-                noEmpleadoDt = int.Parse(dtDatos.Rows[i]["NO. EMPLEADO"].ToString());
-                noEmpleadoCelda = Convert.ToInt32(valorCelda);
-                if (noEmpleadoCelda == noEmpleadoDt)
-                {
-                    for (int j = 3; j < iCol; j++)
-                    {
-                        conceptoColumna = (excel.Cells[5, j] as Microsoft.Office.Interop.Excel.Range).Value;
-                        if (conceptoColumna == dtDatos.Rows[i]["CONCEPTO"].ToString())
-                        {
-                            excel.Cells[iFil, j] = dtDatos.Rows[i]["CANTIDAD"].ToString();
-                            rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil, j];
-                            rng.NumberFormat = "#,##0.00";
-                        }
-                    }
-                }
+                rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, colTotal];
+                if (colSubsidio != 0)
+                    rng.Formula = string.Format("={0}+{1}-{2}", columna1 + i.ToString(), columna3 + i.ToString(), columna2 + i.ToString());
                 else
-                {
-                    iFil++;
-                    i--;
-                    contador--;
-                }
+                    rng.Formula = string.Format("={0}-{1}", columna1 + i.ToString(), columna2 + i.ToString());
             }
 
-            for (int i = 6; i < iFil; i++)
-            {
-                for (int j = 3; j < iCol; j++)
-                {
-                    if ((excel.Cells[i, j] as Microsoft.Office.Interop.Excel.Range).Value == null)
-                    {
-                        excel.Cells[i, j] = "0";
-                        rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[i, j];
-                        rng.NumberFormat = "#,##0.00";
-                    }
-                }
-            }
-
-            for (int i = 3; i < iCol + 1; i++)
+            //FORMULAS TOTALES POR COLUMNA
+            for (int i = 3; i < columnasTotales; i++)
             {
                 columna1 = GLOBALES.COLUMNAS_EXCEL(i);
                 rng = (Microsoft.Office.Interop.Excel.Range)excel.Cells[iFil + 2, i];
@@ -693,6 +619,7 @@ namespace Nominas
                 rng.Formula = string.Format("=SUM({0}:{1})", columna1 + (6).ToString(), columna1 + iFil.ToString());
             }
 
+            excel.Range["C6", GLOBALES.COLUMNAS_EXCEL(colTotal) + iFil.ToString()].NumberFormat = "#,##0.00";
             excel.Range["A1", "G3"].Font.Bold = true;
             excel.Range["B:AZ"].EntireColumn.AutoFit();
             excel.Range["A6"].Select();
@@ -1057,11 +984,11 @@ namespace Nominas
         {
             switch (cmbTipoNomina.Text)
             {
-                case "Normal":
+                case "Ordinaria":
                     tipoNomina = GLOBALES.NORMAL;
                     dtpFinPeriodo.Enabled = false;
                     break;
-                case "Extraordinaria normal":
+                case "Extraordinaria":
                     tipoNomina = GLOBALES.EXTRAORDINARIO_NORMAL;
                     dtpFinPeriodo.Enabled = true;
                     break;
