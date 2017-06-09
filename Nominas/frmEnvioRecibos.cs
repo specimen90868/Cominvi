@@ -34,39 +34,76 @@ namespace Nominas
         string idDepartamentos = "";
         string ruta = "";
         string correoEnvio, passwordEnvio, servidorEnvio;
-        int puertoEnvio, tipoNomina, periodo;
+        int puertoEnvio;
         bool usaSSL;
         string fecha = "";
         string fechafin = "";
         List<Empleados.Core.Empleados> lstEmp;
-        Boolean FLAG_COMBOBOX = false;
+        #endregion
+
+        #region VARIABLES PUBLICAS
+        public int _tiponomina;
+        public int _periodo;
         #endregion
 
         private void frmEnvioRecibos_Load(object sender, EventArgs e)
         {
-            cmbTipoNomina.SelectedIndex = 0;
-
             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();
             cmd.Connection = cnx;
 
-            Departamento.Core.DeptoHelper dh = new Departamento.Core.DeptoHelper();
-            dh.Command = cmd;
             Configuracion.Core.ConfiguracionHelper confh = new Configuracion.Core.ConfiguracionHelper();
             confh.Command = cmd;
+            
+            CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
+            nh.Command = cmd;
 
-            Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
-            ph.Command = cmd;
+            List<CalculoNomina.Core.tmpPagoNomina> lstPeriodos = new List<CalculoNomina.Core.tmpPagoNomina>();
+            lstvPeriodos.Items.Clear();
 
-            Periodos.Core.Periodos p = new Periodos.Core.Periodos();
-            p.idempresa = GLOBALES.IDEMPRESA;
+            switch (_tiponomina)
+            {
+                case 0:
+                    try
+                    {
+                        cnx.Open();
+                        lstPeriodos = nh.obtenerPeriodosNomina(GLOBALES.IDEMPRESA, _tiponomina, _periodo);
+                        cnx.Close();
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Error: Al obtener los periodos de la empresa.", "Error");
+                        cnx.Dispose();
+                        return;
+                    }
+                    break;
 
-            List<Periodos.Core.Periodos> lstPeriodos = new List<Periodos.Core.Periodos>();
+                case 2:
+                    try
+                    {
+                        cnx.Open();
+                        lstPeriodos = nh.obtenerPeriodosNomina(GLOBALES.IDEMPRESA, _tiponomina, _periodo);
+                        cnx.Close();
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Error: Al obtener los periodos de la empresa.", "Error");
+                        cnx.Dispose();
+                        return;
+                    }
+                    break;
+            }
+
+            for (int i = 0; i < lstPeriodos.Count; i++)
+            {
+                ListViewItem Lista;
+                Lista = lstvPeriodos.Items.Add(lstPeriodos[i].fechainicio.ToShortDateString());
+                Lista.SubItems.Add(lstPeriodos[i].fechafin.ToShortDateString());
+            }
 
             try
             {
                 cnx.Open();
-                lstPeriodos = ph.obtenerPeriodos(p);
                 correoEnvio = confh.obtenerValorConfiguracion("CorreoEnvio").ToString();
                 passwordEnvio = confh.obtenerValorConfiguracion("PasswordEnvio").ToString();
                 puertoEnvio = int.Parse(confh.obtenerValorConfiguracion("PuertoEnvio").ToString());
@@ -81,7 +118,7 @@ namespace Nominas
             }
             catch (Exception)
             {
-                MessageBox.Show("Error: Al obtener los periodos de la empresa.", "Error");
+                MessageBox.Show("Error: Al obtener la configuración de envío.", "Error");
                 cnx.Dispose();
                 return;
             }
@@ -98,18 +135,7 @@ namespace Nominas
             lstvDepartamentos.Columns.Add("Id", 60, HorizontalAlignment.Left);
             lstvDepartamentos.Columns.Add("Departamento", 150, HorizontalAlignment.Left);
 
-            cmbPeriodo.DataSource = lstPeriodos;
-            cmbPeriodo.DisplayMember = "pago";
-            cmbPeriodo.ValueMember = "idperiodo";
-
-            FLAG_COMBOBOX = true;     
-
             this.Visor.RefreshReport();
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            
         }
 
         private void lstvDepartamentos_ItemChecked(object sender, ItemCheckedEventArgs e)
@@ -145,7 +171,7 @@ namespace Nominas
                     try
                     {
                         cnx.Open();
-                        lstEmp = eh.obtenerEmpleadoPorDepto(GLOBALES.IDEMPRESA, idDepartamentos, DateTime.Parse(fecha).Date, (cmbTipoNomina.Text == "Normal" ? 0 : 2));
+                        lstEmp = eh.obtenerEmpleadoPorDepto(GLOBALES.IDEMPRESA, idDepartamentos, DateTime.Parse(fecha).Date, _tiponomina, true);
                         cnx.Close();
                     }
                     catch
@@ -188,12 +214,7 @@ namespace Nominas
                 fecha = lstvPeriodos.SelectedItems[i].Text;
                 fechafin = lstvPeriodos.SelectedItems[i].SubItems[1].Text;
             }
-                
-            if (cmbTipoNomina.Text == "Normal")
-                tipoNomina = GLOBALES.NORMAL;
-            else
-                tipoNomina = GLOBALES.EXTRAORDINARIO_NORMAL;
-
+            
             workerEnvio.RunWorkerAsync();
         }
 
@@ -229,7 +250,7 @@ namespace Nominas
                 try
                 {
                     cnx.Open();
-                    lstQR = nh.obtenerListaQr(GLOBALES.IDEMPRESA, DateTime.Parse(fecha).Date, DateTime.Parse(fechafin).Date, periodo);
+                    lstQR = nh.obtenerListaQr(GLOBALES.IDEMPRESA, DateTime.Parse(fecha).Date, DateTime.Parse(fechafin).Date, _periodo);
                     cnx.Close();
                 }
                 catch (Exception error)
@@ -303,14 +324,15 @@ namespace Nominas
                     {
                         dsReportes.NominaRecibosDataTable dtImpresionNomina = new dsReportes.NominaRecibosDataTable();
                         SqlDataAdapter daImpresionNomina = new SqlDataAdapter();
-                        cmd.CommandText = "exec stp_rptNominaImpresionTrabajador @idempresa, @fechainicio, @fechafin, @tiponomina, @idtrabajador, @periodo";
+                        cmd.CommandText = "exec stp_rptReciboCfdi @idempresa, @fechainicio, @fechafin, @empleados, @tiponomina, @todos, @periodo";
                         cmd.Parameters.Clear();
                         cmd.Parameters.AddWithValue("idempresa", GLOBALES.IDEMPRESA);
                         cmd.Parameters.AddWithValue("fechainicio", DateTime.Parse(fecha).Date);
                         cmd.Parameters.AddWithValue("fechafin", DateTime.Parse(fechafin).Date);
-                        cmd.Parameters.AddWithValue("tiponomina", tipoNomina);
-                        cmd.Parameters.AddWithValue("idtrabajador", int.Parse(dgvEmpleados.Rows[i].Cells["idtrabajador"].Value.ToString()));
-                        cmd.Parameters.AddWithValue("periodo", periodo);
+                        cmd.Parameters.AddWithValue("tiponomina", _tiponomina);
+                        cmd.Parameters.AddWithValue("todos", false);
+                        cmd.Parameters.AddWithValue("empleados", dgvEmpleados.Rows[i].Cells["idtrabajador"].Value.ToString());
+                        cmd.Parameters.AddWithValue("periodo", _periodo);
                         cmd.CommandTimeout = 300;
                         daImpresionNomina.SelectCommand = cmd;
                         daImpresionNomina.Fill(dtImpresionNomina);
@@ -389,32 +411,32 @@ namespace Nominas
                     MessageBox.Show("Error: Al crear el archivo comprimido.", "Error");
                 }
 
-                MailMessage email = new MailMessage();
-                SmtpClient smtp = new SmtpClient();
-                Attachment comprimido = new Attachment(ruta + "RecibosNomina_" + DateTime.Parse(fecha).ToString("yyyyMMdd") + "_" + GLOBALES.IDEMPRESA + ".zip");
-                email.IsBodyHtml = true;
-                email.From = new MailAddress(correoEnvio, "Recibos electrónicos de nómina");
-                email.To.Add(txtCorreoElectronico.Text);
-                email.Subject = "RecibosNomina_" + DateTime.Parse(fecha).ToString("yyyyMMdd");
-                email.Body = "Correo automatico enviado por el sistema de administración de nómina. \r\n \r\n No responder.";
-                email.Priority = MailPriority.Normal;
-                email.Attachments.Add(comprimido);
-                smtp.Host = servidorEnvio;
-                smtp.Port = puertoEnvio;
-                smtp.EnableSsl = usaSSL;
+                //MailMessage email = new MailMessage();
+                //SmtpClient smtp = new SmtpClient();
+                //Attachment comprimido = new Attachment(ruta + "RecibosNomina_" + DateTime.Parse(fecha).ToString("yyyyMMdd") + "_" + GLOBALES.IDEMPRESA + ".zip");
+                //email.IsBodyHtml = true;
+                //email.From = new MailAddress(correoEnvio, "Recibos electrónicos de nómina");
+                //email.To.Add(txtCorreoElectronico.Text);
+                //email.Subject = "RecibosNomina_" + DateTime.Parse(fecha).ToString("yyyyMMdd");
+                //email.Body = "Correo automatico enviado por el sistema de administración de nómina. \r\n \r\n No responder.";
+                //email.Priority = MailPriority.Normal;
+                //email.Attachments.Add(comprimido);
+                //smtp.Host = servidorEnvio;
+                //smtp.Port = puertoEnvio;
+                //smtp.EnableSsl = usaSSL;
 
-                smtp.Credentials = new NetworkCredential(correoEnvio, passwordEnvio);
-                try
-                {
-                    workerEnvio.ReportProgress(0, "Enviando recibos de nómina");
-                    smtp.Send(email);
-                    smtp.Dispose();
-                    comprimido.Dispose();
-                }
-                catch (Exception msg)
-                {
-                    MessageBox.Show("Error al enviar el correo: " + msg.Message, "Error");
-                }
+                //smtp.Credentials = new NetworkCredential(correoEnvio, passwordEnvio);
+                //try
+                //{
+                //    workerEnvio.ReportProgress(0, "Enviando recibos de nómina");
+                //    smtp.Send(email);
+                //    smtp.Dispose();
+                //    comprimido.Dispose();
+                //}
+                //catch (Exception msg)
+                //{
+                //    MessageBox.Show("Error al enviar el correo: " + msg.Message, "Error");
+                //}
             }
         }
 
@@ -430,8 +452,8 @@ namespace Nominas
         private void workerEnvio_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             lblEtapa.Text = "Terminado.";
-            Directory.Delete(ruta + DateTime.Parse(fecha).ToString("yyyyMMdd") + "_" + GLOBALES.IDEMPRESA + "\\", true);
-            File.Delete(ruta + "RecibosNomina_" + DateTime.Parse(fecha).ToString("yyyyMMdd") + "_" + GLOBALES.IDEMPRESA +".zip");
+            //Directory.Delete(ruta + DateTime.Parse(fecha).ToString("yyyyMMdd") + "_" + GLOBALES.IDEMPRESA + "\\", true);
+            //File.Delete(ruta + "RecibosNomina_" + DateTime.Parse(fecha).ToString("yyyyMMdd") + "_" + GLOBALES.IDEMPRESA +".zip");
             MessageBox.Show("Mensaje enviado.", "Confirmación");
         }
 
@@ -460,7 +482,7 @@ namespace Nominas
             try
             {
                 cnx.Open();
-                lstDeptos = dh.obtenerDepartamentos(GLOBALES.IDEMPRESA, DateTime.Parse(fecha), (cmbTipoNomina.Text == "Normal" ? 0 : 2));
+                lstDeptos = dh.obtenerDepartamentos(GLOBALES.IDEMPRESA, DateTime.Parse(fecha), _tiponomina, true);
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -493,79 +515,5 @@ namespace Nominas
             }
         }
 
-        private void cmbPeriodo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            cnx = new SqlConnection(cdn);
-            cmd = new SqlCommand();
-            cmd.Connection = cnx;
-
-            CalculoNomina.Core.NominaHelper nh = new CalculoNomina.Core.NominaHelper();
-            nh.Command = cmd;
-
-            Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
-            ph.Command = cmd;
-
-            Periodos.Core.Periodos p = new Periodos.Core.Periodos();
-            if (!FLAG_COMBOBOX)
-            {
-                Periodos.Core.Periodos a = (Periodos.Core.Periodos)cmbPeriodo.SelectedValue;
-                p.idperiodo = a.idperiodo;
-            }
-            else
-                p.idperiodo = int.Parse(cmbPeriodo.SelectedValue.ToString());
-
-            List<CalculoNomina.Core.tmpPagoNomina> lstPeriodos = new List<CalculoNomina.Core.tmpPagoNomina>();
-            lstvPeriodos.Items.Clear();
-
-            try
-            {
-                cnx.Open();
-                periodo = int.Parse(ph.DiasDePago(p).ToString());
-                cnx.Close();
-            }
-            catch (Exception error) { MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error"); }
-
-            switch (cmbTipoNomina.Text)
-            {
-                case "Normal":
-                    try
-                    {
-                        cnx.Open();
-                        lstPeriodos = nh.obtenerPeriodosNomina(GLOBALES.IDEMPRESA, GLOBALES.NORMAL, periodo);
-                        cnx.Close();
-                        cnx.Dispose();
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("Error: Al obtener los periodos de la empresa.", "Error");
-                        cnx.Dispose();
-                        return;
-                    }
-                    break;
-
-                case "Extraordinaria normal":
-                    try
-                    {
-                        cnx.Open();
-                        lstPeriodos = nh.obtenerPeriodosNomina(GLOBALES.IDEMPRESA, GLOBALES.EXTRAORDINARIO_NORMAL, periodo);
-                        cnx.Close();
-                        cnx.Dispose();
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("Error: Al obtener los periodos de la empresa.", "Error");
-                        cnx.Dispose();
-                        return;
-                    }
-                    break;
-            }
-
-            for (int i = 0; i < lstPeriodos.Count; i++)
-            {
-                ListViewItem Lista;
-                Lista = lstvPeriodos.Items.Add(lstPeriodos[i].fechainicio.ToShortDateString());
-                Lista.SubItems.Add(lstPeriodos[i].fechafin.ToShortDateString());
-            }
-        }
     }
 }

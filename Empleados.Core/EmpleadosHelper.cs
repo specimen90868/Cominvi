@@ -699,15 +699,20 @@ namespace Empleados.Core
             return dato;
         }
 
-        public List<Empleados> obtenerEmpleadoPorDepto(int idEmpresa, string idDepartamentos, DateTime inicio, int tiponomina)
+        public List<Empleados> obtenerEmpleadoPorDepto(int idEmpresa, string idDepartamentos, DateTime inicio, int tiponomina, bool timbrado)
         {
             DataTable dtEmpleados = new DataTable();
             List<Empleados> lstEmpleados = new List<Empleados>();
-            Command.CommandText = @"select t.idtrabajador, t.noempleado, t.nombrecompleto from trabajadores t
-                inner join pagonomina pn on t.idtrabajador = pn.idtrabajador where
-                pn.iddepartamento in (select * from fnListaCadenaATabla(@deptos)) and fechainicio = @fecha and
-                t.idempresa = @idempresa and tiponomina = @tiponomina
-                group by t.idtrabajador, t.noempleado, t.nombrecompleto";
+            if (timbrado)
+                Command.CommandText = @"select cm.idtrabajador, cm.noempleado, cm.nombre as nombrecompleto from cfdimaster cm 
+                                    where cm.iddepartamento in (select * from fnListaCadenaATabla(@deptos)) and cm.periodoinicio = @fecha and
+                                    cm.idempresa = @idempresa and cm.tiponomina = @tiponomina
+                                    group by cm.idtrabajador, cm.noempleado, cm.nombre";
+            else
+                Command.CommandText = @"select pn.idtrabajador, t.noempleado, t.nombrecompleto from pagonomina pn inner join trabajadores t on pn.idtrabajador = t.idtrabajador
+                                    where pn.iddepartamento in (select * from fnListaCadenaATabla(@deptos)) and pn.fechainicio = @fecha and
+                                    pn.idempresa = @idempresa and pn.tiponomina = @tiponomina
+                                    group by pn.idtrabajador, t.noempleado, t.nombrecompleto";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idEmpresa);
             Command.Parameters.AddWithValue("deptos", idDepartamentos);
@@ -735,453 +740,28 @@ namespace Empleados.Core
             return dato;
         }
 
-    }
-
-    public class RFC
-    {
-        public string ObtieneRFC(string _paterno, string _materno, string _nombre)
+        public List<Empleados> obtenerRFC_CURP()
         {
-            string rfc = "";
-            string paterno = PalabrasNoUtilizadas(_paterno.TrimStart().TrimEnd()).TrimEnd();
-            string materno = PalabrasNoUtilizadas(_materno.TrimStart().TrimEnd()).TrimEnd();
-            string nombre = PalabrasNoUtilizadas(_nombre.TrimStart().TrimEnd()).TrimEnd();
-            nombre = PalabrasComunes(nombre);
-
-            int cuentaPaterno = 0, cuentaMaterno = 0;
-            cuentaPaterno = paterno.Length;
-            cuentaMaterno = materno.Length;
-
-            if (cuentaPaterno == 0)
+            Command.CommandText = @"select idtrabajador, nombres, paterno, materno, rfc, curp, fechanacimiento from trabajadores where idtrabajador in
+                                    (select idtrabajador from xmlCabecera where idempresa = 2 and periodoinicio = '2017-03-20'
+                                    and periodofin = '2017-03-26' and emitido = 'N')";
+            Command.Parameters.Clear();
+            DataTable dt = new DataTable();
+            dt = SelectData(Command);
+            List<Empleados> lstEmpleados = new List<Empleados>();
+            for (int i = 0; i < dt.Rows.Count; i++)
             {
-                materno = materno.Substring(0, 2);
-                nombre = nombre.Substring(0, 2);
-                rfc = materno + nombre;
+                Empleados empleado = new Empleados();
+                empleado.idtrabajador = int.Parse(dt.Rows[i]["idtrabajador"].ToString());
+                empleado.nombres = dt.Rows[i]["nombres"].ToString();
+                empleado.paterno = dt.Rows[i]["paterno"].ToString();
+                empleado.materno = dt.Rows[i]["materno"].ToString();
+                empleado.rfc = dt.Rows[i]["rfc"].ToString();
+                empleado.curp = dt.Rows[i]["curp"].ToString();
+                empleado.fechanacimiento = DateTime.Parse(dt.Rows[i]["fechanacimiento"].ToString());
+                lstEmpleados.Add(empleado);
             }
-            if (cuentaMaterno == 0)
-            {
-                paterno = paterno.Substring(0, 2);
-                nombre = nombre.Substring(0, 2);
-                rfc = paterno + nombre;
-            }
-
-            if (cuentaPaterno == 1 || cuentaPaterno == 2)
-            {
-                paterno = paterno.Substring(0, 1);
-                materno = materno.Substring(0, 1);
-                nombre = nombre.Substring(0, 2);
-                rfc = paterno + materno + nombre;
-            }
-
-            if (cuentaPaterno > 2 && cuentaMaterno > 2)
-            {
-                bool esVocal = false;
-                string primerLetraPaterno = paterno.Substring(0, 1);
-                string primerVocal = "";
-                string primerLetraMaterno = materno.Substring(0, 1);
-                string primerLetraNombre = nombre.Substring(0, 1);
-                char[] letras = paterno.ToCharArray();
-                for (int i = 1; i < letras.Length; i++)
-                {
-                    esVocal = EsVocal(letras[i]);
-                    if (esVocal)
-                    {
-                        primerVocal = letras[i].ToString();
-                        break;
-                    }
-                }
-                rfc = primerLetraPaterno + primerVocal + primerLetraMaterno + primerLetraNombre;
-                rfc = PalabrasInconvenientes(rfc);
-            }
-
-            return rfc;
-        }
-
-        public string PalabrasNoUtilizadas(string valor)
-        {
-            string[] valores = valor.Split(' ');
-            string _valor = "";
-            for (int i = 0; i < valores.Length; i++)
-            {
-                switch (valores[i])
-                {
-                    case "DE": valores[i] = valores[i].Replace("DE", ""); break;
-                    case "LA": valores[i] = valores[i].Replace("LA", ""); break;
-                    case "LAS": valores[i] = valores[i].Replace("LAS", ""); break;
-                    case "MC": valores[i] = valores[i].Replace("MC", ""); break;
-                    case "VON": valores[i] = valores[i].Replace("VON", ""); break;
-                    case "DEL": valores[i] = valores[i].Replace("DEL", ""); break;
-                    case "LOS": valores[i] = valores[i].Replace("LOS", ""); break;
-                    case "Y": valores[i] = valores[i].Replace("Y", ""); break;
-                    case "MAC": valores[i] = valores[i].Replace("MAC", ""); break;
-                    case "VAN": valores[i] = valores[i].Replace("VAN", ""); break;
-                    case "MI": valores[i] = valores[i].Replace("MI", ""); break;
-                }
-            }
-
-            for (int i = 0; i < valores.Length; i++)
-            {
-                if (valores[i] != "")
-                    _valor += valores[i] + " ";
-            }
-            return _valor;
-        }
-
-        public string PalabrasComunes(string valor)
-        {
-            string[] valores = valor.Split(' ');
-            string _valor = "";
-
-            if (valores.Length == 1)
-            {
-                _valor = valor;
-            }
-
-            if (valores.Length == 2)
-            {
-                bool flag1 = false, flag2 = false;
-                if (valores[0] == "MARIA" || valores[0] == "JOSE" || valores[0] == "MARÍA" || valores[0] == "JOSÉ")
-                    flag1 = true;
-                if (valores[1] == "MARIA" || valores[1] == "JOSE" || valores[1] == "MARÍA" || valores[1] == "JOSÉ")
-                    flag2 = true;
-                if (flag1 && flag2)
-                    _valor = valores[1];
-                else
-                {
-                    for (int i = 0; i < valores.Length; i++)
-                    {
-                        switch (valores[i])
-                        {
-                            case "MARIA": valores[i] = valores[i].Replace("MARIA", ""); break;
-                            case "MARÍA": valores[i] = valores[i].Replace("MARÍA", ""); break;
-                            case "JOSE": valores[i] = valores[i].Replace("JOSE", ""); ; break;
-                            case "JOSÉ": valores[i] = valores[i].Replace("JOSÉ", ""); break;
-                            case "J": valores[i] = valores[i].Replace("J", ""); break;
-                            case "J.": valores[i] = valores[i].Replace("J.", ""); break;
-                            case "MA": valores[i] = valores[i].Replace("J.", ""); break;
-                            case "MA.": valores[i] = valores[i].Replace("J.", ""); break;
-                        }
-                    }
-                    for (int i = 0; i < valores.Length; i++)
-                    {
-                        if (valores[i] != "")
-                            _valor += valores[i] + " ";
-                    }
-                }
-            }
-
-            if (valores.Length > 2)
-            {
-                for (int i = 0; i < valores.Length; i++)
-                {
-                    switch (valores[i])
-                    {
-                        case "MARIA": valores[i] = valores[i].Replace("MARIA", ""); break;
-                        case "MARÍA": valores[i] = valores[i].Replace("MARÍA", ""); break;
-                        case "JOSE": valores[i] = valores[i].Replace("JOSE", ""); ; break;
-                        case "JOSÉ": valores[i] = valores[i].Replace("JOSÉ", ""); break;
-                        case "J": valores[i] = valores[i].Replace("J", ""); break;
-                        case "J.": valores[i] = valores[i].Replace("J.", ""); break;
-                        case "MA": valores[i] = valores[i].Replace("J.", ""); break;
-                        case "MA.": valores[i] = valores[i].Replace("J.", ""); break;
-                    }
-                }
-                for (int i = 0; i < valores.Length; i++)
-                {
-                    if (valores[i] != "")
-                        _valor += valores[i] + " ";
-                }
-            }
-            return _valor;
-        }
-
-        public bool EsVocal(char c)
-        {
-            bool vocal = false;
-            switch (c)
-            {
-                case 'a': vocal = true; break;
-                case 'e': vocal = true; break;
-                case 'i': vocal = true; break;
-                case 'o': vocal = true; break;
-                case 'u': vocal = true; break;
-
-                case 'A': vocal = true; break;
-                case 'E': vocal = true; break;
-                case 'I': vocal = true; break;
-                case 'O': vocal = true; break;
-                case 'U': vocal = true; break;
-
-                case 'Á': vocal = true; break;
-                case 'É': vocal = true; break;
-                case 'Í': vocal = true; break;
-                case 'Ó': vocal = true; break;
-                case 'Ú': vocal = true; break;
-                default:
-                    vocal = false; break;
-            }
-            return vocal;
-        }
-
-        public string PalabrasInconvenientes(string rfc)
-        {
-            switch (rfc)
-            {
-                case "BUEI": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "BUEY": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "CACA": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "CACO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "CAGA": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "CAGO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "CAKA": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "CAKO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "COGE": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "COJA": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "COJE": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "COJI": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "COJO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "CULO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "FETO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "GUEY": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "JOTO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "KACA": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "KACO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "KAGA": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "KAGO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "KOGE": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "KOJO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "KAKA": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "KULO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "MAME": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "MAMO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "MEAR": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "MEAS": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "MEON": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "MION": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "MOCO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "MULA": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "PEDA": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "PEDO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "PENE": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "PUTA": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "PUTO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "PITO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "QULO": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "RATA": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-                case "RUIN": rfc = rfc.Replace(rfc.Substring(rfc.Length - 1, 1), "X"); break;
-            }
-            return rfc;
-        }
-
-        public string ClaveHomonimia(string _paterno, string _materno, string _nombre)
-        {
-            string paterno = _paterno.TrimStart().TrimEnd();
-            string materno = _materno.TrimStart().TrimEnd();
-            string nombre = _nombre.TrimStart().TrimEnd();
-            string nombreCompleto = "";
-
-            int cuentaPaterno = 0, cuentaMaterno = 0;
-            cuentaPaterno = paterno.Length;
-            cuentaMaterno = materno.Length;
-
-            if (cuentaPaterno == 0)
-                nombreCompleto = materno + " " + nombre;
-
-            if (cuentaMaterno == 0)
-                nombreCompleto = paterno + " " + nombre;
-
-            if (cuentaPaterno != 0 && cuentaMaterno != 0)
-                nombreCompleto = paterno + " " + materno + " " + nombre;
-
-            char[] valoresLetras = nombreCompleto.ToCharArray();
-            string[] valores = new string[nombreCompleto.Length];
-            for (int i = 0; i < valoresLetras.Length; i++)
-            {
-                switch (valoresLetras[i])
-                {
-                    case ' ': valores[i] = "00"; break;
-                    case '0': valores[i] = "00"; break;
-                    case '1': valores[i] = "01"; break;
-                    case '2': valores[i] = "02"; break;
-                    case '3': valores[i] = "03"; break;
-                    case '4': valores[i] = "04"; break;
-                    case '5': valores[i] = "05"; break;
-                    case '6': valores[i] = "06"; break;
-                    case '7': valores[i] = "07"; break;
-                    case '8': valores[i] = "08"; break;
-                    case '9': valores[i] = "09"; break;
-                    case '&': valores[i] = "10"; break;
-                    case 'A': valores[i] = "11"; break;
-                    case 'B': valores[i] = "12"; break;
-                    case 'C': valores[i] = "13"; break;
-                    case 'D': valores[i] = "14"; break;
-                    case 'E': valores[i] = "15"; break;
-                    case 'F': valores[i] = "16"; break;
-                    case 'G': valores[i] = "17"; break;
-                    case 'H': valores[i] = "18"; break;
-                    case 'I': valores[i] = "19"; break;
-                    case 'J': valores[i] = "21"; break;
-                    case 'K': valores[i] = "22"; break;
-                    case 'L': valores[i] = "23"; break;
-                    case 'M': valores[i] = "24"; break;
-                    case 'N': valores[i] = "25"; break;
-                    case 'O': valores[i] = "26"; break;
-                    case 'P': valores[i] = "27"; break;
-                    case 'Q': valores[i] = "28"; break;
-                    case 'R': valores[i] = "29"; break;
-                    case 'S': valores[i] = "32"; break;
-                    case 'T': valores[i] = "33"; break;
-                    case 'U': valores[i] = "34"; break;
-                    case 'V': valores[i] = "35"; break;
-                    case 'W': valores[i] = "36"; break;
-                    case 'X': valores[i] = "37"; break;
-                    case 'Y': valores[i] = "38"; break;
-                    case 'Z': valores[i] = "39"; break;
-                    case 'Ñ': valores[i] = "40"; break;
-                }
-            }
-            string numeros = "0";
-            for (int i = 0; i < valores.Length; i++)
-            {
-                numeros += valores[i];
-            }
-
-            double suma = 0;
-            char[] numeros2 = numeros.ToCharArray();
-            for (int i = 0; i < numeros2.Length; i++)
-            {
-                if (i <= (numeros2.Length - 2))
-                    suma += double.Parse(numeros2[i].ToString() + "" + numeros2[i + 1].ToString()) * double.Parse(numeros2[i + 1].ToString());
-            }
-
-            suma = double.Parse(suma.ToString().Substring(suma.ToString().Length - 3, 3));
-            int cociente = (int)Math.Truncate(suma / 34);
-            int residuo = (int)(suma % 34);
-
-            string clave = TablaHomonimio(cociente) + TablaHomonimio(residuo);
-            return clave;
-        }
-
-        public string DigitoVerificador(string rfc12posiciones)
-        {
-            char[] valoresLetras = rfc12posiciones.ToCharArray();
-            string[] valores = new string[rfc12posiciones.Length];
-            for (int i = 0; i < valoresLetras.Length; i++)
-            {
-                switch (valoresLetras[i])
-                {
-                    case '0': valores[i] = "00"; break;
-                    case '1': valores[i] = "01"; break;
-                    case '2': valores[i] = "02"; break;
-                    case '3': valores[i] = "03"; break;
-                    case '4': valores[i] = "04"; break;
-                    case '5': valores[i] = "05"; break;
-                    case '6': valores[i] = "06"; break;
-                    case '7': valores[i] = "07"; break;
-                    case '8': valores[i] = "08"; break;
-                    case '9': valores[i] = "09"; break;
-                    case 'A': valores[i] = "10"; break;
-                    case 'B': valores[i] = "11"; break;
-                    case 'C': valores[i] = "12"; break;
-                    case 'D': valores[i] = "13"; break;
-                    case 'E': valores[i] = "14"; break;
-                    case 'F': valores[i] = "15"; break;
-                    case 'G': valores[i] = "16"; break;
-                    case 'H': valores[i] = "17"; break;
-                    case 'I': valores[i] = "18"; break;
-                    case 'J': valores[i] = "19"; break;
-                    case 'K': valores[i] = "20"; break;
-                    case 'L': valores[i] = "21"; break;
-                    case 'M': valores[i] = "22"; break;
-                    case 'N': valores[i] = "23"; break;
-                    case '&': valores[i] = "24"; break;
-                    case 'O': valores[i] = "25"; break;
-                    case 'P': valores[i] = "26"; break;
-                    case 'Q': valores[i] = "27"; break;
-                    case 'R': valores[i] = "28"; break;
-                    case 'S': valores[i] = "29"; break;
-                    case 'T': valores[i] = "30"; break;
-                    case 'U': valores[i] = "31"; break;
-                    case 'V': valores[i] = "32"; break;
-                    case 'W': valores[i] = "33"; break;
-                    case 'X': valores[i] = "34"; break;
-                    case 'Y': valores[i] = "35"; break;
-                    case 'Z': valores[i] = "36"; break;
-                    case ' ': valores[i] = "37"; break;
-                    case 'Ñ': valores[i] = "38"; break;
-                    default: valores[i] = "00"; break;
-                }
-            }
-            double suma = 0;
-            double posicion = 12;
-            for (int i = 0; i < valores.Length; i++)
-            {
-                suma += double.Parse(valores[i].ToString()) * (posicion + 1);
-                posicion--;
-            }
-
-            int residuo = (int)(suma % 11);
-                string dv = "";
-
-            if (residuo == 0)
-                dv = "0";
-
-            if (residuo > 10)
-                dv = "0";
-            
-            if (residuo < 10 && residuo > 0)
-            {
-                dv = (11 - residuo).ToString();
-                if (dv == "10")
-                    dv = "A";
-            }
-               
-            if (residuo == 10)
-                dv = "A";
-
-            return dv;
-        }
-
-        private string TablaHomonimio(int valor)
-        {
-            string homo = "";
-            switch (valor)
-            {
-                case 0: homo = "1"; break;
-                case 1: homo = "2"; break;
-                case 2: homo = "3"; break;
-                case 3: homo = "4"; break;
-                case 4: homo = "5"; break;
-                case 5: homo = "6"; break;
-                case 6: homo = "7"; break;
-                case 7: homo = "8"; break;
-                case 8: homo = "9"; break;
-                case 9: homo = "A"; break;
-                case 10: homo = "B"; break;
-                case 11: homo = "C"; break;
-                case 12: homo = "D"; break;
-                case 13: homo = "E"; break;
-                case 14: homo = "F"; break;
-                case 15: homo = "G"; break;
-                case 16: homo = "H"; break;
-                case 17: homo = "I"; break;
-                case 18: homo = "J"; break;
-                case 19: homo = "K"; break;
-                case 20: homo = "L"; break;
-                case 21: homo = "M"; break;
-                case 22: homo = "N"; break;
-                case 23: homo = "P"; break;
-                case 24: homo = "Q"; break;
-                case 25: homo = "R"; break;
-                case 26: homo = "S"; break;
-                case 27: homo = "T"; break;
-                case 28: homo = "U"; break;
-                case 29: homo = "V"; break;
-                case 30: homo = "W"; break;
-                case 31: homo = "X"; break;
-                case 32: homo = "Y"; break;
-                case 33: homo = "Z"; break;
-            }
-            return homo;
+            return lstEmpleados;
         }
 
     }

@@ -71,11 +71,8 @@
             this.label9 = new System.Windows.Forms.Label();
             this.cmbDepartamento = new System.Windows.Forms.ComboBox();
             this.cmbPuesto = new System.Windows.Forms.ComboBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.dtpFechaAntiguedad = new System.Windows.Forms.DateTimePicker();
             this.lblEstado = new System.Windows.Forms.Label();
             this.cmbEstado = new System.Windows.Forms.ComboBox();
-            this.txtAntiguedadMod = new System.Windows.Forms.TextBox();
             this.rbtnHombre = new System.Windows.Forms.RadioButton();
             this.rbtnMujer = new System.Windows.Forms.RadioButton();
             this.label12 = new System.Windows.Forms.Label();
@@ -84,8 +81,6 @@
             this.btnAsignar = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
             this.txtAntiguedad = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.cmbZona = new System.Windows.Forms.ComboBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
@@ -415,7 +410,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(13, 272);
+            this.label5.Location = new System.Drawing.Point(13, 246);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(109, 13);
             this.label5.TabIndex = 214;
@@ -424,7 +419,7 @@
             // dtpFechaNacimiento
             // 
             this.dtpFechaNacimiento.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFechaNacimiento.Location = new System.Drawing.Point(127, 269);
+            this.dtpFechaNacimiento.Location = new System.Drawing.Point(127, 243);
             this.dtpFechaNacimiento.Name = "dtpFechaNacimiento";
             this.dtpFechaNacimiento.Size = new System.Drawing.Size(152, 20);
             this.dtpFechaNacimiento.TabIndex = 7;
@@ -433,7 +428,7 @@
             // txtEdad
             // 
             this.txtEdad.Enabled = false;
-            this.txtEdad.Location = new System.Drawing.Point(284, 269);
+            this.txtEdad.Location = new System.Drawing.Point(284, 243);
             this.txtEdad.Name = "txtEdad";
             this.txtEdad.Size = new System.Drawing.Size(30, 20);
             this.txtEdad.TabIndex = 19;
@@ -481,30 +476,10 @@
             this.cmbPuesto.Size = new System.Drawing.Size(151, 21);
             this.cmbPuesto.TabIndex = 17;
             // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(10, 246);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(111, 13);
-            this.label10.TabIndex = 222;
-            this.label10.Text = "Fecha de antiguedad:";
-            // 
-            // dtpFechaAntiguedad
-            // 
-            this.dtpFechaAntiguedad.Enabled = false;
-            this.dtpFechaAntiguedad.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFechaAntiguedad.Location = new System.Drawing.Point(127, 243);
-            this.dtpFechaAntiguedad.Name = "dtpFechaAntiguedad";
-            this.dtpFechaAntiguedad.Size = new System.Drawing.Size(151, 20);
-            this.dtpFechaAntiguedad.TabIndex = 6;
-            this.dtpFechaAntiguedad.ValueChanged += new System.EventHandler(this.dtpFechaAntiguedad_ValueChanged);
-            this.dtpFechaAntiguedad.Leave += new System.EventHandler(this.dtpFechaAntiguedad_Leave);
-            // 
             // lblEstado
             // 
             this.lblEstado.AutoSize = true;
-            this.lblEstado.Location = new System.Drawing.Point(78, 323);
+            this.lblEstado.Location = new System.Drawing.Point(78, 297);
             this.lblEstado.Name = "lblEstado";
             this.lblEstado.Size = new System.Drawing.Size(43, 13);
             this.lblEstado.TabIndex = 224;
@@ -515,24 +490,15 @@
             this.cmbEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbEstado.FormattingEnabled = true;
             this.cmbEstado.ItemHeight = 13;
-            this.cmbEstado.Location = new System.Drawing.Point(127, 320);
+            this.cmbEstado.Location = new System.Drawing.Point(127, 294);
             this.cmbEstado.Name = "cmbEstado";
             this.cmbEstado.Size = new System.Drawing.Size(151, 21);
             this.cmbEstado.TabIndex = 9;
             // 
-            // txtAntiguedadMod
-            // 
-            this.txtAntiguedadMod.Enabled = false;
-            this.txtAntiguedadMod.Location = new System.Drawing.Point(284, 243);
-            this.txtAntiguedadMod.Name = "txtAntiguedadMod";
-            this.txtAntiguedadMod.Size = new System.Drawing.Size(30, 20);
-            this.txtAntiguedadMod.TabIndex = 226;
-            this.txtAntiguedadMod.Text = "0";
-            // 
             // rbtnHombre
             // 
             this.rbtnHombre.AutoSize = true;
-            this.rbtnHombre.Location = new System.Drawing.Point(128, 347);
+            this.rbtnHombre.Location = new System.Drawing.Point(128, 321);
             this.rbtnHombre.Name = "rbtnHombre";
             this.rbtnHombre.Size = new System.Drawing.Size(62, 17);
             this.rbtnHombre.TabIndex = 10;
@@ -543,7 +509,7 @@
             // rbtnMujer
             // 
             this.rbtnMujer.AutoSize = true;
-            this.rbtnMujer.Location = new System.Drawing.Point(206, 347);
+            this.rbtnMujer.Location = new System.Drawing.Point(206, 321);
             this.rbtnMujer.Name = "rbtnMujer";
             this.rbtnMujer.Size = new System.Drawing.Size(51, 17);
             this.rbtnMujer.TabIndex = 11;
@@ -554,7 +520,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(86, 349);
+            this.label12.Location = new System.Drawing.Point(86, 323);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(34, 13);
             this.label12.TabIndex = 230;
@@ -574,7 +540,7 @@
             // 
             this.btnVer.Image = ((System.Drawing.Image)(resources.GetObject("btnVer.Image")));
             this.btnVer.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnVer.Location = new System.Drawing.Point(415, 301);
+            this.btnVer.Location = new System.Drawing.Point(415, 273);
             this.btnVer.Name = "btnVer";
             this.btnVer.Size = new System.Drawing.Size(67, 35);
             this.btnVer.TabIndex = 21;
@@ -587,7 +553,7 @@
             // 
             this.btnAsignar.Image = ((System.Drawing.Image)(resources.GetObject("btnAsignar.Image")));
             this.btnAsignar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAsignar.Location = new System.Drawing.Point(499, 301);
+            this.btnAsignar.Location = new System.Drawing.Point(499, 273);
             this.btnAsignar.Name = "btnAsignar";
             this.btnAsignar.Size = new System.Drawing.Size(67, 35);
             this.btnAsignar.TabIndex = 22;
@@ -599,7 +565,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(378, 312);
+            this.label13.Location = new System.Drawing.Point(378, 284);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(31, 13);
             this.label13.TabIndex = 234;
@@ -612,24 +578,6 @@
             this.txtAntiguedad.Name = "txtAntiguedad";
             this.txtAntiguedad.Size = new System.Drawing.Size(30, 20);
             this.txtAntiguedad.TabIndex = 235;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(374, 275);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(35, 13);
-            this.label14.TabIndex = 236;
-            this.label14.Text = "Zona:";
-            // 
-            // cmbZona
-            // 
-            this.cmbZona.Enabled = false;
-            this.cmbZona.FormattingEnabled = true;
-            this.cmbZona.Location = new System.Drawing.Point(415, 272);
-            this.cmbZona.Name = "cmbZona";
-            this.cmbZona.Size = new System.Drawing.Size(151, 21);
-            this.cmbZona.TabIndex = 19;
             // 
             // label15
             // 
@@ -720,7 +668,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(42, 297);
+            this.label4.Location = new System.Drawing.Point(42, 271);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(78, 13);
             this.label4.TabIndex = 252;
@@ -730,7 +678,7 @@
             // 
             this.dtpFechaBaja.Enabled = false;
             this.dtpFechaBaja.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFechaBaja.Location = new System.Drawing.Point(128, 295);
+            this.dtpFechaBaja.Location = new System.Drawing.Point(128, 269);
             this.dtpFechaBaja.Name = "dtpFechaBaja";
             this.dtpFechaBaja.Size = new System.Drawing.Size(151, 20);
             this.dtpFechaBaja.TabIndex = 8;
@@ -751,8 +699,6 @@
             this.Controls.Add(this.label18);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.label15);
-            this.Controls.Add(this.cmbZona);
-            this.Controls.Add(this.label14);
             this.Controls.Add(this.txtAntiguedad);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.btnAsignar);
@@ -761,11 +707,8 @@
             this.Controls.Add(this.rbtnMujer);
             this.Controls.Add(this.rbtnHombre);
             this.Controls.Add(this.label12);
-            this.Controls.Add(this.txtAntiguedadMod);
             this.Controls.Add(this.cmbEstado);
             this.Controls.Add(this.lblEstado);
-            this.Controls.Add(this.dtpFechaAntiguedad);
-            this.Controls.Add(this.label10);
             this.Controls.Add(this.cmbPuesto);
             this.Controls.Add(this.cmbDepartamento);
             this.Controls.Add(this.label9);
@@ -858,11 +801,8 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ComboBox cmbDepartamento;
         private System.Windows.Forms.ComboBox cmbPuesto;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.DateTimePicker dtpFechaAntiguedad;
         private System.Windows.Forms.Label lblEstado;
         private System.Windows.Forms.ComboBox cmbEstado;
-        private System.Windows.Forms.TextBox txtAntiguedadMod;
         private System.Windows.Forms.RadioButton rbtnHombre;
         private System.Windows.Forms.RadioButton rbtnMujer;
         private System.Windows.Forms.Label label12;
@@ -872,8 +812,6 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TextBox txtAntiguedad;
         private System.Windows.Forms.ToolStripButton toolHistorial;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.ComboBox cmbZona;
         internal System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;

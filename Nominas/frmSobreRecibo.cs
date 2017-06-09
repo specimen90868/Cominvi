@@ -258,8 +258,8 @@ namespace Nominas
                     *****************************************************************/
                 cnx.Open();
                 nh.eliminaNominaTrabajador(idTrabajador, _inicioPeriodo, _finPeriodo, _tipoNormalEspecial);
-                lstConceptosPercepciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "P", idTrabajador, _inicioPeriodo, _finPeriodo, _periodo);
-                lstConceptosDeducciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "D", idTrabajador, _inicioPeriodo, _finPeriodo, _periodo);
+                lstConceptosPercepciones = nh.conceptosNominaTrabajadorPercepciones(GLOBALES.IDEMPRESA, idTrabajador, _inicioPeriodo, _finPeriodo, _periodo);
+                lstConceptosDeducciones = nh.conceptosNominaTrabajadorDeducciones(GLOBALES.IDEMPRESA, idTrabajador, _inicioPeriodo, _finPeriodo, _periodo);
                 cnx.Close();
                 /**************************TERMINA*********************************/
             }
@@ -977,19 +977,19 @@ namespace Nominas
             pnp.idtrabajador = idTrabajador;
             pnp.fechainicio = _inicioPeriodo.Date;
             pnp.fechafin = _finPeriodo.Date;
-            pnp.tipoconcepto = "P";
+            
 
             CalculoNomina.Core.tmpPagoNomina pnd = new CalculoNomina.Core.tmpPagoNomina();
             pnd.idtrabajador = idTrabajador;
             pnd.fechainicio = _inicioPeriodo.Date;
             pnd.fechafin = _finPeriodo.Date;
-            pnd.tipoconcepto = "D";
+            
             
             try
             {
                 cnx.Open();
-                lstReciboPercepciones = nh.obtenerDatosRecibo(pnp, _periodo);
-                lstReciboDeducciones = nh.obtenerDatosRecibo(pnd, _periodo);
+                lstReciboPercepciones = nh.obtenerDatosReciboPercepciones(pnp, _periodo);
+                lstReciboDeducciones = nh.obtenerDatosReciboDeducciones(pnd, _periodo);
                 cnx.Close();
                 
             }

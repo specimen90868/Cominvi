@@ -36,12 +36,12 @@
             this.toolConsultar = new System.Windows.Forms.ToolStripButton();
             this.toolEditar = new System.Windows.Forms.ToolStripButton();
             this.toolBaja = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolAsignaciones = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.dgvConceptos = new System.Windows.Forms.DataGridView();
             this.cmbPeriodos = new System.Windows.Forms.ComboBox();
-            this.toolAsignaciones = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolTitulo.SuspendLayout();
             this.toolBusqueda.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConceptos)).BeginInit();
@@ -71,10 +71,10 @@
             this.toolNuevo,
             this.toolConsultar,
             this.toolEditar,
-            this.toolBaja,
             this.toolStripSeparator2,
             this.toolAsignaciones,
             this.toolStripSeparator1,
+            this.toolBaja,
             this.toolStripLabel1});
             this.toolBusqueda.Location = new System.Drawing.Point(0, 27);
             this.toolBusqueda.Name = "toolBusqueda";
@@ -118,6 +118,21 @@
             this.toolBaja.Text = "Eliminar";
             this.toolBaja.Click += new System.EventHandler(this.toolBaja_Click);
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolAsignaciones
+            // 
+            this.toolAsignaciones.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolAsignaciones.Image = ((System.Drawing.Image)(resources.GetObject("toolAsignaciones.Image")));
+            this.toolAsignaciones.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolAsignaciones.Name = "toolAsignaciones";
+            this.toolAsignaciones.Size = new System.Drawing.Size(81, 22);
+            this.toolAsignaciones.Text = "Asignaciones";
+            this.toolAsignaciones.Click += new System.EventHandler(this.toolAsignaciones_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
@@ -150,21 +165,6 @@
             this.cmbPeriodos.Size = new System.Drawing.Size(121, 21);
             this.cmbPeriodos.TabIndex = 11;
             this.cmbPeriodos.SelectedIndexChanged += new System.EventHandler(this.cmbPeriodos_SelectedIndexChanged);
-            // 
-            // toolAsignaciones
-            // 
-            this.toolAsignaciones.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolAsignaciones.Image = ((System.Drawing.Image)(resources.GetObject("toolAsignaciones.Image")));
-            this.toolAsignaciones.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolAsignaciones.Name = "toolAsignaciones";
-            this.toolAsignaciones.Size = new System.Drawing.Size(81, 22);
-            this.toolAsignaciones.Text = "Asignaciones";
-            this.toolAsignaciones.Click += new System.EventHandler(this.toolAsignaciones_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // frmListaConceptos
             // 

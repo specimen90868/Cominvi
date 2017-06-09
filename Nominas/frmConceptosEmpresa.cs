@@ -98,6 +98,7 @@ namespace Nominas
 
             var a = from concepto in lstConceptos
                     join cempresa in lstConceptosEmpresa on concepto.id equals cempresa.idconcepto
+                    orderby concepto.noconcepto ascending
                     select new
                     {
                         concepto.id,

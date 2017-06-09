@@ -1966,9 +1966,10 @@
                       <Filters>
                         <Filter>
                           <FilterExpression>=Fields!cfdiTipoConcepto.Value</FilterExpression>
-                          <Operator>Equal</Operator>
+                          <Operator>In</Operator>
                           <FilterValues>
                             <FilterValue>D</FilterValue>
+                            <FilterValue>S</FilterValue>
                           </FilterValues>
                         </Filter>
                         <Filter>
@@ -5697,9 +5698,10 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                       <Filters>
                         <Filter>
                           <FilterExpression>=Fields!cfdiTipoConcepto.Value</FilterExpression>
-                          <Operator>Equal</Operator>
+                          <Operator>In</Operator>
                           <FilterValues>
                             <FilterValue>D</FilterValue>
+                            <FilterValue>S</FilterValue>
                           </FilterValues>
                         </Filter>
                         <Filter>
@@ -5717,6 +5719,7 @@ conforme con las percepciones y deducciones que en él aparecen especificados.</
                       </Style>
                     </Tablix>
                     <ColSpan>2</ColSpan>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell />

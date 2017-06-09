@@ -405,6 +405,8 @@ namespace Conceptos.Core
             Command.Parameters.AddWithValue("idempresa", ce.idempresa);
             Command.Parameters.AddWithValue("periodo", ce.periodo);
             Command.Parameters.AddWithValue("idconcepto", ce.idconcepto);
+            Command.Parameters.AddWithValue("noconcepto", ce.noconcepto);
+            Command.Parameters.AddWithValue("asignacion", ce.asignacion);
             return Command.ExecuteNonQuery();
         }
 

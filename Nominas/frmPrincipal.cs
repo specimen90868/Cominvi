@@ -169,10 +169,10 @@ namespace Nominas
                         toolNominaNormal.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "Impresión de recibos":
-                        toolImpresionRecibos.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        toolRecibosNomina.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "Envio de recibos":
-                        toolEnvioRecibos.Enabled = Convert.ToBoolean(lstMenu[i].accion);
+                        //toolEnvioRecibos.Enabled = Convert.ToBoolean(lstMenu[i].accion);
                         break;
                     case "Reportes":
                         toolReportes.Enabled = Convert.ToBoolean(lstMenu[i].accion);
@@ -553,6 +553,7 @@ namespace Nominas
         {
             frmSeleccionPeriodo sp = new frmSeleccionPeriodo();
             sp._TipoNomina = GLOBALES.NORMAL;
+            sp._Ventana = 0; //NOMINAS
             sp.MdiParent = this;
             sp.StartPosition = FormStartPosition.CenterScreen;
             sp.Show();
@@ -560,10 +561,9 @@ namespace Nominas
 
         private void toolReportes_Click(object sender, EventArgs e)
         {
-            frmReportes r = new frmReportes();
-            r.MdiParent = this;
-            r._ReportePreNomina = false;
-            r.Show();
+            
+
+            
         }
 
         private void toolIncapacidades_Click(object sender, EventArgs e)
@@ -584,6 +584,7 @@ namespace Nominas
         {
             frmSeleccionPeriodo sp = new frmSeleccionPeriodo();
             sp._TipoNomina = GLOBALES.EXTRAORDINARIO_NORMAL;
+            sp._Ventana = 0; //NOMINAS
             sp.MdiParent = this;
             sp.Show();
         }
@@ -634,18 +635,6 @@ namespace Nominas
             lbs.Show();
         }
 
-        private void toolImpresionRecibos_Click(object sender, EventArgs e)
-        {
-            frmImpresionRecibos ir = new frmImpresionRecibos();
-            ir.Show();
-        }
-
-        private void toolEnvioRecibos_Click(object sender, EventArgs e)
-        {
-            frmEnvioRecibos er = new frmEnvioRecibos();
-            er.Show();
-        }
-
         private void frmPrincipal_KeyDown(object sender, KeyEventArgs e)
         {
             if (!FLAG_SESIONACTIVA)
@@ -671,6 +660,66 @@ namespace Nominas
             le.MdiParent = this;
             le.WindowState = FormWindowState.Maximized;
             le.Show();
+        }
+
+        private void toolPeriodoOrdinario_Click(object sender, EventArgs e)
+        {
+            frmSeleccionPeriodo sp = new frmSeleccionPeriodo();
+            sp._TipoNomina = GLOBALES.NORMAL;
+            sp._Ventana = 1; //CFDI
+            sp.MdiParent = this;
+            sp.StartPosition = FormStartPosition.CenterScreen;
+            sp.Show();
+        }
+
+        private void toolPeriodoExtraOrdinario_Click(object sender, EventArgs e)
+        {
+            frmSeleccionPeriodo sp = new frmSeleccionPeriodo();
+            sp._TipoNomina = GLOBALES.EXTRAORDINARIO_NORMAL;
+            sp._Ventana = 1; //CFDI
+            sp.MdiParent = this;
+            sp.StartPosition = FormStartPosition.CenterScreen;
+            sp.Show();
+        }
+
+        private void toolEnvioCorreo_Click(object sender, EventArgs e)
+        {
+            frmSeleccionPeriodo sp = new frmSeleccionPeriodo();
+            sp._TipoNomina = GLOBALES.NORMAL;
+            sp._Ventana = 2; //CFDI
+            sp.MdiParent = this;
+            sp.StartPosition = FormStartPosition.CenterScreen;
+            sp.Show();
+        }
+
+        private void toolEnvioCorreoExtraordinario_Click(object sender, EventArgs e)
+        {
+            frmSeleccionPeriodo sp = new frmSeleccionPeriodo();
+            sp._TipoNomina = GLOBALES.EXTRAORDINARIO_NORMAL;
+            sp._Ventana = 2; //CFDI
+            sp.MdiParent = this;
+            sp.StartPosition = FormStartPosition.CenterScreen;
+            sp.Show();
+        }
+
+        private void toolReporteOrdinario_Click(object sender, EventArgs e)
+        {
+            frmSeleccionPeriodo sp = new frmSeleccionPeriodo();
+            sp._TipoNomina = GLOBALES.NORMAL;
+            sp._Ventana = 3; //REPORTES
+            sp.MdiParent = this;
+            sp.StartPosition = FormStartPosition.CenterScreen;
+            sp.Show();
+        }
+
+        private void toolReporteExtraordinario_Click(object sender, EventArgs e)
+        {
+            frmSeleccionPeriodo sp = new frmSeleccionPeriodo();
+            sp._TipoNomina = GLOBALES.EXTRAORDINARIO_NORMAL;
+            sp._Ventana = 3; //REPORTES
+            sp.MdiParent = this;
+            sp.StartPosition = FormStartPosition.CenterScreen;
+            sp.Show();
         }
     }
 }

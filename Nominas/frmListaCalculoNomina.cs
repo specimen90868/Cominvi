@@ -843,9 +843,9 @@ namespace Nominas
             int existeConcepto = 0;
             total = dgvEmpleados.Rows.Count;
 
-            StreamWriter swLog = new StreamWriter(@"C:\Temp\LogHealthTrabajador" + DateTime.Now.Year.ToString() + "_" + DateTime.Now.Month.ToString() + "_" +
-                        DateTime.Now.Day.ToString() + "_" + DateTime.Now.Minute.ToString() + ".txt", true);
-            swLog.WriteLine(String.Format("Calculo de Nómina: Del {0} al {1}", periodoInicio.ToShortDateString(), periodoFin.ToShortDateString()));
+            //StreamWriter swLog = new StreamWriter(@"C:\Temp\LogHealthTrabajador" + DateTime.Now.Year.ToString() + "_" + DateTime.Now.Month.ToString() + "_" +
+            //            DateTime.Now.Day.ToString() + "_" + DateTime.Now.Minute.ToString() + ".txt", true);
+            //swLog.WriteLine(String.Format("Calculo de Nómina: Del {0} al {1}", periodoInicio.ToShortDateString(), periodoFin.ToShortDateString()));
 
             foreach (DataGridViewRow fila in dgvEmpleados.Rows)
             {
@@ -855,14 +855,14 @@ namespace Nominas
                     estatus = int.Parse(eh.obtenerEstatus(int.Parse(fila.Cells["idtrabajador"].Value.ToString())).ToString());
                     cnx.Close();
 
-                    swLog.WriteLine(String.Format("Empleado: {0}, Estatus: {1}", fila.Cells["idtrabajador"].Value.ToString(), estatus.ToString()));
+                    //swLog.WriteLine(String.Format("Empleado: {0}, Estatus: {1}", fila.Cells["idtrabajador"].Value.ToString(), estatus.ToString()));
 
                     if (estatus == 0)
                     {
                         cnx.Open();
                         nh.eliminaPreNomina(int.Parse(fila.Cells["idtrabajador"].Value.ToString()));
                         cnx.Close();
-                        swLog.WriteLine(String.Format("Empleado: {0}, Se elimina Prenomina", fila.Cells["idtrabajador"].Value.ToString()));
+                        //swLog.WriteLine(String.Format("Empleado: {0}, Se elimina Prenomina", fila.Cells["idtrabajador"].Value.ToString()));
                         continue;
                     }
                     else
@@ -870,26 +870,26 @@ namespace Nominas
                         cnx.Open();
                         existeAltaReingreso = ah.existeAlta(GLOBALES.IDEMPRESA, int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicioPosterior, periodoFinPosterior);
                         cnx.Close();
-                        swLog.WriteLine(String.Format("Empleado: {0}, Existencia de Alta: {1}, Fecha Inicio: {2}, Fecha Fin: {3} ", fila.Cells["idtrabajador"].Value.ToString(), existeAltaReingreso, periodoInicioPosterior.ToShortDateString(), periodoFinPosterior.ToShortDateString()));
+                        //swLog.WriteLine(String.Format("Empleado: {0}, Existencia de Alta: {1}, Fecha Inicio: {2}, Fecha Fin: {3} ", fila.Cells["idtrabajador"].Value.ToString(), existeAltaReingreso, periodoInicioPosterior.ToShortDateString(), periodoFinPosterior.ToShortDateString()));
                         if (existeAltaReingreso != 0)
                         {
                             cnx.Open();
                             nh.eliminaPreNomina(int.Parse(fila.Cells["idtrabajador"].Value.ToString()));
                             cnx.Close();
-                            swLog.WriteLine(String.Format("Empleado: {0}, Se elimina Prenomina", fila.Cells["idtrabajador"].Value.ToString()));
+                            //swLog.WriteLine(String.Format("Empleado: {0}, Se elimina Prenomina", fila.Cells["idtrabajador"].Value.ToString()));
                             continue;
                         }
 
                         cnx.Open();
                         existeAltaReingreso = rh.existeReingreso(GLOBALES.IDEMPRESA, int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicioPosterior, periodoFinPosterior);
                         cnx.Close();
-                        swLog.WriteLine(String.Format("Empleado: {0}, Existencia de Reingreso: {1}, Fecha Inicio: {2}, Fecha Fin: {3} ", fila.Cells["idtrabajador"].Value.ToString(), existeAltaReingreso, periodoInicioPosterior.ToShortDateString(), periodoFinPosterior.ToShortDateString()));
+                        //swLog.WriteLine(String.Format("Empleado: {0}, Existencia de Reingreso: {1}, Fecha Inicio: {2}, Fecha Fin: {3} ", fila.Cells["idtrabajador"].Value.ToString(), existeAltaReingreso, periodoInicioPosterior.ToShortDateString(), periodoFinPosterior.ToShortDateString()));
                         if (existeAltaReingreso != 0)
                         {
                             cnx.Open();
                             nh.eliminaPreNomina(int.Parse(fila.Cells["idtrabajador"].Value.ToString()));
                             cnx.Close();
-                            swLog.WriteLine(String.Format("Empleado: {0}, Se elimina Prenomina", fila.Cells["idtrabajador"].Value.ToString()));
+                            //swLog.WriteLine(String.Format("Empleado: {0}, Se elimina Prenomina", fila.Cells["idtrabajador"].Value.ToString()));
                             continue;
                         }
                         
@@ -917,8 +917,8 @@ namespace Nominas
                 {
                     cnx.Open();
                     nh.eliminaNominaTrabajador(int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicio.Date, periodoFin.Date, _tipoNomina);
-                    lstConceptosPercepciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "P", int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicio.Date, periodoFin.Date, _periodo);
-                    lstConceptosDeducciones = nh.conceptosNominaTrabajador(GLOBALES.IDEMPRESA, "D", int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicio.Date, periodoFin.Date, _periodo);
+                    lstConceptosPercepciones = nh.conceptosNominaTrabajadorPercepciones(GLOBALES.IDEMPRESA, int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicio.Date, periodoFin.Date, _periodo);
+                    lstConceptosDeducciones = nh.conceptosNominaTrabajadorDeducciones(GLOBALES.IDEMPRESA, int.Parse(fila.Cells["idtrabajador"].Value.ToString()), periodoInicio.Date, periodoFin.Date, _periodo);
                     cnx.Close();
                 }
                 catch (Exception error)
@@ -1306,7 +1306,7 @@ namespace Nominas
                 }
                 #endregion
             }
-            swLog.Close();
+            //swLog.Close();
 
             #region PERIODO
             calculoNoPeriodo();
@@ -1728,26 +1728,24 @@ namespace Nominas
 
         private void empleadosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmReportes r = new frmReportes();
-            r.OnReporte += r_OnReporte;
-            r._inicio = periodoInicio.Date;
-            r._fin = periodoFin.Date;
-            r._ReportePreNomina = true;
-            r._noReporte = 1;
-            r._tipoNomina = _tipoNomina;
-            r.Show();
+            frmVisorReportes vr = new frmVisorReportes();
+            vr._noReporte = 1;
+            vr._periodo = _periodo;
+            vr._tipoNomina = _tipoNomina;
+            vr._inicioPeriodo = periodoInicio.Date;
+            vr._finPeriodo = periodoFin.Date;
+            vr.Show();
         }
 
         private void toolReporteDepto_Click(object sender, EventArgs e)
         {
-            frmReportes r = new frmReportes();
-            r.OnReporte += r_OnReporte;
-            r._inicio = periodoInicio.Date;
-            r._fin = periodoFin.Date;
-            r._ReportePreNomina = true;
-            r._noReporte = 2;
-            r._tipoNomina = _tipoNomina;
-            r.Show();
+            frmVisorReportes vr = new frmVisorReportes();
+            vr._inicioPeriodo = periodoInicio.Date;
+            vr._finPeriodo = periodoFin.Date;
+            vr._noReporte = 2;
+            vr._tipoNomina = _tipoNomina;
+            vr._periodo = _periodo;
+            vr.Show();
         }
 
         private void dgvFaltas_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -2095,42 +2093,9 @@ namespace Nominas
 
         private void toolTabular_Click(object sender, EventArgs e)
         {
-            frmReportes r = new frmReportes();
-            r.OnReporte += r_OnReporte;
-            r._inicio = periodoInicio.Date;
-            r._fin = periodoFin.Date;
-            r._noReporte = 6;
-            r._ReportePreNomina = true;
-            r._tipoNomina = _tipoNomina;
-            r.Show();
-        }
-
-        void r_OnReporte(string netocero, string orden, int noreporte, int empleadoinicial, int empleadofinal)
-        {
-            NetoCero = "";
-            Orden = "";
-            NetoCero = netocero;
-            Orden = orden;
-
-            if (noreporte == 6)
-                workExcel.RunWorkerAsync();
-            else if (noreporte == 11)
-                workerGravadosExentos.RunWorkerAsync();
-            else {
-                frmVisorReportes vr = new frmVisorReportes();
-                vr._noReporte = noreporte;
-                vr._inicioPeriodo = periodoInicio.Date;
-                vr._finPeriodo = periodoFin.Date;
-                vr._orden = orden;
-                vr._netoCero = netocero;
-                vr._noReporte = noreporte;
-                vr._tipoNomina = _tipoNomina;
-                vr._empleadoInicio = empleadoinicial;
-                vr._empleadoFin = empleadofinal;
-                vr._periodo = _periodo;
-                vr.Show();
-            }
-  
+            NetoCero = " ";
+            Orden = " t.noempleado ";
+            workExcel.RunWorkerAsync();
         }
 
         private void workExcel_DoWork(object sender, DoWorkEventArgs e)
@@ -2703,14 +2668,13 @@ namespace Nominas
 
         private void toolReciboNomina_Click(object sender, EventArgs e)
         {
-            frmReportes r = new frmReportes();
-            r.OnReporte += r_OnReporte;
-            r._inicio = periodoInicio.Date;
-            r._fin = periodoFin.Date;
-            r._ReportePreNomina = true;
-            r._noReporte = 9;
-            r._tipoNomina = _tipoNomina;
-            r.Show();
+            frmVisorReportes vr = new frmVisorReportes();
+            vr._inicioPeriodo = periodoInicio.Date;
+            vr._finPeriodo = periodoFin.Date;
+            vr._noReporte = 9;
+            vr._tipoNomina = _tipoNomina;
+            vr._periodo = _periodo;
+            vr.Show();
         }
 
         private void toolGuardar_Click(object sender, EventArgs e)
@@ -2720,14 +2684,7 @@ namespace Nominas
 
         private void toolGravadosExentos_Click(object sender, EventArgs e)
         {
-            frmReportes r = new frmReportes();
-            r.OnReporte += r_OnReporte;
-            r._inicio = periodoInicio.Date;
-            r._fin = periodoFin.Date;
-            r._noReporte = 11;
-            r._ReportePreNomina = true;
-            r._tipoNomina = _tipoNomina;
-            r.Show();
+            workerGravadosExentos.RunWorkerAsync();
         }
 
         private void workerGravadosExentos_DoWork(object sender, DoWorkEventArgs e)

@@ -345,24 +345,6 @@ namespace Nominas
                 Empleados.Core.Empleados emp = new Empleados.Core.Empleados();
                 emp.idtrabajador = _idempleado;
 
-                Empleados.Core.EmpleadosEstatus ee = new Empleados.Core.EmpleadosEstatus();
-                ee.idtrabajador = _idempleado;
-                ee.idempresa = GLOBALES.IDEMPRESA;
-                ee.estatus = GLOBALES.INACTIVO;
-
-                Historial.Core.HistorialHelper hp = new Historial.Core.HistorialHelper();
-                hp.Command = cmd;
-
-                Historial.Core.Historial h = new Historial.Core.Historial();
-                h.idtrabajador = _idempleado;
-                h.tipomovimiento = GLOBALES.mBAJA;
-                h.fecha_imss = dtpFechaBaja.Value;
-                h.fecha_sistema = DateTime.Now;
-                h.idempresa = GLOBALES.IDEMPRESA;
-                h.motivobaja = int.Parse(cmbMotivoBaja.SelectedValue.ToString());
-                h.iddepartamento = 0;
-                h.idpuesto = 0;
-
                 //Ausentismo.Core.AusentismoHelper ah = new Ausentismo.Core.AusentismoHelper();
                 //ah.Command = cmd;
 
@@ -521,11 +503,7 @@ namespace Nominas
                 try
                 {
                     cnx.Open();
-                    h.valor = (decimal)eh.obtenerSalarioDiarioIntegrado(emp);
-                    hp.insertarHistorial(h);
-                    //ACTUALIZA TABLA trabajadoresestatus
-                    eh.bajaEmpleado(ee);
-
+                    
                     baja.registropatronal = (string)ep.obtenerRegistroPatronal(empresa);
                     baja.nss = (string)eh.obtenerNss(emp);
                     bh.insertaBaja(baja);

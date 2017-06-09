@@ -67,8 +67,11 @@
             this.toolNominaNormal = new System.Windows.Forms.ToolStripMenuItem();
             this.toolExtraordinario = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolImpresionRecibos = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolEnvioRecibos = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolRecibosNomina = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolPeriodoOrdinario = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolPeriodoExtraOrdinario = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolEnvioCorreoOrdinario = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolEnvioCorreoExtraordinario = new System.Windows.Forms.ToolStripMenuItem();
             this.toolReportes = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuCatalogos = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuDepartamentos = new System.Windows.Forms.ToolStripMenuItem();
@@ -96,6 +99,8 @@
             this.toolEstatusPerfil = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolPorcentaje = new System.Windows.Forms.ToolStripStatusLabel();
             this.workAntiguedad = new System.ComponentModel.BackgroundWorker();
+            this.toolReporteOrdinario = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolReporteExtraordinario = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPrincipal.SuspendLayout();
             this.stsPrincipal.SuspendLayout();
             this.SuspendLayout();
@@ -370,8 +375,7 @@
             this.mnuNominas.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolCalculoNomina,
             this.toolStripSeparator9,
-            this.toolImpresionRecibos,
-            this.toolEnvioRecibos,
+            this.toolRecibosNomina,
             this.toolReportes});
             this.mnuNominas.Name = "mnuNominas";
             this.mnuNominas.Size = new System.Drawing.Size(67, 20);
@@ -383,7 +387,7 @@
             this.toolNominaNormal,
             this.toolExtraordinario});
             this.toolCalculoNomina.Name = "toolCalculoNomina";
-            this.toolCalculoNomina.Size = new System.Drawing.Size(184, 22);
+            this.toolCalculoNomina.Size = new System.Drawing.Size(175, 22);
             this.toolCalculoNomina.Text = "Cálculo de nómina";
             // 
             // toolNominaNormal
@@ -397,32 +401,60 @@
             // 
             this.toolExtraordinario.Name = "toolExtraordinario";
             this.toolExtraordinario.Size = new System.Drawing.Size(152, 22);
-            this.toolExtraordinario.Text = "Extraordinario";
+            this.toolExtraordinario.Text = "Extraordinaria";
             this.toolExtraordinario.Click += new System.EventHandler(this.toolExtraordinario_Click);
             // 
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(181, 6);
+            this.toolStripSeparator9.Size = new System.Drawing.Size(172, 6);
             // 
-            // toolImpresionRecibos
+            // toolRecibosNomina
             // 
-            this.toolImpresionRecibos.Name = "toolImpresionRecibos";
-            this.toolImpresionRecibos.Size = new System.Drawing.Size(184, 22);
-            this.toolImpresionRecibos.Text = "Impresión de recibos";
-            this.toolImpresionRecibos.Click += new System.EventHandler(this.toolImpresionRecibos_Click);
+            this.toolRecibosNomina.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolPeriodoOrdinario,
+            this.toolPeriodoExtraOrdinario,
+            this.toolEnvioCorreoOrdinario,
+            this.toolEnvioCorreoExtraordinario});
+            this.toolRecibosNomina.Name = "toolRecibosNomina";
+            this.toolRecibosNomina.Size = new System.Drawing.Size(175, 22);
+            this.toolRecibosNomina.Text = "Recibos de nómina";
             // 
-            // toolEnvioRecibos
+            // toolPeriodoOrdinario
             // 
-            this.toolEnvioRecibos.Name = "toolEnvioRecibos";
-            this.toolEnvioRecibos.Size = new System.Drawing.Size(184, 22);
-            this.toolEnvioRecibos.Text = "Envio de recibos";
-            this.toolEnvioRecibos.Click += new System.EventHandler(this.toolEnvioRecibos_Click);
+            this.toolPeriodoOrdinario.Name = "toolPeriodoOrdinario";
+            this.toolPeriodoOrdinario.Size = new System.Drawing.Size(245, 22);
+            this.toolPeriodoOrdinario.Text = "Periodo ordinario";
+            this.toolPeriodoOrdinario.Click += new System.EventHandler(this.toolPeriodoOrdinario_Click);
+            // 
+            // toolPeriodoExtraOrdinario
+            // 
+            this.toolPeriodoExtraOrdinario.Name = "toolPeriodoExtraOrdinario";
+            this.toolPeriodoExtraOrdinario.Size = new System.Drawing.Size(245, 22);
+            this.toolPeriodoExtraOrdinario.Text = "Periodo extraordinario";
+            this.toolPeriodoExtraOrdinario.Click += new System.EventHandler(this.toolPeriodoExtraOrdinario_Click);
+            // 
+            // toolEnvioCorreoOrdinario
+            // 
+            this.toolEnvioCorreoOrdinario.Name = "toolEnvioCorreoOrdinario";
+            this.toolEnvioCorreoOrdinario.Size = new System.Drawing.Size(245, 22);
+            this.toolEnvioCorreoOrdinario.Text = "Envio por E-mail (Ordinario)";
+            this.toolEnvioCorreoOrdinario.Click += new System.EventHandler(this.toolEnvioCorreo_Click);
+            // 
+            // toolEnvioCorreoExtraordinario
+            // 
+            this.toolEnvioCorreoExtraordinario.Name = "toolEnvioCorreoExtraordinario";
+            this.toolEnvioCorreoExtraordinario.Size = new System.Drawing.Size(245, 22);
+            this.toolEnvioCorreoExtraordinario.Text = "Envio por E-mail (Extraordinario)";
+            this.toolEnvioCorreoExtraordinario.Click += new System.EventHandler(this.toolEnvioCorreoExtraordinario_Click);
             // 
             // toolReportes
             // 
+            this.toolReportes.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolReporteOrdinario,
+            this.toolReporteExtraordinario});
             this.toolReportes.Name = "toolReportes";
-            this.toolReportes.Size = new System.Drawing.Size(184, 22);
+            this.toolReportes.Size = new System.Drawing.Size(175, 22);
             this.toolReportes.Text = "Reportes";
             this.toolReportes.Click += new System.EventHandler(this.toolReportes_Click);
             // 
@@ -626,6 +658,20 @@
             this.workAntiguedad.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.workAntiguedad_ProgressChanged);
             this.workAntiguedad.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workAntiguedad_RunWorkerCompleted);
             // 
+            // toolReporteOrdinario
+            // 
+            this.toolReporteOrdinario.Name = "toolReporteOrdinario";
+            this.toolReporteOrdinario.Size = new System.Drawing.Size(191, 22);
+            this.toolReporteOrdinario.Text = "Periodo ordinario";
+            this.toolReporteOrdinario.Click += new System.EventHandler(this.toolReporteOrdinario_Click);
+            // 
+            // toolReporteExtraordinario
+            // 
+            this.toolReporteExtraordinario.Name = "toolReporteExtraordinario";
+            this.toolReporteExtraordinario.Size = new System.Drawing.Size(191, 22);
+            this.toolReporteExtraordinario.Text = "Periodo extraordinario";
+            this.toolReporteExtraordinario.Click += new System.EventHandler(this.toolReporteExtraordinario_Click);
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -715,10 +761,15 @@
         private System.Windows.Forms.ToolStripStatusLabel toolPorcentaje;
         private System.Windows.Forms.ToolStripMenuItem toolImportarEmpleados;
         private System.Windows.Forms.ToolStripMenuItem toolRegistroBajas;
-        private System.Windows.Forms.ToolStripMenuItem toolImpresionRecibos;
-        private System.Windows.Forms.ToolStripMenuItem toolEnvioRecibos;
+        private System.Windows.Forms.ToolStripMenuItem toolRecibosNomina;
         private System.Windows.Forms.ToolStripMenuItem toolFactorDescuento;
         private System.Windows.Forms.ToolStripMenuItem toolEmpresas;
+        private System.Windows.Forms.ToolStripMenuItem toolPeriodoOrdinario;
+        private System.Windows.Forms.ToolStripMenuItem toolPeriodoExtraOrdinario;
+        private System.Windows.Forms.ToolStripMenuItem toolEnvioCorreoOrdinario;
+        private System.Windows.Forms.ToolStripMenuItem toolEnvioCorreoExtraordinario;
+        private System.Windows.Forms.ToolStripMenuItem toolReporteOrdinario;
+        private System.Windows.Forms.ToolStripMenuItem toolReporteExtraordinario;
     }
 }
 

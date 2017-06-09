@@ -28,13 +28,16 @@ namespace Departamento.Core
             return lstDeptos;
         }
 
-        public List<Depto> obtenerDepartamentos(int idEmpresa, DateTime fecha, int tipoNomina)
+        public List<Depto> obtenerDepartamentos(int idEmpresa, DateTime fecha, int tipoNomina, bool timbrados)
         {
             DataTable dtDeptos = new DataTable();
             List<Depto> lstDeptos = new List<Depto>();
-            Command.CommandText = @"select distinct pn.iddepartamento as id, depto.descripcion as descripcion from PagoNomina pn inner join Departamentos depto on
-                pn.iddepartamento = depto.id where pn.idempresa = @idempresa
-                and pn.fechainicio = @fecha and tiponomina = @tiponomina order by pn.iddepartamento asc";
+            if (timbrados)
+                Command.CommandText = @"select distinct cm.iddepartamento as id, cm.departamento as descripcion from cfdimaster cm
+                                    where cm.idempresa = @idempresa and cm.periodoinicio = @fecha and cm.tiponomina = @tiponomina order by cm.iddepartamento asc";
+            else
+                Command.CommandText = @"select distinct pn.iddepartamento as id, d.descripcion from pagonomina pn inner join departamentos d on pn.iddepartamento = d.id
+                                    where pn.idempresa = @idempresa and pn.fechainicio = @fecha and pn.tiponomina = @tiponomina order by pn.iddepartamento asc";
             Command.Parameters.Clear();
             Command.Parameters.AddWithValue("idempresa", idEmpresa);
             Command.Parameters.AddWithValue("fecha", fecha);

@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Configuration;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 
 namespace Nominas
 {
@@ -173,12 +175,13 @@ namespace Nominas
 
         private void txtBuscar_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char)Keys.Enter)
+            if (e.KeyChar == (char)System.Windows.Forms.Keys.Enter)
             {
                 if (string.IsNullOrEmpty(txtBuscar.Text) || string.IsNullOrWhiteSpace(txtBuscar.Text))
                 {
 
-                    var empleado = from em in lstEmpleados orderby em.noempleado ascending
+                    var empleado = from em in lstEmpleados
+                                   orderby em.noempleado ascending
                                    select new
                                    {
                                        IdTrabajador = em.idtrabajador,
@@ -212,7 +215,7 @@ namespace Nominas
                                        SDI = b.sdi,
                                        SD = b.sd,
                                        Sueldo = b.sueldo,
-                                       Cuenta = b.cuenta, 
+                                       Cuenta = b.cuenta,
                                        Estado = b.estatus,
                                        Departamento = b.departamento,
                                        Puesto = b.puesto,
@@ -510,6 +513,5 @@ namespace Nominas
             tnd._idEmpleado = int.Parse(dgvEmpleados.Rows[fila].Cells[0].Value.ToString());
             tnd.Show();
         }
-
     }
 }

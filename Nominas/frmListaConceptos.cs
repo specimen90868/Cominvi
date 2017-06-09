@@ -51,7 +51,7 @@ namespace Nominas
                 cnx.Close();
                 cnx.Dispose();
 
-                var con = from c in lstConceptos
+                var con = from c in lstConceptos orderby c.noconcepto ascending
                              select new
                              {
                                  Id = c.id,

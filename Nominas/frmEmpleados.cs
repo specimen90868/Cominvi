@@ -96,7 +96,6 @@ namespace Nominas
             List<Puestos.Core.Puestos> lstPuesto = new List<Puestos.Core.Puestos>();
             List<Estados.Core.Estados> lstEstados = new List<Estados.Core.Estados>();
             List<Periodos.Core.Periodos> lstPeriodos = new List<Periodos.Core.Periodos>();
-            List<Salario.Core.Salarios> lstSalario = new List<Salario.Core.Salarios>();
             List<Catalogos.Core.Catalogo> lstMetodoPago = new List<Catalogos.Core.Catalogo>();
 
             try
@@ -107,7 +106,6 @@ namespace Nominas
                 lstPuesto = ph.obtenerPuestos(puesto);
                 lstEstados = edoh.obtenerEstados();
                 lstPeriodos = pdh.obtenerPeriodos(periodo);
-                lstSalario = sh.obtenerSalario();
                 lstMetodoPago = cath.obtenerGrupo(mp);
                 cnx.Close();
                 cnx.Dispose();
@@ -137,10 +135,6 @@ namespace Nominas
             cmbPeriodo.DataSource = lstPeriodos.ToList();
             cmbPeriodo.DisplayMember = "pago";
             cmbPeriodo.ValueMember = "idperiodo";
-
-            cmbZona.DataSource = lstSalario.ToList();
-            cmbZona.DisplayMember = "zona";
-            cmbZona.ValueMember = "idsalario";
 
         }
 
@@ -197,11 +191,11 @@ namespace Nominas
                         txtApMaterno.Text = lstEmpleado[i].materno;
                         mtxtNoEmpleado.Text = lstEmpleado[i].noempleado;
                         dtpFechaIngreso.Value = DateTime.Parse(lstEmpleado[i].fechaingreso.ToString());
-                        dtpFechaAntiguedad.Value = DateTime.Parse(lstEmpleado[i].fechaantiguedad.ToString());
+                        
                         dtpFechaNacimiento.Value = DateTime.Parse(lstEmpleado[i].fechanacimiento.ToString());
                         txtAntiguedad.Text = lstEmpleado[i].antiguedad.ToString();
                         txtEdad.Text = lstEmpleado[i].edad.ToString();
-                        txtAntiguedadMod.Text = lstEmpleado[i].antiguedadmod.ToString();
+                        
                         txtRFC.Text = lstEmpleado[i].rfc;
                         txtCURP.Text = lstEmpleado[i].curp;
                         txtNSS.Text = lstEmpleado[i].nss + lstEmpleado[i].digitoverificador.ToString();
@@ -209,7 +203,7 @@ namespace Nominas
                         cmbDepartamento.SelectedValue = int.Parse(lstEmpleado[i].iddepartamento.ToString());
                         cmbPuesto.SelectedValue = int.Parse(lstEmpleado[i].idpuesto.ToString());
                         cmbPeriodo.SelectedValue = int.Parse(lstEmpleado[i].idperiodo.ToString());
-                        cmbZona.SelectedValue = int.Parse(lstEmpleado[i].idsalario.ToString());
+                        
                         cmbTipoSalario.SelectedValue = int.Parse(lstEmpleado[i].tiposalario.ToString());
 
                         txtSueldo.Text = lstEmpleado[i].sueldo.ToString("F6");
@@ -252,11 +246,6 @@ namespace Nominas
             }
             else
                 toolHistorial.Enabled = false;
-        }
-
-        private void dtpFechaAntiguedad_Leave(object sender, EventArgs e)
-        {
-            txtAntiguedadMod.Text = ObtieneEdad(dtpFechaAntiguedad.Value).ToString();
         }
 
         private async void dtpFechaNacimiento_Leave(object sender, EventArgs e)
@@ -474,9 +463,9 @@ namespace Nominas
             em.nombrecompleto = txtApPaterno.Text + (string.IsNullOrEmpty(txtApMaterno.Text) ? "" : " " + txtApMaterno.Text) + " " + txtNombre.Text;
             em.fechaingreso = dtpFechaIngreso.Value;
             em.antiguedad = int.Parse(txtAntiguedad.Text);
-            em.fechaantiguedad = dtpFechaAntiguedad.Value;
+            em.fechaantiguedad = dtpFechaIngreso.Value;
             em.fechanacimiento = dtpFechaNacimiento.Value;
-            em.antiguedadmod = int.Parse(txtAntiguedadMod.Text);
+            em.antiguedadmod = 0;
             em.edad = int.Parse(txtEdad.Text);
             em.idempresa = GLOBALES.IDEMPRESA;
             em.rfc = txtRFC.Text;
@@ -485,7 +474,7 @@ namespace Nominas
             em.digitoverificador = int.Parse(txtNSS.Text.Trim().Substring(10, 1));
 
             em.idperiodo = int.Parse(cmbPeriodo.SelectedValue.ToString());
-            em.idsalario = int.Parse(cmbZona.SelectedValue.ToString());
+            em.idsalario = 0;
             em.iddepartamento = int.Parse(cmbDepartamento.SelectedValue.ToString());
             em.idpuesto = int.Parse(cmbPuesto.SelectedValue.ToString());
             em.tiposalario = int.Parse(cmbTipoSalario.SelectedValue.ToString());
@@ -713,7 +702,6 @@ namespace Nominas
 
         private void dtpFechaIngreso_Leave(object sender, EventArgs e)
         {
-            dtpFechaAntiguedad.Value = dtpFechaIngreso.Value;
             txtAntiguedad.Text = ObtieneEdad(dtpFechaIngreso.Value).ToString();
         }
 
@@ -840,11 +828,6 @@ namespace Nominas
             }
         }
 
-        private void dtpFechaAntiguedad_ValueChanged(object sender, EventArgs e)
-        {
-            txtAntiguedadMod.Text = ObtieneEdad(dtpFechaAntiguedad.Value).ToString();
-        }
-
         private void btnVer_Click(object sender, EventArgs e)
         {
             frmImagen i = new frmImagen();
@@ -912,7 +895,7 @@ namespace Nominas
                 case "DF": estado = "DISTRITO FEDERAL"; break;
                 case "DG": estado = "DURANGO"; break;
                 case "GT": estado = "GUANAJUATO"; break;
-                case "GR": estado = "GERRERO"; break;
+                case "GR": estado = "GUERRERO"; break;
                 case "HG": estado = "HIDALGO"; break;
                 case "JC": estado = "JALISCO"; break;
                 case "MC": estado = "MEXICO"; break;
@@ -974,11 +957,6 @@ namespace Nominas
             {
                 MessageBox.Show("El No. de Empleado ya existe. Verifique.");
             }
-        }
-
-        private void dtpFechaAplicacionHistorico_ValueChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

@@ -841,7 +841,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -872,9 +871,10 @@
         <Filters>
           <Filter>
             <FilterExpression>=Fields!CaratulaTipoConcepto.Value</FilterExpression>
-            <Operator>Equal</Operator>
+            <Operator>In</Operator>
             <FilterValues>
               <FilterValue>D</FilterValue>
+              <FilterValue>S</FilterValue>
             </FilterValues>
           </Filter>
         </Filters>

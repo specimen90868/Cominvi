@@ -40,6 +40,7 @@
             this.toolDepartamento = new System.Windows.Forms.ToolStripMenuItem();
             this.toolPuesto = new System.Windows.Forms.ToolStripMenuItem();
             this.toolCambioPeriodo = new System.Windows.Forms.ToolStripButton();
+            this.toolNominaDigital = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolEliminar = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -51,7 +52,6 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.lblBuscar = new System.Windows.Forms.ToolStripLabel();
             this.txtBuscar = new System.Windows.Forms.ToolStripTextBox();
-            this.toolNominaDigital = new System.Windows.Forms.ToolStripButton();
             this.toolTitulo = new System.Windows.Forms.ToolStrip();
             this.toolEmpleados = new System.Windows.Forms.ToolStripLabel();
             this.dgvEmpleados = new System.Windows.Forms.DataGridView();
@@ -176,6 +176,15 @@
             this.toolCambioPeriodo.Text = "Periodo";
             this.toolCambioPeriodo.Click += new System.EventHandler(this.toolCambioPeriodo_Click);
             // 
+            // toolNominaDigital
+            // 
+            this.toolNominaDigital.Image = ((System.Drawing.Image)(resources.GetObject("toolNominaDigital.Image")));
+            this.toolNominaDigital.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolNominaDigital.Name = "toolNominaDigital";
+            this.toolNominaDigital.Size = new System.Drawing.Size(107, 22);
+            this.toolNominaDigital.Text = "Nomina Digital";
+            this.toolNominaDigital.Click += new System.EventHandler(this.toolNominaDigital_Click);
+            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
@@ -256,20 +265,11 @@
             this.txtBuscar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic);
             this.txtBuscar.ForeColor = System.Drawing.Color.Gray;
             this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(300, 25);
+            this.txtBuscar.Size = new System.Drawing.Size(300, 23);
             this.txtBuscar.Text = "Buscar empleado...";
             this.txtBuscar.Leave += new System.EventHandler(this.txtBuscar_Leave);
             this.txtBuscar.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBuscar_KeyPress);
             this.txtBuscar.Click += new System.EventHandler(this.txtBuscar_Click);
-            // 
-            // toolNominaDigital
-            // 
-            this.toolNominaDigital.Image = ((System.Drawing.Image)(resources.GetObject("toolNominaDigital.Image")));
-            this.toolNominaDigital.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolNominaDigital.Name = "toolNominaDigital";
-            this.toolNominaDigital.Size = new System.Drawing.Size(107, 22);
-            this.toolNominaDigital.Text = "Nomina Digital";
-            this.toolNominaDigital.Click += new System.EventHandler(this.toolNominaDigital_Click);
             // 
             // toolTitulo
             // 

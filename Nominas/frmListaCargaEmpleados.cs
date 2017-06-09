@@ -315,13 +315,7 @@ namespace Nominas
 
         private string ObtenerRfc(string paterno, string materno, string nombre, DateTime fechanacimiento)
         {
-            Empleados.Core.RFC rfc = new Empleados.Core.RFC();
-            string _rfc = rfc.ObtieneRFC(paterno, materno, nombre);
-            string _homo = rfc.ClaveHomonimia(paterno, materno, nombre);
-            string _fecha = fechanacimiento.ToString("yyMMdd");
-            string _dv = rfc.DigitoVerificador(_rfc + _fecha + _homo);
-            _rfc = _rfc + _fecha + _homo + _dv;
-            return _rfc;
+            return "";
         }
 
         private string ObtenerEstado(string curp)

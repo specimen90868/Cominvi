@@ -657,9 +657,10 @@
                       <Filters>
                         <Filter>
                           <FilterExpression>=Fields!tipoconcepto.Value</FilterExpression>
-                          <Operator>Equal</Operator>
+                          <Operator>In</Operator>
                           <FilterValues>
                             <FilterValue>D</FilterValue>
+                            <FilterValue>S</FilterValue>
                           </FilterValues>
                         </Filter>
                       </Filters>
@@ -669,6 +670,7 @@
                         </Border>
                       </Style>
                     </Tablix>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -1072,7 +1074,6 @@
                                       <PaddingBottom>2pt</PaddingBottom>
                                     </Style>
                                   </Textbox>
-                                  <rd:Selected>true</rd:Selected>
                                 </CellContents>
                               </TablixCell>
                             </TablixCells>

@@ -453,7 +453,7 @@ namespace Nominas
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show("Error: Al elmininar el reingreso, historial y actualización del trabajador.\r\n\r\n Esta Ventana se cerrará.", "Error");
+                    MessageBox.Show("Error: Al eliminar el reingreso, historial y actualización del trabajador.\r\n\r\n Esta Ventana se cerrará.", "Error");
                     this.Dispose();
                 }
             }

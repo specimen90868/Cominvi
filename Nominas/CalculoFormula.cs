@@ -1434,6 +1434,45 @@ namespace Nominas
                         formula = formula.Replace("[" + variables[i] + "]", totalImss.ToString());
                         
                         break;
+                    case "GastosMedicos":
+                        decimal porcentajeGM;
+                        Imss.Core.ImssHelper igmh = new Imss.Core.ImssHelper();
+                        igmh.Command = cmd;
+                        cnx.Open();
+                        porcentajeGM = igmh.ExcedenteVSM(1);
+                        cnx.Close();
+                        formula = formula.Replace("[" + variables[i] + "]", porcentajeGM.ToString());
+                        break;
+
+                    case "PrestacionDinero":
+                        decimal porcentajePD;
+                        Imss.Core.ImssHelper ipdh = new Imss.Core.ImssHelper();
+                        ipdh.Command = cmd;
+                        cnx.Open();
+                        porcentajePD = ipdh.ExcedenteVSM(2);
+                        cnx.Close();
+                        formula = formula.Replace("[" + variables[i] + "]", porcentajePD.ToString());
+                        break;
+
+                    case "InvalidezVida": 
+                        decimal porcentajeIV;
+                        Imss.Core.ImssHelper iivh = new Imss.Core.ImssHelper();
+                        iivh.Command = cmd;
+                        cnx.Open();
+                        porcentajeIV = iivh.ExcedenteVSM(3);
+                        cnx.Close();
+                        formula = formula.Replace("[" + variables[i] + "]", porcentajeIV.ToString());
+                        break;
+
+                    case "CesantiaVejez": 
+                        decimal porcentajeCV;
+                        Imss.Core.ImssHelper icvh = new Imss.Core.ImssHelper();
+                        icvh.Command = cmd;
+                        cnx.Open();
+                        porcentajeCV = icvh.ExcedenteVSM(6);
+                        cnx.Close();
+                        formula = formula.Replace("[" + variables[i] + "]", porcentajeCV.ToString());
+                        break;
                 }
             }
             cnx.Dispose();

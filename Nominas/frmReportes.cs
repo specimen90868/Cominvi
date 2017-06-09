@@ -29,12 +29,10 @@ namespace Nominas
         string cdn = ConfigurationManager.ConnectionStrings["cdnNomina"].ConnectionString;
         Departamento.Core.DeptoHelper dh;
         Empleados.Core.EmpleadosHelper eh;
-        Periodos.Core.PeriodosHelper ph;
         CalculoNomina.Core.NominaHelper nh;
         int noReporte;
-        string netocero, orden;
-        int tipoNomina, periodo;
-        Boolean FLAG_COMBOBOX = false;
+        string netocero, orden, idDepartamentos, idEmpleados;
+        List<Empleados.Core.Empleados> lstEmp;
         #endregion
 
         #region DELEGADOS
@@ -45,239 +43,192 @@ namespace Nominas
         #region VARIABLES PUBLICA
         public DateTime _inicio;
         public DateTime _fin;
-        public bool _ReportePreNomina;
         public int _noReporte;
         public int _tipoNomina;
+        public int _periodo;
         #endregion
 
         private void frmReportes_Load(object sender, EventArgs e)
         {
             dtpFinPeriodo.Enabled = false;
 
-            cmbDeptoInicial.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            cmbDeptoInicial.AutoCompleteSource = AutoCompleteSource.ListItems;
-            cmbDeptoFinal.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            cmbDeptoFinal.AutoCompleteSource = AutoCompleteSource.ListItems;
-
-            cmbEmpleadoInicial.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            cmbEmpleadoInicial.AutoCompleteSource = AutoCompleteSource.ListItems;
-            cmbEmpleadoFinal.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            cmbEmpleadoFinal.AutoCompleteSource = AutoCompleteSource.ListItems;
-
-            cnx = new SqlConnection(cdn);
-            cmd = new SqlCommand();
-            cmd.Connection = cnx;
-
-            dh = new Departamento.Core.DeptoHelper();
-            dh.Command = cmd;
-
-            Departamento.Core.Depto depto = new Departamento.Core.Depto();
-            depto.idempresa = GLOBALES.IDEMPRESA;
-            depto.estatus = GLOBALES.ACTIVO;
-
-            ph = new Periodos.Core.PeriodosHelper();
-            ph.Command = cmd;
-
-            Periodos.Core.Periodos periodo = new Periodos.Core.Periodos();
-            periodo.idempresa = GLOBALES.IDEMPRESA;
-
-            List<Departamento.Core.Depto> lstDeptosDe = new List<Departamento.Core.Depto>();
-            List<Departamento.Core.Depto> lstDeptosHasta = new List<Departamento.Core.Depto>();
-            List<Periodos.Core.Periodos> lstPeriodos = new List<Periodos.Core.Periodos>();
-            
-            try
-            {
-                cnx.Open();
-                lstDeptosDe = dh.obtenerDepartamentos(depto);
-                lstDeptosHasta = dh.obtenerDepartamentos(depto);
-                lstPeriodos = ph.obtenerPeriodos(periodo);
-                cnx.Close();
-                cnx.Dispose();
-            }
-            catch (Exception error) { MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error"); }
-
-            cmbDeptoInicial.DataSource = lstDeptosDe;
-            cmbDeptoInicial.DisplayMember = "descripcion";
-            cmbDeptoInicial.ValueMember = "id";
-
-            cmbDeptoFinal.DataSource = lstDeptosHasta;
-            cmbDeptoFinal.DisplayMember = "descripcion";
-            cmbDeptoFinal.ValueMember = "id";
-
-            cmbPeriodo.DataSource = lstPeriodos.ToList();
-            cmbPeriodo.DisplayMember = "pago";
-            cmbPeriodo.ValueMember = "idperiodo";
-
             cmbTipoReporte.SelectedIndex = 0;
-            cmbTipoNomina.SelectedIndex = 0;
             cmbNetoCero.SelectedIndex = 0;
             cmbOrden.SelectedIndex = 3;
 
-            if (_ReportePreNomina)
-            {
-                dtpInicioPeriodo.Value = _inicio;
-                dtpFinPeriodo.Value = _fin;
-                cmbPeriodo.Enabled = true;
-                dtpInicioPeriodo.Enabled = false;
-                dtpFinPeriodo.Enabled = false;
-                cmbTipoReporte.Enabled = false;
-                cmbDeptoInicial.Enabled = false;
-                cmbDeptoFinal.Enabled = false;
-                cmbEmpleadoInicial.Enabled = false;
-                cmbEmpleadoFinal.Enabled = false;
+            lstvDepartamentos.View = View.Details;
+            lstvDepartamentos.CheckBoxes = true;
+            lstvDepartamentos.GridLines = false;
+            lstvDepartamentos.Columns.Add("Id", 60, HorizontalAlignment.Left);
+            lstvDepartamentos.Columns.Add("Departamento", 150, HorizontalAlignment.Left);
 
-                if (_noReporte == 2)
-                {
-                    cmbOrden.Items.Clear();
-                    cmbOrden.Items.Add("Departamento");
-                    cmbOrden.SelectedIndex = 0;
-                }
-                else
-                {
-                    cmbOrden.Items.Clear();
-                    cmbOrden.Items.Add("No. de Empleado");
-                    cmbOrden.Items.Add("Departamento");
-                    cmbOrden.Items.Add("No. de Empleado, Departamento");
-                    cmbOrden.Items.Add("Departamento, No. de Empleado");
-                    cmbOrden.SelectedIndex = 0;
-                }
+            lstvEmpleados.View = View.Details;
+            lstvEmpleados.CheckBoxes = true;
+            lstvEmpleados.GridLines = false;
+            lstvEmpleados.Columns.Add("Id", 60, HorizontalAlignment.Left);
+            lstvEmpleados.Columns.Add("No. Empleado", 70, HorizontalAlignment.Left);
+            lstvEmpleados.Columns.Add("Nombre", 250, HorizontalAlignment.Left);
 
-                if (_noReporte == 9 || _noReporte == 1)
-                {
-                    cmbEmpleadoInicial.Enabled = true;
-                    cmbEmpleadoFinal.Enabled = true;
-                }
-            }
-            FLAG_COMBOBOX = true;
+            //if (_ReportePreNomina)
+            //{
+            //    dtpInicioPeriodo.Value = _inicio;
+            //    dtpFinPeriodo.Value = _fin;
+            //    dtpInicioPeriodo.Enabled = false;
+            //    dtpFinPeriodo.Enabled = false;
+            //    cmbTipoReporte.Enabled = false;
+
+            //    if (_noReporte == 2)
+            //    {
+            //        cmbOrden.Items.Clear();
+            //        cmbOrden.Items.Add("Departamento");
+            //        cmbOrden.SelectedIndex = 0;
+            //    }
+            //    else
+            //    {
+            //        cmbOrden.Items.Clear();
+            //        cmbOrden.Items.Add("No. de Empleado");
+            //        cmbOrden.Items.Add("Departamento");
+            //        cmbOrden.Items.Add("No. de Empleado, Departamento");
+            //        cmbOrden.Items.Add("Departamento, No. de Empleado");
+            //        cmbOrden.SelectedIndex = 0;
+            //    }
+
+            //    if (_noReporte == 9 || _noReporte == 1)
+            //    {
+            //        lstvEmpleados.Enabled = true;
+            //    }
+            //}
         } 
 
         private void btnAceptar_Click(object sender, EventArgs e)
-
         {
-            
-            if (!_ReportePreNomina)
-            {
-                if (noReporte != 6 && noReporte != 9)
-                {
-                    if (noReporte == 8)
-                    {
-                        int existeNullCodeQR = 0;
-                        cnx = new SqlConnection(cdn);
-                        cmd = new SqlCommand();
-                        cmd.Connection = cnx;
-                        nh = new CalculoNomina.Core.NominaHelper();
-                        nh.Command = cmd;
 
-                        #region EXISTENCIA DE NULOS EN TABLA xmlCabecera
-                        try
+            frmVisorReportes vr = new frmVisorReportes();
+            vr._tipoNomina = _tipoNomina;
+            vr._inicioPeriodo = dtpInicioPeriodo.Value.Date;
+            vr._finPeriodo = dtpFinPeriodo.Value.Date;
+            vr._periodo = _periodo;
+            vr._netoCero = netocero;
+            vr._orden = orden;
+            vr._noReporte = noReporte;
+            vr.WindowState = FormWindowState.Maximized;
+
+            switch (noReporte)
+            {
+                case 3: //REPORTE TOTAL GENERAL
+                    vr.Show();
+                    break;
+
+                case 4: //REPORTE POR DEPARTAMENTOS
+                    if (chkTodosDeptos.Checked)
+                    {
+                        vr._departamentos = "";
+                        vr._todos = true;
+                    }
+                    else
+                    {
+                        idDepartamentos = "";
+                        for (int i = 0; i < lstvDepartamentos.Items.Count; i++)
                         {
-                            cnx.Open();
-                            existeNullCodeQR = nh.existeNullQR(GLOBALES.IDEMPRESA, dtpInicioPeriodo.Value.Date, dtpFinPeriodo.Value.Date);
-                            cnx.Close();
+                            if (lstvDepartamentos.Items[i].Checked)
+                            {
+                                idDepartamentos += lstvDepartamentos.Items[i].Text + ",";
+                            }
                         }
-                        catch (Exception error)
+
+                        if (idDepartamentos != "")
                         {
-                            MessageBox.Show("Error: Al obtener existencia de nulos Code QR." + error.Message, "Error");
-                            cnx.Dispose();
+                            idDepartamentos = idDepartamentos.Substring(0, idDepartamentos.Length - 1);
+                            vr._departamentos = idDepartamentos;
+                            vr._todos = false;
+                        }
+                        else
+                        {
+                            MessageBox.Show("INFORMACÓN:\r\n\r\n" +
+                                            "Por favor elija al menos un departamento.",
+                                            "Información",
+                                            MessageBoxButtons.OK,
+                                            MessageBoxIcon.Information);
                             return;
                         }
-                        #endregion
-
-                        #region GENERACION DE CODIGO QR SI EXISTEN NULOS
-                        if (existeNullCodeQR != 0)
-                        {
-                            List<CalculoNomina.Core.CodigoBidimensional> lstXml = new List<CalculoNomina.Core.CodigoBidimensional>();
-                            try
-                            {
-                                cnx.Open();
-                                lstXml = nh.obtenerListaQr(GLOBALES.IDEMPRESA, dtpInicioPeriodo.Value.Date, dtpFinPeriodo.Value.Date, periodo);
-                                cnx.Close();
-                            }
-                            catch (Exception error)
-                            {
-                                MessageBox.Show("Error: Al obtener el listado de los XML." + error.Message, "Error");
-                                cnx.Dispose();
-                                return;
-                            }
-
-                            string codigoQR = "";
-                            string[] valores = null;
-                            string numero = "";
-                            string vEntero = "";
-                            string vDecimal = "";
-                            for (int i = 0; i < lstXml.Count; i++)
-                            {
-                                numero = lstXml[i].tt.ToString();
-                                valores = numero.Split('.');
-                                vEntero = valores[0];
-                                vDecimal = valores[1];
-                                codigoQR = string.Format("?re={0}&rr={1}&tt={2}.{3}&id={4}", lstXml[i].re, lstXml[i].rr,
-                                    vEntero.PadLeft(10, '0'), vDecimal.PadRight(6, '0'), lstXml[i].uuid);
-                                var qrEncoder = new QrEncoder(ErrorCorrectionLevel.H);
-                                var qrCode = qrEncoder.Encode(codigoQR);
-                                var renderer = new GraphicsRenderer(new FixedModuleSize(2, QuietZoneModules.Two), Brushes.Black, Brushes.White);
-
-                                using (var stream = new FileStream(lstXml[i].uuid + ".png", FileMode.Create))
-                                    renderer.WriteToStream(qrCode.Matrix, ImageFormat.Png, stream);
-
-                                Bitmap bmp = new Bitmap(lstXml[i].uuid + ".png");
-                                Byte[] qr = GLOBALES.IMAGEN_BYTES(bmp);
-                                bmp.Dispose();
-                                File.Delete(lstXml[i].uuid + ".png");
-                                try
-                                {
-                                    cnx.Open();
-                                    nh.actualizaXml(GLOBALES.IDEMPRESA, dtpInicioPeriodo.Value.Date, dtpFinPeriodo.Value.Date, lstXml[i].idtrabajador, qr);
-                                    cnx.Close();
-                                }
-                                catch (Exception)
-                                {
-                                    MessageBox.Show("Error: Al actualizar el código QR.", "Error");
-                                    cnx.Dispose();
-                                    return;
-                                }
-                            }
-                        }
-                        #endregion
                     }
-
-                    frmVisorReportes vr = new frmVisorReportes();
-                    vr._inicioPeriodo = dtpInicioPeriodo.Value;
-                    vr._finPeriodo = dtpFinPeriodo.Value;
-                    if (_ReportePreNomina)
-                        vr._tipoNomina = _tipoNomina;
-                    else
-                        vr._tipoNomina = tipoNomina;
-                    vr._noReporte = noReporte;
-                    vr._deptoInicio = int.Parse(cmbDeptoInicial.SelectedValue.ToString());
-                    vr._deptoFin = int.Parse(cmbDeptoFinal.SelectedValue.ToString());
-                    vr._empleadoInicio = int.Parse(cmbEmpleadoInicial.SelectedValue.ToString());
-                    vr._empleadoFin = int.Parse(cmbEmpleadoFinal.SelectedValue.ToString());
-                    vr._netoCero = netocero;
-                    vr._orden = orden;
-                    vr._periodo = periodo;
                     vr.Show();
-                }
-                else
-                {
-                    if (noReporte == 6)
-                        excelTabular();
-                    if (noReporte == 9)
-                        excelGravadosExentos();
-                }
+                    break;
+
+                case 5: //REPORTE DE NOMINA POR EMPLEADO
+                    if (chkTodosDeptos.Checked)
+                    {
+                        vr._empleados = "";
+                        vr._todos = true;
+                    }
+                    else
+                    {
+                        idEmpleados = "";
+                        for (int i = 0; i < lstvEmpleados.Items.Count; i++)
+                        {
+                            if (lstvEmpleados.Items[i].Checked)
+                                idEmpleados += lstvEmpleados.Items[i].Text + ",";
+                        }
+                        if (idEmpleados != "")
+                        {
+                            idEmpleados = idEmpleados.Substring(0, idEmpleados.Length - 1);
+                            vr._empleados = idEmpleados;
+                            vr._todos = false;
+                        }
+                        else
+                        {
+                            MessageBox.Show("INFORMACÓN:\r\n\r\n" +
+                                            "Por favor elija al menos un trabajador.",
+                                            "Información",
+                                            MessageBoxButtons.OK,
+                                            MessageBoxIcon.Information);
+                            return;
+                        }
+                    }
+                    vr.Show();
+                    break;
+
+                case 6:
+                    excelTabular();
+                    break;
+
+                case 7: //REPORTE RECIBOS DE NOMINA
+                    if (chkTodosDeptos.Checked)
+                    {
+                        vr._empleados = "";
+                        vr._todos = true;
+                    }
+                    else
+                    {
+                        idEmpleados = "";
+                        for (int i = 0; i < lstvEmpleados.Items.Count; i++)
+                        {
+                            if (lstvEmpleados.Items[i].Checked)
+                                idEmpleados += lstvEmpleados.Items[i].Text + ",";
+                        }
+                        if (idEmpleados != "")
+                        {
+                            idEmpleados = idEmpleados.Substring(0, idEmpleados.Length - 1);
+                            vr._empleados = idEmpleados;
+                            vr._todos = false;
+                        }
+                        else
+                        {
+                            MessageBox.Show("INFORMACÓN:\r\n\r\n" +
+                                            "Por favor elija al menos un trabajador.",
+                                            "Información",
+                                            MessageBoxButtons.OK,
+                                            MessageBoxIcon.Information);
+                            return;
+                        }
+                    }
+                    vr.Show();
+                    break;
+
+                case 9:
+                    excelGravadosExentos();
+                    break;
             }
-            else
-            {
-                int empleadoInicial = 0, empleadoFinal = 0;
-                if (_noReporte == 9 || _noReporte == 1)
-                {
-                    empleadoInicial = int.Parse(cmbEmpleadoInicial.SelectedValue.ToString());
-                    empleadoFinal = int.Parse(cmbEmpleadoFinal.SelectedValue.ToString());
-                }
-                if (OnReporte != null)
-                    OnReporte(netocero, orden, _noReporte, empleadoInicial, empleadoFinal);
-            }
-            this.Dispose();
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -290,12 +241,12 @@ namespace Nominas
             switch (cmbTipoReporte.Text)
             {
                 case "Empleados":
-                    cmbDeptoInicial.Enabled = true;
-                    cmbDeptoFinal.Enabled = true;
-                    cmbEmpleadoInicial.Enabled = true;
-                    cmbEmpleadoFinal.Enabled = true;
+                    lstvDepartamentos.Enabled = true;
+                    lstvEmpleados.Enabled = true;
                     cmbOrden.Enabled = true;
                     cmbNetoCero.Enabled = true;
+                    chkTodosDeptos.Enabled = true;
+                    chkTodosEmpleados.Enabled = true;
                     noReporte = 5;
                     cmbOrden.Items.Clear();
                     cmbOrden.Items.Add("No. de Empleado");
@@ -305,26 +256,24 @@ namespace Nominas
                     cmbOrden.SelectedIndex = 3;
                     break;
                 case "Departamentos":
-                    
-                    cmbDeptoInicial.Enabled = true;
-                    cmbDeptoFinal.Enabled = true;
-                    cmbEmpleadoInicial.Enabled = false;
-                    cmbEmpleadoFinal.Enabled = false;
+                    lstvDepartamentos.Enabled = true;
+                    lstvEmpleados.Enabled = false;
                     cmbOrden.Enabled = true;
                     cmbNetoCero.Enabled = true;
+                    chkTodosDeptos.Enabled = true;
+                    chkTodosEmpleados.Enabled = false;
                     noReporte = 4;
                     cmbOrden.Items.Clear();
                     cmbOrden.Items.Add("Departamento");
                     cmbOrden.SelectedIndex = 0;
                     break;
                 case "Total General":
-                    
-                    cmbDeptoInicial.Enabled = false;
-                    cmbDeptoFinal.Enabled = false;
-                    cmbEmpleadoInicial.Enabled = false;
-                    cmbEmpleadoFinal.Enabled = false;
+                    lstvDepartamentos.Enabled = false;
+                    lstvEmpleados.Enabled = false;
                     cmbOrden.Enabled = false;
                     cmbNetoCero.Enabled = false;
+                    chkTodosDeptos.Enabled = false;
+                    chkTodosEmpleados.Enabled = false;
                     cmbOrden.Items.Clear();
                     cmbOrden.Items.Add("No. de Empleado");
                     cmbOrden.Items.Add("Departamento");
@@ -333,28 +282,24 @@ namespace Nominas
                     noReporte = 3;
                     break;
                 case "Tabular":
-                    
-                    cmbDeptoInicial.Enabled = true;
-                    cmbDeptoFinal.Enabled = true;
-                    cmbEmpleadoInicial.Enabled = true;
-                    cmbEmpleadoFinal.Enabled = true;
+                    lstvDepartamentos.Enabled = true;
+                    lstvEmpleados.Enabled = true;
                     cmbOrden.Enabled = true;
                     cmbNetoCero.Enabled = true;
+                    chkTodosDeptos.Enabled = true;
+                    chkTodosEmpleados.Enabled = true;
                     noReporte = 6;
                     cmbOrden.Items.Clear();
                     cmbOrden.Items.Add("No. de Empleado");
-                    cmbOrden.Items.Add("Departamento");
-                    cmbOrden.Items.Add("No. de Empleado, Departamento");
-                    cmbOrden.Items.Add("Departamento, No. de Empleado");
+                    cmbOrden.SelectedIndex = 0;
                     break;
                 case "Recibos de Nomina":
-                   
-                    cmbDeptoInicial.Enabled = true;
-                    cmbDeptoFinal.Enabled = true;
-                    cmbEmpleadoInicial.Enabled = true;
-                    cmbEmpleadoFinal.Enabled = true;
+                    lstvDepartamentos.Enabled = true;
+                    lstvEmpleados.Enabled = true;
                     cmbOrden.Enabled = true;
                     cmbNetoCero.Enabled = true;
+                    chkTodosDeptos.Enabled = true;
+                    chkTodosEmpleados.Enabled = true;
                     noReporte = 7;
                     cmbOrden.Items.Clear();
                     cmbOrden.Items.Add("No. de Empleado");
@@ -364,30 +309,13 @@ namespace Nominas
                     cmbOrden.SelectedIndex = 0;
                     break;
 
-                case "Recibos Timbrados": 
-                    
-                    cmbDeptoInicial.Enabled = true;
-                    cmbDeptoFinal.Enabled = true;
-                    cmbEmpleadoInicial.Enabled = true;
-                    cmbEmpleadoFinal.Enabled = true;
-                    cmbOrden.Enabled = true;
-                    cmbNetoCero.Enabled = true;
-                    noReporte = 8;
-                    cmbOrden.Items.Clear();
-                    cmbOrden.Items.Add("No. de Empleado");
-                    cmbOrden.Items.Add("Departamento");
-                    cmbOrden.Items.Add("No. de Empleado, Departamento");
-                    cmbOrden.Items.Add("Departamento, No. de Empleado");
-                    cmbOrden.SelectedIndex = 0;
-                    break;
                 case "Gravados y Exentos":
-                   
-                    cmbDeptoInicial.Enabled = false;
-                    cmbDeptoFinal.Enabled = false;
-                    cmbEmpleadoInicial.Enabled = false;
-                    cmbEmpleadoFinal.Enabled = false;
+                    lstvDepartamentos.Enabled = false;
+                    lstvEmpleados.Enabled = false;
                     cmbOrden.Enabled = false;
                     cmbNetoCero.Enabled = false;
+                    chkTodosDeptos.Enabled = false;
+                    chkTodosEmpleados.Enabled = false;
                     noReporte = 9;
                     break;
             }
@@ -395,9 +323,9 @@ namespace Nominas
 
         private void dtpInicioPeriodo_ValueChanged(object sender, EventArgs e)
         {
-            if (tipoNomina == GLOBALES.NORMAL)
+            if (_tipoNomina == GLOBALES.NORMAL)
             {
-                if (cmbPeriodo.Text == "SEMANAL")
+                if (_periodo == 7)
                 {
                     DateTime dt = dtpInicioPeriodo.Value;
                     while (dt.DayOfWeek != DayOfWeek.Monday) dt = dt.AddDays(-1);
@@ -417,7 +345,11 @@ namespace Nominas
                         dtpFinPeriodo.Value = new DateTime(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month, DateTime.DaysInMonth(dtpInicioPeriodo.Value.Year, dtpInicioPeriodo.Value.Month));
                     }
                 }
-            }            
+            }
+            else
+            {
+                dtpFinPeriodo.Value = dtpInicioPeriodo.Value;
+            }
         }
 
         private void excelTabular()
@@ -438,20 +370,26 @@ namespace Nominas
 
             List<Empresas.Core.Empresas> lstEmpresa = new List<Empresas.Core.Empresas>();
             DataTable dtDatos = new DataTable();
+            if (chkTodosDeptos.Checked)
+                idEmpleados = "";
+            else {
+                idEmpleados = "";
+                for (int i = 0; i < lstvEmpleados.Items.Count; i++)
+                {
+                    if (lstvEmpleados.Items[i].Checked)
+                        idEmpleados += lstvEmpleados.Items[i].Text + ",";
+                }
+                if (idEmpleados != "")
+                {
+                    idEmpleados = idEmpleados.Substring(0, idEmpleados.Length - 1);
+                }
+            }
 
             try
             {
                 cnx.Open();
                 lstEmpresa = eh.obtenerEmpresa(GLOBALES.IDEMPRESA);
-
-                dtDatos = nh.obtenerNominaTabular(pn,
-                    int.Parse(cmbDeptoInicial.SelectedValue.ToString()),
-                    int.Parse(cmbDeptoFinal.SelectedValue.ToString()),
-                    int.Parse(cmbEmpleadoInicial.SelectedValue.ToString()),
-                    int.Parse(cmbEmpleadoFinal.SelectedValue.ToString()),
-                    tipoNomina,
-                    netocero, orden, periodo);
-
+                dtDatos = nh.obtenerNominaTabular(pn, idEmpleados, _tipoNomina, netocero, orden, chkTodosDeptos.Checked, _periodo);
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -868,7 +806,7 @@ namespace Nominas
             try
             {
                 cnx.Open();
-                dt = nh.obtenerGravadosExentos(pn, periodo);
+                dt = nh.obtenerGravadosExentos(pn, _periodo);
                 cnx.Close();
                 cnx.Dispose();
             }
@@ -980,104 +918,123 @@ namespace Nominas
             }
         }
 
-        private void cmbTipoNomina_SelectedIndexChanged(object sender, EventArgs e)
+        private void btnObtener_Click(object sender, EventArgs e)
         {
-            switch (cmbTipoNomina.Text)
-            {
-                case "Ordinaria":
-                    tipoNomina = GLOBALES.NORMAL;
-                    dtpFinPeriodo.Enabled = false;
-                    break;
-                case "Extraordinaria":
-                    tipoNomina = GLOBALES.EXTRAORDINARIO_NORMAL;
-                    dtpFinPeriodo.Enabled = true;
-                    break;
-            }
-        }
-
-        private void frmReportes_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyData == Keys.F5)
-            {
-                cnx = new SqlConnection(cdn);
-                cmd = new SqlCommand();
-                cmd.Connection = cnx;
-
-                eh = new Empleados.Core.EmpleadosHelper();
-                eh.Command = cmd;
-
-                Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
-                empleado.idempresa = GLOBALES.IDEMPRESA;
-
-                List<Empleados.Core.Empleados> lstEmpleadoDe = new List<Empleados.Core.Empleados>();
-                List<Empleados.Core.Empleados> lstEmpleadoHasta = new List<Empleados.Core.Empleados>();
-
-                try
-                {
-                    cnx.Open();
-                    lstEmpleadoDe = eh.obtenerEmpleadosBaja(empleado);
-                    lstEmpleadoHasta = eh.obtenerEmpleadosBaja(empleado);
-                    cnx.Close();
-                    cnx.Dispose();
-                }
-                catch (Exception error) { MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error"); }
-
-                cmbEmpleadoInicial.DataSource = lstEmpleadoDe;
-                cmbEmpleadoInicial.DisplayMember = "noempleado";
-                cmbEmpleadoInicial.ValueMember = "idtrabajador";
-
-                cmbEmpleadoFinal.DataSource = lstEmpleadoHasta;
-                cmbEmpleadoFinal.DisplayMember = "noempleado";
-                cmbEmpleadoFinal.ValueMember = "idtrabajador";
-            }
-        }
-
-        private void cmbPeriodo_SelectedIndexChanged(object sender, EventArgs e)
-        {
+            lstvDepartamentos.Items.Clear();
             cnx = new SqlConnection(cdn);
             cmd = new SqlCommand();
             cmd.Connection = cnx;
 
-            eh = new Empleados.Core.EmpleadosHelper();
-            eh.Command = cmd;
+            Departamento.Core.DeptoHelper dh = new Departamento.Core.DeptoHelper();
+            dh.Command = cmd;
 
-            Empleados.Core.Empleados empleado = new Empleados.Core.Empleados();
-            empleado.idempresa = GLOBALES.IDEMPRESA;
-
-            Periodos.Core.PeriodosHelper ph = new Periodos.Core.PeriodosHelper();
-            ph.Command = cmd;
-
-            Periodos.Core.Periodos p = new Periodos.Core.Periodos();
-
-            if (!FLAG_COMBOBOX)
-            {
-                Periodos.Core.Periodos a = (Periodos.Core.Periodos)cmbPeriodo.SelectedValue;
-                p.idperiodo = a.idperiodo;
-            }
-            else
-                p.idperiodo = int.Parse(cmbPeriodo.SelectedValue.ToString());
-            
-            List<Empleados.Core.Empleados> lstEmpleadoDe = new List<Empleados.Core.Empleados>();
-            List<Empleados.Core.Empleados> lstEmpleadoHasta = new List<Empleados.Core.Empleados>();
+            List<Departamento.Core.Depto> lstDeptos = new List<Departamento.Core.Depto>();
 
             try
             {
                 cnx.Open();
-                periodo = int.Parse(ph.DiasDePago(p).ToString());
-                lstEmpleadoDe = eh.obtenerEmpleadosBaja(empleado, periodo);
-                lstEmpleadoHasta = eh.obtenerEmpleadosBaja(empleado, periodo);
+                lstDeptos = dh.obtenerDepartamentos(GLOBALES.IDEMPRESA, dtpInicioPeriodo.Value.Date, _tipoNomina, false);
                 cnx.Close();
                 cnx.Dispose();
             }
-            catch (Exception error) { MessageBox.Show("Error: \r\n \r\n" + error.Message, "Error"); }
+            catch (Exception)
+            {
+                MessageBox.Show("Error: Al obtener los departamentos de la empresa.", "Error");
+                cnx.Dispose();
+                return;
+            }
 
-            cmbEmpleadoInicial.DataSource = lstEmpleadoDe;
-            cmbEmpleadoInicial.DisplayMember = "noempleado";
-            cmbEmpleadoInicial.ValueMember = "idtrabajador";
-
-            cmbEmpleadoFinal.DataSource = lstEmpleadoHasta;
-            cmbEmpleadoFinal.DisplayMember = "noempleado";
-            cmbEmpleadoFinal.ValueMember = "idtrabajador";
+            for (int i = 0; i < lstDeptos.Count; i++)
+            {
+                ListViewItem Lista;
+                Lista = lstvDepartamentos.Items.Add(lstDeptos[i].id.ToString());
+                Lista.SubItems.Add(lstDeptos[i].descripcion.ToString());
+            }
         }
+
+        private void lstvDepartamentos_ItemChecked(object sender, ItemCheckedEventArgs e)
+        {
+            if (chkTodosEmpleados.Enabled)
+            {
+                if (e.Item.Checked)
+                {
+                    idDepartamentos = "";
+                    for (int i = 0; i < lstvDepartamentos.Items.Count; i++)
+                    {
+                        if (lstvDepartamentos.Items[i].Checked)
+                        {
+                            idDepartamentos += lstvDepartamentos.Items[i].Text + ",";
+                        }
+                    }
+
+                    if (idDepartamentos != "")
+                    {
+                        lstvEmpleados.Items.Clear();
+                        cnx = new SqlConnection(cdn);
+                        cmd = new SqlCommand();
+                        cmd.Connection = cnx;
+
+                        Empleados.Core.EmpleadosHelper eh = new Empleados.Core.EmpleadosHelper();
+                        eh.Command = cmd;
+
+                        lstEmp = new List<Empleados.Core.Empleados>();
+                        idDepartamentos = idDepartamentos.Substring(0, idDepartamentos.Length - 1);
+                        try
+                        {
+                            cnx.Open();
+                            lstEmp = eh.obtenerEmpleadoPorDepto(GLOBALES.IDEMPRESA, idDepartamentos, dtpInicioPeriodo.Value.Date, _tipoNomina, false);
+                            cnx.Close();
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Error: Al obtener el listado de los empleados.", "Error");
+                            cnx.Dispose();
+                            return;
+                        }
+
+                        for (int i = 0; i < lstEmp.Count; i++)
+                        {
+                            ListViewItem Lista;
+                            Lista = lstvEmpleados.Items.Add(lstEmp[i].idtrabajador.ToString());
+                            Lista.SubItems.Add(lstEmp[i].noempleado);
+                            Lista.SubItems.Add(lstEmp[i].nombrecompleto);
+                        }
+                    }
+                }
+                else
+                {
+                    lstvEmpleados.Items.Clear();
+                }
+            }
+        }
+
+        private void chkTodosDeptos_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkTodosDeptos.Checked)
+            {
+                for (int i = 0; i < lstvDepartamentos.Items.Count; i++)
+                    lstvDepartamentos.Items[i].Checked = true;
+            }
+            else
+            {
+                for (int i = 0; i < lstvDepartamentos.Items.Count; i++)
+                    lstvDepartamentos.Items[i].Checked = false;
+            }
+        }
+
+        private void chkTodosEmpleados_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkTodosEmpleados.Checked)
+            {
+                for (int i = 0; i < lstvEmpleados.Items.Count; i++)
+                    lstvEmpleados.Items[i].Checked = true;
+            }
+            else
+            {
+                for (int i = 0; i < lstvEmpleados.Items.Count; i++)
+                    lstvEmpleados.Items[i].Checked = false;
+            }
+        }
+
     }
 }

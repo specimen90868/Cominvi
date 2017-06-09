@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.cmbTipoNomina = new System.Windows.Forms.ComboBox();
             this.lstvDepartamentos = new System.Windows.Forms.ListView();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -46,38 +44,15 @@
             this.workerEnvio = new System.ComponentModel.BackgroundWorker();
             this.label5 = new System.Windows.Forms.Label();
             this.chkTodos = new System.Windows.Forms.CheckBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.cmbPeriodo = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmpleados)).BeginInit();
             this.BarraEstado.SuspendLayout();
             this.SuspendLayout();
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 21);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(83, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Tipo de nómina:";
-            // 
-            // cmbTipoNomina
-            // 
-            this.cmbTipoNomina.FormattingEnabled = true;
-            this.cmbTipoNomina.Items.AddRange(new object[] {
-            "Normal",
-            "Extraordinaria normal"});
-            this.cmbTipoNomina.Location = new System.Drawing.Point(96, 18);
-            this.cmbTipoNomina.Name = "cmbTipoNomina";
-            this.cmbTipoNomina.Size = new System.Drawing.Size(145, 21);
-            this.cmbTipoNomina.TabIndex = 1;
-            this.cmbTipoNomina.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
             // lstvDepartamentos
             // 
-            this.lstvDepartamentos.Location = new System.Drawing.Point(247, 87);
+            this.lstvDepartamentos.Location = new System.Drawing.Point(247, 51);
             this.lstvDepartamentos.Name = "lstvDepartamentos";
-            this.lstvDepartamentos.Size = new System.Drawing.Size(231, 126);
+            this.lstvDepartamentos.Size = new System.Drawing.Size(231, 162);
             this.lstvDepartamentos.TabIndex = 8;
             this.lstvDepartamentos.UseCompatibleStateImageBehavior = false;
             this.lstvDepartamentos.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.lstvDepartamentos_ItemChecked);
@@ -85,7 +60,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(244, 51);
+            this.label2.Location = new System.Drawing.Point(244, 29);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(82, 13);
             this.label2.TabIndex = 7;
@@ -94,7 +69,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(7, 71);
+            this.label3.Location = new System.Drawing.Point(7, 29);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(51, 13);
             this.label3.TabIndex = 6;
@@ -103,10 +78,10 @@
             // lstvPeriodos
             // 
             this.lstvPeriodos.CheckBoxes = true;
-            this.lstvPeriodos.Location = new System.Drawing.Point(10, 87);
+            this.lstvPeriodos.Location = new System.Drawing.Point(10, 51);
             this.lstvPeriodos.MultiSelect = false;
             this.lstvPeriodos.Name = "lstvPeriodos";
-            this.lstvPeriodos.Size = new System.Drawing.Size(231, 126);
+            this.lstvPeriodos.Size = new System.Drawing.Size(231, 162);
             this.lstvPeriodos.TabIndex = 5;
             this.lstvPeriodos.UseCompatibleStateImageBehavior = false;
             this.lstvPeriodos.SelectedIndexChanged += new System.EventHandler(this.lstvPeriodos_SelectedIndexChanged);
@@ -134,7 +109,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(7, 48);
+            this.label4.Location = new System.Drawing.Point(7, 9);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(41, 13);
             this.label4.TabIndex = 11;
@@ -142,9 +117,9 @@
             // 
             // txtCorreoElectronico
             // 
-            this.txtCorreoElectronico.Location = new System.Drawing.Point(96, 45);
+            this.txtCorreoElectronico.Location = new System.Drawing.Point(54, 6);
             this.txtCorreoElectronico.Name = "txtCorreoElectronico";
-            this.txtCorreoElectronico.Size = new System.Drawing.Size(145, 20);
+            this.txtCorreoElectronico.Size = new System.Drawing.Size(187, 20);
             this.txtCorreoElectronico.TabIndex = 12;
             // 
             // dgvEmpleados
@@ -209,7 +184,7 @@
             // chkTodos
             // 
             this.chkTodos.AutoSize = true;
-            this.chkTodos.Location = new System.Drawing.Point(247, 67);
+            this.chkTodos.Location = new System.Drawing.Point(332, 28);
             this.chkTodos.Name = "chkTodos";
             this.chkTodos.Size = new System.Drawing.Size(111, 17);
             this.chkTodos.TabIndex = 24;
@@ -217,31 +192,11 @@
             this.chkTodos.UseVisualStyleBackColor = true;
             this.chkTodos.CheckedChanged += new System.EventHandler(this.chkTodos_CheckedChanged);
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(244, 21);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(46, 13);
-            this.label6.TabIndex = 25;
-            this.label6.Text = "Periodo:";
-            // 
-            // cmbPeriodo
-            // 
-            this.cmbPeriodo.FormattingEnabled = true;
-            this.cmbPeriodo.Location = new System.Drawing.Point(296, 18);
-            this.cmbPeriodo.Name = "cmbPeriodo";
-            this.cmbPeriodo.Size = new System.Drawing.Size(182, 21);
-            this.cmbPeriodo.TabIndex = 26;
-            this.cmbPeriodo.SelectedIndexChanged += new System.EventHandler(this.cmbPeriodo_SelectedIndexChanged);
-            // 
             // frmEnvioRecibos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(486, 507);
-            this.Controls.Add(this.cmbPeriodo);
-            this.Controls.Add(this.label6);
             this.Controls.Add(this.chkTodos);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.BarraEstado);
@@ -254,8 +209,6 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lstvPeriodos);
-            this.Controls.Add(this.cmbTipoNomina);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.Visor);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -272,8 +225,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox cmbTipoNomina;
         private System.Windows.Forms.ListView lstvDepartamentos;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -290,7 +241,5 @@
         private System.ComponentModel.BackgroundWorker workerEnvio;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.CheckBox chkTodos;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox cmbPeriodo;
     }
 }

@@ -30,6 +30,7 @@ namespace Nominas
 
         #region VARIABLES PUBLICAS
         public int _TipoNomina;
+        public int _Ventana;
         #endregion
 
         private void frmSeleccionPeriodo_Load(object sender, EventArgs e)
@@ -74,17 +75,44 @@ namespace Nominas
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            frmListaCalculoNomina lcn = new frmListaCalculoNomina();
-            lcn.MdiParent = this.MdiParent;
-            lcn._tipoNomina = _TipoNomina;
-            lcn._periodo = periodoSeleccionado;
-            lcn.WindowState = FormWindowState.Maximized;
-            if (chkObraCivil.Checked)
-                lcn._obracivil = true;
-            else
-                lcn._obracivil = false;
-            lcn.Show();
-            this.Dispose();
+            if (_Ventana == 0)
+            {
+                frmListaCalculoNomina lcn = new frmListaCalculoNomina();
+                lcn.MdiParent = this.MdiParent;
+                lcn._tipoNomina = _TipoNomina;
+                lcn._periodo = periodoSeleccionado;
+                lcn.WindowState = FormWindowState.Maximized;
+                if (chkObraCivil.Checked)
+                    lcn._obracivil = true;
+                else
+                    lcn._obracivil = false;
+                lcn.Show();
+                this.Dispose();
+            }
+            else if(_Ventana == 1)
+            {
+                frmImpresionRecibos ir = new frmImpresionRecibos();
+                ir._tiponomina = _TipoNomina;
+                ir._periodo = periodoSeleccionado;
+                ir.Show();
+                this.Dispose();
+            }
+            else if(_Ventana == 2)
+            {
+                frmEnvioRecibos er = new frmEnvioRecibos();
+                er._tiponomina = _TipoNomina;
+                er._periodo = periodoSeleccionado;
+                er.Show();
+                this.Dispose();
+            }
+            else if (_Ventana == 3)
+            {
+                frmReportes r = new frmReportes();
+                r._tipoNomina = _TipoNomina;
+                r._periodo = periodoSeleccionado;
+                r.Show();
+                this.Dispose();
+            }
         }
 
         private void cmbPeriodo_SelectedIndexChanged(object sender, EventArgs e)

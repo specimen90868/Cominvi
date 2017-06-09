@@ -893,9 +893,10 @@
                       <Filters>
                         <Filter>
                           <FilterExpression>=Fields!DeptoTipoConcepto.Value</FilterExpression>
-                          <Operator>Equal</Operator>
+                          <Operator>In</Operator>
                           <FilterValues>
                             <FilterValue>D</FilterValue>
+                            <FilterValue>S</FilterValue>
                           </FilterValues>
                         </Filter>
                       </Filters>
@@ -1945,9 +1946,10 @@
         <Filters>
           <Filter>
             <FilterExpression>=Fields!CaratulaTipoConcepto.Value</FilterExpression>
-            <Operator>Equal</Operator>
+            <Operator>In</Operator>
             <FilterValues>
               <FilterValue>D</FilterValue>
+              <FilterValue>S</FilterValue>
             </FilterValues>
           </Filter>
         </Filters>
